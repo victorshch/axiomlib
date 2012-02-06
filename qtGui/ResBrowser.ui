@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>resBrowser</class>
+ <widget class="QWidget" name="resBrowser">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>400</width>
+    <height>350</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Results' browser</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout">
+   <item row="0" column="0">
+    <widget class="QLabel" name="label">
+     <property name="text">
+      <string>AxiomSet:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="5" column="0" colspan="2">
+    <widget class="QTableWidget" name="tableWidget_markUps">
+     <column>
+      <property name="text">
+       <string>File Name</string>
+      </property>
+     </column>
+    </widget>
+   </item>
+   <item row="3" column="0">
+    <widget class="QLabel" name="label_3">
+     <property name="text">
+      <string>MarkUps of abnormal befavior:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="0" rowspan="2" colspan="2">
+    <layout class="QGridLayout" name="gridLayout_2" columnminimumwidth="0,0">
+     <property name="horizontalSpacing">
+      <number>10</number>
+     </property>
+     <item row="0" column="0">
+      <widget class="QComboBox" name="comboBox_axiomSets"/>
+     </item>
+     <item row="0" column="1">
+      <widget class="QPushButton" name="pushButton_refresh">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Fixed" vsizetype="Expanding">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>80</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>Обновить</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item row="6" column="0" colspan="2">
+    <widget class="Line" name="line">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
+   </item>
+   <item row="8" column="0" colspan="2">
+    <layout class="QGridLayout" name="gridLayout_3">
+     <item row="1" column="0" rowspan="5">
+      <widget class="QTableWidget" name="tableWidget_results">
+       <column>
+        <property name="text">
+         <string>File Name</string>
+        </property>
+       </column>
+      </widget>
+     </item>
+     <item row="1" column="1">
+      <widget class="QPushButton" name="pushButton_showRow">
+       <property name="text">
+        <string>Отобразить
+ряд</string>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="1" rowspan="3">
+      <spacer name="verticalSpacer">
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>20</width>
+         <height>40</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item row="2" column="1">
+      <widget class="QPushButton" name="pushButton_showResults">
+       <property name="text">
+        <string>Отобразить
+результаты
+распознавания</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item row="7" column="0">
+    <widget class="QLabel" name="label_2">
+     <property name="text">
+      <string>Recognition results:</string>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

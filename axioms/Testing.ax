@@ -1,0 +1,20 @@
+Testing
+no_name_Elem_Cond_Bank
+			derivative_decrease_right:		derivDecreaseLeft -> 0.000000
+			derivative_decrease_right:		derivDecreaseMaxLevel -> 9.828409
+			derivative_decrease_right:		derivDecreaseMinLevel -> 1.375796
+			derivative_decrease_right:		derivDecreaseRight -> 2.000000
+	not: 	increase_right_elementary_condition:		increaseLeft -> 0.000000
+	not: 	increase_right_elementary_condition:		increaseMaxLevel -> 9.201144
+	not: 	increase_right_elementary_condition:		increaseMinLevel -> 1.016319
+	not: 	increase_right_elementary_condition:		increaseRight -> 1.000000
+	or
+			derivative_decrease_left:		derivDecreaseLeft -> 3.000000
+			derivative_decrease_left:		derivDecreaseMaxLevel -> 0.508494
+			derivative_decrease_left:		derivDecreaseMinLevel -> 0.092036
+			derivative_decrease_left:		derivDecreaseRight -> 0.000000
+	or
+			second_derivative_decrease_left:		secDerivDecreaseLeft -> 4.000000
+			second_derivative_decrease_left:		secDerivDecreaseMaxLevel -> 0.378553
+			second_derivative_decrease_left:		secDerivDecreaseMinLevel -> 0.052327
+			second_derivative_decrease_left:		secDerivDecreaseRight -> 0.000000

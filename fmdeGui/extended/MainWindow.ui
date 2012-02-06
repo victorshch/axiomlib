@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>800</width>
+    <height>600</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Алгоритм построения систем аксиом</string>
+  </property>
+  <widget class="QWidget" name="centralwidget"/>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>800</width>
+     <height>25</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menu">
+    <property name="title">
+     <string>Файл</string>
+    </property>
+    <widget class="QMenu" name="menu_stage0">
+     <property name="title">
+      <string>Параметры 1-го этапа</string>
+     </property>
+     <addaction name="action_save0"/>
+     <addaction name="separator"/>
+     <addaction name="action_load0"/>
+    </widget>
+    <widget class="QMenu" name="menu_stage1">
+     <property name="title">
+      <string>Результаты 1-го этапа</string>
+     </property>
+     <addaction name="action_save1"/>
+     <addaction name="action_AxiomLib_save1"/>
+     <addaction name="separator"/>
+     <addaction name="action_load1"/>
+    </widget>
+    <widget class="QMenu" name="menu_stage2">
+     <property name="title">
+      <string>Результаты 2-го этапа</string>
+     </property>
+     <addaction name="action_save2"/>
+     <addaction name="action_AxiomLib_save2"/>
+     <addaction name="separator"/>
+     <addaction name="action_load2"/>
+    </widget>
+    <widget class="QMenu" name="menu_stage3">
+     <property name="title">
+      <string>Результаты 3-го этапа</string>
+     </property>
+     <addaction name="action_save3"/>
+     <addaction name="action_AxiomLib_save3"/>
+     <addaction name="separator"/>
+     <addaction name="action_load3"/>
+    </widget>
+    <addaction name="menu_stage0"/>
+    <addaction name="menu_stage1"/>
+    <addaction name="menu_stage2"/>
+    <addaction name="menu_stage3"/>
+    <addaction name="separator"/>
+    <addaction name="action_exit"/>
+   </widget>
+   <addaction name="menu"/>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+  <action name="action_exit">
+   <property name="text">
+    <string>Выход</string>
+   </property>
+  </action>
+  <action name="action_save0">
+   <property name="text">
+    <string>Сохранить</string>
+   </property>
+  </action>
+  <action name="action_load0">
+   <property name="text">
+    <string>Загрузить</string>
+   </property>
+  </action>
+  <action name="action_save1">
+   <property name="text">
+    <string>Сохранить</string>
+   </property>
+  </action>
+  <action name="action_AxiomLib_save1">
+   <property name="text">
+    <string>Сохранить в формате AxiomLib</string>
+   </property>
+  </action>
+  <action name="action_load1">
+   <property name="text">
+    <string>Загрузить</string>
+   </property>
+  </action>
+  <action name="action_save2">
+   <property name="text">
+    <string>Сохранить</string>
+   </property>
+  </action>
+  <action name="action_AxiomLib_save2">
+   <property name="text">
+    <string>Сохранить в формате AxiomLib</string>
+   </property>
+  </action>
+  <action name="action_load2">
+   <property name="text">
+    <string>Загрузить</string>
+   </property>
+  </action>
+  <action name="action_save3">
+   <property name="text">
+    <string>Сохранить</string>
+   </property>
+  </action>
+  <action name="action_AxiomLib_save3">
+   <property name="text">
+    <string>Сохранить в формате AxiomLib</string>
+   </property>
+  </action>
+  <action name="action_load3">
+   <property name="text">
+    <string>Загрузить</string>
+   </property>
+  </action>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
