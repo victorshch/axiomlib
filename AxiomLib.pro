@@ -207,7 +207,7 @@ SOURCES += src/TreatmentSample.cxx \
     src/optimization/GoldenSectionSearch.cxx \
     src/optimization/GridSearch.cxx \
     src/optimization/MinimizerFactory.cxx \
-    src/optimization/HybridGridSearch.cxx
+    src/optimization/HybridGridSearch.cxx \
     src/Recognizermultimarkup.cxx \
     src/MultiMarking/dtwmetric.cxx \
     src/MultiMarking/metric1.cxx \
@@ -413,7 +413,7 @@ HEADERS += src/undefs.h \
     src/optimization/GoldenSectionSearch.h \
     src/optimization/GridSearch.h \
     src/optimization/MinimizerFactory.h \
-    src/optimization/HybridGridSearch.h
+    src/optimization/HybridGridSearch.h \
     src/MultiMarking/dtwmetric.h \
     src/MultiMarking/rowmetric.h \
     src/MultiMarking/metric1.h \
