@@ -1,17 +1,7 @@
 # Файл, в котором задаются параметры сборки AxiomLib
-# Этот файл не надо коммитить в репозиторий, он у каждого свой (в репозитории -- образец)
 
 # В данном файле должны быть заданы значения переменных 
-# MPICH_INCLUDE, MPICH_LIB, BOOST_INCLUDE, BOOST_LIB, AXIOMLIB_INCLUDE, 
-# AXIOMLIB_LIBDIR, AXIOMLIB_LIBNAME
-
-### Конфигурация ###
-
-CONFIG += static
-#CONFIG += release
-#CONFIG -= debug
-#CONFIG += debug
-#CONFIG -= release
+# MPICH_INCLUDE, MPICH_LIB, BOOST_INCLUDE, BOOST_LIB, AXIOMLIB_INCLUDE, AXIOMLIB_LIB
 
 ### Пути include'ов и библиотек ###
 
@@ -41,15 +31,60 @@ unix {
 	OTHER_LIB = -lpthread
 }
 
+#Здесь нужно указать абсолютнй путь к директории src
 AXIOMLIB_INCLUDE = ./src
 
+unix {
+#Здесь нужно указать абсолютные пути к файлу libAxiomLib.a
 debug{
-	AXIOMLIB_LIBDIR = ./lib/debug/
+	AXIOMLIB_LIB = ./lib/debug/
 }
 release {
-	AXIOMLIB_LIBDIR = ./lib/release/
+	AXIOMLIB_LIB = ./lib/release/
+}
+
 }
 
 AXIOMLIB_LIBNAME = AxiomLib
 
-AXIOMLIB_LIB = $$AXIOMLIB_LIBDIR$$AXIOMLIB_LIBNAME
+#AXIOMLIB_LIB = $$AXIOMLIB_LIBDIR$$AXIOMLIB_LIBNAME
+
+### Дополнительные флаги компиляции ###
+
+# Для windows
+win32 {
+	QMAKE_CXXFLAGS_RELEASE += -openmp
+	QMAKE_CXXFLAGS_RELEASE += -o2 -DRELEASE
+	QMAKE_CXXFLAGS_DEBUG += /ZI /Od
+}
+# Для unix
+linux-g++|linux-g++-64 {
+        QMAKE_CXXFLAGS_RELEASE += -fopenmp -o2 -std=c++0x
+}
+linux-icc|linux-icc-64 {
+        QMAKE_CXXFLAGS += -std=c++0x -no-multibyte-chars -wd913
+        QMAKE_CXXFLAGS_RELEASE += -openmp
+        QMAKE_LFLAGS_RELEASE += -openmp
+}
+
+### Дополнительные флаги линковки ###
+
+# Для windows
+win32 {
+	QMAKE_LFLAGS +=
+	QMAKE_LFLAGS_DEBUG += /debug /incremental:yes
+}
+
+### Задание флагов отключение warning'ов (работает только если warn_off есть в CONFIG)
+
+# Для unix
+unix {
+	#QMAKE_CXXFLAGS_WARN_OFF = -Wno-sign-compare -Wno-sign-conversion -Wno-unused-parameter
+	QMAKE_CXXFLAGS_WARN_OFF = -Wno-unused-parameter
+}
+
+win32 {
+        #Отключение ворнингов, связанных со стандартными функциями,
+        #которые cl считает небезопасными
+        QMAKE_CXXFLAGS_WARN_OFF += -D_SCL_SECURE_NO_WARNINGS -D_CRT_SECURE_NO_WARNINGS
+}
