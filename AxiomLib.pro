@@ -2,13 +2,25 @@
 # Project created by QtCreator 2010-04-02T11:28:45
 # -------------------------------------------------
 include(AxiomLibConfig.pri)
+CONFIG += static
 DEFINES += "BOOST_FILESYSTEM_VERSION=2"
 INCLUDEPATH += $$MPICH_INCLUDE \
     $$BOOST_INCLUDE
 QT -= core \
     gui
-TARGET = $$AXIOMLIB_LIBNAME
-DESTDIR = $$AXIOMLIB_LIBDIR
+TARGET = AxiomLib
+
+debug{
+OBJECTS_DIR = obj_debug
+DESTDIR = debug
+}
+
+release{
+OBJECTS_DIR = obj_release
+DESTDIR = release
+}
+
+
 TEMPLATE = lib
 DEFINES += AXIOMLIB_LIBRARY
 
@@ -35,11 +47,17 @@ linux-icc|linux-icc-64 {
     QMAKE_CXXFLAGS_RELEASE += -openmp
     QMAKE_LFLAGS_RELEASE += -openmp
 }
-win32:# ,    ,
+linux-icc|linux-icc-64 {
+        QMAKE_CXXFLAGS += -std=c++0x -no-multibyte-chars -wd913
+        QMAKE_CXXFLAGS_RELEASE += -openmp
+        QMAKE_LFLAGS_RELEASE += -openmp
+}
 
-# cl
-QMAKE_CXXFLAGS += -D_SCL_SECURE_NO_WARNINGS \
-    -D_CRT_SECURE_NO_WARNINGS
+win32 {
+        #пФЛМАЮЕОЙЕ ЧПТОЙОЗПЧ, УЧСЪБООЩИ УП УФБОДБТФОЩНЙ ЖХОЛГЙСНЙ,
+        #ЛПФПТЩЕ cl УЮЙФБЕФ ОЕВЕЪПРБУОЩНЙ
+        QMAKE_CXXFLAGS += -D_SCL_SECURE_NO_WARNINGS -D_CRT_SECURE_NO_WARNINGS
+}
 
 # ##   ###
 SOURCES += src/TreatmentSample.cxx \
@@ -157,7 +175,7 @@ SOURCES += src/TreatmentSample.cxx \
     src/DataSetBase.cxx \
     src/DataSetDivision.cxx \
     src/SatPointSet.cpp \
-    src/Logger.cxx \
+    src/Logger.cxx \ 
     src/FuzzyMultiDataExt/Heuristics.cxx \
     src/FuzzyMultiDataExt/ECTypeStage.cxx \
     src/FuzzyMultiDataExt/ECStage.cxx \
@@ -177,6 +195,19 @@ SOURCES += src/TreatmentSample.cxx \
     src/FuzzyMultiDataExt/ECOccClustering.cxx \
     src/FuzzyMultiDataExt/AXOccClustering.cxx \
     src/FuzzyMultiDataExt/StatVector.cxx \
+    src/RecognizerImplBase.cxx \
+    src/RecognizerReducedAdapter.cxx \
+    src/ReducedRecognizerDistance.cxx \
+    src/TrajectorySampleDistance.cxx \
+    src/LabelingStrategy.cxx \
+    src/LabelingStrategyFactory.cxx \
+    src/LabelingStrategySimple.cxx \
+    src/optimization/FunctionOneVariable.cxx \
+    src/optimization/Minimizer.cxx \
+    src/optimization/GoldenSectionSearch.cxx \
+    src/optimization/GridSearch.cxx \
+    src/optimization/MinimizerFactory.cxx \
+    src/optimization/HybridGridSearch.cxx
     src/Recognizermultimarkup.cxx \
     src/MultiMarking/dtwmetric.cxx \
     src/MultiMarking/metric1.cxx \
@@ -370,6 +401,19 @@ HEADERS += src/undefs.h \
     src/FuzzyMultiDataExt/AXOccClustering.h \
     src/Common.h \
     src/FuzzyMultiDataExt/StatVector.h \
+    src/RecognizerImplBase.h \
+    src/RecognizerReducedAdapter.h \
+    src/ReducedRecognizerDistance.h \
+    src/TrajectorySampleDistance.h \
+    src/LabelingStrategy.h \
+    src/LabelingStrategyFactory.h \
+    src/LabelingStrategySimple.h \
+    src/optimization/FunctionOneVariable.h \
+    src/optimization/Minimizer.h \
+    src/optimization/GoldenSectionSearch.h \
+    src/optimization/GridSearch.h \
+    src/optimization/MinimizerFactory.h \
+    src/optimization/HybridGridSearch.h
     src/MultiMarking/dtwmetric.h \
     src/MultiMarking/rowmetric.h \
     src/MultiMarking/metric1.h \
