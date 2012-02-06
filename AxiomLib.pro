@@ -1,47 +1,71 @@
 # -------------------------------------------------
 # Project created by QtCreator 2010-04-02T11:28:45
 # -------------------------------------------------
+
 include(AxiomLibConfig.pri)
+
+CONFIG += static
+
+### Конфигурация - release или debug ###
+
+CONFIG += release
+CONFIG -= debug
+#CONFIG += debug
+#CONFIG -= release
+
+
 DEFINES += "BOOST_FILESYSTEM_VERSION=2"
+
 INCLUDEPATH += $$MPICH_INCLUDE \
     $$BOOST_INCLUDE
+
+#LIBS += $$MPICH_LIB $$BOOST_LIB
+
 QT -= core \
     gui
-TARGET = $$AXIOMLIB_LIBNAME
-DESTDIR = $$AXIOMLIB_LIBDIR
+TARGET = AxiomLib
+
+debug{
+OBJECTS_DIR = obj_debug
+DESTDIR = debug
+}
+
+release{
+OBJECTS_DIR = obj_release
+DESTDIR = release
+}
+
+
 TEMPLATE = lib
 DEFINES += AXIOMLIB_LIBRARY
 
-# ##    ###
-# windows
-win32 { 
-    QMAKE_CXXFLAGS_RELEASE += -openmp
-    QMAKE_CXXFLAGS_RELEASE += -o2 \
-        -DRELEASE
-    QMAKE_CXXFLAGS_DEBUG += /ZI \
-        /Od
+### Дополнительные флаги компиляции ###
+
+# Для windows
+win32 {
+	QMAKE_CXXFLAGS_RELEASE += -openmp
+	QMAKE_CXXFLAGS_RELEASE += -o2 -DRELEASE
+	QMAKE_CXXFLAGS_DEBUG += /ZI /Od
+}
+# Для unix
+linux-g++|linux-g++-64 {
+		QMAKE_CXXFLAGS += -std=c++0x
+        QMAKE_CXXFLAGS_RELEASE += -fopenmp -o2
+}
+linux-icc|linux-icc-64 {
+        QMAKE_CXXFLAGS += -std=c++0x -no-multibyte-chars -wd913
+        QMAKE_CXXFLAGS_RELEASE += -openmp
+        QMAKE_LFLAGS_RELEASE += -openmp
 }
 
-# unix
-linux-g++|linux-g++-64 { 
-    QMAKE_CXXFLAGS += -std=c++0x
-    QMAKE_CXXFLAGS_RELEASE += -fopenmp \
-        -o2
+win32 {
+        #Отключение ворнингов, связанных со стандартными функциями,
+        #которые cl считает небезопасными
+        QMAKE_CXXFLAGS += -D_SCL_SECURE_NO_WARNINGS -D_CRT_SECURE_NO_WARNINGS
 }
-linux-icc|linux-icc-64 { 
-    QMAKE_CXXFLAGS += -std=c++0x \
-        -no-multibyte-chars \
-        -wd913
-    QMAKE_CXXFLAGS_RELEASE += -openmp
-    QMAKE_LFLAGS_RELEASE += -openmp
-}
-win32:# ,    ,
 
-# cl
-QMAKE_CXXFLAGS += -D_SCL_SECURE_NO_WARNINGS \
-    -D_CRT_SECURE_NO_WARNINGS
+### Имена исходников ###
 
-# ##   ###
 SOURCES += src/TreatmentSample.cxx \
     src/TreatmentFactory.cxx \
     src/TransmuteTpl.cxx \
@@ -157,7 +181,7 @@ SOURCES += src/TreatmentSample.cxx \
     src/DataSetBase.cxx \
     src/DataSetDivision.cxx \
     src/SatPointSet.cpp \
-    src/Logger.cxx \
+    src/Logger.cxx \ 
     src/FuzzyMultiDataExt/Heuristics.cxx \
     src/FuzzyMultiDataExt/ECTypeStage.cxx \
     src/FuzzyMultiDataExt/ECStage.cxx \
@@ -177,14 +201,19 @@ SOURCES += src/TreatmentSample.cxx \
     src/FuzzyMultiDataExt/ECOccClustering.cxx \
     src/FuzzyMultiDataExt/AXOccClustering.cxx \
     src/FuzzyMultiDataExt/StatVector.cxx \
-    src/Recognizermultimarkup.cxx \
-    src/MultiMarking/dtwmetric.cxx \
-    src/MultiMarking/metric1.cxx \
-    src/MultiMarking/metric2.cxx \
-    src/MultiMarking/metric3.cxx \
-    src/MultiMarking/metric4.cxx \
-    src/MultiMarking/multimarks.cxx \
-    src/MultiMarking/rowmetric.cxx
+    src/RecognizerImplBase.cxx \
+    src/RecognizerReducedAdapter.cxx \
+    src/ReducedRecognizerDistance.cxx \
+    src/TrajectorySampleDistance.cxx \
+    src/LabelingStrategy.cxx \
+    src/LabelingStrategyFactory.cxx \
+    src/LabelingStrategySimple.cxx \
+    src/optimization/FunctionOneVariable.cxx \
+    src/optimization/Minimizer.cxx \
+    src/optimization/GoldenSectionSearch.cxx \
+    src/optimization/GridSearch.cxx \
+    src/optimization/MinimizerFactory.cxx \
+    src/optimization/HybridGridSearch.cxx
 HEADERS += src/undefs.h \
     src/TreatmentSample.h \
     src/TreatmentFactory.h \
@@ -347,7 +376,7 @@ HEADERS += src/undefs.h \
     src/DataSetDivision.h \
     src/DistanceClusterizer.h \
     src/SatPointSet.h \
-    src/Logger.h \
+    src/Logger.h \ 
     src/FuzzyMultiDataExt/Heuristics.h \
     src/FuzzyMultiDataExt/ECTypeStage.h \
     src/FuzzyMultiDataExt/ECStage.h \
@@ -370,12 +399,17 @@ HEADERS += src/undefs.h \
     src/FuzzyMultiDataExt/AXOccClustering.h \
     src/Common.h \
     src/FuzzyMultiDataExt/StatVector.h \
-    src/MultiMarking/dtwmetric.h \
-    src/MultiMarking/rowmetric.h \
-    src/MultiMarking/metric1.h \
-    src/MultiMarking/metric2.h \
-    src/MultiMarking/metric3.h \
-    src/MultiMarking/metric4.h \
-    src/MultiMarking/multimarks.h \
-    src/Recognizermultimarkup.h
+    src/RecognizerImplBase.h \
+    src/RecognizerReducedAdapter.h \
+    src/ReducedRecognizerDistance.h \
+    src/TrajectorySampleDistance.h \
+    src/LabelingStrategy.h \
+    src/LabelingStrategyFactory.h \
+    src/LabelingStrategySimple.h \
+    src/optimization/FunctionOneVariable.h \
+    src/optimization/Minimizer.h \
+    src/optimization/GoldenSectionSearch.h \
+    src/optimization/GridSearch.h \
+    src/optimization/MinimizerFactory.h \
+    src/optimization/HybridGridSearch.h
 OTHER_FILES += 
