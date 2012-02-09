@@ -23,6 +23,7 @@ class Metric1 : public DTWMetric {
 private:
 
     // creation
+    // constructors should be empty
     Metric1(MultiMark& f);
 
     public:

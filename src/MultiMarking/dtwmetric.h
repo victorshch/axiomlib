@@ -30,16 +30,16 @@ class DTWMetric {
  public:
 
    // choose metric type
-   static DTWMetric& getMetric(std::string name);
+   static DTWMetric* getMetric(std::string name);
 
    // calculate distance between 2 elements of mark
-   virtual double compute(std::vector<bool>& v1, std::vector<bool>& v2);
+   virtual double compute(const std::vector<bool>& v1, const std::vector<bool>& v2);
 
    //
-   virtual double compute(MultiMark&  v1, MultiMark& v2);
+   //virtual double compute(MultiMark&  v1, MultiMark& v2);
 
    // compute distances for several windows
-   static void computeDTW (DTWMetric* m, const MultiMark& t, int begin,int end1,int end2, const MultiMark& ref, std::vector<double> result);
+   static void computeDTW (DTWMetric* m, const MultiMark& t, int i,int Nmin,int Nmax, const MultiMark& ref, std::vector<double> result);
 
 };// end of class
 
