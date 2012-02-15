@@ -1,7 +1,8 @@
 /****************************************************************************
 *			DTWMetric
 *
-*	Description:	DTWMetric
+*	Description:	DTWMetric - Класс-родитель для всех метрик,
+*                       используемых для работы DTW алгоритма.
 *
 *	Author:		armkor
 *	History:
@@ -21,7 +22,7 @@ class DTWMetric {
 
  private:
 
-   // create metric from mark
+   // Создание метрики
    DTWMetric();
 
    //
@@ -29,16 +30,13 @@ class DTWMetric {
 
  public:
 
-   // choose metric type
+   // Выбор типа метрики. Возвращается указатель на класс-метрику, которая используется
    static DTWMetric* getMetric(std::string name);
 
-   // calculate distance between 2 elements of mark
+   // Вычисление расстояния между двумя разметками
    virtual double compute(const std::vector<bool>& v1, const std::vector<bool>& v2);
 
-   //
-   //virtual double compute(MultiMark&  v1, MultiMark& v2);
-
-   // compute distances for several windows
+   // Вычисление расстояния для одного типа окна
    static void computeDTW (DTWMetric* m, const MultiMark& t, int i,int Nmin,int Nmax, const MultiMark& ref, std::vector<double> result);
 
 };// end of class

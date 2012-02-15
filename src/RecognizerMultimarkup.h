@@ -11,11 +11,11 @@
 #ifndef RECOGNIZERMULTIMARKUP_H
 #define RECOGNIZERMULTIMARKUP_H
 
-#include "Recognizer.h"
+#include "RecognizerImplBase.h"
 
 namespace AxiomLib {
 
-class RecognizerMultiMarkup : public Recognizer {
+class RecognizerMultiMarkup : public RecognizerImplBase {
 
 private:
 

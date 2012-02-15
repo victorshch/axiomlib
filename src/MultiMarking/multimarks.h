@@ -1,7 +1,8 @@
 /****************************************************************************
 *			MultiMark
 *
-*	Description:	MultiMark
+*	Description:	MultiMark - описание разметки траектории
+*                       множеством аксиом
 *
 *	Author:		armkor
 *	History:

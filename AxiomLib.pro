@@ -9,18 +9,14 @@ INCLUDEPATH += $$MPICH_INCLUDE \
 QT -= core \
     gui
 TARGET = AxiomLib
-
-debug{
-OBJECTS_DIR = obj_debug
-DESTDIR = debug
+debug { 
+    OBJECTS_DIR = obj_debug
+    DESTDIR = debug
 }
-
-release{
-OBJECTS_DIR = obj_release
-DESTDIR = release
+release { 
+    OBJECTS_DIR = obj_release
+    DESTDIR = release
 }
-
-
 TEMPLATE = lib
 DEFINES += AXIOMLIB_LIBRARY
 
@@ -47,17 +43,18 @@ linux-icc|linux-icc-64 {
     QMAKE_CXXFLAGS_RELEASE += -openmp
     QMAKE_LFLAGS_RELEASE += -openmp
 }
-linux-icc|linux-icc-64 {
-        QMAKE_CXXFLAGS += -std=c++0x -no-multibyte-chars -wd913
-        QMAKE_CXXFLAGS_RELEASE += -openmp
-        QMAKE_LFLAGS_RELEASE += -openmp
+linux-icc|linux-icc-64 { 
+    QMAKE_CXXFLAGS += -std=c++0x \
+        -no-multibyte-chars \
+        -wd913
+    QMAKE_CXXFLAGS_RELEASE += -openmp
+    QMAKE_LFLAGS_RELEASE += -openmp
 }
+win32:# пФЛМАЮЕОЙЕ ЧПТОЙОЗПЧ, УЧСЪБООЩИ УП УФБОДБТФОЩНЙ ЖХОЛГЙСНЙ,
 
-win32 {
-        #пФЛМАЮЕОЙЕ ЧПТОЙОЗПЧ, УЧСЪБООЩИ УП УФБОДБТФОЩНЙ ЖХОЛГЙСНЙ,
-        #ЛПФПТЩЕ cl УЮЙФБЕФ ОЕВЕЪПРБУОЩНЙ
-        QMAKE_CXXFLAGS += -D_SCL_SECURE_NO_WARNINGS -D_CRT_SECURE_NO_WARNINGS
-}
+# ЛПФПТЩЕ cl УЮЙФБЕФ ОЕВЕЪПРБУОЩНЙ
+QMAKE_CXXFLAGS += -D_SCL_SECURE_NO_WARNINGS \
+    -D_CRT_SECURE_NO_WARNINGS
 
 # ##   ###
 SOURCES += src/TreatmentSample.cxx \
@@ -175,7 +172,7 @@ SOURCES += src/TreatmentSample.cxx \
     src/DataSetBase.cxx \
     src/DataSetDivision.cxx \
     src/SatPointSet.cpp \
-    src/Logger.cxx \ 
+    src/Logger.cxx \
     src/FuzzyMultiDataExt/Heuristics.cxx \
     src/FuzzyMultiDataExt/ECTypeStage.cxx \
     src/FuzzyMultiDataExt/ECStage.cxx \
@@ -210,12 +207,15 @@ SOURCES += src/TreatmentSample.cxx \
     src/optimization/HybridGridSearch.cxx \
     src/Recognizermultimarkup.cxx \
     src/MultiMarking/dtwmetric.cxx \
-    src/MultiMarking/metric1.cxx \
-    src/MultiMarking/metric2.cxx \
-    src/MultiMarking/metric3.cxx \
-    src/MultiMarking/metric4.cxx \
     src/MultiMarking/multimarks.cxx \
-    src/MultiMarking/rowmetric.cxx
+    src/RecognizerMultimarkup.cxx \
+    src/MultiMarking/MetricsBetweenSets1.cxx \
+    src/MultiMarking/MetricsBetweenSets2.cxx \
+    src/MultiMarking/MetricsMatrix.cxx \
+    src/MultiMarking/MetricsHamming.cxx \
+    src/MultiMarking/MetricsEuclidean.cxx \
+    src/MultiMarking/MetricsBetweenSets2.cxx \
+    src/MultiMarking/MetricsEqual.cxx
 HEADERS += src/undefs.h \
     src/TreatmentSample.h \
     src/TreatmentFactory.h \
@@ -415,11 +415,12 @@ HEADERS += src/undefs.h \
     src/optimization/MinimizerFactory.h \
     src/optimization/HybridGridSearch.h \
     src/MultiMarking/dtwmetric.h \
-    src/MultiMarking/rowmetric.h \
-    src/MultiMarking/metric1.h \
-    src/MultiMarking/metric2.h \
-    src/MultiMarking/metric3.h \
-    src/MultiMarking/metric4.h \
     src/MultiMarking/multimarks.h \
-    src/Recognizermultimarkup.h
+    src/RecognizerMultimarkup.h \
+    src/MultiMarking/MetricsBetweenSets1.h \
+    src/MultiMarking/MetricsMatrix.h \
+    src/MultiMarking/MetricsHamming.h \
+    src/MultiMarking/MetricsEuclidean.h \
+    src/MultiMarking/MetricsBetweenSets2.h \
+    src/MultiMarking/MetricsEqual.h
 OTHER_FILES += 
