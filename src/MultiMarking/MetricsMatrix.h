@@ -1,15 +1,15 @@
 /****************************************************************************
-*			Metric4
+*			RowMetric
 *
-*	Description:	Metric4
+*	Description:	RowMetric
 *
 *	Author:		armkor
 *	History:
 *
 ****************************************************************************/
 
-#ifndef METRIC4_H
-#define METRIC4_H
+#ifndef ROWMETRIC_H
+#define ROWMETRIC_H
 
 #include "dtwmetric.h"
 #include "multimarks.h";
@@ -18,17 +18,17 @@ namespace AxiomLib {
 
 namespace MultiMarking {
 
-class Metric4 : public DTWMetric {
+class Matrix : public DTWMetric {
 
 private:
 
-    //
-    Metric4(MultiMark& f);
+ //
+ Matrix ();
 
-    public:
+public:
 
-    //
-    double compute(std::vector<bool>& v1, std::vector<bool>& v2);
+ //
+double compute (MultiMark& v1, MultiMark& v2);
 
 };// end of class
 
@@ -36,4 +36,4 @@ private:
 
 };//  end of namespace AxiomLib
 
-#endif // METRIC4_H
+#endif // ROWMETRIC_H

@@ -1,33 +1,33 @@
 /****************************************************************************
-*			Metric3
+*			Metric1
 *
-*	Description:	Metric3
+*	Description:	Metric1
 *
 *	Author:		armkor
 *	History:
 *
 ****************************************************************************/
 
-#ifndef METRIC3_H
-#define METRIC3_H
+#ifndef METRIC1_H
+#define METRIC1_H
 
 #include "dtwmetric.h"
-#include "multimarks.h";
+#include "multimarks.h"
 
 namespace AxiomLib {
 
 namespace MultiMarking {
 
-class Metric3 : public DTWMetric {
+class BetweenSets1 : public DTWMetric {
 
 private:
 
-    //
-    Metric3 (MultiMark& f);
+    // creation
+    BetweenSets1();
 
     public:
 
-    // distance for DTW
+    // realisation distance for DTW
     double compute(std::vector<bool>& v1, std::vector<bool>& v2);
 
 };// end of class
@@ -36,4 +36,4 @@ private:
 
 };//  end of namespace AxiomLib
 
-#endif // METRIC3_H
+#endif // METRIC1_H
