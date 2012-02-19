@@ -23,7 +23,7 @@ namespace MultiMarking {
     typedef std::vector<bool> tempb;
     typedef std::vector<tempb>  MultiMark;
 
-};//  end of namespace MultiMraking
+};//  end of namespace MultiMarking
 
 };//  end of namespace AxiomLib
 

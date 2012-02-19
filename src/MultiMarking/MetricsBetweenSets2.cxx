@@ -1,10 +1,17 @@
 #include "MetricsBetweenSets2.h"
 
-double BetweenSets2::compute(std::vector<bool>& v1, std::vector<bool>& v2);
+
+double BetweenSets2::compute(std::vector<bool>& v1, std::vector<bool>& v2)
 {
     double k=0;
-    int min=v1.size();
-    int max=v2.size(); // максимальная длина из двух векторов
+    int min=0;
+    int max=0;
+    for (int i=0;i<v1.size();i++)
+        if (v1[i]==true)
+            min++;
+    for (int i=0;i<v2.size();i++)
+        if (v2[i]==true)
+            max++;
     if (max < min)
             min=max;
     if (max==0)
@@ -17,4 +24,5 @@ double BetweenSets2::compute(std::vector<bool>& v1, std::vector<bool>& v2);
     k=1-(k/(double)min);
     return k;
 }
+
 
