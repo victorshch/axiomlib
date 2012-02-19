@@ -215,6 +215,8 @@ SOURCES += src/TreatmentSample.cxx \
     src/MultiMarking/MetricsHamming.cxx \
     src/MultiMarking/MetricsEuclidean.cxx \
     src/MultiMarking/MetricsBetweenSets2.cxx \
+    src/MultiMarking/MetricsEqual.cxx \
+    src/MultiMarking/multimarks.cxx \
     src/MultiMarking/MetricsEqual.cxx
 HEADERS += src/undefs.h \
     src/TreatmentSample.h \
@@ -422,5 +424,8 @@ HEADERS += src/undefs.h \
     src/MultiMarking/MetricsHamming.h \
     src/MultiMarking/MetricsEuclidean.h \
     src/MultiMarking/MetricsBetweenSets2.h \
+    src/MultiMarking/MetricsEqual.h \
+    src/MultiMarking/multimarks.h \
+    src/MultiMarking/MetricsHamming.h \
     src/MultiMarking/MetricsEqual.h
 OTHER_FILES += 
