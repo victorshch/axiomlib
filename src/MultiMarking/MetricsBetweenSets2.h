@@ -1,15 +1,14 @@
 /****************************************************************************
-*			Metric2
+*			MetricsBetweenSets2.h
 *
-*	Description:	Metric2
-*
+*	Description: Класс-метрика. Содержит метод - подсчет расстояния
+*                    между двумя множествами, посредством метрики, основанной
+*                    на поиске одинаковых элементов в двух множествах, без
+*                    учета дополнительной информации.
 *	Author:		armkor
 *	History:
 *
 ****************************************************************************/
-
-#ifndef METRIC2_H
-#define METRIC2_H
 
 #include "dtwmetric.h"
 #include "multimarks.h"
@@ -19,11 +18,6 @@ namespace AxiomLib {
 namespace MultiMarking {
 
 class BetweenSets2 : public DTWMetric {
-
-private:
-
-    // creation Metric
-    BetweenSets2();
 
     public:
 
@@ -36,4 +30,3 @@ private:
 
 };//  end of namespace AxiomLib
 
-#endif // METRIC2_H

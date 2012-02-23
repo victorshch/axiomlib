@@ -1,15 +1,11 @@
 /****************************************************************************
-*			Metric3
+*			MetricsEuclidean.h
 *
-*	Description:	Metric3
-*
+*	Description: Класс-метрика. Метрика - расстояние Евклида.
 *	Author:		armkor
 *	History:
 *
 ****************************************************************************/
-
-#ifndef METRIC3_H
-#define METRIC3_H
 
 #include "dtwmetric.h"
 #include "multimarks.h"
@@ -20,11 +16,6 @@ namespace AxiomLib {
 namespace MultiMarking {
 
 class Euclidean : public DTWMetric {
-
-private:
-
-    //
-    Euclidean ();
 
     public:
 
@@ -37,4 +28,3 @@ private:
 
 };//  end of namespace AxiomLib
 
-#endif // METRIC3_H

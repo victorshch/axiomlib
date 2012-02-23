@@ -19,7 +19,7 @@ win32 {
 
 # ‰Ã— unix
 unix {
-	MPICH_INCLUDE = -I/usr/include/mpich2/
+        MPICH_INCLUDE = /usr/include/mpich2/
 	MPICH_LIB = -lmpi -lgomp -lmpich
 	BOOST_INCLUDE = "/home/wictor/boost_1_46_1/include"
 

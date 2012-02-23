@@ -1,8 +1,8 @@
 /****************************************************************************
-*			Metric1
+*			MetricsEqual.h
 *
-*	Description:	Metric1
-*
+*	Description: Класс-метрика. Содержит метод - подсчет расстояния DTW
+*                    Идея метрики - полное совпадение множеств.
 *	Author:		armkor
 *	History:
 *
@@ -17,11 +17,6 @@ namespace MultiMarking {
 
 class Equal : public DTWMetric {
 
-private:
-
-    // creation
-    Equal();
-
     public:
 
     // realisation distance for DTW
@@ -32,5 +27,3 @@ private:
 };//  end of namespace MultiMraking
 
 };//  end of namespace AxiomLib
-
-#endif // METRIC1_H

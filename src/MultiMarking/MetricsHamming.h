@@ -1,29 +1,20 @@
 /****************************************************************************
-*			Metric4
+*			MetricsHamming.h
 *
-*	Description:	Metric4
-*
+*	Description: Класс-метрика. Метрика - расстояние Хэмминга.
 *	Author:		armkor
 *	History:
 *
 ****************************************************************************/
 
-#ifndef METRIC4_H
-#define METRIC4_H
-
 #include "dtwmetric.h"
-#include "multimarks.h";
+#include "multimarks.h"
 
 namespace AxiomLib {
 
 namespace MultiMarking {
 
 class Hamming : public DTWMetric {
-
-private:
-
-    //
-    Hamming();
 
     public:
 
@@ -36,4 +27,3 @@ private:
 
 };//  end of namespace AxiomLib
 
-#endif // METRIC4_H
