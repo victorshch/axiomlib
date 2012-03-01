@@ -37,7 +37,7 @@ class DTWMetric {
    virtual double compute(const std::vector<bool>& v1, const std::vector<bool>& v2)=0;
 
    // Вычисление DTW
-   static void computeDTW (DTWMetric* m, const MultiMark& t, int i,int Nmin,int Nmax, const MultiMark& ref, std::vector<double> result);
+   static void computeDTW (DTWMetric* m, const MultiMark& t, int i,int Nmin,int Nmax, const MultiMark& ref, std::vector<double>& result);
 
 };// end of class
 

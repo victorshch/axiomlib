@@ -17,8 +17,9 @@ namespace MultiMarking {
 class Matrix : public DTWMetric {
 
 public:
- //
-double compute (const std::vector<bool>& v1, const std::vector<bool>& v2);
+    int CurrentAxiomNumber;
+    //
+    double compute (const std::vector<bool>& v1, const std::vector<bool>& v2);
 
 };// end of class
 
