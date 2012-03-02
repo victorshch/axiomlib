@@ -21,11 +21,13 @@ namespace MultiMarking {
     void DTWMetric::computeDTW (DTWMetric* m, const MultiMark& t,int i,int Nmin,
                                 int Nmax, const MultiMark& ref, std::vector<double>& result) {
         // Инициализация матриц
+        // vector<vector<double> >
         MultiMark D,R,S;
         int len_t=Nmax; // Максимальный размер окна = размер матрицы
         int len_ref=ref.size(); /* Длина эталонной траектории*/
 
         // Память под вектора. Удобнее так, тк R S заполняются с конца
+        // Исправить выделение памяти
         for (int w=0;w<(len_ref+1);w++) {
             for (int q=0;q<(len_t+1);q++) {
                 S[w].push_back(0);
@@ -83,6 +85,11 @@ namespace MultiMarking {
         for (int j=0;j<(Nmax-Nmin+1);j++) {
             result[j]=(S[0][j]/R[0][j]);
         }
+    }
+
+    void DTWMetric::computeDTWForMetric(const MultiMark &t, int i, int Nmin, int Nmax, const MultiMark &ref, std::vector<double> &result)
+    {
+        computeDTW(this, t, i, Nmin, Nmax, ref, result);
     }
 
 };//  end of namespace MultiMraking
