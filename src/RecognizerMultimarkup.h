@@ -1,7 +1,7 @@
 /****************************************************************************
 *			RecognizerMultiMarkup
 *
-*	Description: RecognizerMultiMarkup
+*	Description:  RecognizerMultiMarkup
 *
 *	Author:		armkor
 *	History:
@@ -12,6 +12,7 @@
 #define RECOGNIZERMULTIMARKUP_H
 
 #include "RecognizerImplBase.h"
+#include "MultiMarking/dtwmetric.h"
 
 namespace AxiomLib {
 
@@ -19,18 +20,30 @@ class RecognizerMultiMarkup : public RecognizerImplBase {
 
 private:
 
+    int stretch;
+
+
+protected:
+
+    // Вычисление расстояний от участков разметок тестовых траекторий до разметок эталонных траекторий
+    void computeDistances(AxiomSet& axiomSet, DataSet& dataSet, std::vector<int>& params, // номера столбцов кторые надо использовать
+                                                              // расстояния от участков разметок тестовых траекторий до разметок эталонных траекторий
+                                                              std::vector<TrajectorySampleDistance>& result,
+                                                              // какие аксиомы срабатывали при разметке эталонных траекторий
+                                                              std::vector<bool>& refAxiomUsage,
+                                                              // какие аксиомы срабатывали при разметке тестовых траекторий
+                                                              std::vector<bool>& testAxiomUsage) ;
 public:
 
-    // run for MultiMark
-    virtual signed int run (AxiomSetPop& pop) ;
-    //
-    virtual signed int run (AxiomSetPop& pop, std::vector <double> &precs) ;
-    //
-    virtual signed int run (AxiomSet& axiomSet, DataSet& dataSet, MultiMarking::MultiMark& params, int& resFirst, int& resSecond, const int asIndex = -1) ;
-    //
-    virtual signed int run (AxiomSet& axiomSet, DataSet& dataSet, MultiMarking::MultiMark& params, int& resFirst, int& resSecond, std::vector<double> &stat, const int asIndex = -1) ;
+    // Задание параметров класса-потомка считываю имя создаю метрику
+    int initFromEnv (const Environment& env) ;
 
-}; // end of class
+    // Функция возвращает копию распознавателя
+    // Рекомендуется реализовывать вызовом конструктора копирования
+    Recognizer* copy (void) ;
+
+};// end of class
 
 }; //  end of namespace
+
 #endif // RECOGNIZERMULTIMARKUP_H

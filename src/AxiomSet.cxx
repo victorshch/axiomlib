@@ -123,7 +123,7 @@ signed int AxiomSet::setAxiom (Axiom& axiom, const int i) {
 	
 	if ( i  < (int) axioms.size() ) {
 		*(axioms[i]) = axiom;
-	}
+        }
 	else { // this mean: i == axioms.size()
 		Axiom* addAxiom;
 		addAxiom = new Axiom;
@@ -251,6 +251,105 @@ int AxiomSet::enter (std::vector<int>& marked, const std::vector<double>& row, c
 	}
  	return 0;
 }
+
+/****************************************************************************
+*				AxiomSet::enter
+*
+*	Description:	Функция разметки ряда для случая разметки множеством аксиом
+*                       row начиная с отсчета begin до отсчета end
+*	Parameters:	marked -куда кладем разметку
+*				row    - ряд для разметки
+*				begin - отсчет с которого начинать разметку
+*				end    - отсчет до которого вести разметку
+*	Returns:		Функция вовзращает размеченный ряд - ряд с номером аксиомы выполненной на каждом из отсчетов исходного ряда
+*				-1 - означает что ни одна аксиома не выполнена - то есть нулевая аксиома записывается под этим значением
+*	Throws:		AxiomLibExeption - если begin и end заданы не корректно
+*	Author:		armkor
+*	History:
+*
+****************************************************************************/
+
+int AxiomSet::enter (MultiMarking::MultiMark& marked, const std::vector<double>& row, const unsigned long begin, const unsigned long end) {
+        if ((end <= begin) || (row.size() < end)) {
+                marked.resize(0);
+                throw AxiomLibException("Error in AxiomSet::enter : wrong parameters.");
+        }
+        else {
+                int curRes;
+                marked.resize(end - begin);
+
+                for (unsigned long i=begin;i<end;i++){
+                    marked[i-begin].resize(axioms.size());
+                    for (int j=0;j<axioms.size();j++){
+                        marked[i-begin][j]==false;
+                    }
+                }
+
+                for (unsigned long i = begin; i < end; i++) {
+                        curRes = 0;
+                        for (unsigned int j = 0; j < axioms.size(); j++ ) {
+                                curRes = (axioms[j])->check(i, row);
+                                if (curRes == 1) {
+                                        marked[i - begin][j] == true;
+                                }
+                        }
+                }
+        }
+        return 0;
+}
+
+/****************************************************************************
+*				AxiomSet::enter
+*
+*	Description:	Функция разметки ряда для случая разметки множеством аксиом
+*                       row начиная с отсчета begin до отсчета end
+*	Parameters:	marked -куда кладем разметку
+*				row    - ряд для разметки
+*				begin - отсчет с которого начинать разметку
+*				end    - отсчет до которого вести разметку
+*				stat - статистика по аксиомам системы, какие были использованы при разметке
+*	Returns:		Функция вовзращает размеченный ряд - ряд с номером аксиомы выполненной на каждом из отсчетов исходного ряда
+*				-1 - означает что ни одна аксиома не выполнена - то есть нулевая аксиома записывается под этим значением
+*	Throws:		AxiomLibExeption - если begin и end заданы не корректно
+*	Author:		armkor
+*	History:
+*
+****************************************************************************/
+
+
+int AxiomSet::enter (MultiMarking::MultiMark& marked, const std::vector<double>& row, const unsigned long begin, const unsigned long end, std::vector<bool> &stat){
+    if ((end <= begin) || (row.size() < end)) {
+            marked.resize(0);
+            throw AxiomLibException("Error in AxiomSet::enter : wrong parameters.");
+    }
+    else {
+            int curRes;
+            marked.resize(end - begin);
+            stat.resize(axioms.size());
+            for (unsigned int i = 0; i < axioms.size(); i++)
+                                    stat[i] = false;
+
+            for (unsigned long i=begin;i<end;i++){
+                marked[i-begin].resize(axioms.size());
+                for (int j=0;j<axioms.size();j++){
+                    marked[i-begin][j]==0;
+                }
+            }
+
+            for (unsigned long i = begin; i < end; i++) {
+                    curRes = 0;
+                    for (unsigned int j = 0; j < axioms.size(); j++ ) {
+                            curRes = (axioms[j])->check(i, row);
+                            if (curRes == 1) {
+                                    marked[i - begin][j] == 1;
+                                    if (!stat[j]) stat[j] = true;
+                            }
+                    }
+            }
+    }
+    return 0;
+}
+
 
 
 /****************************************************************************

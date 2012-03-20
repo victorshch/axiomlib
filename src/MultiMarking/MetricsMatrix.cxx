@@ -8,26 +8,35 @@
 ****************************************************************************/
 
 #include "MetricsMatrix.h"
-
+#include "dtwmetric.h"
 
 namespace AxiomLib {
 
 namespace MultiMarking {
 
-    double Matrix::compute(const std::vector<bool>& v1, const std::vector<bool>& v2) {
-        int indicator=0;
-        std::vector<bool> s=v1;
-        // сравнивать на равенство только v1[currentAxiomNumber] с v2[currentAxiomNumber]
-        for (int i=0;i<s.size();i++) {
-            if (v1[i]!=v2[i]) {
-                indicator=1;
-            }
-        }
-        return indicator;
+    double Matrix::compute(const std::vector<bool>& v1, const std::vector<bool>& v2) { // Передаем столбцы матрицы
+        if ( v1[currentAxiomNumber] == v2[currentAxiomNumber] )
+            return 1;
+        return 0;
     }
 
-    double Matrix::computeDTWForMetric(const MultiMark &t, int i, int Nmin, int Nmax, const MultiMark &ref, std::vector<double> &result)
+    void Matrix::computeDTWForMetric(const MultiMark &t, int i, int Nmin, int Nmax, const MultiMark &ref, std::vector<double> &result)
     {
+        MultiMark temp;
+        int y=result.size(); // Узнаем кол-во аксиом
+        std::vector<double> tempresult; // Промежуточный вектор значений DTW для каждой из строк
+        for (int e=0;e<y;e++){ // Обнуление суммы DTW
+            result[e]==0;
+        }
+        for (int k=0;k<y;k++){
+            temp[0] = ref[k];
+            this->currentAxiomNumber=k; // Устанавливаем номер рассматриваемой строки.
+            DTWMetric::computeDTW (this,t,i,Nmin,Nmax,temp,tempresult); // Вызываем функцию для текущей строки
+            for (int e=0;e<y;e++){
+                result[e]+=tempresult[e]/y;
+            }
+        }
+
         // в цикле для каждого значения currentAxiomNumber вызвать computeDTW,
         // затем сложить результаты
     }

@@ -8,7 +8,15 @@
 ****************************************************************************/
 
 #include "dtwmetric.h"
+#include <boost/algorithm/string/case_conv.hpp>
 
+#include "AxiomLibException.h"
+#include "MetricsBetweenSets1.h"
+#include "MetricsBetweenSets2.h"
+#include "MetricsEqual.h"
+#include "MetricsEuclidean.h"
+#include "MetricsHamming.h"
+#include "MetricsMatrix.h"
 
 namespace AxiomLib {
 
@@ -20,20 +28,15 @@ namespace MultiMarking {
 
     void DTWMetric::computeDTW (DTWMetric* m, const MultiMark& t,int i,int Nmin,
                                 int Nmax, const MultiMark& ref, std::vector<double>& result) {
-        // Инициализация матриц
-        // vector<vector<double> >
-        MultiMark D,R,S;
         int len_t=Nmax; // Максимальный размер окна = размер матрицы
         int len_ref=ref.size(); /* Длина эталонной траектории*/
 
-        // Память под вектора. Удобнее так, тк R S заполняются с конца
-        // Исправить выделение памяти
-        for (int w=0;w<(len_ref+1);w++) {
-            for (int q=0;q<(len_t+1);q++) {
-                S[w].push_back(0);
-                R[w].push_back(0);
-                D[w].push_back(0);
-            }
+        // Инициализация матриц
+        std::vector<std::vector<double>> D(len_t+1),R(len_t+1),S(len_t+1);
+        for (int u=0;u<len_ref+1;u++){
+            D[u].resize(len_ref+1);
+            R[u].resize(len_ref+1);
+            S[u].resize(len_ref+1);
         }
 
         // Создание матрицы расстояний
@@ -63,6 +66,7 @@ namespace MultiMarking {
         for (int b=(len_t-1);b>-1;b--) {
             for (int a=(len_ref-1);a>-1;a--) {
 
+                // В алгоритме не надо обрабатывать самую нижнюю клетку. По-моему тут это обрабатывается.
                 // Подсчет diag,right,down для данного случая
                 diag=calculate(D[a][b],S[a+1][b+1],R[a+1][b+1]);
                 right=calculate(D[a][b],S[a][b+1],R[a][b+1]);
@@ -87,10 +91,42 @@ namespace MultiMarking {
         }
     }
 
-    void DTWMetric::computeDTWForMetric(const MultiMark &t, int i, int Nmin, int Nmax, const MultiMark &ref, std::vector<double> &result)
-    {
+    void DTWMetric::computeDTWForMetric(const MultiMark &t, int i, int Nmin, int Nmax, const MultiMark &ref, std::vector<double> &result){
         computeDTW(this, t, i, Nmin, Nmax, ref, result);
     }
+
+
+    DTWMetric* DTWMetric::getMetric(std::string name){
+        // преобразование в строчные буквы
+          std::string nameCopy = boost::algorithm::to_lower_copy(name);
+          DTWMetric* result;
+          if(nameCopy == "betweensets1") {
+              result=new BetweenSets1;
+              return result;
+          }
+          if(nameCopy == "betweensets2") {
+              result=new BetweenSets2;
+              return result;
+          }
+          if(nameCopy == "equal") {
+              result=new Equal;
+              return result;
+          }
+          if(nameCopy == "euclidean") {
+              result=new Euclidean;
+              return result;
+          }
+          if(nameCopy == "hamming") {
+              result=new Hamming;
+              return result;
+          }
+          if(nameCopy == "matrix") {
+              result=new Matrix;
+              return result;
+          }
+          throw AxiomLibException("Can not find a name of metric");
+    }
+
 
 };//  end of namespace MultiMraking
 
