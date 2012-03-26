@@ -17,6 +17,10 @@ namespace MultiMarking {
 
 class Euclidean : public DTWMetric {
 
+    private:
+
+    int because_of_error;
+
     public:
 
     // distance for DTW

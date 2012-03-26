@@ -20,7 +20,7 @@ class RecognizerMultiMarkup : public RecognizerImplBase {
 
 private:
 
-    int stretch;
+    int stretch; // используется при указании размеров окна
 
 
 protected:

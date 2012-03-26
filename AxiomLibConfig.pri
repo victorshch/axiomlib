@@ -37,10 +37,10 @@ AXIOMLIB_INCLUDE = /home/mrmrmr/study/axiomlib/branches/armkor/src
 unix {
 #Здесь нужно указать абсолютные пути к файлу libAxiomLib.a
 debug{
-        AXIOMLIB_LIB = /home/mrmrmr/study/axiomlib/branches/armkor/lib/release/libAxiomLib.a
+        AXIOMLIB_LIB = /home/mrmrmr/study/axiomlib/branches/armkor/release/libAxiomLib.a
 }
 release {
-        AXIOMLIB_LIB = /home/mrmrmr/study/axiomlib/branches/armkor/lib/release/libAxiomLib.a
+        AXIOMLIB_LIB = /home/mrmrmr/study/axiomlib/branches/armkor/release/libAxiomLib.a
 }
 
 }

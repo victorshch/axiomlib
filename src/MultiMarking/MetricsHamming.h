@@ -16,6 +16,10 @@ namespace MultiMarking {
 
 class Hamming : public DTWMetric {
 
+    private:
+
+    int because_of_error;
+
     public:
 
     //

@@ -332,7 +332,7 @@ int AxiomSet::enter (MultiMarking::MultiMark& marked, const std::vector<double>&
             for (unsigned long i=begin;i<end;i++){
                 marked[i-begin].resize(axioms.size());
                 for (int j=0;j<axioms.size();j++){
-                    marked[i-begin][j]==0;
+                    marked[i-begin][j]==false;
                 }
             }
 
@@ -341,7 +341,7 @@ int AxiomSet::enter (MultiMarking::MultiMark& marked, const std::vector<double>&
                     for (unsigned int j = 0; j < axioms.size(); j++ ) {
                             curRes = (axioms[j])->check(i, row);
                             if (curRes == 1) {
-                                    marked[i - begin][j] == 1;
+                                    marked[i - begin][j] == true;
                                     if (!stat[j]) stat[j] = true;
                             }
                     }

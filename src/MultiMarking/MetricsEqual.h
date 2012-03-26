@@ -17,6 +17,10 @@ namespace MultiMarking {
 
 class Equal : public DTWMetric {
 
+private:
+
+    int because_of_error;
+
     public:
 
     // realisation distance for DTW

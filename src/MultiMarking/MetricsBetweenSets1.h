@@ -19,6 +19,10 @@ namespace MultiMarking {
 
 class BetweenSets1 : public DTWMetric {
 
+    private:
+
+    int because_of_error;
+
     public:
 
     // realisation distance for DTW

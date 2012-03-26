@@ -10,7 +10,7 @@
 #include "dtwmetric.h"
 #include <boost/algorithm/string/case_conv.hpp>
 
-#include "AxiomLibException.h"
+#include "../AxiomLibException.h"
 #include "MetricsBetweenSets1.h"
 #include "MetricsBetweenSets2.h"
 #include "MetricsEqual.h"
@@ -21,6 +21,9 @@
 namespace AxiomLib {
 
 namespace MultiMarking {
+
+    DTWMetric::DTWMetric(){}
+
 
     double calculate(double a,double b,double c) {
         return ((a+b)/(c+1));
@@ -39,12 +42,13 @@ namespace MultiMarking {
             S[u].resize(len_ref+1);
         }
 
+        // http://programmersforum.ru/showthread.php?t=89775
         // Создание матрицы расстояний
-        for (int a=0 ; a < len_ref ; a++) {
-            for (int b=0 ; b < len_t ; b++ ) {
-                D[a][b]=m->compute ( ref[a],t[i-len_t+1+b] );
-            }
-        }
+               for (int a=0 ; a < len_ref ; a++) {
+                   for (int b=0 ; b < len_t ; b++ ) {
+                       D[a][b]=m->compute ( ref[a],t[i-len_t+1+b] );
+                   }
+               }
 
         // Работа с матрицами R и S
         S[len_ref-1][len_t-1]=D[len_ref-1][len_t-1];
@@ -101,23 +105,23 @@ namespace MultiMarking {
           std::string nameCopy = boost::algorithm::to_lower_copy(name);
           DTWMetric* result;
           if(nameCopy == "betweensets1") {
-              result=new BetweenSets1;
+              BetweenSets1* result;
               return result;
           }
           if(nameCopy == "betweensets2") {
-              result=new BetweenSets2;
+              BetweenSets2* result;
               return result;
           }
           if(nameCopy == "equal") {
-              result=new Equal;
+              Equal* result;
               return result;
           }
           if(nameCopy == "euclidean") {
-              result=new Euclidean;
+              Euclidean* result;
               return result;
           }
           if(nameCopy == "hamming") {
-              result=new Hamming;
+              Hamming* result;
               return result;
           }
           if(nameCopy == "matrix") {

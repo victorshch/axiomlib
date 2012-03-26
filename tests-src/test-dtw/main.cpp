@@ -12,7 +12,7 @@ using namespace MultiMarking;
 int main()
 {
     std::vector<double> result(2);
-    Equal metric;
+    Equal* metric;
     MultiMark razmetka(3),etalon(3);
     // Выделение данных
     for (int i=0;i<3;i++){
@@ -28,7 +28,7 @@ int main()
     etalon[1][0]=0;etalon[1][1]=1;
     etalon[2][0]=1;etalon[2][1]=0;
 
-    DTWMetric::computeDTW (metric, razmetka, 0,2,3, etalon, std::vector<double>& result);
+    DTWMetric::computeDTW (metric, razmetka, 0,2,3, etalon, result);
 
     cout << result[0] << '  ' << result[1];
 
@@ -37,4 +37,3 @@ int main()
     cout << "Hello World!" << endl;
     return 0;
 }
-
