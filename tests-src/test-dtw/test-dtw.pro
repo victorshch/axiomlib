@@ -1,7 +1,7 @@
 
 include(../common.pri)
 
-INCLUDEPATH += /home/mrmrmr/study/axiomlib/src
+INCLUDEPATH += /home/mrmrmr/study/axiomlib/branches/armkor/src
 
 QT       -= core gui
 

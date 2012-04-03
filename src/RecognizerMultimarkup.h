@@ -13,6 +13,9 @@
 
 #include "RecognizerImplBase.h"
 #include "MultiMarking/dtwmetric.h"
+#include "Environment.h"
+#include "AxiomSet.h"
+#include "DataSet.h"
 
 namespace AxiomLib {
 
@@ -21,7 +24,7 @@ class RecognizerMultiMarkup : public RecognizerImplBase {
 private:
 
     int stretch; // используется при указании размеров окна
-
+    MultiMarking::DTWMetric* metric;//используемая метрика
 
 protected:
 

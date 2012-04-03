@@ -42,10 +42,10 @@ namespace MultiMarking {
             S[u].resize(len_ref+1);
         }
 
-        // http://programmersforum.ru/showthread.php?t=89775
-        // Создание матрицы расстояний
+        // Заполнение матриц.
                for (int a=0 ; a < len_ref ; a++) {
                    for (int b=0 ; b < len_t ; b++ ) {
+                       // Здесь кидает ошибку
                        D[a][b]=m->compute ( ref[a],t[i-len_t+1+b] );
                    }
                }
