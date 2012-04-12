@@ -46,7 +46,8 @@ namespace MultiMarking {
                for (int a=0 ; a < len_ref ; a++) {
                    for (int b=0 ; b < len_t ; b++ ) {
                        // Здесь кидает ошибку
-                       D[a][b]=m->compute ( ref[a],t[i-len_t+1+b] );
+
+                      // D.at(a).at(b);//=m->compute ( ref[a],t[i-len_t+1+b] );
                    }
                }
 
@@ -93,10 +94,6 @@ namespace MultiMarking {
         for (int j=0;j<(Nmax-Nmin+1);j++) {
             result[j]=(S[0][j]/R[0][j]);
         }
-    }
-
-    void DTWMetric::computeDTWForMetric(const MultiMark &t, int i, int Nmin, int Nmax, const MultiMark &ref, std::vector<double> &result){
-        computeDTW(this, t, i, Nmin, Nmax, ref, result);
     }
 
 

@@ -46,6 +46,11 @@ namespace MultiMarking {
         return k;
     }
 
+    void BetweenSets2::computeDTWForMetric(const MultiMark &t, int i, int Nmin, int Nmax, const MultiMark &ref, std::vector<double> &result){
+        computeDTW(this, t, i, Nmin, Nmax, ref, result);
+    }
+
+
 };//  end of namespace MultiMraking
 
 };//  end of namespace AxiomLib

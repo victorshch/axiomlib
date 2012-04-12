@@ -13,6 +13,7 @@ int main()
 {
     std::vector<double> result(2);
     Equal* metric;
+    metric=new Equal;
     MultiMark razmetka(3),etalon(3);
     // Выделение данных
     for (int i=0;i<3;i++){

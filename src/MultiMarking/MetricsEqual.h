@@ -17,14 +17,20 @@ namespace MultiMarking {
 
 class Equal : public DTWMetric {
 
-private:
+public:
 
-    int because_of_error;
+    int s;
 
     public:
 
+    Equal();
+
+    ~Equal() { }
+
     // realisation distance for DTW
     double compute(std::vector<bool>& v1, std::vector<bool>& v2);
+
+    void computeDTWForMetric(const MultiMark &t, int i, int Nmin, int Nmax, const MultiMark &ref, std::vector<double> &result);
 
 };// end of class
 

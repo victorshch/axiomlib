@@ -28,6 +28,12 @@ namespace MultiMarking {
         return 0;
     }
 
+    Equal::Equal(){ }
+
+    void Equal::computeDTWForMetric(const MultiMark &t, int i, int Nmin, int Nmax, const MultiMark &ref, std::vector<double> &result){
+        DTWMetric::computeDTW(this, t, i, Nmin, Nmax, ref, result);
+    }
+
 };//  end of namespace MultiMraking
 
 };//  end of namespace AxiomLib

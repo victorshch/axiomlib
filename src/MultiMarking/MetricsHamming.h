@@ -25,6 +25,8 @@ class Hamming : public DTWMetric {
     //
     double compute(std::vector<bool>& v1, std::vector<bool>& v2);
 
+    void computeDTWForMetric(const MultiMark &t, int i, int Nmin, int Nmax, const MultiMark &ref, std::vector<double> &result);
+
 };// end of class
 
 };//  end of namespace MultiMraking

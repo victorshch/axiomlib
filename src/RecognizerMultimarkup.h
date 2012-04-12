@@ -23,6 +23,8 @@ class RecognizerMultiMarkup : public RecognizerImplBase {
 
 private:
 
+
+
     int stretch; // используется при указании размеров окна
     MultiMarking::DTWMetric* metric;//используемая метрика
 
@@ -38,12 +40,15 @@ protected:
                                                               std::vector<bool>& testAxiomUsage) ;
 public:
 
+    RecognizerMultiMarkup() : metric(0) {}
     // Задание параметров класса-потомка считываю имя создаю метрику
     int initFromEnv (const Environment& env) ;
 
     // Функция возвращает копию распознавателя
     // Рекомендуется реализовывать вызовом конструктора копирования
     Recognizer* copy (void) ;
+
+
 
 };// end of class
 
