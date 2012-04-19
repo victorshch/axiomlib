@@ -6,13 +6,13 @@
 namespace AxiomLib {
 
 
-    void compare (std::vector<bool>& m, std::vector<bool> p){
+    void compare (std::vector<bool>& m, const std::vector<bool> &p){
         for (int i=0;i<m.size();i++){
          if (p[i])
              m[i]=true;
         }
     }
-    double minimum (std::vector<double> r){
+    double minimum (const std::vector<double> &r){
         double min=r[0];
         for(int i=0;i<r.size();i++){
             if (r[i]<min)
@@ -30,7 +30,6 @@ namespace AxiomLib {
                                                               std::vector<bool>& refAxiomUsage,
                                                               // какие аксиомы срабатывали при разметке тестовых траекторий
                                                               std::vector<bool>& testAxiomUsage) {
-        // Вектор, в котором хранятся промежуточные значения используемых аксиом
         std::vector<bool> temp_testAxiomUsage;
         std::vector<bool> temp_refAxiomUsage;
         temp_testAxiomUsage.resize(axiomSet.size());
@@ -38,63 +37,50 @@ namespace AxiomLib {
         testAxiomUsage.resize(axiomSet.size());
         refAxiomUsage.resize(axiomSet.size());
 
-        // Разметки траекторий
-
-        // Разметка эталонных траекторий
-        // Вектор, в котором будут храниться разметки эталонных траекторий
-        vector <MultiMarking::MultiMark> etalon(dataSet.getNumberOfClasses()); // ЧЕМ ОТЛИЧАЕТСЯ getClassSize ОТ getNumberOfClasses()
-        // Вектор(временный), в котором храниться временной ряд
-        std::vector<double> vec;  // ЗНАЮ ЛИ Я РАЗМЕР ВЕКТОРА
-        // Заполнение этого вектора
+        vector <MultiMarking::MultiMark> etalon(dataSet.getNumberOfClasses());
+        std::vector<double> vec;
         for (int i=0;i<dataSet.getNumberOfClasses();i++){
             if (!(dataSet.getTSByIndexFromClass(vec, i , 0, params[0])))
                 throw AxiomLibException("Can not create row");
             axiomSet.enter(etalon[i], vec , 0 , vec.size(), temp_refAxiomUsage);
-            compare (&refAxiomUsage,temp_refAxiomUsage);
+            compare (refAxiomUsage,temp_refAxiomUsage);
         }
-
-        // Разметка тестовых траекторий
-        // Вектор, в котором хранятся разметки тестовых траекторий
-        // Вектор, в котором будут храниться разметки эталонных траекторий
-        vector <MultiMarking::MultiMark> tests (dataSet.getTestSize());
-        for (int i=0;i<dataSet.getTestSize();i++){
+        std::vector<int> numOfTS;
+        int k;
+        dataSet.getTestSize(k,numOfTS);
+        vector <MultiMarking::MultiMark> tests (k);
+        for (int i=0;i<k;i++){
             if (!(dataSet.getTSByIndexFromTests(vec, i, params[0])))
                 throw AxiomLibException("Can not create row");
-            axiomSet.enter(tests[i], vec , 0 , vec.size(), temp_refAxiomUsage);
-            compare (&refAxiomUsage,temp_refAxiomUsage);
+            axiomSet.enter(tests[i], vec , 0 , vec.size(), temp_testAxiomUsage);
+            compare (testAxiomUsage,temp_testAxiomUsage);
         }
 
-        // DTW
+
+       result.reserve(tests.size());
+       for(int i = 0; i < tests.size(); ++i) {
+           result.push_back(TrajectorySampleDistance(dataSet.getNumberOfClasses(), tests[i].size()));
+       }
+
         std::vector<double> temp_result;
         for (int j=0;j<tests.size();j++){
-            for (int i=0;i<etalon.size();i++){ // Откуда брать с какого отчета начинать?
-                // тут еще цикл по началу отсчета в тестовой траектории + создать вектор, в котором для каждого отсечта - минимальное расстояние
-                MultiMarking::DTWMetric::computeDTW (metric, tests[j], 0 , stretch*etalon[i],etalon[i]*(1.0/stretch), etalon[i], &temp_result); // МИНИМАЛЬНАЯ МАКСИМАЛЬНАЯ ДЛИНА ОКНА
-                // тут ищем минимум среди result и пишем его в вектор, создаваемый выше
-                // пишем значение в TrajectorySampleDistance
+            for (int i=0;i<etalon.size();i++){
+                for (int s=(int)stretch*(etalon[i].size());s<tests[j].size()+1;s++){
+                   MultiMarking::DTWMetric::computeDTW (metric, tests[j], s , (int)stretch*etalon[i].size(),(int )(1.0/stretch)*etalon[i].size(), etalon[i], temp_result);
+                   result[j].setDistance(i, s,minimum(temp_result));
+                }
             }
         }
-
-
     }
 
-
-
-
-    // Задание параметров класса-потомка считываю имя создаю метрику
     int RecognizerMultiMarkup::initFromEnv (const Environment& env) {
-        // Чтение параметра размера окна   Проверука ноль - если не ноль, параметр не указан кидаем ошибку+тест на англ
         if (env.getIntParamValue(stretch, "stretch")!=0)
             throw AxiomLibException("Can not find stretch");
-        // Чтение параметра - метрики
-        std::string name_metric;
         if (env.getStringParamValue(name_metric, "metric")!=0)
             throw AxiomLibException("Can not find a name of metric");
-        metric = MultiMarking::DTWMetric::getMetric(name_metric);  // +namepace
+        metric = MultiMarking::DTWMetric::getMetric(name_metric);
     }
 
-    // Функция возвращает копию распознавателя
-    // Рекомендуется реализовывать вызовом конструктора копирования
 
     Recognizer* RecognizerMultiMarkup::copy (void){
         return new RecognizerMultiMarkup(*this);
@@ -102,11 +88,11 @@ namespace AxiomLib {
 
     RecognizerMultiMarkup::RecognizerMultiMarkup(const RecognizerMultiMarkup& other) {
         stretch = other.stretch;
-        metric_name = other.metric_name;
-        metric = DTWMetric::getMetric(other.metric_name);
+        name_metric= other.name_metric;
+        metric = MultiMarking::DTWMetric::getMetric(other.name_metric);
     }
 
-    ~RecognizerMultiMarkup() {
+    RecognizerMultiMarkup::~RecognizerMultiMarkup() {
         if(metric) delete metric;
     }
 }

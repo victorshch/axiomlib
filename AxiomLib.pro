@@ -2,7 +2,8 @@
 # Project created by QtCreator 2010-04-02T11:28:45
 # -------------------------------------------------
 include(AxiomLibConfig.pri)
-CONFIG += static
+CONFIG += static debug
+CONFIG -= release
 DEFINES += "BOOST_FILESYSTEM_VERSION=2"
 INCLUDEPATH += $$MPICH_INCLUDE \
     $$BOOST_INCLUDE

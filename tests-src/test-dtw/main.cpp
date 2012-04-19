@@ -31,10 +31,9 @@ int main()
 
     DTWMetric::computeDTW (metric, razmetka, 0,2,3, etalon, result);
 
-    cout << result[0] << '  ' << result[1];
+    cout << result[0] << ' ' << result[1]; // 1/2   1/4
 
     // сформировать несколько входных наборов для функции comupteDTW,
     // сравнить то, что выдает эта функция с результатами, подсчитанными вручную
-    cout << "Hello World!" << endl;
     return 0;
 }

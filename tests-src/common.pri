@@ -1,8 +1,9 @@
-include(../../AxiomLibConfig.pri)
-
-CONFIG += console 
+CONFIG += console
 CONFIG -= release
 CONFIG += debug
+
+
+include(../../AxiomLibConfig.pri)
 
 INCLUDEPATH += $$BOOST_INCLUDE $$MPICH_INCLUDE $$OTHER_INCLUDE
 

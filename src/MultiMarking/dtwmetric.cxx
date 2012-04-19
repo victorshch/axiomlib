@@ -28,7 +28,7 @@ namespace MultiMarking {
     double calculate(double a,double b,double c) {
         return ((a+b)/(c+1));
     }
-
+                                        // t-рассматриваемая ref - эталонная
     void DTWMetric::computeDTW (DTWMetric* m, const MultiMark& t,int i,int Nmin,
                                 int Nmax, const MultiMark& ref, std::vector<double>& result) {
         int len_t=Nmax; // Максимальный размер окна = размер матрицы
@@ -43,33 +43,31 @@ namespace MultiMarking {
         }
 
         // Заполнение матриц.
-               for (int a=0 ; a < len_ref ; a++) {
-                   for (int b=0 ; b < len_t ; b++ ) {
-                       // Здесь кидает ошибку
-
-                      // D.at(a).at(b);//=m->compute ( ref[a],t[i-len_t+1+b] );
+               for (int a=0 ; a < len_t ; a++) {
+                   for (int b=0 ; b < len_ref ; b++ ) {
+                       D.at(a).at(b)=m->compute ( ref[b],t[i-len_t+a] );
                    }
                }
 
         // Работа с матрицами R и S
-        S[len_ref-1][len_t-1]=D[len_ref-1][len_t-1];
-        R[len_ref-1][len_t-1]=1;
+        S[len_t-1][len_ref-1]=D[len_t-1][len_ref-1];
+        R[len_t-1][len_ref-1]=1;
 
         // Заполнение дополнительных строки и столбца
         for(int z=0;z<len_ref+1;z++) {
-            S[z][len_t]=D[len_ref-1][len_t-1];
-            R[z][len_t]=1;
+            S[len_t][z]=D[len_t-1][len_ref-1];
+            R[len_t][z]=1;
         }
 
         for (int z=0;z<len_t+1;z++) {
-            S[len_ref][z]=D[len_ref-1][len_t-1];
-            R[len_ref][z]=1;
+            S[z][len_ref]=D[len_t-1][len_ref-1];
+            R[z][len_ref]=1;
         }
 
         // Заполнение матриц
         double diag,right,down;
-        for (int b=(len_t-1);b>-1;b--) {
-            for (int a=(len_ref-1);a>-1;a--) {
+        for (int a=(len_t-1);a>-1;a--) {
+            for (int b=(len_ref-1);b>-1;b--) {
 
                 // В алгоритме не надо обрабатывать самую нижнюю клетку. По-моему тут это обрабатывается.
                 // Подсчет diag,right,down для данного случая
@@ -91,6 +89,7 @@ namespace MultiMarking {
             }
         }
 
+        result.resize(Nmax-Nmin+1);
         for (int j=0;j<(Nmax-Nmin+1);j++) {
             result[j]=(S[0][j]/R[0][j]);
         }

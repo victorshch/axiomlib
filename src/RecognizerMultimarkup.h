@@ -27,6 +27,9 @@ private:
 
     int stretch; // используется при указании размеров окна
     MultiMarking::DTWMetric* metric;//используемая метрика
+    std::string name_metric; // name of metric
+
+    ~RecognizerMultiMarkup();
 
 protected:
 
@@ -47,6 +50,10 @@ public:
     // Функция возвращает копию распознавателя
     // Рекомендуется реализовывать вызовом конструктора копирования
     Recognizer* copy (void) ;
+
+    RecognizerMultiMarkup(const RecognizerMultiMarkup& other);
+
+
 
 
 
