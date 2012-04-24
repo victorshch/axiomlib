@@ -29,9 +29,9 @@ int main()
     etalon[1][0]=0;etalon[1][1]=1;
     etalon[2][0]=1;etalon[2][1]=0;
 
-    DTWMetric::computeDTW (metric, razmetka, 0,2,3, etalon, result);
+    DTWMetric::computeDTW (metric, razmetka, 3,2,3, etalon, result);
 
-    cout << result[0] << ' ' << result[1]; // 1/2   1/4
+    cout <<" Correct answer 0.5 Result:" << result[0] << "\n" <<  " Correct answer 0.(6) Result: " << result[1];
 
     // сформировать несколько входных наборов для функции comupteDTW,
     // сравнить то, что выдает эта функция с результатами, подсчитанными вручную

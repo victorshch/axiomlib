@@ -14,7 +14,7 @@ namespace AxiomLib {
 
 namespace MultiMarking {
 
-    double Hamming::compute(std::vector<bool>& v1, std::vector<bool>& v2) {
+    double Hamming::compute(const std::vector<bool>& v1,const std::vector<bool>& v2) {
         double s=0;
         int n=v1.size();
         for (int i=0;i<n;i++) {
@@ -24,10 +24,6 @@ namespace MultiMarking {
         }
         s=s / v1.size();
         return s;
-    }
-
-    void Hamming::computeDTWForMetric(const MultiMark &t, int i, int Nmin, int Nmax, const MultiMark &ref, std::vector<double> &result){
-        computeDTW(this, t, i, Nmin, Nmax, ref, result);
     }
 
 };//  end of namespace MultiMraking

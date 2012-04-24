@@ -14,7 +14,7 @@ namespace AxiomLib {
 
 namespace MultiMarking {
 
-    double Euclidean::compute(std::vector<bool>& v1, std::vector<bool>& v2) {
+    double Euclidean::compute(const std::vector<bool>& v1,const std::vector<bool>& v2) {
         double s=0.0;
         int n=v1.size();
         for (int i=0;i<n;i++) {
@@ -25,10 +25,6 @@ namespace MultiMarking {
         s=sqrt(s);
         s=s / sqrt(v1.size()) ;
         return s;
-    }
-
-    void Euclidean::computeDTWForMetric(const MultiMark &t, int i, int Nmin, int Nmax, const MultiMark &ref, std::vector<double> &result){
-        computeDTW(this, t, i, Nmin, Nmax, ref, result);
     }
 
 };//  end of namespace MultiMraking

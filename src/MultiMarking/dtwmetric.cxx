@@ -33,7 +33,6 @@ namespace MultiMarking {
                                 int Nmax, const MultiMark& ref, std::vector<double>& result) {
         int len_t=Nmax; // Максимальный размер окна = размер матрицы
         int len_ref=ref.size(); /* Длина эталонной траектории*/
-
         // Инициализация матриц
         std::vector<std::vector<double>> D(len_t+1),R(len_t+1),S(len_t+1);
         for (int u=0;u<len_ref+1;u++){
@@ -43,8 +42,8 @@ namespace MultiMarking {
         }
 
         // Заполнение матриц.
+        for (int b=0 ; b < len_ref ; b++ ){
                for (int a=0 ; a < len_t ; a++) {
-                   for (int b=0 ; b < len_ref ; b++ ) {
                        D.at(a).at(b)=m->compute ( ref[b],t[i-len_t+a] );
                    }
                }
@@ -68,7 +67,7 @@ namespace MultiMarking {
         double diag,right,down;
         for (int a=(len_t-1);a>-1;a--) {
             for (int b=(len_ref-1);b>-1;b--) {
-
+                if ((a!=(len_t-1)) or (b!=len_ref-1)){
                 // В алгоритме не надо обрабатывать самую нижнюю клетку. По-моему тут это обрабатывается.
                 // Подсчет diag,right,down для данного случая
                 diag=calculate(D[a][b],S[a+1][b+1],R[a+1][b+1]);
@@ -87,11 +86,12 @@ namespace MultiMarking {
                     R[a][b]=R[a][b+1]+1;
                 }
             }
+            }
         }
 
         result.resize(Nmax-Nmin+1);
         for (int j=0;j<(Nmax-Nmin+1);j++) {
-            result[j]=(S[0][j]/R[0][j]);
+            result[j]=(S[j][0]/R[j][0]);
         }
     }
 

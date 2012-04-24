@@ -3,6 +3,9 @@
 #include "Environment.h"
 #include "AxiomSet.h"
 #include "DataSet.h"
+
+#include <boost/algorithm/string/case_conv.hpp>
+
 namespace AxiomLib {
 
 
@@ -61,16 +64,28 @@ namespace AxiomLib {
        for(int i = 0; i < tests.size(); ++i) {
            result.push_back(TrajectorySampleDistance(dataSet.getNumberOfClasses(), tests[i].size()));
        }
-
-        std::vector<double> temp_result;
+       std::string name_metric = boost::algorithm::to_lower_copy(name_metric);
+       std::vector<double> temp_result;
+       if (name_metric == "matrix") {
         for (int j=0;j<tests.size();j++){
             for (int i=0;i<etalon.size();i++){
                 for (int s=(int)stretch*(etalon[i].size());s<tests[j].size()+1;s++){
-                   MultiMarking::DTWMetric::computeDTW (metric, tests[j], s , (int)stretch*etalon[i].size(),(int )(1.0/stretch)*etalon[i].size(), etalon[i], temp_result);
+                   metric->computeDTWForMetric ( tests[j], s , (int)stretch*etalon[i].size(),(int )(1.0/stretch)*etalon[i].size(), etalon[i], temp_result);
                    result[j].setDistance(i, s,minimum(temp_result));
                 }
             }
         }
+    }
+       else{
+           for (int j=0;j<tests.size();j++){
+               for (int i=0;i<etalon.size();i++){
+                   for (int s=(int)stretch*(etalon[i].size());s<tests[j].size()+1;s++){
+                      MultiMarking::DTWMetric::computeDTW (metric, tests[j], s , (int)stretch*etalon[i].size(),(int )(1.0/stretch)*etalon[i].size(), etalon[i], temp_result);
+                      result[j].setDistance(i, s,minimum(temp_result));
+                   }
+               }
+           }
+       }
     }
 
     int RecognizerMultiMarkup::initFromEnv (const Environment& env) {
