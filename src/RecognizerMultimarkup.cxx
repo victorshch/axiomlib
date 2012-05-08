@@ -66,7 +66,6 @@ namespace AxiomLib {
        }
        std::string name_metric = boost::algorithm::to_lower_copy(name_metric);
        std::vector<double> temp_result;
-       if (name_metric == "matrix") {
         for (int j=0;j<tests.size();j++){
             for (int i=0;i<etalon.size();i++){
                 for (int s=(int)stretch*(etalon[i].size());s<tests[j].size()+1;s++){
@@ -75,17 +74,6 @@ namespace AxiomLib {
                 }
             }
         }
-    }
-       else{
-           for (int j=0;j<tests.size();j++){
-               for (int i=0;i<etalon.size();i++){
-                   for (int s=(int)stretch*(etalon[i].size());s<tests[j].size()+1;s++){
-                      MultiMarking::DTWMetric::computeDTW (metric, tests[j], s , (int)stretch*etalon[i].size(),(int )(1.0/stretch)*etalon[i].size(), etalon[i], temp_result);
-                      result[j].setDistance(i, s,minimum(temp_result));
-                   }
-               }
-           }
-       }
     }
 
     int RecognizerMultiMarkup::initFromEnv (const Environment& env) {
