@@ -14,6 +14,7 @@ namespace AxiomLib {
 namespace MultiMarking {
 
 double BetweenSets1::compute(const std::vector<bool>& v1,const std::vector<bool>& v2) {
+
     double k=0; /* Расстояние между двумя множествами */
     int min=0; /* Мощность меньшего множества */
     int max=0; /* Мощность большего множества */

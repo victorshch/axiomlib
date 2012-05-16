@@ -1,4 +1,5 @@
 #include "TrajectorySampleDistance.h"
+#include <iostream>
 
 using namespace AxiomLib;
 
@@ -27,7 +28,7 @@ int AxiomLib::TrajectorySampleDistance::length() const
 
 void AxiomLib::TrajectorySampleDistance::setDistance(int classNo, int endPoint, double distance)
 {
-	//todo checks in debug mode
+        //todo checks in debug mode
 	m_dist[classNo][endPoint] = distance;
 }
 

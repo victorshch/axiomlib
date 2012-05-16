@@ -17,14 +17,13 @@ namespace MultiMarking {
 
 class Euclidean : public DTWMetric {
 
-    private:
-
-    int because_of_error;
-
     public:
 
+    Euclidean() {}
     // distance for DTW
     double compute(const std::vector<bool>& v1, const std::vector<bool>& v2);
+
+    void computeDTWForMetric (const MultiMark& t, int i,int Nmin,int Nmax, const MultiMark& ref, std::vector<double>& result){ }
 
 };// end of class
 

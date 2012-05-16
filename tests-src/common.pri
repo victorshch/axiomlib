@@ -1,5 +1,5 @@
 CONFIG += console
-CONFIG += release
+CONFIG += static release
 CONFIG -= debug
 
 

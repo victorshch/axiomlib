@@ -25,7 +25,7 @@ private:
 
 
 
-    int stretch; // используется при указании размеров окна
+    double stretch; // используется при указании размеров окна
     MultiMarking::DTWMetric* metric;//используемая метрика
     std::string name_metric; // name of metric
 

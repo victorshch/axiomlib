@@ -24,9 +24,10 @@ namespace MultiMarking {
     {
         MultiMark temp;
         int y=result.size(); // Узнаем кол-во аксиом
-        std::vector<double> tempresult; // Промежуточный вектор значений DTW для каждой из строк
+        std::vector<double> tempresult(y); // Промежуточный вектор значений DTW для каждой из строк
         for (int e=0;e<y;e++){ // Обнуление суммы DTW
             result[e]==0;
+            tempresult[e]==0;
         }
         for (int k=0;k<y;k++){
             temp[0] = ref[k];

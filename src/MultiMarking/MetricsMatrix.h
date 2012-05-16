@@ -21,6 +21,8 @@ public:
 
 
     int currentAxiomNumber;
+
+    Matrix() {}
     //
     double compute (const std::vector<bool>& v1, const std::vector<bool>& v2);
 

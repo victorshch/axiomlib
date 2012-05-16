@@ -3,7 +3,7 @@
 # -------------------------------------------------
 include(AxiomLibConfig.pri)
 CONFIG -= static debug
-CONFIG += release
+CONFIG += static release
 DEFINES += "BOOST_FILESYSTEM_VERSION=2"
 INCLUDEPATH += $$MPICH_INCLUDE \
     $$BOOST_INCLUDE
@@ -206,19 +206,15 @@ SOURCES += src/TreatmentSample.cxx \
     src/optimization/GridSearch.cxx \
     src/optimization/MinimizerFactory.cxx \
     src/optimization/HybridGridSearch.cxx \
-    src/Recognizermultimarkup.cxx \
     src/MultiMarking/dtwmetric.cxx \
-    src/MultiMarking/multimarks.cxx \
     src/RecognizerMultimarkup.cxx \
     src/MultiMarking/MetricsBetweenSets1.cxx \
     src/MultiMarking/MetricsBetweenSets2.cxx \
     src/MultiMarking/MetricsMatrix.cxx \
     src/MultiMarking/MetricsHamming.cxx \
     src/MultiMarking/MetricsEuclidean.cxx \
-    src/MultiMarking/MetricsBetweenSets2.cxx \
     src/MultiMarking/MetricsEqual.cxx \
-    src/MultiMarking/multimarks.cxx \
-    src/MultiMarking/MetricsEqual.cxx
+    src/MultiMarking/multimarks.cxx
 HEADERS += src/undefs.h \
     src/TreatmentSample.h \
     src/TreatmentFactory.h \
@@ -425,8 +421,5 @@ HEADERS += src/undefs.h \
     src/MultiMarking/MetricsHamming.h \
     src/MultiMarking/MetricsEuclidean.h \
     src/MultiMarking/MetricsBetweenSets2.h \
-    src/MultiMarking/MetricsEqual.h \
-    src/MultiMarking/multimarks.h \
-    src/MultiMarking/MetricsHamming.h \
     src/MultiMarking/MetricsEqual.h
 OTHER_FILES += 

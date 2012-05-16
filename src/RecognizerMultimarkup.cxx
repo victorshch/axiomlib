@@ -3,6 +3,7 @@
 #include "Environment.h"
 #include "AxiomSet.h"
 #include "DataSet.h"
+#include <iostream>
 
 #include <boost/algorithm/string/case_conv.hpp>
 
@@ -58,14 +59,12 @@ namespace AxiomLib {
             axiomSet.enter(tests[i], vec , 0 , vec.size(), temp_testAxiomUsage);
             compare (testAxiomUsage,temp_testAxiomUsage);
         }
-
-
        result.reserve(tests.size());
        for(int i = 0; i < tests.size(); ++i) {
            result.push_back(TrajectorySampleDistance(dataSet.getNumberOfClasses(), tests[i].size()));
        }
-       std::string name_metric = boost::algorithm::to_lower_copy(name_metric);
        std::vector<double> temp_result;
+       if (name_metric == "matrix"){
         for (int j=0;j<tests.size();j++){
             for (int i=0;i<etalon.size();i++){
                 for (int s=(int)stretch*(etalon[i].size());s<tests[j].size()+1;s++){
@@ -75,13 +74,29 @@ namespace AxiomLib {
             }
         }
     }
+       else {
+           for (int j=0;j<tests.size();j++){
+               result[j].setLength(tests[j].size());
+               for (int i=0;i<etalon.size();i++){
+                   for (int s=(1.0/stretch)*etalon[i].size();s<tests[j].size()+1;s++){
+                      metric->computeDTW ( metric, tests[j], s , stretch*etalon[i].size(),(1.0/stretch)*etalon[i].size(), etalon[i], temp_result);
+                      // Еще подправиь в случаи матриц - там надо выделить память под промежуточный вектор. И вообще понять, чего там происходит.
+                      result[j].setDistance(i, s,minimum(temp_result));
+                   }
+               }
+           }
+       }
+        cout << "theend";
+    }
 
     int RecognizerMultiMarkup::initFromEnv (const Environment& env) {
-        if (env.getIntParamValue(stretch, "stretch")!=0)
+        if (env.getDoubleParamValue(stretch, "stretch")!=0)
             throw AxiomLibException("Can not find stretch");
         if (env.getStringParamValue(name_metric, "metric")!=0)
             throw AxiomLibException("Can not find a name of metric");
         metric = MultiMarking::DTWMetric::getMetric(name_metric);
+        std::string name_Copy = boost::algorithm::to_lower_copy(name_metric);
+        name_metric=name_Copy;
     }
 
 

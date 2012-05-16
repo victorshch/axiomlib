@@ -15,6 +15,7 @@ namespace AxiomLib {
 namespace MultiMarking {
 
     double Equal::compute(const std::vector<bool>& v1,const  std::vector<bool>& v2) {
+
         int len1=v1.size();
         int len2=v2.size();
         if (len1!=len2) {
