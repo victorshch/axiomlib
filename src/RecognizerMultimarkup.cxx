@@ -34,13 +34,21 @@ namespace AxiomLib {
                                                               std::vector<bool>& refAxiomUsage,
                                                               // какие аксиомы срабатывали при разметке тестовых траекторий
                                                               std::vector<bool>& testAxiomUsage) {
+       // cout << "RecognizerMultiMarkup::computeDistances";
         std::vector<bool> temp_testAxiomUsage;
         std::vector<bool> temp_refAxiomUsage;
-        temp_testAxiomUsage.resize(axiomSet.size());
+        temp_testAxiomUsage.resize(axiomSet.size()); // inizializacia false
         temp_refAxiomUsage.resize(axiomSet.size());
         testAxiomUsage.resize(axiomSet.size());
         refAxiomUsage.resize(axiomSet.size());
+        for (int y=0;y<axiomSet.size();y++){
+            temp_testAxiomUsage[y]=false;
+            temp_refAxiomUsage[y]=false;
+            testAxiomUsage[y]=false;
+            refAxiomUsage[y]=false;
+        }
 
+        //cout << "1";
         vector <MultiMarking::MultiMark> etalon(dataSet.getNumberOfClasses());
         std::vector<double> vec;
         for (int i=0;i<dataSet.getNumberOfClasses();i++){
@@ -49,6 +57,7 @@ namespace AxiomLib {
             axiomSet.enter(etalon[i], vec , 0 , vec.size(), temp_refAxiomUsage);
             compare (refAxiomUsage,temp_refAxiomUsage);
         }
+        //cout << "2";
         std::vector<int> numOfTS;
         int k;
         dataSet.getTestSize(k,numOfTS);
@@ -59,15 +68,38 @@ namespace AxiomLib {
             axiomSet.enter(tests[i], vec , 0 , vec.size(), temp_testAxiomUsage);
             compare (testAxiomUsage,temp_testAxiomUsage);
         }
+        //cout << "3";
        result.reserve(tests.size());
        for(int i = 0; i < tests.size(); ++i) {
            result.push_back(TrajectorySampleDistance(dataSet.getNumberOfClasses(), tests[i].size()));
        }
+       //cout << "4";
+       ////
+       //std::vector<bool> l;
+       for (int j=0;j<tests.size();j++){
+           for (int s=0;s<tests[j].size();s++){
+               for (int i=0;i<tests[j][s].size();i++) {
+              // l[s]=tests[j][s];
+              // std::cout << "tests[j]["<< s <<"]" << tests[j][s][i];
+           }
+               //cout <<"\n";
+           }
+           //cout << "\n";
+       }/*
+           for (int j=0;j<etalon.size();j++){
+               for (int s=0;s<etalon[j].size();s++){
+                   std::cout << "etalon[j]["<< s <<"]" << etalon[j][s][1]<< "\n";
+               }
+           }
+*/
+
+
+       ////
        std::vector<double> temp_result;
        if (name_metric == "matrix"){
         for (int j=0;j<tests.size();j++){
             for (int i=0;i<etalon.size();i++){
-                for (int s=(int)stretch*(etalon[i].size());s<tests[j].size()+1;s++){
+                for (int s=(int)stretch*(etalon[i].size());s<tests[j].size();s++){
                    metric->computeDTWForMetric ( tests[j], s , (int)stretch*etalon[i].size(),(int )(1.0/stretch)*etalon[i].size(), etalon[i], temp_result);
                    result[j].setDistance(i, s,minimum(temp_result));
                 }
@@ -78,15 +110,16 @@ namespace AxiomLib {
            for (int j=0;j<tests.size();j++){
                result[j].setLength(tests[j].size());
                for (int i=0;i<etalon.size();i++){
-                   for (int s=(1.0/stretch)*etalon[i].size();s<tests[j].size()+1;s++){
+                   for (int s=(1.0/stretch)*etalon[i].size();s<tests[j].size();s++){
                       metric->computeDTW ( metric, tests[j], s , stretch*etalon[i].size(),(1.0/stretch)*etalon[i].size(), etalon[i], temp_result);
                       // Еще подправиь в случаи матриц - там надо выделить память под промежуточный вектор. И вообще понять, чего там происходит.
                       result[j].setDistance(i, s,minimum(temp_result));
+                    //  std::cout << "!!!!"<<minimum(temp_result)<<"!!!";
                    }
                }
            }
        }
-        cout << "theend";
+     //   cout << "theend";
     }
 
     int RecognizerMultiMarkup::initFromEnv (const Environment& env) {

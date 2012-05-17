@@ -26,6 +26,7 @@ namespace MultiMarking {
                 return 1;
             }
         }
+
         return 0;
     }
 

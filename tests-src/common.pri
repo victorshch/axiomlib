@@ -1,4 +1,4 @@
-CONFIG += console
+CONFIG -= console
 CONFIG += static release
 CONFIG -= debug
 
