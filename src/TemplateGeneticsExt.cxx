@@ -83,8 +83,8 @@ int TemplateGeneticsExt::initFromEnv(const Environment& env) {
 		throw AxiomLibException("TemplateGeneticsExt::initFromEnv : number of genetic iterations without improvement has not been set.");
 
 	// 3. Инициализируем начальную популяцию
-	if (env.getIntParamValue (popSize, "popSize") < 0)
-		throw AxiomLibException("TemplateGeneticsExt::initFromEnv : popSize is undefined.");
+	if (env.getIntParamValue (popSize, "genPopSize") < 0)
+		throw AxiomLibException("TemplateGeneticsExt::initFromEnv : genPopSize is undefined.");
 	double presetAxiomSets;
 	if (env.getDoubleParamValue(presetAxiomSets, "popPreset") < 0)
 		throw AxiomLibException("TemplateGeneticsExt::initFromEnv : popPreset is not set.");
