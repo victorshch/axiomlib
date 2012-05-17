@@ -137,7 +137,9 @@ namespace AxiomLib {
         return new RecognizerMultiMarkup(*this);
     }
 
-    RecognizerMultiMarkup::RecognizerMultiMarkup(const RecognizerMultiMarkup& other) {
+    RecognizerMultiMarkup::RecognizerMultiMarkup(const RecognizerMultiMarkup& other)
+		: RecognizerImplBase(other)
+	{
         stretch = other.stretch;
         name_metric= other.name_metric;
         metric = MultiMarking::DTWMetric::getMetric(other.name_metric);
