@@ -48,7 +48,6 @@ namespace MultiMarking {
         for (int b=0 ; b < len_t ; b++ ){
                for (int a=0 ; a < len_ref ; a++) {
                        D.at(a).at(b)=m->compute ( ref[a],t[i-len_t+b] );
-                      // std::cout << "D[" << a << "]["<< b <<"]" << D[a][b] << "\n";
                        S.at(a).at(b)=0;
                        R.at(a).at(b)=0;
                    }
@@ -70,13 +69,9 @@ namespace MultiMarking {
         for (int a=(len_ref-1);a>-1;a--) {
             for (int b=(len_t-1);b>-1;b--) {
                 if ((a!=(len_ref-1)) || (b!=len_t-1)){
-                // В алгоритме не надо обрабатывать самую нижнюю клетку. По-моему тут это обрабатывается.
-                // Подсчет diag,right,down для данного случая
                 diag=calculate(D[a][b],S[a+1][b+1],R[a+1][b+1]);
                 right=calculate(D[a][b],S[a][b+1],R[a][b+1]);
                 down=calculate(D[a][b],S[a+1][b],R[a+1][b]);
-                //
-                //std::cout << "a" << a << "b"<< b <<"diag" << diag<<"right" << right <<"down" << down<< "\n";
                 if ((down<right)&&(down<diag)) {
                     S[a][b]=D[a][b]+S[a+1][b];
                     R[a][b]=R[a+1][b]+1;
@@ -90,15 +85,11 @@ namespace MultiMarking {
                     R[a][b]=R[a][b+1]+1;
                 }
             }
-              // std::cout << "R[" << a << "]["<< b <<"]" << R[a][b] << "\n";
-               // std::cout << "S[" << a << "]["<< b <<"]" << S[a][b] << "\n";
             }
         };
         result.resize(Nmax-Nmin+1);
         for (int j=0;j<(Nmax-Nmin+1);j++) {
-           // std::cout << (S[j][0]/R[j][0]);
             result[j]=(S[0][j]/R[0][j]);
-           // std::cout << "\n"<< result[j];
         };
     }
 

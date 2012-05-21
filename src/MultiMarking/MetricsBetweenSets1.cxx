@@ -30,8 +30,11 @@ double BetweenSets1::compute(const std::vector<bool>& v1,const std::vector<bool>
         }
     }
     if (max < min) {
-        max=min;
-    }
+          int t = min;
+          min = max;
+          max = t;
+      }
+
     if (max==0) {
         return 0;
     }
@@ -44,7 +47,9 @@ double BetweenSets1::compute(const std::vector<bool>& v1,const std::vector<bool>
     k=1-(k / (double)max);
     return k;
 }
-
+void BetweenSets1::computeDTWForMetric (const MultiMark& t, int i,int Nmin,int Nmax, const MultiMark& ref, std::vector<double>& result){
+    DTWMetric::computeDTW (this,t,i,Nmin,Nmax, ref, result);
+}
 
 
 };//  end of namespace MultiMraking

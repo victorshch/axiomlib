@@ -29,8 +29,11 @@ namespace MultiMarking {
             }
         }
         if (max < min) {
-                min = max;
-            }
+              int t = min;
+              min = max;
+              max = t;
+          }
+
         if (max == 0) {
             return 0;
         }
@@ -46,7 +49,9 @@ namespace MultiMarking {
         return k;
     }
 
-
+    void BetweenSets2::computeDTWForMetric (const MultiMark& t, int i,int Nmin,int Nmax, const MultiMark& ref, std::vector<double>& result){
+        DTWMetric::computeDTW (this,t,i,Nmin,Nmax, ref, result);
+    }
 
 };//  end of namespace MultiMraking
 
