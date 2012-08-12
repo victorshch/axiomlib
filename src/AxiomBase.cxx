@@ -152,8 +152,8 @@ signed int AxiomBase::readFromAX (std::string filePath, std::vector<std::string>
 		
 		if (this->compareStringAndPath(*tok_name, filePath, ".ax") == false) {
 			// имя аксиомы расходится - в названии файла и в его содержимом - выдаем ошибку
-			file.close();
-			throw AxiomLibException ("Error in AxiomBase::readFromAX: different file's names in the file and in the name of the file .");
+//			file.close();
+//			throw AxiomLibException ("Error in AxiomBase::readFromAX: different file's names in the file and in the name of the file .");
 		}
 		
 		// итеративано считываем записанные имена элементарных условий в файле 
@@ -236,8 +236,8 @@ signed int AxiomBase::readFromX (std::string filePath, std::string &strName) {
 		token_separator::iterator tok_name = tokens.begin();
 		if (this->compareStringAndPath(*tok_name, filePath, ".x") == false) {
 			// имя базы аксиом расходится - в названии файла и в его содержимом - выдаем ошибку
-			file.close();
-			throw AxiomLibException ("Error in AxiomBase::readFromX: different file's names in the file and in the name of the file .");
+//			file.close();
+//			throw AxiomLibException ("Error in AxiomBase::readFromX: different file's names in the file and in the name of the file .");
 		}
 		strName = *tok_name;
 	}

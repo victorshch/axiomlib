@@ -583,6 +583,11 @@ Axiom & Axiom::operator= (const Axiom& second) {
 	return *this;
 }
 
+Axiom::Axiom(const Axiom &other)
+{
+	*this = other;
+}
+
 
 /****************************************************************************
 *				Axiom::checkWeakEquivalence

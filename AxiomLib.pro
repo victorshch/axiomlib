@@ -2,70 +2,69 @@
 # Project created by QtCreator 2010-04-02T11:28:45
 # -------------------------------------------------
 
+CONFIG += static
+CONFIG -= debug
+CONFIG += release
+
 include(AxiomLibConfig.pri)
 
-CONFIG += static
-
-### Конфигурация - release или debug ###
-
-CONFIG += release
-CONFIG -= debug
-#CONFIG += debug
-#CONFIG -= release
-
+QT -= core gui
+CONFIG -= qt
 
 DEFINES += "BOOST_FILESYSTEM_VERSION=2"
-
 INCLUDEPATH += $$MPICH_INCLUDE \
     $$BOOST_INCLUDE
-
-#LIBS += $$MPICH_LIB $$BOOST_LIB
-
 QT -= core \
     gui
 TARGET = AxiomLib
-
-debug{
-OBJECTS_DIR = obj_debug
-DESTDIR = debug
+debug { 
+    OBJECTS_DIR = obj_debug
+    DESTDIR = debug
 }
-
-release{
-OBJECTS_DIR = obj_release
-DESTDIR = release
+release { 
+    OBJECTS_DIR = obj_release
+    DESTDIR = release
 }
-
-
 TEMPLATE = lib
 DEFINES += AXIOMLIB_LIBRARY
 
-### Дополнительные флаги компиляции ###
-
-# Для windows
-win32 {
-	QMAKE_CXXFLAGS_RELEASE += -openmp
-	QMAKE_CXXFLAGS_RELEASE += -o2 -DRELEASE
-	QMAKE_CXXFLAGS_DEBUG += /ZI /Od
-}
-# Для unix
-linux-g++|linux-g++-64 {
-		QMAKE_CXXFLAGS += -std=c++0x
-        QMAKE_CXXFLAGS_RELEASE += -fopenmp -o2
-}
-linux-icc|linux-icc-64 {
-        QMAKE_CXXFLAGS += -std=c++0x -no-multibyte-chars -wd913
-        QMAKE_CXXFLAGS_RELEASE += -openmp
-        QMAKE_LFLAGS_RELEASE += -openmp
+# ##    ###
+# windows
+win32 { 
+    QMAKE_CXXFLAGS_RELEASE += -openmp
+    QMAKE_CXXFLAGS_RELEASE += -o2 \
+        -DRELEASE
+    QMAKE_CXXFLAGS_DEBUG += /ZI \
+        /Od
 }
 
-win32 {
-        #Отключение ворнингов, связанных со стандартными функциями,
-        #которые cl считает небезопасными
-        QMAKE_CXXFLAGS += -D_SCL_SECURE_NO_WARNINGS -D_CRT_SECURE_NO_WARNINGS
+# unix
+linux-g++|linux-g++-64 { 
+    QMAKE_CXXFLAGS += -std=c++0x
+    QMAKE_CXXFLAGS_RELEASE += -fopenmp \
+        -o2
 }
+linux-icc|linux-icc-64 { 
+    QMAKE_CXXFLAGS += -std=c++0x \
+        -no-multibyte-chars \
+        -wd913
+    QMAKE_CXXFLAGS_RELEASE += -openmp
+    QMAKE_LFLAGS_RELEASE += -openmp
+}
+linux-icc|linux-icc-64 { 
+    QMAKE_CXXFLAGS += -std=c++0x \
+        -no-multibyte-chars \
+        -wd913
+    QMAKE_CXXFLAGS_RELEASE += -openmp
+    QMAKE_LFLAGS_RELEASE += -openmp
+}
+win32:# п©п╓п⌡п°п░п╝п∙п·п≥п∙ п╖п÷п╒п·п≥п·п≈п÷п╖, пёп╖п║п╙п▒п·п·п╘п≤ пёп÷ пёп╓п▒п·п■п▒п╒п╓п·п╘п²п≥ п√п╔п·п⌡п⌠п≥п║п²п≥,
 
-### Имена исходников ###
+# п⌡п÷п╓п÷п╒п╘п∙ cl пёп╝п≥п╓п▒п∙п╓ п·п∙п▓п∙п╙п÷п п▒пёп·п╘п²п≥
+QMAKE_CXXFLAGS += -D_SCL_SECURE_NO_WARNINGS \
+    -D_CRT_SECURE_NO_WARNINGS
 
+# ##   ###
 SOURCES += src/TreatmentSample.cxx \
     src/TreatmentFactory.cxx \
     src/TransmuteTpl.cxx \
@@ -181,7 +180,7 @@ SOURCES += src/TreatmentSample.cxx \
     src/DataSetBase.cxx \
     src/DataSetDivision.cxx \
     src/SatPointSet.cpp \
-    src/Logger.cxx \ 
+    src/Logger.cxx \
     src/FuzzyMultiDataExt/Heuristics.cxx \
     src/FuzzyMultiDataExt/ECTypeStage.cxx \
     src/FuzzyMultiDataExt/ECStage.cxx \
@@ -213,7 +212,19 @@ SOURCES += src/TreatmentSample.cxx \
     src/optimization/GoldenSectionSearch.cxx \
     src/optimization/GridSearch.cxx \
     src/optimization/MinimizerFactory.cxx \
-    src/optimization/HybridGridSearch.cxx
+    src/optimization/HybridGridSearch.cxx \
+    src/MultiMarking/dtwmetric.cxx \
+    src/RecognizerMultimarkup.cxx \
+    src/MultiMarking/MetricsBetweenSets1.cxx \
+    src/MultiMarking/MetricsBetweenSets2.cxx \
+    src/MultiMarking/MetricsMatrix.cxx \
+    src/MultiMarking/MetricsHamming.cxx \
+    src/MultiMarking/MetricsEuclidean.cxx \
+    src/MultiMarking/MetricsEqual.cxx \
+    src/MultiMarking/multimarks.cxx \
+    src/MultiMarking/Dice.cxx \
+    src/MultiMarking/Jaccard.cxx \
+    src/Recognizer.cxx
 HEADERS += src/undefs.h \
     src/TreatmentSample.h \
     src/TreatmentFactory.h \
@@ -376,7 +387,7 @@ HEADERS += src/undefs.h \
     src/DataSetDivision.h \
     src/DistanceClusterizer.h \
     src/SatPointSet.h \
-    src/Logger.h \ 
+    src/Logger.h \
     src/FuzzyMultiDataExt/Heuristics.h \
     src/FuzzyMultiDataExt/ECTypeStage.h \
     src/FuzzyMultiDataExt/ECStage.h \
@@ -411,5 +422,16 @@ HEADERS += src/undefs.h \
     src/optimization/GoldenSectionSearch.h \
     src/optimization/GridSearch.h \
     src/optimization/MinimizerFactory.h \
-    src/optimization/HybridGridSearch.h
+    src/optimization/HybridGridSearch.h \
+    src/MultiMarking/dtwmetric.h \
+    src/MultiMarking/multimarks.h \
+    src/RecognizerMultimarkup.h \
+    src/MultiMarking/MetricsBetweenSets1.h \
+    src/MultiMarking/MetricsMatrix.h \
+    src/MultiMarking/MetricsHamming.h \
+    src/MultiMarking/MetricsEuclidean.h \
+    src/MultiMarking/MetricsBetweenSets2.h \
+    src/MultiMarking/MetricsEqual.h \
+    src/MultiMarking/Dice.h \
+    src/MultiMarking/Jaccard.h
 OTHER_FILES += 

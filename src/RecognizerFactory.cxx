@@ -37,6 +37,11 @@ Recognizer* RecognizerFactory::create (const std::string &name) {
     toReturn = new RecognizerNet;
     return toReturn;
   }
+  if ( (name == "MultiMarking") || (name == "MULTIMARKING") || (name == "multimarking") || (name == "Multimarking") ) {
+    RecognizerMultiMarkup* toReturn;
+    toReturn = new RecognizerMultiMarkup;
+    return toReturn;
+  }
   // преобразование в строчные буквы
   std::string nameCopy = boost::algorithm::to_lower_copy(name);
   if(nameCopy == "neuralpercsingle") {

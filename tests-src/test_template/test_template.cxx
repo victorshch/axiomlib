@@ -6,6 +6,7 @@
 #include <iostream>
 #include <time.h>
 #include <string>
+#include <stdexcept>
 
 #undef SEEK_SET
 #undef SEEK_END
@@ -98,7 +99,11 @@ int main (int argc, char** argv) {
 	}
 	catch ( AxiomLibException testex ) {
 		std::cerr << "Fatal toplevel AxiomLibException:\n\t";
-		std::cerr << testex.error() << "\n";
+		std::cerr << testex.error() << std::endl;
 		MPI_Finalize ();
+	}
+	catch ( std::exception e) {
+		std::cerr << "Fatal exception:\n\t";
+		std::cerr << e.what() << std::endl;
 	}
 }

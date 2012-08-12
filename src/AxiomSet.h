@@ -143,6 +143,8 @@ class AxiomSet {
     
     // Оператор присваивания системы аксиом
     AxiomSet & operator= (const AxiomSet &second);
+	
+	AxiomSet(const AxiomSet &second);
     
     // Проверка сильной (заменить на слабую!!!) структурной идентичности двух наборов аксиом
     signed int checkWeakEquivalence(const AxiomSet& second) const;

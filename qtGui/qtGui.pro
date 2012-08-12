@@ -29,8 +29,6 @@ include(../AxiomLibConfig.pri)
 
 ### Конфигурация - release или debug ###
 
-CONFIG += release
-CONFIG -= debug
 #CONFIG += debug
 #CONFIG -= release
 

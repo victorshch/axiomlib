@@ -8,6 +8,8 @@
 ****************************************************************************/
 #include "AxiomSet.h"
 
+#include "Logger.h"
+
 // Дефолтные значения для элементов класса
 #define str_default_axiomSet_name	"no_name_AxiomSet"
 #define str_default_axiomSet_bank	"no_name_AxiomBank"
@@ -123,7 +125,7 @@ signed int AxiomSet::setAxiom (Axiom& axiom, const int i) {
 	
 	if ( i  < (int) axioms.size() ) {
 		*(axioms[i]) = axiom;
-	}
+        }
 	else { // this mean: i == axioms.size()
 		Axiom* addAxiom;
 		addAxiom = new Axiom;
@@ -250,6 +252,114 @@ int AxiomSet::enter (std::vector<int>& marked, const std::vector<double>& row, c
 		}
 	}
  	return 0;
+}
+
+/****************************************************************************
+*				AxiomSet::enter
+*
+*	Description:	Функция разметки ряда для случая разметки множеством аксиом
+*                       row начиная с отсчета begin до отсчета end
+*	Parameters:	marked -куда кладем разметку
+*				row    - ряд для разметки
+*				begin - отсчет с которого начинать разметку
+*				end    - отсчет до которого вести разметку
+*	Returns:		Функция вовзращает размеченный ряд - ряд с номером аксиомы выполненной на каждом из отсчетов исходного ряда
+*				-1 - означает что ни одна аксиома не выполнена - то есть нулевая аксиома записывается под этим значением
+*	Throws:		AxiomLibExeption - если begin и end заданы не корректно
+*	Author:		armkor
+*	History:
+*
+****************************************************************************/
+
+int AxiomSet::enter (MultiMarking::MultiMark& marked, const std::vector<double>& row, const unsigned long begin, const unsigned long end) {
+        if ((end <= begin) || (row.size() < end)) {
+                marked.resize(0);
+                throw AxiomLibException("Error in AxiomSet::enter : wrong parameters.");
+        }
+        else {
+                int curRes;
+                marked.resize(end - begin);
+
+                for (unsigned long i=begin;i<end;i++){
+                    marked[i-begin].resize(axioms.size());
+                    for (int j=0;j<axioms.size();j++){
+                        marked[i-begin][j]=false;
+                    }
+                }
+
+                for (unsigned long i = begin; i < end; i++) {
+                        curRes = 0;
+                        for (unsigned int j = 0; j < axioms.size(); j++ ) {
+                                curRes = (axioms[j])->check(i, row);
+                                if (curRes == 1) {
+                                        marked[i - begin][j] = true;
+                                }
+                        }
+                }
+        }
+        return 0;
+}
+
+/****************************************************************************
+*				AxiomSet::enter
+*
+*	Description:	Функция разметки ряда для случая разметки множеством аксиом
+*                       row начиная с отсчета begin до отсчета end
+*	Parameters:	marked -куда кладем разметку
+*				row    - ряд для разметки
+*				begin - отсчет с которого начинать разметку
+*				end    - отсчет до которого вести разметку
+*				stat - статистика по аксиомам системы, какие были использованы при разметке
+*	Returns:		Функция вовзращает размеченный ряд - ряд с номером аксиомы выполненной на каждом из отсчетов исходного ряда
+*				-1 - означает что ни одна аксиома не выполнена - то есть нулевая аксиома записывается под этим значением
+*	Throws:		AxiomLibExeption - если begin и end заданы не корректно
+*	Author:		armkor
+*	History:
+*
+****************************************************************************/
+
+
+int AxiomSet::enter (MultiMarking::MultiMark& marked, const std::vector<double>& row, const unsigned long begin, const unsigned long end, std::vector<bool> &stat){
+  //  std::cout <<"AxiomSet::enter";
+    if ((end <= begin) || (row.size() < end)) {
+            marked.resize(0);
+            throw AxiomLibException("Error in AxiomSet::enter : wrong parameters.");
+    }
+    else {
+            int curRes;
+            marked.resize(end - begin);
+            stat.resize(axioms.size());
+            for (unsigned int i = 0; i < axioms.size(); i++)
+                                    stat[i] = false;
+            for (unsigned long i=begin;i<end;i++){
+                marked[i-begin].resize(axioms.size());
+
+                for (int j=0;j<axioms.size();j++){
+                    marked[i-begin][j]=false;
+                }
+            }
+
+            for (unsigned long i = begin; i < end; i++) {
+                //std::cout << "S";
+                    curRes = 0;
+                    for (unsigned int j = 0; j < axioms.size(); j++ ) {
+                            curRes = (axioms[j])->check(i, row);
+         //                   std::cout << "!"<< curRes << "!";
+                            if (curRes != 0) {
+                  //              std::cout << "E";
+                                    marked[i - begin][j] = true;
+       //                             std::cout << "@"<< marked[i - begin][j] << "@";
+                                    if (!stat[j]) stat[j] = true;
+                            }
+                    }
+            }
+    }/*
+    for(int k=0;k<marked.size();k++){
+        for (int t=0;t<marked[k].size();t++){
+            std::cout << marked[k][t] << "\n";
+        }
+    }*/
+    return 0;
 }
 
 
@@ -717,6 +827,13 @@ signed int AxiomSet::getParamValue (double &param, int axiomNum, int ecNum, std:
 *
 ****************************************************************************/
 AxiomSet & AxiomSet::operator= (const AxiomSet &second) {
+	//Logger::getInstance()->writeDebug("Entering AxiomSet::operator=");
+	
+	if(this == &second) {
+		//Logger::getInstance()->writeDebug("Leaving AxiomSet::operator= (self-assignment)");
+		return *this;
+	}
+	
 	// Копируем значение контрольного бита
 	crossoverControlBit = second.getCrossoverControlBit ();
 	// Копируем имя системы аксиом
@@ -733,7 +850,13 @@ AxiomSet & AxiomSet::operator= (const AxiomSet &second) {
 		axioms[i] = new Axiom;
 		*axioms[i] = second.getAxiom (i);
 	}
+	//Logger::getInstance()->writeDebug("Leaving AxiomSet::operator=");
 	return *this;
+}
+
+AxiomSet::AxiomSet(const AxiomSet &second)
+{
+	*this = second;
 }
 
 /****************************************************************************

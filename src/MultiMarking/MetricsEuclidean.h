@@ -1,34 +1,29 @@
 /****************************************************************************
-*			Metric1
+*			MetricsEuclidean.h
 *
-*	Description:	Metric1
-*
+*	Description: Класс-метрика. Метрика - расстояние Евклида.
 *	Author:		armkor
 *	History:
 *
 ****************************************************************************/
 
-#ifndef METRIC1_H
-#define METRIC1_H
-
 #include "dtwmetric.h"
 #include "multimarks.h"
+#include "math.h"
 
 namespace AxiomLib {
 
 namespace MultiMarking {
 
-class Metric1 : public DTWMetric {
-
-private:
-
-    // creation
-    Metric1(MultiMark& f);
+class Euclidean : public DTWMetric {
 
     public:
 
-    // realisation distance for DTW
-    double compute(std::vector<bool>& v1, std::vector<bool>& v2);
+    Euclidean() {}
+    // distance for DTW
+    double compute(const std::vector<bool>& v1, const std::vector<bool>& v2);
+
+    void computeDTWForMetric (const MultiMark& t, int i,int Nmin,int Nmax, const MultiMark& ref, std::vector<double>& result);
 
 };// end of class
 
@@ -36,4 +31,3 @@ private:
 
 };//  end of namespace AxiomLib
 
-#endif // METRIC1_H

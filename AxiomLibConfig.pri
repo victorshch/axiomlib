@@ -4,10 +4,10 @@
 
 # ‰Ã— windows
 win32 {
-	AXIOMLIB_INCLUDE = D:\My_documents\Workspace\Axiomlib_working_copy2\src
-        QWT_INCLUDE = D:\lib\qwt-5.2.1\src
-	MPICH_INCLUDE = "C:\Program Files (x86)\MPICH2\include"
-        BOOST_INCLUDE = D:\lib\boost_1_44_0
+        AXIOMLIB_INCLUDE = F:/Workspace/Axiomlib_working_copy2/src
+        QWT_INCLUDE = D:/lib/qwt-5.2.1/src
+        MPICH_INCLUDE = "C:/Program Files (x86)/MPICH2/include"
+        BOOST_INCLUDE = "C:/Program Files (x86)/boost/boost_1_47"
 	OTHER_INCLUDE =
 }
 # ‰Ã— unix
@@ -25,20 +25,20 @@ unix {
 win32 {
 
 debug {
-        AXIOMLIB_LIB = D:\My_documents\Workspace\Axiomlib_working_copy2\debug\AxiomLib.lib
-        QWT_LIB = D:\lib\qwt-5.2.1\lib\qwtd.lib
-        MPICH_LIB = "C:\Program Files (x86)\MPICH2\lib\mpi.lib"
+        AXIOMLIB_LIB = F:/Workspace/Axiomlib_working_copy2/debug/AxiomLib.lib
+        QWT_LIB = D:/lib/qwt-5.2.1/lib/qwtd.lib
+        MPICH_LIB = "C:/Program Files (x86)/MPICH2/lib/mpi.lib"
 } release {
-        AXIOMLIB_LIB = D:\My_documents\Workspace\Axiomlib_working_copy2\release\AxiomLib.lib
-        QWT_LIB = D:\lib\qwt-5.2.1\lib\qwt.lib
-        MPICH_LIB = "C:\Program Files (x86)\MPICH2\lib\mpi.lib"
+        AXIOMLIB_LIB = F:/Workspace/Axiomlib_working_copy2/release/AxiomLib.lib
+        QWT_LIB = D:/lib/qwt-5.2.1/lib/qwt.lib
+        MPICH_LIB = "C:/Program Files (x86)/MPICH2/lib/mpi.lib"
 }
-        BOOST_LIB = /LIBPATH:"D:\lib\boost_1_44_0\stage\lib"
-        #MPICH_LIB = /LIBPATH:"C:\Program Files (x86)\MPICH2\lib"
+        BOOST_LIB = /LIBPATH:"C:/Program Files (x86)/boost/boost_1_47/lib"
+        #MPICH_LIB = /LIBPATH:"C:/Program Files (x86)/MPICH2/lib"
 
-#        BOOST_LIB = D:\lib\boost_1_44_0\stage\lib\boost_filesystem-vc100-mt.lib \
-#            D:\lib\boost_1_44_0\stage\lib\boost_system-vc100-mt.lib \
-#            D:\lib\boost_1_44_0\stage\lib\boost_serialization-vc100-mt.lib
+#        BOOST_LIB = D:/lib/boost_1_44_0/stage/lib/boost_filesystem-vc100-mt.lib \
+#            D:/lib/boost_1_44_0/stage/lib/boost_system-vc100-mt.lib \
+#            D:/lib/boost_1_44_0/stage/lib/boost_serialization-vc100-mt.lib
 	OTHER_LIB = Shell32.lib
 }
 

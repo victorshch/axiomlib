@@ -6,6 +6,8 @@
 
 #include "AxiomSetPlus.h"
 
+#include "Logger.h"
+
 using namespace AxiomLib;
 
 // Конструктор структуры
@@ -36,12 +38,20 @@ AxiomSetPlus::~AxiomSetPlus (void) {
 
 // Оператор присваивания системы аксиом
 AxiomSetPlus & AxiomSetPlus::operator= (const AxiomSetPlus &second) {
-	if (axiomSet == NULL)
-		axiomSet = new AxiomSet;
-	if (second.axiomSet != NULL)
+	//Logger::getInstance()->writeDebug("Entering AxiomSetPlus::operator= ");
+	if(this == &second) {
+		//Logger::getInstance()->writeDebug("Leaving AxiomSetPlus::operator= (self-assignment)");
+		return *this;
+	}
+	
+	if (second.axiomSet != NULL) {
+		if (axiomSet == NULL) {
+			axiomSet = new AxiomSet;
+		}
 		*axiomSet = *(second.axiomSet);
+	}
 	else {
-		delete axiomSet;
+		if(axiomSet) delete axiomSet;
 		axiomSet = NULL;
 	}
 	goal = second.goal;
@@ -59,6 +69,7 @@ AxiomSetPlus & AxiomSetPlus::operator= (const AxiomSetPlus &second) {
 	asTransProb = second.asTransProb;
 	axTransProb = second.axTransProb;
 	ecTransProb = second.ecTransProb;
+	//Logger::getInstance()->writeDebug("Leaving AxiomSetPlus::operator= ");
 	return *this;
 }
 
@@ -77,6 +88,14 @@ int AxiomSetPlus::clearStat (void) {
 	axTransProb = 0.0;
 	ecTransProb = 0.0;
 	return 0;
+}
+
+AxiomSetPlus::AxiomSetPlus(const AxiomSetPlus &second)
+{
+	//Logger::getInstance()->writeDebug("Copying AxiomSetPlus");
+	axiomSet = 0;
+	*this = second;
+	//Logger::getInstance()->writeDebug("Finished copying AxiomSetPlus");
 }
 
 // Функция очистки содержимого объекта структуры

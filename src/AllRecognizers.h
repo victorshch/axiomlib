@@ -8,3 +8,5 @@
 #include "RecognizerQnaryPercMulti.h"
 
 #include "RecognizerReducedAdapter.h"
+
+#include "RecognizerMultimarkup.h"

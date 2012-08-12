@@ -129,6 +129,8 @@ class Axiom {
     
   // Оператор присваивания
     Axiom & operator= (const Axiom& second);
+	
+	Axiom(const Axiom& other);
 
   // Проверка слабой структурной идентичности двух аксиом
     signed int checkWeakEquivalence(const Axiom& second) const;

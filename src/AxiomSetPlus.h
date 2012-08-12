@@ -60,6 +60,8 @@ struct AxiomSetPlus {
 	// Функция очистки статистики по системе аксиом
 	int clearStat (void);
 
+	AxiomSetPlus(const AxiomSetPlus& second);
+	
 	// Оператор присваивания системы аксиом
     AxiomSetPlus & operator= (const AxiomSetPlus &second);
     

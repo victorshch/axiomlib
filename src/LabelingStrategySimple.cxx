@@ -45,6 +45,7 @@ void LabelingStrategySimple::initFromEnv(const Environment &env)
 
 void LabelingStrategySimple::performLabeling(const TrajectorySampleDistance &trajectorySampleDistance, std::vector<int> &labeling) const
 {
+	//Logger::getInstance()->writeDebug("Entering LabelingStrategySimple::performLabeling()");
 	if(m_numClasses < 0) {
 		int numClasses = trajectorySampleDistance.numClasses();
 		std::vector<double> precisions(numClasses, m_initialPrecision);
@@ -52,8 +53,7 @@ void LabelingStrategySimple::performLabeling(const TrajectorySampleDistance &tra
 	} else {
 		performLabeling(trajectorySampleDistance, labeling, m_precisions);
 	}
-	
-	
+	//Logger::getInstance()->writeDebug("Leaving LabelingStrategySimple::performLabeling()");
 }
 
 std::string toString(const std::vector<double>& v) {
@@ -76,6 +76,7 @@ double LabelingStrategySimple::train(const std::vector<TrajectorySampleDistance>
 									 const std::vector<std::vector<int> > &trainTrajectoryRightLabeling, 
 									 CompareStatistic *compareStatistic,
 									 GoalStrategy* goalStrategy) {	
+	
 	int numClasses = trainTrajectorySampleDistance[0].numClasses();
 	
 	if(m_numClasses < 0) {
@@ -124,6 +125,7 @@ double LabelingStrategySimple::train(const std::vector<TrajectorySampleDistance>
 
 void LabelingStrategySimple::performLabeling(const TrajectorySampleDistance &trajectorySampleDistance, std::vector<int> &labeling, const std::vector<double> &precs)
 {
+	//Logger::getInstance()->writeDebug("Entering LabelingStrategySimple::performLabeling() (inner)");
 	int numClasses = trajectorySampleDistance.numClasses();
 	
 	int length = trajectorySampleDistance.length();
@@ -136,6 +138,8 @@ void LabelingStrategySimple::performLabeling(const TrajectorySampleDistance &tra
 	
 	std::vector<double> bulletin(numClasses);
 	
+	//Logger::getInstance()->writeDebug("LabelingStrategySimple::performLabeling() (inner) : filling bulletin");
+	
 	for(int i = 0; i < length; ++i) {
 		if (trajectorySampleDistance.distance(0, i) < 0) {
 			continue;
@@ -144,10 +148,12 @@ void LabelingStrategySimple::performLabeling(const TrajectorySampleDistance &tra
 		for(int cl = 0; cl < numClasses; ++cl) {
 			double currD = trajectorySampleDistance.distance(cl, i);
 			
-			if(currD <= precs[cl]) {
+			if(currD <= precs[cl] && currD >= 0) 
+			{
 				bulletin[cl] = (precs[cl] - currD) / precs[cl];
 				flag = true;
-			} else
+			} 
+			else
 			{
 				bulletin[cl] = -1;
 			}
@@ -159,6 +165,7 @@ void LabelingStrategySimple::performLabeling(const TrajectorySampleDistance &tra
 			labeling[i] = index + 1;
 		}
 	}
+	//Logger::getInstance()->writeDebug("Leaving LabelingStrategySimple::performLabeling() (inner)");
 }
 
 LabelingStrategySimple *LabelingStrategySimple::copy() const
