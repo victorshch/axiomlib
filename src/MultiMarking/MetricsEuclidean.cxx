@@ -23,7 +23,7 @@ namespace MultiMarking {
             }
         }
         s=sqrt(s);
-        s=s / sqrt(v1.size()) ;
+        s=s / sqrt((double)v1.size()) ;
         return s;
     }
 

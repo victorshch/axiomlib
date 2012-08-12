@@ -8,6 +8,8 @@
 ****************************************************************************/
 #include "AxiomSet.h"
 
+#include "Logger.h"
+
 // Дефолтные значения для элементов класса
 #define str_default_axiomSet_name	"no_name_AxiomSet"
 #define str_default_axiomSet_bank	"no_name_AxiomBank"
@@ -825,6 +827,13 @@ signed int AxiomSet::getParamValue (double &param, int axiomNum, int ecNum, std:
 *
 ****************************************************************************/
 AxiomSet & AxiomSet::operator= (const AxiomSet &second) {
+	//Logger::getInstance()->writeDebug("Entering AxiomSet::operator=");
+	
+	if(this == &second) {
+		//Logger::getInstance()->writeDebug("Leaving AxiomSet::operator= (self-assignment)");
+		return *this;
+	}
+	
 	// Копируем значение контрольного бита
 	crossoverControlBit = second.getCrossoverControlBit ();
 	// Копируем имя системы аксиом
@@ -841,7 +850,13 @@ AxiomSet & AxiomSet::operator= (const AxiomSet &second) {
 		axioms[i] = new Axiom;
 		*axioms[i] = second.getAxiom (i);
 	}
+	//Logger::getInstance()->writeDebug("Leaving AxiomSet::operator=");
 	return *this;
+}
+
+AxiomSet::AxiomSet(const AxiomSet &second)
+{
+	*this = second;
 }
 
 /****************************************************************************

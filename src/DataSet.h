@@ -61,6 +61,7 @@ class DataSet : public DataSetBase {
 	
 	// Функция возвращает число классов нештатного поведения
 	int getNumberOfClasses() const;
+	int getNumberOfTests() const;
 	
 	// Функция возвращает число элементов в струтуре referenceClassesTS
 	bool getClassSize (int &numOfClasses, std::vector<int> &numOfMultiTS, std::vector<std::vector<int> > &numOfTS) const;

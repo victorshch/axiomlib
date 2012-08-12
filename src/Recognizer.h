@@ -76,6 +76,8 @@ class Recognizer {
 
   // Функция обучения алгоритма распознавания
   virtual double learn (TemplateRecognizer &templateRecognizer) = 0;
+	
+	virtual double learn(TemplateRecognizer &templateRecognizer, int& resFirst, int& resSecond, std::vector<double>& stat, int asIndex = -1);
   
   // Провести разметку рядов в системе аксиом,
   // прогнать распознаватель, посчитать количество
@@ -87,8 +89,10 @@ class Recognizer {
   virtual signed int run (AxiomSet& axiomSet, DataSet& dataSet, std::vector<int>& params, int& resFirst, int& resSecond, const int asIndex = -1) = 0;
 
   virtual signed int run (AxiomSet& axiomSet, DataSet& dataSet, std::vector<int>& params, int& resFirst, int& resSecond, std::vector<double> &stat, const int asIndex = -1) = 0;
-  
-}; // end of class
+	
+};
+
+// end of class
 
 }; //  end of namespace
 

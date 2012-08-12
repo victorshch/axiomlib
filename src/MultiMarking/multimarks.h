@@ -10,17 +10,14 @@
 #ifndef MULTIMARK_H
 #define MULTIMARK_H
 
-
-#include "iostream"
-#include "vector"
+#include <vector>
 
 namespace AxiomLib {
 
 namespace MultiMarking {
 
     // declaration of type MultiMark
-    typedef std::vector<bool> tempb;
-    typedef std::vector<tempb>  MultiMark;
+	typedef std::vector<std::vector<bool> >  MultiMark;
 
 };//  end of namespace MultiMarking
 

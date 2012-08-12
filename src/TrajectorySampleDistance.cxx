@@ -3,9 +3,10 @@
 
 using namespace AxiomLib;
 
-TrajectorySampleDistance::TrajectorySampleDistance(int nClasses, int length) : m_nClasses(nClasses), m_dist(nClasses),
-	m_length(length)
-{ }
+TrajectorySampleDistance::TrajectorySampleDistance(int nClasses, int length) : m_nClasses(nClasses), m_dist(nClasses)
+{
+	setLength(length);
+}
 
 void AxiomLib::TrajectorySampleDistance::setLength(int newValue)
 {

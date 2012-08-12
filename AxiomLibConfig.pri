@@ -7,14 +7,14 @@
 
 # Для windows
 win32 {
-	MPICH_INCLUDE = "C:\Program Files (x86)\MPICH2\include"
-	MPICH_LIB = "C:\Program Files (x86)\MPICH2\lib\mpi.lib"
+        MPICH_INCLUDE = "C:/Program Files (x86)/MPICH2/include"
+        MPICH_LIB = "C:/Program Files (x86)/MPICH2/lib/mpi.lib"
 
-    BOOST_INCLUDE = D:\lib\boost_1_44_0
-	BOOST_LIB = /LIBPATH:"D:\lib\boost_1_44_0\stage\lib"	
+        BOOST_INCLUDE = "C:/Program Files (x86)/boost/boost_1_47"
+        BOOST_LIB = /LIBPATH:"C:/Program Files (x86)/boost/boost_1_47/lib/"
 
 	OTHER_INCLUDE = 
-	OTHER_LIB = 
+        OTHER_LIB = shell32.lib
 }
 
 # Для unix
@@ -32,7 +32,12 @@ unix {
 }
 
 #Здесь нужно указать абсолютнй путь к директории src
-AXIOMLIB_INCLUDE = /home/mrmrmr/study/axiomlib/branches/armkor/src
+AXIOMLIB_INCLUDE = F:/Workspace/Axiomlib_working_copy2/src
+
+release {
+#для boost.ublas
+    DEFINES += NDEBUG
+}
 
 unix {
 #Здесь нужно указать абсолютные пути к файлу libAxiomLib.a
@@ -43,6 +48,14 @@ release {
         AXIOMLIB_LIB = /home/mrmrmr/study/axiomlib/branches/armkor/release/libAxiomLib.a
 }
 
+} 
+win32 {
+debug {
+        AXIOMLIB_LIB = F:/Workspace/Axiomlib_working_copy2/debug/AxiomLib.lib
+}
+release {
+        AXIOMLIB_LIB = F:/Workspace/Axiomlib_working_copy2/release/AxiomLib.lib
+}
 }
 
 AXIOMLIB_LIBNAME = AxiomLib
@@ -80,7 +93,7 @@ win32 {
 # Для unix
 unix {
 	#QMAKE_CXXFLAGS_WARN_OFF = -Wno-sign-compare -Wno-sign-conversion -Wno-unused-parameter
-	QMAKE_CXXFLAGS_WARN_OFF = -Wno-unused-parameter
+        QMAKE_CXXFLAGS_WARN_OFF += -Wno-unused-parameter
 }
 
 win32 {

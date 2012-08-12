@@ -1,9 +1,16 @@
 # -------------------------------------------------
 # Project created by QtCreator 2010-04-02T11:28:45
 # -------------------------------------------------
-include(AxiomLibConfig.pri)
+
+CONFIG += static
 CONFIG -= debug
-CONFIG += static release
+CONFIG += release
+
+include(AxiomLibConfig.pri)
+
+QT -= core gui
+CONFIG -= qt
+
 DEFINES += "BOOST_FILESYSTEM_VERSION=2"
 INCLUDEPATH += $$MPICH_INCLUDE \
     $$BOOST_INCLUDE
@@ -53,7 +60,7 @@ linux-icc|linux-icc-64 {
 }
 win32:# пФЛМАЮЕОЙЕ ЧПТОЙОЗПЧ, УЧСЪБООЩИ УП УФБОДБТФОЩНЙ ЖХОЛГЙСНЙ,
 
-# ЛПФПТЩЕ cl УЮЙФБЕФ ОЕВЕЪПРБУОЩНЙ
+# ЛПФПТЩЕ cl УЮЙФБЕФ ОЕВЕЪП� БУОЩНЙ
 QMAKE_CXXFLAGS += -D_SCL_SECURE_NO_WARNINGS \
     -D_CRT_SECURE_NO_WARNINGS
 
@@ -214,7 +221,10 @@ SOURCES += src/TreatmentSample.cxx \
     src/MultiMarking/MetricsHamming.cxx \
     src/MultiMarking/MetricsEuclidean.cxx \
     src/MultiMarking/MetricsEqual.cxx \
-    src/MultiMarking/multimarks.cxx
+    src/MultiMarking/multimarks.cxx \
+    src/MultiMarking/Dice.cxx \
+    src/MultiMarking/Jaccard.cxx \
+    src/Recognizer.cxx
 HEADERS += src/undefs.h \
     src/TreatmentSample.h \
     src/TreatmentFactory.h \
@@ -421,5 +431,7 @@ HEADERS += src/undefs.h \
     src/MultiMarking/MetricsHamming.h \
     src/MultiMarking/MetricsEuclidean.h \
     src/MultiMarking/MetricsBetweenSets2.h \
-    src/MultiMarking/MetricsEqual.h
+    src/MultiMarking/MetricsEqual.h \
+    src/MultiMarking/Dice.h \
+    src/MultiMarking/Jaccard.h
 OTHER_FILES += 

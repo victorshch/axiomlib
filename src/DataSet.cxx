@@ -14,6 +14,7 @@
 #include <set>
 
 #include "Common.h"
+#include "Logger.h"
 
 #include "DataSet.h"
 
@@ -98,14 +99,16 @@ signed int DataSet::readDataSet(const std::string &baseDataSetDir) {
 				break;
 			}
 		}
+		int validParamsSize = (int)testSets[g].correct.validParams.size();
 		length2 = (int) (((this->testSets[g]).correct).data[((this->testSets[g]).correct).validParams.size() - 1]).size();
 		//std::cout << "\n len1 is " << length1 << "\n";
 		//std::cout << "\n len2 is " << length2 << "\n";
 		//std::cout << "\n";
+		Logger::getInstance()->writeDebug("validParamsSize = "+boost::lexical_cast<std::string>(validParamsSize));
 		if (length1 != length2) {
-			//std::cout << "\n len1 is " << length1 << "\n";
-			//std::cout << "\n len2 is " << length2 << "\n";
-			throw AxiomLibException ("Error in DataSetBase::readDataSet: there is no correction by length of rows in a pair of csv files.");
+			std::cout << "\n len1 is " << length1 << "\n";
+			std::cout << "\n len2 is " << length2 << "\n";
+			throw AxiomLibException ("Error in DataSet::readDataSet: test length doesn't match test ref length.");
 		}
 	}
 }
@@ -199,6 +202,11 @@ bool DataSet::setTSByIndexFromClass (std::vector<double> &vec, int indexClass, i
 ****************************************************************************/
 int DataSet::getNumberOfClasses() const {
 	return (int) referenceClassesTS.size();
+}
+
+int DataSet::getNumberOfTests() const
+{
+	return (int) testSets.size();
 }
 
  
@@ -455,15 +463,19 @@ signed int DataSet::readTestesTS (const std::string &path) {
 					MultiTS correctTS;
 					aa = (*dir_itr).string();
 					this->readFromRefCSV (aa, correctTS);
+					Logger::getInstance()->writeDebug("Read ref csv length: " +
+													  boost::lexical_cast<std::string>(correctTS.length()));
 					// Проверяем прочитана ли пара для данного файла (см. описание данной функции)
 					isin = isIn (intByName, readSeq);
 					if (isin >= 0) {
+						Logger::getInstance()->writeDebug("isin >= 0");
 						// Пара описана - только добавляем новые данные
 						(testSets[isin]).correct = correctTS;
 						// Вызов функции для копирования корректной разметки в вектор целых чисел
 						(testSets[isin]).makeIntClone();
 					}
 					else {
+						Logger::getInstance()->writeDebug("isin < 0");
 						// Пара не описана  - создаем новый экземпляр класса TestTS
 						TestTS testTS;
 						testTS.correct = correctTS;
@@ -481,6 +493,8 @@ signed int DataSet::readTestesTS (const std::string &path) {
 						MultiTS multiTStemp;
 						aa = (*dir_itr).string();
 						this->readFromCSV (aa, multiTStemp);
+						Logger::getInstance()->writeDebug("Read test csv length: " +
+														  boost::lexical_cast<std::string>(multiTStemp.length()));
 						// Определяем считана ли пара для данного файла
 						isin = isIn (intByName, readSeq);
 						if (isin >= 0) {
@@ -497,6 +511,8 @@ signed int DataSet::readTestesTS (const std::string &path) {
 					}
 					else {
 						//файл не удовлетворяет ни одному шаблону - его просто не обрабатываем 
+						Logger::getInstance()->writeDebug("Warning: ignoring data set file "
+														  +aa);
 					}
 				}
 			}
