@@ -3,8 +3,6 @@
 # -------------------------------------------------
 
 CONFIG += static
-CONFIG -= debug
-CONFIG += release
 
 include(AxiomLibConfig.pri)
 
@@ -224,7 +222,11 @@ SOURCES += src/TreatmentSample.cxx \
     src/MultiMarking/multimarks.cxx \
     src/MultiMarking/Dice.cxx \
     src/MultiMarking/Jaccard.cxx \
-    src/Recognizer.cxx
+    src/Recognizer.cxx \
+    src/MultiMarking/AsymmHamming.cpp \
+    src/MultiMarking/AsymmBetweenSets.cpp \
+    src/MultiMarking/WeakEqual.cpp \
+    src/MultiMarking/Priority.cpp
 HEADERS += src/undefs.h \
     src/TreatmentSample.h \
     src/TreatmentFactory.h \
@@ -433,5 +435,9 @@ HEADERS += src/undefs.h \
     src/MultiMarking/MetricsBetweenSets2.h \
     src/MultiMarking/MetricsEqual.h \
     src/MultiMarking/Dice.h \
-    src/MultiMarking/Jaccard.h
+    src/MultiMarking/Jaccard.h \
+    src/MultiMarking/AsymmHamming.h \
+    src/MultiMarking/AsymmBetweenSets.h \
+    src/MultiMarking/WeakEqual.h \
+    src/MultiMarking/Priority.h
 OTHER_FILES += 

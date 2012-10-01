@@ -38,7 +38,8 @@ int AxiomSetPop::initFromEnv(const Environment& env)
   if (env.getIntParamValue(popSize, "popSize") < 0)
     throw AxiomLibException("AxiomSetPop::initFromEnv : population size is not set.");
   //asPop = new vector<AxiomSetWithStats>;
-  asPop.resize(popSize);
+  //asPop.resize(popSize);
+  asPop.clear();
 
   // Смотрим, надо ли брать какое-то количество аксиом из заданной
   // экспертом популяции
@@ -70,16 +71,20 @@ int AxiomSetPop::initFromEnv(const Environment& env)
     int nGivenAxiomSets = (int) axiomSetNames.size();
 
     // 4. смотрим, может мы не сможем их все поместить
-    if (nGivenAxiomSets > nPresetAS)
-      throw AxiomLibException("AxiomSetPop::initFromEnv : number of given axiom sets > given number of slots in the population.");
+	if (nGivenAxiomSets > nPresetAS) {
+	  //throw AxiomLibException("AxiomSetPop::initFromEnv : number of given axiom sets > given number of slots in the population.");
+		nPresetAS = nGivenAxiomSets;
+	}
 
     // 5. Начинаем заполнять слоты аксиомами, безо всякого random-а, строго последовательно
     std::set<std::string>::const_iterator curAx = axiomSetNames.begin();
     for (int i = 0; i < nPresetAS; i++) {
-      std::cout << "AxiomSetPop::initFromEnv. Filling slot " << i+1 << " with axiom '" << *curAx << "'\n";
+	  std::cout << "AxiomSetPop::initFromEnv. Filling slot " << i+1 << " with axiom '" << *curAx << "'" << std::endl;
       
       // По имени, получаем наш axiomSet
-      (asPop)[i].initAxiomSetFromFile(axiomSetDir, *curAx, axiomBase);
+	  //(asPop)[i].initAxiomSetFromFile(axiomSetDir, *curAx, axiomBase);
+	  asPop.push_back(AxiomSetWithStats());
+	  asPop.back().initAxiomSetFromFile(axiomSetDir, *curAx, axiomBase);
     
       // Наконец, берем следующее имя из набора
       curAx++;
@@ -93,10 +98,13 @@ int AxiomSetPop::initFromEnv(const Environment& env)
     int nOfAxioms = 10;
     int maxECs = 5;
     std::cout << "AxiomSetPop::initFromEnv. Filling slot " << i+1 << " with random axiom, nOfAxioms = " << nOfAxioms << ", maxECs = " << maxECs << ".\n";
-    (asPop)[i].initAxiomSetByRand(nOfAxioms, maxECs);
-    (asPop)[i].saveAxiomSetToFile (".", "x");
+	asPop.push_back(AxiomSetWithStats());
+	(asPop).back().initAxiomSetByRand(nOfAxioms, maxECs);
+	(asPop).back().saveAxiomSetToFile (".", "x");
   }
-  
+
+  popSize = asPop.size();
+
   return 0;
 }
 
@@ -444,7 +452,7 @@ int AxiomSetPop::cutDown (std::vector <bool> &stayAlive) {
 *	History:
 *	
 ****************************************************************************/
-AxiomSetWithStats& AxiomSetPop::copyAxiomSet (const int asNum) {
+AxiomSetWithStats& AxiomSetPop::axiomSet (const int asNum) {
 	if ( (asNum < 0) || (asNum >= (int) asPop.size()) )
 		throw AxiomLibException("Error in AxiomSetPop::copyAxiomSet: input paramenters out of range.");
 	return asPop[asNum];

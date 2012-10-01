@@ -18,7 +18,7 @@ namespace MultiMarking {
         double s=0.0;
         int n=v1.size();
         for (int i=0;i<n;i++) {
-            if (v1[i]==v2[i]) {
+            if (v1[i]!=v2[i]) {
                 s++;
             }
         }

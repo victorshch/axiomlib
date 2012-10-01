@@ -27,13 +27,12 @@ win32 {
 debug {
         AXIOMLIB_LIB = F:/Workspace/Axiomlib_working_copy2/debug/AxiomLib.lib
         QWT_LIB = D:/lib/qwt-5.2.1/lib/qwtd.lib
-        MPICH_LIB = "C:/Program Files (x86)/MPICH2/lib/mpi.lib"
 } release {
         AXIOMLIB_LIB = F:/Workspace/Axiomlib_working_copy2/release/AxiomLib.lib
         QWT_LIB = D:/lib/qwt-5.2.1/lib/qwt.lib
-        MPICH_LIB = "C:/Program Files (x86)/MPICH2/lib/mpi.lib"
 }
         BOOST_LIB = /LIBPATH:"C:/Program Files (x86)/boost/boost_1_47/lib"
+        MPICH_LIB = "C:/Program Files (x86)/MPICH2/lib/mpi.lib"
         #MPICH_LIB = /LIBPATH:"C:/Program Files (x86)/MPICH2/lib"
 
 #        BOOST_LIB = D:/lib/boost_1_44_0/stage/lib/boost_filesystem-vc100-mt.lib \
@@ -67,7 +66,7 @@ linux-icc-64|linux-icc {
 win32 {
 	QMAKE_CXXFLAGS_RELEASE += -openmp
 	QMAKE_CXXFLAGS_RELEASE += -o2 -DRELEASE
-	QMAKE_CXXFLAGS_DEBUG += /ZI /Od
+        QMAKE_CXXFLAGS_DEBUG += /ZI /Od
 }
 # ‰Ã— unix
 linux-g++|linux-g++-64 {

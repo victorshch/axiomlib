@@ -475,7 +475,7 @@ int ExtGenetics::crossover () {
 			throw AxiomLibException ("Error in ExtGenetics::crossover: internal error - the population is empty.");
 		}
 		for (int i = (int) population.size(); i < aspTemp.size(); i++) {
-			popTemp[i].axSet = aspTemp.copyAxiomSet(i);
+			popTemp[i].axSet = aspTemp.axiomSet(i);
 			popTemp[i].prec = population[h].prec;
 			h++; 
 			if (h >= (int) population.size()) h = 0;

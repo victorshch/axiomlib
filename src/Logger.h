@@ -23,8 +23,8 @@ class Logger
 public:
 	static Logger* getInstance();
 	
-	bool comments() const;
-	bool debug() const;
+	bool isWritingComments() const;
+	bool isWritingDebug() const;
 	bool useLogFile() const;
 	bool timeStamp() const;
 	
@@ -38,6 +38,9 @@ public:
 	// формально не нитебезопасная из-за cout
 	void writeComment(const std::string& str) const;
 	void writeDebug(const std::string& str) const;
+
+	static void comment(const std::string& str);
+	static void debug(const std::string& str);
 	
 private:
 	// Эти функции вынесены в private намеренно

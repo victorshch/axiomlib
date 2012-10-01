@@ -13,10 +13,12 @@ double AxiomLib::MultiMarking::Jaccard::compute(const std::vector<bool> &v1, con
 	int pI = 0, pU = 0;
 	
 	for(int i = 0; i < (int)v1.size(); ++i) {
-		if(v1[i] && v2[i]) {
-			++pI;
-		}
-		if(v1[i] || v2[i]) {
+		if(v1[i]) {
+			++pU;
+			if (v2[i]) {
+				++pI;
+			}
+		} else if (v2[i]) {
 			++pU;
 		}
 	}
