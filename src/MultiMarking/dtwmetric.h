@@ -12,6 +12,8 @@
 #ifndef DTWMETRIC_H
 #define DTWMETRIC_H
 
+#include <string>
+
 #include "multimarks.h"
 
 namespace AxiomLib {
@@ -29,7 +31,6 @@ class DTWMetric {
 
     //
     ~DTWMetric() { }
-
 
    // Инициализация метрики
    static DTWMetric* getMetric(std::string name);

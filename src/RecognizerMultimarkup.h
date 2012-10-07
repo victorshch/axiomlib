@@ -13,7 +13,6 @@
 
 #include "RecognizerImplBase.h"
 #include "MultiMarking/dtwmetric.h"
-#include "MultiMarking/AxiomUsageWrapper.h"
 #include "Environment.h"
 #include "AxiomSet.h"
 #include "DataSet.h"
