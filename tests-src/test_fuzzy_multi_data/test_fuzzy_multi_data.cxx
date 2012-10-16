@@ -33,11 +33,11 @@ int main (int argc, char** argv) {
 
 		
 		// Testing purposes only
-		if (rank == 0) {
-			std::cout << "\nTo begin press enter.";
-			std::cout.flush();
-			std::cin.get();
-		}
+//		if (rank == 0) {
+//			std::cout << "\nTo begin press enter.";
+//			std::cout.flush();
+//			std::cin.get();
+//		}
 		MPI_Barrier (MPI_COMM_WORLD);
 	
 
