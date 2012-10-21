@@ -67,6 +67,7 @@ int main (int argc, char** argv) {
 			std::cout.flush();
 		}
 
+		fuzzyMultiDataLearnAlgorithm.setComments(true);
 		fuzzyMultiDataLearnAlgorithm.run();
 		
 		std::string res;
@@ -103,5 +104,16 @@ int main (int argc, char** argv) {
 		std::cerr << testex.error() << "\n";
 		MPI_Finalize ();
 		return -1;
+	}
+	catch (std::exception ex) {
+		std::cerr << "Fatal toplevel std::exception:\n\t";
+		std::cerr << ex.what() << "\n";
+		MPI_Finalize ();
+		return -1;		
+	}
+	catch (...) {
+		std::cerr << "Fatal toplevel unknown exception";
+		MPI_Finalize ();
+		return -1;				
 	}
 }

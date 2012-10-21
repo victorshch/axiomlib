@@ -12,6 +12,8 @@
 #ifndef DTWMETRIC_H
 #define DTWMETRIC_H
 
+#include <boost/numeric/ublas/matrix.hpp>
+
 #include "multimarks.h"
 
 namespace AxiomLib {
@@ -21,9 +23,11 @@ namespace MultiMarking {
 class DTWMetric {
 
  private:
+	
 
 
  public:
+
     //
     DTWMetric();
 

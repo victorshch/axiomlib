@@ -58,10 +58,12 @@ using namespace AxiomLib;
 *
 ****************************************************************************/
 int FuzzyMultiDataLearnAlgorithm::createAxiomSet (void) {
+	//std::cout << "Entering FuzzyMultiDataLearnAlgorithm::createAxiomSet()"<<std::endl;
 	// подготавливаем необходимые переменные
 	std::vector <std::string> dataSetParams;
 	dataSetParams = fuzzyDataSet.getParamNames();
 	
+	//std::cout << "Calculating number of axioms"<<std::endl;
 	//  Создаем вектор всех аксиом - чтобы его можно было использовать при составленнии систем аксиом
 	int numOfAxioms = 0;
 	for (unsigned int i = 0; i < bestAxiomsFileNames.size(); i++) {
@@ -78,6 +80,7 @@ int FuzzyMultiDataLearnAlgorithm::createAxiomSet (void) {
 	bestAxioms.clear();
 	*/
 
+	//std::cout << "Reading best axioms..."<<std::endl;
 	// Создаем набор всех аксиом
 	bestAxioms.resize(numOfAxioms);
 	int ax = 0;
@@ -87,6 +90,8 @@ int FuzzyMultiDataLearnAlgorithm::createAxiomSet (void) {
 			bestAxioms[ax].initAxiomFromFile (axiomBaseDir, bestAxiomsFileNames[i][j], dataSetParams);
 		}
 	}
+	
+	//std::cout << "Finished reading best axioms"<<std::endl;
 
 	//	Определение ранга текущего процесса
 	int rank, size;
@@ -104,6 +109,7 @@ int FuzzyMultiDataLearnAlgorithm::createAxiomSet (void) {
 		std::vector < std::vector <AxiomExprSetPlus> > nextStepAxiomSets;
 		axiomSets.resize(upTo - from);
 		int as = 0;
+		//std::cout << "Starting loop..."<<std::endl;
 		#pragma omp parallel for schedule(dynamic, 1)
 		for (int i = 0; i < (upTo - from); i++) {
 			// Формируем систему аксиом из одной аксиомы
@@ -111,7 +117,9 @@ int FuzzyMultiDataLearnAlgorithm::createAxiomSet (void) {
 			// Устанавливаем статистику
 			axiomSets[i].axiomsIndex.push_back(i + from);
 			// Вычисляем значение целевой функции для такой системы аксиом
+			//std::cout << "Calculating objective..."<<std::endl;
 			matterAxiomSetFunc (axiomSets[i]);
+			//std::cout << "Objective calculated."<<std::endl;
 			/*
 			AxiomExprPlus aep;
 			AxiomExprStructure aes;
@@ -231,6 +239,7 @@ int FuzzyMultiDataLearnAlgorithm::createAxiomSet (void) {
 	// Синхронизация процессов
 	MPI_Barrier (MPI_COMM_WORLD);
 
+	//std::cout << "Leaving FuzzyMultiDataLearnAlgorithm::createAxiomSet()"<<std::endl;
 	return 0;
 }
 
@@ -808,33 +817,43 @@ double FuzzyMultiDataLearnAlgorithm::matterAxiomSetFunc (AxiomExprSetPlus &as) c
 	as.errSecond = 0;
 	as.markUps.resize(numOfClasses);
 	for (int abType = 0; abType < numOfClasses; abType++) {
+		//std::cout << "Starting iteration for class " << abType << std::endl;
 		// Определение числа используемых траекторий для формирования разметок
-		if ((numberOfUsedClassTraj > 0) && (numberOfUsedClassTraj < numOfMultiTS[abType]))
+		if ((numberOfUsedClassTraj > 0) && (numberOfUsedClassTraj < numOfMultiTS[abType])) {
 			upToNumTS = numberOfUsedClassTraj;
-		else
+		} else {
 			upToNumTS = numOfMultiTS[abType];
+		}
 		// Подготавливаем переменные для записи разметок траекторий, содержащих участки нештатного поведения
 		genMarkUps.clear();
 		resMarkUps.resize (upToNumTS);
 		for (int multiTS = 0; multiTS < upToNumTS; multiTS++) {
+			//std::cout << "Creating ref markups for ts " << multiTS << std::endl;
 			createRefMarkUp (resMarkUps[multiTS], as, abType, multiTS, numOfTS);
 		}
 		// Упрощаем разметки - удаляем 0 в начале и в конце векторов - чтобы общую часть было искать проще
+		//std::cout << "Simplifying markups I" << std::endl;
 		simplifyMarkUps (resMarkUps);
 		// На основании полученных разметок траекторий аномального поведения - производим их сдвиг и формируем варианты обобщенных разметок
+		//std::cout << "Creating markup variants" << std::endl;
 		createMarkUpVariants (genMarkUps, resMarkUps);
 		// Упрощаем вектора разметок - удаляем 0 в начале и в конце. Плюс возможно внесение некоторых изменений в саму разметку
+		//std::cout << "Simplifying markups II" << std::endl;
 		simplifyMarkUps (genMarkUps);
 		// Добавляем минимальные варианты разметок - если общую часть выделить не удалось
-		if (genMarkUps.size() < 1)
+		if (genMarkUps.size() < 1) {
+			//std::cout << "No markups -- creating markup variants" << std::endl;
 			createSimpleMarkUpVariants (genMarkUps, (int) as.axioms.size());
+		}
 		// Выбираем из всех разметок лучшую для данного класса нештатного поведения и сохраняем ее
+		//std::cout << "Choosing best markup" << std::endl;
 		chooseBestMarkUp (as, abType, as.markUps[abType], genMarkUps, errFirstVal, errSecondVal);
 		as.errFirst += errFirstVal;
 		as.errSecond += errSecondVal;
 	}
 	// Вычисление общего значения целевой фунекции для данной системы аксиом с учетом выбранных разметок эталонных траекторий
 	//matterAxiomSetFunc (as, as.markUps);
+	//std::cout << "Calculating goal strategy" << std::endl;
 	as.goal = goalStrategy->compute(as.errFirst, as.errSecond);
 
 	return as.goal;
@@ -889,6 +908,7 @@ double FuzzyMultiDataLearnAlgorithm::matterAxiomSetFunc (AxiomExprSetPlus &as, s
 *
 ****************************************************************************/
 double FuzzyMultiDataLearnAlgorithm::matterAxiomSetFunc (AxiomExprSetPlus &as, int abType, std::vector <int> &genMarkUp, double &goalVal, int &errFirstVal, int &errSecondVal) const {
+	//std::cout << "Entering FuzzyMultiDataLearnAlgorithm::matterAxiomSetFunc () II"<<std::endl;
 	int numOfClasses;
 	std::vector <int> numOfMultiTS;
 	std::vector < std::vector <int> > numOfTS;
@@ -897,6 +917,7 @@ double FuzzyMultiDataLearnAlgorithm::matterAxiomSetFunc (AxiomExprSetPlus &as, i
 	if ((abType < 0) || (abType >= numOfClasses))
 		throw AxiomLibException("FuzzyMultiDataLearnAlgorithm::matterAxiomSetFunc: incorrect input number of abnormal type.");
 	// Подготавливаем данные - какие измерения рядов задействованы системой аксиом
+	//std::cout << "Calculating used dimensions"<<std::endl;
 	std::vector <bool> dims;
 	dims.resize (fuzzyDataSet.paramNamesSize(), false);
 	for (unsigned int axNum = 0; axNum < as.axioms.size(); axNum++) {
@@ -914,13 +935,17 @@ double FuzzyMultiDataLearnAlgorithm::matterAxiomSetFunc (AxiomExprSetPlus &as, i
 	// Выбираем очередную траекторию для заданного типа нештатного поведения и запускаем распознаватель
 	std::vector <int> curMarkUp, result;
 	int num;
+	//std::cout << "Starting abnorm TS loop..."<<std::endl;
 	for (int t = 0; t < (int) numOfTS[abType].size(); t++) {
 		// разметка траектории контрольной выборки системой аксиом as
+		//std::cout << "Creating ref markup..."<<std::endl;
 		createTestMarkUp (curMarkUp, as, dims, abType, t, numOfTS[abType][t]);
 
+		//std::cout << "Running recognizer..."<<std::endl;
 		// Распознавание нештатного поведения в разметке ряда
 		recognizer->run (curMarkUp, genMarkUp, result);
 		
+		//std::cout << "Getting statistic..."<<std::endl;
 		// Вычисление числа ошибок первого и второго рода
 		num = getStatistic (result);
 		
@@ -934,14 +959,18 @@ double FuzzyMultiDataLearnAlgorithm::matterAxiomSetFunc (AxiomExprSetPlus &as, i
 	int numNormalMultiTS;
 	std::vector <int> numNormalTS;
 	fuzzyDataSet.getNormalTestSize (numNormalMultiTS, numNormalTS);
+	//std::cout << "Starting normal TS loop..."<<std::endl;
 	for (int t = 0; t < (int) numNormalTS.size(); t++) {
 		// размечаем траекторию нормального поведения
+		//std::cout << "Creating ref markup..."<<std::endl;
 		createTestMarkUp (curMarkUp, as, dims, t, numNormalTS[t]);
 
 		// Распознавание нештатного поведения в разметке ряда
+		//std::cout << "Running recognizer..."<<std::endl;
 		recognizer->run (curMarkUp, genMarkUp, result);
 		
 		// Вычисление числа ошибок первого и второго рода
+		//std::cout << "Getting statistic..."<<std::endl;
 		num = getStatistic (result);
 		
 		// Суммирование числа ошибок
@@ -949,8 +978,10 @@ double FuzzyMultiDataLearnAlgorithm::matterAxiomSetFunc (AxiomExprSetPlus &as, i
 	}
 
 	// Вычисление значения целевой функции для полученного числа ошибок I и II рода
+	//std::cout << "Computing goal..."<<std::endl;
 	goalVal = goalStrategy->compute(errFirstVal, errSecondVal);
 
+	//std::cout << "Leaving FuzzyMultiDataLearnAlgorithm::matterAxiomSetFunc () II"<<std::endl;
 	return goalVal;
 }
 

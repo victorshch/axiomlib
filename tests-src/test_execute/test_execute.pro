@@ -8,7 +8,7 @@ include(../common.pri)
 
 QT       -= core gui
 
-TARGET = test_execute
+TARGET = Execute
 
 CONFIG   -= app_bundle
 

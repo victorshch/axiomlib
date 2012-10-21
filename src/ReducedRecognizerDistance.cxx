@@ -49,14 +49,18 @@ int ReducedRecognizerDistance::setParamsFromEnv(const Environment &env) {
 int ReducedRecognizerDistance::run(const std::vector<int> &markup, 
 								   const std::vector<int> &templ, 
 								   std::vector<int> &result) {
+	//Logger::getInstance()->writeDebug("Entering ReducedRecognizerDistance::run()");
 	if (m_precision < 0) {
 		throw AxiomLibException("ReducedRecognizerImplBase::run : precision not set");
 	}
 	
 	std::vector<double> prelimResult;
 	
+	//Logger::getInstance()->writeDebug("ReducedRecognizerDistance::run() : calculating preliminary result...");
 	run(markup, templ, prelimResult);
 	
+	//Logger::getInstance()->writeDebug("ReducedRecognizerDistance::run() : calculating labeling...");
+	result.resize(prelimResult.size());
 	for(int i = 0; i < prelimResult.size(); ++i) {
 		if (prelimResult[i] >= 0 && prelimResult[i] <= m_precision) {
 			result[i] = 1;
@@ -65,6 +69,7 @@ int ReducedRecognizerDistance::run(const std::vector<int> &markup,
 		}
 	}
 	
+//	Logger::getInstance()->writeDebug("Leaving ReducedRecognizerDistance::run()");
 	return 0;
 }
 

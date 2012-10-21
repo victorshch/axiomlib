@@ -16,6 +16,7 @@
 #include <boost/serialization/nvp.hpp>
 #include <boost/archive/xml_iarchive.hpp>
 #include <boost/archive/xml_oarchive.hpp>
+#include <boost/filesystem.hpp>
 
 #include "AxiomExprPlus.h"
 #include "AxiomLibException.h"
@@ -85,6 +86,11 @@ namespace AxiomLib {
 		
 		// Сохраняет объект в файл
 		void saveToFile(const std::string &fileName) const {
+			if(!boost::filesystem::exists(fileName.c_str())) {
+				boost::filesystem::path path(fileName.c_str());
+				boost::filesystem::create_directories(path.parent_path());
+			}
+			
 			std::ofstream ofstr(fileName.c_str());
 			if(ofstr.good())
 			{

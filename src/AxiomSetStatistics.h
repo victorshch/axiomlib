@@ -8,6 +8,7 @@
 #include <boost/serialization/utility.hpp>
 #include <boost/archive/xml_iarchive.hpp>
 #include <boost/archive/xml_oarchive.hpp>
+#include <boost/filesystem.hpp>
 
 namespace AxiomLib {
 
@@ -34,7 +35,7 @@ class AxiomSetStatistics
 	std::vector<std::pair<unsigned int, unsigned int> > errors;
 	
 	template<class Archive>
-	void serialize(Archive &archive, unsigned int version) {
+	void serialize(Archive &archive, unsigned int /*version*/) {
 		archive & BOOST_SERIALIZATION_NVP(goal);
 		archive & BOOST_SERIALIZATION_NVP(errFirst);
 		archive & BOOST_SERIALIZATION_NVP(errSecond);
@@ -66,6 +67,11 @@ public:
 	}
 	
 	void saveToFile(const std::string& fileName) const {
+		if(!boost::filesystem::exists(fileName.c_str())) {
+			boost::filesystem::path path(fileName.c_str());
+			boost::filesystem::create_directories(path.parent_path());
+		}
+		
 		std::ofstream ofstr(fileName.c_str());
 		if(ofstr.good())
 		{
