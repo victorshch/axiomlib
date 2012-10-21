@@ -58,7 +58,7 @@ linux-icc|linux-icc-64 {
 }
 win32:# пФЛМАЮЕОЙЕ ЧПТОЙОЗПЧ, УЧСЪБООЩИ УП УФБОДБТФОЩНЙ ЖХОЛГЙСНЙ,
 
-# ЛПФПТЩЕ cl УЮЙФБЕФ ОЕВЕЪП� БУОЩНЙ
+# ЛПФПТЩЕ cl УЮЙФБЕФ ОЕВЕЪП БУОЩНЙ
 QMAKE_CXXFLAGS += -D_SCL_SECURE_NO_WARNINGS \
     -D_CRT_SECURE_NO_WARNINGS
 
@@ -226,7 +226,8 @@ SOURCES += src/TreatmentSample.cxx \
     src/MultiMarking/AsymmHamming.cpp \
     src/MultiMarking/AsymmBetweenSets.cpp \
     src/MultiMarking/WeakEqual.cpp \
-    src/MultiMarking/Priority.cpp
+    src/MultiMarking/Priority.cpp \
+    src/TaggedDataSet.cxx
 HEADERS += src/undefs.h \
     src/TreatmentSample.h \
     src/TreatmentFactory.h \
@@ -439,5 +440,6 @@ HEADERS += src/undefs.h \
     src/MultiMarking/AsymmHamming.h \
     src/MultiMarking/AsymmBetweenSets.h \
     src/MultiMarking/WeakEqual.h \
-    src/MultiMarking/Priority.h
+    src/MultiMarking/Priority.h \
+    src/TaggedDataSet.h
 OTHER_FILES += 
