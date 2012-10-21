@@ -13,6 +13,7 @@
 #define DTWMETRIC_H
 
 #include <string>
+#include <boost/numeric/ublas/matrix.hpp>
 
 #include "multimarks.h"
 
@@ -23,9 +24,11 @@ namespace MultiMarking {
 class DTWMetric {
 
  private:
+	
 
 
  public:
+
     //
     DTWMetric();
 

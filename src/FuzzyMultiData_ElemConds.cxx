@@ -74,6 +74,9 @@ int FuzzyMultiDataLearnAlgorithm::selectElemCond (void) {
 		std::cout << "\n\tProcess: " << rank + 1 << " from " <<  size <<  ":\tAbnormal type\t" << i+1 << " done.\n";
 		std::cout.flush();
 	}
+#ifdef DEBUG_FUZZYMULTYDATA
+		std::cout<<"Exiting loop..."<<std::endl;
+#endif
 	// Объединение списков с именами файлов, содержащих описания элементарных условий, полученных в рамках всех процессов
 	//gatherBestECfromProcesses (rank, size);
 
@@ -689,8 +692,14 @@ int FuzzyMultiDataLearnAlgorithm::selectElemCond (const int abnormalBehaviourTyp
 	for (int dim = 0; dim < (upTo - from); dim++) {
 		// Выбор параметров элементарных условий для заданного типа нештатного поведения по заданной размерности входных данных
 		selectElemCond(abnormalBehaviourType, dataSetParams[from + dim], bestECs[dim]);
+#ifdef DEBUG_FUZZYMULTYDATA
+		std::cout << "Saving selected ecs..."<<std::endl;
+#endif
 		// Сохранение описаний лучших элементарных условий в файлы
 		saveBestECinFile(abnormalBehaviourType, from + dim, bestECs[dim], ecFileNames[dim]);
+#ifdef DEBUG_FUZZYMULTYDATA
+		std::cout << "Selected ecs saved"<<std::endl;
+#endif
 		// Очищение созданных векторов с элементарными условиями для новой итерации цикла
 		for (unsigned int i = 0; i < bestECs[dim].size(); i++) {
 			for (unsigned int j = 0; j < bestECs[dim][i].size(); j++) {

@@ -33,7 +33,7 @@ FuzzyMultiDataLearnAlgorithm::FuzzyMultiDataLearnAlgorithm (void) {
 	//bestECFileNames.clear();
 	predefinedECFileName.clear();
 	bestECForAllAbnormalTypes.clear();
-
+ 
 	axiomNameTemplate.assign (str_defaultAxiomName);
 	ecNameTemplate.assign (str_defaultECName);
 	fileNameECList.assign (str_default_ECList_fileName);
@@ -324,6 +324,9 @@ int FuzzyMultiDataLearnAlgorithm::run (void) {
 	selectElemCond();
 	// Сохранение списка файлов в отдельный файл - отчет
 	std::string fileName;
+	if (this->comments) {
+		std::cout << "\n\tProcess " << rank+1 << " from " << size << ": saving results of 1st stage'\n";
+	}
 	fileName = saveBestECFileNames (rank);
 	if (this->comments)
 		std::cout << "\n\tProcess " << rank+1 << " from " << size << ": results saved to: '" << fileName << "'\n";
@@ -731,7 +734,9 @@ int FuzzyMultiDataLearnAlgorithm::displayBestResult(void) const {
 	// При выводе на экран - назавния систем аксиом будем выводить такие же, какие они были при сохранении в файлы
 	std::cout << "\n\tBest results are:";
 	for (unsigned int asNum = 0; asNum < mask.size(); asNum++) {
-		printf ("\n\t%d.\t%s\t%.4f", asNum + 1, bestAxiomSetsNamesPlus[mask[asNum]].str.c_str(), bestAxiomSetsNamesPlus[mask[asNum]].doubleVal);
+		AxiomExprSetPlus axiomSet;
+		axiomSet.initAxiomSetFromFile(axiomSetBaseDir, bestAxiomSetsNamesPlus[mask[asNum]].str, fuzzyDataSet.getParamNames());
+		printf ("\n\t%d.\t%s\t%.4f\t(%d,%d)", asNum + 1, bestAxiomSetsNamesPlus[mask[asNum]].str.c_str(), bestAxiomSetsNamesPlus[mask[asNum]].doubleVal, axiomSet.errFirst, axiomSet.errSecond);
 	}
 	std::cout << "\n";
 
