@@ -228,7 +228,8 @@ SOURCES += src/TreatmentSample.cxx \
     src/FuzzyMultiDataExt/ASStageSimple.cxx \
     src/FuzzyDataSet_old.cxx \
     src/FuzzyDataSet.cxx \
-    src/elem_conditions/Variance.cxx
+    src/elem_conditions/Variance.cxx \
+    src/TaggedDataSet.cxx
 HEADERS += src/undefs.h \
     src/TreatmentSample.h \
     src/TreatmentFactory.h \
@@ -442,5 +443,7 @@ HEADERS += src/undefs.h \
     src/FuzzyMultiDataExt/ASStageSimple.h \
     src/FuzzyDataSet_old.h \
     src/FuzzyDataSet.h \
-    src/elem_conditions/Variance.h
+    src/MultiMarking/Priority.h \
+    src/elem_conditions/Variance.h \
+    src/TaggedDataSet.h
 OTHER_FILES += 
