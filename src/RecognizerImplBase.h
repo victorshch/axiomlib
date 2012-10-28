@@ -93,6 +93,9 @@ public:
     virtual signed int run (AxiomSet& axiomSet, DataSet& dataSet, 
 							std::vector<int>& params, int& resFirst, int& resSecond, 
 							std::vector<double> &stat, const int asIndex = -1);
+	
+	virtual double countErrors(std::vector<TrajectorySampleDistance> distances, 
+							const std::vector<std::vector<int> >& corrLabelings, int &resFirst, int &resSecond);
 	// Функция обучения алгоритма распознавания
     virtual double learn (TemplateRecognizer &templateRecognizer);
 	

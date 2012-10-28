@@ -16,9 +16,7 @@
 
 #include "Environment.h"
 #include "TrajectorySampleDistance.h"
-#include "CompareStatistic.h"
-#include "GoalStrategy.h"
-
+#include "Recognizer.h"
 namespace AxiomLib {
 
 class LabelingStrategy
@@ -37,8 +35,7 @@ public:
 	// Обучение алгоритма маркировки
 	virtual double train(const std::vector<TrajectorySampleDistance>& trainTrajectorySampleDistance, 
 				 const std::vector<std::vector<int> >& trainTrajectoryRightLabeling,
-				 CompareStatistic* compareStatistic,
-				 GoalStrategy* GoalStrategy) = 0;
+				 Recognizer* recognizer) = 0;
 	
 	virtual LabelingStrategy* copy() const = 0;
 };

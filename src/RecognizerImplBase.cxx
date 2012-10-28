@@ -134,48 +134,41 @@ signed int AxiomLib::RecognizerImplBase::run(AxiomSet& axiomSet, DataSet& extDat
 	*/
 	//Logger::getInstance()->writeDebug("Entering RecognizerImplBase::run()");
 	
-	std::vector<std::vector<int> > labelings;
+	std::vector<std::vector<int> > correctLabelings;
 	std::vector<bool> refStat;
 	std::vector<bool> testStat;
 	
-	// 1. Получаем маркировки тестовых траекторий и статистику использования аксиом
-	//Logger::getInstance()->writeDebug("RecognizerImplBase::run(): labeling...");
-	performLabeling(axiomSet, extDataSet, extParams, labelings, refStat, testStat);
-	//Logger::getInstance()->writeDebug("RecognizerImplBase::run(): labeling finished");
+	std::vector<TrajectorySampleDistance> distances;
 	
+	computeDistances(axiomSet, extDataSet, extParams, distances, refStat, testStat);	
 	//int nTests = labelings.size();
 	
 	int nTests;
 	std::vector<int> nTS;
 	//Logger::getInstance()->writeDebug("RecognizerImplBase::run(): checking test size");
 	extDataSet.getTestSize(nTests, nTS);
-	if(nTests != labelings.size()) {
-		throw AxiomLibException("RecognizerImplBase::run() : number of labelings does not match number of tests");
-	}
+//	if(nTests != labelings.size()) {
+//		throw AxiomLibException("RecognizerImplBase::run() : number of labelings does not match number of tests");
+//	}
 	
+	correctLabelings.resize(nTests);
 	
 	resFirst = 0;
 	resSecond = 0;
 	
 	int resShouldBe = 0;
 	
-	//int nDims = extParams.size();
-	std::vector <int> corrLabeling; // Здесь будет лежать корректная маркировка текущего ряда
-	
 	// 2. Считаем число ошибок
-	//Logger::getInstance()->writeDebug("RecognizerImplBase::run(): counting errors");
+	
 	for (int i = 0; i < nTests; ++i) {
-		double tmpFirst = 0, tmpSecond = 0; // Переменные для суммирования статистики
 		int tmpShouldBe = 0;
-		extDataSet.getTSByIndexFromTests (corrLabeling, i, -1);
+		extDataSet.getTSByIndexFromTests (correctLabelings[i], i, -1);
 		//Logger::getInstance()->writeDebug("Getting statistics...");
-		compareStatistic->getStatistic(labelings[i], corrLabeling, tmpFirst, tmpSecond, comments());
-		//Logger::getInstance()->writeDebug("Finished getting statistics");
-		resFirst += (int)tmpFirst;
-		resSecond += (int)tmpSecond;
-		coutAbnormalSegments(corrLabeling, tmpShouldBe);
+		coutAbnormalSegments(correctLabelings[i], tmpShouldBe);
 		resShouldBe += tmpShouldBe;
 	}
+	
+	this->countErrors(distances, correctLabelings, resFirst, resSecond);
 	
 	//Logger::getInstance()->writeDebug("RecognizerImplBase::run() : counting stat");
 	
@@ -184,6 +177,28 @@ signed int AxiomLib::RecognizerImplBase::run(AxiomSet& axiomSet, DataSet& extDat
 			
 	//Logger::getInstance()->writeDebug("Leaving RecognizerImplBase::run()");
 	return 0;	
+}
+
+double RecognizerImplBase::countErrors(std::vector<TrajectorySampleDistance> distances, const std::vector<std::vector<int> >& correctLabelings, int &resFirst, int &resSecond)
+{
+	resFirst = 0;
+	resSecond = 0;
+	
+	std::vector <int> labeling; // Полученная маркировка текущего ряда
+	// 2. Считаем число ошибок
+	//Logger::getInstance()->writeDebug("RecognizerImplBase::run(): counting errors");
+	int nTests = correctLabelings.size(); 
+	for (int i = 0; i < nTests; ++i) {
+		double tmpFirst = 0, tmpSecond = 0; // Переменные для суммирования статистики
+		
+		labelingStrategy->performLabeling(distances[i], labeling);
+		compareStatistic->getStatistic(labeling, correctLabelings[i], tmpFirst, tmpSecond, comments());
+		//Logger::getInstance()->writeDebug("Finished getting statistics");
+		resFirst += (int)tmpFirst;
+		resSecond += (int)tmpSecond;
+	}
+
+	return goalStrategy->compute(resFirst, resSecond);
 }
 
 void RecognizerImplBase::performLabeling(AxiomSet &axiomSet, DataSet &dataSet, 
@@ -225,20 +240,20 @@ double RecognizerImplBase::learn(TemplateRecognizer &templateRecognizer)
 	computeDistances(axiomSet, dataSet, templateRecognizer.params,
 					 sampleDistances, refAxiomUsage, testAxiomUsage);
 	
-	int numClasses = templateRecognizer.prepDataSet.getNumberOfClasses();
+	int numTests = templateRecognizer.prepDataSet.getNumberOfTests();
 	
-	std::vector<std::vector<int> > rightLabelings(numClasses);
+	std::vector<std::vector<int> > rightLabelings(numTests);
 	
-	for(int i = 0; i < numClasses; ++i) {
+	for(int i = 0; i < numTests; ++i) {
 		dataSet.getTSByIndexFromTests(rightLabelings[i], i, -1);
 	}
 	
 	if(labelingStrategy.get() == 0) {
-		Logger::getInstance()->writeDebug("RecognizerImplBase::learn() : warning : labelingStrategy is null");
+		throw AxiomLibException("RecognizerImplBase::learn() : labelingStrategy is null");
 	}
 	
 	return labelingStrategy->train(sampleDistances, rightLabelings, 
-								   compareStatistic.get(), goalStrategy.get());
+								   this);
 	
 }
 

@@ -33,17 +33,14 @@ private:
 	class Function : public Optimization::FunctionOneVariable {
 		const std::vector<TrajectorySampleDistance> &trainTrajectorySampleDistance;
 		const std::vector<std::vector<int> >& trainTrajectoryRightLabeling;
-		CompareStatistic *compareStatistic;
-		GoalStrategy* goalStrategy;
-		std::vector<double> &m_precisions;
-		
+		Recognizer* recognizer;
+		std::vector<double>& m_precisions;		
 		int currentClass;
 		
 	public:
 		Function(const std::vector<TrajectorySampleDistance> &trainTrajectorySampleDistance, 
 				 const std::vector<std::vector<int> >& trainTrajectoryRightLabeling,
-				 CompareStatistic *compareStatistic, GoalStrategy* goalStrategy,
-				 std::vector<double> &m_precisions);
+				 Recognizer* recognizer, std::vector<double>& precisions);
 		
 		void setCurrentClass(int classNo);
 		
@@ -59,7 +56,7 @@ public:
 	
 	double train(const std::vector<TrajectorySampleDistance> &trainTrajectorySampleDistance, 
 				 const std::vector<std::vector<int> >& trainTrajectoryRightLabeling,
-				 CompareStatistic *compareStatistic, GoalStrategy *goalStrategy);
+				 Recognizer* recognizer);
 	
 	static void performLabeling(const TrajectorySampleDistance &trajectorySampleDistance, 
 								std::vector<int> &labeling, 

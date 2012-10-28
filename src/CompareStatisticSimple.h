@@ -39,6 +39,8 @@ class CompareStatisticSimple : public CompareStatistic {
 
 	int ImH; // Very important param - максимальное превышение числа найденных траеторий над реально пресутсвующими 
 		     // 				  - после чего начиаем учитывать это превышение в first
+	
+	int minPoints; 
 
 	protected:
 

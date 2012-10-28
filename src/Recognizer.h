@@ -18,6 +18,7 @@
 #include "CompareStatistic.h"
 #include "CompareStatisticSimple.h"
 #include "CompareClassFactory.h"
+#include "TrajectorySampleDistance.h"
 #include <string>
 #include <vector>
 #include <stdlib.h>
@@ -89,6 +90,8 @@ class Recognizer {
   virtual signed int run (AxiomSet& axiomSet, DataSet& dataSet, std::vector<int>& params, int& resFirst, int& resSecond, const int asIndex = -1) = 0;
 
   virtual signed int run (AxiomSet& axiomSet, DataSet& dataSet, std::vector<int>& params, int& resFirst, int& resSecond, std::vector<double> &stat, const int asIndex = -1) = 0;
+	
+  virtual double countErrors(std::vector<TrajectorySampleDistance> distances, const std::vector<std::vector<int> >& corrLabelings, int &resFirst, int &resSecond);
 	
 };
 

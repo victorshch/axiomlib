@@ -17,3 +17,8 @@ double Recognizer::learn(TemplateRecognizer &templateRecognizer, int &resFirst, 
 	return res;
 }
 
+double Recognizer::countErrors(std::vector<TrajectorySampleDistance> distances, const std::vector<std::vector<int> > &corrLabelings, int &resFirst, int &resSecond)
+{
+	throw AxiomLibException("Recognizer::countErrors() : not implemented");
+}
+

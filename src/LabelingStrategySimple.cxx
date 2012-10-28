@@ -2,6 +2,7 @@
 #include <iterator>
 #include <algorithm>
 #include <boost/lexical_cast.hpp>
+#include <boost/format.hpp>
 
 #include "Logger.h"
 
@@ -74,8 +75,7 @@ std::string toString(const std::vector<double>& v) {
 
 double LabelingStrategySimple::train(const std::vector<TrajectorySampleDistance> &trainTrajectorySampleDistance, 
 									 const std::vector<std::vector<int> > &trainTrajectoryRightLabeling, 
-									 CompareStatistic *compareStatistic,
-									 GoalStrategy* goalStrategy) {	
+									 Recognizer *recognizer) {	
 	
 	int numClasses = trainTrajectorySampleDistance[0].numClasses();
 	
@@ -85,8 +85,7 @@ double LabelingStrategySimple::train(const std::vector<TrajectorySampleDistance>
 	
 	Function func(trainTrajectorySampleDistance, 
 				  trainTrajectoryRightLabeling, 
-				  compareStatistic, 
-				  goalStrategy, 
+				  recognizer,  
 				  m_precisions);
 	
 	Logger::getInstance()->writeDebug("Training LabelingStrategySimple...");
@@ -103,6 +102,7 @@ double LabelingStrategySimple::train(const std::vector<TrajectorySampleDistance>
 		Logger::getInstance()->writeDebug("Current abnormal class : " 
 										  + boost::lexical_cast<std::string>(i+1));
 		
+		double lastBestX = this->m_precisions[i];
 		func.setCurrentClass(i);
 		
 		double bestX;
@@ -112,6 +112,8 @@ double LabelingStrategySimple::train(const std::vector<TrajectorySampleDistance>
 		if(bestF < lastBestF) {
 			m_precisions[i] = bestX;
 			lastBestF = bestF;
+		} else {
+			m_precisions[i] = lastBestX;
 		}
 		
 		Logger::getInstance()->writeDebug("Current goal value : "
@@ -175,14 +177,27 @@ LabelingStrategySimple *LabelingStrategySimple::copy() const
 
 LabelingStrategySimple::Function::Function(const std::vector<TrajectorySampleDistance> &trainTrajectorySampleDistance, 
 										   const std::vector<std::vector<int> > &trainTrajectoryRightLabeling, 
-										   CompareStatistic *compareStatistic, GoalStrategy* goalStrategy,
-										   std::vector<double> &precs)
+										   Recognizer *recognizer, std::vector<double>& precs)
 	: trainTrajectorySampleDistance(trainTrajectorySampleDistance),
 	  trainTrajectoryRightLabeling(trainTrajectoryRightLabeling),
-	  compareStatistic(compareStatistic), goalStrategy(goalStrategy),
+	  recognizer(recognizer),
 	  m_precisions(precs),
 	  currentClass(0)
-{ }
+{
+	if(trainTrajectoryRightLabeling.size() != trainTrajectorySampleDistance.size()) {
+		boost::format msg = boost::format("LabelingStrategySimple::Function::Function() : trainTrajectoryRightLabeling.size() = %d != %d = trainTrajectorySampleDistance.size()")
+				% trainTrajectoryRightLabeling.size() % trainTrajectorySampleDistance.size();
+		throw AxiomLibException(msg.str());
+	}
+	
+	for(int i = 0; i < (int) trainTrajectoryRightLabeling.size(); ++i) {
+		if((int)trainTrajectoryRightLabeling[i].size() != trainTrajectorySampleDistance[i].length()) {
+			boost::format msg = boost::format("LabelingStrategySimple::Function::Function() : trainTrajectoryRightLabeling[%d].size() = %d != %d = trainTrajectorySampleDistance[%d].length())")
+					% i % trainTrajectoryRightLabeling[i].size() % trainTrajectorySampleDistance[i].length() % i;
+			throw AxiomLibException(msg.str());
+		}
+	}
+}
 
 void LabelingStrategySimple::Function::setCurrentClass(int classNo)
 {
@@ -191,24 +206,10 @@ void LabelingStrategySimple::Function::setCurrentClass(int classNo)
 
 double LabelingStrategySimple::Function::f(double x) const
 {
-	std::vector<double> precisions = m_precisions;
-	precisions[currentClass] = x;
+	m_precisions[currentClass] = x;
 	
-	std::vector<int> labeling;
+	int first;
+	int second;
 	
-	double e1 = 0, e2 = 0;
-	
-	for(std::vector<TrajectorySampleDistance>::size_type i = 0; 
-		i < trainTrajectorySampleDistance.size(); ++i) {
-		double e1temp = 0, e2temp = 0;
-		
-		LabelingStrategySimple::performLabeling(trainTrajectorySampleDistance[i],
-												labeling, precisions);
-		compareStatistic->getStatistic(labeling, trainTrajectoryRightLabeling[i], 
-									   e1temp, e2temp, false);
-		e1 += e1temp;
-		e2 += e2temp;
-	}
-	
-	return goalStrategy->compute((int) e1, (int) e2);
+	return recognizer->countErrors(trainTrajectorySampleDistance, trainTrajectoryRightLabeling, first, second);
 }

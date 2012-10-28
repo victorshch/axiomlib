@@ -8,6 +8,8 @@
 ****************************************************************************/
 #include "CompareStatisticSimple.h"
 
+#include <boost/lexical_cast.hpp>
+
 using namespace AxiomLib;
 
 
@@ -26,6 +28,7 @@ CompareStatisticSimple::CompareStatisticSimple (void) {
 	this->left = 0;
 	this->right = 0;
 	this->ImH = 10;
+	this->minPoints = 0;
 }
 
 
@@ -60,11 +63,12 @@ int CompareStatisticSimple::setParamsFromEnv (const Environment& env) {
   // У нас есть два параметра: "gcFirst" и "gcSecond"
   if ( (env.getIntParamValue(left, "ccLeft") < 0) ||
        (env.getIntParamValue(right, "ccRight") < 0 ) ||
-       (env.getIntParamValue(ImH, "ccNumPoints") < 0 ) ) {
+       (env.getIntParamValue(ImH, "ccNumPoints") < 0 ) ||
+	   (env.getIntParamValue(minPoints, "ccMinNumPoints") < 0)) {
     throw AxiomLibException ("Error in CompareStatisticSimple::setParamsFromEnv - can not find all needed parameners.");
   }
   
-  if (left < 0 || right < 0 || ImH < 0)
+  if (left < 0 || right < 0 || ImH < 0 || minPoints < 0)
     throw AxiomLibException ("Error in CompareStatisticSimple::setParamsFromEnv - invalid parameter values.");
 
   return 0;
@@ -163,10 +167,11 @@ int CompareStatisticSimple::setParams (std::map<std::string, std::string> &param
 *
 ****************************************************************************/
 CompareStatistic* CompareStatisticSimple::copy (void) {
-	CompareStatisticSimple* toReturn;
-	toReturn = new CompareStatisticSimple;
-	toReturn->setParams (left, right, ImH);
-	return (CompareStatistic*) toReturn;
+//	CompareStatisticSimple* toReturn;
+//	toReturn = new CompareStatisticSimple;
+//	toReturn->setParams (left, right, ImH);
+//	return (CompareStatistic*) toReturn;
+	return new CompareStatisticSimple(*this);
 }
 
 
@@ -186,8 +191,34 @@ CompareStatistic* CompareStatisticSimple::copy (void) {
 *	History:
 *
 ****************************************************************************/
-int CompareStatisticSimple::getStatistic (const std::vector<int> &row, const std::vector<int> &correct, double &first, double &second, const bool comments) {
+int CompareStatisticSimple::getStatistic (const std::vector<int> &result, const std::vector<int> &correct, double &first, double &second, const bool comments) {
 	int toReturn = 0;
+	std::vector<int> row = result;
+	if(minPoints > 1) {
+		for(int i = 0; i < (int)row.size(); ++i) {
+			if(row[i] == 0) {
+				continue;
+			}
+			int from = i - left;
+			if(from < 0) {
+				from = 0;
+			}
+			int upTo = i + right;
+			if(upTo >= (int)row.size()) {
+				upTo = (int)row.size() - 1;
+			}
+			int count = 0;
+			for(int j = from; j <= upTo; ++j) {
+				if(result[j] == row[i]) {
+					++count;
+				}
+			}
+			
+			if(count < minPoints) {
+				row[i] = 0;
+			}
+		}
+	}
 	if (row.size() == correct.size()) {
 		// переменные для накопления числа ошибок
 		int f = 0;
@@ -304,7 +335,10 @@ int CompareStatisticSimple::getStatistic (const std::vector<int> &row, const std
 		return toReturn;
 	}
 	else {
-		throw AxiomLibException ("Error in CompareStatisticSimple::getStatistic: wrong input rows - different number of elements");
+		std::string msg = "Error in CompareStatisticSimple::getStatistic: wrong input rows - different number of elements: ";
+		msg += "row.size() = " + boost::lexical_cast<std::string>(row.size()) + ", ";
+		msg += "correct.size() = " + boost::lexical_cast<std::string>(correct.size());
+		throw AxiomLibException (msg);
 	}
 	
 	return -1;
