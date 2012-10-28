@@ -735,8 +735,14 @@ int FuzzyMultiDataLearnAlgorithm::displayBestResult(void) const {
 	std::cout << "\n\tBest results are:";
 	for (unsigned int asNum = 0; asNum < mask.size(); asNum++) {
 		AxiomExprSetPlus axiomSet;
-		axiomSet.initAxiomSetFromFile(axiomSetBaseDir, bestAxiomSetsNamesPlus[mask[asNum]].str, fuzzyDataSet.getParamNames());
-		printf ("\n\t%d.\t%s\t%.4f\t(%d,%d)", asNum + 1, bestAxiomSetsNamesPlus[mask[asNum]].str.c_str(), bestAxiomSetsNamesPlus[mask[asNum]].doubleVal, axiomSet.errFirst, axiomSet.errSecond);
+		std::string filename = (boost::filesystem::path(axiomSetBaseDir) 
+								/ boost::filesystem::path(bestAxiomSetsNamesPlus[mask[asNum]].str + ".as")).string();
+		if(boost::filesystem::exists(filename)) {
+			axiomSet.initAxiomSetFromFile(axiomSetBaseDir, bestAxiomSetsNamesPlus[mask[asNum]].str, fuzzyDataSet.getParamNames());
+			printf ("\n\t%d.\t%s\t%.4f\t(%d,%d)", asNum + 1, bestAxiomSetsNamesPlus[mask[asNum]].str.c_str(), bestAxiomSetsNamesPlus[mask[asNum]].doubleVal, axiomSet.errFirst, axiomSet.errSecond);
+		} else {
+			printf ("\n\t%d.\t%s\t%.4f", asNum + 1, bestAxiomSetsNamesPlus[mask[asNum]].str.c_str(), bestAxiomSetsNamesPlus[mask[asNum]].doubleVal);
+		}
 	}
 	std::cout << "\n";
 
