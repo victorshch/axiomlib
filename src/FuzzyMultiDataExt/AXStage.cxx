@@ -114,8 +114,7 @@ void AXStage::recalculateMatterAxiomFunc(AxiomExprPlus &ax, int abType) {
 void axSelector(AXSelection &ax){ ax.setSelected(true); }
 
 void AXStage::run() {
-
-	
+	Logger::getInstance()->writeDebug("Creating axioms.");
 	int classCount = fuzzyDataSet->getClassCount();
 	
 	this->axioms.resize(classCount);
@@ -146,6 +145,15 @@ void AXStage::run() {
 //			}
 //		}
 //	}
+	
+	int count = 0;
+	
+	for(int i = 0; i < getAXSize(); ++i) {
+		count += getAXSize(i);
+	}
+	
+	Logger::getInstance()->writeDebug("Finished creating axioms. Axiom count: " 
+									  + boost::lexical_cast<std::string>(count));
 }
 
 void AXStage::formAxioms(int abType) {
@@ -261,7 +269,6 @@ void AXStage::formAxioms(int abType) {
 		}
 		curBest = curSize;
 		// Создаем новые элементы и вычисляем их значение целевой функции
-		logger->writeDebug("Creating new axioms");
 		for (unsigned int i = 0; i < (unsigned int) (curSize - 1); i++) {
 			for (unsigned int j = i+1; j < (unsigned int) curSize; j++) {
 				if (combineAxioms (axioms[i].element(), axioms[j].element(), axiomExprPlus, abType) > 0) {
@@ -271,7 +278,6 @@ void AXStage::formAxioms(int abType) {
 			}
 			axioms[i].element().clear();
 		}
-		logger->writeDebug("Finished creating new axioms");
 		axioms[curSize - 1].element().clear();
 		axioms.clear();
 		// Записываем полученные значения в вектор для следующей итерации

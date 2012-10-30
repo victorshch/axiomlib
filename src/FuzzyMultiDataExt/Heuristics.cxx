@@ -37,7 +37,7 @@ void Heuristics::run(FuzzyMultiDataExtAlgorithm &algorithm, int classNo) const {
 }
 
 void Heuristics::initFromEnv(const Environment &env) {
-	Logger::getInstance()->writeDebug("Entering initFromEnv() for "+name());
+	//Logger::getInstance()->writeDebug("Entering initFromEnv() for "+name());
 	env.getParamValue(m_order, getParamName("order"));
 	
 	m_classNames.clear();
@@ -51,7 +51,7 @@ void Heuristics::initFromEnv(const Environment &env) {
 	m_classNames.assign(classNames.begin(), classNames.end());
 	
 	initFromEnvImpl(env);
-	Logger::getInstance()->writeDebug("Leaving initFromEnv() for "+name());
+	//Logger::getInstance()->writeDebug("Leaving initFromEnv() for "+name());
 }
 
 void Heuristics::run(FuzzyMultiDataExtAlgorithm &algorithm) const {

@@ -24,10 +24,10 @@ namespace AxiomLib {
 
 namespace FuzzyMultiDataExt {
 
-class ASStage
+class ASStageSimple
 {
 public:
-	ASStage(ClippedFullFuzzyDataSet* fuzzyDataSet, 
+	ASStageSimple(ClippedFullFuzzyDataSet* fuzzyDataSet, 
 	                     AXStage* stage2);
 	
 	void initFromEnv(const Environment& env);

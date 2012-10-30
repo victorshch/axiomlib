@@ -63,7 +63,7 @@ inline std::string to_lower_copy(const std::string& str)
 }
 
 void ECTypeSelection::initFromEnvImpl(const Environment &env) {
-	Logger::getInstance()->writeDebug("Entering initFromEnvImpl for ECTypeSelection...");
+	//Logger::getInstance()->writeDebug("Entering initFromEnvImpl for ECTypeSelection...");
 	std::string policy;
 	if(!env.getStringParamValue(policy, getParamName("selectionPolicy"))) {
 		Logger::getInstance()->writeDebug("Policy: '"+policy+"'");
@@ -121,9 +121,9 @@ void ECTypeSelection::initFromEnvImpl(const Environment &env) {
 			Logger::getInstance()->writeComment("Warinig: invalid EC type name '"+currentName+"', ignoring");
 		}
 	}
-	Logger::getInstance()->writeDebug("Policy: " + boost::lexical_cast<std::string>(m_selectionPolicy));
-	Logger::getInstance()->writeDebug("Selected EC types count: "+boost::lexical_cast<std::string>(m_ecTypes.size()));	
-	Logger::getInstance()->writeDebug("Leaving initFromEnvImpl for ECTypeSelection...");
+//	Logger::getInstance()->writeDebug("Policy: " + boost::lexical_cast<std::string>(m_selectionPolicy));
+//	Logger::getInstance()->writeDebug("Selected EC types count: "+boost::lexical_cast<std::string>(m_ecTypes.size()));	
+//	Logger::getInstance()->writeDebug("Leaving initFromEnvImpl for ECTypeSelection...");
 }
 
 bool ECTypeSelection::compare::operator ()(const std::pair<bool, std::string>& p1, const std::pair<bool, std::string>& p2) const {

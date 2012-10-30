@@ -18,7 +18,7 @@ namespace FuzzyMultiDataExt {
 class ECTypeStage;
 class ECStage;
 class AXStage;
-class ASStage;
+class ASStageSimple;
 
 class Heuristics;
 class HeuristicsSet;

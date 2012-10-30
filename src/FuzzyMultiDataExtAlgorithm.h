@@ -160,7 +160,7 @@ private:
 	FuzzyMultiDataExt::ECTypeStage* stage0;
 	FuzzyMultiDataExt::ECStage* stage1;
 	FuzzyMultiDataExt::AXStage* stage2;
-	FuzzyMultiDataExt::ASStage* stage3;
+	FuzzyMultiDataExt::ASStageSimple* stage3;
 
 	// Вектор элементарных условий, заполняемый в результате их обучения
 	//std::vector <std::vector <ElemCondPlus> > bestECs;

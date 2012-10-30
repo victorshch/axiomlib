@@ -27,17 +27,17 @@
 using namespace AxiomLib;
 using namespace AxiomLib::FuzzyMultiDataExt;
 
-ASStage::ASStage(ClippedFullFuzzyDataSet *fuzzyDataSet, AXStage *stage2) 
+ASStageSimple::ASStageSimple(ClippedFullFuzzyDataSet *fuzzyDataSet, AXStage *stage2) 
     : fuzzyDataSet(fuzzyDataSet), stage2(stage2), logger(Logger::getInstance())
 {
 	//TODO default values
 }
 
-void ASStage::setAxiomSets(const std::vector<AxiomExprSetPlus> &initialAS) {
+void ASStageSimple::setAxiomSets(const std::vector<AxiomExprSetPlus> &initialAS) {
 	bestAxiomSets = initialAS;
 }
 
-void ASStage::initFromEnv(const Environment &env) {
+void ASStageSimple::initFromEnv(const Environment &env) {
 	if (env.getIntParamValue (ccNumPoints, "ccNumPoints") < 0)
 		throw AxiomLibException("FuzzyMultiDataExt_AS::setParamsFromEnv : ccNumPoints is undefined.");
 	
@@ -77,19 +77,19 @@ void ASStage::initFromEnv(const Environment &env) {
 		throw AxiomLibException("FuzzyMultiDataExt_AS::setParamsFromEnv : percentBestAxiomSets is out of range.");	
 }
 
-int ASStage::getASSize() const {
+int ASStageSimple::getASSize() const {
 	return bestAxiomSets.size();
 }
 
-AxiomExprSetPlus &ASStage::getAS(int n) {
+AxiomExprSetPlus &ASStageSimple::getAS(int n) {
 	return bestAxiomSets[n];
 }
 
-const AxiomExprSetPlus &ASStage::getAS(int n) const {
+const AxiomExprSetPlus &ASStageSimple::getAS(int n) const {
 	return bestAxiomSets[n];
 }
 
-void ASStage::recalculateMatterASFunc(AxiomExprSetPlus &as) {
+void ASStageSimple::recalculateMatterASFunc(AxiomExprSetPlus &as) {
 	this->setSatPointsSize(as.axioms.size());
 	
 	for(int i = 0; i < as.axioms.size(); i++) {
@@ -105,7 +105,8 @@ void ASStage::recalculateMatterASFunc(AxiomExprSetPlus &as) {
 	}
 }
 
-void ASStage::run() {	
+void ASStageSimple::run() {	
+	Logger::getInstance()->writeDebug("Creating Axiom Sets");
 	std::vector<int> sizeVector;
 	stage2->getAXSize(sizeVector);
 	
@@ -257,9 +258,11 @@ void ASStage::run() {
 		// Сортировка лучших систем аксиом до заданного числа элементов
 		sortBestAxiomSets ();
 	}
+	
+	Logger::getInstance()->writeDebug("Finished creating Axiom Sets");
 }
 
-int ASStage::tryAddAxiom(AxiomExprSetPlus &as, const AxiomExpr &ax, int axIndex) const {
+int ASStageSimple::tryAddAxiom(AxiomExprSetPlus &as, const AxiomExpr &ax, int axIndex) const {
 	std::vector<std::vector<std::vector<int> > > markUpVariants;
 	as.addAxiom(ax);
 	as.axiomsIndex.push_back(axIndex);
@@ -280,7 +283,7 @@ int ASStage::tryAddAxiom(AxiomExprSetPlus &as, const AxiomExpr &ax, int axIndex)
 //	return 0;
 }
 
-void ASStage::createAllMarkUpVariants(const AxiomExprSetPlus &as, std::vector<std::vector<std::vector<int> > > &markUpVariants) const {
+void ASStageSimple::createAllMarkUpVariants(const AxiomExprSetPlus &as, std::vector<std::vector<std::vector<int> > > &markUpVariants) const {
 	int numOfClasses;
 	std::vector <int> numOfMultiTS;
 	std::vector < std::vector <int> > numOfTS;
@@ -309,7 +312,7 @@ void ASStage::createAllMarkUpVariants(const AxiomExprSetPlus &as, std::vector<st
 	}
 }
 
-bool ASStage::markupsContain(const std::vector<std::vector<std::vector<int> > > &markUpVariants, int axiomNumber) {
+bool ASStageSimple::markupsContain(const std::vector<std::vector<std::vector<int> > > &markUpVariants, int axiomNumber) {
 	for(int i = 0; i < markUpVariants.size(); i++) {
 		for(int j = 0; j < markUpVariants[i].size(); j++) {
 			for(int k = 0; k < markUpVariants[i][j].size(); k++) {
@@ -336,7 +339,7 @@ bool ASStage::markupsContain(const std::vector<std::vector<std::vector<int> > > 
 *	History:
 *
 ****************************************************************************/
-int ASStage::cutDownAxiomSets (std::vector <AxiomExprSetPlus> &axiomSets) const {
+int ASStageSimple::cutDownAxiomSets (std::vector <AxiomExprSetPlus> &axiomSets) const {
 	// Проверка входных параметров
 	if ((maxAxiomSetPopSize < 1) || ( (int) axiomSets.size() <= maxAxiomSetPopSize))
 		return 0;
@@ -424,7 +427,7 @@ int ASStage::cutDownAxiomSets (std::vector <AxiomExprSetPlus> &axiomSets) const 
 *	History:
 *
 ****************************************************************************/
-inline int ASStage::createSimpleMarkUpVariants (std::vector < std::vector <int> > &genMarkUps, const int numOfAxioms) const {
+inline int ASStageSimple::createSimpleMarkUpVariants (std::vector < std::vector <int> > &genMarkUps, const int numOfAxioms) const {
 	genMarkUps.resize(numOfAxioms);
 	for (int i = 0; i < numOfAxioms; i++) {
 		genMarkUps[i].resize(1);
@@ -448,7 +451,7 @@ inline int ASStage::createSimpleMarkUpVariants (std::vector < std::vector <int> 
 *	History:
 *
 ****************************************************************************/
-int ASStage::chooseIndicesOfBestAxiomSets (std::vector <AxiomExprSetPlus> &newAxiomSets, std::vector <int> &indicesOfBestSets, double &goal) const {
+int ASStageSimple::chooseIndicesOfBestAxiomSets (std::vector <AxiomExprSetPlus> &newAxiomSets, std::vector <int> &indicesOfBestSets, double &goal) const {
 	// Сортируем вектор систем аксиом по значению целевой функции
 	std::vector <int> indecies;
 	sortAxiomSets (newAxiomSets, indecies);
@@ -546,7 +549,7 @@ int ASStage::chooseIndicesOfBestAxiomSets (std::vector <AxiomExprSetPlus> &newAx
 *	History:
 *
 ****************************************************************************/
-int ASStage::addAxiomSets(std::vector <AxiomExprSetPlus> &nextStepAxiomSets, std::vector <AxiomExprSetPlus> &newAxiomSets, std::vector <int> &indicesOfBestSets) const {
+int ASStageSimple::addAxiomSets(std::vector <AxiomExprSetPlus> &nextStepAxiomSets, std::vector <AxiomExprSetPlus> &newAxiomSets, std::vector <int> &indicesOfBestSets) const {
 	if (nextStepAxiomSets.size() > 0)
 		throw AxiomLibException("Error in FuzzyMultiDataExt_AS::addAxiomSets: input arguments out of consistency.");
 	// Определяем сколько систем аксиом добавлять
@@ -580,7 +583,7 @@ int ASStage::addAxiomSets(std::vector <AxiomExprSetPlus> &nextStepAxiomSets, std
 *	History:
 *
 ****************************************************************************/
-int ASStage::sortBestAxiomSets (void) {
+int ASStageSimple::sortBestAxiomSets (void) {
 	// Если число элементов в векторе лучших систем аксиом меньше заданного параметра - то просто выходим
 	if ((int) bestAxiomSets.size() <= numberOfBestAxiomSets)
 		return 0;
@@ -648,7 +651,7 @@ int ASStage::sortBestAxiomSets (void) {
 *	History:
 *
 ****************************************************************************/
-int ASStage::addToBestAxiomSets (std::vector <AxiomExprSetPlus> &axiomSets) {
+int ASStageSimple::addToBestAxiomSets (std::vector <AxiomExprSetPlus> &axiomSets) {
 	// Копируем содержимое вектора bestAxiomSets во временную переменную
 	std::vector <AxiomExprSetPlus> tmpBest;
 	tmpBest.resize (bestAxiomSets.size());
@@ -717,7 +720,7 @@ int ASStage::addToBestAxiomSets (std::vector <AxiomExprSetPlus> &axiomSets) {
 *	History:
 *
 ****************************************************************************/
-int ASStage::sortAxiomSets (const std::vector <AxiomExprSetPlus> &axiomSets, std::vector <int> &indecies) const {
+int ASStageSimple::sortAxiomSets (const std::vector <AxiomExprSetPlus> &axiomSets, std::vector <int> &indecies) const {
 	indecies.resize (axiomSets.size());
 	for (int i = 0; i < (int) axiomSets.size(); i++)
 		indecies[i] = i;
@@ -750,7 +753,7 @@ int ASStage::sortAxiomSets (const std::vector <AxiomExprSetPlus> &axiomSets, std
 *	History:
 *
 ****************************************************************************/
-double ASStage::matterAxiomSetFunc (AxiomExprSetPlus &as) const {
+double ASStageSimple::matterAxiomSetFunc (AxiomExprSetPlus &as) const {
 	int numOfClasses;
 	std::vector <int> numOfMultiTS;
 	std::vector < std::vector <int> > numOfTS;
@@ -798,7 +801,7 @@ double ASStage::matterAxiomSetFunc (AxiomExprSetPlus &as) const {
 	return as.goal;
 }
 
-double ASStage::matterAxiomSetFunc(AxiomExprSetPlus &as, const std::vector<std::vector<std::vector<int> > >& markupVariants) const {
+double ASStageSimple::matterAxiomSetFunc(AxiomExprSetPlus &as, const std::vector<std::vector<std::vector<int> > >& markupVariants) const {
 	int numOfClasses = fuzzyDataSet->getClassCount();
 	int errFirstVal, errSecondVal;
 	as.errFirst = 0;
@@ -835,7 +838,7 @@ double ASStage::matterAxiomSetFunc(AxiomExprSetPlus &as, const std::vector<std::
 *	History:
 *
 ****************************************************************************/
-double ASStage::matterAxiomSetFunc (AxiomExprSetPlus &as, std::vector <std::vector <int> > &markUps) const {
+double ASStageSimple::matterAxiomSetFunc (AxiomExprSetPlus &as, std::vector <std::vector <int> > &markUps) const {
 	int tmpFirst, tmpSecond;
 	double tmpGoal;
 	as.errFirst = 0;
@@ -871,7 +874,7 @@ double ASStage::matterAxiomSetFunc (AxiomExprSetPlus &as, std::vector <std::vect
 *	History:
 *
 ****************************************************************************/
-double ASStage::matterAxiomSetFunc (AxiomExprSetPlus &as, int abType, const std::vector <int> &genMarkUp, double &goalVal, int &errFirstVal, int &errSecondVal) const {
+double ASStageSimple::matterAxiomSetFunc (AxiomExprSetPlus &as, int abType, const std::vector <int> &genMarkUp, double &goalVal, int &errFirstVal, int &errSecondVal) const {
 	int numOfClasses;
 	std::vector <int> numOfMultiTS;
 	std::vector < std::vector <int> > numOfTS;
@@ -952,7 +955,7 @@ double ASStage::matterAxiomSetFunc (AxiomExprSetPlus &as, int abType, const std:
 *	History:
 *
 ****************************************************************************/
-double ASStage::matterAxiomSetFunc (const std::string baseDir, const std::string fileName, int &errFirst, int &errSecond) const {
+double ASStageSimple::matterAxiomSetFunc (const std::string baseDir, const std::string fileName, int &errFirst, int &errSecond) const {
 	// Инициализация системы аксиом из указанного файла
 	AxiomExprSetPlus aesp;
 	AxiomSetBase axiomSetBase;
@@ -987,7 +990,7 @@ double ASStage::matterAxiomSetFunc (const std::string baseDir, const std::string
 *	History:
 *
 ****************************************************************************/
-inline int ASStage::getStatistic (std::vector <int> &row) const {
+inline int ASStageSimple::getStatistic (std::vector <int> &row) const {
 	int num = 0;
 	int i = 0;
 	int j;
@@ -1027,7 +1030,7 @@ inline int ASStage::getStatistic (std::vector <int> &row) const {
 *	History:
 *
 ****************************************************************************/
-int ASStage::chooseBestMarkUp (AxiomExprSetPlus &as, int abType, std::vector <int> &markUp, const std::vector <std::vector <int> > &genMarkUps, int &errFirstVal, int &errSecondVal) const {
+int ASStageSimple::chooseBestMarkUp (AxiomExprSetPlus &as, int abType, std::vector <int> &markUp, const std::vector <std::vector <int> > &genMarkUps, int &errFirstVal, int &errSecondVal) const {
 	// Проверяем размер вектора кандидатов в разметки эталонной траектории заданного типа
 	if (genMarkUps.size() < 1) { 
 		markUp.clear();
@@ -1076,7 +1079,7 @@ int ASStage::chooseBestMarkUp (AxiomExprSetPlus &as, int abType, std::vector <in
 *	History:
 *
 ****************************************************************************/
-inline int ASStage::createMarkUpVariants (std::vector < std::vector <int> > &genMarkUps, std::vector < std::vector <int> > &resMarkUps) const {
+inline int ASStageSimple::createMarkUpVariants (std::vector < std::vector <int> > &genMarkUps, std::vector < std::vector <int> > &resMarkUps) const {
 	// Если число траекторий меньше 2, то объединять нечего - выходим из функции
 	if (resMarkUps.size() < 2) {
 		genMarkUps = resMarkUps;
@@ -1141,7 +1144,7 @@ inline int ASStage::createMarkUpVariants (std::vector < std::vector <int> > &gen
 *	History:
 *
 ****************************************************************************/
-inline int ASStage::createRefMarkUp (std::vector <int> &markUp, const AxiomExprSetPlus &as, const int abType, const int multiTSNumber, std::vector < std::vector <int> > &numOfTS) const {
+inline int ASStageSimple::createRefMarkUp (std::vector <int> &markUp, const AxiomExprSetPlus &as, const int abType, const int multiTSNumber, std::vector < std::vector <int> > &numOfTS) const {
 	performMarkUp(as, ClippedFullFuzzyDataSet::Reference, abType, multiTSNumber, markUp);
 	return 0;
 }
@@ -1164,7 +1167,7 @@ inline int ASStage::createRefMarkUp (std::vector <int> &markUp, const AxiomExprS
 *	History:
 *
 ****************************************************************************/
-inline int ASStage::createTestMarkUp (std::vector <int> &markUp, AxiomExprSetPlus &as, std::vector <bool> &dims, int &abType, int &indexTest, int &numOfTestTS) const {
+inline int ASStageSimple::createTestMarkUp (std::vector <int> &markUp, AxiomExprSetPlus &as, std::vector <bool> &dims, int &abType, int &indexTest, int &numOfTestTS) const {
 	performMarkUp(as, ClippedFullFuzzyDataSet::Testing, abType, indexTest, markUp);
 	return 0;
 }
@@ -1186,7 +1189,7 @@ inline int ASStage::createTestMarkUp (std::vector <int> &markUp, AxiomExprSetPlu
 *	History:
 *
 ****************************************************************************/
-inline int ASStage::createTestMarkUp (std::vector <int> &markUp, AxiomExprSetPlus &as, std::vector <bool> &dims, int &indexTest, int &numOfTestTS) const {
+inline int ASStageSimple::createTestMarkUp (std::vector <int> &markUp, AxiomExprSetPlus &as, std::vector <bool> &dims, int &indexTest, int &numOfTestTS) const {
 	performMarkUp(as, ClippedFullFuzzyDataSet::Testing, -1, indexTest, markUp);
 	return 0;
 }
@@ -1204,7 +1207,7 @@ inline int ASStage::createTestMarkUp (std::vector <int> &markUp, AxiomExprSetPlu
 *	History:
 *
 ****************************************************************************/
-inline int ASStage::simplifyMarkUps (std::vector <std::vector <int> > &markUps) const {
+inline int ASStageSimple::simplifyMarkUps (std::vector <std::vector <int> > &markUps) const {
 	int k, l; 
 	for (int i = (int) markUps.size() - 1; i >= 0; i--) {
 		// Убираем все 0 в начале вектора - их не учитываем
@@ -1250,7 +1253,7 @@ inline int ASStage::simplifyMarkUps (std::vector <std::vector <int> > &markUps) 
 *	History:
 *
 ****************************************************************************/
-int ASStage::getSubsequences (const std::vector <int> &str1, const std::vector <int> &str2, int i, int j, const std::vector < std::vector <int> > &square, std::vector < std::vector <int> > &res) const {
+int ASStageSimple::getSubsequences (const std::vector <int> &str1, const std::vector <int> &str2, int i, int j, const std::vector < std::vector <int> > &square, std::vector < std::vector <int> > &res) const {
 	if (square[i][j] == 0) {
 		return 0;
 	}
@@ -1356,7 +1359,7 @@ int ASStage::getSubsequences (const std::vector <int> &str1, const std::vector <
 *	History:
 *
 ****************************************************************************/
-int ASStage::getSquare (const std::vector <int> &str1, const std::vector <int> &str2, std::vector < std::vector <int> > &square) const {
+int ASStageSimple::getSquare (const std::vector <int> &str1, const std::vector <int> &str2, std::vector < std::vector <int> > &square) const {
 	int s1 = (int) str1.size();
 	int s2 = (int) str2.size();
 	// Проврека входных данных
@@ -1415,12 +1418,12 @@ int ASStage::getSquare (const std::vector <int> &str1, const std::vector <int> &
 	return 0;
 }
 
-void ASStage::setSatPointsSize(int size) {
+void ASStageSimple::setSatPointsSize(int size) {
 	satPoints.clear();
 	satPoints.reserve(size);
 }
 
-void ASStage::addToSatPoints(AxiomExpr &ax) {
+void ASStageSimple::addToSatPoints(AxiomExpr &ax) {
 	int index = satPoints.size();
 	ax.index = index;
 	
@@ -1429,7 +1432,7 @@ void ASStage::addToSatPoints(AxiomExpr &ax) {
 			);
 }
 
-const SatPointSet &ASStage::getSatPoints(const AxiomExpr &ax, ClippedFullFuzzyDataSet::DataSetDivisionType type, int classNo) const {
+const SatPointSet &ASStageSimple::getSatPoints(const AxiomExpr &ax, ClippedFullFuzzyDataSet::DataSetDivisionType type, int classNo) const {
 	switch(type) {
 	case ClippedFullFuzzyDataSet::Reference: return satPoints[ax.index].getRefSatPointSet(classNo); break;
 	case ClippedFullFuzzyDataSet::Testing: return satPoints[ax.index].getTestSatPointSet(classNo); break;
@@ -1437,7 +1440,7 @@ const SatPointSet &ASStage::getSatPoints(const AxiomExpr &ax, ClippedFullFuzzyDa
 	}
 }
 
-void ASStage::performMarkUp(const AxiomExprSetPlus &as, ClippedFullFuzzyDataSet::DataSetDivisionType division, int classNo, int multiTSNo, std::vector<int>& result) const {
+void ASStageSimple::performMarkUp(const AxiomExprSetPlus &as, ClippedFullFuzzyDataSet::DataSetDivisionType division, int classNo, int multiTSNo, std::vector<int>& result) const {
 	int multiTSLen = fuzzyDataSet->getMultiTSLength(division, classNo, multiTSNo);
 	
 	//Logger::getInstance()->writeComment("MultiTSLen: " + str(multiTSLen));

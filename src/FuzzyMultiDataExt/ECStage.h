@@ -48,7 +48,9 @@ public:
 	int getECSize() const ;
 	int getECSize(int aType) const ;
 	int getECSize(int aType, int dimension) const;
-	int getECSize(int aType, int dimension, int stage0) const;
+	int getECSize(int aType, int dimension, int ecType) const;
+	
+	int getECTotalCount() const;
 	
 	void recalculateMatterECFunc(ElemCondPlusStat& ec, int abType) const;
 	

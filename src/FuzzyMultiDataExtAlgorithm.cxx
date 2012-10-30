@@ -23,7 +23,7 @@ FuzzyMultiDataExtAlgorithm::FuzzyMultiDataExtAlgorithm()
 	stage0 = new ECTypeStage();
 	stage1 = new ECStage(&fuzzyDataSet, stage0);
 	stage2 = new AXStage(&fuzzyDataSet, stage1);
-	stage3 = new ASStage(&fuzzyDataSet, stage2);
+	stage3 = new ASStageSimple(&fuzzyDataSet, stage2);
 	
 	logger = Logger::getInstance();
 }

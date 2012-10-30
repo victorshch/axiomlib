@@ -113,7 +113,9 @@ void ECStage::run() {
 	
 	setNames();
 	
-	Logger::getInstance()->writeDebug("Finished");
+	int totalCount = getECTotalCount();
+	
+	Logger::getInstance()->writeDebug("Finished EC selection stage. EC count: " + boost::lexical_cast<std::string>(totalCount));
 }
 
 const ElemCondPlusStat &ECStage::getEC(int aType, int dimension, int type, int n) const {
@@ -149,6 +151,21 @@ int ECStage::getECSize(int aType, int dimension) const {
 
 int ECStage::getECSize(int aType, int dimension, int ecType) const {
 	return elemConditions[aType][dimension][ecType].size();
+}
+
+int ECStage::getECTotalCount() const
+{
+	int result = 0;
+	
+	for(int i = 0; i  < getECSize(); ++i) {
+		for(int j = 0; j < getECSize(i); ++j) {
+			for(int k = 0; k  < getECSize(i, j); ++k) {
+				result += getECSize(i, j, k);
+			}
+		}
+	}
+	
+	return result;
 }
 
 void ECStage::setECSelected(int aType, int dimension, int type, int n, bool value) {
