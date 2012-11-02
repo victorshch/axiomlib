@@ -7,7 +7,7 @@
 
 #include "../Environment.h"
 
-#include "../ClippedFullFuzzyDataSet.h"
+#include "../FuzzyDataSet.h"
 
 #include "Common.h"
 #include "ForwardDeclarations.h"
@@ -20,7 +20,7 @@ namespace FuzzyMultiDataExt {
 class ASStageSimple : public ASStage
 {
 public:
-	ASStageSimple(ClippedFullFuzzyDataSet* fuzzyDataSet, 
+	ASStageSimple(FuzzyDataSet* fuzzyDataSet, 
 	                     AXStage* stage2);
 	
 	void initFromEnv(const Environment& env);
@@ -39,25 +39,25 @@ public:
 private:
 	class AXSatPointSet {
 	public:
-		AXSatPointSet(const AxiomExpr &ax, const ClippedFullFuzzyDataSet& fuzzyDataSet) {
+		AXSatPointSet(const AxiomExpr &ax, const FuzzyDataSet& fuzzyDataSet) {
 			int classCount = fuzzyDataSet.getClassCount();
 			
 			refSatPoints.reserve(classCount);
 			testSatPoints.reserve(classCount + 1);
 			
 			testSatPoints.push_back(
-					PSatPointSet(new SatPointSet(ax, fuzzyDataSet, ClippedFullFuzzyDataSet::Testing, -1))
+					PSatPointSet(new SatPointSet(ax, fuzzyDataSet, FuzzyDataSet::Testing, -1))
 				);
 
 			
 			for(int i = 0; i < classCount; i++) {
 				refSatPoints.push_back
 						(
-							PSatPointSet(new SatPointSet(ax, fuzzyDataSet, ClippedFullFuzzyDataSet::Reference, i))
+							PSatPointSet(new SatPointSet(ax, fuzzyDataSet, FuzzyDataSet::Reference, i))
 						);
 				testSatPoints.push_back
 						(
-							PSatPointSet(new SatPointSet(ax, fuzzyDataSet, ClippedFullFuzzyDataSet::Testing, i))
+							PSatPointSet(new SatPointSet(ax, fuzzyDataSet, FuzzyDataSet::Testing, i))
 						);				
 			}
 		}
@@ -75,7 +75,7 @@ private:
 	
 	std::vector<AxiomExprSetPlus> bestAxiomSets;
 	
-	const ClippedFullFuzzyDataSet* fuzzyDataSet;
+	const FuzzyDataSet* fuzzyDataSet;
 	const AXStage* stage2;
 	
 	std::vector<AXSatPointSet> satPoints;
@@ -83,9 +83,9 @@ private:
 	void setSatPointsSize(int size);
 	void addToSatPoints(AxiomExpr& ax);
 	
-	const SatPointSet& getSatPoints(const AxiomExpr& ax, ClippedFullFuzzyDataSet::DataSetDivisionType type, int classNo) const;
+	const SatPointSet& getSatPoints(const AxiomExpr& ax, FuzzyDataSet::DataSetDivisionType type, int classNo) const;
 	
-	void performMarkUp(const AxiomExprSetPlus &as, ClippedFullFuzzyDataSet::DataSetDivisionType, int classNo, int multiTSNo, std::vector<int>& result) const;
+	void performMarkUp(const AxiomExprSetPlus &as, FuzzyDataSet::DataSetDivisionType, int classNo, int multiTSNo, std::vector<int>& result) const;
 	
 	Logger* logger;
 	

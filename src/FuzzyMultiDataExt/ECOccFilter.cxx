@@ -105,7 +105,7 @@ void ECOccFilter::run(FuzzyMultiDataExtAlgorithm &algorithm, int abType) const {
 	std::vector<int> saturation;
 	std::list<int> indices;
 	
-	int multiTSCount = algorithm.getDataSet().getMutiTSCount(ClippedFullFuzzyDataSet::Reference, abType); 
+	int multiTSCount = algorithm.getDataSet().getMutiTSCount(FuzzyDataSet::Reference, abType); 
 	
 	double maxOccurrence = 0.0;
 	for(int dimension = 0; dimension < algorithm.getECSize(abType); dimension++) {

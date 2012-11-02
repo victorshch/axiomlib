@@ -32,7 +32,7 @@
 #include "GoalStrategy.h"
 #include "PreprocessFactory.h"
 //#include "FullFuzzyDataSet.h"
-#include "ClippedFullFuzzyDataSet.h"
+#include "FuzzyDataSet.h"
 #include "StringPlus.h"
 //#include <sstream>
 #include <stdio.h>
@@ -57,7 +57,7 @@ class FuzzyMultiDataLearnAlgorithm {
 	unsigned short stage;
 	
 	// Исходный набор данных, на котором производится обучение
-	ClippedFullFuzzyDataSet fuzzyDataSet;
+	FuzzyDataSet fuzzyDataSet;
 	// Вектор индексов параметров в каноническом представлении по которым вести анализ - поиск нештатных ситуаций
 	// Под параметром понимается - название одномерного ряда в множестве рядов описывающих поведение системы
 	std::vector<int> dataSetParams;

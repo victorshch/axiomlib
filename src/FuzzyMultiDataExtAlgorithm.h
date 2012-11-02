@@ -18,7 +18,7 @@
 #include "ElemCondPlusStat.h"
 #include "AxiomExprPlus.h"
 #include "AxiomExprSetPlus.h"
-#include "ClippedFullFuzzyDataSet.h"
+#include "FuzzyDataSet.h"
 
 #include "ReducedRecognizer.h"
 #include "GoalStrategy.h"
@@ -46,8 +46,8 @@ public:
 	//int initFromEnvRecognitionOnly (const Environment& env);
 	
 	// Доступ к датасету
-	ClippedFullFuzzyDataSet &getDataSet();
-	const ClippedFullFuzzyDataSet& getDataSet() const;
+	FuzzyDataSet &getDataSet();
+	const FuzzyDataSet& getDataSet() const;
 	
 	// Основная функция класса - запуск подбора системы аксиом
 	void run (void);
@@ -136,7 +136,7 @@ public:
 private:
 	
 	// Исходный набор данных, на котором производится обучение
-	ClippedFullFuzzyDataSet fuzzyDataSet;
+	FuzzyDataSet fuzzyDataSet;
 	// Вектор индексов параметров в каноническом представлении по которым вести анализ - поиск нештатных ситуаций
 	// Под параметром понимается - название одномерного ряда в множестве рядов описывающих поведение системы
 	std::vector<int> dataSetParams;

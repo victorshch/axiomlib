@@ -27,7 +27,7 @@
 using namespace AxiomLib;
 using namespace AxiomLib::FuzzyMultiDataExt;
 
-ASStageSimple::ASStageSimple(ClippedFullFuzzyDataSet *fuzzyDataSet, AXStage *stage2) 
+ASStageSimple::ASStageSimple(FuzzyDataSet *fuzzyDataSet, AXStage *stage2) 
     : fuzzyDataSet(fuzzyDataSet), stage2(stage2), logger(Logger::getInstance())
 {
 	//TODO default values
@@ -1142,7 +1142,7 @@ inline int ASStageSimple::createMarkUpVariants (std::vector < std::vector <int> 
 *
 ****************************************************************************/
 inline int ASStageSimple::createRefMarkUp (std::vector <int> &markUp, const AxiomExprSetPlus &as, const int abType, const int multiTSNumber, std::vector < std::vector <int> > &numOfTS) const {
-	performMarkUp(as, ClippedFullFuzzyDataSet::Reference, abType, multiTSNumber, markUp);
+	performMarkUp(as, FuzzyDataSet::Reference, abType, multiTSNumber, markUp);
 	return 0;
 }
 
@@ -1165,7 +1165,7 @@ inline int ASStageSimple::createRefMarkUp (std::vector <int> &markUp, const Axio
 *
 ****************************************************************************/
 inline int ASStageSimple::createTestMarkUp (std::vector <int> &markUp, AxiomExprSetPlus &as, std::vector <bool> &dims, int &abType, int &indexTest, int &numOfTestTS) const {
-	performMarkUp(as, ClippedFullFuzzyDataSet::Testing, abType, indexTest, markUp);
+	performMarkUp(as, FuzzyDataSet::Testing, abType, indexTest, markUp);
 	return 0;
 }
 
@@ -1187,7 +1187,7 @@ inline int ASStageSimple::createTestMarkUp (std::vector <int> &markUp, AxiomExpr
 *
 ****************************************************************************/
 inline int ASStageSimple::createTestMarkUp (std::vector <int> &markUp, AxiomExprSetPlus &as, std::vector <bool> &dims, int &indexTest, int &numOfTestTS) const {
-	performMarkUp(as, ClippedFullFuzzyDataSet::Testing, -1, indexTest, markUp);
+	performMarkUp(as, FuzzyDataSet::Testing, -1, indexTest, markUp);
 	return 0;
 }
 
@@ -1429,15 +1429,15 @@ void ASStageSimple::addToSatPoints(AxiomExpr &ax) {
 			);
 }
 
-const SatPointSet &ASStageSimple::getSatPoints(const AxiomExpr &ax, ClippedFullFuzzyDataSet::DataSetDivisionType type, int classNo) const {
+const SatPointSet &ASStageSimple::getSatPoints(const AxiomExpr &ax, FuzzyDataSet::DataSetDivisionType type, int classNo) const {
 	switch(type) {
-	case ClippedFullFuzzyDataSet::Reference: return satPoints[ax.index].getRefSatPointSet(classNo); break;
-	case ClippedFullFuzzyDataSet::Testing: return satPoints[ax.index].getTestSatPointSet(classNo); break;
+	case FuzzyDataSet::Reference: return satPoints[ax.index].getRefSatPointSet(classNo); break;
+	case FuzzyDataSet::Testing: return satPoints[ax.index].getTestSatPointSet(classNo); break;
 	default: throw AxiomLibException("Unexpected dataset division value: " + boost::lexical_cast<std::string>(type));
 	}
 }
 
-void ASStageSimple::performMarkUp(const AxiomExprSetPlus &as, ClippedFullFuzzyDataSet::DataSetDivisionType division, int classNo, int multiTSNo, std::vector<int>& result) const {
+void ASStageSimple::performMarkUp(const AxiomExprSetPlus &as, FuzzyDataSet::DataSetDivisionType division, int classNo, int multiTSNo, std::vector<int>& result) const {
 	int multiTSLen = fuzzyDataSet->getMultiTSLength(division, classNo, multiTSNo);
 	
 	//Logger::getInstance()->writeComment("MultiTSLen: " + str(multiTSLen));

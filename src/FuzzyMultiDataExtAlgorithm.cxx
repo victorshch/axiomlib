@@ -140,11 +140,11 @@ int FuzzyMultiDataExtAlgorithm::initFromEnv(const Environment &env) {
 //	return 0;	
 //}
 
-ClippedFullFuzzyDataSet &FuzzyMultiDataExtAlgorithm::getDataSet() {
+FuzzyDataSet &FuzzyMultiDataExtAlgorithm::getDataSet() {
 	return this->fuzzyDataSet;
 }
 
-const ClippedFullFuzzyDataSet &FuzzyMultiDataExtAlgorithm::getDataSet() const {
+const FuzzyDataSet &FuzzyMultiDataExtAlgorithm::getDataSet() const {
 	return this->fuzzyDataSet;
 }
 

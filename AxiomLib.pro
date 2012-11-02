@@ -123,7 +123,6 @@ SOURCES += src/TreatmentSample.cxx \
     src/FuzzyMultiData_ElemConds.cxx \
     src/FuzzyMultiData_AxiomSets.cxx \
     src/FuzzyMultiData_Axioms.cxx \
-    src/FuzzyDataSet.cxx \
     src/FuzzyDataLearnAlgorithm.cxx \
     src/FullFuzzyDataSet.cxx \
     src/ExtGenetics.cxx \
@@ -138,7 +137,6 @@ SOURCES += src/TreatmentSample.cxx \
     src/CrossoverStrategyFactory.cxx \
     src/CompareStatisticSimple.cxx \
     src/CompareClassFactory.cxx \
-    src/ClippedFullFuzzyDataSet.cxx \
     src/CheckName.cxx \
     src/Check.cxx \
     src/BaseGenetics.cxx \
@@ -225,7 +223,9 @@ SOURCES += src/TreatmentSample.cxx \
     src/MultiMarking/Dice.cxx \
     src/MultiMarking/Jaccard.cxx \
     src/Recognizer.cxx \
-    src/FuzzyMultiDataExt/ASStageSimple.cxx
+    src/FuzzyMultiDataExt/ASStageSimple.cxx \
+    src/FuzzyDataSet_old.cxx \
+    src/FuzzyDataSet.cxx
 HEADERS += src/undefs.h \
     src/TreatmentSample.h \
     src/TreatmentFactory.h \
@@ -302,7 +302,6 @@ HEADERS += src/undefs.h \
     src/GoalStrategy.h \
     src/GaOps.h \
     src/FuzzyMultiDataLearnAlgorithm.h \
-    src/FuzzyDataSet.h \
     src/FuzzyDataLearnAlgorithm.h \
     src/FullFuzzyDataSet.h \
     src/ExtGenetics.h \
@@ -322,7 +321,6 @@ HEADERS += src/undefs.h \
     src/CompareStatisticSimple.h \
     src/CompareStatistic.h \
     src/CompareClassFactory.h \
-    src/ClippedFullFuzzyDataSet.h \
     src/CheckName.h \
     src/Check.h \
     src/BaseGenetics.h \
@@ -435,5 +433,7 @@ HEADERS += src/undefs.h \
     src/MultiMarking/MetricsEqual.h \
     src/MultiMarking/Dice.h \
     src/MultiMarking/Jaccard.h \
-    src/FuzzyMultiDataExt/ASStageSimple.h
+    src/FuzzyMultiDataExt/ASStageSimple.h \
+    src/FuzzyDataSet_old.h \
+    src/FuzzyDataSet.h
 OTHER_FILES += 
