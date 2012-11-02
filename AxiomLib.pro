@@ -224,7 +224,8 @@ SOURCES += src/TreatmentSample.cxx \
     src/MultiMarking/multimarks.cxx \
     src/MultiMarking/Dice.cxx \
     src/MultiMarking/Jaccard.cxx \
-    src/Recognizer.cxx
+    src/Recognizer.cxx \
+    src/FuzzyMultiDataExt/ASStageSimple.cxx
 HEADERS += src/undefs.h \
     src/TreatmentSample.h \
     src/TreatmentFactory.h \
@@ -433,5 +434,6 @@ HEADERS += src/undefs.h \
     src/MultiMarking/MetricsBetweenSets2.h \
     src/MultiMarking/MetricsEqual.h \
     src/MultiMarking/Dice.h \
-    src/MultiMarking/Jaccard.h
+    src/MultiMarking/Jaccard.h \
+    src/FuzzyMultiDataExt/ASStageSimple.h
 OTHER_FILES += 
