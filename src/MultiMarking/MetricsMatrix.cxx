@@ -17,8 +17,8 @@ namespace MultiMarking {
 
     double Matrix::compute(const std::vector<bool>& v1, const std::vector<bool>& v2) { // Передаем столбцы матрицы
         if ( v1[currentAxiomNumber] == v2[currentAxiomNumber] )
-            return 1;
-        return 0;
+            return 0;
+        return 1;
     }
 
     void Matrix::computeDTWForMetric(const MultiMark &t, int i, int Nmin, int Nmax, const MultiMark &ref, std::vector<double> &result)
