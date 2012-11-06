@@ -1,5 +1,7 @@
 # Файл, в котором задаются пути к либам и некоторые общие параметры сборки проектов из AxiomLib
 
+DEFINES += "BOOST_FILESYSTEM_VERSION=2"
+
 ### Пути include'ов ###
 
 # Для windows
@@ -12,7 +14,7 @@ win32 {
 }
 # Для unix
 unix {
-	AXIOMLIB_INCLUDE = /home/wictor/Projects/axiomlib/src
+        AXIOMLIB_INCLUDE = /home/wictor/projects/axiomlib/src
         QWT_INCLUDE = "/usr/include/qwt-qt4"
         MPICH_INCLUDE = "/usr/include/mpich2"
         BOOST_INCLUDE = "/home/wictor/boost_1_46_1/include"
@@ -44,18 +46,17 @@ debug {
 # Для unix
 unix {
 linux-icc-64|linux-icc {
-        AXIOMLIB_LIB = /home/wictor/Projects/axiomlib/release/libAxiomLib.a
+        AXIOMLIB_LIB = /home/wictor/projects/axiomlib/release/libAxiomLib.a
 } else {
-        AXIOMLIB_LIB = /home/wictor/Projects/axiomlib/release/libAxiomLib.a
+debug{
+		AXIOMLIB_LIB = /home/wictor/projects/axiomlib/debug/libAxiomLib.a
+} release {
+		AXIOMLIB_LIB = /home/wictor/projects/axiomlib/release/libAxiomLib.a
 }
-        BOOST_LIBDIR = /home/wictor/boost_1_46_1/lib
-
+}
+        BOOST_LIB = -lboost_filesystem -lboost_system -lboost_thread -lboost_serialization
         MPICH_LIB = -lmpi -lgomp -lmpich
 	QWT_LIB = -lqwt-qt4
-        BOOST_LIB = $${BOOST_LIBDIR}/libboost_filesystem.a \
-        $${BOOST_LIBDIR}/libboost_system.a \
-        $${BOOST_LIBDIR}/libboost_serialization.a \
-        $${BOOST_LIBDIR}/libboost_thread.a
         OTHER_LIB = -lpthread
 }
 
