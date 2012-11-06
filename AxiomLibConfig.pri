@@ -52,7 +52,7 @@ release {
 
 unix {
 #Здесь нужно указать абсолютнй путь к директории src
-AXIOMLIB_INCLUDE = /home/mrmrmr/study/axiomlib/branches/armkor
+AXIOMLIB_INCLUDE = /home/mrmrmr/study/axiomlib/branches/armkor/src
 #Здесь нужно указать абсолютные пути к файлу libAxiomLib.a
 debug{
         AXIOMLIB_LIB = /home/mrmrmr/study/axiomlib/branches/armkor/debug/libAxiomLib.a
