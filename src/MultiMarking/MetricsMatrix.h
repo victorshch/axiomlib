@@ -15,19 +15,14 @@ namespace AxiomLib {
 namespace MultiMarking {
 
 class Matrix : public DTWMetric {
-
 public:
-
-
-
-    int currentAxiomNumber;
-
     Matrix() {}
     //
-    double compute (const std::vector<bool>& v1, const std::vector<bool>& v2);
-
+	double compute(const std::vector<bool>& v1, const std::vector<bool>& v2);
     void computeDTWForMetric(const MultiMark &t, int i, int Nmin, int Nmax, const MultiMark &ref, std::vector<double> &result);
 
+protected:
+	int currentAxiomNumber;
 };// end of class
 
 };//  end of namespace MultiMraking

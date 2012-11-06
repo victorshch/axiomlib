@@ -5,6 +5,7 @@
 #include "RecognizerMetric.h"
 #include "RecognizerExtend.h"
 #include "RecognizerFactory.h"
+#include "DataSet.h"
 #include "Defines.h"
 #include <stdio.h>
 #include <time.h>
@@ -45,12 +46,40 @@ int main (int argc, char** argv) {
 
 		if (specOutputForGui) { std::cout << str_systemMsg_prog << "20\n"; std::cout.flush(); }
 
+		std::cout << "Reading DataSet" << std::endl;
+
+		// Инициализируем dataSet
+		std::string datasetDir, datasetName;
+		if (env.getStringParamValue(datasetDir, "BaseDataSetDir") < 0)
+			throw AxiomLibException("test_execute: data set directory is undefined.");
+		if (env.getStringParamValue(datasetName, "DataSet") < 0)
+			throw AxiomLibException("test_execute: data set is undefined.");
+
+		// считываем необходимые для данного класса параметры о наборе данных
+		EnvDataSet envDataSet;
+		envDataSet.readConfigFile (datasetDir, datasetName);
+
+		DataSet dataSet;
+
+		std::vector<int> params;
+
+		// установка корректного обозначения NullStr - обозначение остутсвия в данной точке ряда какого либо нештатного поведения
+		dataSet.setNullStr (envDataSet);
+		// собственно считываем набор данных - заводим его во внутреннее представление
+		dataSet.readDataSet(datasetDir, datasetName);
+		// восстанавливаем в данном классе вектор индексов параметров в каноническом представленнии по которым вести поиск нештатых ситуаций
+		dataSet.getParamNums(params, env, envDataSet);
+
+		std::cout << "Reading AxiomSetPop" << std::endl;
+
 		// Заполняем набор систем аксиом
 		AxiomSetPop axiomSetPop;
 		// инициализируем набор систем аксиом
 		axiomSetPop.initFromEnv(env);
 
 		if (specOutputForGui) { std::cout << str_systemMsg_prog << "30\n"; std::cout.flush(); }
+
+		std::cout << "Initializing GoalStrategy" << std::endl;
 
 		// Инициализируем стратегию вычисления целевой фуекции
 		string goalStrategyName;
@@ -62,6 +91,8 @@ int main (int argc, char** argv) {
 		goalStrategy->setParamsFromEnv(env);
 
 		if (specOutputForGui) { std::cout << str_systemMsg_prog << "40\n"; std::cout.flush(); }
+
+		std::cout << "Initializing Recognizer" << std::endl;
 
 		// Класс распознавателя
 		//RecognizerExtend *recognizer;
@@ -82,13 +113,19 @@ int main (int argc, char** argv) {
 
 		if (specOutputForGui) { std::cout << str_systemMsg_prog << "50\n"; std::cout.flush(); }
 
+		std::cout << "Running recognizer" << std::endl;
+
 		// 1. Прогоняем на существующей популяции алгоритм разметки и распознавания, получаем число ошибок первого и второго рода, заполняем статистику.
-		recognizer->run(axiomSetPop);
+		for(int i = 0; i < axiomSetPop.size(); ++i) {
+			int firstKindErrors = 0;
+			int secondKindErrors = 0;
+			double goal;
+			recognizer->run(axiomSetPop.axiomSet(i), dataSet, params, firstKindErrors, secondKindErrors);
+			goal = goalStrategy->compute(firstKindErrors, secondKindErrors);
+			axiomSetPop.axiomSet(i).setStats(firstKindErrors, secondKindErrors, goal);
+		}
 
 		if (specOutputForGui) { std::cout << str_systemMsg_prog << "70\n"; std::cout.flush(); }
-
-		// 2. Прогоняем вычисление H(first, second)
-		goalStrategy->compute(axiomSetPop);
 
 		if (specOutputForGui) { std::cout << str_systemMsg_prog << "80\n"; std::cout.flush(); }
 
@@ -110,6 +147,7 @@ int main (int argc, char** argv) {
 		std::cout << "\n 	Goals are \n";
 		for (int asNum = 0; asNum < axiomSetPop.size(); asNum++) {
 			axiomSetPop.getStats (asNum, tmpFirst, tmpSecond, goal);
+			std::cout << axiomSetPop.axiomSet(asNum).name() << " : ";
 			std::cout << "	first " << tmpFirst;
 			std::cout << "	second " << tmpSecond;
 			std::cout << "	goal " << goal << "\n";

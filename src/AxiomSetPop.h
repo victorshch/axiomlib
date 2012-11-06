@@ -56,8 +56,8 @@ public:
   void setStats (const int asNum, signed int nf, signed int ns, double g);
   // получение статистики, без проверок, для системы аксиом под номером asNum в векторе asPop
   void getStats (const int asNum, signed int& nf, signed int& ns, double& g) const;
-  // copy axiom set with statistic by number asNum from this class
-  AxiomSetWithStats& copyAxiomSet (const int asNum);
+  // axiom set with statistic by number asNum from this class
+  AxiomSetWithStats& axiomSet (const int asNum);
   
   // функция проверяет - существует ли система аксиом с целевой функцией ниже заданного значения, попутно выбираем лучшую систему аксиом
   bool exit (double exitCond, AxiomSetWithStats &bestAxiomSet);

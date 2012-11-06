@@ -82,7 +82,7 @@ class Recognizer {
   // Провести разметку рядов в системе аксиом,
   // прогнать распознаватель, посчитать количество
   // ошибок 1 и второго рода
-  virtual signed int run (AxiomSetPop& pop) = 0;
+  virtual signed int run(AxiomSetPop& pop) = 0;
   
   virtual signed int run (AxiomSetPop& pop, std::vector <double> &precs) = 0;
 

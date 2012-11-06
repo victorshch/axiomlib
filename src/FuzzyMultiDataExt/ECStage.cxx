@@ -68,7 +68,7 @@ int ECStage::initFromEnv(const Environment &env) {
 void ecSelector(ECSelection& ec) { ec.setSelected(true); }
 
 void ECStage::run() {
-	if(Logger::getInstance()->debug()) {
+	if(Logger::getInstance()->isWritingDebug()) {
 		Logger::getInstance()->writeDebug("Starting EC selection stage");
 		Logger::getInstance()->writeDebug("numOfLevels = "+boost::lexical_cast<std::string>(numOfLevels));
 	}

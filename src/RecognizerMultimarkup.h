@@ -13,21 +13,23 @@
 
 #include "RecognizerImplBase.h"
 #include "MultiMarking/dtwmetric.h"
+#include "MultiMarking/AxiomUsageWrapper.h"
 #include "Environment.h"
 #include "AxiomSet.h"
 #include "DataSet.h"
 
 namespace AxiomLib {
 
+typedef double (*ResultStrategy)(const std::vector<double>& v);
+
 class RecognizerMultiMarkup : public RecognizerImplBase {
 
 private:
-
-
-
-    double stretch; // используется при указании размеров окна
-    MultiMarking::DTWMetric* metric;//используемая метрика
-    std::string name_metric; // name of metric
+	double mStretch; // используется при указании размеров окна
+	MultiMarking::DTWMetric* mMetric;
+	std::string mMetricName; // name of metric
+	ResultStrategy mResultStrategy;
+	bool mCancelAxioms;
 
     ~RecognizerMultiMarkup();
 
@@ -43,19 +45,14 @@ protected:
                                                               std::vector<bool>& testAxiomUsage) ;
 public:
 
-    RecognizerMultiMarkup() : metric(0) {}
+	RecognizerMultiMarkup() : mMetric(0) {}
     // Задание параметров класса-потомка считываю имя создаю метрику
     int initFromEnv (const Environment& env) ;
 
     // Функция возвращает копию распознавателя
-    // Рекомендуется реализовывать вызовом конструктора копирования
     Recognizer* copy (void) ;
 
     RecognizerMultiMarkup(const RecognizerMultiMarkup& other);
-
-
-
-
 
 };// end of class
 

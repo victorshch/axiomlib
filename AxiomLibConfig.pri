@@ -21,18 +21,29 @@ win32 {
 unix {
         MPICH_INCLUDE = /usr/include/mpich2/
 	MPICH_LIB = -lmpi -lgomp -lmpich
-	BOOST_INCLUDE = "/home/wictor/boost_1_46_1/include"
 
-	BOOST_LIBDIR = "/home/wictor/boost_1_46_1/include"
 	BOOST_LIB = -lboost_filesystem -lboost_serialization -lboost_system -lboost_thread
+
 
 
 	OTHER_INCLUDE = 
 	OTHER_LIB = -lpthread
 }
 
-#Здесь нужно указать абсолютнй путь к директории src
-AXIOMLIB_INCLUDE = F:/Workspace/Axiomlib_working_copy2/src
+win32 {
+
+debug {
+        AXIOMLIB_LIB = F:/Workspace/Axiomlib_working_copy2/debug/AxiomLib.lib
+        QWT_LIB = D:/lib/qwt-5.2.1/lib/qwtd.lib
+} release {
+        AXIOMLIB_LIB = F:/Workspace/Axiomlib_working_copy2/release/AxiomLib.lib
+        QWT_LIB = D:/lib/qwt-5.2.1/lib/qwt.lib
+}
+        BOOST_LIB = /LIBPATH:"C:/Program Files (x86)/boost/boost_1_47/lib"
+        MPICH_LIB = "C:/Program Files (x86)/MPICH2/lib/mpi.lib"
+        #MPICH_LIB = /LIBPATH:"C:/Program Files (x86)/MPICH2/lib"
+
+}
 
 release {
 #для boost.ublas
@@ -40,6 +51,8 @@ release {
 }
 
 unix {
+#Здесь нужно указать абсолютнй путь к директории src
+AXIOMLIB_INCLUDE = /home/mrmrmr/study/axiomlib/branches/armkor
 #Здесь нужно указать абсолютные пути к файлу libAxiomLib.a
 debug{
         AXIOMLIB_LIB = /home/mrmrmr/study/axiomlib/branches/armkor/debug/libAxiomLib.a
@@ -68,7 +81,7 @@ AXIOMLIB_LIBNAME = AxiomLib
 win32 {
 	QMAKE_CXXFLAGS_RELEASE += -openmp
 	QMAKE_CXXFLAGS_RELEASE += -o2 -DRELEASE
-	QMAKE_CXXFLAGS_DEBUG += /ZI /Od
+        QMAKE_CXXFLAGS_DEBUG += /ZI /Od
 }
 # Для unix
 linux-g++|linux-g++-64 {

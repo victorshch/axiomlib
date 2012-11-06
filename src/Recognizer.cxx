@@ -16,3 +16,4 @@ double Recognizer::learn(TemplateRecognizer &templateRecognizer, int &resFirst, 
 	run(*(templateRecognizer.axiomSet), templateRecognizer.prepDataSet, templateRecognizer.params, resFirst, resSecond, stat, asIndex);
 	return res;
 }
+

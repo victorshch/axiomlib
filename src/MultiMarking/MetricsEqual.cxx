@@ -23,11 +23,11 @@ namespace MultiMarking {
         }
         for ( int i=0;i<len1;i++) {
             if ( v1[i] != v2[i] ) {
-                return 1;
+				return 1;
             }
         }
 
-        return 0;
+		return 0;
     }
 
     Equal::Equal(){ }

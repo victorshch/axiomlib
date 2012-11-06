@@ -3,8 +3,6 @@
 # -------------------------------------------------
 
 CONFIG += static
-CONFIG -= debug
-CONFIG += release
 
 include(AxiomLibConfig.pri)
 
@@ -28,7 +26,6 @@ release {
 TEMPLATE = lib
 DEFINES += AXIOMLIB_LIBRARY
 
-# ##    ###
 # windows
 win32 { 
     QMAKE_CXXFLAGS_RELEASE += -openmp
@@ -58,13 +55,10 @@ linux-icc|linux-icc-64 {
     QMAKE_CXXFLAGS_RELEASE += -openmp
     QMAKE_LFLAGS_RELEASE += -openmp
 }
-win32:# пФЛМАЮЕОЙЕ ЧПТОЙОЗПЧ, УЧСЪБООЩИ УП УФБОДБТФОЩНЙ ЖХОЛГЙСНЙ,
 
-# ЛПФПТЩЕ cl УЮЙФБЕФ ОЕВЕЪП� БУОЩНЙ
 QMAKE_CXXFLAGS += -D_SCL_SECURE_NO_WARNINGS \
     -D_CRT_SECURE_NO_WARNINGS
 
-# ##   ###
 SOURCES += src/TreatmentSample.cxx \
     src/TreatmentFactory.cxx \
     src/TransmuteTpl.cxx \
@@ -225,7 +219,12 @@ SOURCES += src/TreatmentSample.cxx \
     src/Recognizer.cxx \
     src/FuzzyMultiDataExt/ASStageSimple.cxx \
     src/FuzzyDataSet_old.cxx \
-    src/FuzzyDataSet.cxx
+    src/FuzzyDataSet.cxx \
+    src/MultiMarking/AsymmHamming.cpp \
+    src/MultiMarking/AsymmBetweenSets.cpp \
+    src/MultiMarking/WeakEqual.cpp \
+    src/MultiMarking/Priority.cpp
+
 HEADERS += src/undefs.h \
     src/TreatmentSample.h \
     src/TreatmentFactory.h \
@@ -435,5 +434,10 @@ HEADERS += src/undefs.h \
     src/MultiMarking/Jaccard.h \
     src/FuzzyMultiDataExt/ASStageSimple.h \
     src/FuzzyDataSet_old.h \
-    src/FuzzyDataSet.h
+    src/FuzzyDataSet.h \
+    src/MultiMarking/AsymmHamming.h \
+    src/MultiMarking/AsymmBetweenSets.h \
+    src/MultiMarking/WeakEqual.h \
+    src/MultiMarking/Priority.h
+
 OTHER_FILES += 

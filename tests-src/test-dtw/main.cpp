@@ -16,12 +16,12 @@ int main()
     Equal* metric;
     metric=new Equal;/*
     MultiMark razmetka(3),etalon(3);
-    // п▓я▀п╢п╣п╩п╣п╫п╦п╣ п╢п╟п╫п╫я▀я┘
+    // Выделение данных
     for (int i=0;i<3;i++){
         razmetka[i].resize(2);
         etalon[i].resize(2);
     }
-    // п≈п╟п©п╬п╩п╫п╣п╫п╦п╣
+    // Заполнение
     razmetka[0][0]=0;razmetka[0][1]=1;
     razmetka[1][0]=1;razmetka[1][1]=0;
     razmetka[2][0]=1;razmetka[2][1]=1;
@@ -38,12 +38,12 @@ int main()
     std::vector<double> result2(2);
 
     MultiMark razmetka2(3),etalon2(2);
-    // п▓я▀п╢п╣п╩п╣п╫п╦п╣ п╢п╟п╫п╫я▀я┘
+    // Выделение данных
     for (int i=0;i<3;i++){
         razmetka2[i].resize(2);
         if (i!=2) etalon2[i].resize(2);
     }
-    // п≈п╟п©п╬п╩п╫п╣п╫п╦п╣
+    // Заполнение
     razmetka2[0][0]=0;razmetka2[0][1]=0;
     razmetka2[1][0]=0;razmetka2[1][1]=1;
     razmetka2[2][0]=1;razmetka2[2][1]=1;
@@ -85,7 +85,7 @@ int main()
 
     DTWMetric::computeDTW (metric, razmetka3, 7 ,7,7, etalon3, result3);
     cout <<" Answer3  " << result3[0] ;
-   // п╒п╣я│я┌ я─п╟п╥п╪п╣я┌п╨п╦
+   // Тест разметки
 
     AxiomSet axiomSet;
     vector <MultiMarking::MultiMark> etalon_;

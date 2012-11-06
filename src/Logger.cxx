@@ -16,11 +16,11 @@ Logger::Logger() : m_comments(false), m_debug(false), m_file(false), m_timestamp
 {
 }
 
-bool Logger::comments() const {
+bool Logger::isWritingComments() const {
 	return m_comments;
 }
 
-bool Logger::debug() const {
+bool Logger::isWritingDebug() const {
 	return m_debug;
 }
 
@@ -54,15 +54,25 @@ void Logger::setTimeStamp(bool value) {
 }
 
 void Logger::writeComment(const std::string &value) const {
-	if(comments()) {
+	if(isWritingComments()) {
 		write(value);
 	}
 }
 
 void Logger::writeDebug(const std::string &str) const {
-	if(debug()) {
+	if(isWritingDebug()) {
 		write(str);
 	}
+}
+
+void Logger::comment(const std::string &str)
+{
+	getInstance()->writeComment(str);
+}
+
+void Logger::debug(const std::string &str)
+{
+	getInstance()->writeDebug(str);
 }
 
 std::string Logger::getTimeStamp() const {
