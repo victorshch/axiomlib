@@ -14,11 +14,11 @@ win32 {
 }
 # Для unix
 unix {
-	AXIOMLIB_INCLUDE = /home/wictor/Projects/axiomlib/src
+        AXIOMLIB_INCLUDE = /home/wictor/projects/axiomlib/src
         QWT_INCLUDE = "/usr/include/qwt-qt4"
         MPICH_INCLUDE = "/usr/include/mpich2"
-        BOOST_INCLUDE = "/home/wictor/boost_1_46_1/include"
-	OTHER_INCLUDE =	
+        BOOST_INCLUDE = "/usr/include/boost"
+        OTHER_INCLUDE =	/home/wictor/Shark/include
 }
 
 ### Спецификация библиотек ###
@@ -46,19 +46,14 @@ debug {
 # Для unix
 unix {
 linux-icc-64|linux-icc {
-        AXIOMLIB_LIB = /home/wictor/Projects/axiomlib/release/libAxiomLib.a
+        AXIOMLIB_LIB = /home/wictor/projects/axiomlib/release/libAxiomLib.a
 } else {
-        AXIOMLIB_LIB = /home/wictor/Projects/axiomlib/release/libAxiomLib.a
+        AXIOMLIB_LIB = /home/wictor/projects/axiomlib/release/libAxiomLib.a
 }
-        BOOST_LIBDIR = /home/wictor/boost_1_46_1/lib
-
+        BOOST_LIB = -lboost_filesystem -lboost_system -lboost_thread -lboost_serialization
         MPICH_LIB = -lmpi -lgomp -lmpich
 	QWT_LIB = -lqwt-qt4
-        BOOST_LIB = $${BOOST_LIBDIR}/libboost_filesystem.a \
-        $${BOOST_LIBDIR}/libboost_system.a \
-        $${BOOST_LIBDIR}/libboost_serialization.a \
-        $${BOOST_LIBDIR}/libboost_thread.a
-        OTHER_LIB = -lpthread
+        OTHER_LIB = -L/home/wictor/Shark/lib -lpthread -lshark -lblas -lcblas -latlas -llapack
 }
 
 
@@ -73,6 +68,8 @@ win32 {
 # Для unix
 linux-g++|linux-g++-64 {
         QMAKE_CXXFLAGS_RELEASE += -fopenmp -o2 -std=c++0x
+        QMAKE_CXXFLAGS += -std=c++0x
+
 }
 linux-icc|linux-icc-64 {
         QMAKE_CXXFLAGS += -std=c++0x -no-multibyte-chars -wd913
