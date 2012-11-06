@@ -14,6 +14,8 @@
 
 #include <boost/numeric/ublas/matrix.hpp>
 
+#include <string>
+
 #include "multimarks.h"
 
 namespace AxiomLib {
@@ -33,7 +35,6 @@ class DTWMetric {
 
     //
     ~DTWMetric() { }
-
 
    // Инициализация метрики
    static DTWMetric* getMetric(std::string name);
