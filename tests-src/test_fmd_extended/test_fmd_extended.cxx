@@ -30,7 +30,7 @@ struct ResultInfo {
 
 	ResultInfo() : objectiveValue(-1), firstKindErrors(-1), secondKindErrors(-1) {}
 
-	bool operator< (const ResultInfo& other) {
+    bool operator< (const ResultInfo& other) const {
 		return objectiveValue < other.objectiveValue;
 	}
 };
