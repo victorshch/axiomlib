@@ -465,7 +465,7 @@ void DataSetBase::setupParamNums(const Environment &env, const EnvDataSet &envDa
 	 
 	 // создаем сепаратор - в параметрах задаем символы разделяющие в обрабатываемом файле разные слова и числа между собой
 	 // стандарт csv допускает использование как ;, так и , в качестве разделителя
-	 boost::char_separator<char> sep(",;:	");
+     boost::char_separator<char> sep(",;:	\t\r\n");
  
 	 //считываем и обрабатываем первую строку файла - содежащуюю параметры
 	 if (!file.eof())  {
@@ -605,7 +605,7 @@ void DataSetBase::setupParamNums(const Environment &env, const EnvDataSet &envDa
 				  // строк соответсвующем каноническому порядку параметров
 	 
 	 // создаем сепаратор - в параметрах задаем символы разделяющие в обрабатываемом файле разные слова и числа между собой
-	 boost::char_separator<char> sep(";:	");
+     boost::char_separator<char> sep(";:	\r\n");
  
 	 //считываем и обрабатываем первую строку файла - содежащуюю параметры
 	 if (!file.eof())  {
