@@ -770,11 +770,19 @@ void DataSetBase::setupParamNums(const Environment &env, const EnvDataSet &envDa
  
  bool DataSetBase::checkRefCSVName(const std::string& currentFileName) {
 	 // шаблон - которому должны удовлеворять имена файлов с эталонными рядами для классов неисправностей
-	 static const std::string fileNameFirstHalf ("ref");
-	 static const std::string fileNameLastHalf (".csv");
+
+     if(currentFileName.size() <= 4 || currentFileName[currentFileName.size() - 4] != '.') {
+         return false;
+     }
+
+     std::string extension = currentFileName.substr(currentFileName.size() - 3);
+     return extension == "csv";
+
+//	 static const std::string fileNameFirstHalf ("ref");
+//	 static const std::string fileNameLastHalf (".csv");
 	 
-	 return (checkName (currentFileName, -1, 0, fileNameFirstHalf)) 
-			 && (checkName (currentFileName, (int) currentFileName.size() - 5, (int) currentFileName.size() - 4, fileNameLastHalf));
+//	 return (checkName (currentFileName, -1, 0, fileNameFirstHalf))
+//			 && (checkName (currentFileName, (int) currentFileName.size() - 5, (int) currentFileName.size() - 4, fileNameLastHalf));
  }
  
  /****************************************************************************
