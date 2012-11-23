@@ -45,9 +45,9 @@ debug {
 
 # Для unix
 unix {
-linux-icc-64|linux-icc {
-        AXIOMLIB_LIB = /home/wictor/projects/axiomlib/release/libAxiomLib.a
-} else {
+debug {
+		AXIOMLIB_LIB = /home/wictor/projects/axiomlib/debug/libAxiomLib.a
+} release {
         AXIOMLIB_LIB = /home/wictor/projects/axiomlib/release/libAxiomLib.a
 }
         BOOST_LIB = -lboost_filesystem -lboost_system -lboost_thread -lboost_serialization
@@ -61,18 +61,25 @@ linux-icc-64|linux-icc {
 
 # Для windows
 win32 {
+!noopenmp {
 	QMAKE_CXXFLAGS_RELEASE += -openmp
+}
 	QMAKE_CXXFLAGS_RELEASE += -o2 -DRELEASE
         QMAKE_CXXFLAGS_DEBUG += /ZI /Od
 }
 # Для unix
 linux-g++|linux-g++-64 {
-        QMAKE_CXXFLAGS_RELEASE += -fopenmp -o2 -std=c++0x
+!noopenmp {
+		QMAKE_CXXFLAGS_RELEASE += -fopenmp
+}
+		QMAKE_CXXFLAGS_RELEASE += -o2 -std=c++0x
 }
 linux-icc|linux-icc-64 {
         QMAKE_CXXFLAGS += -std=c++0x -no-multibyte-chars -wd913
+!noopenmp{
         QMAKE_CXXFLAGS_RELEASE += -openmp
         QMAKE_LFLAGS_RELEASE += -openmp
+}
 }
 
 ### Дополнительные флаги линковки ###
