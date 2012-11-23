@@ -14,7 +14,7 @@
 
 #include <boost/shared_ptr.hpp>
 
-#include "ClippedFullFuzzyDataSet.h"
+#include "FuzzyDataSet.h"
 #include "AxiomExpr.h"
 #include "ElemCondPlus.h"
 
@@ -25,11 +25,11 @@ class SatPointSet
 {
 public:
 	// Создание набора точек выполнимости по ЭУ и датасету
-    SatPointSet(const ElemCondPlus &ecPlus, const ClippedFullFuzzyDataSet &dataSet, ClippedFullFuzzyDataSet::DataSetDivisionType division, 
+    SatPointSet(const ElemCondPlus &ecPlus, const FuzzyDataSet &dataSet, FuzzyDataSet::DataSetDivisionType division, 
 				int classNo);
 	
 	// Создание набора точек выполнимости по аксиоме и датасету
-	SatPointSet(const AxiomExpr &axiom, const ClippedFullFuzzyDataSet &dataSet, ClippedFullFuzzyDataSet::DataSetDivisionType division, int classNo);
+	SatPointSet(const AxiomExpr &axiom, const FuzzyDataSet &dataSet, FuzzyDataSet::DataSetDivisionType division, int classNo);
 		
 	// Число траекторий
 	int size() const { return m_satPoints.size(); }

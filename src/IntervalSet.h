@@ -12,7 +12,7 @@
 #ifndef INTERVALSET_H
 #define INTERVALSET_H
 
-#include "ClippedFullFuzzyDataSet.h"
+#include "FuzzyDataSet.h"
 #include "IntInterval.h"
 
 #include <boost/serialization/access.hpp>
@@ -39,13 +39,13 @@ private:
 	IntervalSet() {}
 public:
 	
-	IntervalSet(const ClippedFullFuzzyDataSet& dataSet, ClippedFullFuzzyDataSet::DataSetDivisionType division);
+	IntervalSet(const FuzzyDataSet& dataSet, FuzzyDataSet::DataSetDivisionType division);
 	
 	// Сохраняет интервалы и сбрасывает их в dataset'е
-	static IntervalSet reset(ClippedFullFuzzyDataSet& dataSet, ClippedFullFuzzyDataSet::DataSetDivisionType division);
+	static IntervalSet reset(FuzzyDataSet& dataSet, FuzzyDataSet::DataSetDivisionType division);
 	
 	// Применяет данный набор ограничений к датасету
-	void apply(ClippedFullFuzzyDataSet& dataSet, ClippedFullFuzzyDataSet::DataSetDivisionType division) const;
+	void apply(FuzzyDataSet& dataSet, FuzzyDataSet::DataSetDivisionType division) const;
 	// Возвращает интервал отсечения для заданного класса и траектрии
 	// (classNo < 0 означает нормальное поведение)
 	const IntInterval &getClippingInterval(int classNo, int multiTSNo) const;

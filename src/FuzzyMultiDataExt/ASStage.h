@@ -17,7 +17,7 @@
 
 #include "../Environment.h"
 
-#include "../ClippedFullFuzzyDataSet.h"
+#include "../FuzzyDataSet.h"
 
 #include "Common.h"
 #include "ForwardDeclarations.h"
@@ -29,7 +29,7 @@ namespace FuzzyMultiDataExt {
 class ASStage
 {
 public:
-	static ASStage* create(const std::string& name, ClippedFullFuzzyDataSet* fuzzyDataSet, 
+	static ASStage* create(const std::string& name, FuzzyDataSet* fuzzyDataSet, 
 						   AXStage* stage2);
 	
 	virtual void initFromEnv(const Environment& env) = 0;

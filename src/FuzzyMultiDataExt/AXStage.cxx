@@ -22,7 +22,7 @@
 using namespace AxiomLib;
 using namespace AxiomLib::FuzzyMultiDataExt;
 
-AXStage::AXStage(ClippedFullFuzzyDataSet *fuzzyDataSet, ECStage *stage1)
+AXStage::AXStage(FuzzyDataSet *fuzzyDataSet, ECStage *stage1)
     :fuzzyDataSet(fuzzyDataSet), stage1(stage1), logger(Logger::getInstance())
 {
 	//TODO: инициализация дефлотными значениями
@@ -753,11 +753,11 @@ void AXStage::addToEcSatPoints(int aType, ElemCondPlus &ecPlus) {
 	ecPlus.index = index;
 	
 	PSatPointSet normal = PSatPointSet(
-			new SatPointSet(ecPlus, *fuzzyDataSet, ClippedFullFuzzyDataSet::Reference, -1)
+			new SatPointSet(ecPlus, *fuzzyDataSet, FuzzyDataSet::Reference, -1)
 			);
 	
 	PSatPointSet abnorm = PSatPointSet(
-			new SatPointSet(ecPlus, *fuzzyDataSet, ClippedFullFuzzyDataSet::Reference, aType)
+			new SatPointSet(ecPlus, *fuzzyDataSet, FuzzyDataSet::Reference, aType)
 			);
 			
 	ecSatPoints[aType].push_back(ReducedSatPointSet(normal, abnorm));

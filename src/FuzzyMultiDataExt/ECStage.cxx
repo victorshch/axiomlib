@@ -22,7 +22,7 @@
 using namespace AxiomLib;
 using namespace AxiomLib::FuzzyMultiDataExt;
 
-ECStage::ECStage(ClippedFullFuzzyDataSet* fuzzyDataSet, 
+ECStage::ECStage(FuzzyDataSet* fuzzyDataSet, 
                                            ECTypeStage* stage0) 
     : fuzzyDataSet(fuzzyDataSet), stage0(stage0), logger(Logger::getInstance())
 {
@@ -301,7 +301,7 @@ double ECStage::matterECFunc (ElemCondPlusStat &ec, const int param, const int a
 	int classCount = 0;
 	int classLen = 0;
 
-	int classMultiTSCount = fuzzyDataSet->getMutiTSCount(ClippedFullFuzzyDataSet::Reference, abnormalBehaviourType);
+	int classMultiTSCount = fuzzyDataSet->getMutiTSCount(FuzzyDataSet::Reference, abnormalBehaviourType);
 	
 	// Этот resize будет взывать выделение памяти только тогда,
 	// когда она еще не выделена.
@@ -338,7 +338,7 @@ double ECStage::matterECFunc (ElemCondPlusStat &ec, const int param, const int a
 
 	// Цикл по траекториям нормального поведения
 	//fuzzyDataSet->getNormalClassSize (numOfNormalMultiTS, numOfNormalTS);
-	int normalMultiTSCount = fuzzyDataSet->getMutiTSCount(ClippedFullFuzzyDataSet::Reference, -1);
+	int normalMultiTSCount = fuzzyDataSet->getMutiTSCount(FuzzyDataSet::Reference, -1);
 
 	classCount = 0;
 	classLen = 0;

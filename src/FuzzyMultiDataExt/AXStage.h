@@ -13,7 +13,7 @@
 #include <boost/tuple/tuple.hpp>
 
 #include "../Environment.h"
-#include "../ClippedFullFuzzyDataSet.h"
+#include "../FuzzyDataSet.h"
 #include "../Logger.h"
 #include "../SatPointSet.h"
 
@@ -30,7 +30,7 @@ typedef ElementSelection<AxiomLib::AxiomExprPlus> AXSelection;
 class AXStage
 {
 public:
-    AXStage(ClippedFullFuzzyDataSet* fuzzyDataSet, 
+    AXStage(FuzzyDataSet* fuzzyDataSet, 
 	                     ECStage* stage1);
 	
 	void initFromEnv(const Environment& env);
@@ -64,7 +64,7 @@ private:
 	// Они используются для того, чтобы уменьшить число аллокаций памяти
 	mutable std::vector<ReducedSatPointSet> m_temporary1, m_temporary2;
 	
-	const ClippedFullFuzzyDataSet* fuzzyDataSet;
+	const FuzzyDataSet* fuzzyDataSet;
 	const ECStage* stage1;
 	
 	// Параметры алгоритма настройки аксиом

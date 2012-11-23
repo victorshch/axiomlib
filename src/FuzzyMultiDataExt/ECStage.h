@@ -13,7 +13,7 @@
 #include <boost/tuple/tuple.hpp>
 
 #include "../Environment.h"
-#include "../ClippedFullFuzzyDataSet.h"
+#include "../FuzzyDataSet.h"
 #include "Common.h"
 #include "ForwardDeclarations.h"
 
@@ -27,7 +27,7 @@ typedef ElementSelection<AxiomLib::ElemCondPlusStat> ECSelection;
 class ECStage
 {
 public:	
-    ECStage(ClippedFullFuzzyDataSet* fuzzyDataSet, 
+    ECStage(FuzzyDataSet* fuzzyDataSet, 
 	                     ECTypeStage* stage0);
 	
 	void setECs(const std::vector<std::vector<std::vector<std::vector<ElemCondPlusStat> > > > & value);
@@ -62,7 +62,7 @@ private:
 
 	typedef boost::tuples::tuple<double, double, double, double> StatVector;
 	
-	const ClippedFullFuzzyDataSet* fuzzyDataSet;
+	const FuzzyDataSet* fuzzyDataSet;
 	const ECTypeStage* stage0;
 	
 	ECMultiVector elemConditions;	

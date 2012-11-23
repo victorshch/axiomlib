@@ -4,7 +4,7 @@
 
 using namespace AxiomLib;
 
-SatPointSet::SatPointSet(const ElemCondPlus &ecPlus, const ClippedFullFuzzyDataSet &dataSet, ClippedFullFuzzyDataSet::DataSetDivisionType division, int classNo) {
+SatPointSet::SatPointSet(const ElemCondPlus &ecPlus, const FuzzyDataSet &dataSet, FuzzyDataSet::DataSetDivisionType division, int classNo) {
 	std::vector<int> sizeVector;
 	dataSet.getSizeForClass(division, classNo, sizeVector);
 	
@@ -27,7 +27,7 @@ SatPointSet::SatPointSet(const ElemCondPlus &ecPlus, const ClippedFullFuzzyDataS
 	}		
 }
 
-SatPointSet::SatPointSet(const AxiomExpr &axiom, const ClippedFullFuzzyDataSet &dataSet, ClippedFullFuzzyDataSet::DataSetDivisionType division, int classNo) {
+SatPointSet::SatPointSet(const AxiomExpr &axiom, const FuzzyDataSet &dataSet, FuzzyDataSet::DataSetDivisionType division, int classNo) {
 	std::vector<int> sizeVector;
 	dataSet.getSizeForClass(division, classNo, sizeVector);
 	

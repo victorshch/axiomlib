@@ -2,8 +2,8 @@
 
 using namespace AxiomLib;
 
-IntervalSet::IntervalSet(const ClippedFullFuzzyDataSet &dataSet, 
-						 ClippedFullFuzzyDataSet::DataSetDivisionType division) {
+IntervalSet::IntervalSet(const FuzzyDataSet &dataSet, 
+						 FuzzyDataSet::DataSetDivisionType division) {
 	m_intervals.reserve(dataSet.getClassCount() + 1);
 	std::vector<int> sizeVector;
 	
@@ -19,7 +19,7 @@ IntervalSet::IntervalSet(const ClippedFullFuzzyDataSet &dataSet,
 	}
 }
 
-IntervalSet IntervalSet::reset(ClippedFullFuzzyDataSet &dataSet, ClippedFullFuzzyDataSet::DataSetDivisionType division) {
+IntervalSet IntervalSet::reset(FuzzyDataSet &dataSet, FuzzyDataSet::DataSetDivisionType division) {
 	IntervalSet result(dataSet, division);
 	
 	for(int classNo = -1; classNo < dataSet.getClassCount(); classNo++) {
@@ -32,7 +32,7 @@ IntervalSet IntervalSet::reset(ClippedFullFuzzyDataSet &dataSet, ClippedFullFuzz
 	return result;
 }
 
-void IntervalSet::apply(ClippedFullFuzzyDataSet &dataSet, ClippedFullFuzzyDataSet::DataSetDivisionType division) const {
+void IntervalSet::apply(FuzzyDataSet &dataSet, FuzzyDataSet::DataSetDivisionType division) const {
 	//TODO check sizes
 	int classCount = dataSet.getClassCount();
 	std::vector<int> sizeVector;

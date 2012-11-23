@@ -8,7 +8,7 @@
 using namespace AxiomLib;
 using namespace AxiomLib::FuzzyMultiDataExt;
 
-ASStage *ASStage::create(const std::string &name, ClippedFullFuzzyDataSet *fuzzyDataSet, AXStage *stage2)
+ASStage *ASStage::create(const std::string &name, FuzzyDataSet *fuzzyDataSet, AXStage *stage2)
 {
 	std::string nameCopy = boost::algorithm::to_lower_copy(name);
 	if(nameCopy == "simple") {

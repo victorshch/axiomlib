@@ -1,66 +1,138 @@
-/****************************************************************************
-*					Функции класса FuzzyDataSet
-*
-*	Description:	Класс FuzzyDataSet - реализация
-*	Author:			dk
-*	History:	
-*
-****************************************************************************/
+#include <iostream>
+#include <boost/filesystem.hpp>
 
 #include "FuzzyDataSet.h"
-#include "boost/filesystem/operations.hpp"
-#include "boost/filesystem/path.hpp"
-#include "boost/filesystem/fstream.hpp"
 
-using namespace AxiomLib;
+namespace AxiomLib {
 
+// TODO перенести в конфигурацию
+const char *FuzzyDataSet::divisionNames[] = { "reference", "testing", "validation" };
+	
 /****************************************************************************
-*				FuzzyDataSet::FuzzyDataSet
+*				ClippedFullFuzzyDataSet()
 *
-*	Description:	Пустой конструктор с инициализацией переменных класса
-*	Parameters:	-
-*	Returns:		-
-*	Throws:		-
-*	Author:		dk
-*	History:		-
+*	Description:  Конструктор умолчания
+*	Parameters:	
+*	Returns:	
+*	Throws:		
+*	Author:		wictor
+*	History:	-
 *
 ****************************************************************************/
-FuzzyDataSet::FuzzyDataSet (void) {
-	// Задание внутренних параметров класса по умолчанию
-	std::string nr ("normal");
-	this->normal = nr;
+FuzzyDataSet::FuzzyDataSet() : DataSetBase()
+{
+	setNormalStr("normal");
 }
 
-
 /****************************************************************************
-*					FuzzyDataSet::setNormalStr
+*				readDataSet
 *
-*	Description:	Функция устанавливает новое обозначение под именем к
-*					отороого в обучающей выборке находятся траектории нормального 
-*					поведения
-*	Parameters:		env - класс с данными из конфигурационного файла
-*	Returns:		0
-*	Throws:			-
-*	Author:			dk
-*	History:		-
+*	Description:	Чтение датасета из файла и установка интервалов
+*			по границам рядов
+*	Parameters:	dataSetDir - папка датасетов
+*			dataSetName - имя датасета
+*	Returns:	0
+*	Throws:		-
+*	Author:		wictor
+*	History:	-
 *
 ****************************************************************************/
-signed int FuzzyDataSet::setNormalStr (EnvDataSet &envDataSet) {
-	int ret;
-	std::string normalStr;
-	ret = envDataSet.getNormalStr(normalStr);
-	if (ret == 0) {
-		normal = normalStr;
-	}
+signed int FuzzyDataSet::readDataSet(std::string dataSetDir, std::string dataSetName) {	
+	readDataSet(dataSetDir + "/" + dataSetName);
 	return 0;
 }
 
+int FuzzyDataSet::readDataSet(const std::string &dataSetPathString) {
+	
+	DataSetBase::readDataSet(dataSetPathString);
+	
+	divisions.clear();
+	divisions.reserve(FuzzyDataSet::Last - FuzzyDataSet::First);
+	
+	boost::filesystem::path dataSetPath = boost::filesystem::path(dataSetPathString);
+	for(int i = FuzzyDataSet::First; i < FuzzyDataSet::Last; i++) {
+		boost::filesystem::path divisionPath = dataSetPath / std::string(divisionNames[i]);
+		
+		ReferenceClassesTS refClasses;
+		ClassTS normalClass;
+		
+		if(!boost::filesystem::exists(divisionPath)) {
+			//throw AxiomLibException("Division "+std::string(divisionNames[i])+" not found in dataset in path "+dataSetPathString);
+			divisions.push_back(
+					DataSetDivision(refClasses, normalClass)
+					);
+			continue;
+		}
+		
+		this->readReferenceTS(divisionPath.string(), refClasses);
+		this->readNormalTS(divisionPath.string(), normalClass);
+		divisions.push_back(
+				DataSetDivision(refClasses, normalClass)
+				);
+		
+//		std::vector<int> v;
+//		divisions[i].getNormalSize(v);
+		
+//		std::cout<<"Division :"<<this->divisionNames[i]<<", class count :"<<divisions[i].getClassCount()
+//				<<", normal TS count :"<<v.size()<<std::endl;
+//		for(int i = 0; i < v.size(); i++) {
+//			std::cout<<"dimension count : "<<v[i]<<std::endl;
+//		}
+		
+	}
+	
+	return 0;
+}
+
+bool FuzzyDataSet::getTSByIndex(DataSetDivisionType division, std::vector<double>& vec, int indexClass, int indexMultiTS, int indexTS) const {
+	return divisions[division].getTSByIndex(vec, indexClass, indexMultiTS, indexTS);
+}
 
 /****************************************************************************
-*				FuzzyDataSet::getNormalTS
+*				getTSByIndexFromClass
+*
+*	Description:	Возвращает ряд из обучающей выборки 
+*					по индексам класса, траектории и размерности
+*	Parameters:	vec - заполняемый вектор
+*				indexClass - индекс класса
+*				indexMultiTS - индекс мультиряда
+*				indexTS - индекс ряда
+*	Returns:	
+*	Throws:	
+*	Author:		wictor
+*	History:	-
+*
+****************************************************************************/
+bool FuzzyDataSet::getTSByIndexFromClass(std::vector<double> &vec, int indexClass, int indexMultiTS, int indexTS) const {
+	return getTSByIndex(FuzzyDataSet::Reference, vec, indexClass, indexMultiTS, indexTS);
+}
+
+/****************************************************************************
+*					getTSByIndexFromTest
+*
+*	Description:	Функция возвращает временной ряд из обучающей выборки по 
+*					определенным - номеру класса, номеру мультиряда в классе, 
+*					номеру ряда в мультиряде
+*	Parameters:		vec - заполняемый временной ряд
+*					indexClass - номер класса неисправностей во внутреннем 
+*						представлении данного класса, откуда считывать ряд
+*					indexMultiTS - номер мультиряда откуда считывать требуемый ряд
+*					indexTS - номер требуемого ряда в мультиряде
+*	Returns:		true - если ряд успешно считан
+*					false - если ряд по каким-то причинам не считан (т.е. если его нет)
+*	Throws:			-
+*	Author:			wictor
+*	History:		-
+*
+****************************************************************************/
+bool FuzzyDataSet::getTSByIndexFromTest(std::vector<double> &vec, int indexClass, int indexMultiTS, int indexTS) const {
+	return getTSByIndex(FuzzyDataSet::Testing, vec, indexClass, indexMultiTS, indexTS);}
+
+/****************************************************************************
+*				getNormalTSFromClass
 *
 *	Description:	Функция возвращает временной ряд, соответствующий нормальному 
-*					поведению, из переменных класса по определенным - номеру 
+*					поведению, из обучающей выборки по определенным - номеру 
 *					мультиряда, номеру ряда в мультиряде.
 *	Parameters:		vec - заполняемый временной ряд
 *					indexMultiTS - номер мультиряда откуда считывать требуемый ряд
@@ -68,156 +140,264 @@ signed int FuzzyDataSet::setNormalStr (EnvDataSet &envDataSet) {
 *	Returns:		true - если ряд успешно считан
 *					false - если ряд по каким-то причинам не считан (т.е. если его нет)
 *	Throws:			-
-*	Author:			dk
+*	Author:			wictor
 *	History:		-
 *
 ****************************************************************************/
-bool FuzzyDataSet::getNormalTS (std::vector<double> &vec, int indexMultiTS, int indexTS) const {
-	if ((indexMultiTS < (int) (normalTS.size())) && (indexMultiTS >=0)) {
-		return (normalTS[indexMultiTS]).getTSByIndex (vec, indexTS);
-	}
-	return false;
+bool FuzzyDataSet::getNormalTSFromClass(std::vector<double> &vec, int indexMultiTS, int indexTS) const {
+	return getTSByIndex(FuzzyDataSet::Reference, vec, -1, indexMultiTS, indexTS);
 }
 
-
 /****************************************************************************
-*					FuzzyDataSet::setNormalTS
+*					FullFuzzyDataSet::getNormalTSFromTest
 *
-*	Description:	Функция устанавливает новое значение ряду обучающей выборки, 
-*					соответстующему нормальному поведению
-*	Parameters:		vec - новый временной ряд
-*					indexMultiTS - номер мультиряда
-*					indexTS - номер ряда в мультиряде
-*	Returns:		true - если ряд успешно установлен
-*					false - если ряд по каким-то причинам не установлен
+*	Description:	Функция возвращает временной ряд, соответствующий нормальному 
+*					поведению, из контрольной выборки по определенным - номеру 
+*					мультиряда, номеру ряда в мультиряде.
+*	Parameters:		vec - заполняемый временной ряд
+*					indexMultiTS - номер мультиряда откуда считывать требуемый ряд
+*					indexTS - номер требуемого ряда в мультиряде
+*	Returns:		true - если ряд успешно считан
+*					false - если ряд по каким-то причинам не считан (т.е. если его нет)
 *	Throws:			-
-*	Author:			dk
+*	Author:			wictor
 *	History:		-
 *
 ****************************************************************************/
-bool FuzzyDataSet::setNormalTS (std::vector<double> &vec, int indexMultiTS, int indexTS) {
-	if ((indexMultiTS < (int) (normalTS.size())) && (indexMultiTS >=0)) {
-		return (normalTS[indexMultiTS]).setTSByIndex (vec, indexTS);
-	}
-	return false;
+bool FuzzyDataSet::getNormalTSFromTest(std::vector<double> &vec, int indexMultiTS, int indexTS) const {
+	return getTSByIndex(FuzzyDataSet::Testing, vec, -1, indexMultiTS, indexTS);
 }
 
- 
+///****************************************************************************
+//*				 getClippingIntervals
+//*
+//*	Description: Возвращает набор всех интервалов отсечения
+//*	Parameters:	 -
+//*	Returns:	 const IntervalSetPair & - ссылка на набор всех интервалов отсечения
+//*	Throws:		 -
+//*	Author:		wictor
+//*	History:	-
+//*
+//****************************************************************************/
+//const IntervalSetPair &ClippedFullFuzzyDataSet::getClippingIntervals() const {
+//	return clippingIntervals;
+//}
+
+///****************************************************************************
+//*				 setClippingIntervals
+//*
+//*	Description: Устанавливает набор всех интервалов отсечения
+//*	Parameters:	 intervals - новый набор интервалов отсечения
+//*	Returns:	 -
+//*	Throws:		 -
+//*	Author:		wictor
+//*	History:	-
+//*
+//****************************************************************************/
+//void ClippedFullFuzzyDataSet::setClippingIntervals(const IntervalSetPair &intervals) {
+//	// TODO: сделать проверку того, что новый набор совпадает по размеру со старым
+//	clippingIntervals = intervals;
+//}
+
+void FuzzyDataSet::setClippingInterval(DataSetDivisionType division, const IntInterval &interval, int classNo, int multiTSNo) {
+	divisions[division].setClippingInterval(interval, classNo, multiTSNo);
+}
+
 /****************************************************************************
-*					FuzzyDataSet::getNormalClassSize
+*				 setClassClippingInterval
 *
-*	Description:	Функция выдает информацию о числе временных рядов 
-*					соответстующих нормальному поведению
-*	Parameters:		numOfMultiTS - число мультирядов
-*					numOfTS - вектор чисел рядов в мультирядах
-*	Returns:		true
-*	Throws:			-
-*	Author:			dk
-*	History:		-
+*	Description: Устанавливает интервал отсечения для заданной траектории 
+*					обучающей выборки
+*	Parameters:	 interval - новый интервал отсечения
+*				classNo, multiTSNo - индексы, задающие траекторию
+*				(classNo < 0 означает нормальное поведение)
+*	Returns:	 -
+*	Throws:		 -
+*	Author:		wictor
+*	History:	-
 *
 ****************************************************************************/
-bool FuzzyDataSet::getNormalClassSize (int &numOfMultiTS, std::vector<int> &numOfTS) const {
-	numOfMultiTS = normalTS.size();
-	numOfTS.resize (numOfMultiTS);
-	for (int i = 0; i < numOfMultiTS; i++) {
-		numOfTS[i] = (int) normalTS[i].size();
+void FuzzyDataSet::setClassClippingInterval(const IntInterval &interval, int classNo, int multiTSNo) {
+	setClippingInterval(FuzzyDataSet::Reference, interval, classNo, multiTSNo);
+}
+
+/****************************************************************************
+*				 setTestClippingInterval
+*
+*	Description: Устанавливает интервал отсечения для заданной траектории 
+*					контрольной выборки
+*	Parameters:	 interval - новый интервал отсечения
+*				classNo, multiTSNo - индексы, задающие траекторию
+*				(classNo < 0 означает нормальное поведение)
+*	Returns:	 -
+*	Throws:		 -
+*	Author:		wictor
+*	History:	-
+*
+****************************************************************************/
+void FuzzyDataSet::setTestClippingInterval(const IntInterval &interval, int classNo, int multiTSNo) {
+	setClippingInterval(FuzzyDataSet::Testing, interval, classNo, multiTSNo);
+}
+
+IntInterval FuzzyDataSet::getClippingInterval(DataSetDivisionType division, int classNo, int multiTSNo) const {
+	return divisions[division].getClippingInterval(classNo, multiTSNo);
+}
+
+/****************************************************************************
+*				 getClassClippingInterval
+*
+*	Description: Возвращает интервал отсечения для заданной траектории 
+*					обучающей выборки
+*	Parameters:	 
+*				classNo, multiTSNo - индексы, задающие траекторию
+*				(classNo < 0 означает нормальное поведение)
+*	Returns:	 IntInterval
+*	Throws:		 -
+*	Author:		wictor
+*	History:	-
+*
+****************************************************************************/
+IntInterval FuzzyDataSet::getClassClippingInterval(int classNo, int multiTSNo) const {
+	return getClippingInterval(FuzzyDataSet::Reference, classNo, multiTSNo);
+}
+
+/****************************************************************************
+*				 getTestClippingInterval
+*
+*	Description: Возвращает интервал отсечения для заданной траектории 
+*					контрольной выборки
+*	Parameters:	 
+*				classNo, multiTSNo - индексы, задающие траекторию
+*				(classNo < 0 означает нормальное поведение)
+*	Returns:	 IntInterval
+*	Throws:		 -
+*	Author:		wictor
+*	History:	-
+*
+****************************************************************************/
+IntInterval FuzzyDataSet::getTestClippingInterval(int classNo, int multiTSNo) const {
+	return getClippingInterval(FuzzyDataSet::Testing, classNo, multiTSNo);
+}
+
+int FuzzyDataSet::getClassCount() const {
+	// TODO: инвариант: число классов нештатного поведения должно быть одинаково
+	// во всех папках
+	return divisions[FuzzyDataSet::Reference].getClassCount();
+}
+
+int FuzzyDataSet::getDimensionCount() const {
+	// TODO инвариант: число размерностей должно быть везде одинаковым
+	
+	// TODO проверить, что это то
+	return this->paramNamesSize();
+}
+
+int FuzzyDataSet::getMutiTSCount(DataSetDivisionType division, int classNo) const {
+	return divisions[division].getMultiTSCount(classNo);
+}
+
+int FuzzyDataSet::getMultiTSLength(DataSetDivisionType division, int classNo, int multiTSNo) const {
+	return divisions[division].getMultiTSLength(classNo, multiTSNo);
+}
+
+/****************************************************************************
+*				 getClassMultiTSSize
+*
+*	Description: Возвращает длину заданной траектории обучающей выборки
+*	Parameters:	 
+*				classNo, multiTSNo - индексы, задающие траекторию
+*				(classNo < 0 означает нормальное поведение)
+*	Returns:	 int
+*	Throws:		 -
+*	Author:		wictor
+*	History:	-
+*
+****************************************************************************/
+int FuzzyDataSet::getClassMultiTSLength(int classNo, int multiTSNo) const {
+	return getMultiTSLength(FuzzyDataSet::Reference, classNo, multiTSNo);
+}
+
+/****************************************************************************
+*				 getTestMultiTSSize
+*
+*	Description: Возвращает длину заданной траектории контрольной выборки
+*	Parameters:	 
+*				classNo, multiTSNo - индексы, задающие траекторию
+*				(classNo < 0 означает нормальное поведение)
+*	Returns:	 int
+*	Throws:		 -
+*	Author:		wictor
+*	History:	-
+*
+****************************************************************************/
+int FuzzyDataSet::getTestMultiTSLength(int classNo, int multiTSNo) const {
+	return getMultiTSLength(FuzzyDataSet::Testing, classNo, multiTSNo);
+}
+
+bool FuzzyDataSet::getSize(DataSetDivisionType division, int &v1, std::vector<int> &v2, std::vector<std::vector<int> > &v3) const {
+	if(!divisions[division].getAbnormalSize(v3)) {
+		return false;
 	}
+        v1 = v3.size();
+	v2.clear();
+	v2.reserve(v3.size());
+        for(int i = 0; i < v3.size(); ++i) {
+            v2.push_back(v3[i].size());
+        }
 	return true;
 }
 
-
-/****************************************************************************
-*				FuzzyDataSet::readNormalClassTS
-*
-*	Description:	Читает эталонные ряды для класса неисправности, за которым 
-*					понимается нормальное поведение системы.
-*					Цикл, ходит по всем каталогам в $path/reference/. 
-*					Для каждого каталога, ходим по всем лежащим в нем 
-*					.csv-файлам.
-*	Parameters:		path - строка содержащая адрес базоваой директории набора данных
-*	Returns:		0 - если все было считанно нормально (иначе throw)
-*	Throws:			AxiomLibException  - если директория $path/reference/ - не существует 
-*										или этот адрес существует, но это файл
-*	Author:			dk
-*	History:
-*
-****************************************************************************/
-signed int FuzzyDataSet::readNormalClassTS (std::string &path) {
-	if (normal.size() < 1)
-		throw AxiomLibException ("Error in FuzzyDataSet::readNormalClassTS: string for normal class is not set.");
-
-	// Задание путей для работы с директориями и файлами 
-	std::string nPath = path;
-	nPath.append ("/reference/");
-	nPath.append (normal);
-	boost::filesystem::path classPath( nPath ); // указывает на директорию с траекториями нормального поведения
-	boost::filesystem::path filePath( nPath ); // будет использоваться чтобы ходить по внутренностям директории с именем класса несиправности "normal"
-	
-	// шаблон - которому должны удовлеворять имена файлов с эталонными рядами для классов неисправностей
-	std::string fileNameFirstHalf ("ref");
-	std::string fileNameLastHalf (".csv");
-	std::string aa; // локальная переменная, хранящая имя текущего открываемого и считываемого файла 
-	
-	// Проверка - существует ли указаный путь к файлу
-	if ( !boost::filesystem::exists( classPath ) )
-		throw AxiomLibException ("Error in FuzzyDataSet::readNormalClassTS: path for normal behavior does not exists.");
-	
-	// Проверяем - директория ли данный путь - как предполагается к основному какталогу набора данных
-	if ( boost::filesystem::is_directory( classPath ) ) {
-		// цикл по файлам выбранной директории
-		boost::filesystem::directory_iterator end_iter_int;
-		for ( boost::filesystem::directory_iterator dir_itr_int( classPath ); dir_itr_int != end_iter_int; ++dir_itr_int ) {
-			filePath = *dir_itr_int;
-			// переводим названия файла и шаблона в char* - чтобы сравнить на соответствие (см ./formats.x)
-			aa = dir_itr_int->leaf();
-			if ((checkName (aa, -1, 0, fileNameFirstHalf)) && (checkName (aa, (int) aa.size() - 5, (int) aa.size() - 4, fileNameLastHalf))) {
-				//осталось тока считать файл и записать в специально описанный класс multiTS
-				MultiTS multiTStemp;
-				aa = (*dir_itr_int).string();
-				this->readFromCSV (aa, multiTStemp);
-				/*// Test Output
-				std::vector<double> vecTemp;
-				std::cout << "\n MultiTS \n";
-				for (int nR = 0; nR < multiTStemp.size(); nR++) {
-					multiTStemp.getTSByIndex(vecTemp, nR);
-					std::cout << "\n";
-					for (int fR = 0; fR < vecTemp.size(); fR++) {
-						std::cout << "  " << vecTemp[fR];
-					}
-				}*/
-				// Сохраняем считанный multiTStemp в переменную класса
-				normalTS.push_back(multiTStemp);
-			}
-		}
-	
-	} else {// Указанный путь не является каталогом - поэтому считывание эталонных рядов не произведено
-		throw AxiomLibException ("Error in FuzzyDataSet::readNormalClassTS: wrong path - path is not a dir, it is a file.");
-	}
-	
-	return 0;
+bool FuzzyDataSet::getClassSize(int &v1, std::vector<int> &v2, std::vector<std::vector<int> > &v3) const {
+	return getSize(FuzzyDataSet::Reference, v1, v2, v3);
 }
 
+bool FuzzyDataSet::getTestSize(int &v1, std::vector<int> &v2, std::vector<std::vector<int> > &v3) const {
+	return getSize(FuzzyDataSet::Testing, v1, v2, v3);
+}
 
-/****************************************************************************
-*					FuzzyDataSet::ReadDataSet
-*
-*	Description:	Функция чтения всех данных из набора данных, находящегося
-*					в указанном каталоге
-*	Parameters:		const char* path - путь к каталогу, содержащему набор данных
-*	Returns:		0
-*	Throws:			AxiomLibExeption - если каталог отсутствует, или есть ошибки
-*					в формате набора данных
-*	Author:			dk
-*	History:
-*
-****************************************************************************/
-signed int FuzzyDataSet::readDataSet (std::string dataSetDir, std::string dataSetName) {
-	// Читаем основные данные набора траекторий
-	DataSet::readDataSet (dataSetDir, dataSetName);
-	// Читаем траектории, относящиеся к нормальному поведению
-	std::string baseDataSetDir = dataSetDir;
-	baseDataSetDir.append("/");
-	baseDataSetDir.append(dataSetName);
-	readNormalClassTS (baseDataSetDir);
-	return 0;
+bool FuzzyDataSet::getNormalSize(DataSetDivisionType division, int &v1, std::vector<int> &v2) const {
+	if(!divisions[division].getNormalSize(v2))
+	{
+            return false;
+	}
+	v1 = v2.size();
+	
+	return true;
+}
+
+bool FuzzyDataSet::getNormalClassSize(int &v1, std::vector<int> &v2) const {
+	return getNormalSize(FuzzyDataSet::Reference, v1, v2);
+}
+
+bool FuzzyDataSet::getNormalTestSize(int &v1, std::vector<int> &v2) const {
+	return getNormalSize(FuzzyDataSet::Testing, v1, v2);
+}
+
+bool FuzzyDataSet::getSizeForClass(DataSetDivisionType division, int classNo, std::vector<int> &v) const {
+	return divisions[(int)division].getClassSize(classNo, v);
+}
+
+void FuzzyDataSet::readNormalTS(const std::string &divisionPath, ClassTS &classTS) {
+	boost::filesystem::path normalClassPath(divisionPath);
+	normalClassPath /= this->normal;
+	
+	if(!boost::filesystem::exists(normalClassPath)) {
+		classTS.resize(0);
+	} else {	
+		this->readClassTS(normalClassPath.string(), classTS);
+	}
+}
+
+void FuzzyDataSet::setNormalStr(EnvDataSet &env) {
+	std::string s;
+	int r = env.getNormalStr(s);
+	if(r == 0) {
+		setNormalStr(s);
+	}
+}
+
+void FuzzyDataSet::setNormalStr(const std::string &str) {
+	this->normal = str;
+}
+
 }

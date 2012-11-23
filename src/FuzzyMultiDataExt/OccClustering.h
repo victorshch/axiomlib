@@ -9,7 +9,7 @@
 #ifndef OCCCLUSTERING_H
 #define OCCCLUSTERING_H
 
-#include "../ClippedFullFuzzyDataSet.h"
+#include "../FuzzyDataSet.h"
 #include "../SatPointSet.h"
 #include "../IntInterval.h"
 #include "Heuristics.h"
@@ -36,7 +36,7 @@ protected:
 	// возвращает результат -- удовлетворяет
 	// аксиома условию или нет
 	template<class Axiom>
-	bool clusterize(const Axiom& axiom, int abType, const ClippedFullFuzzyDataSet& dataSet) const;	
+	bool clusterize(const Axiom& axiom, int abType, const FuzzyDataSet& dataSet) const;	
 	
 private:
 	int m_maxClusterSize;
@@ -47,8 +47,8 @@ private:
 };
 
 template<class Axiom>
-bool OccClustering::clusterize(const Axiom& axiom, int abType, const ClippedFullFuzzyDataSet& dataSet) const {
-	SatPointSet satPointSet = SatPointSet(axiom, dataSet, ClippedFullFuzzyDataSet::Reference, abType);
+bool OccClustering::clusterize(const Axiom& axiom, int abType, const FuzzyDataSet& dataSet) const {
+	SatPointSet satPointSet = SatPointSet(axiom, dataSet, FuzzyDataSet::Reference, abType);
 	
 	// Вычисление максимума размера кластера
 	// и минимального максимума размера кластера на траектории
