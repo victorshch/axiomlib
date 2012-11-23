@@ -20,7 +20,7 @@ FuzzyMultiDataExtAlgorithm::FuzzyMultiDataExtAlgorithm()
 {	
 	heuristicsSet = new HeuristicsSet();
 	
-	stage0 = new ECTypeStage();
+	stage0 = new ECTypeStage(this);
 	stage1 = new ECStage(&fuzzyDataSet, stage0);
 	stage2 = new AXStage(&fuzzyDataSet, stage1);
 	stage3 = 0;
@@ -80,6 +80,11 @@ int FuzzyMultiDataExtAlgorithm::initFromEnv(const Environment &env) {
 		throw AxiomLibException("FuzzyMultiDataExtAlgorithm::setParamsFromEnv : axiomSetBaseDir directory is undefined.");
 	if (env.getStringParamValue(axiomSetName, "AxiomSetNameTemplate") < 0)
 		throw AxiomLibException("FuzzyMultiDataExtAlgorithm::setParamsFromEnv : axiomName to save is undefined.");
+
+	if (env.getBoolParamValue(mOneVsAllMode, "oneVsAllMode") < 0) {
+		// По умолчанию режим "один против всех" отключен
+		mOneVsAllMode = false;
+	}
 
 	Logger::getInstance()->writeDebug("Initializing heuristics set");
 	heuristicsSet->initFromEnv(env);

@@ -66,6 +66,9 @@ class ElemCondPlus {
 	 // Возвращает имя типа данного ЭУ
 	 std::string ecTypeName (void) const;
 
+	 // Вычисление необходимых размерностей датасета
+	 void getDimensions(std::vector<bool> &v) const;
+
 	 // Функция проверки выполнимости ЭУ с учетом знака отрицания, если он есть
 	 signed int check (const unsigned long k, const std::vector<double>& x) const;
 	 
