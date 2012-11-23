@@ -29,7 +29,9 @@ DEFINES += AXIOMLIB_LIBRARY
 # ##    ###
 # windows
 win32 { 
+!noopenmp {
     QMAKE_CXXFLAGS_RELEASE += -openmp
+}
     QMAKE_CXXFLAGS_RELEASE += -o2 \
         -DRELEASE
     QMAKE_CXXFLAGS_DEBUG += /ZI \
@@ -39,15 +41,19 @@ win32 {
 # unix
 linux-g++|linux-g++-64 { 
     QMAKE_CXXFLAGS += -std=c++0x
-    QMAKE_CXXFLAGS_RELEASE += -fopenmp \
-        -o2
+!noopenmp{
+	QMAKE_CXXFLAGS_RELEASE += -fopenmp
+}
+	QMAKE_CXXFLAGS_RELEASE += -o2
 }
 linux-icc|linux-icc-64 { 
     QMAKE_CXXFLAGS += -std=c++0x \
         -no-multibyte-chars \
         -wd913
+!noopenmp {
     QMAKE_CXXFLAGS_RELEASE += -openmp
     QMAKE_LFLAGS_RELEASE += -openmp
+}
 }
 linux-icc|linux-icc-64 { 
     QMAKE_CXXFLAGS += -std=c++0x \
