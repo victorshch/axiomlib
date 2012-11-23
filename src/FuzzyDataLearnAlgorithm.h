@@ -25,7 +25,7 @@
 #include "GoalStrategyFactory.h"
 #include "GoalStrategy.h"
 #include "PreprocessFactory.h"
-#include "FuzzyDataSet.h"
+#include "FuzzyDataSet_old.h"
 #include <sstream>
 #include <stdio.h>
 #include <string>
