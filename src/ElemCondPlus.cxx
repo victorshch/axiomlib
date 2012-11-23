@@ -149,12 +149,16 @@ signed int ElemCondPlus::check (const unsigned long k, const std::vector<double>
 signed int ElemCondPlus::check(unsigned long k, const std::vector<std::vector<double> > &x) const {
 	if(dimension < 0 || dimension >= (int) x.size())
 	{
-		throw AxiomLibException("ElemCondPlus::check(): invalid dimension");
+		throw AxiomLibException("ElemCondPlus::check():  dimension out of range: dimension = "
+								+ boost::lexical_cast<std::string>(dimension)
+								+ ", x.size() = " + boost::lexical_cast<std::string>(x.size())
+								);
 	}
 	const std::vector<double> &v = x[dimension];
 	if(k >= v.size())
 	{
-		throw AxiomLibException("ElemCondPlus::check(): invalid k index");
+		throw AxiomLibException("ElemCondPlus::check(): invalid k index : k = " + boost::lexical_cast<std::string>(k)
+								+ ", v.size() = " + boost::lexical_cast<std::string>(v.size()) );
 	}
 	return check(k, v);
 }
