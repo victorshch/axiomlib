@@ -226,7 +226,8 @@ SOURCES += src/TreatmentSample.cxx \
     src/MultiMarking/AsymmHamming.cpp \
     src/MultiMarking/AsymmBetweenSets.cpp \
     src/MultiMarking/WeakEqual.cpp \
-    src/MultiMarking/Priority.cpp
+    src/MultiMarking/Priority.cpp  \
+    src/FuzzyMultiDataExt/ASStageSimple.cxx
 HEADERS += src/undefs.h \
     src/TreatmentSample.h \
     src/TreatmentFactory.h \
@@ -439,5 +440,5 @@ HEADERS += src/undefs.h \
     src/MultiMarking/AsymmHamming.h \
     src/MultiMarking/AsymmBetweenSets.h \
     src/MultiMarking/WeakEqual.h \
-    src/MultiMarking/Priority.h
+    src/FuzzyMultiDataExt/ASStageSimple.h
 OTHER_FILES += 

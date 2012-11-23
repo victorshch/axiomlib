@@ -23,7 +23,7 @@ FuzzyMultiDataExtAlgorithm::FuzzyMultiDataExtAlgorithm()
 	stage0 = new ECTypeStage();
 	stage1 = new ECStage(&fuzzyDataSet, stage0);
 	stage2 = new AXStage(&fuzzyDataSet, stage1);
-	stage3 = new ASStageSimple(&fuzzyDataSet, stage2);
+	stage3 = 0;
 	
 	logger = Logger::getInstance();
 }
@@ -46,9 +46,9 @@ int FuzzyMultiDataExtAlgorithm::initFromEnv(const Environment &env) {
 	// Инициализируем dataSet
 	std::string datasetDir, datasetName;
 	if (env.getStringParamValue(datasetDir, "BaseDataSetDir") < 0)
-		throw AxiomLibException("FuzzyMultiDataLearnAlgorithm::setParamsFromEnv : data set directory is undefined.");
+		throw AxiomLibException("FuzzyMultiDataExtAlgorithm::setParamsFromEnv : data set directory is undefined.");
 	if (env.getStringParamValue(datasetName, "DataSet") < 0)
-		throw AxiomLibException("FuzzyMultiDataLearnAlgorithm::setParamsFromEnv : data set is undefined.");
+		throw AxiomLibException("FuzzyMultiDataExtAlgorithm::setParamsFromEnv : data set is undefined.");
 	// считываем необходимые для данного класса параметры о наборе данных
 	EnvDataSet envDataSet;
 	envDataSet.readConfigFile (datasetDir, datasetName);
@@ -63,7 +63,7 @@ int FuzzyMultiDataExtAlgorithm::initFromEnv(const Environment &env) {
 	// Определяем базовую директорию с наборами аксиом
 	std::string curAxiomName;
 	if (env.getStringParamValue(axiomBaseDir, "AxiomBaseDir") < 0)
-		throw AxiomLibException("FuzzyMultiDataLearnAlgorithm::setParamsFromEnv : popPreset > 0 but axiom base dir is not set.");
+		throw AxiomLibException("FuzzyMultiDataExtAlgorithm::setParamsFromEnv : popPreset > 0 but axiom base dir is not set.");
 	if (env.getStringParamValue(curAxiomName, "ECListFileName") >= 0) 
 		fileNameECList.assign (curAxiomName);
 	if (env.getStringParamValue(curAxiomName, "AxiomListFileName") >= 0) 
@@ -77,12 +77,20 @@ int FuzzyMultiDataExtAlgorithm::initFromEnv(const Environment &env) {
 
 	// Параметры, по которым сохранять лучщие решения
 	if (env.getStringParamValue(axiomSetBaseDir, "AxiomSetBaseDir") < 0)
-		throw AxiomLibException("FuzzyMultiDataLearnAlgorithm::setParamsFromEnv : axiomSetBaseDir directory is undefined.");
+		throw AxiomLibException("FuzzyMultiDataExtAlgorithm::setParamsFromEnv : axiomSetBaseDir directory is undefined.");
 	if (env.getStringParamValue(axiomSetName, "AxiomSetNameTemplate") < 0)
-		throw AxiomLibException("FuzzyMultiDataLearnAlgorithm::setParamsFromEnv : axiomName to save is undefined.");
+		throw AxiomLibException("FuzzyMultiDataExtAlgorithm::setParamsFromEnv : axiomName to save is undefined.");
 
 	Logger::getInstance()->writeDebug("Initializing heuristics set");
 	heuristicsSet->initFromEnv(env);
+	
+	std::string asStageName;
+	env.getMandatoryParamValue(asStageName, "axiomSetStage");
+	
+	stage3 = ASStage::create(asStageName, &fuzzyDataSet, stage2);
+	if(stage3 == 0) {
+		throw AxiomLibException("FuzzyMultiDataExtAlgorithm::setParamsFromEnv : invalid name of axiom set stage : '" + asStageName + "'");
+	}
 	
 	stage0->initFromEnv(env);
 	stage1->initFromEnv(env);
@@ -96,9 +104,9 @@ int FuzzyMultiDataExtAlgorithm::initFromEnv(const Environment &env) {
 //	// Инициализируем dataSet
 //	std::string datasetDir, datasetName;
 //	if (env.getStringParamValue(datasetDir, "BaseDataSetDir") < 0)
-//		throw AxiomLibException("FuzzyMultiDataLearnAlgorithm::setParamsFromEnv : data set directory is undefined.");
+//		throw AxiomLibException("FuzzyMultiDataExtAlgorithm::setParamsFromEnv : data set directory is undefined.");
 //	if (env.getStringParamValue(datasetName, "DataSet") < 0)
-//		throw AxiomLibException("FuzzyMultiDataLearnAlgorithm::setParamsFromEnv : data set is undefined.");
+//		throw AxiomLibException("FuzzyMultiDataExtAlgorithm::setParamsFromEnv : data set is undefined.");
 //	// считываем необходимые для данного класса параметры о наборе данных
 //	EnvDataSet envDataSet;
 //	envDataSet.readConfigFile (datasetDir, datasetName);
@@ -114,18 +122,18 @@ int FuzzyMultiDataExtAlgorithm::initFromEnv(const Environment &env) {
 //	std::string recogClassName;
 //	ReducedRecognizerFactory rrf;
 //	if (env.getStringParamValue(recogClassName, "ReducedRecognizer") < 0)
-//		throw AxiomLibException("FuzzyMultiDataLearnAlgorithm::initFromEnv: ReducedRecognizer class is undefined.");
+//		throw AxiomLibException("FuzzyMultiDataExtAlgorithm::initFromEnv: ReducedRecognizer class is undefined.");
 //	recognizer = rrf.create(recogClassName);
 //	recognizer->setParamsFromEnv (env);
 
 //	if (env.getIntParamValue (ccNumPoints, "ccNumPoints") < 0)
-//		throw AxiomLibException("FuzzyMultiDataLearnAlgorithm::setParamsFromEnv : ccNumPoints is undefined.");
+//		throw AxiomLibException("FuzzyMultiDataExtAlgorithm::setParamsFromEnv : ccNumPoints is undefined.");
 
 //	// Инициализируем стратегию вычисления целевой функции
 //	std::string goalStrategyName;
 //	GoalStrategyFactory gsf;
 //	if (env.getStringParamValue(goalStrategyName, "goalClass") < 0) 
-//		throw AxiomLibException("FuzzyMultiDataLearnAlgorithm::initFromEnv: goal-class is undefined.");
+//		throw AxiomLibException("FuzzyMultiDataExtAlgorithm::initFromEnv: goal-class is undefined.");
 //	goalStrategy = gsf.create(goalStrategyName);
 //	goalStrategy->setParamsFromEnv(env);
 
