@@ -58,7 +58,7 @@ linux-icc|linux-icc-64 {
 }
 win32:# пФЛМАЮЕОЙЕ ЧПТОЙОЗПЧ, УЧСЪБООЩИ УП УФБОДБТФОЩНЙ ЖХОЛГЙСНЙ,
 
-# ЛПФПТЩЕ cl УЮЙФБЕФ ОЕВЕЪП� БУОЩНЙ
+# ЛПФПТЩЕ cl УЮЙФБЕФ ОЕВЕЪП БУОЩНЙ
 QMAKE_CXXFLAGS += -D_SCL_SECURE_NO_WARNINGS \
     -D_CRT_SECURE_NO_WARNINGS
 
@@ -227,7 +227,8 @@ SOURCES += src/TreatmentSample.cxx \
     src/MultiMarking/Priority.cpp  \
     src/FuzzyMultiDataExt/ASStageSimple.cxx \
     src/FuzzyDataSet_old.cxx \
-    src/FuzzyDataSet.cxx
+    src/FuzzyDataSet.cxx \
+    src/elem_conditions/Variance.cxx
 HEADERS += src/undefs.h \
     src/TreatmentSample.h \
     src/TreatmentFactory.h \
@@ -440,5 +441,6 @@ HEADERS += src/undefs.h \
     src/MultiMarking/WeakEqual.h \
     src/FuzzyMultiDataExt/ASStageSimple.h \
     src/FuzzyDataSet_old.h \
-    src/FuzzyDataSet.h
+    src/FuzzyDataSet.h \
+    src/elem_conditions/Variance.h
 OTHER_FILES += 
