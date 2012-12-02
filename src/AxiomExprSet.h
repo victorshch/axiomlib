@@ -22,6 +22,7 @@
 #include "AxiomExprStructure.h"
 #include "Environment.h"
 #include "EnvDataSet.h"
+#include "./MultiMarking/multimarks.h"
 #include <stdlib.h>
 #include <iostream>
 #include <fstream>
@@ -106,6 +107,9 @@ class AxiomExprSet {
 
 	// Функиця разметки ряда с подсчетом статистики
     int enter (std::vector<int>& marked, const std::vector<double>& row, const unsigned long begin, const unsigned long end, std::vector<bool> &stat);
+
+    // Функция разметки ряда в случае разметки подмножествами аксиом
+    int enter (MultiMarking::MultiMark& marked, const std::vector<double>& row, const unsigned long begin, const unsigned long end, std::vector<bool> &stat);
 
     // Оператор присваивания системы аксиом
     AxiomExprSet& operator= (const AxiomExprSet &second);

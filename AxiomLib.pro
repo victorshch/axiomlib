@@ -1,14 +1,11 @@
 # -------------------------------------------------
 # Project created by QtCreator 2010-04-02T11:28:45
 # -------------------------------------------------
-
 CONFIG += static
-
 include(AxiomLibConfig.pri)
-
-QT -= core gui
+QT -= core \
+    gui
 CONFIG -= qt
-
 DEFINES += "BOOST_FILESYSTEM_VERSION=2"
 INCLUDEPATH += $$MPICH_INCLUDE \
     $$BOOST_INCLUDE
@@ -55,10 +52,8 @@ linux-icc|linux-icc-64 {
     QMAKE_CXXFLAGS_RELEASE += -openmp
     QMAKE_LFLAGS_RELEASE += -openmp
 }
-
 QMAKE_CXXFLAGS += -D_SCL_SECURE_NO_WARNINGS \
     -D_CRT_SECURE_NO_WARNINGS
-
 SOURCES += src/TreatmentSample.cxx \
     src/TreatmentFactory.cxx \
     src/TransmuteTpl.cxx \
@@ -223,8 +218,8 @@ SOURCES += src/TreatmentSample.cxx \
     src/MultiMarking/AsymmHamming.cpp \
     src/MultiMarking/AsymmBetweenSets.cpp \
     src/MultiMarking/WeakEqual.cpp \
-    src/MultiMarking/Priority.cpp
-
+    src/MultiMarking/Priority.cpp \
+    src/FuzzyMultiDataExt/ASStageMultiMarking.cxx
 HEADERS += src/undefs.h \
     src/TreatmentSample.h \
     src/TreatmentFactory.h \
@@ -438,6 +433,6 @@ HEADERS += src/undefs.h \
     src/MultiMarking/AsymmHamming.h \
     src/MultiMarking/AsymmBetweenSets.h \
     src/MultiMarking/WeakEqual.h \
-    src/MultiMarking/Priority.h
-
+    src/MultiMarking/Priority.h \
+    src/FuzzyMultiDataExt/ASStageMultiMarking.h
 OTHER_FILES += 
