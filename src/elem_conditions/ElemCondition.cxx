@@ -5,6 +5,7 @@
 ****************************************************************************/
 #include "ElemCondition.h"
 #include "../AxiomLibException.h"
+#include "../FuzzyDataSet.h"
 
 using namespace AxiomLib;
 
@@ -63,5 +64,35 @@ void ElemCondition::crossEC(ElemCondition& second, const double crossProb, const
       second.setParamValue(p2, *curParamName);
     }
   }
+}
+
+int ElemCondition::setLimits(FuzzyDataSet *fuzzyDataSet, bool oneVsAllMode, const double reserve, const unsigned int numOfLevels)
+{
+	// Достаем необходимый для обучения ряд
+	std::vector<double> teachRow;
+	int numOfMultiTS;
+	std::vector <int> numOfTS;
+	if(!oneVsAllMode) {
+		fuzzyDataSet->getNormalClassSize (numOfMultiTS, numOfTS);
+		if ((numOfTS.size() != numOfMultiTS) || (numOfMultiTS < 1))
+			throw AxiomLibException("FuzzyMultiDataLearnAlgorithm::selectElemCond : not enough data for the algorithm.");
+		for (int i = 0; i < numOfMultiTS; i++) {
+			if (numOfTS[i] > dimension) {
+				fuzzyDataSet->getNormalTSFromClass (teachRow, i, dimension);
+				if (teachRow.size() > 0)
+					break;
+			}
+		}
+	} else {
+		if(fuzzyDataSet->getClassCount() <= 0) {
+			throw AxiomLibException("FuzzyMultiDataExtAlgorithm::selectElemCond() : abnormal classes not found");
+		}
+
+		fuzzyDataSet->getTSByIndexFromClass(teachRow, 0, 0, dimension);
+	}
+	if (teachRow.size() < 1)
+		throw AxiomLibException("FuzzyMultiDataLearnAlgorithm::selectElemCond : incorrect normal data set.");
+
+	return setLimits(teachRow, reserve, numOfLevels);
 }
 

@@ -24,6 +24,8 @@ namespace AxiomLib {
 
 //#pragma warning (disable:4996)
 
+class FuzzyDataSet;
+
 class ElemCondition {
   private:
 
@@ -104,6 +106,8 @@ class ElemCondition {
 	  // Функция устанавливает максимальные значения для границ left и right,
 	  // которые определяют окрестность текущей точки в которой проверяется элементарное условие
 	virtual signed int setLimits (const int leftLimit, const int rightLimit) = 0;
+
+	virtual int setLimits(FuzzyDataSet* dataSet, bool oneVsAllMode, const double reserve, const unsigned int numOfLevels);
 
 	  // Функция устанавливает максимальные значения для параметров элементарного условия,
 	  // отличных от left и right

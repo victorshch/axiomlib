@@ -210,37 +210,6 @@ void ECStage::selectElemCond(int abnormalBehaviourType, int dimension, int dimen
 	
 	int elemCondsSize = elemConds.size();
 	
-	// Достаем необходимый для обучения ряд
-	std::vector<double> teachRow;
-	int numOfMultiTS;
-	std::vector <int> numOfTS;
-	if(!parent->oneVsAllMode()) {
-		fuzzyDataSet->getNormalClassSize (numOfMultiTS, numOfTS);
-		if ((numOfTS.size() != numOfMultiTS) || (numOfMultiTS < 1))
-			throw AxiomLibException("FuzzyMultiDataLearnAlgorithm::selectElemCond : not enough data for the algorithm.");
-		for (int i = 0; i < numOfMultiTS; i++) {
-			if (numOfTS[i] > dimension) {
-				fuzzyDataSet->getNormalTSFromClass (teachRow, i, dimension);
-				if (teachRow.size() > 0)
-					break;
-			}
-		}
-	} else {
-		if(fuzzyDataSet->getClassCount() <= 0) {
-			throw AxiomLibException("FuzzyMultiDataExtAlgorithm::selectElemCond() : abnormal classes not found");
-		}
-
-		fuzzyDataSet->getTSByIndexFromClass(teachRow, 0, 0, dimension);
-	}
-	if (teachRow.size() < 1)
-		throw AxiomLibException("FuzzyMultiDataLearnAlgorithm::selectElemCond : incorrect normal data set.");
-	// Данный участок ряда необходим чтобы собрать начальную статистику по максимальным и минимальным значениям для
-	// некоторого набора переменных в элементарных условиях. Поэтому слишком большие объемы не нужны, можно ограничить 1000.
-	/*
-	if (teachRow.size() > 1000) {
-		teachRow.resize (1000);
-	}*/
-	
 	// изменяем размер по числу типов элементраных условий - для каждого типа будет сохранет набор лучших вариантов условий
 	bestECs.resize (elemCondsSize);
 
@@ -260,7 +229,7 @@ void ECStage::selectElemCond(int abnormalBehaviourType, int dimension, int dimen
 		bestECs[i].resize(numBestECs);
 		// Устанавливаем границы сетки
 		elemConds[i].elemCondition->setLimits (leftLimit, rightLimit);
-		if(elemConds[i].elemCondition->setLimits (teachRow, reserve, numOfLevels) == -1) {
+		if(elemConds[i].elemCondition->setLimits (fuzzyDataSet, parent->oneVsAllMode(), reserve, numOfLevels) == -1) {
 			logger->writeComment("Could not select parameter grid for " + elemConds[i].ecTypeName());
 			bestECs[i].resize(0);
 			continue;
