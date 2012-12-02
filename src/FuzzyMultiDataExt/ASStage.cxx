@@ -4,6 +4,7 @@
 
 #include "AXStage.h"
 #include "ASStageSimple.h"
+#include "ASStageMultiMarking.h"
 
 using namespace AxiomLib;
 using namespace AxiomLib::FuzzyMultiDataExt;
@@ -15,5 +16,8 @@ ASStage *ASStage::create(const std::string &name, FuzzyDataSet *fuzzyDataSet, AX
 		return new ASStageSimple(fuzzyDataSet, stage2);
 	}
 	
+        if(nameCopy == "multimarking") {
+                return new ASStageMultiMarking();
+        }
 	return 0;
 }

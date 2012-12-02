@@ -1,14 +1,11 @@
 # -------------------------------------------------
 # Project created by QtCreator 2010-04-02T11:28:45
 # -------------------------------------------------
-
 CONFIG += static
-
 include(AxiomLibConfig.pri)
-
-QT -= core gui
+QT -= core \
+    gui
 CONFIG -= qt
-
 DEFINES += "BOOST_FILESYSTEM_VERSION=2"
 INCLUDEPATH += $$MPICH_INCLUDE \
     $$BOOST_INCLUDE
@@ -57,11 +54,9 @@ linux-icc|linux-icc-64 {
     QMAKE_LFLAGS_RELEASE += -openmp
 }
 win32:# пФЛМАЮЕОЙЕ ЧПТОЙОЗПЧ, УЧСЪБООЩИ УП УФБОДБТФОЩНЙ ЖХОЛГЙСНЙ,
-
 # ЛПФПТЩЕ cl УЮЙФБЕФ ОЕВЕЪП БУОЩНЙ
 QMAKE_CXXFLAGS += -D_SCL_SECURE_NO_WARNINGS \
     -D_CRT_SECURE_NO_WARNINGS
-
 # ##   ###
 SOURCES += src/TreatmentSample.cxx \
     src/TreatmentFactory.cxx \
@@ -224,8 +219,9 @@ SOURCES += src/TreatmentSample.cxx \
     src/MultiMarking/AsymmHamming.cpp \
     src/MultiMarking/AsymmBetweenSets.cpp \
     src/MultiMarking/WeakEqual.cpp \
-    src/MultiMarking/Priority.cpp  \
+    src/MultiMarking/Priority.cpp \
     src/FuzzyMultiDataExt/ASStageSimple.cxx \
+    src/FuzzyMultiDataExt/ASStageMultiMarking.cxx \
     src/FuzzyDataSet_old.cxx \
     src/FuzzyDataSet.cxx \
     src/elem_conditions/Variance.cxx \
@@ -443,6 +439,8 @@ HEADERS += src/undefs.h \
     src/MultiMarking/WeakEqual.h \
     src/FuzzyMultiDataExt/ASStageSimple.h \
     src/FuzzyDataSet_old.h \
+    src/MultiMarking/Priority.h \
+    src/FuzzyMultiDataExt/ASStageMultiMarking.h \
     src/FuzzyDataSet.h \
     src/elem_conditions/Variance.h \
     src/FuzzyMultiDataExt/AXStageSimple.h \

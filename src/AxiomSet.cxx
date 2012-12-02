@@ -320,7 +320,6 @@ int AxiomSet::enter (MultiMarking::MultiMark& marked, const std::vector<double>&
 
 
 int AxiomSet::enter (MultiMarking::MultiMark& marked, const std::vector<double>& row, const unsigned long begin, const unsigned long end, std::vector<bool> &stat){
-  //  std::cout <<"AxiomSet::enter";
     if ((end <= begin) || (row.size() < end)) {
             marked.resize(0);
             throw AxiomLibException("Error in AxiomSet::enter : wrong parameters.");
@@ -340,25 +339,16 @@ int AxiomSet::enter (MultiMarking::MultiMark& marked, const std::vector<double>&
             }
 
             for (unsigned long i = begin; i < end; i++) {
-                //std::cout << "S";
                     curRes = 0;
                     for (unsigned int j = 0; j < axioms.size(); j++ ) {
                             curRes = (axioms[j])->check(i, row);
-         //                   std::cout << "!"<< curRes << "!";
                             if (curRes != 0) {
-                  //              std::cout << "E";
                                     marked[i - begin][j] = true;
-       //                             std::cout << "@"<< marked[i - begin][j] << "@";
                                     if (!stat[j]) stat[j] = true;
                             }
                     }
             }
-    }/*
-    for(int k=0;k<marked.size();k++){
-        for (int t=0;t<marked[k].size();t++){
-            std::cout << marked[k][t] << "\n";
-        }
-    }*/
+    }
     return 0;
 }
 
