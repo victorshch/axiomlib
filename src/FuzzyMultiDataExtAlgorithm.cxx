@@ -434,6 +434,7 @@ void FuzzyMultiDataExtAlgorithm::recalculateMatterAxiomSetFunc(AxiomExprSetPlus&
 }
 
 void FuzzyMultiDataExtAlgorithm::run() {
+    runZeroLevelHeuristics();
 	runFirstLevel();
 	runFirstLevelHeuristics();
 	runSecondLevel();
