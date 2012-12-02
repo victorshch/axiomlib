@@ -8,6 +8,8 @@
 #include <QtDebug>
 #include <string>
 
+#include "Logger.h"
+
 #include "QtGuiException.h"
 
 const char* defaultBaseFileName = "autosave";
@@ -24,8 +26,10 @@ MainWindowContent::MainWindowContent(QWidget *parent, const QStringList &argumen
 	: QWidget(parent), controller(ManagedFuzzyDataController::getInstance())
 {
 	qDebug()<<"Entering ExtMainWindow::ExtMainWindow()";
-	
+
 	ui.setupUi(this);
+
+	AxiomLib::Logger::getInstance()->setDebug(true);
 
 	try {
 		qDebug()<<"Reading env...";

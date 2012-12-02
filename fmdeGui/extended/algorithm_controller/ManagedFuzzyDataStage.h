@@ -21,7 +21,7 @@
 
 #include "vectortypes.h"
 #include "FuzzyMultiDataExtAlgorithm.h"
-#include "ClippedFullFuzzyDataSet.h"
+#include "FuzzyDataSet.h"
 #include "Environment.h"
 #include "IntervalSet.h"
 #include "EnvironmentSerialization.h"
@@ -72,13 +72,13 @@ public:
 	void initClipping() {
 		clippingIntervals = PIntervalSet(
 		            new AxiomLib::IntervalSet(m_algorithm->getDataSet(), 
-							AxiomLib::ClippedFullFuzzyDataSet::Reference)
+							AxiomLib::FuzzyDataSet::Reference)
 		            );
 	}
 
 	void saveClipping() {
 		if(clippingIntervals != PIntervalSet()) {
-			clippingIntervals->apply(m_algorithm->getDataSet(), AxiomLib::ClippedFullFuzzyDataSet::Reference);
+			clippingIntervals->apply(m_algorithm->getDataSet(), AxiomLib::FuzzyDataSet::Reference);
 		} else {
 			throw std::runtime_error("Clipping intervals not loaded into stage!");
 		}

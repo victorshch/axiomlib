@@ -211,7 +211,7 @@ struct TransformMultiVectorHelper {
 	static void makeSameSize(const MultiVector1& v1, MultiVector2& v2) {
 		v2.resize(v1.size());
 		
-		for(MultiVector1::size_type i = 0; < v1.size(); ++i) {
+		for(typename MultiVector1::size_type i = 0; i < v1.size(); ++i) {
 			makeSameSize<depth - 1>(v1[i], v2[i]);
 		}
 	}
