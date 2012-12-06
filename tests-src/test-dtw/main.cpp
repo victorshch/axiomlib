@@ -1,17 +1,18 @@
 
+#include "FuzzyMultiDataExt/ASStageMultiMarking.h"
 #include "MultiMarking/MetricsEqual.h"
-#include "MultiMarking/dtwmetric.h"
-#include "AxiomSet.h"
 
 #include <iostream>
-#include <vector>
 
 using namespace std;
 using namespace AxiomLib;
 using namespace MultiMarking;
 
 int main()
+
 {
+    int k=2;
+    if (k==1){
     std::vector<double> result(2);
     Equal* metric;
     metric=new Equal;/*
@@ -100,6 +101,14 @@ int main()
     std::cout << "Vivod";
     for (int i=0;i<7;i++){
         //std::cout << "\n" <<  etalon_[i][0];
+    }
+}
+    if (k==2){
+        std::vector<std::vector<int>> result;
+        std::vector<int> s1;
+        std::vector<int> s2;
+        result = findCommonSubsequence(s1,s2,distanceFunctionForAxiom,choiceFunctionForAxiom);
+
     }
     return 0;
 }
