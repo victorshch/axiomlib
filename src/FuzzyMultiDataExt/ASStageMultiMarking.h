@@ -5,16 +5,15 @@
 #include "../Environment.h"
 
 #include "../FuzzyDataSet.h"
-
+#include "../MultiMarking/dtwmetric.h"
 #include "Common.h"
 #include "ForwardDeclarations.h"
 #include "ASStage.h"
-#include "../MultiMarking/dtwmetric.h"
 
 namespace AxiomLib {
 
 namespace FuzzyMultiDataExt {
-
+    //  Расстояние между элементами.
     struct DistanceFunctor {
         MultiMarking::DTWMetric* m;
         DistanceFunctor(MultiMarking::DTWMetric* m) { this->m = m; }
@@ -30,13 +29,29 @@ namespace FuzzyMultiDataExt {
     double distanceFunctionForAxiom(int s1, int s2) {
         return s1 == s2 ? 0 : 1;
     }
+    // Выбор элемента
+
     int choiceFunctionForAxiom(int s1, int s2) {
         return s1;
     }
+    std::vector<bool> choiceFunctionForMultiMark(const std::vector<bool>& v1, const std::vector<bool>& v2){
+        std::vector<bool> result;
+        result.resize(std::max(v1.size(),v2.size()));
+        for (int i=0;i<result.size();i++){
+            result[i]=false;
+        }
+        for (int i=0; i<(std::min(v1.size(),v2.size()));i++){
+            if (v1[i] && v2[i]){
+                result[i]=true;
+            }
+        }
+
+    };
+
 
 
     template<class Symbol, class ChoiceFunction>
-    void find(std::vector <std::vector<Symbol>>* r,std::vector<std::vector<bool> > L,
+    void find(std::vector <std::vector<Symbol> >* r,std::vector<std::vector<bool> > L,
               std::vector<std::vector<bool> > D,std::vector<std::vector<bool> > U,
               const std::vector<Symbol>& s1,const std::vector<Symbol>& s2,int i,int j,
               std::vector<Symbol> result,ChoiceFunction choiceF){
@@ -54,36 +69,15 @@ namespace FuzzyMultiDataExt {
                 i--;
             }
         }
-        // Тут перевернуть вектор и записать в указатель на вектор
         std::vector<Symbol> rev;
         for (int k=result->size()-1;k>=0;k--){
             rev.push_back(result[k]);
         }
         r.push_back(rev);
     }
-
-
-
-class ASStageMultiMarking: public ASStage
-{    
-public:
-    ASStageMultiMarking();
-    void initFromEnv(const Environment& env);
-
-    void run();
-
-    AxiomExprSetPlus &getAS(int n);
-    const AxiomExprSetPlus &getAS(int n) const;
-    int getASSize() const;
-    void recalculateMatterASFunc(AxiomExprSetPlus& as);
-    void setAxiomSets(const std::vector<AxiomExprSetPlus>& initialAS);
-
-    //  Метод, реализующий поиск наибольшей общей подстроки.
+    // Мб ошибка из-за того, что то, что хочу вызвать описано дальше.
     template<class Symbol, class DistanceFunction, class ChoiceFunction>
-    std::vector<std::vector<Symbol>> findCommonSubsequence(const std::vector<Symbol>& s1,
-                                                           const std::vector<Symbol>& s2,
-                                                           DistanceFunction distF,
-                                                           ChoiceFunction choiceF){
+    std::vector<std::vector<Symbol> > findCommonSubsequence(const std::vector<Symbol>& s1,const std::vector<Symbol>& s2,DistanceFunction distF,ChoiceFunction choiceF){
 
         int m=s1.size()+1;
         int n=s2.size()+1;
@@ -121,7 +115,7 @@ public:
 
         for (int b=1 ; b < m ; b++ ){
                 for (int a=1 ; a < n ; a++) {
-                    if (distF==0){
+                    if (distF(s1[a],s2[b])==0){
                         U[a][b]=true;
                     }
                     else{
@@ -136,12 +130,37 @@ public:
                 }
             }
         // Построение наибольшей общей подстроки
-        std::vector <std::vector<Symbol>> result;
-        std::vector <std::vector<Symbol>>* r;
+
+        std::vector <std::vector<Symbol> > result;
+        std::vector <std::vector<Symbol> > r;
         r=&result;
         find(r,L,D,U,s1,s2,m,n,result,choiceF);
+        return r;
 
     }
+
+class ASStageMultiMarking: public ASStage
+{    
+public:
+    ASStageMultiMarking();
+    //Параметры запуска;
+    MultiMarking::DTWMetric* m;
+    double porog;
+
+
+    void initFromEnv(const Environment& env);
+
+    void run();
+
+    AxiomExprSetPlus &getAS(int n);
+    const AxiomExprSetPlus &getAS(int n) const;
+    int getASSize() const;
+    void recalculateMatterASFunc(AxiomExprSetPlus& as);
+    void setAxiomSets(const std::vector<AxiomExprSetPlus>& initialAS);
+
+
+
+
 };
 // end
 }
