@@ -86,6 +86,8 @@ win32 {
 # ‰Ã— unix
 linux-g++|linux-g++-64 {
         QMAKE_CXXFLAGS_RELEASE += -fopenmp -o2 -std=c++0x
+        QMAKE_CXXFLAGS += -std=c++0x
+
 }
 linux-icc|linux-icc-64 {
         QMAKE_CXXFLAGS += -std=c++0x -no-multibyte-chars -wd913
