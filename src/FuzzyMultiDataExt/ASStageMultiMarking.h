@@ -92,7 +92,6 @@ namespace FuzzyMultiDataExt {
         int n=s1.size()+1;
         int m=s2.size()+1;
 
-        // Инициализация матриц
         std::vector<std::vector<double> > A(n);
         std::vector<std::vector<bool> > L(n),D(n),U(n);
         for (int u=0;u<n;u++){
