@@ -56,31 +56,41 @@ namespace FuzzyMultiDataExt {
               const std::vector<Symbol>& s1,const std::vector<Symbol>& s2,int i,int j,
               std::vector<Symbol> result,ChoiceFunction choiceF){
         while ((i>0)&&(j>0)){
-            if (D[i][j]){
-                result->push_back(choiceF(s1[i],s2[j]));
-            }
-            if (L[i][j] && U[i][j]){
-                find(r,L,D,U,s1,i,j,result);
-            }
-            if (L[i][j]){
+            if (D[i][j]==true){
+                choiceF(s1[i-1],s2[j-1]);
+                result.push_back(choiceF(s1[i-1],s2[j-1]));
+                i--;
                 j--;
             }
-            if (U[i][j]){
+            else {
+            if (L[i][j]==true && U[i][j]==true){
+                find(r,L,D,U,s1,s2,i-1,j,result,choiceF);
+                find(r,L,D,U,s1,s2,i,j-1,result,choiceF);
+                i=-1;
+            }
+            else
+            {
+            if (L[i][j]==true){
+                j--;
+            }
+            if (U[i][j]==true){
                 i--;
             }
         }
+        }
+        }
         std::vector<Symbol> rev;
-        for (int k=result->size()-1;k>=0;k--){
+        for (int k=result.size()-1;k>=0;k--){
             rev.push_back(result[k]);
         }
-        r.push_back(rev);
+        r->push_back(rev);
     }
-    // Мб ошибка из-за того, что то, что хочу вызвать описано дальше.
-    template<class Symbol, class DistanceFunction, class ChoiceFunction>
-    std::vector<std::vector<Symbol> > findCommonSubsequence(const std::vector<Symbol>& s1,const std::vector<Symbol>& s2,DistanceFunction distF,ChoiceFunction choiceF){
 
-        int m=s1.size()+1;
-        int n=s2.size()+1;
+    template<class Symbol, class DistanceFunction, class ChoiceFunction>
+    std::vector<std::vector<Symbol> >  findCommonSubsequence(const std::vector<Symbol>& s1,const std::vector<Symbol>& s2,DistanceFunction distF,ChoiceFunction choiceF){
+
+        int n=s1.size()+1;
+        int m=s2.size()+1;
 
         // Инициализация матриц
         std::vector<std::vector<double> > A(n);
@@ -103,7 +113,7 @@ namespace FuzzyMultiDataExt {
         }
         for (int b=1 ; b < m ; b++ ){
                 for (int a=1 ; a < n ; a++) {
-                    if (distF(s1[a],s2[b])==0){
+                    if (distF(s1[a-1],s2[b-1])==0){
                         A[a][b]=A[a-1][b-1]+1;
                     }
                     else
@@ -115,27 +125,38 @@ namespace FuzzyMultiDataExt {
 
         for (int b=1 ; b < m ; b++ ){
                 for (int a=1 ; a < n ; a++) {
-                    if (distF(s1[a],s2[b])==0){
-                        U[a][b]=true;
+                    if (distF(s1[a-1],s2[b-1])==0){
+                        D[a][b]=true;
                     }
                     else{
-                        if (A[a-1][b]>=A[a][b-1]){
+                        if (A[a-1][b]<=A[a][b-1]){
                             L[a][b]=true;
                         }
-                        if (A[a-1][b]<=A[a][b-1]){
+                        if (A[a-1][b]>=A[a][b-1]){
                             U[a][b]=true;
                         }
 
                     }
                 }
             }
-        // Построение наибольшей общей подстроки
+        /*
+        ///////////////////Дебаг
+        for (int b=0 ; b < m ; b++ ){
+                for (int a=0 ; a < n ; a++) {
+                    std::cout << A[b][a],D[b][a],L[b][a],U[b][a],'/n';
 
-        std::vector <std::vector<Symbol> > result;
-        std::vector <std::vector<Symbol> > r;
-        r=&result;
-        find(r,L,D,U,s1,s2,m,n,result,choiceF);
-        return r;
+                }
+        }
+*/
+       /////////////////////
+
+        // Построение наибольшей общей подстроки
+        std::vector <std::vector<Symbol> > j;
+        std::vector <std::vector<Symbol> >* r;
+        r=&j;
+        std::vector<Symbol> temp;
+        find(r,L,D,U,s1,s2,n-1,m-1,temp,choiceF);
+        return j;
 
     }
 
