@@ -318,6 +318,10 @@ double TemplateGeneticsExt::run(TemplateRecognizer& templateRecognizer) {
 		//*(templateRecognizer.axiomSet) = *((*population)[mask[0]].axiomSet);
 		*(templateRecognizer.axiomSet) = *(bestElem.axiomSet);
 
+		int e1 = 0, e2 = 0;
+
+		templateRecognizer.recognizer->run();
+
 		// 3. Вызываем алгоритм обучения распознавателя
 		tmpGoalRec = templateRecognizer.recognizer->learn (templateRecognizer);
 
