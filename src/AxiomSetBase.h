@@ -68,10 +68,10 @@ class AxiomSetBase {
 	signed int readFromAS (std::string filePath, AxiomExprSetStructure &aess) const;
 
 	// Функция считывания параметров системы аксиом (с указанием размернстей набора данных, на которых проверять элементарные условия)
-	signed int readFromAS (std::string filePath, AxiomExprSetStructure &aess, std::vector <std::string> &paramNames) const;
+	signed int readFromAS (std::string filePath, AxiomExprSetStructure &aess, const std::vector<std::string> &paramNames) const;
 
 	// Функция считывания параметров системы аксиом из уже открытого файла (с указанием размернстей набора данных, на которых проверять элементарные условия)
-	signed int readFromAS (boost::filesystem::ifstream &file, AxiomExprSetStructure &aess, std::vector <std::string> &paramNames) const;
+	signed int readFromAS (boost::filesystem::ifstream &file, AxiomExprSetStructure &aess, const std::vector<std::string> &paramNames) const;
 
 	// Функция записи системы аксиом в файл
 	signed int saveToAS (std::string baseDir, AxiomSetStructure &ass, int first = -1, int second = -1) const;
