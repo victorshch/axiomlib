@@ -56,6 +56,8 @@ int main (int argc, char** argv) {
 
 		alg.run();
 
+		alg.saveAxiomSetsToXml();
+
 		std::vector<ResultInfo> result;
 		result.reserve(alg.getASSize());
 
@@ -70,10 +72,10 @@ int main (int argc, char** argv) {
 			result.push_back(info);
 		}
 
-		std::sort(result.begin(), result.end());
-		std::reverse(result.begin(), result.end());
+//		std::sort(result.begin(), result.end());
+//		std::reverse(result.begin(), result.end());
 
-		int size = std::min(20, (int) result.size());
+		int size = (int) result.size();
 
 		std::cout << "Best axiom sets:" << std::endl;
 		for(int i = 0; i < size; ++i) {
