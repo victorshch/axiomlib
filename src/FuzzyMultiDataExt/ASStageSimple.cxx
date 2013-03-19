@@ -105,7 +105,11 @@ void ASStageSimple::recalculateMatterASFunc(AxiomExprSetPlus &as) {
 	}
 }
 
-void ASStageSimple::run() {	
+void ASStageSimple::run() {
+	if(stage2 == 0) {
+		throw AxiomLibException("ASStageSimple::run(): axiom stage not set, cannot run training");
+	}
+
 	std::vector<int> sizeVector;
 	stage2->getAXSize(sizeVector);
 	
@@ -257,6 +261,8 @@ void ASStageSimple::run() {
 		// Сортировка лучших систем аксиом до заданного числа элементов
 		sortBestAxiomSets ();
 	}
+
+	std::sort(bestAxiomSets.begin(), bestAxiomSets.end());
 }
 
 int ASStageSimple::tryAddAxiom(AxiomExprSetPlus &as, const AxiomExpr &ax, int axIndex) const {
