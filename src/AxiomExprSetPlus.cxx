@@ -13,6 +13,12 @@ using namespace AxiomLib;
 
 
 
+
+bool AxiomExprSetPlus::operator <(const AxiomExprSetPlus &other) const
+{
+	return this->goal < other.goal;
+}
+
 // Пустой конструктор с заданием имени системы аксиом по default'у
 AxiomExprSetPlus::AxiomExprSetPlus () {
 	goal = -1.0;
