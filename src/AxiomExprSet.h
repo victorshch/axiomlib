@@ -86,6 +86,9 @@ class AxiomExprSet {
     // Функция возвращающая имя системы аксиом
     std::string name (void) const;
 
+	// Функция устанавливает имя системы аксиом
+	void setName(const std::string& value) { nameOfAxiomSet = value; }
+
 	// Функция возвращающая число аксиом в системе
 	int size (void) const;
 
