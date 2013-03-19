@@ -43,7 +43,7 @@ public:
 	int initFromEnv (const Environment& env);
 
 	// Функция устанавливает параметры класса только для возможности распознавания и подсчета целевой функции для системы аксиом
-	//int initFromEnvRecognitionOnly (const Environment& env);
+	int initFromEnvRecognitionOnly (const Environment& env);
 	
 	// Доступ к датасету
 	FuzzyDataSet &getDataSet();
@@ -128,6 +128,11 @@ public:
 	void saveASs(const std::string& dir) const;
 	void saveASs() const;
 	void loadASs(const std::string& dir, const std::vector<std::string>& asNames);
+
+	void saveAxiomSetsToXml(const std::string& dir) const;
+	void saveAxiomSetsToXml() const;
+	void loadAxiomSetsFromXml(const std::string& dir, const std::vector<std::string>& asNames);
+	void loadAxiomSetsFromXml(const std::vector<std::string>& asNames);
 	
 	void recalculateMatterECFunc(ElemCondPlusStat& ec, int abType);
 	void recalculateMatterAxiomFunc(AxiomExprPlus& ax, int abType);
