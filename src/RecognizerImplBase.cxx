@@ -317,7 +317,8 @@ void RecognizerImplBase::countStat(std::vector<double> &stat, int resFirst, int 
 	stat.resize (refStat.size());
 	int temp;
 	double multiplier;
-	multiplier = 0.5 * (double) (abnormalSegmentsNum - resSecond) / (double) (abnormalSegmentsNum + resFirst); // resFisrt и resSecond изначально перепутаны во всей программе, поэтому и здесь формула с такими подстановками
+	//multiplier = 0.5 * (double) (abnormalSegmentsNum - resSecond) / (double) (abnormalSegmentsNum + resFirst); // resFisrt и resSecond изначально перепутаны во всей программе, поэтому и здесь формула с такими подстановками
+	multiplier = 0.5 * (double) (abnormalSegmentsNum - resFirst) / (double) (abnormalSegmentsNum + resSecond);
 	for (unsigned int i = 0; i < refStat.size(); i++) {
 		temp = 0;
 		if (refStat[i]) temp++;
