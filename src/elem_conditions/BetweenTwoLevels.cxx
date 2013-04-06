@@ -508,13 +508,13 @@ signed int BetweenTwoLevels::changeParams (const int numOfSteps) {
 						if (Right >= rightLimit)
 							return -1;
 						else {
-							Right++;
+							Right += neighbourhoodStep;
 							Left = 0;
 							Min = minLimit;
 							Max = minLimit;
 						}
 					} else {
-						Left++;
+						Left += neighbourhoodStep;
 						Min = minLimit;
 						Max = minLimit;
 					}

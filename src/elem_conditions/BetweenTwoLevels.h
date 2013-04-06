@@ -33,6 +33,7 @@ class BetweenTwoLevels : public ElemCondition {
 		archive & BOOST_SERIALIZATION_NVP(levelDelta);
 		archive & BOOST_SERIALIZATION_NVP(leftLimit);
 		archive & BOOST_SERIALIZATION_NVP(rightLimit);
+		archive & BOOST_SERIALIZATION_NVP(neighbourhoodStep);
 		archive & BOOST_SERIALIZATION_NVP(Min);
 		archive & BOOST_SERIALIZATION_NVP(Max);
 		archive & BOOST_SERIALIZATION_NVP(Left);
@@ -53,6 +54,9 @@ class BetweenTwoLevels : public ElemCondition {
 	
 	// Максимальное значение параметра right, которое учитывается при подборе параметров перебором
 	int rightLimit;
+
+	// Шаг изменения окрестности
+	int neighbourhoodStep;
 
   protected:
 	  
@@ -110,7 +114,7 @@ class BetweenTwoLevels : public ElemCondition {
 	signed int setLimits (const int newLeftLimit, const int newRightLimit);
 
 	// Функция устанавливает значения параметров minLevelLimit, maxLevelLimit и levelDelta
-	signed int setLimits (const std::vector<double>& row, const double reserve, const unsigned int numOfLevels);
+	signed int setLimits (const std::vector<double>& row, const double reserve, const unsigned int numOfLevels, unsigned neighbourhoodStep);
 
 	// Функция изменяет параметры элементарного условия на число шагов, указанное в параметрах
 	signed int changeParams (const int numOfSteps);

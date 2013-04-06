@@ -107,7 +107,7 @@ class ElemCondition {
 
 	  // Функция устанавливает максимальные значения для параметров элементарного условия,
 	  // отличных от left и right
-	virtual signed int setLimits (const std::vector<double>& row, const double reserve, const unsigned int numOfLevels) = 0;
+	virtual signed int setLimits (const std::vector<double>& row, const double reserve, const unsigned int numOfLevels, unsigned neigbourhoodStep = 1) = 0;
 
 	  // Функция изменяет параметры элементарного условия в заданных пределах на число шагов,
 	  // указанное в параметрах. Изменение на один шаг - это изменение на одно значение delta.
