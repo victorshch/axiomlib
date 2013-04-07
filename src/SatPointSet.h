@@ -102,7 +102,7 @@ SatPointSet::SatPointSet(const Axiom &axiom, const FuzzyDataSet &dataSet, FuzzyD
 		multiTSCount += dataSet.getMutiTSCount(division, classes[i]);
 	}
 
-	m_satPoints.resize(multiTSCount);
+	m_satPoints.reserve(multiTSCount);
 
 	std::vector<std::vector<double> > multiTS;
 
@@ -128,10 +128,10 @@ SatPointSet::SatPointSet(const Axiom &axiom, const FuzzyDataSet &dataSet, FuzzyD
 
 			int multiTSLen = (int) dataSet.getMultiTSLength(division, currentClass, classMultiTSNo);
 
-			m_satPoints[currentMultiTS].resize(multiTSLen);
+			m_satPoints.push_back(SatVector(multiTSLen));
 
 			for(int i = 0; i < multiTSLen; i++) {
-				m_satPoints[currentMultiTS][i] = (SatValue) (axiom.check(i, multiTS) == 1);
+				m_satPoints.back()[i] = (SatValue) (axiom.check(i, multiTS) == 1);
 			}
 
 			++currentMultiTS;
