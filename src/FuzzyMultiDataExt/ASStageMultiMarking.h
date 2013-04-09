@@ -45,6 +45,7 @@ namespace FuzzyMultiDataExt {
                 result[i]=true;
             }
         }
+        return result;
 
     };
 
