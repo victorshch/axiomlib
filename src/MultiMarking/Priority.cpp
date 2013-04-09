@@ -12,7 +12,7 @@ double AxiomLib::MultiMarking::Priority::compute(const std::vector<bool> &v1, co
 	for(int i = 0; i < n; ++i) {
 		if(v1[i]) {
 			if(v2[i]) {
-				break;
+                          dxe	break;
 			} else {
 				result = 1;
 				break;

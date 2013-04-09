@@ -1,11 +1,92 @@
 #include "FuzzyMultiDataExt/ASStageMultiMarking.h"
 #include "MultiMarking/dtwmetric.h"
 #include "MultiMarking/MetricsEqual.h"
+#include "MultiMarking/AsymmBetweenSets.h"
+#include "MultiMarking/AsymmHamming.h"
+#include "MultiMarking/Dice.h"
+#include "MultiMarking/Jaccard.h"
+#include "MultiMarking/MetricsBetweenSets1.h"
+#include "MultiMarking/MetricsBetweenSets2.h"
+#include "MultiMarking/MetricsEuclidean.h"
+#include "MultiMarking/MetricsHamming.h"
+#include "MultiMarking/MetricsMatrix.h"
+#include "MultiMarking/Priority.h"
+#include "MultiMarking/WeakEqual.h"
 #include "vector"
+
 using namespace std;
 using namespace AxiomLib;
 
+std::vector<std::vector<std::vector<bool>>> vec4;
+std::vector<std::vector<bool> > s41;
+std::vector<std::vector<bool> > s42;
+MultiMarking::DTWMetric* m;
+
+void makeTest(void){
+    FuzzyMultiDataExt::DistanceFunctor distanceFunctor = FuzzyMultiDataExt::DistanceFunctor(m);
+
+    vec4=FuzzyMultiDataExt::findCommonSubsequence(s41,s42,distanceFunctor,FuzzyMultiDataExt::choiceFunctionForMultiMark);
+
+    for (int i=0;i<vec4.size();i++){
+
+        cout <<"Common sequence №"<<i <<'\n';
+        std::vector<std::vector<bool>> p;
+        p=vec4[i];
+        cout <<'{';
+        for (int j=0;j<p.size();j++){
+            cout <<'{';
+            std::vector<bool> element;
+            element=p[j];
+
+            for (int k=0;k<element.size();k++){
+                cout<<element[k];
+            }
+            cout <<'}';
+        }
+        cout <<'}';
+        cout <<'\n';
+    }
+}
+
+void startTest(void){
+    std::cout <<'\n' << "Test Equal"<<'\n';
+    m=new MultiMarking::Equal;
+    makeTest();
+    std::cout <<'\n' << "Test AsymmBetweenSets"<<'\n';
+    m=new MultiMarking::AsymmBetweenSets;
+    makeTest();
+    std::cout <<'\n' << "Test AsymmHamming"<<'\n';
+    m=new MultiMarking::AsymmHamming;
+    makeTest();
+    std::cout <<'\n'<< "Test Dice"<<'\n';
+    m=new MultiMarking::Dice;
+    makeTest();
+    std::cout <<'\n'<< "Test Jaccard"<<'\n';
+    m=new MultiMarking::Jaccard;
+    makeTest();
+    std::cout <<'\n' << "Test BetweenSets1"<<'\n';
+    m=new MultiMarking::BetweenSets1;
+    makeTest();
+    std::cout <<'\n' << "Test BetweenSets2"<<'\n';
+    m=new MultiMarking::BetweenSets2;
+    makeTest();
+    std::cout <<'\n' << "Test Euclidean"<<'\n';
+    m=new MultiMarking::Euclidean;
+    makeTest();
+    std::cout <<'\n' << "Test Hamming"<<'\n';
+    m=new MultiMarking::Hamming;
+    makeTest();
+    std::cout <<'\n' << "Test Priority"<<'\n';
+    m=new MultiMarking::Priority;
+    makeTest();
+    std::cout <<'\n' << "Test WeakEqual"<<'\n';
+    m=new MultiMarking::WeakEqual;
+    makeTest();
+}
+
+
 int main(){
+    cout <<"Test1"<<'\n';
 
     // Случай разметки-строки
     // Test1
@@ -25,6 +106,7 @@ int main(){
     }
 
     // Test 2
+    cout <<"Test2"<<'\n';
 
     std::vector<std::vector<int> > vec2;
     std::vector<int> s12={1,3,2,8,4};
@@ -41,6 +123,7 @@ int main(){
         cout <<'\n';
     }
    // Test 3
+    cout <<"Test3"<<'\n';
 
     std::vector<std::vector<int> > vec3;
     std::vector<int> s23={1,3,2,8,4};
@@ -56,6 +139,44 @@ int main(){
         }
         cout <<'\n';
     }
+
+    //Using Metric
+    
+    // Test 1
+    // Inicializacia pervoj sravnivaemoj stroki
+    std::vector<bool> part1Ofs41={false,false,true};
+    std::vector<bool> part2Ofs41={true,true,false};
+    std::vector<bool> part3Ofs41={false,true,false};
+    std::vector<bool> part4Ofs41={false,false,false};
+    s41.push_back(part1Ofs41);
+    s41.push_back(part2Ofs41);
+    s41.push_back(part3Ofs41);
+    s41.push_back(part4Ofs41);
+
+    // Inicializacia vtoroj sravnivaemoj stroki
+    std::vector<bool> part1Ofs42={true,true,false};
+    std::vector<bool> part2Ofs42={true,true,true};
+    std::vector<bool> part3Ofs42={false,false,false};
+    std::vector<bool> part4Ofs42={true,false,false};
+    s42.push_back(part1Ofs42);
+    s42.push_back(part2Ofs42);
+    s42.push_back(part3Ofs42);
+    s42.push_back(part4Ofs42);
+
+    cout <<"Test: Using Metrics"<<'\n'<<'\n';
+    cout << "Compare:"<< '\n';
+    cout << '{'<<'{'<<part1Ofs41[0]<<','<<part1Ofs41[1]<<','<<part1Ofs41[2]<<'}'
+            <<'{'<<part2Ofs41[0]<<','<<part2Ofs41[1]<<','<<part2Ofs41[2]<<'}'
+            <<'{'<<part3Ofs41[0]<<','<<part3Ofs41[1]<<','<<part3Ofs41[2]<<'}'
+            <<'{'<<part4Ofs41[0]<<','<<part4Ofs41[1]<<','<<part4Ofs41[2]<<'}'<<'}';
+
+   cout <<'\n';
+   cout << '{'<<'{'<<part1Ofs42[0]<<','<<part1Ofs42[1]<<','<<part1Ofs42[2]<<'}'
+        <<'{'<<part2Ofs42[0]<<','<<part2Ofs42[1]<<','<<part2Ofs42[2]<<'}'
+        <<'{'<<part3Ofs42[0]<<','<<part3Ofs42[1]<<','<<part3Ofs42[2]<<'}'
+        <<'{'<<part4Ofs42[0]<<','<<part4Ofs42[1]<<','<<part4Ofs42[2]<<'}'<<'}';
+
+    startTest();
 
     return 0;
 }
