@@ -20,6 +20,8 @@ namespace AxiomLib {
 class MultiTS {
 
   public:
+
+	std::string trajectoryName;
 	
   	// Поле для хранения многомерного временного ряда
 	std::vector<std::vector<double> > data; // по числу paramNames

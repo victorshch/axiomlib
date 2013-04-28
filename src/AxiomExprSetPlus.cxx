@@ -51,6 +51,23 @@ AxiomExprSetPlus::~AxiomExprSetPlus(void) {
 	markUps.clear();
 }
 
+void AxiomExprSetPlus::setErrorsForTraj(int type, int trajNo, int errI, int errII)
+{
+	detailedErrors[type][trajNo] = std::make_pair(errI, errII);
+}
+
+std::pair<int, int> AxiomExprSetPlus::getErrorsForTraj(int type, int trajNo) const
+{
+	if(detailedErrors.find(type) == detailedErrors.end()) {
+		return std::make_pair(-1, -1);
+	}
+	const boost::unordered_map<int, std::pair<int, int> >& errorsForClass = detailedErrors.at(type);
+	if(errorsForClass.find(trajNo) == errorsForClass.end()) {
+		return std::make_pair(-1, -1);
+	}
+	return errorsForClass.at(trajNo);
+}
+
 // Функция удаляет все созданные динамические объкты в системе аксиом
 void AxiomExprSetPlus::clear(void) {
 	AxiomExprSet::clear();

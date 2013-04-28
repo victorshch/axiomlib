@@ -23,6 +23,8 @@ class DataSetDivision
 public:
     DataSetDivision(const ReferenceClassesTS &abnormalTS, const ClassTS &normalTS);
 	
+	std::string getMultiTSName(int indexClass, int indexMultiTS) const;
+
 	// Возвращает число классов нештатного поведения
 	int getClassCount() const; 
 	

@@ -197,8 +197,11 @@ std::string DataSetBase::paramName(int parameter) const {
 *
 ****************************************************************************/
 std::string DataSetBase::className(int parameter) const {
-	if ( (parameter >= 0) && (parameter < (int) classNames.size()) )
+	if ( (parameter >= 0) && (parameter < (int) classNames.size()) ) {
 		return classNames[parameter];
+	} else if (parameter == -1) {
+		return "normal";
+	}
 	return (std::string) "";
 }
 
@@ -451,6 +454,8 @@ void DataSetBase::setupParamNums(const Environment &env, const EnvDataSet &envDa
 		 // Раз файла не нашлось - происходит throw AxiomLibException
 		 throw AxiomLibException ("Error in DataSetBase::ReadFromCSV: given file does not  exists.");
 	 }
+
+	 multiTS.trajectoryName = fileName;
 	 
 	 // теперь знаем что файл существует
 	 // Читаем первую строку файла, содержащую названия параметров, к которым относятся временные ряды

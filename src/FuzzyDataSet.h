@@ -39,6 +39,8 @@ public:
 	
 	int readDataSet(const std::string &dataSetPath);
 	
+	std::string getMultiTSName(DataSetDivisionType division, int indexClass, int indexMultiTS) const;
+
 	// Возвращает одномерный ряд по разделу, номеру класса, траектории и размерности
 	bool getTSByIndex(DataSetDivisionType division, std::vector<double>& vec, int indexClass, int indexMultiTS, int indexTS) const;
 	
