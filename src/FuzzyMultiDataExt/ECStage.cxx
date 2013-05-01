@@ -1,5 +1,6 @@
 #include <cstdlib>
 #include <algorithm>
+#include <cmath>
 
 #include <boost/lexical_cast.hpp>
 #include <boost/algorithm/minmax_element.hpp>
@@ -19,6 +20,8 @@
 
 #define replacementProbability	0.5 // Вероятность замещения одного из элементов вектора bestECs новым, если этот вектор уже раздут и заполнен условиями с таким же значением целевой функции
 #define additionalECItems		10	// > 0 !!! Число дополнительных слотов, на которое увеличивать bestECs, если этот вектор заполнен
+
+#define AXIOMLIB_ECSTAGE_EXPERIMENTAL
 
 using namespace AxiomLib;
 using namespace AxiomLib::FuzzyMultiDataExt;
@@ -257,7 +260,8 @@ void ECStage::selectElemCond(int abnormalBehaviourType, int dimension, int dimen
 		}
 		// Изменяем размер по числу лучших элементарных условий, которое сохранять для каждого из типов условий
 		bestECs[i].reserve(numBestECsMax);
-		bestECs[i].resize(numBestECs);
+		bestECs[i].clear();
+		//bestECs[i].resize(numBestECs);
 		// Устанавливаем границы сетки
 		elemConds[i].elemCondition->setLimits (leftLimit, rightLimit);
 		if(elemConds[i].elemCondition->setLimits (teachRow, reserve, numOfLevels) == -1) {
@@ -278,6 +282,7 @@ void ECStage::selectElemCond(int abnormalBehaviourType, int dimension, int dimen
 		while (elemConds[i].elemCondition->changeParams(1) >= 0) {
 			// Считаем значение целевой функции для измененных параметров
 			matterECFunc (elemConds[i], dimension, abnormalBehaviourType, taskNo);
+			//Logger::debug("Current goal: " + boost::lexical_cast<std::string>(elemConds[i].goal));
 			// Определеяем необходимо ли сохранять элементарное условие с данным набором параметров
 			if (abs(elemConds[i].goal - currentBestEC.goal) < eps) {
 				// продолжается область одного значения целевой функции
@@ -306,6 +311,14 @@ void ECStage::selectElemCond(int abnormalBehaviourType, int dimension, int dimen
 	}	
 }
 
+inline double binaryEntropy(double p) {
+	double positiveEntropy = p > eps ? - p * log2(p) : 0;
+	p = 1 - p;
+	double negativeEntropy = p > eps ? - p * log2(p) : 0;
+
+	return positiveEntropy + negativeEntropy;
+}
+
 double ECStage::matterECFunc (ElemCondPlusStat &ec, const int param, const int abnormalBehaviourType, int taskNo) const {
 	// Берем готовый вектор, чтобы не выделять каждый раз память
 	std::vector <double>& curTS = m_storage[taskNo];
@@ -320,7 +333,7 @@ double ECStage::matterECFunc (ElemCondPlusStat &ec, const int param, const int a
 	// памать на этот вектор уже выделена
 	ec.statOccVector.resize(classMultiTSCount);
 	
-	int numOccurred = 0;
+	int abnOccCount = 0;
 	for (int j = 0; j < classMultiTSCount; j++) {
 		curTS.clear();
 		if (fuzzyDataSet->getTSByIndexFromClass (curTS, abnormalBehaviourType, j, param)) {
@@ -328,7 +341,7 @@ double ECStage::matterECFunc (ElemCondPlusStat &ec, const int param, const int a
 			classCount += currentClassCount;
 			classLen += curTS.size();
 			if(currentClassCount > 0) {
-				++numOccurred;
+				++abnOccCount;
 				ec.statOccVector[j] = true;
 			} else {
 				ec.statOccVector[j] = false;
@@ -339,7 +352,7 @@ double ECStage::matterECFunc (ElemCondPlusStat &ec, const int param, const int a
 	// Заполняем статистику по нештатному поведению
 	if (classLen > 0) {
 		ec.statAbnorm = (double) classCount/ (double) classLen;
-		ec.statOccurence = (double) numOccurred / (double) classMultiTSCount;
+		ec.statOccurence = (double) abnOccCount / (double) classMultiTSCount;
 	}
 	else {
 		ec.statAbnorm = -1.0; // - значит данные не определены
@@ -351,12 +364,19 @@ double ECStage::matterECFunc (ElemCondPlusStat &ec, const int param, const int a
 	//fuzzyDataSet->getNormalClassSize (numOfNormalMultiTS, numOfNormalTS);
 	int normalMultiTSCount = fuzzyDataSet->getMutiTSCount(FuzzyDataSet::Reference, -1);
 
+	int totalNormalMultiTSCount = normalMultiTSCount;
+	int normalOccCount = 0;
+
 	classCount = 0;
 	classLen = 0;
 	for (int j = 0; j < normalMultiTSCount; j++) {
 		curTS.clear();
 		if (fuzzyDataSet->getNormalTSFromClass (curTS, j, param)) {
-			classCount += numOfCarriedOutItems (ec, curTS);
+			int currentClassCount = numOfCarriedOutItems (ec, curTS);
+			classCount += currentClassCount;
+			if(currentClassCount > 0) {
+				++normalOccCount;
+			}
 			classLen += curTS.size();
 		}
 	}
@@ -368,12 +388,16 @@ double ECStage::matterECFunc (ElemCondPlusStat &ec, const int param, const int a
 			}
 
 			int classMultiTSCount = fuzzyDataSet->getMutiTSCount(FuzzyDataSet::Reference, classNo);
+			totalNormalMultiTSCount += classMultiTSCount;
 
 			for (int j = 0; j < classMultiTSCount; j++) {
 				curTS.clear();
 				if (fuzzyDataSet->getTSByIndexFromClass (curTS, classNo, j, param)) {
 					int currentClassCount = numOfCarriedOutItems (ec, curTS);
 					classCount += currentClassCount;
+					if(currentClassCount > 0) {
+						++normalOccCount;
+					}
 					classLen += curTS.size();
 				}
 			}
@@ -388,6 +412,7 @@ double ECStage::matterECFunc (ElemCondPlusStat &ec, const int param, const int a
 		std::cout << "\nWarning in FuzzyMultiDatadLearnAlgorithm::matterECFunc: incorrect dstaSet request.\n";
 	}
 
+#ifndef AXIOMLIB_ECSTAGE_EXPERIMENTAL
 	// Определение значения целевой функции
 	if (ec.statAbnorm < eps) {
 		ec.goal = 0.0;
@@ -401,7 +426,34 @@ double ECStage::matterECFunc (ElemCondPlusStat &ec, const int param, const int a
 			ec.goal = v1 + goalOccurenceWeight * v2;
 		}
 	}
+#else
+//	Logger::debug("abnOccCount: " + boost::lexical_cast<std::string>(abnOccCount)
+//				  + ", normOccCount: " + boost::lexical_cast<std::string>(normalOccCount));
+	// Доля траекторий, которые ЭУ классифицировал как "1"
+	double positiveFraction = (double)(abnOccCount + normalOccCount)
+			/ (double)(classMultiTSCount + totalNormalMultiTSCount);
 
+	// Доля траекторий, которые ЭУ классифицировал как "0"
+	double negativeFraction = 1.0 - positiveFraction;
+
+	double positiveAbnFraction = (double)abnOccCount / (double)(abnOccCount + normalOccCount);
+	double positiveEntropy =  binaryEntropy(positiveAbnFraction);
+
+	double negativeAbnFraction = (double)(classMultiTSCount - abnOccCount)
+			/ (double)(classMultiTSCount + totalNormalMultiTSCount - abnOccCount - normalOccCount);
+	double negativeEntropy = binaryEntropy(negativeAbnFraction);
+
+	double ig = - positiveFraction * positiveEntropy - negativeFraction * negativeEntropy;
+
+	// entropy
+	ec.goal = 1000 * ig;
+
+	if(ec.statOccurence < (double) normalOccCount / (double) totalNormalMultiTSCount) {
+		ec.sign = !ec.sign;
+		// TODO statistics
+		//TODO occVector
+	}
+#endif
 	return ec.goal;
 }
 
@@ -445,10 +497,12 @@ bool goalCompare(const ECSelection& ecSel1, const ECSelection& ecSel2) { return 
 ****************************************************************************/
 inline int ECStage::storeBestECs (std::vector <ECSelection> &bestECs, ElemCondPlusStat &ec, double &goal, double &statNorm, double &statAbnorm) const {
 	//todo заглушка; исправить, чтобы таких ситуаций не возникало
-	if(ec.elemCondition == NULL || ec.goal <= 0) {
+	if(ec.elemCondition == NULL /*|| ec.goal <= -1*/) {
+		Logger::debug("ec.elemCondition == NULL");
 		return 0;
 	}
 	if(bestECs.size() < numBestECsMax) {
+		//Logger::debug("Storing best EC");
 		bestECs.push_back(ec);
 		return 1;
 	} else {
