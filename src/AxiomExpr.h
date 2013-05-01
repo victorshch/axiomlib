@@ -72,6 +72,8 @@ class AxiomExpr {
   
 	// Конструктор: не создает выражение для аксиомы, записывает новое имя аксиомы
     AxiomExpr(const std::string sName);
+
+	AxiomExpr(const ElemCondPlus& ec);
   
 	// Декструктор, уничтожающий все экземпляры объектов
     ~AxiomExpr(void);
@@ -114,6 +116,10 @@ class AxiomExpr {
 
 	// Слитие аксиом по оператору ИЛИ
 	AxiomExpr operator| (const AxiomExpr& second) const;
+
+	AxiomExpr& operator &=(const AxiomExpr& second);
+
+	AxiomExpr& operator |=(const AxiomExpr& second);
 
 	// Слитие аксиом по оператору И в данную аксиому
 	signed int andExpr (const AxiomExpr& first, const AxiomExpr& second);

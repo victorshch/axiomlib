@@ -63,6 +63,8 @@ class ElemCondPlus {
 	 // Конструктор копирования
 	 ElemCondPlus(const ElemCondPlus &second);
 
+	 ElemCondPlus operator!() const;
+
 	 // Возвращает имя типа данного ЭУ
 	 std::string ecTypeName (void) const;
 
