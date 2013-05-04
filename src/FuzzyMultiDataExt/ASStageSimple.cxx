@@ -263,7 +263,7 @@ int ASStageSimple::tryAddAxiom(AxiomExprSetPlus &as, const AxiomExpr &ax, int ax
 	std::vector<std::vector<std::vector<int> > > markUpVariants;
 	as.addAxiom(ax);
 	as.axiomsIndex.push_back(axIndex);
-	
+        // Варианты всех разметок траекторий нештатного поведения
 	createAllMarkUpVariants(as, markUpVariants);
 	
 	matterAxiomSetFunc(as, markUpVariants);
@@ -279,6 +279,9 @@ int ASStageSimple::tryAddAxiom(AxiomExprSetPlus &as, const AxiomExpr &ax, int ax
 //	}
 //	return 0;
 }
+
+// Дерево, в нем хранятся для каджого класса нештатного поведения полученные НОП
+
 
 void ASStageSimple::createAllMarkUpVariants(const AxiomExprSetPlus &as, std::vector<std::vector<std::vector<int> > > &markUpVariants) const {
 	int numOfClasses;
@@ -842,7 +845,7 @@ double ASStageSimple::matterAxiomSetFunc (AxiomExprSetPlus &as, std::vector <std
 	as.errSecond = 0;
 	as.errors.resize(markUps.size());
 	for (int abType = 0; abType < (int) markUps.size(); abType++) {
-		matterAxiomSetFunc (as, abType, markUps[abType], tmpGoal, tmpFirst, tmpSecond);
+                matterAxiomSetFunc (as, abType, markUps[abType], tmpGoal, tmpFirst, tmpSecond);
 		as.errors[abType] = std::make_pair(tmpFirst, tmpSecond);
 		as.errFirst += tmpFirst;
 		as.errSecond += tmpSecond;
@@ -897,7 +900,7 @@ double ASStageSimple::matterAxiomSetFunc (AxiomExprSetPlus &as, int abType, cons
 	// Выбираем очередную траекторию для заданного типа нештатного поведения и запускаем распознаватель
 	std::vector <int> curMarkUp, result;
 	int num;
-	for (int t = 0; t < (int) numOfTS[abType].size(); t++) {
+        for (int t = 0; t < (int) fuzzyDataSet->getMutiTSCount(FuzzyDataSet::Testing, abType); t++) {
 		// разметка траектории контрольной выборки системой аксиом as
 		createTestMarkUp (curMarkUp, as, dims, abType, t, numOfTS[abType][t]);
 
@@ -917,7 +920,8 @@ double ASStageSimple::matterAxiomSetFunc (AxiomExprSetPlus &as, int abType, cons
 	int numNormalMultiTS;
 	std::vector <int> numNormalTS;
 	fuzzyDataSet->getNormalTestSize (numNormalMultiTS, numNormalTS);
-	for (int t = 0; t < (int) numNormalTS.size(); t++) {
+        for (int t = 0; t < (int) fuzzyDataSet->getMutiTSCount(FuzzyDataSet::Testing, -1); t++) {
+
 		// размечаем траекторию нормального поведения
 		createTestMarkUp (curMarkUp, as, dims, t, numNormalTS[t]);
 

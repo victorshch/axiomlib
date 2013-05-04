@@ -3,7 +3,7 @@
 #include "../SatPointSet.h"
 
 #include "../Environment.h"
-
+#include "../MultiMarking/MetricsEqual.h"
 #include "../FuzzyDataSet.h"
 #include "../MultiMarking/dtwmetric.h"
 #include "Common.h"
@@ -13,6 +13,7 @@
 namespace AxiomLib {
 
 namespace FuzzyMultiDataExt {
+
     //  Расстояние между элементами.
     struct DistanceFunctor {
         MultiMarking::DTWMetric* m;
@@ -50,6 +51,51 @@ namespace FuzzyMultiDataExt {
     };
 
 
+    template<class Symbol, class DistanceFunction>
+    std::vector <std::vector<Symbol> > delEqual (std::vector<std::vector<Symbol> > temp, DistanceFunction distF ){
+
+        std::vector <std::vector<Symbol> > result;
+        result.push_back(temp[0]);
+        bool equal;
+        for (int i=0;i<temp.size();i++){
+            equal=true;
+            std::vector<Symbol> subTemp=temp[i];
+            for(int j=0;j<result.size();j++){
+                // Сравнение на отсчетах
+                std::vector<Symbol> subResult=result[j];
+                for(int k=0;k < std::min (temp[i].size(),result[j].size()) ; k++ ){
+                    if (distF(subTemp[k],subResult[k])!=0){
+                        equal=false;
+                    }
+                }
+                }
+                if (!equal){
+                    result.push_back(temp[i]);
+                }
+            }
+
+        return result;
+    }
+
+    template<class Symbol>
+    std::vector <std::vector<Symbol> > findMax (std::vector<std::vector<Symbol> > temp){
+        // TODO Проверка, что вектор непустой
+        std::vector <std::vector<Symbol> > result;
+        int max=0;
+        for (int i=0;i<temp.size();i++){
+
+            if (temp[i].size() > max){
+                max=temp[i].size();
+                }
+        }
+        for (int i=0;i<temp.size();i++){
+            if (temp[i].size()==max){
+                result.push_back(temp[i]);
+            }
+        }
+        return result;
+    }
+
 
     template<class Symbol, class ChoiceFunction>
     void find(std::vector <std::vector<Symbol> >* r,std::vector<std::vector<bool> > L,
@@ -58,7 +104,6 @@ namespace FuzzyMultiDataExt {
               std::vector<Symbol> result,ChoiceFunction choiceF){
         while ((i>0)&&(j>0)){
             if (D[i][j]==true){
-                choiceF(s1[i-1],s2[j-1]);
                 result.push_back(choiceF(s1[i-1],s2[j-1]));
                 i--;
                 j--;
@@ -88,7 +133,7 @@ namespace FuzzyMultiDataExt {
     }
 
     template<class Symbol, class DistanceFunction, class ChoiceFunction>
-    std::vector<std::vector<Symbol> >  findCommonSubsequence(const std::vector<Symbol>& s1,const std::vector<Symbol>& s2,DistanceFunction distF,ChoiceFunction choiceF){
+    std::vector<std::vector<Symbol> >  findCommonSubsequence(const std::vector<Symbol>& s1,const std::vector<Symbol>& s2,DistanceFunction distF,ChoiceFunction choiceF,double porog){
 
         int n=s1.size()+1;
         int m=s2.size()+1;
@@ -113,7 +158,8 @@ namespace FuzzyMultiDataExt {
         }
         for (int b=1 ; b < m ; b++ ){
                 for (int a=1 ; a < n ; a++) {
-                    if (distF(s1[a-1],s2[b-1])==0){
+                    distF(s1[a-1],s2[b-1]);
+                    if (distF(s1[a-1],s2[b-1]) < porog){
                         A[a][b]=A[a-1][b-1]+1;
                     }
                     else
@@ -125,7 +171,7 @@ namespace FuzzyMultiDataExt {
 
         for (int b=1 ; b < m ; b++ ){
                 for (int a=1 ; a < n ; a++) {
-                    if (distF(s1[a-1],s2[b-1])==0){
+                    if (distF(s1[a-1],s2[b-1]) < porog){
                         D[a][b]=true;
                     }
                     else{
@@ -139,16 +185,6 @@ namespace FuzzyMultiDataExt {
                     }
                 }
             }
-        /*
-        ///////////////////Дебаг
-        for (int b=0 ; b < m ; b++ ){
-                for (int a=0 ; a < n ; a++) {
-                    std::cout << A[b][a],D[b][a],L[b][a],U[b][a],'/n';
-
-                }
-        }
-*/
-       /////////////////////
 
         // Построение наибольшей общей подстроки
         std::vector <std::vector<Symbol> > j;
@@ -156,33 +192,87 @@ namespace FuzzyMultiDataExt {
         r=&j;
         std::vector<Symbol> temp;
         find(r,L,D,U,s1,s2,n-1,m-1,temp,choiceF);
-        return j;
+        // Находим максимальные разметки
+        j=findMax (j);
+        return delEqual(j,distF) ;
 
     }
 
-class ASStageMultiMarking: public ASStage
-{    
-public:
-    ASStageMultiMarking();
-    //Параметры запуска;
-    MultiMarking::DTWMetric* m;
-    double porog;
+
+    class ASStageMultiMarking: public ASStage
+    {
+    public:
+        ASStageMultiMarking(FuzzyDataSet* fuzzyDataSet,
+                            AXStage* stage2);
+        //Параметры запуска;
+
+        const FuzzyDataSet* fuzzyDataSet;
+        const AXStage* stage2;
+        MultiMarking::DTWMetric* m;
+        //Порог для сравнения при подходе с подмножествами
+        double porog;
+        bool areMultiMark;
+        // Максимальное число аксиом в популяции
+        int maxAxiomSetPopSize;
+        // Максимальное число шагов в алгоритме построения систем аксиом
+        int maxNumberOfSteps;
+        // Чиcло лучших сохраняемых систем аксиом для каждого процесса
+        int numberOfBestAxiomSets;
+        // Набор лучших систем аксиом
+        std::vector<AxiomExprSetPlus> bestAxiomSets;
+        // Набор лучшей системы аксиом
+        Logger* logger;
+        // Процент лучших систем аксиом в популяции, которые сохраняются при переходе на следующий шаг - (1 - percentBestAxiomSets) - выбираются случайно
+        double percentBestAxiomSets;
+        int ccNumPoints; // Число точек в области, после которого начислять ошибку за каждую лишнюю точку в этой области (используется при подсчете статистики)
+        // Критерий остановки для алгоритма построения системы аксиом - требуемое значение целевой функции
+        double bestAxiomSetGoal;
+        typedef boost::shared_ptr<GoalStrategy> PGoalStrategy;
+        // Стратегия подсчета целевой функции по ошибкам I и II рода
+        PGoalStrategy goalStrategy;
+
+    private:
+        // Функции, используемые в run
+        int sortBestAxiomSets (void);
+        int cutDownAxiomSets (std::vector <AxiomExprSetPlus> &axiomSets) const;
+        int addAxiomSets(std::vector <AxiomExprSetPlus> &nextStepAxiomSets, std::vector <AxiomExprSetPlus> &newAxiomSets, std::vector <int> &indicesOfBestSets) const;
+        int sortAxiomSets (const std::vector <AxiomExprSetPlus> &axiomSets, std::vector <int> &indecies) const;
+        inline int getStatistic (std::vector <int> &row);
+        int chooseBestMarkUp (AxiomExprSetPlus &as, int abType, std::vector <std::vector <bool> > &markUp, const std::vector <std::vector <std::vector <bool> > > &genMarkUps, int &errFirstVal, int &errSecondVal);
+        double matterAxiomSetFunc(AxiomExprSetPlus &as, const std::vector<std::vector<std::vector<std::vector<bool> > > >& markupVariants);
+        double matterAxiomSetFunc (AxiomExprSetPlus &as, std::vector <std::vector <std::vector <bool> > > &markUps);
+        double matterAxiomSetFunc (AxiomExprSetPlus &as, int abType, const std::vector <std::vector<bool> > &genMarkUp, double &goalVal, int &errFirstVal, int &errSecondVal);
+        double matterAxiomSetFunc (AxiomExprSetPlus &as);
+        static std::vector<std::vector<int > > stringIn(std::vector<std::vector<std::vector<bool> > > &genMarkUps,int &numberOfAxiom);
+        static std::vector<std::vector<std::vector<bool> > > stringOut(std::vector<std::vector<int > > &genMarkUps,int &numberOfAxiom);
+
+        inline int createSimpleMarkUpVariants (std::vector<std::vector<std::vector<bool> > > &genMarkUps, const int numOfAxioms) const ;
+        inline int createMarkUpVariants (std::vector<std::vector<std::vector<bool> > > &genMarkUps,std::vector<std::vector<std::vector<bool> > >  &resMarkUps);
+        void createRefMarkUp ( AxiomExprSetPlus &as, FuzzyDataSet::DataSetDivisionType division, int classNo, int multiTSNo, std::vector <std::vector<bool> >& result);
+        int tryAddAxiom(AxiomExprSetPlus &as, const AxiomExpr &ax, int axIndex);
+        void createAllMarkUpVariants(AxiomExprSetPlus &as,std::vector<std::vector<std::vector<std::vector<bool> > > > &markUpVariants);
 
 
-    void initFromEnv(const Environment& env);
-
-    void run();
-
-    AxiomExprSetPlus &getAS(int n);
-    const AxiomExprSetPlus &getAS(int n) const;
-    int getASSize() const;
-    void recalculateMatterASFunc(AxiomExprSetPlus& as);
-    void setAxiomSets(const std::vector<AxiomExprSetPlus>& initialAS);
+        inline int simplifyMarkUps (std::vector <std::vector <std::vector<bool> > > &markUps) const;
 
 
 
+        int chooseIndicesOfBestAxiomSets (std::vector <AxiomExprSetPlus> &newAxiomSets, std::vector <int> &indicesOfBestSets, double &goal) const;
+        int addToBestAxiomSets (std::vector <AxiomExprSetPlus> &axiomSets);
 
-};
+    public:
+        //Наследованные функции
+        void initFromEnv(const Environment& env);
+        // Построение системы аксиом
+        void run();
+        AxiomExprSetPlus &getAS(int n);
+        const AxiomExprSetPlus &getAS(int n) const;
+        int getASSize() const;
+        void recalculateMatterASFunc(AxiomExprSetPlus& as);
+        void setAxiomSets(const std::vector<AxiomExprSetPlus>& initialAS);
+
+    };
+
 // end
 }
 

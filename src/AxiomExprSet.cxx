@@ -273,6 +273,40 @@ int AxiomExprSet::enter (MultiMarking::MultiMark& marked, const std::vector<doub
     return 0;
 
 }
+// for MultiMarking для многомерного случая
+int AxiomExprSet::enter (MultiMarking::MultiMark& marked, const std::vector<std::vector<double> >& row, const unsigned long begin, const unsigned long end){
+    // Проверка входных параметров
+    unsigned int len = 0;
+    for (unsigned int i = 0; i < row.size(); i++) {
+            if (row[i].size() > len)
+                    len = row[i].size();
+    }
+    if ((end <= begin) || (begin < 0) || (end > len)) {
+            throw AxiomLibException("Error in AxiomExprSet::enter : wrong input parameters.");
+    }
+    else {
+        int curRes;
+        marked.resize(end - begin);
+        for (unsigned long i=begin;i<end;i++){
+            marked[i-begin].resize(axioms.size());
+            for (int j=0;j<axioms.size();j++){
+                marked[i-begin][j]=false;
+            }
+        }
+        for (unsigned long i = begin; i < end; i++) {
+                curRes = 0;
+                for (unsigned int j = 0; j < axioms.size(); j++ ) {
+                        curRes = (axioms[j])->check(i, row);
+                        if (curRes > 0) {
+                                marked[i-begin][j] = true;
+                        }
+                }
+        }
+
+}
+
+return 0;
+}
 
 
 /****************************************************************************
