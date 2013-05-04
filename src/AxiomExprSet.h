@@ -114,6 +114,12 @@ class AxiomExprSet {
     // Функция разметки ряда в случае разметки подмножествами аксиом
     int enter (MultiMarking::MultiMark& marked, const std::vector<double>& row, const unsigned long begin, const unsigned long end, std::vector<bool> &stat);
 
+    // for MultiMarking для многомерного случая
+    int enter (MultiMarking::MultiMark& marked, const std::vector<std::vector<double> >& row, const unsigned long begin, const unsigned long end);
+
+    // TODO for MultiMarking для многомерного случая
+    int enter (MultiMarking::MultiMark& marked, const std::vector<std::vector<double> >& row, const unsigned long begin, const unsigned long end, std::vector<bool> &stat);
+
     // Оператор присваивания системы аксиом
     AxiomExprSet& operator= (const AxiomExprSet &second);
 

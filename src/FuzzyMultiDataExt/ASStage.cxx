@@ -17,7 +17,7 @@ ASStage *ASStage::create(const std::string &name, FuzzyDataSet *fuzzyDataSet, AX
 	}
 	
         if(nameCopy == "multimarking") {
-                return new ASStageMultiMarking();
+                return new ASStageMultiMarking(fuzzyDataSet, stage2);
         }
 	return 0;
 }

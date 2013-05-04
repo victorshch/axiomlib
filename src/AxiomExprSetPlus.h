@@ -61,7 +61,7 @@ class AxiomExprSetPlus : public AxiomExprSet {
 
 	// Вектора разметок для различных типов нештатного поведения
 	std::vector < std::vector <int> > markUps;
-	
+
 	// Разметки подмножествами для каждого класса нештатного поведения
 	std::vector < std::vector <std::vector<bool> > > multiMarkUps;
 	

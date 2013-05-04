@@ -1,6 +1,5 @@
 #include "FuzzyMultiDataExt/ASStageMultiMarking.h"
 #include "MultiMarking/dtwmetric.h"
-#include "MultiMarking/MetricsEqual.h"
 #include "MultiMarking/AsymmBetweenSets.h"
 #include "MultiMarking/AsymmHamming.h"
 #include "MultiMarking/Dice.h"
@@ -25,7 +24,7 @@ MultiMarking::DTWMetric* m;
 void makeTest(void){
     FuzzyMultiDataExt::DistanceFunctor distanceFunctor = FuzzyMultiDataExt::DistanceFunctor(m);
 
-    vec4=FuzzyMultiDataExt::findCommonSubsequence(s41,s42,distanceFunctor,FuzzyMultiDataExt::choiceFunctionForMultiMark);
+    vec4=FuzzyMultiDataExt::findCommonSubsequence(s41,s42,distanceFunctor,FuzzyMultiDataExt::choiceFunctionForMultiMark,1);
 
     for (int i=0;i<vec4.size();i++){
 
@@ -52,7 +51,7 @@ void startTest(void){
     std::cout <<'\n' << "Test Equal"<<'\n';
     m=new MultiMarking::Equal;
     makeTest();
-    std::cout <<'\n' << "Test AsymmBetweenSets"<<'\n';
+ /*   std::cout <<'\n' << "Test AsymmBetweenSets"<<'\n';
     m=new MultiMarking::AsymmBetweenSets;
     makeTest();
     std::cout <<'\n' << "Test AsymmHamming"<<'\n';
@@ -72,16 +71,16 @@ void startTest(void){
     makeTest();
     std::cout <<'\n' << "Test Euclidean"<<'\n';
     m=new MultiMarking::Euclidean;
-    makeTest();
+    makeTest();*/
     std::cout <<'\n' << "Test Hamming"<<'\n';
     m=new MultiMarking::Hamming;
-    makeTest();
+    makeTest();/*
     std::cout <<'\n' << "Test Priority"<<'\n';
     m=new MultiMarking::Priority;
     makeTest();
     std::cout <<'\n' << "Test WeakEqual"<<'\n';
     m=new MultiMarking::WeakEqual;
-    makeTest();
+    makeTest();*/
 }
 
 
@@ -94,7 +93,7 @@ int main(){
     std::vector<int> s1={1,3};
     std::vector<int> s2={3};
 
-    vec = FuzzyMultiDataExt::findCommonSubsequence(s1,s2,FuzzyMultiDataExt::distanceFunctionForAxiom,FuzzyMultiDataExt::choiceFunctionForAxiom);
+    vec = FuzzyMultiDataExt::findCommonSubsequence(s1,s2,FuzzyMultiDataExt::distanceFunctionForAxiom,FuzzyMultiDataExt::choiceFunctionForAxiom,1);
 
     for (int i=0;i<vec.size();i++){
         std::vector<int> p;
@@ -112,7 +111,7 @@ int main(){
     std::vector<int> s12={1,3,2,8,4};
     std::vector<int> s22={3,1,8,4,3,8,9,1,2,7,3,8,4};
 
-    vec2 = FuzzyMultiDataExt::findCommonSubsequence(s12,s22,FuzzyMultiDataExt::distanceFunctionForAxiom,FuzzyMultiDataExt::choiceFunctionForAxiom);
+    vec2 = FuzzyMultiDataExt::findCommonSubsequence(s12,s22,FuzzyMultiDataExt::distanceFunctionForAxiom,FuzzyMultiDataExt::choiceFunctionForAxiom,1);
 
     for (int i=0;i<vec2.size();i++){
         std::vector<int> p;
@@ -129,7 +128,7 @@ int main(){
     std::vector<int> s23={1,3,2,8,4};
     std::vector<int> s121={3,1,8,4,3,8,9,1,2,7,3,8,4};
 
-    vec3 = FuzzyMultiDataExt::findCommonSubsequence(s121,s23,FuzzyMultiDataExt::distanceFunctionForAxiom,FuzzyMultiDataExt::choiceFunctionForAxiom);
+    vec3 = FuzzyMultiDataExt::findCommonSubsequence(s121,s23,FuzzyMultiDataExt::distanceFunctionForAxiom,FuzzyMultiDataExt::choiceFunctionForAxiom,1);
 
     for (int i=0;i<vec3.size();i++){
         std::vector<int> p;
@@ -177,6 +176,9 @@ int main(){
         <<'{'<<part4Ofs42[0]<<','<<part4Ofs42[1]<<','<<part4Ofs42[2]<<'}'<<'}';
 
     startTest();
+// Test stringIn stringOut
+
+
 
     return 0;
 }

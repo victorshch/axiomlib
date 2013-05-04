@@ -37,7 +37,7 @@ class ReducedRecognizer {
 	virtual int run (const std::vector <int> &markUp, const std::vector<int> &etalon, std::vector <int> &result) = 0;
 	
 	// Функция поиска разметки ethalon в markUp -- в result пишутся получающиеся расстояния
-	virtual int run(const std::vector <int> &markUp, const std::vector<int> &etalon, std::vector <double> &result) = 0;
+        virtual int run(const std::vector <int> &markUp, const std::vector<int> &etalon, std::vector <double> &result) = 0;
 	
   
 }; // end of class
