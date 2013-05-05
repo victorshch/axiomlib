@@ -922,23 +922,32 @@ double ASStageSimple::matterAxiomSetFunc (AxiomExprSetPlus &as, int abType, cons
 	errFirstVal = 0;
 	errSecondVal = 0;
 	// Выбираем очередную траекторию для заданного типа нештатного поведения и запускаем распознаватель
-	std::vector <int> curMarkUp, result;
+	std::vector <int> curMarkUp, curLabeling;
 	int num;
 	for (int t = 0; t < (int) numOfTS[abType].size(); t++) {
+		int currentFirstKindErrors = 0;
+		int currentSecondKindErrors = 0;
 		// разметка траектории контрольной выборки системой аксиом as
 		createTestMarkUp (curMarkUp, as, dims, abType, t, numOfTS[abType][t]);
 
 		// Распознавание нештатного поведения в разметке ряда
-		recognizer->run (curMarkUp, genMarkUp, result);
+		recognizer->run (curMarkUp, genMarkUp, curLabeling);
 		
 		// Вычисление числа ошибок первого и второго рода
-		num = getStatistic (result);
+		num = getStatistic (curLabeling);
 		
 		// Суммирование числа ошибок
-		if (num == 0)
-			errSecondVal++;
-		else
-			errFirstVal += num - 1;
+		if (num == 0) {
+			currentSecondKindErrors = 1;
+		}
+		else {
+			currentFirstKindErrors = num - 1;
+		}
+
+		as.setErrorsForTraj(abType, t, currentFirstKindErrors, currentSecondKindErrors);
+
+		errSecondVal+= currentSecondKindErrors;
+		errFirstVal += currentFirstKindErrors;
 	}
 	// Пробегаем по всем рядам нормального поведения
 	int numNormalMultiTS;
@@ -949,13 +958,18 @@ double ASStageSimple::matterAxiomSetFunc (AxiomExprSetPlus &as, int abType, cons
 		createTestMarkUp (curMarkUp, as, dims, t, numNormalTS[t]);
 
 		// Распознавание нештатного поведения в разметке ряда
-		recognizer->run (curMarkUp, genMarkUp, result);
+		recognizer->run (curMarkUp, genMarkUp, curLabeling);
 		
 		// Вычисление числа ошибок первого и второго рода
-		num = getStatistic (result);
+		num = getStatistic (curLabeling);
 		
 		// Суммирование числа ошибок
 		errFirstVal += num;
+
+		int oldTypeIErrors = as.getErrorsForTraj(-1, t).first;
+		if(oldTypeIErrors < 0) oldTypeIErrors = 0;
+
+		as.setErrorsForTraj(-1, t, num + oldTypeIErrors, 0);
 	}
 
 	// Вычисление значения целевой функции для полученного числа ошибок I и II рода

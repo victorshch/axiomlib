@@ -84,6 +84,11 @@ int FuzzyDataSet::readDataSet(const std::string &dataSetPathString) {
 	return 0;
 }
 
+std::string FuzzyDataSet::getMultiTSName(FuzzyDataSet::DataSetDivisionType division, int indexClass, int indexMultiTS) const
+{
+	divisions[division].getMultiTSName(indexClass, indexMultiTS);
+}
+
 bool FuzzyDataSet::getTSByIndex(DataSetDivisionType division, std::vector<double>& vec, int indexClass, int indexMultiTS, int indexTS) const {
 	return divisions[division].getTSByIndex(vec, indexClass, indexMultiTS, indexTS);
 }
