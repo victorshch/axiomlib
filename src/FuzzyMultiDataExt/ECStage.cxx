@@ -37,6 +37,8 @@ ECStage::ECStage(FuzzyDataSet* fuzzyDataSet,
 	parent = stage0->getParent();
 
 	goalOccurenceWeight = 0.0;
+
+	entropyObjective = false;
 	
 	ecNameTemplate = "elemCondition";
 }
@@ -66,6 +68,8 @@ int ECStage::initFromEnv(const Environment &env) {
 		throw AxiomLibException("FuzzyMultiDataLearnAlgorithm::setParamsFromEnv : numBestECsMax is undefined.");
 
 	env.getParamValue(goalOccurenceWeight, "ECGoalOccurenceWeight");
+
+	env.getParamValue(entropyObjective, "ECEntropyObjective", false);
 	
 	env.getStringParamValue(ecNameTemplate, "ECNameTemplate");
 	return 0;
@@ -319,6 +323,14 @@ inline double binaryEntropy(double p) {
 	return positiveEntropy + negativeEntropy;
 }
 
+inline double informationGainTerm(int normNegCount, int normPosCount, int abnNegCount, int abnPosCount) {
+	double negFraction = (double) (normNegCount + abnNegCount) / (double) (normNegCount + abnNegCount + normPosCount + abnPosCount);
+	double posFraction = 1.0 - negFraction;
+
+	return - negFraction * binaryEntropy((double) normNegCount / (double)(normNegCount + abnNegCount))
+			- posFraction * binaryEntropy((double)normPosCount / (double)(normPosCount + abnPosCount));
+}
+
 double ECStage::matterECFunc (ElemCondPlusStat &ec, const int param, const int abnormalBehaviourType, int taskNo) const {
 	// Берем готовый вектор, чтобы не выделять каждый раз память
 	std::vector <double>& curTS = m_storage[taskNo];
@@ -367,6 +379,9 @@ double ECStage::matterECFunc (ElemCondPlusStat &ec, const int param, const int a
 	int totalNormalMultiTSCount = normalMultiTSCount;
 	int normalOccCount = 0;
 
+	int abnClassLen = classLen;
+	int abnClassCount = classCount;
+
 	classCount = 0;
 	classLen = 0;
 	for (int j = 0; j < normalMultiTSCount; j++) {
@@ -404,6 +419,9 @@ double ECStage::matterECFunc (ElemCondPlusStat &ec, const int param, const int a
 		}
 	}
 
+	int normClassCount = classCount;
+	int normClassLen = classLen;
+
 	// Заполняем статистику по нештатному поведению
 	if (classLen > 0)
 		ec.statNormal = (double) classCount/ (double) classLen;
@@ -412,48 +430,32 @@ double ECStage::matterECFunc (ElemCondPlusStat &ec, const int param, const int a
 		std::cout << "\nWarning in FuzzyMultiDatadLearnAlgorithm::matterECFunc: incorrect dstaSet request.\n";
 	}
 
-#ifndef AXIOMLIB_ECSTAGE_EXPERIMENTAL
-	// Определение значения целевой функции
-	if (ec.statAbnorm < eps) {
-		ec.goal = 0.0;
-	} else {
-		if (ec.statNormal < eps) {
-			ec.goal = max_goal_val;
-		} else {
-			const double delta = 0.000005;
-			double v1 = std::min ((double) ec.statAbnorm / (ec.statNormal + delta), (double)max_goal_val);
-			double v2 = ec.statOccurence;
-			ec.goal = v1 + goalOccurenceWeight * v2;
-		}
-	}
-#else
-//	Logger::debug("abnOccCount: " + boost::lexical_cast<std::string>(abnOccCount)
-//				  + ", normOccCount: " + boost::lexical_cast<std::string>(normalOccCount));
-	// Доля траекторий, которые ЭУ классифицировал как "1"
-	double positiveFraction = (double)(abnOccCount + normalOccCount)
-			/ (double)(classMultiTSCount + totalNormalMultiTSCount);
-
-	// Доля траекторий, которые ЭУ классифицировал как "0"
-	double negativeFraction = 1.0 - positiveFraction;
-
-	double positiveAbnFraction = (double)abnOccCount / (double)(abnOccCount + normalOccCount);
-	double positiveEntropy =  binaryEntropy(positiveAbnFraction);
-
-	double negativeAbnFraction = (double)(classMultiTSCount - abnOccCount)
-			/ (double)(classMultiTSCount + totalNormalMultiTSCount - abnOccCount - normalOccCount);
-	double negativeEntropy = binaryEntropy(negativeAbnFraction);
-
-	double ig = - positiveFraction * positiveEntropy - negativeFraction * negativeEntropy;
-
-	// entropy
-	ec.goal = 1000 * ig;
-
-	if(ec.statOccurence < (double) normalOccCount / (double) totalNormalMultiTSCount) {
+	if(ec.statOccurence < (double)normalOccCount / (double)totalNormalMultiTSCount
+			|| ec.statAbnorm < ec.statNormal) {
+		ec.statAbnorm = 1 - ec.statAbnorm;
+		ec.statNormal = 1 - ec.statNormal;
+		ec.statOccurence = 1 - ec.statOccurence;
 		ec.sign = !ec.sign;
-		// TODO statistics
-		//TODO occVector
 	}
-#endif
+	if(!entropyObjective) {
+		// Определение значения целевой функции
+		if (ec.statAbnorm < eps) {
+			ec.goal = 0.0;
+		} else {
+			if (ec.statNormal < eps) {
+				ec.goal = max_goal_val;
+			} else {
+				const double delta = 0.000005;
+				double v1 = std::min ((double) ec.statAbnorm / (ec.statNormal + delta), (double)max_goal_val);
+				double v2 = ec.statOccurence;
+				ec.goal = v1 + goalOccurenceWeight * v2;
+			}
+		}
+	} else {
+		double igByPoints = informationGainTerm(normClassLen - normClassCount, normClassCount, abnClassLen - abnClassCount, abnClassCount);
+		double igByTrajectories = informationGainTerm(totalNormalMultiTSCount - normalOccCount, normalOccCount, classMultiTSCount - abnOccCount, abnOccCount);
+		ec.goal = 100.0 * (igByPoints + goalOccurenceWeight * igByTrajectories);
+	}
 	return ec.goal;
 }
 
