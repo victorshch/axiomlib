@@ -59,7 +59,7 @@ public:
 
 	int classNo() const { return mClassNo; }
 
-	SplitDataSet splitByEC(const ElemCondPlus& ecPlus, double& splitLevel) const;
+	SplitDataSet splitByEC(const ElemCondPlus& ecPlus, double& splitLevel, double maxSplitLevel) const;
 
 	double entropy() const;
 

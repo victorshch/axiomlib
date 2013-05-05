@@ -7,7 +7,7 @@
 
 #include <boost/unordered_set.hpp>
 
-#define eps 1e-6
+#define eps 1e-7
 
 using namespace AxiomLib;
 using namespace AxiomLib::FuzzyMultiDataExt;
@@ -93,7 +93,8 @@ AxiomExpr AXTree::toAxiom() const
 }
 
 std::string ecToString(const ElemCondPlus& ec) {
-	return ec.elemCondition ? ((ec.sign ? "" : "not ") + ec.elemCondition->name()) : "0";
+	return ec.elemCondition ? ((ec.sign ? "" : "not ") + ec.elemCondition->name()) :
+							  (ec.sign? "+" : "-");
 }
 
 std::string AXTree::toString() const
@@ -211,7 +212,7 @@ AXTree *AXStageTree::constructTree(BootstrappedDataSet dataSet, int depth) const
 
 	Logger::debug("AXStageTree::constructTree() splitting dataset "  + dataSet.toString());
 	double splitLevel;
-	SplitDataSet split = dataSet.splitByEC(result->ecPlus(), splitLevel);
+	SplitDataSet split = dataSet.splitByEC(result->ecPlus(), splitLevel, maxSplitLevel);
 	Logger::debug("Resulting datasets: " + split.left.toString() + ", " + split.right.toString());
 	Logger::debug("Split level : " + boost::lexical_cast<std::string>(splitLevel));
 
@@ -224,12 +225,13 @@ AXTree *AXStageTree::constructTree(BootstrappedDataSet dataSet, int depth) const
 //	}
 
 	if(split.left.totalTrajCount() == 0 || split.right.totalTrajCount() == 0) {
+		delete result;
 		Logger::debug("Couldn' t split dataset");
-		ElemCondPlus result;
-		result.elemCondition = 0;
+		ElemCondPlus result2;
+		result2.elemCondition = 0;
 		//result.sign = dataSet.normalTrajCount() < dataSet.abnormalTrajCount();
-		result.sign = dataSet.normalTrajFraction() < dataSet.abnormalTrajFraction();
-		return new AXTree(result);
+		result2.sign = dataSet.normalTrajFraction() < dataSet.abnormalTrajFraction();
+		return new AXTree(result2);
 	}
 
 
@@ -265,10 +267,6 @@ ElemCondPlus AXStageTree::chooseEC(const BootstrappedDataSet &dataSet, double &b
 
 		++ecCount;
 
-		if(splitLevel > maxSplitLevel) {
-			continue;
-		}
-
 		if(splitLevel > threshSplitLevel) {
 			// В этом случае оптимизируем сначала splitLevel, потом ig
 			if(splitLevel <= bestSplitLevel + eps) {
@@ -300,7 +298,7 @@ ElemCondPlus AXStageTree::chooseEC(const BootstrappedDataSet &dataSet, double &b
 
 double AXStageTree::informationGain(const ElemCondPlus &ec, const BootstrappedDataSet &dataSet, double& splitLevel) const
 {
-	SplitDataSet split = dataSet.splitByEC(ec, splitLevel);
+	SplitDataSet split = dataSet.splitByEC(ec, splitLevel, maxSplitLevel);
 
 	return dataSet.entropy()
 			- (double)split.left.totalTrajCount() / (double)(dataSet.totalTrajCount()) * split.left.entropy()
@@ -351,6 +349,14 @@ inline double binaryEntropy(double p) {
 	double negativeEntropy = p > eps ? - p * log2(p) : 0;
 
 	return positiveEntropy + negativeEntropy;
+}
+
+inline double informationGainTerm(int normNegCount, int normPosCount, int abnNegCount, int abnPosCount) {
+	double negFraction = (double) (normNegCount + abnNegCount) / (double) (normNegCount + abnNegCount + normPosCount + abnPosCount);
+	double posFraction = 1.0 - negFraction;
+
+	return - negFraction * binaryEntropy((double) normNegCount / (double)(normNegCount + abnNegCount))
+			- posFraction * binaryEntropy((double)normPosCount / (double)(normPosCount + abnPosCount));
 }
 
 double BootstrappedDataSet::entropy() const
@@ -435,7 +441,7 @@ void BootstrappedDataSet::abnormalTraj(int i, int dimension, std::vector<double>
 	mDataSet->getTSByIndex(FuzzyDataSet::Reference, result, mAbnormalIndices[i].first, mAbnormalIndices[i].second, dimension);
 }
 
-SplitDataSet BootstrappedDataSet::splitByEC(const ElemCondPlus &ecPlus, double &splitLevel) const
+SplitDataSet BootstrappedDataSet::splitByEC(const ElemCondPlus &ecPlus, double &splitLevel, double maxSplitLevel) const
 {	
 	BootstrappedDataSet negative(mDataSet, mClassNo);
 	BootstrappedDataSet positive(mDataSet, mClassNo);
@@ -490,6 +496,10 @@ SplitDataSet BootstrappedDataSet::splitByEC(const ElemCondPlus &ecPlus, double &
 
 	splitLevel = std::min(*std::min_element(normalFreq.begin(), normalFreq.end()),
 						  *std::min_element(abnormalFreq.begin(), abnormalFreq.end()));
+
+	if(splitLevel > maxSplitLevel) {
+		splitLevel = maxSplitLevel;
+	}
 
 	for(int i = 0; i < normalTrajCount(); ++i) {
 		if(normalFreq[i] <= splitLevel) {
