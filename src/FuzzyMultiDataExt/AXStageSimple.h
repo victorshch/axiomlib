@@ -35,8 +35,6 @@ private:
 	// Набор точек выполнения на нештатном и нормальном поведении
 	//typedef boost::tuples::tuple<PSatPointSet, PSatPointSet> ReducedSatPointSet;
 
-	FuzzyMultiDataExtAlgorithm* parent;
-
 	AXMultiVector axioms;
 
 	std::vector<std::vector<ReducedSatPointSet> > ecSatPoints;
@@ -45,9 +43,6 @@ private:
 	// Временные наборы точек выполнения для каждого типа нештатного поведения
 	// Они используются для того, чтобы уменьшить число аллокаций памяти
 	mutable std::vector<ReducedSatPointSet> m_temporary1, m_temporary2;
-
-	const FuzzyDataSet* fuzzyDataSet;
-	const ECStage* stage1;
 
 	// Параметры алгоритма настройки аксиом
 	// Максимальное число аксиом в популяции

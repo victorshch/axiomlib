@@ -13,6 +13,7 @@
 #include "Common.h"
 
 #include "AXStageSimple.h"
+#include "AXStageTree.h"
 
 #include "AXStage.h"
 
@@ -30,6 +31,9 @@ AXStage *AXStage::create(std::string name, FuzzyDataSet *fuzzyDataSet, ECStage *
 
 	if(name == "simple") {
 		return new AXStageSimple(fuzzyDataSet, stage1);
+	}
+	if(name == "tree") {
+		return new AXStageTree(fuzzyDataSet, stage1);
 	}
 
 	throw AxiomLibException("AXStage::create() : unknown ASStage type : '" + name + "'");

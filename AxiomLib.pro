@@ -229,7 +229,8 @@ SOURCES += src/TreatmentSample.cxx \
     src/FuzzyDataSet_old.cxx \
     src/FuzzyDataSet.cxx \
     src/elem_conditions/Variance.cxx \
-    src/FuzzyMultiDataExt/AXStageSimple.cpp
+    src/FuzzyMultiDataExt/AXStageSimple.cpp \
+    src/FuzzyMultiDataExt/AXStageTree.cpp
 HEADERS += src/undefs.h \
     src/TreatmentSample.h \
     src/TreatmentFactory.h \
@@ -444,5 +445,6 @@ HEADERS += src/undefs.h \
     src/FuzzyDataSet_old.h \
     src/FuzzyDataSet.h \
     src/elem_conditions/Variance.h \
-    src/FuzzyMultiDataExt/AXStageSimple.h
+    src/FuzzyMultiDataExt/AXStageSimple.h \
+    src/FuzzyMultiDataExt/AXStageTree.h
 OTHER_FILES += 

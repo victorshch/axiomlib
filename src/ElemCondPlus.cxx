@@ -54,6 +54,13 @@ ElemCondPlus::ElemCondPlus(const ElemCondPlus &second)
    }
 }
 
+ElemCondPlus ElemCondPlus::operator !() const
+{
+	ElemCondPlus result(*this);
+	result.sign = !result.sign;
+	return result;
+}
+
 /****************************************************************************
 *					ElemCondPlus::ElemCondPlus
 *
@@ -260,10 +267,10 @@ ElemCondPlus& ElemCondPlus::operator= (const ElemCondPlus& second) {
 		this->name = second.name;
 		this->index = second.index;
 		
-		// Пробуем присвоить, не создавая нового экземпляра ElemCondition
-		if(this->elemCondition && second.elemCondition && this->elemCondition->assign(second.elemCondition)) {
-			return *this;
-		}
+//		// Пробуем присвоить, не создавая нового экземпляра ElemCondition
+//		if(this->elemCondition && second.elemCondition && this->elemCondition->assign(second.elemCondition)) {
+//			return *this;
+//		}
 		
 		// Если не получилось, то действуем стандартным образом
 		if(this->elemCondition != NULL) {

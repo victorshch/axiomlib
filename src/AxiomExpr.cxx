@@ -30,6 +30,13 @@ AxiomExpr::AxiomExpr (const std::string sName) {
 	nameOfECBank.assign ("no_name_Elem_Cond_Bank");
 }
 
+AxiomExpr::AxiomExpr(const ElemCondPlus &ec)
+{
+	expression.resize(1);
+	expression[0].resize(1);
+	expression[0][0] = ec;
+}
+
 
 // Деструктор класса - удаляет все динамические созданные объекты
 AxiomExpr::~AxiomExpr(void) {
@@ -353,6 +360,18 @@ AxiomExpr AxiomExpr::operator| (const AxiomExpr& second) const {
 	return result;
 }
 
+AxiomExpr &AxiomExpr::operator &=(const AxiomExpr &second)
+{
+	AxiomExpr first(*this);
+	andExpr(first, second);
+}
+
+AxiomExpr &AxiomExpr::operator |=(const AxiomExpr &second)
+{
+	AxiomExpr first(*this);
+	orExpr(first, second);
+}
+
 
 /****************************************************************************
 *					AxiomExpr::andExpr
@@ -372,8 +391,9 @@ signed int AxiomExpr::andExpr (const AxiomExpr& first, const AxiomExpr& second) 
 	numDisjunts1 = first.expression.size();
 	numDisjunts2 = second.expression.size();
 	numDisjunts = numDisjunts1*numDisjunts2;
-	if (numDisjunts < 1)
-		return 0;
+	if (numDisjunts < 1) {
+		return orExpr(first, second);
+	}
 	this->expression.resize(numDisjunts);
 	unsigned int curLen;
 	unsigned int k = 0;
