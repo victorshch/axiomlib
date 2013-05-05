@@ -77,6 +77,9 @@ private:
 	
 	const FuzzyDataSet* fuzzyDataSet;
 	const AXStage* stage2;
+
+	// Вес слагаемого (1/длина разметки) в целевой функции
+	double singleAxiomMarkupPenalty;
 	
 	std::vector<AXSatPointSet> satPoints;
 	

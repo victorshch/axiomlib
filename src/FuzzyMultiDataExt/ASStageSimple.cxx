@@ -41,6 +41,8 @@ void ASStageSimple::initFromEnv(const Environment &env) {
 	if (env.getIntParamValue (ccNumPoints, "ccNumPoints") < 0)
 		throw AxiomLibException("FuzzyMultiDataExt_AS::setParamsFromEnv : ccNumPoints is undefined.");
 	
+	env.getParamValue(singleAxiomMarkupPenalty, "singleAxiomMarkupPenalty", 0.0);
+
 	// создание класса распознавания участков разметки в ряду разметки
 	std::string recogClassName;
 	ReducedRecognizerFactory rrf;
@@ -159,8 +161,8 @@ void ASStageSimple::run() {
 			{
 				char buf[128];
 				sprintf (buf, "\r\tCurrent axiomSet: %d out of %d. Goal value is %.2f (%d, %d).\tThread %d.\t", i + 1, numOfAxioms, axiomSets[i].goal, axiomSets[i].errFirst, axiomSets[i].errSecond, omp_get_thread_num());
-				//printf ("\n\tCurrent axiomSet: %d out of %d. Goal value is %.2f (%d, %d).\tThread %d.\t", from + i + 1, numOfAxioms, axiomSets[i].goal, axiomSets[i].errFirst, axiomSets[i].errSecond, omp_get_thread_num());
 				logger->writeComment(buf);
+
 			}
 		}
 
@@ -825,6 +827,15 @@ double ASStageSimple::matterAxiomSetFunc(AxiomExprSetPlus &as, const std::vector
 	//matterAxiomSetFunc (as, as.markUps);
 	as.goal = goalStrategy->compute(as.errFirst, as.errSecond);
 
+	// penalize axiom sets with single axiom markup
+	if(as.axioms.size() > 1) {
+		for(int i = 0; i < as.markUps.size(); ++i) {
+			if(as.markUps[i].size() <= 1) {
+				as.goal += singleAxiomMarkupPenalty;
+			}
+		}
+	}
+
 	return as.goal;	
 }
 
@@ -855,6 +866,16 @@ double ASStageSimple::matterAxiomSetFunc (AxiomExprSetPlus &as, std::vector <std
 	}
 	// Вычисление значения целевой функции для полученного числа ошибок I и II рода
 	as.goal = goalStrategy->compute(as.errFirst, as.errSecond);
+
+	// penalize axiom sets with single axiom markup
+	if(as.axioms.size() > 1) {
+		for(int i = 0; i < as.markUps.size(); ++i) {
+			if(as.markUps[i].size() <= 1) {
+				as.goal += singleAxiomMarkupPenalty;
+			}
+		}
+	}
+
 	return as.goal;
 }
 
