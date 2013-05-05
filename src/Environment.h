@@ -121,7 +121,10 @@ class Environment {
   // В случае отсутствия значения бросает исключение
   template<class T>
   void getMandatoryParamValue(T& value, const std::string& name) const;
-  
+
+  template<class T>
+  void getParamValue(T& value, const std::string& name, const T& defaultValue) const;
+
   // Удаляет параметр из окружения
   int undefineParam(const std::string& name);
   
@@ -179,6 +182,12 @@ int Environment::getParamValue(T& value, const std::string& name) const {
 		return 0;
 	} catch (boost::bad_lexical_cast) {
 		return -1;
+	}
+}
+template<class T>
+void Environment::getParamValue(T& value, const std::string& name, const T& defaultValue) const {
+	if(getParamValue<T>(value, name) != 0) {
+		value = defaultValue;
 	}
 }
 
