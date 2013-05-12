@@ -93,6 +93,15 @@ std::string ElemCondPlus::ecTypeName (void) const {
 	throw AxiomLibException("Error in ElemCondPlus::ecTypeName : elementary condition is not defined.");
 }
 
+void ElemCondPlus::getDimensions(std::vector<bool> &v) const
+{
+	std::fill(v.begin(), v.end(), false);
+
+	if((int) v.size() > dimension) {
+		v[dimension] = true;
+	}
+}
+
 
 /****************************************************************************
 *					ElemCondPlus::check

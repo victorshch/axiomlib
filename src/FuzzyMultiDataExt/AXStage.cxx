@@ -7,6 +7,7 @@
 #include <omp.h>
 
 #include "../AxiomStatistics.h"
+#include "../FuzzyMultiDataExtAlgorithm.h"
 
 #include "ECStage.h"
 #include "../Logger.h"
@@ -23,7 +24,7 @@ using namespace AxiomLib;
 using namespace AxiomLib::FuzzyMultiDataExt;
 
 AXStage::AXStage(FuzzyDataSet *fuzzyDataSet, ECStage *stage1)
-    :fuzzyDataSet(fuzzyDataSet), stage1(stage1), logger(Logger::getInstance())
+	: parent(stage1->getParent()), fuzzyDataSet(fuzzyDataSet), stage1(stage1), logger(Logger::getInstance())
 {
 	//TODO: инициализация дефлотными значениями
 	goalOccurenceWeight = 0.0;
@@ -746,12 +747,20 @@ void AXStage::addToEcSatPoints(int aType, ElemCondPlus &ecPlus) {
 	int index = ecSatPoints[aType].size();
 	ecPlus.index = index;
 	
-	PSatPointSet normal = PSatPointSet(
-			new SatPointSet(ecPlus, *fuzzyDataSet, FuzzyDataSet::Reference, -1)
-			);
+	PSatPointSet normal;
+
+	if(parent->oneVsAllMode()) {
+		normal = PSatPointSet(
+					new SatPointSet(ecPlus, *fuzzyDataSet, FuzzyDataSet::Reference, aType, SatPointSet::ComplementarySatPoints)
+					);
+	} else {
+		normal = PSatPointSet(
+				new SatPointSet(ecPlus, *fuzzyDataSet, FuzzyDataSet::Reference, -1, SatPointSet::ClassSatPoints)
+				);
+	}
 	
 	PSatPointSet abnorm = PSatPointSet(
-			new SatPointSet(ecPlus, *fuzzyDataSet, FuzzyDataSet::Reference, aType)
+			new SatPointSet(ecPlus, *fuzzyDataSet, FuzzyDataSet::Reference, aType, SatPointSet::ClassSatPoints)
 			);
 			
 	ecSatPoints[aType].push_back(ReducedSatPointSet(normal, abnorm));

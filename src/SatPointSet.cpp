@@ -4,63 +4,6 @@
 
 using namespace AxiomLib;
 
-SatPointSet::SatPointSet(const ElemCondPlus &ecPlus, const FuzzyDataSet &dataSet, FuzzyDataSet::DataSetDivisionType division, int classNo) {
-	std::vector<int> sizeVector;
-	dataSet.getSizeForClass(division, classNo, sizeVector);
-	
-	int multiTSCount = sizeVector.size();
-	
-	m_satPoints.resize(multiTSCount);
-
-	std::vector<double> ts;
-	
-	for(int multiTSNo = 0; multiTSNo < multiTSCount; multiTSNo++) {
-		dataSet.getTSByIndex(division, ts, classNo, multiTSNo, ecPlus.dimension);
-		
-		int multiTSSize = ts.size();
-		
-		m_satPoints[multiTSNo].resize(multiTSSize);
-		
-		for(int i = 0; i < multiTSSize; i++) {
-			m_satPoints[multiTSNo][i] = (SatValue) (ecPlus.check(i, ts) == 1);
-		}
-	}		
-}
-
-SatPointSet::SatPointSet(const AxiomExpr &axiom, const FuzzyDataSet &dataSet, FuzzyDataSet::DataSetDivisionType division, int classNo) {
-	std::vector<int> sizeVector;
-	dataSet.getSizeForClass(division, classNo, sizeVector);
-	
-	int multiTSCount = sizeVector.size();
-	
-	m_satPoints.resize(multiTSCount);
-
-	std::vector<std::vector<double> > multiTS;
-
-	int dimensionCount = dataSet.getDimensionCount();
-	
-	std::vector<bool> dimensions(dimensionCount);
-	
-	axiom.getDimensions(dimensions);
-	
-	for(int multiTSNo = 0; multiTSNo < multiTSCount; multiTSNo++) {
-		multiTS.resize(dimensionCount);
-		for(int tsNo = 0; tsNo < dimensionCount; tsNo++) {
-			if(dimensions[tsNo]) {
-				dataSet.getTSByIndex(division, multiTS[tsNo], classNo, multiTSNo, tsNo);
-			}
-		}
-		
-		int multiTSLen = (int) dataSet.getMultiTSLength(division, classNo, multiTSNo);
-		
-		m_satPoints[multiTSNo].resize(multiTSLen);
-		
-		for(int i = 0; i < multiTSLen; i++) {
-			m_satPoints[multiTSNo][i] = (SatValue) (axiom.check(i, multiTS) == 1);
-		}
-	}	
-}
-
 SatPointSet& SatPointSet::operator &=(const SatPointSet& other) {
 	// TODO: вставить проверку размеров при дебаге
 	

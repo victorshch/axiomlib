@@ -27,7 +27,7 @@ typedef ElementSelection<AxiomLib::ElemCondPlusStat> ECSelection;
 class ECStage
 {
 public:	
-    ECStage(FuzzyDataSet* fuzzyDataSet, 
+	ECStage(FuzzyDataSet* fuzzyDataSet,
 	                     ECTypeStage* stage0);
 	
 	void setECs(const std::vector<std::vector<std::vector<std::vector<ElemCondPlusStat> > > > & value);
@@ -51,6 +51,8 @@ public:
 	int getECSize(int aType, int dimension, int stage0) const;
 	
 	void recalculateMatterECFunc(ElemCondPlusStat& ec, int abType) const;
+
+	FuzzyMultiDataExtAlgorithm* getParent() const { return parent; }
 	
 private:
 	
@@ -62,6 +64,8 @@ private:
 	
 	const FuzzyDataSet* fuzzyDataSet;
 	const ECTypeStage* stage0;
+
+	FuzzyMultiDataExtAlgorithm* parent;
 	
 	ECMultiVector elemConditions;	
 	

@@ -20,16 +20,19 @@
 
 namespace AxiomLib {
 
-//Набор точек выполнимости для некоторого класса
+// Набор точек выполнимости для некоторого класса (набора траекторий)
 class SatPointSet
 {
 public:
-	// Создание набора точек выполнимости по ЭУ и датасету
-    SatPointSet(const ElemCondPlus &ecPlus, const FuzzyDataSet &dataSet, FuzzyDataSet::DataSetDivisionType division, 
-				int classNo);
-	
-	// Создание набора точек выполнимости по аксиоме и датасету
-	SatPointSet(const AxiomExpr &axiom, const FuzzyDataSet &dataSet, FuzzyDataSet::DataSetDivisionType division, int classNo);
+
+	enum SatPointSetType {
+		ClassSatPoints,
+		ComplementarySatPoints
+	};
+
+	template<class Axiom>
+	SatPointSet(const Axiom &axiom, const FuzzyDataSet &dataSet, FuzzyDataSet::DataSetDivisionType division,
+				int classNo, SatPointSetType satPointSetType = ClassSatPoints);
 		
 	// Число траекторий
 	int size() const { return m_satPoints.size(); }
@@ -55,11 +58,86 @@ private:
 	typedef char SatValue;
 	typedef std::vector<SatValue> SatVector;
 	typedef std::vector<SatVector> ClassSatVector;
+
+	SatPointSet();
 	
 	ClassSatVector m_satPoints;
 };
 
 typedef boost::shared_ptr<SatPointSet> PSatPointSet;
+
+template<class Axiom>
+SatPointSet::SatPointSet(const Axiom &axiom, const FuzzyDataSet &dataSet, FuzzyDataSet::DataSetDivisionType division,
+			int classNo, SatPointSet::SatPointSetType satPointSetType) {
+
+	if(classNo < -1 || classNo >= dataSet.getClassCount()) {
+		classNo = -1;
+	}
+
+	std::vector<int> classes;
+	classes.reserve(dataSet.getClassCount());
+
+	switch(satPointSetType) {
+	case SatPointSet::ClassSatPoints:
+		classes.push_back(classNo);
+		break;
+	case SatPointSet::ComplementarySatPoints:
+		for(int i = -1; i < dataSet.getClassCount(); ++i) {
+			if(i != classNo) {
+				classes.push_back(i);
+			}
+		}
+		break;
+	default: throw AxiomLibException("SatPointSet::SatPointSet() : unexpected satPointSetType : "
+									 + boost::lexical_cast<std::string>(satPointSetType));
+	}
+
+	if(classes.empty()) {
+		return;
+	}
+
+	int multiTSCount = 0;
+
+	for(size_t i = 0; i < classes.size(); ++i) {
+		multiTSCount += dataSet.getMutiTSCount(division, classes[i]);
+	}
+
+	m_satPoints.resize(multiTSCount);
+
+	std::vector<std::vector<double> > multiTS;
+
+	int dimensionCount = dataSet.getDimensionCount();
+
+	std::vector<bool> dimensions(dimensionCount);
+
+	axiom.getDimensions(dimensions);
+
+	// Сквозной индекс траекторий
+	size_t currentMultiTS = 0;
+
+	for(size_t i = 0; i < classes.size(); ++i) {
+		int currentClass = classes[i];
+
+		for(int classMultiTSNo = 0; classMultiTSNo < dataSet.getMutiTSCount(division, currentClass); classMultiTSNo++) {
+			multiTS.resize(dimensionCount);
+			for(int tsNo = 0; tsNo < dimensionCount; tsNo++) {
+				if(dimensions[tsNo]) {
+					dataSet.getTSByIndex(division, multiTS[tsNo], currentClass, classMultiTSNo, tsNo);
+				}
+			}
+
+			int multiTSLen = (int) dataSet.getMultiTSLength(division, classNo, classMultiTSNo);
+
+			m_satPoints[currentMultiTS].resize(multiTSLen);
+
+			for(int i = 0; i < multiTSLen; i++) {
+				m_satPoints[currentMultiTS][i] = (SatValue) (axiom.check(i, multiTS) == 1);
+			}
+
+			++currentMultiTS;
+		}
+	}
+}
 
 };
 

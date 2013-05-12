@@ -13,6 +13,7 @@
 #include "../Environment.h"
 
 #include "Common.h"
+#include "ForwardDeclarations.h"
 #include "../Logger.h"
 
 namespace AxiomLib {
@@ -24,7 +25,7 @@ typedef ElementSelection<AxiomLib::ElemCondPlus> ECTypeSelection;
 class ECTypeStage
 {
 public:
-    ECTypeStage();
+	ECTypeStage(FuzzyMultiDataExtAlgorithm* parent);
 	
 	void setECTypes(const std::vector<ElemCondPlus> &value);
 	
@@ -43,12 +44,16 @@ public:
 		
 //		archive & self->ecTypes;
 //	}
+
+	FuzzyMultiDataExtAlgorithm* getParent() const { return parent; }
 	
 private:
 	
 	std::vector<ECTypeSelection> ecTypes;
 	
 	Logger* logger;
+
+	FuzzyMultiDataExtAlgorithm* parent;
 };
 
 };

@@ -132,11 +132,20 @@ public:
 	void recalculateMatterECFunc(ElemCondPlusStat& ec, int abType);
 	void recalculateMatterAxiomFunc(AxiomExprPlus& ax, int abType);
 	void recalculateMatterAxiomSetFunc(AxiomExprSetPlus& as);
+
+	bool oneVsAllMode() const { return mOneVsAllMode; }
 	
 private:
 	
 	// Исходный набор данных, на котором производится обучение
 	FuzzyDataSet fuzzyDataSet;
+
+	// Режим "один против всех". Если true, то
+	// при подборе ЭУ и аксиом для некоторого класса нештатного поведения
+	// траектории других классов нештатного поведения учитываются в целевых функциях 1-го и 2-го этапов
+	// как траектории нормального поведения
+	bool mOneVsAllMode;
+
 	// Вектор индексов параметров в каноническом представлении по которым вести анализ - поиск нештатных ситуаций
 	// Под параметром понимается - название одномерного ряда в множестве рядов описывающих поведение системы
 	std::vector<int> dataSetParams;

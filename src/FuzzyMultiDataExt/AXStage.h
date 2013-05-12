@@ -30,7 +30,7 @@ typedef ElementSelection<AxiomLib::AxiomExprPlus> AXSelection;
 class AXStage
 {
 public:
-    AXStage(FuzzyDataSet* fuzzyDataSet, 
+	AXStage(FuzzyDataSet* fuzzyDataSet,
 	                     ECStage* stage1);
 	
 	void initFromEnv(const Environment& env);
@@ -48,6 +48,8 @@ public:
 	void recalculateMatterAxiomFunc(AxiomExprPlus& ax, int abType);
 	
 	void run();
+
+	FuzzyMultiDataExtAlgorithm* getParent() const { return parent; }
 	
 private:
 	typedef std::vector<std::vector<AXSelection> > AXMultiVector;
@@ -55,6 +57,8 @@ private:
 	// Набор точек выполнения на нештатном и нормальном поведении
 	//typedef boost::tuples::tuple<PSatPointSet, PSatPointSet> ReducedSatPointSet;
 	
+	FuzzyMultiDataExtAlgorithm* parent;
+
 	AXMultiVector axioms;
 	
 	std::vector<std::vector<ReducedSatPointSet> > ecSatPoints;

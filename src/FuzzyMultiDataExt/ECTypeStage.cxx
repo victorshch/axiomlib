@@ -12,7 +12,8 @@ void setSelected(ECTypeSelection& ecPlus)
 	ecPlus.setSelected(true);
 }
 
-ECTypeStage::ECTypeStage()
+ECTypeStage::ECTypeStage(FuzzyMultiDataExtAlgorithm *parent)
+	: parent(parent)
 {
 	//Заполнение вектора типов ЭУ - по умолчанию используются все типы ЭУ
 	ElemConditionsFactory ecf;
@@ -30,7 +31,6 @@ ECTypeStage::ECTypeStage()
 }
 
 ECTypeSelection ecTypeSelectionCreator(const ElemCondPlus& ec) {return ECTypeSelection(ec);}
-
 
 void ECTypeStage::setECTypes(const std::vector<ElemCondPlus> &value) {
 	relaxed_transform(value.begin(), value.end(), this->ecTypes.begin(), 

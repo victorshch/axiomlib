@@ -9,6 +9,7 @@
 #include "ECTypeStage.h"
 #include "../Logger.h"
 #include "Common.h"
+#include "../FuzzyMultiDataExtAlgorithm.h"
 //#include "../DistanceClusterizer.h"
 
 #include "ECStage.h"
@@ -23,13 +24,15 @@ using namespace AxiomLib;
 using namespace AxiomLib::FuzzyMultiDataExt;
 
 ECStage::ECStage(FuzzyDataSet* fuzzyDataSet, 
-                                           ECTypeStage* stage0) 
-    : fuzzyDataSet(fuzzyDataSet), stage0(stage0), logger(Logger::getInstance())
+										   ECTypeStage* stage0)
+	: fuzzyDataSet(fuzzyDataSet), stage0(stage0), logger(Logger::getInstance())
 {
 	//TODO: проверка fuzzyDataSet и stage0 на NULL
 	
 	//TODO: значения по умлочанию
 	
+	parent = stage0->getParent();
+
 	goalOccurenceWeight = 0.0;
 	
 	ecNameTemplate = "elemCondition";
@@ -58,7 +61,7 @@ int ECStage::initFromEnv(const Environment &env) {
 		throw AxiomLibException("FuzzyMultiDataLearnAlgorithm::setParamsFromEnv : numBestECs is undefined.");
 	if (env.getIntParamValue (numBestECsMax, "numBestECsMax") < 0)
 		throw AxiomLibException("FuzzyMultiDataLearnAlgorithm::setParamsFromEnv : numBestECsMax is undefined.");
-	
+
 	env.getParamValue(goalOccurenceWeight, "ECGoalOccurenceWeight");
 	
 	env.getStringParamValue(ecNameTemplate, "ECNameTemplate");
@@ -194,15 +197,23 @@ void ECStage::selectElemCond(int abnormalBehaviourType, int dimension, int dimen
 	std::vector<double> teachRow;
 	int numOfMultiTS;
 	std::vector <int> numOfTS;
-	fuzzyDataSet->getNormalClassSize (numOfMultiTS, numOfTS);
-	if ((numOfTS.size() != numOfMultiTS) || (numOfMultiTS < 1))
-		throw AxiomLibException("FuzzyMultiDataLearnAlgorithm::selectElemCond : not enough data for the algorithm.");
-	for (int i = 0; i < numOfMultiTS; i++) {
-		if (numOfTS[i] > dimension) {
-			fuzzyDataSet->getNormalTSFromClass (teachRow, i, dimension);
-			if (teachRow.size() > 0)
-				break;
+	if(!parent->oneVsAllMode()) {
+		fuzzyDataSet->getNormalClassSize (numOfMultiTS, numOfTS);
+		if ((numOfTS.size() != numOfMultiTS) || (numOfMultiTS < 1))
+			throw AxiomLibException("FuzzyMultiDataLearnAlgorithm::selectElemCond : not enough data for the algorithm.");
+		for (int i = 0; i < numOfMultiTS; i++) {
+			if (numOfTS[i] > dimension) {
+				fuzzyDataSet->getNormalTSFromClass (teachRow, i, dimension);
+				if (teachRow.size() > 0)
+					break;
+			}
 		}
+	} else {
+		if(fuzzyDataSet->getClassCount() <= 0) {
+			throw AxiomLibException("FuzzyMultiDataExtAlgorithm::selectElemCond() : abnormal classes not found");
+		}
+
+		fuzzyDataSet->getTSByIndexFromClass(teachRow, 0, 0, dimension);
 	}
 	if (teachRow.size() < 1)
 		throw AxiomLibException("FuzzyMultiDataLearnAlgorithm::selectElemCond : incorrect normal data set.");
@@ -223,8 +234,8 @@ void ECStage::selectElemCond(int abnormalBehaviourType, int dimension, int dimen
 			int th_id = omp_get_thread_num();
 			char buf[128];
 			sprintf (buf, "\r\tAbType: %d\tDimension: %s\tElem condition: %d (%s) out of %d by thread %d.\t", 
-			         abnormalBehaviourType, dataSetParamNames[dimension].c_str(), (i+1),
-			         elemConds[i].ecTypeName().c_str(), elemConds.size(), th_id);
+					 abnormalBehaviourType, dataSetParamNames[dimension].c_str(), (i+1),
+					 elemConds[i].ecTypeName().c_str(), (int)elemConds.size(), th_id);
 			logger->writeComment(buf);
 		}
 		// Изменяем размер по числу лучших элементарных условий, которое сохранять для каждого из типов условий
@@ -332,6 +343,26 @@ double ECStage::matterECFunc (ElemCondPlusStat &ec, const int param, const int a
 			classLen += curTS.size();
 		}
 	}
+
+	if(parent->oneVsAllMode()) {
+		for(int classNo = 0; classNo < fuzzyDataSet->getClassCount(); ++classNo) {
+			if(classNo == abnormalBehaviourType) {
+				continue;
+			}
+
+			int classMultiTSCount = fuzzyDataSet->getMutiTSCount(FuzzyDataSet::Reference, classNo);
+
+			for (int j = 0; j < classMultiTSCount; j++) {
+				curTS.clear();
+				if (fuzzyDataSet->getTSByIndexFromClass (curTS, classNo, j, param)) {
+					int currentClassCount = numOfCarriedOutItems (ec, curTS);
+					classCount += currentClassCount;
+					classLen += curTS.size();
+				}
+			}
+		}
+	}
+
 	// Заполняем статистику по нештатному поведению
 	if (classLen > 0)
 		ec.statNormal = (double) classCount/ (double) classLen;
@@ -341,17 +372,18 @@ double ECStage::matterECFunc (ElemCondPlusStat &ec, const int param, const int a
 	}
 
 	// Определение значения целевой функции
-	if (ec.statAbnorm < eps)
+	if (ec.statAbnorm < eps) {
 		ec.goal = 0.0;
-	else
-		if (ec.statNormal < eps)
+	} else {
+		if (ec.statNormal < eps) {
 			ec.goal = max_goal_val;
-		else {
+		} else {
 			const double delta = 0.000005;
 			double v1 = std::min ((double) ec.statAbnorm / (ec.statNormal + delta), (double)max_goal_val);
 			double v2 = ec.statOccurence;
 			ec.goal = v1 + goalOccurenceWeight * v2;
 		}
+	}
 
 	return ec.goal;
 }
@@ -487,7 +519,7 @@ inline int ECStage::storeBestECs (std::vector <ECSelection> &bestECs, ElemCondPl
 
 void ECStage::checkIndices(int i, int j, int k, int l) const {
 	if(i < 0 || i >= this->elemConditions.size() || j < 0 || j >= elemConditions[i].size()
-	        || k < 0 || k >= elemConditions[i][j].size() || l < 0 || l >= elemConditions[i][j][k].size()) {
+			|| k < 0 || k >= elemConditions[i][j].size() || l < 0 || l >= elemConditions[i][j][k].size()) {
 		throw AxiomLibException("Invalid subscript in FuzzyMultiDataExt_EC : "+str(i)+" "+str(j)+" "+str(k)+" "+str(l));
 	}
 }
