@@ -74,6 +74,7 @@ private:
 	std::vector<std::string> dataSetParamNames;
 	
 	bool entropyObjective;
+	bool ecReversing;
 
 	// Параметры алгоритма настройки элементарных условий
 	int leftLimit;

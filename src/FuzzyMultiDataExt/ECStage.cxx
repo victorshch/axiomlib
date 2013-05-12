@@ -39,6 +39,7 @@ ECStage::ECStage(FuzzyDataSet* fuzzyDataSet,
 	goalOccurenceWeight = 0.0;
 
 	entropyObjective = false;
+	ecReversing = false;
 	
 	ecNameTemplate = "elemCondition";
 }
@@ -70,6 +71,8 @@ int ECStage::initFromEnv(const Environment &env) {
 	env.getParamValue(goalOccurenceWeight, "ECGoalOccurenceWeight");
 
 	env.getParamValue(entropyObjective, "ECEntropyObjective", false);
+
+	env.getParamValue(ecReversing, "ECReversing", false);
 	
 	env.getStringParamValue(ecNameTemplate, "ECNameTemplate");
 	return 0;
@@ -193,12 +196,18 @@ void ECStage::selectElemCond(int abnormalBehaviourType, int dimension, int dimen
 	for(int i = 0; i < numTypes; i++) {
 		if(stage0->isECTypeSelected(i)) {
 			ElemCondPlus ec = stage0->getECType(i);
-			ec.dimension = dimension;
-			elemConds.push_back(ElemCondPlusStat(ec));
+			if(!ecReversing || ec.sign == true) {
+				ec.dimension = dimension;
+				elemConds.push_back(ElemCondPlusStat(ec));
+			}
 		}
 	}
 	
 	int elemCondsSize = elemConds.size();
+
+	if(elemConds.size() == 0) {
+		throw AxiomLibException("ECStage::selectElemCond() : no ECs selected for EC stage");
+	}
 	
 	// Достаем необходимый для обучения ряд
 	std::vector<double> teachRow;
@@ -413,12 +422,14 @@ double ECStage::matterECFunc (ElemCondPlusStat &ec, const int param, const int a
 		std::cout << "\nWarning in FuzzyMultiDatadLearnAlgorithm::matterECFunc: incorrect dstaSet request.\n";
 	}
 
-	if(ec.statOccurence < (double)normalOccCount / (double)totalNormalMultiTSCount
-			|| ec.statAbnorm < ec.statNormal) {
-		ec.statAbnorm = 1 - ec.statAbnorm;
-		ec.statNormal = 1 - ec.statNormal;
-		ec.statOccurence = 1 - ec.statOccurence;
-		ec.sign = !ec.sign;
+	if(ecReversing) {
+		if(ec.statOccurence < (double)normalOccCount / (double)totalNormalMultiTSCount
+				|| ec.statAbnorm < ec.statNormal) {
+			ec.statAbnorm = 1 - ec.statAbnorm;
+			ec.statNormal = 1 - ec.statNormal;
+			ec.statOccurence = 1 - ec.statOccurence;
+			ec.sign = !ec.sign;
+		}
 	}
 	if(!entropyObjective) {
 		// Определение значения целевой функции
