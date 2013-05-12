@@ -1,4 +1,13 @@
+#include <iostream>
+#include <fstream>
+#include <sstream>
+
 #include <boost/filesystem.hpp>
+#include <boost/serialization/nvp.hpp>
+#include <boost/archive/xml_iarchive.hpp>
+#include <boost/archive/xml_oarchive.hpp>
+
+#include "elem_conditions/Export.h"
 
 #include "AxiomBase.h"
 
@@ -105,45 +114,44 @@ int FuzzyMultiDataExtAlgorithm::initFromEnv(const Environment &env) {
 	return 0;	
 }
 
-//int FuzzyMultiDataExt::initFromEnvRecognitionOnly(const Environment &env) {
-//	// Инициализируем dataSet
-//	std::string datasetDir, datasetName;
-//	if (env.getStringParamValue(datasetDir, "BaseDataSetDir") < 0)
-//		throw AxiomLibException("FuzzyMultiDataExtAlgorithm::setParamsFromEnv : data set directory is undefined.");
-//	if (env.getStringParamValue(datasetName, "DataSet") < 0)
-//		throw AxiomLibException("FuzzyMultiDataExtAlgorithm::setParamsFromEnv : data set is undefined.");
-//	// считываем необходимые для данного класса параметры о наборе данных
-//	EnvDataSet envDataSet;
-//	envDataSet.readConfigFile (datasetDir, datasetName);
-//	// установка корректного обозначения NullStr - обозначение остутсвия в данной точке ряда какого либо нештатного поведения
-//	fuzzyDataSet.setNullStr (envDataSet);
-//	fuzzyDataSet.setNormalStr (envDataSet);
-//	// собственно считываем набор данных - заводим его во внутреннее представление
-//	fuzzyDataSet.readDataSet(datasetDir, datasetName);
-//	// восстанавливаем в данном классе вектор индексов параметров в каноническом представленнии по которым вести поиск нештатых ситуаций
-//	fuzzyDataSet.paramNums(dataSetParams, env, envDataSet);
+int FuzzyMultiDataExtAlgorithm::initFromEnvRecognitionOnly(const Environment &env) {
+	// Инициализируем dataSet
+	std::string datasetDir, datasetName;
+	if (env.getStringParamValue(datasetDir, "BaseDataSetDir") < 0)
+		throw AxiomLibException("FuzzyMultiDataExtAlgorithm::setParamsFromEnv : data set directory is undefined.");
+	if (env.getStringParamValue(datasetName, "DataSet") < 0)
+		throw AxiomLibException("FuzzyMultiDataExtAlgorithm::setParamsFromEnv : data set is undefined.");
+	// считываем необходимые для данного класса параметры о наборе данных
+	EnvDataSet envDataSet;
+	envDataSet.readConfigFile (datasetDir, datasetName);
+	// установка корректного обозначения NullStr - обозначение остутсвия в данной точке ряда какого либо нештатного поведения
+	fuzzyDataSet.setNullStr (envDataSet);
+	fuzzyDataSet.setNormalStr (envDataSet);
+	// собственно считываем набор данных - заводим его во внутреннее представление
+	fuzzyDataSet.readDataSet(datasetDir, datasetName);
+	// восстанавливаем в данном классе вектор индексов параметров в каноническом представленнии по которым вести поиск нештатых ситуаций
+	fuzzyDataSet.getParamNums(dataSetParams, env, envDataSet);
 
-//	// создание класса распознавания участков разметки в ряду разметки
-//	std::string recogClassName;
-//	ReducedRecognizerFactory rrf;
-//	if (env.getStringParamValue(recogClassName, "ReducedRecognizer") < 0)
-//		throw AxiomLibException("FuzzyMultiDataExtAlgorithm::initFromEnv: ReducedRecognizer class is undefined.");
-//	recognizer = rrf.create(recogClassName);
-//	recognizer->setParamsFromEnv (env);
+	std::string asStageName;
+	env.getMandatoryParamValue(asStageName, "axiomSetStage");
 
-//	if (env.getIntParamValue (ccNumPoints, "ccNumPoints") < 0)
-//		throw AxiomLibException("FuzzyMultiDataExtAlgorithm::setParamsFromEnv : ccNumPoints is undefined.");
+	stage3 = ASStage::create(asStageName, &fuzzyDataSet, stage2);
+	if(stage3 == 0) {
+		throw AxiomLibException("FuzzyMultiDataExtAlgorithm::setParamsFromEnv : invalid name of axiom set stage : '" + asStageName + "'");
+	}
 
-//	// Инициализируем стратегию вычисления целевой функции
-//	std::string goalStrategyName;
-//	GoalStrategyFactory gsf;
-//	if (env.getStringParamValue(goalStrategyName, "goalClass") < 0) 
-//		throw AxiomLibException("FuzzyMultiDataExtAlgorithm::initFromEnv: goal-class is undefined.");
-//	goalStrategy = gsf.create(goalStrategyName);
-//	goalStrategy->setParamsFromEnv(env);
+	// Параметры, по которым сохранять лучщие решения
+	if (env.getStringParamValue(axiomSetBaseDir, "AxiomSetBaseDir") < 0)
+	{}
+//		throw AxiomLibException("FuzzyMultiDataExtAlgorithm::setParamsFromEnv : axiomSetBaseDir directory is undefined.");
+	if (env.getStringParamValue(axiomSetName, "AxiomSetNameTemplate") < 0) {}
+//		throw AxiomLibException("FuzzyMultiDataExtAlgorithm::setParamsFromEnv : axiomName to save is undefined.");
 
-//	return 0;	
-//}
+
+	stage3->initFromEnv(env);
+
+	return 0;
+}
 
 FuzzyDataSet &FuzzyMultiDataExtAlgorithm::getDataSet() {
 	return this->fuzzyDataSet;
@@ -421,6 +429,73 @@ void FuzzyMultiDataExtAlgorithm::loadASs(const std::string& dir, const std::vect
 	setAxiomSets(axiomSets);
 }
 
+void FuzzyMultiDataExtAlgorithm::saveAxiomSetsToXml(const std::string &dirName) const
+{
+//	boost::filesystem::path dir(dirName);
+	Logger::comment("Saving axoiom sets to directory '" + dirName + "'");
+	for(int i = 0; i < getASSize(); ++i) {
+		const AxiomExprSetPlus& aesp = getAS(i);
+		//boost::filesystem::path currentPath = dir;
+		std::string currentFileName = dirName + "/" + aesp.name() + ".xml";
+		//currentPath /= aesp.name() + ".xml";
+		Logger::comment("Saving axiom set to " + currentFileName);
+		std::ofstream ofstr(currentFileName);
+		if(ofstr.good())
+		{
+			boost::archive::xml_oarchive archive(ofstr);
+			archive << boost::serialization::make_nvp("AxiomExprSetPlus", aesp);
+		}
+		else
+		{
+			throw AxiomLibException("ECStatistics:saveToFile(): Couldn't open file '"
+									+ currentFileName + "' for writing");
+		}
+
+	}
+}
+
+void FuzzyMultiDataExtAlgorithm::saveAxiomSetsToXml() const
+{
+	saveAxiomSetsToXml(this->axiomSetBaseDir);
+}
+
+void FuzzyMultiDataExtAlgorithm::loadAxiomSetsFromXml(const std::string &dirName, const std::vector<std::string> &asNames)
+{
+//	boost::filesystem::path dir(dirName);
+	std::vector<AxiomExprSetPlus> axiomSets;
+	axiomSets.reserve(asNames.size());
+	for(int i = 0; i < (int)asNames.size(); ++i) {
+		std::string currentName = asNames[i];
+		std::string currentFileName = dirName + "/" + currentName + ".xml";
+		Logger::comment("Loading axiom set from '" + currentFileName + "'");
+		boost::filesystem::path currentPath(currentFileName);
+//		if(!boost::filesystem::exists(currentPath)) {
+//			Logger::comment("Warning: specified axiom set file '" + currentPath.filename() + "' does not exist");
+//			continue;
+//		}
+		std::ifstream ifstr(currentFileName);
+		if(ifstr.good())
+		{
+			AxiomExprSetPlus aesp;
+			boost::archive::xml_iarchive archive(ifstr);
+			archive >> boost::serialization::make_nvp("AxiomExprSetPlus", aesp);
+			axiomSets.push_back(aesp);
+		}
+		else
+		{
+			throw AxiomLibException("ECStatistics:initFromFile(): Couldn't open file '"
+									+ currentFileName + "' for reading");
+		}
+	}
+
+	setAxiomSets(axiomSets);
+}
+
+void FuzzyMultiDataExtAlgorithm::loadAxiomSetsFromXml(const std::vector<std::string> &asNames)
+{
+	loadAxiomSetsFromXml(this->axiomSetBaseDir, asNames);
+}
+
 void FuzzyMultiDataExtAlgorithm::recalculateMatterECFunc(ElemCondPlusStat &ec, int abType) {
 	stage1->recalculateMatterECFunc(ec, abType);
 }
@@ -464,6 +539,15 @@ void FuzzyMultiDataExtAlgorithm::runSecondLevelHeuristics() {
 
 void FuzzyMultiDataExtAlgorithm::runThirdLevel() {
 	stage3->run();
+
+	// This is bad programming, but i'm lazy
+	int numLength = (int) boost::lexical_cast<std::string>(stage3->getASSize() - 1).size();
+
+	for(int i = 0; i < stage3->getASSize(); ++i) {
+		std::ostringstream ss;
+		ss << std::setw(numLength) << std::setfill('0') << (i+1);
+		stage3->getAS(i).setName(this->axiomSetName + ss.str());
+	}
 }
 
 void FuzzyMultiDataExtAlgorithm::setAxiomSets(const std::vector<AxiomExprSetPlus> &axiomSets) {
