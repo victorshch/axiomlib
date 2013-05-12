@@ -402,7 +402,7 @@ signed int AxiomSetBase::readFromAS (std::string filePath, AxiomExprSetStructure
 *	History:
 *
 ****************************************************************************/
-signed int AxiomSetBase::readFromAS (std::string filePath, AxiomExprSetStructure &aess, std::vector <std::string> &paramNames) const {
+signed int AxiomSetBase::readFromAS (std::string filePath, AxiomExprSetStructure &aess, const std::vector <std::string> &paramNames) const {
 	// Дописываем расширение к пути к файлу с описанием структуры системы аксиом
 	std::string fullFilePath;
 	fullFilePath = filePath;
@@ -495,7 +495,7 @@ signed int AxiomSetBase::readFromAS (std::string filePath, AxiomExprSetStructure
 *	History:
 *
 ****************************************************************************/
-signed int AxiomSetBase::readFromAS (boost::filesystem::ifstream &file, AxiomExprSetStructure &aess, std::vector <std::string> &paramNames) const {
+signed int AxiomSetBase::readFromAS (boost::filesystem::ifstream &file, AxiomExprSetStructure &aess, const std::vector <std::string> &paramNames) const {
 	boost::char_separator<char> sep(" :;\t[]");
 	std::string str, tempStr;
 	int i = 0;
