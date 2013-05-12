@@ -405,21 +405,21 @@ BootstrappedDataSet::BootstrappedDataSet(const FuzzyDataSet *dataSet, int classN
 		indicesVector.push_back(std::make_pair(-1, traj));
 	}
 
-	for(int traj = 0; traj < mDataSet->getMutiTSCount(FuzzyDataSet::Testing, classNo); ++traj) {
+	for(int traj = 0; traj < mDataSet->getMutiTSCount(FuzzyDataSet::Reference, classNo); ++traj) {
 		indicesVector.push_back(std::make_pair(classNo, traj));
 	}
 
 	if(oneVsAll) {
 		for(int c = 0; c < mDataSet->getClassCount(); ++c) {
 			if(c == classNo) continue;
-			for(int traj = 0; traj < mDataSet->getMutiTSCount(FuzzyDataSet::Testing, c); ++traj) {
+			for(int traj = 0; traj < mDataSet->getMutiTSCount(FuzzyDataSet::Reference, c); ++traj) {
 				indicesVector.push_back(std::make_pair(c, traj));
 			}
 		}
 	}
 
-	for(int i = 0; i < totalTrajectoryCount; ++i) {
-		int currentGlobalIndex = rand() % totalTrajectoryCount;
+	for(int i = 0; i < indicesVector.size(); ++i) {
+		int currentGlobalIndex = rand() % (int) indicesVector.size();
 		//DEBUG ONLY!
 		//int currentGlobalIndex = i;
 		std::pair<int, int> currentIndex = indicesVector[currentGlobalIndex];
