@@ -13,6 +13,7 @@
 #define EXPORT_H
 
 #include <boost/serialization/extended_type_info.hpp>
+#include <boost/serialization/export.hpp>
 #include "../all_axioms.h"
 
 BOOST_CLASS_EXPORT_GUID(AxiomLib::BetweenTwoLevels, "BetweenTwoLevels");
