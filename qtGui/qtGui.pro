@@ -44,3 +44,6 @@ LIBS += $$BOOST_LIB \
 
 # Включение файла со списком файлов проекта
 include(qtGui.pri)
+
+CONFIG -= release
+CONFIG += debug

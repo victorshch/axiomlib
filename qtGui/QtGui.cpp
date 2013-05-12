@@ -766,16 +766,16 @@ void QtGui::editConfig() {
 void QtGui::processOutput() {
 	std::string strAll(process->readAll());
 	// Обработчик - удаляет системные сообщения
-	int res;
-	res = systemMsgHandler (strAll);
+//	int res;
+//	res = systemMsgHandler (strAll);
 	// Вывод на экран
 	textEdit_output->append (strAll.c_str());
 	// Запись в log-файл
 	if (writeToLog)
 		toLogFile (strAll);
 	// Если при обработке было найдено служебное сообщение об останове процесса - то вызываем функцию остановки
-	if (res == 1)
-		stop();
+//	if (res == 1)
+//		stop();
 }
 
 
