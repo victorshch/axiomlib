@@ -27,15 +27,15 @@ namespace FuzzyMultiDataExt {
 
 
 
-    double distanceFunctionForAxiom(int s1, int s2) {
+	inline double distanceFunctionForAxiom(int s1, int s2) {
         return s1 == s2 ? 0 : 1;
     }
     // Выбор элемента
 
-    int choiceFunctionForAxiom(int s1, int s2) {
+	inline int choiceFunctionForAxiom(int s1, int s2) {
         return s1;
     }
-    std::vector<bool> choiceFunctionForMultiMark(const std::vector<bool>& v1, const std::vector<bool>& v2){
+	inline std::vector<bool> choiceFunctionForMultiMark(const std::vector<bool>& v1, const std::vector<bool>& v2){
         std::vector<bool> result;
         result.resize(std::max(v1.size(),v2.size()));
         for (int i=0;i<result.size();i++){
