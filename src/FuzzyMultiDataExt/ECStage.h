@@ -73,6 +73,8 @@ private:
 	std::vector<int> dataSetParams;
 	std::vector<std::string> dataSetParamNames;
 	
+	bool entropyObjective;
+
 	// Параметры алгоритма настройки элементарных условий
 	int leftLimit;
 	int rightLimit;
