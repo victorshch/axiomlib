@@ -126,7 +126,7 @@ SatPointSet::SatPointSet(const Axiom &axiom, const FuzzyDataSet &dataSet, FuzzyD
 				}
 			}
 
-			int multiTSLen = (int) dataSet.getMultiTSLength(division, classNo, classMultiTSNo);
+			int multiTSLen = (int) dataSet.getMultiTSLength(division, currentClass, classMultiTSNo);
 
 			m_satPoints[currentMultiTS].resize(multiTSLen);
 
