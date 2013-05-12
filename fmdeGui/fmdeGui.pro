@@ -19,8 +19,8 @@ CONFIG -= debug
 #CONFIG -= release
 
 unix {
-    QMAKE_CC = gcc-4.5
-    QMAKE_CXX = g++-4.5
+#    QMAKE_CC = gcc-4.5
+#    QMAKE_CXX = g++-4.5
 }
 
 ### Задание папки, куда будет положен исполняемый файл ###

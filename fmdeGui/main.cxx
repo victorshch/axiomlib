@@ -1,6 +1,7 @@
 #include <QtGui/QApplication>
 #include <QMessageBox>
 #include <QDir>
+#include <QDebug>
 
 #include "AxiomLibException.h"
 
@@ -52,8 +53,11 @@ int main(int argc, char *argv[])
 	AxiomLibGuiApplication a(argc, argv);
 	
 	try {		
+		QStringList args = QApplication::arguments();
+		args.removeAt(0);
+
 		MainWindowContent* mainWindowContent = new MainWindowContent(0, 
-																	 QApplication::arguments(), 
+																	 args,
 																	 QDir::currentPath());
 		
 		MainWindow* mainWindow = new MainWindow(0, (mainWindowContent->controller));

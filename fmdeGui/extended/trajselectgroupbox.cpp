@@ -46,7 +46,7 @@ void TrajSelectGroupBox::unWire() {
 }
 
 void TrajSelectGroupBox::fillTSSizes(ManagedFuzzyDataController *controller) {
-	AxiomLib::ClippedFullFuzzyDataSet &dataSet = controller->fuzzyMultiDataLearnAlgorithm.getDataSet();
+	AxiomLib::FuzzyDataSet &dataSet = controller->fuzzyMultiDataLearnAlgorithm.getDataSet();
 	
 	std::vector<int> abnormalMultiTSSizes;
 	int abnormalClassesN;

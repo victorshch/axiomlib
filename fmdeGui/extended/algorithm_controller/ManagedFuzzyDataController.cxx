@@ -315,16 +315,16 @@ void ManagedFuzzyDataController::saveStageAxiomLib(int number, const std::string
 
 int ManagedFuzzyDataController::getMultiTSCount(int classNo) {
 	return fuzzyMultiDataLearnAlgorithm.getDataSet()
-	        .getMutiTSCount(AxiomLib::ClippedFullFuzzyDataSet::Reference, classNo);
+			.getMutiTSCount(AxiomLib::FuzzyDataSet::Reference, classNo);
 }
 
 void ManagedFuzzyDataController::getMultiTS(int classNo, int tsNo, 
 											std::vector<std::vector<double> > &multiTS)
 {
-	AxiomLib::ClippedFullFuzzyDataSet &dataSet = fuzzyMultiDataLearnAlgorithm.getDataSet();
+	AxiomLib::FuzzyDataSet &dataSet = fuzzyMultiDataLearnAlgorithm.getDataSet();
 	
 	qDebug()<<"Performing reset...";
-	AxiomLib::IntervalSet intervals = AxiomLib::IntervalSet::reset(dataSet, AxiomLib::ClippedFullFuzzyDataSet::Reference);
+	AxiomLib::IntervalSet intervals = AxiomLib::IntervalSet::reset(dataSet, AxiomLib::FuzzyDataSet::Reference);
 	qDebug()<<"Reset done";
 	int size1;
 	std::vector<int> size2;
@@ -359,12 +359,12 @@ void ManagedFuzzyDataController::getMultiTS(int classNo, int tsNo,
 	}
 	
 	qDebug()<<"Performing apply...";
-	intervals.apply(dataSet, AxiomLib::ClippedFullFuzzyDataSet::Reference);
+	intervals.apply(dataSet, AxiomLib::FuzzyDataSet::Reference);
 	qDebug()<<"Apply done.";
 }
 
 //void ManagedFuzzyDataController::getTS(int classNo, int tsNo, int dimensionNo, std::vector<double> &ts) {
-//	const AxiomLib::ClippedFullFuzzyDataSet &dataSet = fuzzyMultiDataLearnAlgorithm.getDataSet();
+//	const AxiomLib::FuzzyDataSet &dataSet = fuzzyMultiDataLearnAlgorithm.getDataSet();
 	
 //	if(classNo < 0) {		
 //		dataSet.getNormalTSFromClass(
@@ -418,7 +418,7 @@ int ManagedFuzzyDataController::getTotalAbnormalTrajNumber() const {
 	
 	int result = 0;
 	for(int i = 0; i < fuzzyMultiDataLearnAlgorithm.getDataSet().getClassCount(); ++i) {
-		result += fuzzyMultiDataLearnAlgorithm.getDataSet().getMutiTSCount(AxiomLib::ClippedFullFuzzyDataSet::Reference, i);
+		result += fuzzyMultiDataLearnAlgorithm.getDataSet().getMutiTSCount(AxiomLib::FuzzyDataSet::Reference, i);
 	}
 	
 	return result;

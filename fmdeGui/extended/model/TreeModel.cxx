@@ -1,5 +1,7 @@
 #include <QVector>
 #include <QStack>
+#include <stdexcept>
+#include <exception>
 
 #include "TreeModel.h"
 

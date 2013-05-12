@@ -22,6 +22,7 @@
 #include "ManagedFuzzyDataStage3.h"
 #include "FuzzyMultiDataExtAlgorithm.h"
 #include "Environment.h"
+#include "Logger.h"
 #include "ElemConditionsFactory.h"
 #include "../QtGuiException.h"
 
@@ -143,8 +144,12 @@ void ManagedFuzzyDataController::readEnv(ForwardIterator begin,
 	envStart.readConfigParams(begin, end, convert);
 
 	std::string pathToConfigFile;
-	if (envStart.getStringParamValue (pathToConfigFile, "ConfigFile") < 0)
+	if (envStart.getStringParamValue (pathToConfigFile, "ConfigFile") < 0) {
+		AxiomLib::Logger::debug("ManagedFuzzyDataController::readEnv(): Config file not found in environment, defaulting to '" + std::string(defaultConfigFile) + "'");
 		pathToConfigFile.assign (defaultConfigFile);
+	} else {
+		AxiomLib::Logger::debug("ManagedFuzzyDataController::readEnv(): Config file path: '" + pathToConfigFile + "'");
+	}
 
 	env.readConfigFile(pathToConfigFile.c_str());
 	env += envStart;
