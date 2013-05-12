@@ -21,7 +21,7 @@
 #define replacementProbability	0.5 // Вероятность замещения одного из элементов вектора bestECs новым, если этот вектор уже раздут и заполнен условиями с таким же значением целевой функции
 #define additionalECItems		10	// > 0 !!! Число дополнительных слотов, на которое увеличивать bestECs, если этот вектор заполнен
 
-#define AXIOMLIB_ECSTAGE_EXPERIMENTAL
+#undef AXIOMLIB_ECSTAGE_EXPERIMENTAL
 
 using namespace AxiomLib;
 using namespace AxiomLib::FuzzyMultiDataExt;

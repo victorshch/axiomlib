@@ -212,6 +212,14 @@ void ASStageSimple::run() {
 				// выбираем заданное число лучших систем аксиом и добавляем их в популяцию на следующем шаге алгоритма
 				indicesOfBestSets.clear();
 				chooseIndicesOfBestAxiomSets (newAxiomSets, indicesOfBestSets, axiomSets[axSet].goal);
+				const AxiomExprSetPlus& bestAS = newAxiomSets[indicesOfBestSets[0]];
+				{
+					char buf[256];
+					sprintf (buf, "\r\tProc start point: %d - %d\tIteration: %d\tCurrent axiomSet: %d out of %d.\t Thread %d.\n\t Best objective value: %d (%d, %d)", 1, 1, iterNum+1, axSet+1, axiomSets.size(), omp_get_thread_num(),
+							 int(bestAS.goal), bestAS.errFirst, bestAS.errSecond);
+					logger->writeComment(buf);
+				}
+
 				wholeNum += indicesOfBestSets.size();
 				addAxiomSets(nextStepAxiomSets[axSet], newAxiomSets, indicesOfBestSets);
 			}
