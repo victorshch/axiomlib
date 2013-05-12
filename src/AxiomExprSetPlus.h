@@ -33,11 +33,14 @@ class AxiomExprSetPlus : public AxiomExprSet {
 		archive & BOOST_SERIALIZATION_NVP(errSecond);
 		archive & BOOST_SERIALIZATION_NVP(axiomsIndex);
 		archive & BOOST_SERIALIZATION_NVP(markUps);
+		archive & BOOST_SERIALIZATION_NVP(multiMarkUps);
 		archive & BOOST_SERIALIZATION_NVP(errors);
 	}
 
  public:
 	
+	bool operator <(const AxiomExprSetPlus& other) const;
+
 	//	Расширение исходного класса AxiomExprSet за счет следующих переменных:
 
 	// Значение целевой функции
