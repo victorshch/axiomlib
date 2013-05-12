@@ -255,12 +255,13 @@ void AXStage::formAxioms(int abType) {
 		createAxiomSatPoints(abType, axioms);
 		
 		logger->writeComment("Finished creating sat points for axioms");
-		
+
 		// Переносим существующие аксиомы в результат на данном шаге		
 		for (int i = 0; i < curSize; i++) {
 			bestAxiomsNew[i] = axioms[i].element();
 		}
 		curBest = curSize;
+		logger->writeComment("Creating axiom combinations");
 		// Создаем новые элементы и вычисляем их значение целевой функции
 		logger->writeDebug("Creating new axioms");
 		for (unsigned int i = 0; i < (unsigned int) (curSize - 1); i++) {
@@ -270,10 +271,8 @@ void AXStage::formAxioms(int abType) {
 					curBest++;
 				}
 			}
-			axioms[i].element().clear();
 		}
 		logger->writeDebug("Finished creating new axioms");
-		axioms[curSize - 1].element().clear();
 		axioms.clear();
 		// Записываем полученные значения в вектор для следующей итерации
 		axioms.resize(curBest);
@@ -516,13 +515,13 @@ inline int AXStage::getPriority (std::vector <AXSelection> &vec, std::vector <un
 ****************************************************************************/
 int AXStage::combineAxioms (AxiomExprPlus &axiomFirst, AxiomExprPlus &axiomSecond, AxiomExprPlus &axiomExprPlus, const int abType) const {
 	// Создание новых аксиом
-	//logger->writeDebug("Creating Or and And axioms");
+//	logger->writeDebug("Creating Or and And axioms");
 	AxiomExprPlus axiomExprAnd, axiomExprOr;
 	axiomExprAnd.andExpr(axiomFirst, axiomSecond);
 	axiomExprOr.orExpr (axiomFirst, axiomSecond);
 	
 	// Вычисление наборов точек выполнимости
-	//logger->writeDebug("Calculating SatPointSets");
+//	logger->writeDebug("Calculating SatPointSets");
 	ReducedSatPointSet orSet = getOr(abType, axiomFirst, axiomSecond, m_temporary1[abType]);
 	ReducedSatPointSet andSet = getAnd(abType, axiomFirst, axiomSecond, m_temporary2[abType]);
 	
@@ -544,13 +543,13 @@ int AXStage::combineAxioms (AxiomExprPlus &axiomFirst, AxiomExprPlus &axiomSecon
 	}
 */	
 	// Вычисление целевых функций
-	//logger->writeDebug("Calculating matterAxiomFuncs");
+//	logger->writeDebug("Calculating matterAxiomFuncs");
 	matterAxiomFunc (axiomExprOr, abType, orSet);
 	matterAxiomFunc (axiomExprAnd, abType, andSet);
 
 	// Вывод отладочной информации
 	//std::cout << "\n\t andRes = " << axiomExprAnd.goal << "\torRes = " << axiomExprOr.goal << "\taxF = " << fi << "\taxS = " << se << "\tand.size() = " << axiomExprAnd.expression.size() << "\tand[0].size() = " << axiomExprAnd.expression[0].size() << "\tor.size() = " << axiomExprOr.expression.size() << "\tor[0].size() = " << axiomExprOr.expression[0].size();
-	//logger->writeDebug("Analyzing result");
+//	logger->writeDebug("Analyzing result");
 	// Определение лучше ли получились значения целевых функций у новых аксиом
 	if ((axiomExprAnd.goal >= axiomExprOr.goal) || (((axiomExprOr.goal - axiomExprAnd.goal) <= eps) && (axiomExprAnd.statAbnorm >= axiomExprOr.statAbnorm))) {
 		// значит axiomExprAnd - лучше axiomExprOr
