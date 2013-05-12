@@ -45,12 +45,32 @@ void ECTypeSelection::run(FuzzyMultiDataExtAlgorithm &algorithm) const {
 		            boost::algorithm::to_lower_copy(algorithm.getECType(i).elemCondition->name())
 		            );
 		//todo подумать, надо ли делать эту проверку
-		if(algorithm.isECTypeSelected(i)) {
+		//if(algorithm.isECTypeSelected(i))
+		{
+
+//            if(m_selectionPolicy == Exclusive) {
+//                if(m_ecTypes.count(pair) != 0) {
+//                    Logger::getInstance()->writeComment("Excluding '"+algorithm.getECType(i).ecTypeName()+"'");
+//                    algorithm.setECTypeSelected(i, false);
+//                } else {
+//                    Logger::getInstance()->writeComment("Including '"+algorithm.getECType(i).ecTypeName()+"'");
+//                    algorithm.setECTypeSelected(i, true);
+//                }
+//            } else {
+//                if(m_ecTypes.count(pair) == 0) {
+//                    Logger::getInstance()->writeComment("Excluding '"+algorithm.getECType(i).ecTypeName()+"'");
+//                    algorithm.setECTypeSelected(i, false);
+//                } else {
+//                    Logger::getInstance()->writeComment("Including '"+algorithm.getECType(i).ecTypeName()+"'");
+//                    algorithm.setECTypeSelected(i, true);
+//                }
+//            }
 			if((m_ecTypes.count(pair) != 0) == (m_selectionPolicy == Exclusive)) {
 				Logger::getInstance()->writeComment("Excluding '"+algorithm.getECType(i).ecTypeName()+"'");
 				algorithm.setECTypeSelected(i, false);
 			} else {
 				Logger::getInstance()->writeComment("Including '"+algorithm.getECType(i).ecTypeName()+"'");
+				algorithm.setECTypeSelected(i, true);
 			}
 		}
 	}
