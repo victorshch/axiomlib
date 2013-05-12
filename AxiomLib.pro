@@ -220,7 +220,8 @@ SOURCES += src/TreatmentSample.cxx \
     src/MultiMarking/WeakEqual.cpp \
     src/MultiMarking/Priority.cpp \
     src/FuzzyMultiDataExt/ASStageMultiMarking.cxx \
-    src/elem_conditions/Variance.cxx
+    src/elem_conditions/Variance.cxx \
+    src/FuzzyMultiDataExt/AXStageSimple.cpp
 HEADERS += src/undefs.h \
     src/TreatmentSample.h \
     src/TreatmentFactory.h \
