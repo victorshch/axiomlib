@@ -48,6 +48,7 @@ ElemConditionsFactory::ElemConditionsFactory (void)
   all_axioms[13] = new SecDerivativeIncreaseRight();
   all_axioms[0] = new Integral();
   all_axioms[14] = new IncreaseRightElemCondition();
+  all_axioms[15] = new Variance();
   all_axioms[1] = new DecreaseLeftElemCondition();
   all_axioms[2] = new IncreaseLeftElemCondition();
 // END CREATE_ALL_AXIOMS
@@ -104,64 +105,9 @@ ElemCondition* ElemConditionsFactory::createAxiomByNum(signed int num)
   // проверка выхода номера аксиомы за границы
   if (num < 1 || num > (int) all_axioms.size()) {
     throw AxiomLibException("ElemConditionsFactory::createAxiomByNum : argument out of range.");
-    return 0;
   }
 
-//  el_axiom* to_return = (all_axioms[num])->create();
-  ElemCondition* toReturn;
-  switch (num) {
-// BEGIN CREATE_ALL_CREATE_AXIOM_BY_NUM
-    case 4:
-      toReturn = new DecreaseRightElemCondition();
-      break;
-    case 5:
-      toReturn = new SecDerivativeDecreaseLeft();
-      break;
-    case 6:
-      toReturn = new DerivativeDecreaseLeft();
-      break;
-    case 7:
-      toReturn = new BetweenTwoLevels();
-      break;
-    case 8:
-      toReturn = new Volatility();
-      break;
-    case 9:
-      toReturn = new SecDerivativeIncreaseLeft();
-      break;
-    case 10:
-      toReturn = new SecDerivativeDecreaseRight();
-      break;
-    case 11:
-      toReturn = new DerivativeDecreaseRight();
-      break;
-    case 12:
-      toReturn = new DerivativeIncreaseRight();
-      break;
-    case 13:
-      toReturn = new DerivativeIncreaseLeft();
-      break;
-    case 14:
-      toReturn = new SecDerivativeIncreaseRight();
-      break;
-    case 1:
-      toReturn = new Integral();
-      break;
-    case 15:
-      toReturn = new IncreaseRightElemCondition();
-      break;
-    case 2:
-      toReturn = new DecreaseLeftElemCondition();
-      break;
-    case 3:
-      toReturn = new IncreaseLeftElemCondition();
-      break;
-// END CREATE_ALL_CREATE_AXIOM_BY_NUM
-    default:
-      toReturn = NULL;
-  }
-  
-  return toReturn;
+  return all_axioms[(size_t)(num - 1)]->clone();
 }
 
 
@@ -402,8 +348,7 @@ ElemCondition* ElemConditionsFactory::createAxiomByName(const char* name) {
 	for(int i = 0; i < N_EL_AXIOMS; i++)
 	{
 		if (all_axioms[i]->name() == name) {
-	//      to_return = (*i)->create();
-		toReturn = createAxiomByNum(i+1);
+            toReturn = all_axioms[i]->clone();
 		}
 	}
 	

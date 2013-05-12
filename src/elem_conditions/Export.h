@@ -30,5 +30,6 @@ BOOST_CLASS_EXPORT_GUID(AxiomLib::SecDerivativeDecreaseRight, "SecDerivativeDecr
 BOOST_CLASS_EXPORT_GUID(AxiomLib::SecDerivativeIncreaseLeft, "SecDerivativeIncreaseLeft");
 BOOST_CLASS_EXPORT_GUID(AxiomLib::SecDerivativeIncreaseRight, "SecDerivativeIncreaseRight");
 BOOST_CLASS_EXPORT_GUID(AxiomLib::Volatility, "Volatility");
+BOOST_CLASS_EXPORT_GUID(AxiomLib::Variance, "Variance");
 
 #endif // EXPORT_H

@@ -2,7 +2,7 @@
 *			all_axioms
 *
 *	Description:	"Супер-include", содержащий все includes частных аксиом
-*			генерируется автоматически
+*			генерируется автоматически (not anymore =\)
 *	Author:		Eugene A. Vasin
 *	History:	
 *
@@ -25,5 +25,8 @@
 #include "elem_conditions/DecreaseLeftElemCondition.h"
 #include "elem_conditions/IncreaseRightElemCondition.h"
 #include "elem_conditions/IncreaseLeftElemCondition.h"
-#define N_EL_AXIOMS 15
+#include "elem_conditions/Variance.h"
+
+// TODO refactor
+#define N_EL_AXIOMS 16
 // END AXIOM HEADERS
