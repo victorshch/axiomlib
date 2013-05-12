@@ -364,12 +364,14 @@ AxiomExpr &AxiomExpr::operator &=(const AxiomExpr &second)
 {
 	AxiomExpr first(*this);
 	andExpr(first, second);
+	return *this;
 }
 
 AxiomExpr &AxiomExpr::operator |=(const AxiomExpr &second)
 {
 	AxiomExpr first(*this);
 	orExpr(first, second);
+	return *this;
 }
 
 
