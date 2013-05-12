@@ -28,7 +28,16 @@ DataSetDivision::DataSetDivision(const ReferenceClassesTS &abnormalTS, const Cla
 								   IntInterval(0, abnormalTS[abType][multiTSNo].length() - 1)
 					));
 		}
-	}	
+	}
+}
+
+std::string DataSetDivision::getMultiTSName(int classNo, int indexMultiTS) const
+{
+	if(classNo < -1) {
+		classNo = -1;
+	}
+
+	return m_tsSet[classNo + 1][indexMultiTS].get<0>().trajectoryName;
 }
 
 int DataSetDivision::getClassCount() const {

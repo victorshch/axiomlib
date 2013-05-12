@@ -20,6 +20,8 @@
 #include <boost/serialization/nvp.hpp>
 #include <boost/serialization/utility.hpp>
 
+#include <boost/unordered_map.hpp>
+
 namespace AxiomLib {
 
 class AxiomExprSetPlus : public AxiomExprSet {
@@ -36,6 +38,8 @@ class AxiomExprSetPlus : public AxiomExprSet {
 		archive & BOOST_SERIALIZATION_NVP(multiMarkUps);
 		archive & BOOST_SERIALIZATION_NVP(errors);
 	}
+
+	boost::unordered_map<int, boost::unordered_map<int, std::pair<int, int> > > detailedErrors;
 
  public:
 	
@@ -77,6 +81,10 @@ class AxiomExprSetPlus : public AxiomExprSet {
  
     // Деструктор удаляющий все созданные в рамках данной системы аксиом динамические объекты
     ~AxiomExprSetPlus(void);
+
+	void setErrorsForTraj(int type, int trajNo, int errI, int errII);
+
+	std::pair<int, int> getErrorsForTraj(int type, int trajNo) const;
  
     // Функция удаления всех аксиом из системы аксиом
     void clear (void);

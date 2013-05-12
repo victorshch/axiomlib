@@ -89,6 +89,8 @@ int main (int argc, char** argv) {
 		fuzzyMultiDataExtAlgorithm.initFromEnvRecognitionOnly(env);
 		fuzzyMultiDataExtAlgorithm.setComments(comments);
 
+		const FuzzyDataSet& dataSet = fuzzyMultiDataExtAlgorithm.getDataSet();
+
 //		std::vector<std::string> dataSetParams = fuzzyMultiDataLearnAlgorithm.getDataSet().getParamNames();
 
 		std::vector<std::string> asNames;
@@ -107,7 +109,26 @@ int main (int argc, char** argv) {
 			std::cout << "\n\t" << i <<".\tAxiomSet: " << aess.name() << "\t"
 					  << aess.goal << " (" << aess.errFirst << ", " << aess.errSecond << ").";
 
+			std::cout << std::endl;
+			std::cout << "Detailed error statistics:" << std::endl;
+
+			int classCount = dataSet.getClassCount();
+			for(int classNo = -1; classNo < classCount; classNo++) {
+				std::cout << "Class '" + dataSet.className(classNo) + "'" << std::endl;
+				int multiTSCount = dataSet.getMutiTSCount(FuzzyDataSet::Testing, classNo);
+				std::cout << "Trajectory statistics:" << std::endl;
+				for(int multiTS = 0; multiTS < multiTSCount; multiTS++) {
+					//std::string name = dataSet.getMultiTSName(FuzzyDataSet::Testing, classNo, multiTS);
+					std::cout << "\tMultiTS no. " << multiTS ;//<<", name " << name;
+					//std::cout << std::endl;
+					std::pair<int, int> errors = aess.getErrorsForTraj(classNo, multiTS);
+					std::cout << "\tErrors: (" << errors.first << ", " << errors.second << ")\n";
+				}
+			}
+			std::cout << std::endl;
 		}
+
+
 
 		return 0;
 
