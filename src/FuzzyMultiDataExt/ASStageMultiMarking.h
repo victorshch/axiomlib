@@ -208,10 +208,17 @@ namespace FuzzyMultiDataExt {
 
         const FuzzyDataSet* fuzzyDataSet;
         const AXStage* stage2;
+        // Метрика для поиска наибольшей общей подпоследовательности
         MultiMarking::DTWMetric* m;
+
+        // Метрика для распознавателя.
+        MultiMarking::DTWMetric* mForRecognize;
         //Порог для сравнения при подходе с подмножествами
         double porog;
+        double porogForDTW;
         bool areMultiMark;
+        // Растяжка для нештатных при расплознавании(Размер окна)
+        double mStretch;
         // Максимальное число аксиом в популяции
         int maxAxiomSetPopSize;
         // Максимальное число шагов в алгоритме построения систем аксиом
@@ -231,8 +238,14 @@ namespace FuzzyMultiDataExt {
         // Стратегия подсчета целевой функции по ошибкам I и II рода
         PGoalStrategy goalStrategy;
 
+        // Стоимость ошибки, если при сдвиге разметок осталась область разметки без соответствия в другой разметке
+        double shiftErrIn;
+        // Степень расширения разметки (неточность при поиске разметок во время их подбора)
+        double extendMarkUpLensLevel;
     private:
         // Функции, используемые в run
+        std::vector<int> convert(std::vector<double> resultInDouble);
+        void recognize (std::vector <std::vector<bool> > &markUp, const std::vector <std::vector<bool> > &genMarkUp, std::vector <int> &result);
         int sortBestAxiomSets (void);
         int cutDownAxiomSets (std::vector <AxiomExprSetPlus> &axiomSets) const;
         int addAxiomSets(std::vector <AxiomExprSetPlus> &nextStepAxiomSets, std::vector <AxiomExprSetPlus> &newAxiomSets, std::vector <int> &indicesOfBestSets) const;

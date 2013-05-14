@@ -37,13 +37,66 @@ void ASStageMultiMarking::setAxiomSets(const std::vector<AxiomExprSetPlus>& init
 }
 
 void ASStageMultiMarking::initFromEnv(const Environment& env){
+    if (env.getIntParamValue (ccNumPoints, "ccNumPoints") < 0)
+            throw AxiomLibException("FuzzyMultiDataExt_AS::setParamsFromEnv : ccNumPoints is undefined.");
+
+    // Инициализируем стратегию вычисления целевой функции
+    std::string goalStrategyName;
+    GoalStrategyFactory gsf;
+    if (env.getStringParamValue(goalStrategyName, "goalClass") < 0)
+            throw AxiomLibException("FuzzyMultiDataExt_AS::initFromEnv: goal-class is undefined.");
+    goalStrategy = PGoalStrategy(gsf.create(goalStrategyName));
+    goalStrategy->setParamsFromEnv(env);
+
+    // Стоимость ошибки, если при сдвиге разметок осталась область разметки без соответствия в другой разметке
+    if (env.getDoubleParamValue (shiftErrIn, "shiftErrIn") < 0)
+            throw AxiomLibException("FuzzyMultiDataExt_AS::setParamsFromEnv : shiftErrIn is undefined.");
+    // Степень расширения длины вхождения разметки (при поиске разметок во время их подбора)
+    if (env.getDoubleParamValue (extendMarkUpLensLevel, "extendMarkUpLensLevel") < 0)
+            throw AxiomLibException("FuzzyMultiDataExt_AS::setParamsFromEnv : extendMarkUpLensLevel is undefined.");
+    if (env.getIntParamValue (maxAxiomSetPopSize, "maxAxiomSetPopSize") < 0)
+            throw AxiomLibException("FuzzyMultiDataExt_AS::setParamsFromEnv : maxAxiomSetPopSize is undefined.");
+    if (env.getIntParamValue (maxNumberOfSteps, "maxNumberOfSteps") < 0)
+            throw AxiomLibException("FuzzyMultiDataExt_AS::setParamsFromEnv : maxNumberOfSteps is undefined.");
+    if (env.getDoubleParamValue (bestAxiomSetGoal, "bestAxiomSetGoal") < 0)
+            throw AxiomLibException("FuzzyMultiDataExt_AS::setParamsFromEnv : bestAxiomSetGoal is undefined.");
+    if (env.getIntParamValue (numberOfBestAxiomSets, "numberOfBestAxiomSets") < 0)
+            throw AxiomLibException("FuzzyMultiDataExt_AS::setParamsFromEnv : numberOfBestAxiomSets is undefined.");
+    if (env.getDoubleParamValue (percentBestAxiomSets, "percentBestAxiomSets") < 0)
+            throw AxiomLibException("FuzzyMultiDataExt_AS::setParamsFromEnv : percentBestAxiomSets is undefined.");
+    if ((percentBestAxiomSets <= 0.0) || (percentBestAxiomSets > 1.0))
+            throw AxiomLibException("FuzzyMultiDataExt_AS::setParamsFromEnv : percentBestAxiomSets is out of range.");
+
+    // Метрика для поиска наибольшей общей подпоследовательности
+    std::string name_m;
+    if (env.getStringParamValue (name_m, "DTWMetric") < 0)
+            throw AxiomLibException("FuzzyMultiDataExt_AS::setParamsFromEnv : m is undefined.");
+    else
+        m=m->getMetric(name_m) ;
+    // Метрика для распознавателя.
+    if (env.getStringParamValue (name_m, "mForRecognize") < 0)
+            throw AxiomLibException("FuzzyMultiDataExt_AS::setParamsFromEnv : mForRecognize is undefined.");
+    else
+        mForRecognize=mForRecognize->getMetric(name_m) ;
+    //Порог для сравнения при подходе с подмножествами
+    if (env.getDoubleParamValue (porog, "porog") < 0)
+            throw AxiomLibException("FuzzyMultiDataExt_AS::setParamsFromEnv : porog is undefined.");
+
+    if (env.getDoubleParamValue (porogForDTW, "porogForDTW") < 0)
+            throw AxiomLibException("FuzzyMultiDataExt_AS::setParamsFromEnv : porogForDTW is undefined.");
+
+    if (env.getBoolParamValue (areMultiMark, "areMultiMark") < 0)
+            throw AxiomLibException("FuzzyMultiDataExt_AS::setParamsFromEnv : areMultiMark is undefined.");
+
+    // Растяжка для нештатных при расплознавании(Размер окна)
+    if (env.getDoubleParamValue (mStretch, "mStretch") < 0)
+            throw AxiomLibException("FuzzyMultiDataExt_AS::setParamsFromEnv : mStretch is undefined.");
 
 }
 
 
 ASStageMultiMarking::ASStageMultiMarking(FuzzyDataSet* fuzzyDataSet,
                                          AXStage* stage2): fuzzyDataSet(fuzzyDataSet), stage2(stage2), logger(Logger::getInstance()){
-    // TODO porog+metric etc
 }
 
 /****************************************************************************
@@ -95,6 +148,53 @@ int ASStageMultiMarking::chooseBestMarkUp (AxiomExprSetPlus &as, int abType, std
         markUp = genMarkUps[curBestIndex];
         return 0;
 }
+double minimum (const std::vector<double> &r){
+        if(r.empty()) {
+                throw AxiomLibException("minimum(): vector is empty");
+        }
+
+        double min=r[0];
+        for(int i=0;i<r.size();i++){
+                if (r[i]<min)
+                        min=r[i];
+        }
+        return min;
+}
+std::vector<int> ASStageMultiMarking::convert(std::vector<double> resultInDouble){
+    std::vector<int> result;
+    int toPush=0;
+    for (int i=0;i<resultInDouble.size();i++){
+        if (resultInDouble[i] < porogForDTW){
+            toPush=1;
+        }
+        else{
+            toPush=0;
+        }
+        result.push_back(toPush);
+    }
+return result;
+}
+
+// Функция запуска поиска разметки ethalon в markUp и запись результатов поиска в result
+void ASStageMultiMarking::recognize (std::vector <std::vector<bool> > &markUp, const std::vector <std::vector<bool> > &genMarkUp, std::vector <int> &result){
+
+    std::vector<double> resultInDouble;
+    resultInDouble.resize(markUp.size());
+    for (int i=0;i<(mStretch)*genMarkUp.size();i++){
+        resultInDouble[i]=1;
+    }
+    std::vector<double> temp_result;
+    for (int s=(mStretch)*genMarkUp.size();s<markUp.size();s++){
+            //Logger::debug("Window : " + boost::lexical_cast<std::string>((1.0/mStretch)*etalon[i].size()) + " " + boost::lexical_cast<std::string>((mStretch)*etalon[i].size()));
+            //Logger::debug("Computing DTW...");
+            temp_result.clear();
+            mForRecognize->computeDTWForMetric( markUp, s , (1.0/mStretch)*genMarkUp.size(),(mStretch)*genMarkUp.size(), genMarkUp, temp_result);
+            //Logger::debug("Setting distance...");
+            resultInDouble[s] = minimum(temp_result);
+    }
+    result = convert(resultInDouble);
+}
+
 
 /****************************************************************************
 *					FuzzyMultiDataExt_AS::matterAxiomSetFunc
@@ -266,7 +366,8 @@ double ASStageMultiMarking::matterAxiomSetFunc (AxiomExprSetPlus &as, int abType
                 createRefMarkUp(as,FuzzyDataSet::Testing,abType, t,curMarkUp);
 
                 // Распознавание нештатного поведения в разметке ряда
-               //? recognizer->run (curMarkUp, genMarkUp, result);
+                recognize (curMarkUp, genMarkUp, result);
+                //recognizer->run (curMarkUp, genMarkUp, result);
 
                 // Вычисление числа ошибок первого и второго рода
                 num = getStatistic (result);
@@ -287,7 +388,7 @@ double ASStageMultiMarking::matterAxiomSetFunc (AxiomExprSetPlus &as, int abType
                 createRefMarkUp(as,FuzzyDataSet::Testing,t, numNormalTS[t],curMarkUp);
 
                 // Распознавание нештатного поведения в разметке ряда
-                //recognizer->run (curMarkUp, genMarkUp, result);
+                recognize (curMarkUp, genMarkUp, result);
 
                 // Вычисление числа ошибок первого и второго рода
                 num = getStatistic (result);
@@ -1047,7 +1148,7 @@ void ASStageMultiMarking::run(){
     // stage2 хранит аксиомы для каждого класса нештатного поведения
     std::vector<int> sizeVector;
     stage2->getAXSize(sizeVector);
-
+    logger->writeComment("Enter AxionCreator");
     //  Создаем вектор всех аксиом - чтобы его можно было использовать при составленнии систем аксиом
     int numOfAxioms = 0;
     for (unsigned int i = 0; i < sizeVector.size(); i++) {
@@ -1078,6 +1179,7 @@ void ASStageMultiMarking::run(){
     std::vector < std::vector <AxiomExprSetPlus> > nextStepAxiomSets;
     axiomSets.resize(numOfAxioms);
 
+    logger->writeComment("Create one axion system");
     // Создаем набор систем аксиом, каждая из которых будет содержать только одну аксиому
     #pragma omp parallel for schedule(dynamic, 1)
     for (int i = 0; i < numOfAxioms; i++) {
@@ -1087,6 +1189,7 @@ void ASStageMultiMarking::run(){
         axiomSets[i].axiomsIndex.push_back(i);
         // Вычисляем значение целевой функции для такой системы аксиом + учет типа разметки
         matterAxiomSetFunc (axiomSets[i]);
+
     }
 
     // Итерационный алгоритм построения системы аксиом
