@@ -225,12 +225,16 @@ double ASStageMultiMarking::matterAxiomSetFunc (AxiomExprSetPlus &as)  {
         as.errSecond = 0;
         as.multiMarkUps.resize(numOfClasses);
         as.errors.resize(numOfClasses);
+        std::vector <std::vector <bool> > razmetka;
         for (int abType = 0; abType < numOfClasses; abType++) {
                 genMarkUps.clear();
                 resMarkUps.resize (numOfMultiTS[abType]);
                 for (int multiTS = 0; multiTS < numOfMultiTS[abType]; multiTS++) {
                         createRefMarkUp (as,FuzzyDataSet::Reference,abType,multiTS,resMarkUps[multiTS]);
+                        razmetka=resMarkUps[multiTS];
                 }
+                // Проверить resMarkUp
+                std::cout << "Vsego razmetok" <<resMarkUps.size()<<"!!!";
                 // Упрощаем разметки - удаляем 0 в начале и в конце векторов - чтобы общую часть было искать проще
                 simplifyMarkUps (resMarkUps);
                 // На основании полученных разметок траекторий аномального поведения - производим их сдвиг и формируем варианты обобщенных разметок
@@ -509,7 +513,7 @@ inline int ASStageMultiMarking::createSimpleMarkUpVariants (std::vector<std::vec
 }
 
 void ASStageMultiMarking::createRefMarkUp ( AxiomExprSetPlus &as, FuzzyDataSet::DataSetDivisionType division, int classNo, int multiTSNo, std::vector <std::vector<bool> >& result){
-
+    result.clear();
     std::vector<std::vector<double> > row;
 
     int multiTSLen = fuzzyDataSet->getMultiTSLength(division, classNo, multiTSNo);
@@ -521,7 +525,8 @@ void ASStageMultiMarking::createRefMarkUp ( AxiomExprSetPlus &as, FuzzyDataSet::
         row.push_back(temp);
     }
        // Продумать, как делается разметка. Нужно ли рерайзить(изменять размер)
-    as.enter (result,row, 0, row.size());
+    as.enter (result,row, 0, row[0].size());
+   // std::cerr << "\nRazmetki" <<result.size()<<"Size\n";
 }
 
 

@@ -277,6 +277,7 @@ int AxiomExprSet::enter (MultiMarking::MultiMark& marked, const std::vector<doub
 int AxiomExprSet::enter (MultiMarking::MultiMark& marked, const std::vector<std::vector<double> >& row, const unsigned long begin, const unsigned long end){
     // Проверка входных параметров
     unsigned int len = 0;
+
     for (unsigned int i = 0; i < row.size(); i++) {
             if (row[i].size() > len)
                     len = row[i].size();
@@ -287,6 +288,9 @@ int AxiomExprSet::enter (MultiMarking::MultiMark& marked, const std::vector<std:
     else {
         int curRes;
         marked.resize(end - begin);
+       /* //Debug
+        std::cerr << "Size razmetka in enter:"<< marked.size() <<"\n";
+        //*/
         for (unsigned long i=begin;i<end;i++){
             marked[i-begin].resize(axioms.size());
             for (int j=0;j<axioms.size();j++){
@@ -303,8 +307,20 @@ int AxiomExprSet::enter (MultiMarking::MultiMark& marked, const std::vector<std:
                 }
         }
 
-}
+}/*
+    //Debug
+    std::vector<double> _row=row[1];
 
+    std::cerr << "Some information"<< _row.size() <<"New Line";
+    for (int i=0;i<marked.size();i++){
+        std::vector <bool> here;
+        here=marked[i];
+        std::cerr << "New Point";
+        for (int j=0;j<here.size();j++){
+            std::cerr << here[j];
+        }
+    }
+    //*/
 return 0;
 }
 
