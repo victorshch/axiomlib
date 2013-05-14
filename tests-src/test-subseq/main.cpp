@@ -24,7 +24,7 @@ MultiMarking::DTWMetric* m;
 void makeTest(void){
     FuzzyMultiDataExt::DistanceFunctor distanceFunctor = FuzzyMultiDataExt::DistanceFunctor(m);
 
-    vec4=FuzzyMultiDataExt::findCommonSubsequence(s41,s42,distanceFunctor,FuzzyMultiDataExt::choiceFunctionForMultiMark,1);
+    vec4=FuzzyMultiDataExt::findCommonSubsequence(s41,s42,distanceFunctor,FuzzyMultiDataExt::choiceFunctionForMultiMark,0.3);
 
     for (int i=0;i<vec4.size();i++){
 
