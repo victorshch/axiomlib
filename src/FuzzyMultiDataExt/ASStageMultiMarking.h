@@ -98,10 +98,12 @@ namespace FuzzyMultiDataExt {
 
 
     template<class Symbol, class ChoiceFunction>
-    void find(std::vector <std::vector<Symbol> >* r,std::vector<std::vector<bool> > L,
+    int find(std::vector <std::vector<Symbol> >* r,std::vector<std::vector<bool> > L,
               std::vector<std::vector<bool> > D,std::vector<std::vector<bool> > U,
               const std::vector<Symbol>& s1,const std::vector<Symbol>& s2,int i,int j,
               std::vector<Symbol> result,ChoiceFunction choiceF){
+        //std::cerr << "\nI'm inside i:"<< i << "j:"<< j<<"\n";
+
         while ((i>0)&&(j>0)){
             if (D[i][j]==true){
                 result.push_back(choiceF(s1[i-1],s2[j-1]));
@@ -109,32 +111,60 @@ namespace FuzzyMultiDataExt {
                 j--;
             }
             else {
-            if (L[i][j]==true && U[i][j]==true){
-                find(r,L,D,U,s1,s2,i-1,j,result,choiceF);
-                find(r,L,D,U,s1,s2,i,j-1,result,choiceF);
-                i=-1;
-            }
-            else
-            {
             if (L[i][j]==true){
-                j--;
-            }
-            if (U[i][j]==true){
                 i--;
             }
+            else if (U[i][j]==true){
+                find(r,L,D,U,s1,s2,i,j-1,result,choiceF);
+                return 0;
+            }
+            else{
+                ////std::cerr << "Something wrong";
+            }
+
         }
         }
+
+            std::vector < Symbol >  rev=result;
+            std::reverse(rev.begin(),rev.end());
+            r->push_back(rev);
+            return 0;
+
+/*
+
+        if ((i<=0)||(j<=0)){
+            std::vector < Symbol >  rev=result;
+            std::reverse(rev.begin(),rev.end());
+            r->push_back(rev);
+            return 0;
         }
-        std::vector<Symbol> rev;
-        for (int k=result.size()-1;k>=0;k--){
-            rev.push_back(result[k]);
+        else{
+            if (D[i][j]==true){
+                result.push_back(choiceF(s1[i-1],s2[j-1]));
+                find(r,L,D,U,s1,s2,i-1,j-1,result,choiceF);
+                return 0;
+            }
+            else{
+                if (L[i][j]==true){
+                    find(r,L,D,U,s1,s2,i-1,j,result,choiceF);
+
+                }
+                if (U[i][j]==true){
+                    find(r,L,D,U,s1,s2,i,j-1,result,choiceF);
+                }
+                return 0;
+            }
         }
+        //Сюда вернемся, если ноль
+        std::vector < Symbol >  rev=result;
+        std::reverse(rev.begin(),rev.end());
         r->push_back(rev);
+*/
     }
 
     template<class Symbol, class DistanceFunction, class ChoiceFunction>
     std::vector<std::vector<Symbol> >  findCommonSubsequence(const std::vector<Symbol>& s1,const std::vector<Symbol>& s2,DistanceFunction distF,ChoiceFunction choiceF,double porog){
-
+        //std::cerr <<"Working";
         int n=s1.size()+1;
         int m=s2.size()+1;
 
@@ -185,16 +215,20 @@ namespace FuzzyMultiDataExt {
                     }
                 }
             }
-
+//std::cerr <<"Have made matrix";
         // Построение наибольшей общей подстроки
         std::vector <std::vector<Symbol> > j;
         std::vector <std::vector<Symbol> >* r;
         r=&j;
         std::vector<Symbol> temp;
+        //std::cerr <<"Find NOP";
         find(r,L,D,U,s1,s2,n-1,m-1,temp,choiceF);
         // Находим максимальные разметки
+        //std::cerr <<"findMax";
         j=findMax (j);
+       // //std::cerr <<"delEqual";
         return delEqual(j,distF) ;
+
 
     }
 
