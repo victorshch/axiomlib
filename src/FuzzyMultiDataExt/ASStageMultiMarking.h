@@ -53,11 +53,12 @@ namespace FuzzyMultiDataExt {
 
     template<class Symbol, class DistanceFunction>
     std::vector <std::vector<Symbol> > delEqual (std::vector<std::vector<Symbol> > temp, DistanceFunction distF ){
-
+     //   std::cerr << "tyt";
         std::vector <std::vector<Symbol> > result;
         result.push_back(temp[0]);
         bool equal;
         for (int i=0;i<temp.size();i++){
+    //        std::cerr << "Why so long?";
             equal=true;
             std::vector<Symbol> subTemp=temp[i];
             for(int j=0;j<result.size();j++){
@@ -73,7 +74,7 @@ namespace FuzzyMultiDataExt {
                     result.push_back(temp[i]);
                 }
             }
-
+      //  std::cerr << "Done";
         return result;
     }
 
@@ -82,15 +83,19 @@ namespace FuzzyMultiDataExt {
         // TODO Проверка, что вектор непустой
         std::vector <std::vector<Symbol> > result;
         int max=0;
+    //    std::cerr <<"I'm here";
         for (int i=0;i<temp.size();i++){
-
+      //          std::cerr <<"Still here";
             if (temp[i].size() > max){
                 max=temp[i].size();
                 }
         }
+        int j=0;
         for (int i=0;i<temp.size();i++){
+            if (j==5) break;
             if (temp[i].size()==max){
                 result.push_back(temp[i]);
+                j++;
             }
         }
         return result;
@@ -111,22 +116,24 @@ namespace FuzzyMultiDataExt {
                 j--;
             }
             else {
+            if (U[i][j]==true && L[i][j]==true){
+                find(r,L,D,U,s1,s2,i,j-1,result,choiceF);
+                i--;
+            }
+            else
+            {
             if (L[i][j]==true){
                 i--;
             }
-            else if (U[i][j]==true){
-                find(r,L,D,U,s1,s2,i,j-1,result,choiceF);
-                return 0;
+            if (U[i][j]==true){
+                j--;
             }
-            else{
-                ////std::cerr << "Something wrong";
-            }
-
         }
         }
-
+        }
             std::vector < Symbol >  rev=result;
             std::reverse(rev.begin(),rev.end());
+            //std::cerr << "push";
             r->push_back(rev);
             return 0;
 
@@ -221,12 +228,13 @@ namespace FuzzyMultiDataExt {
         std::vector <std::vector<Symbol> >* r;
         r=&j;
         std::vector<Symbol> temp;
-        //std::cerr <<"Find NOP";
+      //  std::cerr <<"Find NOP";
         find(r,L,D,U,s1,s2,n-1,m-1,temp,choiceF);
         // Находим максимальные разметки
-        //std::cerr <<"findMax";
+    //    std::cerr <<"find"<<r->size();
         j=findMax (j);
-       // //std::cerr <<"delEqual";
+       // std::cerr <<"findMax"<<r->size();
+      //  std::cerr <<"delEqual";
         return delEqual(j,distF) ;
 
 
