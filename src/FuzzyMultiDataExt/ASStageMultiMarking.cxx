@@ -252,7 +252,7 @@ double ASStageMultiMarking::matterAxiomSetFunc (AxiomExprSetPlus &as)  {
                 // На основании полученных разметок траекторий аномального поведения - производим их сдвиг и формируем варианты обобщенных разметок
                 createMarkUpVariants (genMarkUps, resMarkUps);
                 // Упрощаем вектора разметок - удаляем 0 в начале и в конце. Плюс возможно внесение некоторых изменений в саму разметку
-                std::cout << "createMarkUpVariants";
+                std::cerr << "createMarkUpVariants";
                 simplifyMarkUps (genMarkUps);
 
                 // Добавляем минимальные варианты разметок - если общую часть выделить не удалось
