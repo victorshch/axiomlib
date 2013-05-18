@@ -171,7 +171,7 @@ namespace FuzzyMultiDataExt {
 
     template<class Symbol, class DistanceFunction, class ChoiceFunction>
     std::vector<std::vector<Symbol> >  findCommonSubsequence(const std::vector<Symbol>& s1,const std::vector<Symbol>& s2,DistanceFunction distF,ChoiceFunction choiceF,double porog){
-        //std::cerr <<"Working";
+        std::cerr <<"Working";
         int n=s1.size()+1;
         int m=s2.size()+1;
 
@@ -234,7 +234,7 @@ namespace FuzzyMultiDataExt {
     //    std::cerr <<"find"<<r->size();
         j=findMax (j);
        // std::cerr <<"findMax"<<r->size();
-      //  std::cerr <<"delEqual";
+        std::cerr <<"cANCEL FINCOMMON";
         return delEqual(j,distF) ;
 
 
