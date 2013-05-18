@@ -187,30 +187,40 @@ return result;
 
 // Функция запуска поиска разметки ethalon в markUp и запись результатов поиска в result
 void ASStageMultiMarking::recognize (std::vector <std::vector<bool> > &markUp, const std::vector <std::vector<bool> > &genMarkUp, std::vector <int> &result){
-    std::cerr << " DTW";
-    std::vector<double> resultInDouble;
-    resultInDouble.resize(markUp.size());
-    for (int i=0;i<(mStretch)*genMarkUp.size();i++){
-        resultInDouble[i]=1;
-    }
-    std::cerr << " DTW2";
+	std::cerr << "Entering recognize";
+	std::vector<double> resultInDouble(markUp.size(), 1.0);
+//    resultInDouble.resize(markUp.size());
+//	for (int i=0;i<resultInDouble.size();i++){
+//        resultInDouble[i]=1;
+//    }
+	std::cerr << " DTW2"<< std::endl;
     std::vector<double> temp_result;
-    for (int s=(int)((mStretch)*genMarkUp.size());s<markUp.size();s++){
-            //Logger::debug("Window : " + boost::lexical_cast<std::string>((1.0/mStretch)*etalon[i].size()) + " " + boost::lexical_cast<std::string>((mStretch)*etalon[i].size()));
-            //Logger::debug("Computing DTW...");
-        std::cerr << " DTW3";
-        temp_result.clear();
-        std::cerr << " DTW4";
-        mForRecognize->computeDTWForMetric( markUp, s , (1.0/mStretch)*genMarkUp.size(),(mStretch)*genMarkUp.size(), genMarkUp, temp_result);
-            //Logger::debug("Setting distance...");
-        std::cerr << " DTW5";
-            resultInDouble[s] = minimum(temp_result);
-    }
-    std::cerr << " DTW6";
+	int windowSizeLowerLimit = std::max(int((1.0/mStretch)*genMarkUp.size()), 1);
+	int windowSizeUpperLimit = std::max(int((mStretch)*genMarkUp.size()), 1);
+
+	std::cerr << "windowSizeLowerLimit = " << windowSizeLowerLimit << ", windowSizeUpperLimit = " << windowSizeUpperLimit
+			  << ", markUp.size() = " << markUp.size()
+				 << ", genMarkUp.size() = " << genMarkUp.size() << std::endl;
+	if(genMarkUp.size() > 0) {
+		for (int s=windowSizeUpperLimit;s<markUp.size();s++){
+				//Logger::debug("Window : " + boost::lexical_cast<std::string>((1.0/mStretch)*etalon[i].size()) + " " + boost::lexical_cast<std::string>((mStretch)*etalon[i].size()));
+				//Logger::debug("Computing DTW...");
+			std::cerr << " DTW3" << std::endl;
+			temp_result.clear();
+			std::cerr << " DTW4" << std::endl;
+			std::cerr << "s = " << s << std::endl;
+			mForRecognize->computeDTWForMetric( markUp, s , windowSizeLowerLimit, windowSizeUpperLimit, genMarkUp, temp_result);
+				//Logger::debug("Setting distance...");
+			//temp_result.push_back(0.5);
+			std::cerr << " DTW5" << std::endl;
+				resultInDouble[s] = minimum(temp_result);
+		}
+	}
+	std::cerr << " DTW6" << std::endl;
 
     result = convert(resultInDouble);
-    std::cerr << " DTW7";
-    std::cerr << " recognize";
+	std::cerr << " DTW7" << std::endl;
+	std::cerr << "leaving recognize";
 }
 
 
@@ -412,7 +422,7 @@ std::cerr << " Point8";
 std::cerr << " Point9";
                 // Вычисление числа ошибок первого и второго рода
                 num = getStatistic (result);
-                std::cerr << " Point10";
+				std::cerr << "finished getStatistic" << std::endl;
 
                 // Суммирование числа ошибок
                 if (num == 0)
@@ -1259,7 +1269,7 @@ void ASStageMultiMarking::run(){
 
     logger->writeComment("Create one axiom system");
     // Создаем набор систем аксиом, каждая из которых будет содержать только одну аксиому
-    #pragma omp parallel for schedule(dynamic, 1)
+	//#pragma omp parallel for schedule(dynamic, 1)
     for (int i = 0; i < numOfAxioms; i++) {
         // Формируем систему аксиом из одной аксиомы
         axiomSets[i].addAxiom (bestAxioms[i]);
@@ -1303,7 +1313,7 @@ void ASStageMultiMarking::run(){
                     unsigned int lastAxiomInSet=axiomSets[axSet].axiomsIndex[size-1];
                     //std::cerr << "bvcfdx\n";
 
-                    #pragma omp parallel for schedule(dynamic, 1)
+					//#pragma omp parallel for schedule(dynamic, 1)
                     for (int ax = lastAxiomInSet + 1; ax < (int) bestAxioms.size(); ax++) {
                             // Для всех аксиом, еще не входящих в рассматриваемую систему аксиом создаем новую систему
                                     //std::cerr << "rfvrfvrf\n";
