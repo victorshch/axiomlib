@@ -1,0 +1,154 @@
+<html>
+<head>
+<title>UNIPEN Database Conditions of Use</title>
+</head>
+<body bgcolor="FFFFFF">
+<h1>UNIPEN Database Conditions of Use</h1>
+
+The term <em>user</em> will refer to the person or institution who
+has obtained the UNIPEN data distribution.
+<p>
+Two major types of use can be identified:
+
+<h1>
+<ul>
+<li> I. Non-commercial use
+<p>
+<li> II. Commercial use
+</ul>
+</h1>
+
+<p>
+<table border=1 cellpadding=10>
+<tr><td>
+I. Non-commercial use
+<p>
+Non-commercial use refers to university and institutional
+research which aims at public dissemination of research results. This
+type of usage of UNIPEN data is highly advocated by the International
+Unipen Foundation (iUF). However, there is a 
+<a href="#research-publication">Publication Policy</a> which must be
+taken into account (See below).
+
+<tr><td> 
+II. Commercial use
+<p>
+II.a Commercial use of UNIPEN data proper - the textual content and the point 
+coordinates - is prohibited. An example would be the extraction of 
+handwriting coordinates to sell 'script fonts'. 
+<p>
+II.b The usage of UNIPEN data for the training of 
+commercial handwriting recognition systems
+is allowed. 
+<p>
+II.c The  <a href="iuf-unipen-tm.html">UNIPEN logo</a> will be presented by 
+the user in the final documentation of the resulting software product. 
+<p>
+II.d Reference to individual writer identities or the identity of 
+individual data donator companies from
+within the UNIPEN data distribution should be avoided at all times.
+<b>
+</table>
+<p>
+<font size=-1>Note: Also in the case
+of commercial development, the user is kindly asked to present the
+results of the underlying research and development via an acknowledged
+science &amp; technology forum (journal or conference).</font>
+
+
+<p>
+<hr>
+
+
+<h2><a name="research-publication">Ad I. UNIPEN Publication Policy</h2>
+
+<h3>I.1 - Reference</h3>
+Users are required to mention the Unipen Release version 
+in their publications, and are strongly urged to use the latest  
+version available.
+
+<pre>
+    Reference example: 
+
+        "As a training set, we used UNIPEN [xx] Train-R01/V07, 
+         <a href="#bench">benchmark</a> ..., subsets ..... 
+         As a test set, we used UNIPEN DevTest-R01/V02, 
+         benchmark ..., subsets .... 
+         To the raw UNIPEN data, the following pre-processing 
+         was applied: ...."
+             .
+             .
+             .
+
+        [xx] Guyon, I., Schomaker, L., Plamondon, R., 
+             Liberman, M. & Janet, S. (1994). 
+             UNIPEN project of on-line data exchange and recognizer 
+             benchmarks, Proceedings of the 12th International
+             Conference on Pattern Recognition, ICPR'94, 
+             pp. 29-33, Jerusalem, Israel, October 1994. IAPR-IEEE.
+</pre>
+
+<p>
+In this example we assume the release of the set DevTest-R01/V02,
+which will actually take place in the future.
+<p>
+In case your training set and test set are derived from within a 
+single distribution such as Train-R01/V07, please explain in detail
+how your random selection of samples from within this distribution 
+was produced. Was the process actually random? Was manual pruning
+involved? Improvements to the labels (truth values) can be submitted 
+by the users in the form of <kbd>.SEGMENT...</kbd> entries via <a
+href="mailto:office@unipen.org">email</a> to the iUF.
+
+
+<h3>I.2 - Which data?</h3>
+
+A proper distinction between training and test sets is necessary.
+The best possible training/test set distinction involves data randomly
+selected from two exclusive sets of writers for both sets, respectively.
+<p>
+Note that there is a problem in the use of test sets. Iterated use
+of a particular training / test set pair in a development process
+can be considered as <b>indirect training</b>! Even if a development set
+as such is not formally used for training, it is a well-known fact that 
+all parameter adjustments,
+code improvements, etc., are a form of training, regardless of the type
+of pattern recognition algorithm which is used. Therefore, it is good
+practice to explain the effort spent in iterated testing in the publications.
+The tendency to iterate a single training/test set pair within a complete
+PhD project has led to inflated reported recognition rates in the past.
+It is good practice to generate a random selection of multiple sets at
+the start of such projects.
+
+
+<h3>I.3 - Benchmark (eq. database subset) overview</h3>
+
+<p>
+<center>
+<a name="bench">
+<table border=5 bgcolor="DDEEDD" cellpadding=1>
+<tr><td> <b>Benchmark</b> <td> <b>Description</b>
+<tr><td> <h2>1a <td> isolated digits
+<tr><td> <h2>1b  <td> isolated upper case
+<tr><td> <h2>1c  <td> isolated lower case
+<tr><td> <h2>1d  <td> isolated symbols (punctuations etc.)
+<tr><td> <h2>2   <td> isolated characters, mixed case
+<tr><td> <h2>3   <td> isolated characters in the context of words or texts
+<tr><td> <h2>4   <td> isolated printed words, not mixed with digits and symbols 
+<tr><td> <h2>5   <td> isolated printed words, full character set
+<tr><td> <h2>6   <td> isolated cursive or mixed-style words (without digits and symbols)
+<tr><td> <h2>7   <td> isolated words, any style, full character set              
+<tr><td> <h2>8   <td> text: (minimally two words of) free text, full character set
+</table>
+</center>
+
+<p>
+Note that only <b>Benchmark #8</b> is a realistic, application-oriented test,
+because the word segmentation problem must also have been solved by
+the recognizer. No manual word segmentation is allowed in test <b>Benchmark #8</b>.
+<p>
+<hr>
+Lambert Schomaker, January 1997, October 2000.
+
+</body>
+</html>
