@@ -13,6 +13,7 @@
 
 #include "FuzzyMultiDataExt/ECTypeStage.h"
 #include "FuzzyMultiDataExt/ECStage.h"
+#include "FuzzyMultiDataExt/ECStageSimple.h"
 #include "FuzzyMultiDataExt/AXStage.h"
 #include "FuzzyMultiDataExt/ASStage.h"
 #include "FuzzyMultiDataExt/HeuristicsSet.h"
@@ -33,7 +34,7 @@ FuzzyMultiDataExtAlgorithm::FuzzyMultiDataExtAlgorithm()
 	heuristicsSet = new HeuristicsSet();
 	
 	stage0 = new ECTypeStage(this);
-	stage1 = new ECStage(&fuzzyDataSet, stage0);
+	stage1 = new ECStageSimple(&fuzzyDataSet, stage0);
 	stage2 = 0;
 	stage3 = 0;
 	

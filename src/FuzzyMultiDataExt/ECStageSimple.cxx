@@ -13,7 +13,7 @@
 #include "../FuzzyMultiDataExtAlgorithm.h"
 //#include "../DistanceClusterizer.h"
 
-#include "ECStage.h"
+#include "ECStageSimple.h"
 
 #define eps						0.0000001 // используется в некоторых формулах, чтобы исплючить ошибку машинного округления
 #define max_goal_val			10000 // максимальное значение целевой функции для элементарного условия (просто достаточно большое число)
@@ -26,10 +26,14 @@
 using namespace AxiomLib;
 using namespace AxiomLib::FuzzyMultiDataExt;
 
-ECStage::ECStage(FuzzyDataSet* fuzzyDataSet, 
+ECStageSimple::ECStageSimple(FuzzyDataSet* fuzzyDataSet, 
 										   ECTypeStage* stage0)
-	: fuzzyDataSet(fuzzyDataSet), stage0(stage0), logger(Logger::getInstance())
 {
+
+	this->stage0 = stage0;
+	this->fuzzyDataSet = fuzzyDataSet;
+	this->logger = Logger::getInstance();
+	
 	//TODO: проверка fuzzyDataSet и stage0 на NULL
 	
 	//TODO: значения по умлочанию
@@ -46,14 +50,14 @@ ECStage::ECStage(FuzzyDataSet* fuzzyDataSet,
 
 ECSelection ecSelectionCreator(const ElemCondPlusStat& ec) { return ECSelection(ec); }
 
-void ECStage::setECs(const std::vector<std::vector<std::vector<std::vector<ElemCondPlusStat> > > > &value) {
+void ECStageSimple::setECs(const std::vector<std::vector<std::vector<std::vector<ElemCondPlusStat> > > > &value) {
 	this->elemConditions.clear();
 	TransformMultiVectorHelper<4>::transform(value, this->elemConditions, 
 											 ecSelectionCreator
 	);	
 }
 
-int ECStage::initFromEnv(const Environment &env) {
+int ECStageSimple::initFromEnv(const Environment &env) {
 	// Параметры алгоритма настройки элементарных условий
 	if (env.getIntParamValue (leftLimit, "leftLimit") < 0)
 		throw AxiomLibException("FuzzyMultiDataLearnAlgorithm::setParamsFromEnv : leftLimit is undefined.");
@@ -80,7 +84,7 @@ int ECStage::initFromEnv(const Environment &env) {
 
 void ecSelector(ECSelection& ec) { ec.setSelected(true); }
 
-void ECStage::run() {
+void ECStageSimple::run() {
 	if(Logger::getInstance()->isWritingDebug()) {
 		Logger::getInstance()->writeDebug("Starting EC selection stage");
 		Logger::getInstance()->writeDebug("numOfLevels = "+boost::lexical_cast<std::string>(numOfLevels));
@@ -131,42 +135,42 @@ void ECStage::run() {
 	Logger::getInstance()->writeDebug("Finished EC selection stage. EC count: " + boost::lexical_cast<std::string>(totalCount));
 }
 
-const ElemCondPlusStat &ECStage::getEC(int aType, int dimension, int type, int n) const {
+const ElemCondPlusStat &ECStageSimple::getEC(int aType, int dimension, int type, int n) const {
 	checkIndices(aType, dimension, type, n);
 	return this->elemConditions[aType][dimension][type][n].element();
 }
 
-bool ECStage::isECSelected(int aType, int dimension, int type, int n) const {
+bool ECStageSimple::isECSelected(int aType, int dimension, int type, int n) const {
 	checkIndices(aType, dimension, type, n);
 	return this->elemConditions[aType][dimension][type][n].selected();
 }
 
 int sizeGetter(const std::vector<ECSelection>& v) { return (int)v.size(); }
 
-void ECStage::getECSize(std::vector<std::vector<std::vector<int> > > &result) const {
+void ECStageSimple::getECSize(std::vector<std::vector<std::vector<int> > > &result) const {
 
 	TransformMultiVectorHelper<3>::transform(elemConditions, result, 
 											 sizeGetter
 	);
 }
 
-int ECStage::getECSize() const {
+int ECStageSimple::getECSize() const {
 	return elemConditions.size();
 }
 
-int ECStage::getECSize(int aType) const {
+int ECStageSimple::getECSize(int aType) const {
 	return elemConditions[aType].size();
 }
 
-int ECStage::getECSize(int aType, int dimension) const {
+int ECStageSimple::getECSize(int aType, int dimension) const {
 	return elemConditions[aType][dimension].size();
 }
 
-int ECStage::getECSize(int aType, int dimension, int ecType) const {
+int ECStageSimple::getECSize(int aType, int dimension, int ecType) const {
 	return elemConditions[aType][dimension][ecType].size();
 }
 
-int ECStage::getECTotalCount() const
+int ECStageSimple::getECTotalCount() const
 {
 	int result = 0;
 	
@@ -181,20 +185,20 @@ int ECStage::getECTotalCount() const
 	return result;
 }
 
-void ECStage::setECSelected(int aType, int dimension, int type, int n, bool value) {
+void ECStageSimple::setECSelected(int aType, int dimension, int type, int n, bool value) {
 	this->elemConditions[aType][dimension][type][n].setSelected(value);
 }
 
-void ECStage::recalculateMatterECFunc(ElemCondPlusStat &ec, int abType) const {
+void ECStageSimple::recalculateMatterECFunc(ElemCondPlusStat &ec, int abType) const {
 	setTaskCount(1);
 	this->matterECFunc(ec, ec.dimension, abType, 0);
 }
 
-void ECStage::setTaskCount(int n) const {
+void ECStageSimple::setTaskCount(int n) const {
 	m_storage.resize(n);
 }
 
-void ECStage::selectElemCond(int abnormalBehaviourType, int dimension, int dimensionIndex, int taskNo) {
+void ECStageSimple::selectElemCond(int abnormalBehaviourType, int dimension, int dimensionIndex, int taskNo) {
 	
 //	// Эта операция не должна занимать много времени, т.к. мы следали до этого reserve()
 //	this->elemConditions[abnormalBehaviourType].resize(
@@ -325,9 +329,9 @@ void ECStage::selectElemCond(int abnormalBehaviourType, int dimension, int dimen
 }
 
 inline double binaryEntropy(double p) {
-	double positiveEntropy = p > eps ? - p * log2(p) : 0;
+	double positiveEntropy = p > eps ? - p * (log(p)/log(2.0)) : 0;
 	p = 1 - p;
-	double negativeEntropy = p > eps ? - p * log2(p) : 0;
+	double negativeEntropy = p > eps ? - p * (log(p)/log(2.0)) : 0;
 
 	return positiveEntropy + negativeEntropy;
 }
@@ -340,7 +344,7 @@ inline double informationGainTerm(int normNegCount, int normPosCount, int abnNeg
 			- posFraction * binaryEntropy((double)normPosCount / (double)(normPosCount + abnPosCount));
 }
 
-double ECStage::matterECFunc (ElemCondPlusStat &ec, const int param, const int abnormalBehaviourType, int taskNo) const {
+double ECStageSimple::matterECFunc (ElemCondPlusStat &ec, const int param, const int abnormalBehaviourType, int taskNo) const {
 	// Берем готовый вектор, чтобы не выделять каждый раз память
 	std::vector <double>& curTS = m_storage[taskNo];
 	int classCount = 0;
@@ -482,7 +486,7 @@ double ECStage::matterECFunc (ElemCondPlusStat &ec, const int param, const int a
 *	History:
 *
 ****************************************************************************/
-inline int ECStage::numOfCarriedOutItems (ElemCondPlus &ec, std::vector <double> &row) const {
+inline int ECStageSimple::numOfCarriedOutItems (ElemCondPlus &ec, std::vector <double> &row) const {
 	int count = 0;
 	for (unsigned long i = 0; i < row.size(); i++) {
 		if (ec.check (i, row) > 0)
@@ -508,7 +512,7 @@ bool goalCompare(const ECSelection& ecSel1, const ECSelection& ecSel2) { return 
 *	History:
 *
 ****************************************************************************/
-inline int ECStage::storeBestECs (std::vector <ECSelection> &bestECs, ElemCondPlusStat &ec, double &goal, double &statNorm, double &statAbnorm) const {
+inline int ECStageSimple::storeBestECs (std::vector <ECSelection> &bestECs, ElemCondPlusStat &ec, double &goal, double &statNorm, double &statAbnorm) const {
 	//todo заглушка; исправить, чтобы таких ситуаций не возникало
 	if(ec.elemCondition == NULL /*|| ec.goal <= -1*/) {
 		Logger::debug("ec.elemCondition == NULL");
@@ -601,14 +605,14 @@ inline int ECStage::storeBestECs (std::vector <ECSelection> &bestECs, ElemCondPl
 //	return 0;
 }
 
-void ECStage::checkIndices(int i, int j, int k, int l) const {
+void ECStageSimple::checkIndices(int i, int j, int k, int l) const {
 	if(i < 0 || i >= this->elemConditions.size() || j < 0 || j >= elemConditions[i].size()
 			|| k < 0 || k >= elemConditions[i][j].size() || l < 0 || l >= elemConditions[i][j][k].size()) {
 		throw AxiomLibException("Invalid subscript in FuzzyMultiDataExt_EC : "+str(i)+" "+str(j)+" "+str(k)+" "+str(l));
 	}
 }
 
-void ECStage::setNames() {
+void ECStageSimple::setNames() {
 	for(int aType = 0; aType < getECSize(); aType++) {
 		for(int dimension = 0; dimension < getECSize(aType); dimension++) {
 			for(int ecType = 0; ecType < getECSize(aType, dimension); ecType++) {
@@ -620,7 +624,7 @@ void ECStage::setNames() {
 	}
 }
 
-std::string ECStage::getECName(int abType, int dimension, int ecType, int n) const {
+std::string ECStageSimple::getECName(int abType, int dimension, int ecType, int n) const {
 	char buffer[128];
 	sprintf(buffer, "%s_at_%d_dim_%d_%d_%d", ecNameTemplate.c_str(), abType+1, dimension+1, ecType+1, n+1);
 	return std::string(buffer);
@@ -628,7 +632,7 @@ std::string ECStage::getECName(int abType, int dimension, int ecType, int n) con
 
 bool isEcNull(const ECSelection& ec) { return ec.element().elemCondition == NULL; }
 
-void AxiomLib::FuzzyMultiDataExt::ECStage::prune() {
+void AxiomLib::FuzzyMultiDataExt::ECStageSimple::prune() {
 	for(int abType = 0; abType < getECSize(); abType++) {
 		for(int dimension = 0; dimension < getECSize(abType); dimension++) {
 			for(int ecType = 0; ecType < getECSize(abType, dimension); ecType++) {

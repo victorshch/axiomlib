@@ -179,7 +179,6 @@ SOURCES += src/TreatmentSample.cxx \
     src/Logger.cxx \
     src/FuzzyMultiDataExt/Heuristics.cxx \
     src/FuzzyMultiDataExt/ECTypeStage.cxx \
-    src/FuzzyMultiDataExt/ECStage.cxx \
     src/FuzzyMultiDataExt/AXStage.cxx \
     src/FuzzyMultiDataExt/ASStage.cxx \
     src/FuzzyMultiDataExtAlgorithm.cxx \
@@ -230,7 +229,8 @@ SOURCES += src/TreatmentSample.cxx \
     src/FuzzyDataSet.cxx \
     src/elem_conditions/Variance.cxx \
     src/FuzzyMultiDataExt/AXStageSimple.cpp \
-    src/FuzzyMultiDataExt/AXStageTree.cpp
+    src/FuzzyMultiDataExt/AXStageTree.cpp \
+    src/FuzzyMultiDataExt/ECStageSimple.cxx
 HEADERS += src/undefs.h \
     src/TreatmentSample.h \
     src/TreatmentFactory.h \
@@ -394,7 +394,6 @@ HEADERS += src/undefs.h \
     src/Logger.h \
     src/FuzzyMultiDataExt/Heuristics.h \
     src/FuzzyMultiDataExt/ECTypeStage.h \
-    src/FuzzyMultiDataExt/ECStage.h \
     src/FuzzyMultiDataExt/Common.h \
     src/FuzzyMultiDataExt/AXStage.h \
     src/FuzzyMultiDataExt/ASStage.h \
@@ -446,5 +445,7 @@ HEADERS += src/undefs.h \
     src/FuzzyDataSet.h \
     src/elem_conditions/Variance.h \
     src/FuzzyMultiDataExt/AXStageSimple.h \
-    src/FuzzyMultiDataExt/AXStageTree.h
+    src/FuzzyMultiDataExt/AXStageTree.h \
+    src/FuzzyMultiDataExt/ECStageSimple.h \
+    src/FuzzyMultiDataExt/ECStage.h \
 OTHER_FILES += 

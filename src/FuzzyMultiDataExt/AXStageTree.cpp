@@ -342,11 +342,11 @@ void AXStageTree::formAxiomsForClass(int classNo)
 }
 
 inline double binaryEntropy(double p) {
-	double positiveEntropy = p > eps ? - p * log2(p) : 0;
+	double positiveEntropy = p > eps ? - p * (log(p) / log(2.0)) : 0;
 
 	p = 1 - p;
 
-	double negativeEntropy = p > eps ? - p * log2(p) : 0;
+	double negativeEntropy = p > eps ? - p * (log(p) / log(2.0)) : 0;
 
 	return positiveEntropy + negativeEntropy;
 }
