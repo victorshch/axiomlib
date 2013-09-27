@@ -238,7 +238,6 @@ namespace FuzzyMultiDataExt {
             j=findMax (j,maxNOP);
             return delEqual(j,distF) ;
         }
-
     }
 
 

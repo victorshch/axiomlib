@@ -17,6 +17,47 @@
 using namespace AxiomLib;
 using namespace AxiomLib::FuzzyMultiDataExt;
 
+void debug_common_bool(std::vector<std::vector<std::vector<bool> > > common){
+
+    std::vector<std::vector<bool> > one_line;
+    std::vector<bool> one_point;
+    std::cout << "Find\t" << common.size() << "common subsequence\n";
+
+    for (unsigned int i = 0; i < common.size(); i++){
+        std::cout << "Common subsequence ?" << i << "\n";
+        one_line.clear();
+        one_line = common[i];
+
+        for (unsigned int j = 0; j < one_line.size(); j++){
+            std::cout << "Point " << j << "\n";
+            one_point.clear();
+            one_point = one_line[j];
+
+            for (unsigned int k = 0; k < one_point.size(); k++){
+                std::cout << one_point[k];
+            }
+        }
+        std::cout << "\n\n";
+    }
+}
+
+void debug_common_int(std::vector<std::vector<int> > common){
+
+    std::vector<int> one_line;
+    std::cout << "Find\t" << common.size() << "common subsequence\n";
+
+    for (unsigned int i = 0; i < common.size(); i++){
+        std::cout << "Common subsequence ?" << i << "\n";
+        one_line.clear();
+        one_line = common[i];
+
+        for (unsigned int j = 0; j < one_line.size(); j++){
+            std::cout << one_line[j];
+        }
+        std::cout << "\n\n";
+    }
+}
+
 // From BaseClass
 AxiomExprSetPlus &ASStageMultiMarking::getAS(int n){
     return bestAxiomSets[n];
@@ -711,6 +752,7 @@ inline int ASStageMultiMarking::createMarkUpVariants (std::vector<std::vector<st
         for (int i=1;i<_resMarkUps.size();i++){
             for (int j=0;j<_genMarkUps.size();j++){
                 std::vector<std::vector<int> > common =findCommonSubsequence(_resMarkUps[i],_genMarkUps[j],distanceFunctionForAxiom,choiceFunctionForAxiom,this->porog,this->maxNOP);
+                debug_common_int(common);
                 if (common.size()>0){
                     for (int k=0;k<common.size();k++){
                         temp.push_back(common[k]);
@@ -729,6 +771,7 @@ inline int ASStageMultiMarking::createMarkUpVariants (std::vector<std::vector<st
         for (int i=1;i<resMarkUps.size();i++){
             for (int j=0;j<genMarkUps.size();j++){
                 std::vector<std::vector<std::vector<bool> > > common =findCommonSubsequence(resMarkUps[i],genMarkUps[j],DistanceFunctor(this->m),choiceFunctionForMultiMark,this->porog,this->maxNOP);
+                debug_common_bool(common);
                 if (common.size()>0){
                     for (int k=0;k<common.size();k++){
                         temp.push_back(common[k]);

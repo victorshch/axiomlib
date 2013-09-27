@@ -49,19 +49,19 @@ void QnaryPercWrapper<Holder>::construct(const Settings &settings) {
 			actualQo = settings.qO;
 		}
 		// инициализация q-нарного перцептрона
-		qp.construct(
+    //	qp.construct(
 			// число состояний входных нейронов - определяется кодировщиком
-			Holder::getCoderDstQ(),
+    //		Holder::getCoderDstQ(),
 			// число состояний выходных нейронов
-			actualQo,
+    //		actualQo,
 			// число входных нейронов - максимальная длина 
 			// закодированной обучающей строки
-			getCoderDstLen(Holder::getMaxTrainDim()),
+            //getCoderDstLen(Holder::getMaxTrainDim()),
 			// число выходных нейронов - достаточное для того, чтобы представить
 			// самый большой номер обучающей строки в qO-ичной системе счисления
-			numDigits(actualQo, (Holder::getNumTrain() - 1)
-			)
-		);
+    //		numDigits(actualQo, (Holder::getNumTrain() - 1)
+    //		)
+    //	);
 	}
 }
 
