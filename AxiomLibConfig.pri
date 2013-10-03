@@ -12,10 +12,10 @@ win32 {
 }
 # ‰Ã— unix
 unix {
-	AXIOMLIB_INCLUDE = /home/wictor/Projects/axiomlib/src
+        AXIOMLIB_INCLUDE = /home/armkor/src/axiomlib/src
         QWT_INCLUDE = "/usr/include/qwt-qt4"
         MPICH_INCLUDE = "/usr/include/mpich2"
-        BOOST_INCLUDE = "/home/wictor/boost_1_46_1/include"
+        BOOST_INCLUDE = "/usr/include/boost"
 	OTHER_INCLUDE =	
 }
 
@@ -44,11 +44,11 @@ debug {
 # ‰Ã— unix
 unix {
 linux-icc-64|linux-icc {
-        AXIOMLIB_LIB = /home/wictor/Projects/axiomlib/release/libAxiomLib.a
+        AXIOMLIB_LIB = /home/armkor/src/axiomlib/release/libAxiomLib.a
 } else {
-        AXIOMLIB_LIB = /home/wictor/Projects/axiomlib/release/libAxiomLib.a
+        AXIOMLIB_LIB = /home/armkor/src/axiomlib/release/libAxiomLib.a
 }
-        BOOST_LIBDIR = /home/wictor/boost_1_46_1/lib
+        BOOST_LIBDIR = /usr/lib
 
         MPICH_LIB = -lmpi -lgomp -lmpich
 	QWT_LIB = -lqwt-qt4
