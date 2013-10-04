@@ -117,7 +117,7 @@ ASStageMultiMarking::ASStageMultiMarking(FuzzyDataSet* fuzzyDataSet,
 ****************************************************************************/
 int ASStageMultiMarking::chooseBestMarkUp (AxiomExprSetPlus &as, int abType, std::vector <std::vector <bool> > &markUp, const std::vector <std::vector <std::vector <bool> > > &genMarkUps, int &errFirstVal, int &errSecondVal) {
 
-  //  //std::cerr << "sr chooseBestMarkUp ";
+    std::cerr << "sr chooseBestMarkUp ";
     // Проверяем размер вектора кандидатов в разметки эталонной траектории заданного типа
         if (genMarkUps.size() < 1) {
                 markUp.clear();
@@ -128,6 +128,7 @@ int ASStageMultiMarking::chooseBestMarkUp (AxiomExprSetPlus &as, int abType, std
         if (genMarkUps.size() == 1) {
                 markUp = genMarkUps[0];
                 double tmpGoalVal;
+                std::cerr << "pered matterAxiomSetFunction";
                 matterAxiomSetFunc (as, abType, genMarkUps[0], tmpGoalVal, errFirstVal, errSecondVal);
                 return 0;
         }
@@ -135,10 +136,12 @@ int ASStageMultiMarking::chooseBestMarkUp (AxiomExprSetPlus &as, int abType, std
         double goalVal, goalTmp;
         int errFirstTmp, errSecondTmp;
         int curBestIndex = 0;
+        std::cerr << "wwwwwww";
         // Вычисляем число ошибок I и II рода для заданного варианта разметки эталонной траектории заданного типа и Выбираем лучшее значение целевой функции
         matterAxiomSetFunc (as, abType, genMarkUps[0], goalVal, errFirstVal, errSecondVal);
         for (unsigned int i = 1; i < genMarkUps.size(); i++) {
-                matterAxiomSetFunc (as, abType, genMarkUps[i], goalTmp, errFirstTmp, errSecondTmp);
+            std::cerr << "FFFFFFFFFFFFFFFF"<< i<<"hhhhhhhhhh";
+            matterAxiomSetFunc (as, abType, genMarkUps[i], goalTmp, errFirstTmp, errSecondTmp);
                 if (goalTmp < goalVal) {
                         goalVal = goalTmp;
                         errFirstVal = errFirstTmp;
@@ -146,9 +149,10 @@ int ASStageMultiMarking::chooseBestMarkUp (AxiomExprSetPlus &as, int abType, std
                         curBestIndex = i;
                 }
         }
+        std::cerr << "vvvvvvvvvvvv";
         // Сохраняем соотвествующую лучшую разметку
         markUp = genMarkUps[curBestIndex];
-    //    //std::cerr << "chooseBestMarkUp ";
+        std::cerr << "chooseBestMarkUp ";
         return 0;
 }
 double minimum (const std::vector<double> &r){
@@ -164,9 +168,10 @@ double minimum (const std::vector<double> &r){
         return min;
 }
 std::vector<int> ASStageMultiMarking::convert(std::vector<double> resultInDouble){
- //   //std::cerr << "convert( ";
+    std::cerr << "convert( ";
     std::vector<int> result;
-    int toPush=0;
+    result.push_back(1);
+   /* int toPush=0;
     for (int i=0;i<resultInDouble.size();i++){
         if (resultInDouble[i] < porogForDTW){
             toPush=1;
@@ -176,29 +181,36 @@ std::vector<int> ASStageMultiMarking::convert(std::vector<double> resultInDouble
         }
         result.push_back(toPush);
     }
- //   //std::cerr << "sr convert( ";
+        std::cerr << "sr convert( ";*/
 return result;
 }
 
 // Функция запуска поиска разметки ethalon в markUp и запись результатов поиска в result
 void ASStageMultiMarking::recognize (std::vector <std::vector<bool> > &markUp, const std::vector <std::vector<bool> > &genMarkUp, std::vector <int> &result){
- //   //std::cerr << " DTW";
+    std::cerr << " DTW";
     std::vector<double> resultInDouble;
     resultInDouble.resize(markUp.size());
     for (int i=0;i<(mStretch)*genMarkUp.size();i++){
         resultInDouble[i]=1;
     }
+    std::cerr << " DTW2";
     std::vector<double> temp_result;
-    for (int s=(mStretch)*genMarkUp.size();s<markUp.size();s++){
+    for (int s=(int)((mStretch)*genMarkUp.size());s<markUp.size();s++){
             //Logger::debug("Window : " + boost::lexical_cast<std::string>((1.0/mStretch)*etalon[i].size()) + " " + boost::lexical_cast<std::string>((mStretch)*etalon[i].size()));
             //Logger::debug("Computing DTW...");
-            temp_result.clear();
-            mForRecognize->computeDTWForMetric( markUp, s , (1.0/mStretch)*genMarkUp.size(),(mStretch)*genMarkUp.size(), genMarkUp, temp_result);
+        std::cerr << " DTW3";
+        temp_result.clear();
+        std::cerr << " DTW4";
+        mForRecognize->computeDTWForMetric( markUp, s , (1.0/mStretch)*genMarkUp.size(),(mStretch)*genMarkUp.size(), genMarkUp, temp_result);
             //Logger::debug("Setting distance...");
+        std::cerr << " DTW5";
             resultInDouble[s] = minimum(temp_result);
     }
+    std::cerr << " DTW6";
+
     result = convert(resultInDouble);
- //   //std::cerr << " recognize";
+    std::cerr << " DTW7";
+    std::cerr << " recognize";
 }
 
 
@@ -252,7 +264,7 @@ double ASStageMultiMarking::matterAxiomSetFunc (AxiomExprSetPlus &as)  {
                 // На основании полученных разметок траекторий аномального поведения - производим их сдвиг и формируем варианты обобщенных разметок
                 createMarkUpVariants (genMarkUps, resMarkUps);
                 // Упрощаем вектора разметок - удаляем 0 в начале и в конце. Плюс возможно внесение некоторых изменений в саму разметку
-                std::cerr << "createMarkUpVariants";
+                std::cerr << "createMarkUpVariants"<<genMarkUps.size();
                 simplifyMarkUps (genMarkUps);
 
                 // Добавляем минимальные варианты разметок - если общую часть выделить не удалось
@@ -260,8 +272,9 @@ double ASStageMultiMarking::matterAxiomSetFunc (AxiomExprSetPlus &as)  {
                         logger->writeComment("Warinig: couldn't find common subsequence, creating simple markup");
                         createSimpleMarkUpVariants (genMarkUps, (int) as.axioms.size());
                 }
+                std::cerr << "I'm j";
                 // Выбираем из всех разметок лучшую для данного класса нештатного поведения и сохраняем ее
-                chooseBestMarkUp (as, abType, as.multiMarkUps[abType], genMarkUps, errFirstVal, errSecondVal);
+                 chooseBestMarkUp (as, abType, as.multiMarkUps[abType], genMarkUps, errFirstVal, errSecondVal);
 
                 as.errors[abType].first = errFirstVal;
                 as.errors[abType].second = errSecondVal;
@@ -272,7 +285,7 @@ double ASStageMultiMarking::matterAxiomSetFunc (AxiomExprSetPlus &as)  {
         // Вычисление общего значения целевой фунекции для данной системы аксиом с учетом выбранных разметок эталонных траекторий
 
         as.goal = goalStrategy->compute(as.errFirst, as.errSecond);
-        //std::cerr << "matterAxiomSetFunc ";
+        std::cerr << "matterAxiomSetFunc ";
         return as.goal;
 }
 
@@ -355,16 +368,20 @@ double ASStageMultiMarking::matterAxiomSetFunc (AxiomExprSetPlus &as, std::vecto
 ****************************************************************************/
 
 double ASStageMultiMarking::matterAxiomSetFunc (AxiomExprSetPlus &as, int abType, const std::vector <std::vector<bool> > &genMarkUp, double &goalVal, int &errFirstVal, int &errSecondVal) {
- //   ////std::cerr << " matterAxiomSetFunc";
+    std::cerr << " matterAxiomSetFunc";
     int numOfClasses;
         std::vector <int> numOfMultiTS;
         std::vector < std::vector <int> > numOfTS;
         // получаем информацию о числе траекторий контрольной выборки
+        std::cerr << " Point1";
         fuzzyDataSet->getTestSize (numOfClasses, numOfMultiTS, numOfTS);
+        std::cerr << " Point2";
         if ((abType < 0) || (abType >= numOfClasses))
                 throw AxiomLibException("FuzzyMultiDataExt_AS::matterAxiomSetFunc: incorrect input number of abnormal type.");
         // Подготавливаем данные - какие измерения рядов задействованы системой аксиом
+        std::cerr << " Point3";
         std::vector <bool> dims;
+        std::cerr << " Point14";
         dims.resize (fuzzyDataSet->paramNamesSize(), false);
         for (unsigned int axNum = 0; axNum < as.axioms.size(); axNum++) {
                 for (unsigned int ecNumI = 0; ecNumI < as.axioms[axNum]->expression.size(); ecNumI++) {
@@ -375,7 +392,7 @@ double ASStageMultiMarking::matterAxiomSetFunc (AxiomExprSetPlus &as, int abType
                         }
                 }
         }
-
+        std::cerr << " Point5";
         // подготавливаем перменные для хранения числа ошибок
         errFirstVal = 0;
         errSecondVal = 0;
@@ -383,16 +400,19 @@ double ASStageMultiMarking::matterAxiomSetFunc (AxiomExprSetPlus &as, int abType
         std::vector <std::vector<bool> > curMarkUp;
         std::vector <int> result;
         int num;
+        std::cerr << " Point6";
         for (int t = 0; t < (int) fuzzyDataSet->getMutiTSCount(FuzzyDataSet::Testing, abType); t++) {
                 // разметка траектории контрольной выборки системой аксиом as
-                createRefMarkUp(as,FuzzyDataSet::Testing,abType, t,curMarkUp);
-
+            std::cerr << " Point7";
+                createRefMarkUp(as,FuzzyDataSet::Testing,abType, t, curMarkUp);
+std::cerr << " Point8";
                 // Распознавание нештатного поведения в разметке ряда
-                recognize (curMarkUp, genMarkUp, result);
+                 recognize (curMarkUp, genMarkUp, result);
                 //recognizer->run (curMarkUp, genMarkUp, result);
-
+std::cerr << " Point9";
                 // Вычисление числа ошибок первого и второго рода
                 num = getStatistic (result);
+                std::cerr << " Point10";
 
                 // Суммирование числа ошибок
                 if (num == 0)
@@ -400,28 +420,31 @@ double ASStageMultiMarking::matterAxiomSetFunc (AxiomExprSetPlus &as, int abType
                 else
                         errFirstVal += num - 1;
         }
+        std::cerr << " Point11";
         // Пробегаем по всем рядам нормального поведения
         int numNormalMultiTS;
         std::vector <int> numNormalTS;
+        std::cerr << " Point12";
         fuzzyDataSet->getNormalTestSize (numNormalMultiTS, numNormalTS);
+        std::cerr << " Point13";
         for (int t = 0; t < (int) fuzzyDataSet->getMutiTSCount(FuzzyDataSet::Testing, -1); t++) {
-
+                std::cerr << " Point44";
                 // размечаем траекторию нормального поведения
                 createRefMarkUp(as,FuzzyDataSet::Testing,t, numNormalTS[t],curMarkUp);
-
+                std::cerr << " Point1234";
                 // Распознавание нештатного поведения в разметке ряда
-                recognize (curMarkUp, genMarkUp, result);
-
+                //recognize (curMarkUp, genMarkUp, result);
+                std::cerr << " Point0000";
                 // Вычисление числа ошибок первого и второго рода
                 num = getStatistic (result);
-
+                std::cerr << " Point167890";
                 // Суммирование числа ошибок
                 errFirstVal += num;
         }
 
         // Вычисление значения целевой функции для полученного числа ошибок I и II рода
         goalVal = goalStrategy->compute(errFirstVal, errSecondVal);
-    //    ////std::cerr << "canc matterAxiomSetFunc ";
+        std::cerr << "canc matterAxiomSetFunc ";
         return goalVal;
 }
 
@@ -548,8 +571,8 @@ void ASStageMultiMarking::createRefMarkUp ( AxiomExprSetPlus &as, FuzzyDataSet::
     }
        // Продумать, как делается разметка. Нужно ли рерайзить(изменять размер)
     as.enter (result,row, 0, row[0].size());
-    ////std::cerr << "createRefMarkUp ";
-   // ////std::cerr << "\nRazmetki" <<result.size()<<"Size\n";
+    std::cerr << "createRefMarkUp ";
+    std::cerr << "\nRazmetki" <<result.size()<<"Size\n";
 }
 
 
@@ -562,12 +585,13 @@ inline int ASStageMultiMarking::simplifyMarkUps (std::vector <std::vector <std::
 
     for (int i =0;i< (int) markUps.size(); i++) {
         line.clear();line=markUps[i];
+        std::cerr << line.size();
         // Убираем все 0 в начале вектора - их не учитываем
         k = 0;
         stop=false;
         while (k < (int) line.size()) {
             point.clear();point=line[k];
-
+            std::cerr << "point.size()" << point.size();
             for (int j=0;j<point.size();j++){
                 if (point[j]){
                     stop=true;
@@ -579,7 +603,7 @@ inline int ASStageMultiMarking::simplifyMarkUps (std::vector <std::vector <std::
                 k++;
         }
         stop=false;
-
+        std::cerr << "k "<< k;
         // не учитываем все 0 в конце вектора разметки
         l = (int) line.size() - 1;
         while (l >= k) {
@@ -740,7 +764,7 @@ std::vector<std::vector<std::vector<bool> > > ASStageMultiMarking::stringOut(std
 
 
 inline int ASStageMultiMarking::createMarkUpVariants (std::vector<std::vector<std::vector<bool> > > &genMarkUps,std::vector<std::vector<std::vector<bool> > >  &resMarkUps) {
-// Тут уже надо переходить к двум случаям
+// ПЕРЕДЕЛАТЬ НОВЫЙ ВЕКТОР!!!!!
     //std::cerr << " ";
     if (!areMultiMark){
         std::vector<std::vector<int > > _resMarkUps,_genMarkUps;
@@ -763,20 +787,23 @@ inline int ASStageMultiMarking::createMarkUpVariants (std::vector<std::vector<st
         genMarkUps=stringOut(_genMarkUps,numberOfAxiom);
     }
     else {
-        //std::cerr << "resMarkUps.size() " <<resMarkUps.size() << " genMarkUps.size()" <<genMarkUps.size() << "\n" ;
+        std::cerr << "resMarkUps.size() " <<resMarkUps.size();// << " genMarkUps.size()" <<genMarkUps.size() << "\n" ;
+        std::vector<std::vector<std::vector<bool> > > temp;
         genMarkUps.push_back(resMarkUps[0]);
+        temp.push_back(resMarkUps[0]);
         for (int i=1;i<resMarkUps.size();i++){
             for (int j=0;j<genMarkUps.size();j++){
-                //std::cerr << " My func";
+                std::cerr << " My func"<< genMarkUps.size() <<"Itsover";
                 std::vector<std::vector<std::vector<bool> > > common =findCommonSubsequence(resMarkUps[i],genMarkUps[j],DistanceFunctor(this->m),choiceFunctionForMultiMark,this->porog);
                 std::cerr << "\nCancel  My func " << common.size() << "H\n";
-                genMarkUps[j]=common[0];
-                if (common.size()>1){
-                    for (int k=1;k<common.size();k++){
-                        genMarkUps.push_back(common[k]);
+                if (common.size()>0){
+                    for (int k=0;k<common.size();k++){
+                        temp.push_back(common[k]);
                     }
                 }
             }
+            genMarkUps=temp;
+            temp.clear();
         }
         //std::cerr << "End of procedure";
 
