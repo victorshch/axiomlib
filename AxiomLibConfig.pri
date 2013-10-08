@@ -46,7 +46,7 @@ unix {
 linux-icc-64|linux-icc {
         AXIOMLIB_LIB = /home/armkor/src/axiomlib/release/libAxiomLib.a
 } else {
-        AXIOMLIB_LIB = /home/wictor/Projects/axiomlib/release/libAxiomLib.a
+        AXIOMLIB_LIB = /home/armkor/src/axiomlib/release/libAxiomLib.a
 }
         BOOST_LIBDIR = /usr/lib
 
