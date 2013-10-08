@@ -3,6 +3,7 @@
 # Project created by QtCreator 2011-10-29T23:11:23
 #
 #-------------------------------------------------
+INCLUDEPATH += /home/armkor/src/axiomlib/src
 
 include(../common.pri)
 

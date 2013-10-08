@@ -3,7 +3,6 @@
 **********************************************************************/
 
 #include <boost/format.hpp>
-
 #include "Environment.h"
 #include "AxiomLibException.h"
 #include "FuzzyMultiDataExtAlgorithm.h"

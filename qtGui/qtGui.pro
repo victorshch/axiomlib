@@ -1,11 +1,13 @@
 # Файл проекта qtGui
+# Включение файла, в котором задаются параметры include'ов и библиотек
+include(../AxiomLibConfig.pri)
 
 # имя исполняемого файла
 TARGET = qtGui
 
 TEMPLATE = app
-QT += core \
-    gui
+QT += core
+QT += gui
 DEPENDPATH += .
 
 #MOC_DIR += ./GeneratedFiles/debug
@@ -22,8 +24,7 @@ OBJECTS_DIR = ./obj_release/
 
 DEFINES += "BOOST_FILESYSTEM_VERSION=2"
 
-# Включение файла, в котором задаются параметры include'ов и библиотек
-include(../AxiomLibConfig.pri)
+
 #include(dkNoteDebug.pri)
 # include(dkNoteRelease.pri)
 

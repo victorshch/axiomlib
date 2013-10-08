@@ -17,42 +17,39 @@
 using namespace AxiomLib;
 using namespace AxiomLib::FuzzyMultiDataExt;
 
-void debug_common_bool(std::vector<std::vector<std::vector<bool> > > common){
+
+void debug_bool(std::vector<std::vector<std::vector<bool> > > common){
 
     std::vector<std::vector<bool> > one_line;
     std::vector<bool> one_point;
-    std::cout << "Find\t" << common.size() << "common subsequence\n";
 
     for (unsigned int i = 0; i < common.size(); i++){
-        std::cout << "Common subsequence ?" << i << "\n";
         one_line.clear();
         one_line = common[i];
 
         for (unsigned int j = 0; j < one_line.size(); j++){
-            std::cout << "Point " << j << "\n";
             one_point.clear();
             one_point = one_line[j];
 
             for (unsigned int k = 0; k < one_point.size(); k++){
                 std::cout << one_point[k];
             }
+            std::cout << "\t";
         }
         std::cout << "\n\n";
     }
 }
 
-void debug_common_int(std::vector<std::vector<int> > common){
+void debug_int(std::vector<std::vector<int> > common){
 
     std::vector<int> one_line;
-    std::cout << "Find\t" << common.size() << "common subsequence\n";
 
     for (unsigned int i = 0; i < common.size(); i++){
-        std::cout << "Common subsequence ?" << i << "\n";
         one_line.clear();
         one_line = common[i];
 
         for (unsigned int j = 0; j < one_line.size(); j++){
-            std::cout << one_line[j];
+            std::cout << one_line[j] << "\n";
         }
         std::cout << "\n\n";
     }
@@ -740,19 +737,31 @@ std::vector<std::vector<std::vector<bool> > > ASStageMultiMarking::stringOut(std
 
 
 inline int ASStageMultiMarking::createMarkUpVariants (std::vector<std::vector<std::vector<bool> > > &genMarkUps,std::vector<std::vector<std::vector<bool> > >  &resMarkUps) {
+    std::cerr << "\nFinding common sequences\n";
     if (!areMultiMark){
-        std::vector<std::vector<int > > _resMarkUps,_genMarkUps;
+        std::vector<std::vector<int > > _resMarkUps,_genMarkUps, fordebug;
         int numberOfAxiom;
         _resMarkUps = stringIn(resMarkUps,numberOfAxiom);
 
         std::vector<std::vector<int > > temp;
         _genMarkUps.push_back(_resMarkUps[0]);
         temp.push_back(_resMarkUps[0]);
+        for (int i=1;i<_resMarkUps.size(); i++){
+            for (int j=0;j<_genMarkUps.size(); j++){
 
-        for (int i=1;i<_resMarkUps.size();i++){
-            for (int j=0;j<_genMarkUps.size();j++){
-                std::vector<std::vector<int> > common =findCommonSubsequence(_resMarkUps[i],_genMarkUps[j],distanceFunctionForAxiom,choiceFunctionForAxiom,this->porog,this->maxNOP);
-                debug_common_int(common);
+                fordebug.clear();
+                fordebug.push_back(_resMarkUps[i]);
+                std::cerr << "Comparing\n";
+                debug_int(fordebug);
+                fordebug.clear();
+                fordebug.push_back(_genMarkUps[j]);
+                std::cerr << "with\n";
+                debug_int(fordebug);
+                std::cerr << "\n";
+
+                std::vector<std::vector<int> > common = findCommonSubsequence(_resMarkUps[i],_genMarkUps[j],distanceFunctionForAxiom,choiceFunctionForAxiom,this->porog,this->maxNOP);
+                std::cerr << "Common sequence size "<< common.size() <<"\n";
+                debug_int(common);
                 if (common.size()>0){
                     for (int k=0;k<common.size();k++){
                         temp.push_back(common[k]);
@@ -765,13 +774,25 @@ inline int ASStageMultiMarking::createMarkUpVariants (std::vector<std::vector<st
         genMarkUps=stringOut(_genMarkUps,numberOfAxiom);
     }
     else {
-        std::vector<std::vector<std::vector<bool> > > temp;
+        std::vector<std::vector<std::vector<bool> > > temp, fordebug;
         genMarkUps.push_back(resMarkUps[0]);
         temp.push_back(resMarkUps[0]);
-        for (int i=1;i<resMarkUps.size();i++){
-            for (int j=0;j<genMarkUps.size();j++){
-                std::vector<std::vector<std::vector<bool> > > common =findCommonSubsequence(resMarkUps[i],genMarkUps[j],DistanceFunctor(this->m),choiceFunctionForMultiMark,this->porog,this->maxNOP);
-                debug_common_bool(common);
+        for (int i = 1; i < resMarkUps.size(); i++){
+            for (int j = 0; j < genMarkUps.size(); j++){
+
+                fordebug.clear();
+                fordebug.push_back(resMarkUps[i]);
+                std::cerr << "Comparing\n ";
+                debug_bool(fordebug);
+                fordebug.clear();
+                fordebug.push_back(genMarkUps[j]);
+                std::cerr << "with\n";
+                debug_bool(fordebug);
+                std::cerr << "\n";
+
+                std::vector<std::vector<std::vector<bool> > > common = findCommonSubsequence(resMarkUps[i], genMarkUps[j], DistanceFunctor(this->m),choiceFunctionForMultiMark,this->porog,this->maxNOP);
+                std::cerr << "Common sequence size "<< common.size() <<"\n";
+                debug_bool(common);
                 if (common.size()>0){
                     for (int k=0;k<common.size();k++){
                         temp.push_back(common[k]);
@@ -783,6 +804,7 @@ inline int ASStageMultiMarking::createMarkUpVariants (std::vector<std::vector<st
         }
 
     }
+    std::cerr << "------------------------------------------------------------------------------------------------------------\n";
         return 0;
 }
 
@@ -1184,7 +1206,7 @@ int ASStageMultiMarking::addToBestAxiomSets (std::vector <AxiomExprSetPlus> &axi
 ****************************************************************************/
 
 void ASStageMultiMarking::run(){
-    std::cerr << " Start run";
+    std::cerr << "Start run";
     // stage2 хранит аксиомы для каждого класса нештатного поведения
     std::vector<int> sizeVector;
     stage2->getAXSize(sizeVector);
@@ -1231,7 +1253,6 @@ void ASStageMultiMarking::run(){
         matterAxiomSetFunc (axiomSets[i]);
 
     }
-    std::cerr << "Step 1\n";
     // Итерационный алгоритм построения системы аксиом
     bool condition = true;
     std::vector <int> indicesOfBestSets;
@@ -1266,14 +1287,12 @@ void ASStageMultiMarking::run(){
 
                     }
                     //Нам не нужно проверять, а есть ли аксиома из-за способа перебора
-                    std::cerr << "Step 2\n";
                     // выбираем заданное число лучших систем аксиом и добавляем их в популяцию на следующем шаге алгоритма
                     indicesOfBestSets.clear();
                     chooseIndicesOfBestAxiomSets (newAxiomSets, indicesOfBestSets, axiomSets[axSet].goal);
                     wholeNum += indicesOfBestSets.size();
                     addAxiomSets(nextStepAxiomSets[axSet], newAxiomSets, indicesOfBestSets);
             }
-            std::cerr << "Step 3\n";
             // Переносим исходные системы аксиом в специальный вектор результатов и по ходу дела очищаем их содержимое
             addToBestAxiomSets (axiomSets);
             // Переносим системы аксиом для следующего шага в axiomSets
@@ -1291,7 +1310,6 @@ void ASStageMultiMarking::run(){
                     nextStepAxiomSets[y].clear();
             }
             nextStepAxiomSets.clear();
-            std::cerr << "Step 3_1\n";
             // - Убрано, так как рост числа систем аксиом уже ограничивается в функции chooseIndicesOfBestAxiomSets
             // Ограничиваем число систем аксиом, чтобы оно не могло разрастаться со скоростью геометрической прогресси
             cutDownAxiomSets (axiomSets);
@@ -1321,10 +1339,10 @@ void ASStageMultiMarking::run(){
     }
 
     // Сортировка лучших систем аксиом до заданного числа элементов
-  std::cerr << "Step 4\n";
+  std::cerr << "Sorting best axiom sets";
     sortBestAxiomSets ();
     std::sort(bestAxiomSets.begin(), bestAxiomSets.end());
-std::cerr << "Step 5\n";
+std::cerr << "Run function ends";
 }
 
 /****************************************************************************
