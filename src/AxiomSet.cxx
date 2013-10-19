@@ -850,6 +850,7 @@ AxiomSet & AxiomSet::operator= (const AxiomSet &second) {
 		axioms[i] = new Axiom;
 		*axioms[i] = second.getAxiom (i);
 	}
+
 	//Logger::getInstance()->writeDebug("Leaving AxiomSet::operator=");
 	return *this;
 }
@@ -897,4 +898,35 @@ signed int AxiomSet::transmuteAxiom (const int axiomNum, double ectl, double atl
 		throw AxiomLibException("Error in AxiomSet::transmuteAxiom: wrong parameter value.");
 	int res = axioms[axiomNum]->transmute(ectl, atl);
 	return res;
+}
+
+void AxiomSet::initAxiomWeights()
+{
+	for(int i = 0; i < axioms.size(); ++i) {
+		axioms[i]->weight = 1.0 / (double) axioms.size();
+	}
+}
+
+std::vector<double> AxiomSet::getAxiomWeights() const
+{
+	std::vector<double> result;
+	result.reserve(getNumOfAxioms());
+
+	for(int i = 0; i < getNumOfAxioms(); ++i) {
+		result.push_back(axioms[i]->weight);
+	}
+
+	return result;
+}
+
+void AxiomSet::setAxiomWeights(const std::vector<double> &w)
+{
+	double s = 0;
+	for(int i = 0; i < getNumOfAxioms(); ++i) {
+		s += w[i];
+	}
+
+	for(int i = 0; i < getNumOfAxioms(); ++i) {
+		axioms[i]->weight = w[i] / s;
+	}
 }

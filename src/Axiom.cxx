@@ -19,6 +19,8 @@ Axiom::Axiom () {
 	// Установка значений атрибутов класса по умолчанию
 	minNumOfEC = 1;
 	maxNumOfEC = 7;
+
+	weight = 0.5;
 }
 
 // пустой конструктор с заданием имени аксиомы во входном параметре
@@ -29,6 +31,7 @@ Axiom::Axiom (const std::string sName) {
 	// Установка значений атрибутов класса по умолчанию
 	minNumOfEC = 1;
 	maxNumOfEC = 7;
+	weight = 1.0;
 }
 
 // Деструктор класса - удаляет все динамические созданные объекты
@@ -568,6 +571,7 @@ Axiom & Axiom::operator= (const Axiom& second) {
 	ElemConditionsFactory ecf;
 	// копирование названия аксиомы
 	nameOfAxiom = second.name();
+	weight = second.weight;
 	// копирвание элементарных условий путем создания таких же с такими же параметрами
 	std::map <std::string, std::map <std::string, std::string> > ecParams;
 	second.getECParameters (ecParams);

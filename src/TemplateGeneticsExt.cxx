@@ -7,6 +7,7 @@
 #include <boost/lexical_cast.hpp>
 
 #include "Logger.h"
+#include <nlopt.hpp>
 
 #include "TemplateGeneticsExt.h"
 
@@ -15,6 +16,23 @@ using namespace AxiomLib;
 #define debug true
 #define bestGoals 1.5 // Особи, со значением целевой функции не более чем во столько раз привосходящим минимальное значение целевой функции, считаются лучшими 
 #define epsilon 0.01 // Это параметр для работы с дробными числами
+
+std::ostream& operator << (std::ostream& ostr, const std::vector<double>& v) {
+	ostr << "[" << v.size() << "]";
+	ostr << "(";
+	for(unsigned i = 0; i < v.size(); ++i) {
+		ostr << v[i] << ", ";
+	}
+	ostr << ")";
+	return ostr;
+}
+
+std::string toStr(const std::vector<double>& v) {
+	std::ostringstream ostr;
+	ostr << v;
+	return ostr.str();
+}
+
 
 // Коструктор класса с заданием начальных параметров по умолчанию
 TemplateGeneticsExt::TemplateGeneticsExt (void) {
@@ -304,8 +322,11 @@ double TemplateGeneticsExt::run(TemplateRecognizer& templateRecognizer) {
 				numOfBadGenIterCount++;
 			}
 			
-			if (debug) cout << "		TemplateGeneticsExt: best goal = "<<bestElem.goal
-							<<"=("<<bestElem.nFirst<<","<<bestElem.nSecond<<")"<<std::endl;
+			if (debug) {
+				cout << "		TemplateGeneticsExt: best goal = "<<bestElem.goal
+							<<"=("<<bestElem.nFirst<<","<<bestElem.nSecond<<")";
+				cout << ", best weights:\n " << bestElem.axiomSet->getAxiomWeights();
+			}
 
 			// *.9. Проверяем условия выхода из цикла
 			if ((numOfBadGenIterCount > numOfBadGenIter) || (bestElem.goal < exitCondGen))
@@ -453,6 +474,30 @@ int TemplateGeneticsExt::crossover () {
 	return 0;
 }
 
+struct axiomset_optimize_helper {
+	TemplateRecognizer* templateRecognizer;
+	GoalStrategy* goalStrategy;
+	AxiomSet* axiomSet;
+};
+
+double optimize_function_helper(const std::vector<double> &x, std::vector<double> &grad, void* f_data) {
+	if(!grad.empty()) {
+		throw AxiomLibException("optimize_function_helper() : can't compute gradient!");
+	}
+
+	axiomset_optimize_helper* helper = (axiomset_optimize_helper*) f_data;
+	AxiomSet axiomSet = *helper->axiomSet;
+	axiomSet.setAxiomWeights(x);
+
+	int resFirst, resSecond;
+	helper->templateRecognizer->recognizer->run (axiomSet,
+										helper->templateRecognizer->prepDataSet,
+										helper->templateRecognizer->params,
+										resFirst, resSecond);
+
+	return helper->goalStrategy->compute(resFirst, resSecond);
+}
+
 
 /****************************************************************************
 *					TemplateGeneticsExt::recognize
@@ -479,10 +524,51 @@ inline int TemplateGeneticsExt::recognize (TemplateRecognizer& templateRecognize
 	// В цикле происходит тестировние всех элементов популяции используя данный шаблон
 	#pragma omp parallel for schedule(dynamic, 1)
 	for (int i = 0; i < (int) population->size(); i++) {
+		AxiomSet &as = *((*population)[i].axiomSet);
+		as.setAxiomWeights(as.getAxiomWeights());
+		nlopt::opt opt(nlopt::GN_DIRECT_L, as.getNumOfAxioms());
+
+		axiomset_optimize_helper helper = { &templateRecognizer, this->goalStrategy, &as };
+
+		opt.set_min_objective(&optimize_function_helper, &helper);
+
+		opt.set_lower_bounds(0);
+		opt.set_upper_bounds(1);
+
+		opt.set_stopval(0.0);
+		opt.set_maxtime(30);
+
+		std::vector<double> result = as.getAxiomWeights();
+		double result_f;
+
+#undef debug
+		std::ostringstream ostr;
+		ostr << "Optimizing axiom weights...\n";
+		ostr << "Initial weights: " << result << "\n";
+
+		std::vector<double> dummy;
+
+		double initial_f = optimize_function_helper(result, dummy, &helper);
+
+		nlopt::result r = opt.optimize(result, result_f);
+
+		(*population)[i].axiomSet->setAxiomWeights(result);
+
+		ostr << "Axiom weights optimized. Result:" << (*population)[i].axiomSet->getAxiomWeights();
+		ostr << "\n Initial objective: " << initial_f << ", best objective: " << result_f;
+
 		int resFirst, resSecond;
-		templateRecognizer.recognizer->run (*((*population)[i].axiomSet), templateRecognizer.prepDataSet, templateRecognizer.params, resFirst, resSecond, (*population)[i].axiomProfit);
+		templateRecognizer.recognizer->run (*((*population)[i].axiomSet),
+											templateRecognizer.prepDataSet,
+											templateRecognizer.params,
+											resFirst, resSecond,
+											(*population)[i].axiomProfit);
 		(*population)[i].nFirst = resFirst;
 		(*population)[i].nSecond = resSecond;
+
+		ostr << "\n (" << resFirst << ", " << resSecond << ") " << goalStrategy->compute(resFirst, resSecond);
+
+		Logger::debug(ostr.str());
 	}
 	return 0;
 }

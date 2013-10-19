@@ -151,6 +151,13 @@ class AxiomSet {
 
 	// Transmute selected axiom
 	signed int transmuteAxiom (const int axiomNum, double ectl, double atl);
+
+	void initAxiomWeights();
+
+	std::vector<double> getAxiomWeights() const;
+
+	// Normalizes weights
+	void setAxiomWeights(const std::vector<double>& w);
     
 }; // end of class
 

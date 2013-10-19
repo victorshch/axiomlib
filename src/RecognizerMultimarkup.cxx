@@ -60,6 +60,11 @@ void RecognizerMultiMarkup::computeDistances(AxiomSet& axiomSet, DataSet& dataSe
 											 std::vector<bool>& refAxiomUsage,
 											 // какие аксиомы срабатывали при разметке тестовых траекторий
 											 std::vector<bool>& testAxiomUsage) {
+	MultiMarking::DTWMetric* metric = mMetric->clone();
+	if(metric->isWeighted()) {
+		metric->setWeights(axiomSet.getAxiomWeights());
+	}
+
 	//Logger::debug("Entering RecognizerMultiMarkup::computeDistances()");
 	std::vector<bool> temp_testAxiomUsage;
 	std::vector<bool> temp_refAxiomUsage;
@@ -113,7 +118,7 @@ void RecognizerMultiMarkup::computeDistances(AxiomSet& axiomSet, DataSet& dataSe
 				}
 				//Logger::debug("Window : " + boost::lexical_cast<std::string>((1.0/mStretch)*etalon[i].size()) + " " + boost::lexical_cast<std::string>((mStretch)*etalon[i].size()));
 				//Logger::debug("Computing DTW...");
-				mMetric->computeDTWForMetric( tests[j], s , (1.0/mStretch)*etalon[i].size(),(mStretch)*etalon[i].size(), tempEtalon, temp_result);
+				metric->computeDTWForMetric( tests[j], s , (1.0/mStretch)*etalon[i].size(),(mStretch)*etalon[i].size(), tempEtalon, temp_result);
 				//Logger::debug("Setting distance...");
 				result[j].setDistance(i, s, minimum(temp_result));
 			}

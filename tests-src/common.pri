@@ -2,6 +2,8 @@ CONFIG -= console
 
 include(../../AxiomLibConfig.pri)
 
+DEFINES += "BOOST_FILESYSTEM_VERSION=2"
+
 QT -= core gui
 CONFIG -= qt
 

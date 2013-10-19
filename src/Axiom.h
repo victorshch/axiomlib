@@ -47,6 +47,7 @@ class Axiom {
 	unsigned int maxNumOfEC;
 
  public:
+	double weight;
  
   // Пустой конструктор: создает нулевой вектор
     Axiom(void);  
