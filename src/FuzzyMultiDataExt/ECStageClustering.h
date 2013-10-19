@@ -5,10 +5,15 @@
 #include "Common.h"
 #include "ECStage.h"
 #include "ForwardDeclarations.h"
+#include "ClusteringFeatures/ClusteringFeature.h"
+#include "ClusteringRealizations\IClusteringModel.h"
+#include "ECStageClusteringElemCond.h"
 
 
 #ifndef FUZZYMULTIDATAEXT_EC_CLUSTERING_H
 #define FUZZYMULTIDATAEXT_EC_CLUSTERING_H
+
+using namespace std;
 
 namespace AxiomLib {
 
@@ -20,9 +25,9 @@ public:
 
 	virtual void setECs(const std::vector<std::vector<std::vector<std::vector<ElemCondPlusStat> > > > & value) = 0;
 	
-	virtual int initFromEnv(const Environment& env) = 0;
+	virtual int initFromEnv(const Environment& env);
 	
-	virtual void run() = 0; 
+	virtual void run(); 
 
 	/*
 		В ф-ции run должно происходить:
@@ -53,6 +58,32 @@ public:
 private:
 	Logger* logger;
 
+	// List of clustering features using for transform strip to vector of features
+	std::list<ClusteringFeature*> clusteringFeatures;
+
+	// List of elementary conditions
+	std::list<ECStageClusteringElemCond*> elemCond;
+	
+	// Count of features in list "clusteringFeatures"
+	int featuresCount;
+
+	int dimensions;
+
+	// result data after getting strips and trasforming into vector of feature 
+	vector<vector<vector<double>>> resultFeatures;
+
+	// count of strips which are randomly taken from trajectory
+	int stripsCount;
+
+	int stripLength;
+
+	// k-means cluster's count
+	int k;
+	
+	// Realization of clustering algorithm
+	IClusteringModel** clusteringModels;
+
+	void handleTrajectory(const std::vector<double>& trajectory, int dimension);
 };
 
 };
