@@ -228,6 +228,29 @@ int TemplateGeneticsExt::initFromEnv(const Environment& env) {
 	return 0;
 }
 
+struct axiomset_optimize_helper {
+	TemplateRecognizer* templateRecognizer;
+	GoalStrategy* goalStrategy;
+	AxiomSet* axiomSet;
+};
+
+double optimize_function_helper(const std::vector<double> &x, std::vector<double> &grad, void* f_data) {
+	if(!grad.empty()) {
+		throw AxiomLibException("optimize_function_helper() : can't compute gradient!");
+	}
+
+	axiomset_optimize_helper* helper = (axiomset_optimize_helper*) f_data;
+	AxiomSet axiomSet = *helper->axiomSet;
+	axiomSet.setAxiomWeights(x);
+
+	int resFirst, resSecond;
+	helper->templateRecognizer->recognizer->run (axiomSet,
+										helper->templateRecognizer->prepDataSet,
+										helper->templateRecognizer->params,
+										resFirst, resSecond);
+
+	return helper->goalStrategy->compute(resFirst, resSecond);
+}
 
 /****************************************************************************
 *					TemplateGeneticsExt::run
@@ -338,6 +361,52 @@ double TemplateGeneticsExt::run(TemplateRecognizer& templateRecognizer) {
 			templateRecognizer.axiomSet = new AxiomSet;
 		//*(templateRecognizer.axiomSet) = *((*population)[mask[0]].axiomSet);
 		*(templateRecognizer.axiomSet) = *(bestElem.axiomSet);
+
+		if(as.getNumOfAxioms() > 1) {
+			AxiomSet& as = *(templateRecognizer.axiomSet);
+			as.setAxiomWeights(as.getAxiomWeights());
+			nlopt::opt opt(nlopt::GN_DIRECT_L, as.getNumOfAxioms() - 1);
+
+			axiomset_optimize_helper helper = { &templateRecognizer, this->goalStrategy, &as };
+
+			opt.set_min_objective(&optimize_function_helper, &helper);
+
+			opt.set_lower_bounds(0);
+			opt.set_upper_bounds(1);
+
+			opt.set_stopval(0.0);
+			opt.set_maxtime(30);
+
+			std::vector<double> result = as.getAxiomWeights();
+			double result_f;
+
+			std::ostringstream ostr;
+			ostr << "Optimizing axiom weights...\n";
+			ostr << "Initial weights: " << result << "\n";
+
+			std::vector<double> dummy;
+
+			double initial_f = optimize_function_helper(result, dummy, &helper);
+
+			nlopt::result r = opt.optimize(result, result_f);
+
+			as.setAxiomWeights(result);
+
+			ostr << "Axiom weights optimized. Result:" << as.getAxiomWeights();
+			ostr << "\n Initial objective: " << initial_f << ", best objective: " << result_f;
+
+			int resFirst, resSecond;
+			templateRecognizer.recognizer->run (as,
+												templateRecognizer.prepDataSet,
+												templateRecognizer.params,
+												resFirst, resSecond);
+
+			ostr << "\n (" << resFirst << ", " << resSecond << ") " << goalStrategy->compute(resFirst, resSecond);
+
+			Logger::getInstance()->writeDebug(ostr.str());
+
+			tmpGoal = result_f;
+		}
 
 		// 3. Вызываем алгоритм обучения распознавателя
 		tmpGoalRec = templateRecognizer.recognizer->learn (templateRecognizer);
@@ -474,31 +543,6 @@ int TemplateGeneticsExt::crossover () {
 	return 0;
 }
 
-struct axiomset_optimize_helper {
-	TemplateRecognizer* templateRecognizer;
-	GoalStrategy* goalStrategy;
-	AxiomSet* axiomSet;
-};
-
-double optimize_function_helper(const std::vector<double> &x, std::vector<double> &grad, void* f_data) {
-	if(!grad.empty()) {
-		throw AxiomLibException("optimize_function_helper() : can't compute gradient!");
-	}
-
-	axiomset_optimize_helper* helper = (axiomset_optimize_helper*) f_data;
-	AxiomSet axiomSet = *helper->axiomSet;
-	axiomSet.setAxiomWeights(x);
-
-	int resFirst, resSecond;
-	helper->templateRecognizer->recognizer->run (axiomSet,
-										helper->templateRecognizer->prepDataSet,
-										helper->templateRecognizer->params,
-										resFirst, resSecond);
-
-	return helper->goalStrategy->compute(resFirst, resSecond);
-}
-
-
 /****************************************************************************
 *					TemplateGeneticsExt::recognize
 *
@@ -526,37 +570,6 @@ inline int TemplateGeneticsExt::recognize (TemplateRecognizer& templateRecognize
 	for (int i = 0; i < (int) population->size(); i++) {
 		AxiomSet &as = *((*population)[i].axiomSet);
 		as.setAxiomWeights(as.getAxiomWeights());
-		nlopt::opt opt(nlopt::GN_DIRECT_L, as.getNumOfAxioms());
-
-		axiomset_optimize_helper helper = { &templateRecognizer, this->goalStrategy, &as };
-
-		opt.set_min_objective(&optimize_function_helper, &helper);
-
-		opt.set_lower_bounds(0);
-		opt.set_upper_bounds(1);
-
-		opt.set_stopval(0.0);
-		opt.set_maxtime(30);
-
-		std::vector<double> result = as.getAxiomWeights();
-		double result_f;
-
-#undef debug
-		std::ostringstream ostr;
-		ostr << "Optimizing axiom weights...\n";
-		ostr << "Initial weights: " << result << "\n";
-
-		std::vector<double> dummy;
-
-		double initial_f = optimize_function_helper(result, dummy, &helper);
-
-		nlopt::result r = opt.optimize(result, result_f);
-
-		(*population)[i].axiomSet->setAxiomWeights(result);
-
-		ostr << "Axiom weights optimized. Result:" << (*population)[i].axiomSet->getAxiomWeights();
-		ostr << "\n Initial objective: " << initial_f << ", best objective: " << result_f;
-
 		int resFirst, resSecond;
 		templateRecognizer.recognizer->run (*((*population)[i].axiomSet),
 											templateRecognizer.prepDataSet,
@@ -566,9 +579,6 @@ inline int TemplateGeneticsExt::recognize (TemplateRecognizer& templateRecognize
 		(*population)[i].nFirst = resFirst;
 		(*population)[i].nSecond = resSecond;
 
-		ostr << "\n (" << resFirst << ", " << resSecond << ") " << goalStrategy->compute(resFirst, resSecond);
-
-		Logger::debug(ostr.str());
 	}
 	return 0;
 }

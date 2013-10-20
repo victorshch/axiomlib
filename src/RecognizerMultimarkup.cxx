@@ -60,7 +60,7 @@ void RecognizerMultiMarkup::computeDistances(AxiomSet& axiomSet, DataSet& dataSe
 											 std::vector<bool>& refAxiomUsage,
 											 // какие аксиомы срабатывали при разметке тестовых траекторий
 											 std::vector<bool>& testAxiomUsage) {
-	MultiMarking::DTWMetric* metric = mMetric->clone();
+	std::auto_ptr<MultiMarking::DTWMetric> metric = std::auto_ptr<MultiMarking::DTWMetric>(mMetric->clone());
 	if(metric->isWeighted()) {
 		metric->setWeights(axiomSet.getAxiomWeights());
 	}
@@ -159,7 +159,7 @@ RecognizerMultiMarkup::RecognizerMultiMarkup(const RecognizerMultiMarkup& other)
 {
 	mStretch = other.mStretch;
 	mMetricName = other.mMetricName;
-	mMetric = MultiMarking::DTWMetric::getMetric(other.mMetricName);
+	mMetric = other.mMetric->clone();
 }
 
 RecognizerMultiMarkup::~RecognizerMultiMarkup() {
