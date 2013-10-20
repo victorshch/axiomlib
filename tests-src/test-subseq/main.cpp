@@ -24,18 +24,18 @@ MultiMarking::DTWMetric* m;
 void makeTest(void){
     FuzzyMultiDataExt::DistanceFunctor distanceFunctor = FuzzyMultiDataExt::DistanceFunctor(m);
 
-    vec4=FuzzyMultiDataExt::findCommonSubsequence(s41,s42,distanceFunctor,FuzzyMultiDataExt::choiceFunctionForMultiMark,0.3);
+    vec4=FuzzyMultiDataExt::findCommonSubsequence(s41,s42,distanceFunctor,FuzzyMultiDataExt::choiceFunctionForMultiMark, 1, 100);
 
-    for (int i=0;i<vec4.size();i++){
+    for (int i = 0;i < vec4.size(); i++){
 
         cout <<"Common sequence №"<<i <<'\n';
         std::vector<std::vector<bool>> p;
-        p=vec4[i];
+        p = vec4[i];
         cout <<'{';
         for (int j=0;j<p.size();j++){
             cout <<'{';
             std::vector<bool> element;
-            element=p[j];
+            element = p[j];
 
             for (int k=0;k<element.size();k++){
                 cout<<element[k];
@@ -93,11 +93,13 @@ int main(){
     std::vector<int> s1={1,3};
     std::vector<int> s2={3};
 
-    vec = FuzzyMultiDataExt::findCommonSubsequence(s1,s2,FuzzyMultiDataExt::distanceFunctionForAxiom,FuzzyMultiDataExt::choiceFunctionForAxiom,1);
+    vec = FuzzyMultiDataExt::findCommonSubsequence(s1,s2,
+                                    FuzzyMultiDataExt::distanceFunctionForAxiom,
+                                    FuzzyMultiDataExt::choiceFunctionForAxiom,1, 100);
 
-    for (int i=0;i<vec.size();i++){
+    for (int i = 0;i < vec.size();i++){
         std::vector<int> p;
-        p=vec[i];
+        p = vec[i];
         for (int j=0;j<p.size();j++){
             cout << p[j];
         }
@@ -111,7 +113,7 @@ int main(){
     std::vector<int> s12={1,3,2,8,4};
     std::vector<int> s22={3,1,8,4,3,8,9,1,2,7,3,8,4};
 
-    vec2 = FuzzyMultiDataExt::findCommonSubsequence(s12,s22,FuzzyMultiDataExt::distanceFunctionForAxiom,FuzzyMultiDataExt::choiceFunctionForAxiom,1);
+    vec2 = FuzzyMultiDataExt::findCommonSubsequence(s12,s22,FuzzyMultiDataExt::distanceFunctionForAxiom,FuzzyMultiDataExt::choiceFunctionForAxiom,1, 100);
 
     for (int i=0;i<vec2.size();i++){
         std::vector<int> p;
@@ -128,7 +130,7 @@ int main(){
     std::vector<int> s23={1,3,2,8,4};
     std::vector<int> s121={3,1,8,4,3,8,9,1,2,7,3,8,4};
 
-    vec3 = FuzzyMultiDataExt::findCommonSubsequence(s121,s23,FuzzyMultiDataExt::distanceFunctionForAxiom,FuzzyMultiDataExt::choiceFunctionForAxiom,1);
+    vec3 = FuzzyMultiDataExt::findCommonSubsequence(s121,s23,FuzzyMultiDataExt::distanceFunctionForAxiom,FuzzyMultiDataExt::choiceFunctionForAxiom,1, 100);
 
     for (int i=0;i<vec3.size();i++){
         std::vector<int> p;
@@ -176,6 +178,61 @@ int main(){
         <<'{'<<part4Ofs42[0]<<','<<part4Ofs42[1]<<','<<part4Ofs42[2]<<'}'<<'}';
 
     startTest();
+
+    s41.clear();
+    s42.clear();
+    std::vector<bool> s41_part;
+    s41_part.push_back(true);
+    // [1]	[1]	[1]	[1]	[1]	[1]	[1]	[1]
+    s41.push_back(s41_part);s41.push_back(s41_part);s41.push_back(s41_part);s41.push_back(s41_part);s41.push_back(s41_part);s41.push_back(s41_part);s41.push_back(s41_part);s41.push_back(s41_part);
+    s41_part.clear();
+    s41_part.push_back(false);
+    for (int i = 0;i < 47; i++){
+        s41.push_back(s41_part);
+    }
+    s41_part.clear();
+    s41_part.push_back(true);
+    s41.push_back(s41_part);s41.push_back(s41_part);s41.push_back(s41_part);s41.push_back(s41_part);
+
+    for (int i = 0; i < 6; i++){
+        s42.push_back(s41_part);
+    }
+    std::cout << "-----------------------------------------------------------" ;
+
+    std::cout << "\nCompare";
+
+    cout << '{';
+    for (int j = 0;j< s41.size(); j++){
+        cout <<'{';
+        std::vector<bool> element;
+        element = s41[j];
+
+        for (int k = 0;k < element.size(); k++){
+            cout << element[k];
+        }
+        cout << '}';
+    }
+    cout << '}';
+    cout << '\n';
+
+    std::cout << "\nWith";
+    cout << '{';
+    for (int j = 0;j< s42.size(); j++){
+        cout <<'{';
+        std::vector<bool> element;
+        element = s42[j];
+
+        for (int k = 0;k < element.size(); k++){
+            cout << element[k];
+        }
+        cout << '}';
+    }
+    cout << '}';
+    cout << '\n';
+
+
+    startTest();
+
 // Test stringIn stringOut
 
 

@@ -15,7 +15,7 @@
 namespace AxiomLib { 
 
 class DerivativeDecreaseLeft : public ElemCondition {
-
+//
   private:
 	//объявления, необходимые для сериализации
 	friend class boost::serialization::access;

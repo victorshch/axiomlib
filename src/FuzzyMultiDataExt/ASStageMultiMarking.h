@@ -21,7 +21,7 @@ namespace FuzzyMultiDataExt {
 
             // Сигнатура оператора соответствует требованию к DistanceFunction
             double operator() (const std::vector<bool>& v1, const std::vector<bool>& v2) {
-                    return m->compute(v1,v2);
+                    return m->compute(v1, v2);
             }
         };
 
@@ -48,6 +48,20 @@ namespace FuzzyMultiDataExt {
         return result;
 
     };
+
+    inline void matrix_debug(std::vector<std::vector<bool> > D){
+        std::cout << "\n/////////////////////////\nMatrix:\n";
+        std::vector<bool> temp;
+        for (int i = 0; i < D.size(); i++){
+            temp.clear();
+            temp = D[i];
+            std::cout << "\n-------------------------------\n";
+            for (int j = 0; j < temp.size(); j++){
+                std::cout << temp[j] << "\t";
+            }
+        }
+        std::cout << "\n/////////////////////////\n";
+    }
 
     template<class Symbol, class DistanceFunction>
     std::vector <std::vector<Symbol> > delEqual (std::vector<std::vector<Symbol> > temp, DistanceFunction distF ){
@@ -101,32 +115,47 @@ namespace FuzzyMultiDataExt {
               const std::vector<Symbol>& s1,const std::vector<Symbol>& s2,int i,int j,
               std::vector<Symbol> result,ChoiceFunction choiceF,int numOfIt,int maxNOP){
 
-        while ((i>0) && (j>0)){
-            if (D[i][j]==true){
-                result.push_back(choiceF(s1[i-1],s2[j-1]));
+        while ((i > 0) && (j > 0)){
+            // Debug
+           //std::cout << "\ni = "<<i<<" j = "<<j<<"\n";
+
+            if (D[i][j] == true){
+                // Debug
+                //std::cout << "Equal " << i << " " << j;
+
+                result.push_back(choiceF(s1[i-1], s2[j-1]));
                 i--;
                 j--;
             }
             else {
+                // Debug
+                //std::cout << "else";
             if (U[i][j]==true && L[i][j]==true){
-                if (numOfIt<maxNOP){
+                // Debug
+//                std::cout << "U&&L=true " << i << " " << j;
+//                std::cout << "numOfIt" << numOfIt << "maxNOP" << maxNOP ;
+                if (numOfIt < maxNOP){
+                    // debug
+                    // std::cout << "\nnumOfIt" << numOfIt << "\n";
                     numOfIt++;
-                find(r,L,D,U,s1,s2,i,j-1,result,choiceF,numOfIt,maxNOP);
-            }
+                    find(r, L, D, U, s1, s2, i, j-1, result, choiceF, numOfIt, maxNOP);
+                }
                 i--;
             }
             else
             {
+                // Debug
+                // std::cout << "else-else";
             if (L[i][j]==true){
-                i--;
-            }
-            if (U[i][j]==true){
                 j--;
             }
+            if (U[i][j]==true){
+                i--;
+            }
         }
         }
         }
-        if (result.size()>0){
+        if (result.size() > 0){
             std::vector < Symbol >  rev=result;
             std::reverse(rev.begin(),rev.end());
             r->push_back(rev);
@@ -173,67 +202,80 @@ namespace FuzzyMultiDataExt {
 
         std::vector<std::vector<double> > A(n);
         std::vector<std::vector<bool> > L(n),D(n),U(n);
-        for (int u=0;u<n;u++){
+        for (int u = 0;u < n; u++){
                 A[u].resize(m);
                 L[u].resize(m);
                 D[u].resize(m);
                 U[u].resize(m);
         }
-        int k=0;
+        int k = 0;
         // Заполнение матриц.
-        for (int b=0 ; b < m ; b++ ){
-                for (int a=0 ; a < n ; a++) {
-                        A[a][b]=0;
-                        D[a][b]=false;
-                        L[a][b]=false;
-                        U[a][b]=false;
+        for (int b = 0 ; b < m ; b++ ){
+                for (int a = 0 ; a < n ; a++) {
+                        A[a][b] = 0;
+                        D[a][b] = false;
+                        L[a][b] = false;
+                        U[a][b] = false;
                 }
         }
-        for (int b=1 ; b < m ; b++ ){
-                for (int a=1 ; a < n ; a++) {
-                    distF(s1[a-1],s2[b-1]);
-                    if (distF(s1[a-1],s2[b-1]) < porog){
-                        A[a][b]=A[a-1][b-1]+1;
+        for (int b = 1 ; b < m ; b++ ){
+                for (int a = 1 ; a < n ; a++) {
+                    distF (s1[a - 1], s2[b - 1]);
+                    if (distF(s1[a - 1], s2[b - 1]) < porog){
+                        A[a][b] = A[a - 1][b - 1] + 1;
                     }
                     else
                     {
-                        A[a][b]=std::max(A[a-1][b],A[a][b-1]);
+                        A[a][b] = std::max(A[a - 1][b],A[a][b - 1]);
                     }
                 }
         }
 
-        for (int b=1 ; b < m ; b++ ){
-                for (int a=1 ; a < n ; a++) {
-                    if (distF(s1[a-1],s2[b-1]) < porog){
-                        D[a][b]=true;
+        for (int b = 1 ; b < m ; b++ ){
+                for (int a = 1 ; a < n ; a++) {
+                    if (distF(s1[a - 1],s2[b - 1]) < porog){
+                        D[a][b] = true;
                     }
-                    else{
-                        if (A[a-1][b]<=A[a][b-1]){
-                            L[a][b]=true;
+                    else {
+                        if (A[a - 1][b] <= A[a][b - 1]){
+                            L[a][b] = true;
                         }
-                        if (A[a-1][b]>=A[a][b-1]){
-                            U[a][b]=true;
+                        if (A[a - 1][b] >= A[a][b - 1]){
+                            U[a][b] = true;
                         }
-                        if (A[a-1][b]==A[a][b-1]){
+                        if (A[a - 1][b] == A[a][b - 1]){
                             k++;
                         }
 
                     }
                 }
             }
+        // Debug
+        //matrix_debug( D );
+        //matrix_debug( L );
+        //matrix_debug( U );
+
+
         // Построение наибольшей общей подстроки
         std::vector <std::vector<Symbol> > j;
         std::vector <std::vector<Symbol> >* r;
         r=&j;
         std::vector<Symbol> temp;
-        find(r,L,D,U,s1,s2,n-1,m-1,temp,choiceF,0,maxNOP);
+        // Wrong work
+        find(r, L, D, U, s1, s2, n-1, m-1, temp, choiceF, 0, maxNOP);
+
+        // Debug
+//        std::cout << "r->size() = " << r->size();
+//        j=*r;
+//        return j;
+
         if (r->size()<1){
             j=*r;
             return j;
         }
         else{
             j=*r;
-            j=findMax (j,maxNOP);
+            j=findMax (j, maxNOP);
             return delEqual(j,distF) ;
         }
     }
