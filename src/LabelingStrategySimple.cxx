@@ -119,6 +119,12 @@ double LabelingStrategySimple::train(const std::vector<TrajectorySampleDistance>
 		Logger::getInstance()->writeDebug("Current goal value : "
 										  + boost::lexical_cast<std::string>(bestF));
 	}
+
+	func.setCurrentClass(0);
+	double finalGoal = func.f(m_precisions[0]);
+
+	Logger::getInstance()->writeDebug("Final goal value : "
+									  + boost::lexical_cast<std::string>(finalGoal));
 	
 	Logger::getInstance()->writeDebug("Precisions: " + toString(m_precisions));
 	
