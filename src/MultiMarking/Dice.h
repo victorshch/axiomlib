@@ -11,6 +11,8 @@ class Dice : public DTWMetric
 {
 public:
 	Dice();
+
+	virtual DTWMetric* clone() const { return DTWMetric::clone_impl(this); }
 	
 	virtual double compute(const std::vector<bool>& v1, const std::vector<bool>& v2);
 };

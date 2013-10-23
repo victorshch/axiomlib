@@ -20,6 +20,8 @@ class Euclidean : public DTWMetric {
     public:
 
     Euclidean() {}
+
+	virtual DTWMetric* clone() const { return DTWMetric::clone_impl(this); }
     // distance for DTW
     double compute(const std::vector<bool>& v1, const std::vector<bool>& v2);
 

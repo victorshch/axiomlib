@@ -24,6 +24,7 @@
 #include "Jaccard.h"
 #include "WeakEqual.h"
 #include "Priority.h"
+#include "WeightedHamming.h"
 #include <iostream>
 
 namespace AxiomLib {
@@ -149,6 +150,9 @@ DTWMetric* DTWMetric::getMetric(std::string name){
 	}
 	if (nameCopy == "priority") {
 		return new Priority();
+	}
+	if (nameCopy == "weightedhamming") {
+		return new WeightedHamming();
 	}
 	throw AxiomLibException("Invalid DTW metric name: '" + name + "'");
 }

@@ -23,6 +23,8 @@ class BetweenSets2 : public DTWMetric {
 
     BetweenSets2() {}
 
+	virtual DTWMetric* clone() const { return DTWMetric::clone_impl(this); }
+
     // distance for DTW
     double compute(const std::vector<bool>& v1, const std::vector<bool>& v2);
 
