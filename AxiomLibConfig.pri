@@ -1,8 +1,8 @@
 # Файл, в котором задаются пути к либам и некоторые общие параметры сборки проектов из AxiomLib
 
-DEFINES += "BOOST_FILESYSTEM_VERSION=2"
-
 ### Пути include'ов ###
+
+NLOPT_DIR = /home/wictor/nlopt
 
 # Для windows
 win32 {
@@ -10,15 +10,15 @@ win32 {
         QWT_INCLUDE = D:/lib/qwt-5.2.1/src
         MPICH_INCLUDE = "C:/Program Files (x86)/MPICH2/include"
         BOOST_INCLUDE = "C:/Program Files (x86)/boost/boost_1_47"
-	OTHER_INCLUDE =
+        OTHER_INCLUDE =
 }
 # Для unix
 unix {
         AXIOMLIB_INCLUDE = /home/wictor/projects/axiomlib/src
         QWT_INCLUDE = "/usr/include/qwt-qt4"
         MPICH_INCLUDE = "/usr/include/mpich2"
-        BOOST_INCLUDE = "/usr/include/boost"
-	OTHER_INCLUDE =	
+        BOOST_INCLUDE =
+        OTHER_INCLUDE =	$${NLOPT_DIR}/include
 }
 
 ### Спецификация библиотек ###
@@ -33,7 +33,7 @@ debug {
         AXIOMLIB_LIB = F:/Workspace/Axiomlib_working_copy2/release/AxiomLib.lib
         QWT_LIB = D:/lib/qwt-5.2.1/lib/qwt.lib
 }
-        BOOST_LIB = /LIBPATH:"C:/Program Files (x86)/boost/boost_1_47/lib"
+        BOOST_LIB = -lboost_filesystem -lboost_system -lboost_serialization
         MPICH_LIB = "C:/Program Files (x86)/MPICH2/lib/mpi.lib"
         #MPICH_LIB = /LIBPATH:"C:/Program Files (x86)/MPICH2/lib"
 
@@ -50,10 +50,12 @@ linux-icc-64|linux-icc {
 } else {
         AXIOMLIB_LIB = /home/wictor/projects/axiomlib/release/libAxiomLib.a
 }
-        BOOST_LIB = -lboost_filesystem -lboost_system -lboost_thread -lboost_serialization
+        BOOST_LIBDIR = /home/wictor/boost_1_46_1/lib
+
         MPICH_LIB = -lmpi -lgomp -lmpich
 	QWT_LIB = -lqwt-qt4
-        OTHER_LIB = -lpthread
+        BOOST_LIB = -lboost_filesystem -lboost_system -lboost_serialization -lboost_thread
+        OTHER_LIB = -lpthread -L$${NLOPT_DIR}/lib -lnlopt -lm
 }
 
 
@@ -68,8 +70,6 @@ win32 {
 # Для unix
 linux-g++|linux-g++-64 {
         QMAKE_CXXFLAGS_RELEASE += -fopenmp -o2 -std=c++0x
-        QMAKE_CXXFLAGS += -std=c++0x
-
 }
 linux-icc|linux-icc-64 {
         QMAKE_CXXFLAGS += -std=c++0x -no-multibyte-chars -wd913
