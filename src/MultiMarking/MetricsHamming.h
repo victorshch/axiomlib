@@ -19,6 +19,8 @@ class Hamming : public DTWMetric {
     public:
 
     Hamming() {}
+
+	virtual DTWMetric* clone() const { return DTWMetric::clone_impl(this); }
     //
     double compute (const std::vector<bool>& v1, const std::vector<bool>& v2);
 

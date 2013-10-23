@@ -23,6 +23,8 @@ public:
 
     Equal();
 
+	virtual DTWMetric* clone() const { return DTWMetric::clone_impl(this); }
+
     ~Equal() { }
     // realisation distance for DTW
     double compute(const std::vector<bool>& v1, const std::vector<bool>& v2);

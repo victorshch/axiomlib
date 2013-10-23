@@ -17,6 +17,8 @@ namespace MultiMarking {
 class Matrix : public DTWMetric {
 public:
     Matrix() {}
+
+	virtual DTWMetric* clone() const { return DTWMetric::clone_impl(this); }
     //
 	double compute(const std::vector<bool>& v1, const std::vector<bool>& v2);
     void computeDTWForMetric(const MultiMark &t, int i, int Nmin, int Nmax, const MultiMark &ref, std::vector<double> &result);

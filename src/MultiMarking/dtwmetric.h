@@ -35,6 +35,13 @@ class DTWMetric {
     //
     ~DTWMetric() { }
 
+
+	virtual DTWMetric* clone() const = 0;
+
+	virtual bool isWeighted() const { return false; }
+
+	virtual void setWeights(const std::vector<double>& w) { return; }
+
    // Инициализация метрики
    static DTWMetric* getMetric(std::string name);
    //
@@ -44,6 +51,13 @@ class DTWMetric {
 
    // Вычисление DTW
    static void computeDTW (DTWMetric* m, const MultiMark& t, int i,int Nmin,int Nmax, const MultiMark& ref, std::vector<double>& result);
+
+protected:
+   template<class Derived>
+   static DTWMetric* clone_impl(const Derived* d) {
+	   return new Derived(*d);
+   }
+
 
 };// end of class
 
