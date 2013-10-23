@@ -3,6 +3,8 @@
 #include "../GoalStrategyFactory.h"
 #include "../Logger.h"
 
+#include "nlopt.hpp"
+
 #include "AXStage.h"
 
 #include "ASStage.h"
@@ -17,6 +19,21 @@
 using namespace AxiomLib;
 using namespace AxiomLib::FuzzyMultiDataExt;
 
+std::ostream& operator << (std::ostream& ostr, const std::vector<double>& v) {
+	ostr << "[" << v.size() << "]";
+	ostr << "(";
+	for(unsigned i = 0; i < v.size(); ++i) {
+		ostr << v[i] << ", ";
+	}
+	ostr << ")";
+	return ostr;
+}
+
+std::string toStr(const std::vector<double>& v) {
+	std::ostringstream ostr;
+	ostr << v;
+	return ostr.str();
+}
 
 void debug_bool(std::vector<std::vector<std::vector<bool> > > common){
 
@@ -118,11 +135,17 @@ void ASStageMultiMarking::initFromEnv(const Environment& env){
             throw AxiomLibException("FuzzyMultiDataExt_AS::setParamsFromEnv : m is undefined.");
     else
         m = m->getMetric(name_m) ;
+	if(!m) {
+		throw AxiomLibException("Invalid metric " + name_m);
+	}
     // Метрика для распознавателя.
     if (env.getStringParamValue (name_m, "mForRecognize") < 0)
             throw AxiomLibException("FuzzyMultiDataExt_AS::setParamsFromEnv : mForRecognize is undefined.");
     else
         mForRecognize = mForRecognize->getMetric(name_m) ;
+	if(!mForRecognize) {
+		throw AxiomLibException("Invalid metric " + name_m);
+	}
     //Порог для сравнения при подходе с подмножествами
     if (env.getDoubleParamValue (porog, "porog") < 0)
             throw AxiomLibException("FuzzyMultiDataExt_AS::setParamsFromEnv : porog is undefined.");
@@ -139,11 +162,14 @@ void ASStageMultiMarking::initFromEnv(const Environment& env){
     if (env.getIntParamValue (maxNOP, "maxNOP") < 0)
             throw AxiomLibException("FuzzyMultiDataExt_AS::setParamsFromEnv : maxNOP is undefined.");
 
+	env.getParamValue(maxGoalToOptimizeWeights, "ASMaxGoalToOptimizeWeights", 1000.0);
+
 }
 
 
 ASStageMultiMarking::ASStageMultiMarking(FuzzyDataSet* fuzzyDataSet,
                                          AXStage* stage2): fuzzyDataSet(fuzzyDataSet), stage2(stage2), logger(Logger::getInstance()){
+	maxGoalToOptimizeWeights = 1000;
 }
 
 /****************************************************************************
@@ -225,22 +251,20 @@ return result;
 
 // Функция запуска поиска разметки ethalon в markUp и запись результатов поиска в result
 void ASStageMultiMarking::recognize (const AxiomExprSetPlus &as, std::vector <std::vector<bool> > &markUp, const std::vector <std::vector<bool> > &genMarkUp, std::vector <int> &result) const{
+	MultiMarking::DTWMetric* metric = mForRecognize->clone();
+	metric->setWeights(as.axiomWeights());
 
     std::vector<double> resultInDouble(markUp.size(), 1.0);
     std::vector<double> temp_result;
     int windowSizeLowerLimit  =  std::max(int((1.0/mStretch)*genMarkUp.size()), 1);
     int windowSizeUpperLimit  =  std::max(int((mStretch)*genMarkUp.size()), 1);
 
-        /*std::cerr << "windowSizeLowerLimit  =  " << windowSizeLowerLimit << ", windowSizeUpperLimit  =  " << windowSizeUpperLimit
-              << ", markUp.size()  =  " << markUp.size()
-                                 << ", genMarkUp.size()  =  " << genMarkUp.size() << std::endl;*/
 	if(genMarkUp.size() > 0) {
         for (int s = windowSizeUpperLimit;s<markUp.size();s++){
 				//Logger::debug("Window : " + boost::lexical_cast<std::string>((1.0/mStretch)*etalon[i].size()) + " " + boost::lexical_cast<std::string>((mStretch)*etalon[i].size()));
                                 //Logger::debug("Computing DTW...");
                         temp_result.clear();
-			mForRecognize->computeDTWForMetric( markUp, s , windowSizeLowerLimit, windowSizeUpperLimit, genMarkUp, temp_result);
-                                //Logger::debug("Setting distance...");
+			metric->computeDTWForMetric( markUp, s , windowSizeLowerLimit, windowSizeUpperLimit, genMarkUp, temp_result);
                         resultInDouble[s]  =  minimum(temp_result);
 		}
         }
@@ -309,7 +333,68 @@ double ASStageMultiMarking::matterAxiomSetFunc (AxiomExprSetPlus &as) const  {
         // Вычисление общего значения целевой фунекции для данной системы аксиом с учетом выбранных разметок эталонных траекторий
 
         as.goal  =  goalStrategy->compute(as.errFirst, as.errSecond);
-        return as.goal;
+		return as.goal;
+}
+
+struct optimize_struct_helper {
+	const ASStage* stage;
+	AxiomExprSetPlus axiomExprSetPlus;
+};
+
+double optimize_function_helper(const std::vector<double>& x, std::vector<double>& /*grad*/, void* s) {
+	optimize_struct_helper* helper = (optimize_struct_helper*) s;
+
+	AxiomExprSetPlus as = helper->axiomExprSetPlus;
+
+	as.axioms.back()->weight = x[0];
+	as.setAxiomWeights(as.axiomWeights());
+
+	helper->stage->recalculateMatterASFunc(as);
+
+	return as.goal;
+}
+
+void ASStageMultiMarking::selectWeight(AxiomExprSetPlus &as) const
+{
+	nlopt::opt opt(nlopt::GN_DIRECT_L, 1);
+
+	optimize_struct_helper helper = { this, as };
+
+	opt.set_min_objective(&optimize_function_helper, &helper);
+
+	opt.set_lower_bounds(0);
+	opt.set_upper_bounds(1);
+
+	opt.set_stopval(0.0);
+	opt.set_maxtime(1.5);
+//	opt.set_xtol_abs(0.05);
+
+	std::vector<double> result(1, as.axioms.back()->weight);
+	double result_f;
+
+	as.setAxiomWeights(as.axiomWeights());
+
+	std::ostringstream ostr;
+	ostr << "Optimizing weight of last axiom...\n";
+	ostr << "Initial weights: " << as.axiomWeights() << "\n";
+
+	ostr << "Initial goal: " << as.goal << " (" << as.errFirst << ", " << as.errSecond <<  ")\n";
+
+	nlopt::result r = opt.optimize(result, result_f);
+
+	ostr << "Final goal: " << result_f << "\n";
+
+	as.axioms.back()->weight = result[0];
+	as.setAxiomWeights(as.axiomWeights());
+
+	recalculateMatterASFunc(as);
+
+	ostr << "Final weights: " << as.axiomWeights() << "\n";
+	ostr << "Final goal: " << as.goal << " (" << as.errFirst << ", " << as.errSecond << ")\n";
+	as.setAxiomWeights(as.axiomWeights());
+	recalculateMatterASFunc(as);
+	ostr << "Final goal: " << as.goal << " (" << as.errFirst << ", " << as.errSecond << ")\n";
+	Logger::debug(ostr.str());
 }
 
 double ASStageMultiMarking::matterAxiomSetFunc(AxiomExprSetPlus &as, const std::vector<std::vector<std::vector<std::vector<bool> > > >& markupVariants) const {
@@ -329,7 +414,12 @@ double ASStageMultiMarking::matterAxiomSetFunc(AxiomExprSetPlus &as, const std::
         }
         // Вычисление общего значения целевой фунекции для данной системы аксиом с учетом выбранных разметок эталонных траекторий
 
-        as.goal  =  goalStrategy->compute(as.errFirst, as.errSecond);
+		as.goal = goalStrategy->compute(as.errFirst, as.errSecond);
+
+		if(as.goal <= maxGoalToOptimizeWeights && as.axioms.size() > 1 && this->mForRecognize->isWeighted()) {
+			selectWeight(as);
+		}
+
         return as.goal;
 }
 
@@ -361,6 +451,7 @@ double ASStageMultiMarking::matterAxiomSetFunc (AxiomExprSetPlus &as, std::vecto
         }
         // Вычисление значения целевой функции для полученного числа ошибок I и II рода
         as.goal  =  goalStrategy->compute(as.errFirst, as.errSecond);
+
         return as.goal;
 }
 
@@ -415,7 +506,7 @@ double ASStageMultiMarking::matterAxiomSetFunc (AxiomExprSetPlus &as, int abType
                 // разметка траектории контрольной выборки системой аксиом as
                 createRefMarkUp(as,FuzzyDataSet::Testing,abType, t, curMarkUp);
                 // Распознавание нештатного поведения в разметке ряда
-                 recognize (curMarkUp, genMarkUp, result);
+				 recognize (as, curMarkUp, genMarkUp, result);
                 // Вычисление числа ошибок первого и второго рода
                 num  =  getStatistic (result);
                 // Суммирование числа ошибок
@@ -436,7 +527,7 @@ double ASStageMultiMarking::matterAxiomSetFunc (AxiomExprSetPlus &as, int abType
 					// размечаем траекторию нормального поведения
 					createRefMarkUp(as,FuzzyDataSet::Testing, classNo, t, curMarkUp);
 					// Распознавание нештатного поведения в разметке ряда
-					recognize (as, curMarkUp, genMarkUp, result);
+				recognize (as, curMarkUp, genMarkUp, result);
 					// Вычисление числа ошибок первого и второго рода
 					num = getStatistic (result);
 					// Суммирование числа ошибокover
@@ -747,9 +838,12 @@ std::vector<std::vector<std::vector<bool> > > ASStageMultiMarking::stringOut(std
     return result;
 }
 
+//#define AXIOMLIB_ASSTAGEMULTIMARKING_LCS_VERBOSE
 
 inline int ASStageMultiMarking::createMarkUpVariants (std::vector<std::vector<std::vector<bool> > > &genMarkUps,std::vector<std::vector<std::vector<bool> > >  &resMarkUps) const {
+#ifdef AXIOMLIB_ASSTAGEMULTIMARKING_LCS_VERBOSE
     std::cerr << "\nFinding common sequences\n";
+#endif
     if (!areMultiMark){
         std::vector<std::vector<int > > _resMarkUps,_genMarkUps, fordebug;
         int numberOfAxiom;
@@ -760,7 +854,7 @@ inline int ASStageMultiMarking::createMarkUpVariants (std::vector<std::vector<st
         temp.push_back(_resMarkUps[0]);
         for (int i = 1;i<_resMarkUps.size(); i++){
             for (int j = 0;j<_genMarkUps.size(); j++){
-
+#ifdef AXIOMLIB_ASSTAGEMULTIMARKING_LCS_VERBOSE
                 fordebug.clear();
                 fordebug.push_back(_resMarkUps[i]);
                 std::cerr << "Comparing\n";
@@ -770,10 +864,12 @@ inline int ASStageMultiMarking::createMarkUpVariants (std::vector<std::vector<st
                 std::cerr << "with\n";
                 debug_int(fordebug);
                 std::cerr << "\n";
-
+#endif
                 std::vector<std::vector<int> > common  =  findCommonSubsequence(_resMarkUps[i],_genMarkUps[j],distanceFunctionForAxiom,choiceFunctionForAxiom,this->porog,this->maxNOP);
+#ifdef AXIOMLIB_ASSTAGEMULTIMARKING_LCS_VERBOSE
                 std::cerr << "Common sequence size "<< common.size() <<"\n";
                 debug_int(common);
+#endif
                 if (common.size()>0){
                     for (int k = 0;k<common.size();k++){
                         temp.push_back(common[k]);
@@ -791,7 +887,7 @@ inline int ASStageMultiMarking::createMarkUpVariants (std::vector<std::vector<st
         temp.push_back(resMarkUps[0]);
         for (int i  =  1; i < resMarkUps.size(); i++){
             for (int j  =  0; j < genMarkUps.size(); j++){
-
+#ifdef AXIOMLIB_ASSTAGEMULTIMARKING_LCS_VERBOSE
                 fordebug.clear();
                 fordebug.push_back(resMarkUps[i]);
                 std::cerr << "Comparing\n ";
@@ -801,10 +897,12 @@ inline int ASStageMultiMarking::createMarkUpVariants (std::vector<std::vector<st
                 std::cerr << "with\n";
                 debug_bool(fordebug);
                 std::cerr << "\n";
-
+#endif
                 std::vector<std::vector<std::vector<bool> > > common  =  findCommonSubsequence(resMarkUps[i], genMarkUps[j], DistanceFunctor(this->m),choiceFunctionForMultiMark,this->porog,this->maxNOP);
+#ifdef AXIOMLIB_ASSTAGEMULTIMARKING_LCS_VERBOSE
                 std::cerr << "Common sequence size "<< common.size() <<"\n";
                 debug_bool(common);
+#endif
                 if (common.size()>0){
                     for (int k = 0;k<common.size();k++){
                         temp.push_back(common[k]);
@@ -816,7 +914,9 @@ inline int ASStageMultiMarking::createMarkUpVariants (std::vector<std::vector<st
         }
 
     }
+#ifdef AXIOMLIB_ASSTAGEMULTIMARKING_LCS_VERBOSE
     std::cerr << "------------------------------------------------------------------------------------------------------------\n";
+#endif
         return 0;
 }
 
@@ -1254,6 +1354,7 @@ void ASStageMultiMarking::run(){
     axiomSets.resize(numOfAxioms);
 
     logger->writeComment("Create one axiom system");
+	debug() << "ClassCount : " << this->fuzzyDataSet->getClassCount();
     // Создаем набор систем аксиом, каждая из которых будет содержать только одну аксиому
 	//#pragma omp parallel for schedule(dynamic, 1)
     for (int i  =  0; i < numOfAxioms; i++) {
@@ -1263,8 +1364,10 @@ void ASStageMultiMarking::run(){
         axiomSets[i].axiomsIndex.push_back(i);
         // Вычисляем значение целевой функции для такой системы аксиом + учет типа разметки
         matterAxiomSetFunc (axiomSets[i]);
-
     }
+
+	debug() << "Finished creating single axiom axiom systems";
+
     // Итерационный алгоритм построения системы аксиом
     bool condition  =  true;
     std::vector <int> indicesOfBestSets;
@@ -1290,12 +1393,15 @@ void ASStageMultiMarking::run(){
                     int size = axiomSets[axSet].axiomsIndex.size();
                     unsigned int lastAxiomInSet = axiomSets[axSet].axiomsIndex[size-1];
 
-					//#pragma omp parallel for schedule(dynamic, 1)
+
+					//todo parallelize here
                     for (int ax  =  lastAxiomInSet + 1; ax < (int) bestAxioms.size(); ax++) {
                             // Для всех аксиом, еще не входящих в рассматриваемую систему аксиом создаем новую систему
                                     // создаем новую систему аксиом на основе выбранной - добавляя в нее еще невходивщую аксиому
                                     newAxiomSets[ax]  =  axiomSets[axSet];
-                                    tryAddAxiom(newAxiomSets[ax], bestAxioms[ax], ax);
+									debug() << "Current axiom set: " << axSet + 1 << " out of " << axiomSets.size()
+											<< ", current axiom: " << ax + 1 << " out of " << bestAxioms.size();
+									tryAddAxiom(newAxiomSets[ax], bestAxioms[ax], ax);
 
                     }
                     //Нам не нужно проверять, а есть ли аксиома из-за способа перебора

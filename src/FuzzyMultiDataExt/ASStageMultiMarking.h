@@ -298,7 +298,10 @@ namespace FuzzyMultiDataExt {
         //Порог для сравнения при подходе с подмножествами
         double porog;
         double porogForDTW;
-        bool areMultiMark;
+		bool areMultiMark;
+
+		double maxGoalToOptimizeWeights;
+
         // Растяжка для нештатных при расплознавании(Размер окна)
         double mStretch;
         // Максимальное количество наибольших общих подпоследовательностей у двух(!) разметок
@@ -340,6 +343,10 @@ namespace FuzzyMultiDataExt {
 		double matterAxiomSetFunc (AxiomExprSetPlus &as, std::vector <std::vector <std::vector <bool> > > &markUps) const;
 		double matterAxiomSetFunc (AxiomExprSetPlus &as, int abType, const std::vector <std::vector<bool> > &genMarkUp, double &goalVal, int &errFirstVal, int &errSecondVal) const;
 		double matterAxiomSetFunc (AxiomExprSetPlus &as) const;
+
+		/// Выбор веса для последней добавленной аксиомы
+		void selectWeight(AxiomExprSetPlus& as) const;
+
         static std::vector<std::vector<int > > stringIn(std::vector<std::vector<std::vector<bool> > > &genMarkUps,int &numberOfAxiom);
         static std::vector<std::vector<std::vector<bool> > > stringOut(std::vector<std::vector<int > > &genMarkUps,int &numberOfAxiom);
 

@@ -146,6 +146,12 @@ class AxiomExprSet {
 
 	// Функция сохранения системы аксиом в файл (с указанием размерости исходных данных для каждого элементарного условия)
 	int saveAxiomSetToFile (std::string baseDir, std::string axiomSetName, std::vector <std::string> &dataSetParams, int first = -1, int second = -1) const;
+
+	/// Возвращает веса аксиом
+	std::vector<double> axiomWeights() const;
+
+	/// Устанавливает новые веса аксиом
+	bool setAxiomWeights(const std::vector<double>& value);
         
 }; // end of class
 

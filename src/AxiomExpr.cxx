@@ -17,6 +17,7 @@ using namespace AxiomLib;
 
 // Пустой конструктор - с заданием имени аксиомы по умолчанию
 AxiomExpr::AxiomExpr () {
+	weight = 0.5;
 	isVoting = false;
 	votingThreshold = 2;
 	setDefaultName();
@@ -27,6 +28,7 @@ AxiomExpr::AxiomExpr () {
 
 // пустой конструктор с заданием имени аксиомы во входном параметре
 AxiomExpr::AxiomExpr (const std::string sName) {
+	this->weight = 0.5;
 	votingThreshold = 2;
 	isVoting = false;
 	this->nameOfAxiomExpr.assign (sName);
@@ -41,6 +43,7 @@ AxiomExpr::AxiomExpr(const ElemCondPlus &ec)
 	expression.resize(1);
 	expression[0].resize(1);
 	expression[0][0] = ec;
+	weight = 0.5;
 }
 
 

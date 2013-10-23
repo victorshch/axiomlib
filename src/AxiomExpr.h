@@ -40,6 +40,7 @@ class AxiomExpr {
 	void serialize(Archive &archive, const unsigned int /*version*/) {
 		archive & BOOST_SERIALIZATION_NVP(nameOfAxiomExpr);
 		archive & BOOST_SERIALIZATION_NVP(nameOfECBank);
+		archive & BOOST_SERIALIZATION_NVP(weight);
 		archive & BOOST_SERIALIZATION_NVP(isVoting);
 		if(!isVoting) {
 			archive & BOOST_SERIALIZATION_NVP(expression);
@@ -64,6 +65,9 @@ class AxiomExpr {
  protected:
 
  public:
+
+	// Вес аксиомы
+	double weight;
 
 	// Название аксиомы
     std::string nameOfAxiomExpr;

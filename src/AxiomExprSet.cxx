@@ -8,6 +8,8 @@
 ****************************************************************************/
 #include "AxiomExprSet.h"
 
+#include <algorithm>
+
 using namespace AxiomLib;
 
 #define str_default_axiomSet_name	"no_name_AxiomExprSet"
@@ -548,4 +550,35 @@ signed int AxiomExprSet::saveAxiomSetToFile (std::string baseDir, std::string ax
 	AxiomSetBase axiomSetBase;
 	axiomSetBase.saveToAS (baseDir, aess, dataSetParams, first, second);
 	return 0;
+}
+
+std::vector<double> AxiomExprSet::axiomWeights() const
+{
+	std::vector<double> result;
+	result.reserve(axioms.size());
+	for(unsigned i = 0; i < axioms.size(); ++i) {
+		result.push_back(axioms[i]->weight);
+	}
+
+	return result;
+}
+
+bool AxiomExprSet::setAxiomWeights(const std::vector<double> &value)
+{
+	if(value.size() != axioms.size()) {
+		return false;
+	}
+
+	if(axioms.size() == 1) {
+		axioms.front()->weight = 1.0;
+		return true;
+	}
+
+	double s = std::accumulate(value.begin(), value.end(), 0.0);
+
+	for(unsigned i = 0; i < axioms.size(); ++i) {
+		axioms[i]->weight = value[i]/s;
+	}
+
+	return true;
 }
