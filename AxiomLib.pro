@@ -11,7 +11,8 @@ CONFIG -= qt
 
 DEFINES += "BOOST_FILESYSTEM_VERSION=2"
 INCLUDEPATH += $$MPICH_INCLUDE \
-    $$BOOST_INCLUDE
+    $$BOOST_INCLUDE \
+    $$OTHER_INCLUDE
 QT -= core \
     gui
 TARGET = AxiomLib
@@ -39,7 +40,7 @@ win32 {
 # unix
 linux-g++|linux-g++-64 { 
     QMAKE_CXXFLAGS += -std=c++0x
-    QMAKE_CXXFLAGS_RELEASE += -fopenmp \
+    QMAKE_CXXFLAGS_RELEASE +=  \
         -o2
 }
 linux-icc|linux-icc-64 { 

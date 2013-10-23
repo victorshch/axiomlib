@@ -2,21 +2,23 @@
 
 ### Пути include'ов ###
 
+NLOPT_DIR = /home/wictor/nlopt
+
 # Для windows
 win32 {
         AXIOMLIB_INCLUDE = F:/Workspace/Axiomlib_working_copy2/src
         QWT_INCLUDE = D:/lib/qwt-5.2.1/src
         MPICH_INCLUDE = "C:/Program Files (x86)/MPICH2/include"
         BOOST_INCLUDE = "C:/Program Files (x86)/boost/boost_1_47"
-	OTHER_INCLUDE =
+        OTHER_INCLUDE =
 }
 # Для unix
 unix {
-	AXIOMLIB_INCLUDE = /home/wictor/Projects/axiomlib/src
+        AXIOMLIB_INCLUDE = /home/wictor/projects/axiomlib/src
         QWT_INCLUDE = "/usr/include/qwt-qt4"
         MPICH_INCLUDE = "/usr/include/mpich2"
-        BOOST_INCLUDE = "/home/wictor/boost_1_46_1/include"
-	OTHER_INCLUDE =	
+        BOOST_INCLUDE =
+        OTHER_INCLUDE =	$${NLOPT_DIR}/include
 }
 
 ### Спецификация библиотек ###
@@ -31,7 +33,7 @@ debug {
         AXIOMLIB_LIB = F:/Workspace/Axiomlib_working_copy2/release/AxiomLib.lib
         QWT_LIB = D:/lib/qwt-5.2.1/lib/qwt.lib
 }
-        BOOST_LIB = /LIBPATH:"C:/Program Files (x86)/boost/boost_1_47/lib"
+        BOOST_LIB = -lboost_filesystem -lboost_system -lboost_serialization
         MPICH_LIB = "C:/Program Files (x86)/MPICH2/lib/mpi.lib"
         #MPICH_LIB = /LIBPATH:"C:/Program Files (x86)/MPICH2/lib"
 
@@ -44,19 +46,16 @@ debug {
 # Для unix
 unix {
 linux-icc-64|linux-icc {
-        AXIOMLIB_LIB = /home/wictor/Projects/axiomlib/release/libAxiomLib.a
+        AXIOMLIB_LIB = /home/wictor/projects/axiomlib/release/libAxiomLib.a
 } else {
-        AXIOMLIB_LIB = /home/wictor/Projects/axiomlib/release/libAxiomLib.a
+        AXIOMLIB_LIB = /home/wictor/projects/axiomlib/release/libAxiomLib.a
 }
         BOOST_LIBDIR = /home/wictor/boost_1_46_1/lib
 
         MPICH_LIB = -lmpi -lgomp -lmpich
 	QWT_LIB = -lqwt-qt4
-        BOOST_LIB = $${BOOST_LIBDIR}/libboost_filesystem.a \
-        $${BOOST_LIBDIR}/libboost_system.a \
-        $${BOOST_LIBDIR}/libboost_serialization.a \
-        $${BOOST_LIBDIR}/libboost_thread.a
-        OTHER_LIB = -lpthread
+        BOOST_LIB = -lboost_filesystem -lboost_system -lboost_serialization -lboost_thread
+        OTHER_LIB = -lpthread -L$${NLOPT_DIR}/lib -lnlopt -lm
 }
 
 
