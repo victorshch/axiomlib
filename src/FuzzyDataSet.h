@@ -123,6 +123,8 @@ public:
 	void setNormalStr(EnvDataSet &env);
 	
 	void setNormalStr(const std::string& str);
+
+	void bootstrapNormalBehavior(double p);
 private:
 	
 	std::vector<DataSetDivision> divisions;

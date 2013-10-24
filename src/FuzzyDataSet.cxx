@@ -405,4 +405,9 @@ void FuzzyDataSet::setNormalStr(const std::string &str) {
 	this->normal = str;
 }
 
+void FuzzyDataSet::bootstrapNormalBehavior(double p)
+{
+	divisions[Reference].bootstrapNormal(p);
+}
+
 }

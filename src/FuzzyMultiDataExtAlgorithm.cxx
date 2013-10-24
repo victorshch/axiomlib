@@ -72,6 +72,13 @@ int FuzzyMultiDataExtAlgorithm::initFromEnv(const Environment &env) {
 	// восстанавливаем в данном классе вектор индексов параметров в каноническом представленнии по которым вести поиск нештатых ситуаций
 	fuzzyDataSet.getParamNums(dataSetParams, env, envDataSet);
 
+	double p;
+	if (!env.getDoubleParamValue(p, "BootstrapDataSetParameter")) {
+		if(p > 0) {
+			fuzzyDataSet.bootstrapNormalBehavior(p);
+		}
+	}
+
 	// Определяем базовую директорию с наборами аксиом
 	std::string curAxiomName;
 	if (env.getStringParamValue(axiomBaseDir, "AxiomBaseDir") < 0)

@@ -20,6 +20,11 @@ namespace AxiomLib {
 
 class DataSetDivision
 {
+private:
+	typedef boost::tuples::tuple<MultiTS, IntInterval> ClippedMultiTS;
+	typedef std::vector<ClippedMultiTS> ClippedClassTS;
+	typedef std::vector<ClippedClassTS> ClippedClassTSSet;
+
 public:
     DataSetDivision(const ReferenceClassesTS &abnormalTS, const ClassTS &normalTS);
 	
@@ -32,7 +37,7 @@ public:
 	int getMultiTSCount(int classNo) const;
 	
 	// Возвращает одномерный ряд по индексам
-	bool getTSByIndex(std::vector<double> &v, int behaviourType, int multiTSNo, int tsNo, bool clip = true) const;
+	bool getTSByIndex(std::vector<double> &v, int behaviourType, int multiTSNo, int tsNo, bool clip = false) const;
 	
 	// Возвращает длину мультиряда
 	int getMultiTSLength(int behaviourType, int multiTSNo) const;
@@ -49,10 +54,11 @@ public:
 	
 	// Возвращает размерности траекторий нормального поведения
 	bool getNormalSize(std::vector<int> &v) const;
+
+	// "Разрезает" траектории нормального поведения на более короткие
+	void bootstrapNormal(double p);
+
 private:
-	typedef boost::tuples::tuple<MultiTS, IntInterval> ClippedMultiTS;
-	typedef std::vector<ClippedMultiTS> ClippedClassTS;
-	typedef std::vector<ClippedClassTS> ClippedClassTSSet;
 	
 	ClippedClassTSSet m_tsSet;
 	
@@ -62,6 +68,7 @@ private:
 	ClippedClassTS &getClippedClassTS(int behaviourType);
 	ClippedMultiTS &getClippedMultiTS(int behaviourType, int multiTSNo);
 	
+	static std::vector<MultiTS> bootstrapMultiTS(const MultiTS& multiTS, unsigned count, unsigned minLength, unsigned maxLength);
 };
 
 }

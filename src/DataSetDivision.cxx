@@ -3,6 +3,7 @@
 #include <boost/lexical_cast.hpp>
 
 #include "DataSetDivision.h"
+#include "Logger.h"
 
 using namespace AxiomLib;
 
@@ -60,7 +61,7 @@ const DataSetDivision::ClippedClassTS &DataSetDivision::getClippedClassTS(int be
 	int behaviourIndex = behaviourType + 1;
 	
 	if(behaviourIndex >= m_tsSet.size()) {
-		throw AxiomLibException("Invalid behaviour type index "+boost::lexical_cast<std::string>(behaviourType));
+		throw AxiomLibException("DataSetDivision::getClippedClassTS() : Invalid behaviour type index "+boost::lexical_cast<std::string>(behaviourType));
 	}
 	
 	return m_tsSet[behaviourIndex];
@@ -74,7 +75,7 @@ DataSetDivision::ClippedClassTS &DataSetDivision::getClippedClassTS(int behaviou
 	int behaviourIndex = behaviourType + 1;
 	
 	if(behaviourIndex >= m_tsSet.size()) {
-		throw AxiomLibException("Invalid behaviour type index "+boost::lexical_cast<std::string>(behaviourType));
+		throw AxiomLibException("DataSetDivision::getClippedClassTS() : Invalid behaviour type index "+boost::lexical_cast<std::string>(behaviourType));
 	}
 	
 	return m_tsSet[behaviourIndex];
@@ -107,6 +108,42 @@ DataSetDivision::ClippedMultiTS &DataSetDivision::getClippedMultiTS(int behaviou
 	}
 	
 	return classTS[multiTSNo];
+}
+
+std::vector<MultiTS> DataSetDivision::bootstrapMultiTS(const MultiTS &multiTS, unsigned count, unsigned minLength, unsigned maxLength)
+{
+	srand(time(0));
+
+	std::vector<MultiTS> result;
+
+	result.reserve(count);
+
+	for(unsigned i = 0; i < count; ++i) {
+		unsigned length = multiTS.length();
+		if(length > minLength) {
+			unsigned variation = (std::min((unsigned)multiTS.length(), maxLength) - minLength);
+			if(variation) {
+				length = minLength + rand() % variation;
+			} else {
+				length = minLength;
+			}
+		}
+
+		unsigned position = rand() % (multiTS.length() - length);
+
+		MultiTS resultTS;
+		resultTS.validParams = multiTS.validParams;
+		resultTS.data.resize(multiTS.data.size());
+		for(unsigned i = 0; i < multiTS.data.size(); ++i) {
+			if(multiTS.validParams[i]) {
+				resultTS.data[i].assign(multiTS.data[i].begin() + position, multiTS.data[i].begin() + position + length);
+			}
+		}
+
+		result.push_back(resultTS);
+	}
+
+	return result;
 }
 
 
@@ -168,4 +205,44 @@ bool DataSetDivision::getClassSize(int classNo, std::vector<int> &v) const {
 
 bool DataSetDivision::getNormalSize(std::vector<int> &v) const {
 	return getClassSize(-1, v);
+}
+
+void DataSetDivision::bootstrapNormal(double p)
+{
+	if(m_tsSet.size() < 2) {
+		return;
+	}
+
+	int minAbnormalSize = -1, maxAbnormalSize = -1;
+
+	for(unsigned classNo = 1; classNo < m_tsSet.size(); ++classNo) {
+		for(unsigned multiTSNo = 0; multiTSNo < m_tsSet[classNo].size(); ++multiTSNo) {
+			if(minAbnormalSize < 0) {
+				minAbnormalSize = m_tsSet[classNo][multiTSNo].get<0>().length();
+			} else {
+				minAbnormalSize = std::min(m_tsSet[classNo][multiTSNo].get<0>().length(), minAbnormalSize);
+			}
+
+			if(maxAbnormalSize < 0) {
+				maxAbnormalSize = m_tsSet[classNo][multiTSNo].get<0>().length();
+			} else {
+				maxAbnormalSize = std::max(m_tsSet[classNo][multiTSNo].get<0>().length(), maxAbnormalSize);
+			}
+		}
+	}
+
+	const ClippedClassTS& normalTS = m_tsSet[0];
+	ClippedClassTS newNormalTS;
+
+	for(unsigned i = 0; i < normalTS.size(); ++i) {
+		unsigned coverageCount = (normalTS[i].get<0>().length() + minAbnormalSize - 1) / minAbnormalSize;
+
+		std::vector<MultiTS> newTS = bootstrapMultiTS(normalTS[i].get<0>(), (unsigned)coverageCount * p, minAbnormalSize, maxAbnormalSize);
+
+		for(unsigned i = 0; i < newTS.size(); ++i) {
+			newNormalTS.push_back(boost::tuples::make_tuple(newTS[i], IntInterval(0, newTS[i].length())));
+		}
+	}
+
+	m_tsSet[0] = newNormalTS;
 }
