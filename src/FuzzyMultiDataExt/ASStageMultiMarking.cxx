@@ -423,16 +423,21 @@ double ASStageMultiMarking::matterAxiomSetFunc (AxiomExprSetPlus &as, int abType
         int numNormalMultiTS;
         std::vector <int> numNormalTS;
         fuzzyDataSet->getNormalTestSize (numNormalMultiTS, numNormalTS);
-        for (int t  =  0; t < (int) fuzzyDataSet->getMutiTSCount(FuzzyDataSet::Testing, -1); t++) {
-                // размечаем траекторию нормального поведения
-                createRefMarkUp(as,FuzzyDataSet::Testing,t, numNormalTS[t],curMarkUp);
-                // Распознавание нештатного поведения в разметке ряда
-                recognize (curMarkUp, genMarkUp, result);
-                // Вычисление числа ошибок первого и второго рода
-                num  =  getStatistic (result);
-                // Суммирование числа ошибокover
-                errFirstVal +=  num;
-        }
+		for(int classNo = -1; classNo < fuzzyDataSet->getClassCount(); ++classNo) {
+			if(classNo == abType) {
+				continue;
+			}
+			for (int t = 0; t < (int) fuzzyDataSet->getMutiTSCount(FuzzyDataSet::Testing, classNo); t++) {
+					// размечаем траекторию нормального поведения
+					createRefMarkUp(as,FuzzyDataSet::Testing, classNo, t, curMarkUp);
+					// Распознавание нештатного поведения в разметке ряда
+					recognize (as, curMarkUp, genMarkUp, result);
+					// Вычисление числа ошибок первого и второго рода
+					num = getStatistic (result);
+					// Суммирование числа ошибокover
+					errFirstVal += num;
+			}
+		}
 
         // Вычисление значения целевой функции для полученного числа ошибок I и II рода
         goalVal  =  goalStrategy->compute(errFirstVal, errSecondVal);
