@@ -10,8 +10,12 @@
 #define LOGGER_H
 
 #include <string>
+#include <sstream>
 #include <boost/scoped_ptr.hpp>
+#include <boost/shared_ptr.hpp>
 #include <boost/thread/once.hpp>
+
+#include "AxiomLibException.h"
 
 namespace AxiomLib {
 
@@ -62,6 +66,65 @@ private:
 	static void reinit();
 	static boost::once_flag m_once_flag;
 };
+
+// logging stream (modeled after QDebug)
+class LoggerStream {
+public:
+	enum Type {
+		Comment,
+		Debug,
+		Exception
+	};
+
+private:
+	class LoggerStreamInternal {
+	public:
+		LoggerStreamInternal(LoggerStream::Type type_): type(type_), ref(1) {}
+
+		LoggerStream::Type type;
+		std::ostringstream ostr;
+		int ref;
+	};
+
+	LoggerStreamInternal* mInternal;
+public:
+	LoggerStream(Type type) : mInternal(new LoggerStreamInternal(type)) {}
+	LoggerStream(const LoggerStream& other) : mInternal(other.mInternal) {
+		++mInternal->ref;
+	}
+
+	~LoggerStream() {
+		if(!--mInternal->ref) {
+			std::string str = mInternal->ostr.str();
+			LoggerStream::Type type = mInternal->type;
+			delete mInternal;
+			switch(type) {
+			case LoggerStream::Comment: Logger::comment(str); break;
+			case LoggerStream::Debug: Logger::debug(str); break;
+			case LoggerStream::Exception: throw AxiomLibException(str); break;
+			}
+		}
+	}
+
+	template<class T>
+	LoggerStream operator<<(const T& value) {
+		mInternal->ostr << value;
+		return *this;
+	}
+};
+
+inline LoggerStream debug() {
+	return LoggerStream(LoggerStream::Debug);
+}
+
+inline LoggerStream comment() {
+	return LoggerStream(LoggerStream::Comment);
+}
+
+/// Throws exception from LoggerStream's destructor -- use with care!
+inline LoggerStream exception() {
+	return LoggerStream(LoggerStream::Exception);
+}
 
 }
 
