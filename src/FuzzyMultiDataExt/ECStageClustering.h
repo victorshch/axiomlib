@@ -1,17 +1,16 @@
 #pragma once
 
+#ifndef FUZZYMULTIDATAEXT_EC_CLUSTERING_H
+#define FUZZYMULTIDATAEXT_EC_CLUSTERING_H
+
 #include "../Environment.h"
 #include "../FuzzyDataSet.h"
 #include "Common.h"
 #include "ECStage.h"
 #include "ForwardDeclarations.h"
 #include "ClusteringFeatures/ClusteringFeature.h"
-#include "ClusteringRealizations\IClusteringModel.h"
-#include "ECStageClusteringElemCond.h"
-
-
-#ifndef FUZZYMULTIDATAEXT_EC_CLUSTERING_H
-#define FUZZYMULTIDATAEXT_EC_CLUSTERING_H
+#include "ClusteringRealizations\ClusteringModel.h"
+#include "ElemCondClustering.h"
 
 using namespace std;
 
@@ -37,24 +36,34 @@ public:
 	*/
 	
 	// жХОЛГЙЙ ДПУФХРБ Л ОБВПТХ ьх
+	// aType - тип нештатного поведения
+	// dimension - размерность
+	// type - тип элементарного условия (алгоритм кластеризации + набор фич + длина и колво участков)
+	// n - Номер Э условия
 	virtual const ElemCondPlusStat & getEC(int aType, int dimension, int type, int n) const = 0;
 	
-	virtual bool isECSelected(int aType, int dimension, int type, int n) const = 0;
+	virtual bool isECSelected(int aType, int dimension, int type, int n) {
+		return true;
+	}
 	
-	virtual void setECSelected(int aType, int dimension, int type, int n, bool value) = 0;
+	virtual void setECSelected(int aType, int dimension, int type, int n, bool value) {
+
+	}
 	
-	virtual void getECSize(std::vector<std::vector<std::vector<int> > > &result) const = 0;
+	virtual void getECSize(std::vector<std::vector<std::vector<int> > > &result) {
+		// TODO: 
+	}
 	
-	virtual int getECSize() const  = 0;
-	virtual int getECSize(int aType) const  = 0;
+	virtual int getECSize() const  = 0; // Количество типов нештатного поведения
+	virtual int getECSize(int aType) const  = 0; 
 	virtual int getECSize(int aType, int dimension) const = 0;
 	virtual int getECSize(int aType, int dimension, int ecType) const = 0;
 	
+	// TODO: определить в родителе
 	virtual int getECTotalCount() const = 0;
 	
-	virtual void recalculateMatterECFunc(ElemCondPlusStat& ec, int abType) const = 0;
-
-
+	virtual void recalculateMatterECFunc(ElemCondPlusStat& ec, int abType) {
+	}
 private:
 	Logger* logger;
 
@@ -62,7 +71,7 @@ private:
 	std::list<ClusteringFeature*> clusteringFeatures;
 
 	// List of elementary conditions
-	std::list<ECStageClusteringElemCond*> elemCond;
+	std::list<ElemCondClustering*> elemCond;
 	
 	// Count of features in list "clusteringFeatures"
 	int featuresCount;
@@ -70,7 +79,7 @@ private:
 	int dimensions;
 
 	// result data after getting strips and trasforming into vector of feature 
-	vector<vector<vector<double>>> resultFeatures;
+	vector<vector<vector<double> > > resultFeatures;
 
 	// count of strips which are randomly taken from trajectory
 	int stripsCount;
@@ -81,7 +90,7 @@ private:
 	int k;
 	
 	// Realization of clustering algorithm
-	IClusteringModel** clusteringModels;
+	std::vector<ClusteringModel*> clusteringModels;
 
 	void handleTrajectory(const std::vector<double>& trajectory, int dimension);
 };

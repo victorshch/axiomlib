@@ -11,7 +11,9 @@ CONFIG -= qt
 
 DEFINES += "BOOST_FILESYSTEM_VERSION=2"
 INCLUDEPATH += $$MPICH_INCLUDE \
-    $$BOOST_INCLUDE
+    $$BOOST_INCLUDE \
+    $$OTHER_INCLUDE
+
 QT -= core \
     gui
 TARGET = AxiomLib
@@ -56,9 +58,9 @@ linux-icc|linux-icc-64 {
     QMAKE_CXXFLAGS_RELEASE += -openmp
     QMAKE_LFLAGS_RELEASE += -openmp
 }
-win32:# ΠΏΠ¤Π›ΠΠΠ®Π•ΠΠ™Π• Π§ΠΠΆΠΠ™ΠΠ—ΠΠ§, Π£Π§Π΅ΠªΠ‘ΠΠΠ©Π Π£Π Π£Π¤Π‘ΠΠ”Π‘ΠΆΠ¤ΠΠ©ΠΠ™ Π–Π¥ΠΠ›Π“Π™Π΅ΠΠ™,
+win32:# Πζμναΰεοκε ώπτοκοϊπώ, υώσÿβοούι υπ υζβοδβτζούξκ φθομηκσξκ,
 
-# Π›ΠΠ¤ΠΠΆΠ©Π• cl Π£Π®Π™Π¤Π‘Π•Π¤ ΠΠ•Π’Π•ΠªΠ Π‘Π£ΠΠ©ΠΠ™
+# μπζπτύε cl υΰκζβεζ οεχεÿπ βυούξκ
 QMAKE_CXXFLAGS += -D_SCL_SECURE_NO_WARNINGS \
     -D_CRT_SECURE_NO_WARNINGS
 
@@ -230,7 +232,10 @@ SOURCES += src/TreatmentSample.cxx \
     src/elem_conditions/Variance.cxx \
     src/FuzzyMultiDataExt/AXStageSimple.cpp \
     src/FuzzyMultiDataExt/AXStageTree.cpp \
-    src/FuzzyMultiDataExt/ECStageSimple.cxx
+    src/FuzzyMultiDataExt/ECStageSimple.cxx \
+    src/FuzzyMultiDataExt/ClusteringRealizations/KMeansClusteringModel.cpp \
+    src/FuzzyMultiDataExt/ElemCondClustering.cxx \
+    src/FuzzyMultiDataExt/ECStageClustering.cxx
 HEADERS += src/undefs.h \
     src/TreatmentSample.h \
     src/TreatmentFactory.h \
@@ -448,4 +453,11 @@ HEADERS += src/undefs.h \
     src/FuzzyMultiDataExt/AXStageTree.h \
     src/FuzzyMultiDataExt/ECStageSimple.h \
     src/FuzzyMultiDataExt/ECStage.h \
-OTHER_FILES += 
+    src/FuzzyMultiDataExt/ClusteringFeatures/MinValueFeature.h \
+    src/FuzzyMultiDataExt/ClusteringFeatures/MaxValueFeature.h \
+    src/FuzzyMultiDataExt/ClusteringFeatures/ClusteringFeatureFactory.h \
+    src/FuzzyMultiDataExt/ClusteringRealizations/KMeansClusteringModel.h \
+    src/FuzzyMultiDataExt/ClusteringRealizations/ClusteringModel.h \
+    src/FuzzyMultiDataExt/ElemCondClustering.h \
+    src/FuzzyMultiDataExt/ECStageClustering.h \
+    src/FuzzyMultiDataExt/ClusteringFeatures/ClusteringFeature.h

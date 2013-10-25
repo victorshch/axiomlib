@@ -10,7 +10,7 @@ namespace FuzzyMultiDataExt {
 class ClusteringFeature {			
 	public:
 		virtual void initFromEnv(const Environment& env) = 0;
-		virtual double calculate(const std::vector<double> trajectory, int start, int size);
+		virtual double calculate(const std::vector<double>& trajectory, int start, int size);
 };
 };
 

@@ -27,6 +27,8 @@ typedef ElementSelection<AxiomLib::ElemCondPlusStat> ECSelection;
 class ECStage
 {
 public:		
+	static ECStage* create(const std::string& name, FuzzyDataSet* fuzzyDataSet, ECTypeStage* stage0);
+
 	virtual void setECs(const std::vector<std::vector<std::vector<std::vector<ElemCondPlusStat> > > > & value) = 0;
 	
 	virtual int initFromEnv(const Environment& env) = 0;

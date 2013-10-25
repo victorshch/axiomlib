@@ -1,8 +1,9 @@
 #include "ECStageClustering.h"
 #include "Clusteringfeatures/MaxValuefeature.h"
+#include "Clusteringfeatures/MinValuefeature.h"
 
-#include "ClusteringRealizations\SharkClusteringModel.h"
-#include "ECStageClusteringElemCond.h"
+#include "ClusteringRealizations\KMeansClusteringModel.h"
+#include "ElemCondClustering.h"
 
 using namespace AxiomLib;
 using namespace std;
@@ -17,18 +18,20 @@ ECStageClustering::ECStageClustering(FuzzyDataSet* fuzzyDataSet, ECTypeStage* st
 
 int ECStageClustering::initFromEnv(const Environment& env){
 	set<string> clusteringParams;
-	if (!env.getStringSetParamValue(clusteringParams, "ECClustering")){
-		throw AxiomLibException("ECStageClustering::initFromEnv : ECClustering is undefined.");
-	}
+	//if (!env.getStringSetParamValue(clusteringParams, "ECClustering")){
+	//	throw AxiomLibException("ECStageClustering::initFromEnv : ECClustering is undefined.");
+	//}
 
-	for (auto start = clusteringParams.begin(), 
-		 end = clusteringParams.end(); start != end; start++){
-			 // Parse params and create Clustering features using class ClusteringfeatureFactory
-	}
+	//for (auto start = clusteringParams.begin(), 
+	//	 end = clusteringParams.end(); start != end; start++){
+	//		 // Parse params and create Clustering features using class ClusteringfeatureFactory
+	//}
 
 	this->clusteringFeatures.push_back(&MaxValueFeature());
+	this->clusteringFeatures.push_back(&MinValueFeature());
 
 	this->featuresCount = clusteringFeatures.size();
+	return 0;
 }
 
 void ECStageClustering::handleTrajectory(const vector<double>& trajectory, int dimension) {	
@@ -37,7 +40,6 @@ void ECStageClustering::handleTrajectory(const vector<double>& trajectory, int d
 	for (int i = 0; i < stripsCount; i++){
 		vector<double> feature;
 		feature.reserve(featuresCount);
-		// todo: use reserve
 
 		int position = rand() % (length - stripLength);
 		for (auto begin = clusteringFeatures.begin(), end = clusteringFeatures.end();
@@ -61,25 +63,32 @@ void ECStageClustering::run(){
 
 	resultFeatures.resize(dimensions);
 
-	this->clusteringModels = new (IClusteringModel*[featuresCount]);
+	this->clusteringModels.reserve(featuresCount);
 
 	for(int i = 0; i < this->dimensions; i++){
-		this->clusteringModels[i] = new SharkClusteringModel();
+		this->clusteringModels[i] = new KMeansClusteringModel();
 	}
 
 	// foreach class
-	for (auto i = 0; i < classesCount; ++i){			
+	for (auto i = -1; i < classesCount; ++i){			
 		vector<int> numOfTS; 
 		int numOfMultiTS; 
-		fuzzyDataSet->getNormalClassSize(numOfMultiTS, numOfTS);
-		
+
+		numOfMultiTS = fuzzyDataSet->getMutiTSCount(FuzzyDataSet::Reference, i);
+
 		//foreach dimension
 		for (int k = 0; k < dimensions; ++k){
 
 			//foreach trajectory
 			for (int j = 0; j < numOfMultiTS; j++){				
 				vector<double> row;
-				fuzzyDataSet->getNormalTSFromClass (row, j , k);
+
+				if (i == -1) {
+					fuzzyDataSet->getNormalTSFromClass (row, j , k);
+				} else {
+					fuzzyDataSet->getTSByIndexFromClass (row, i, j, k);
+				}
+
 				handleTrajectory(row, k);
 			}			
 		}
@@ -93,7 +102,7 @@ void ECStageClustering::run(){
 
 	for (int j = 0; j < dimensions; j++){
 		for (int i = 0; i < this->k; i++){
-			this->elemCond.push_back(new ECStageClusteringElemCond(i, stripLength, clusteringFeatures, this->clusteringModels[i]));
+			this->elemCond.push_back(new ElemCondClustering(i, stripLength, clusteringFeatures, this->clusteringModels[i]));
 		}
 	}
 }

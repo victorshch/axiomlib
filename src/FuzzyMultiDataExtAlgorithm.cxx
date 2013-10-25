@@ -25,6 +25,7 @@
 
 #define DEFAULT_AX_STAGE std::string("simple")
 #define DEFAULT_AS_STAGE std::string("simple")
+#define DEFAULT_EC_STAGE std::string("simple")
 
 using namespace AxiomLib;
 using namespace AxiomLib::FuzzyMultiDataExt;
@@ -34,7 +35,7 @@ FuzzyMultiDataExtAlgorithm::FuzzyMultiDataExtAlgorithm()
 	heuristicsSet = new HeuristicsSet();
 	
 	stage0 = new ECTypeStage(this);
-	stage1 = new ECStageSimple(&fuzzyDataSet, stage0);
+	stage1 = 0;
 	stage2 = 0;
 	stage3 = 0;
 	
@@ -102,6 +103,15 @@ int FuzzyMultiDataExtAlgorithm::initFromEnv(const Environment &env) {
 	Logger::getInstance()->writeDebug("Initializing heuristics set");
 	heuristicsSet->initFromEnv(env);
 	
+	std::string ecStageName;
+	env.getParamValue(ecStageName, "ecStage", DEFAULT_EC_STAGE);
+
+	stage1 = ECStage::create(ecStageName, &fuzzyDataSet, stage0);
+
+	if(stage1 == 0) {
+		throw AxiomLibException("FuzzyMultiDataExtAlgorithm::setParamsFromEnv : invalid name of ec stage : '" + ecStageName + "'");
+	}
+
 	std::string axStageName;
 	env.getParamValue(axStageName, "axiomStage", DEFAULT_AX_STAGE);
 

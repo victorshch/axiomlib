@@ -1,17 +1,17 @@
 #pragma once
 
-#include "../ElemCondPlus.h"
-#include  "ClusteringFeatures\ClusteringFeature.h"
-#include "ClusteringRealizations\IClusteringModel.h"
-
 #ifndef FUZZYMULTIDATAEXT_EC_CLUSTERING_ELEM_COND_H
 #define FUZZYMULTIDATAEXT_EC_CLUSTERING_ELEM_COND_H
+
+#include "../ElemCondPlus.h"
+#include  "ClusteringFeatures\ClusteringFeature.h"
+#include "ClusteringRealizations\ClusteringModel.h"
 
 using namespace std;
 
 namespace AxiomLib {
 	namespace FuzzyMultiDataExt {
-		class ECStageClusteringElemCond : public ElemCondition {
+		class ElemCondClustering : public ElemCondition {
 			
 		public: 
 			// Возвращает имя данной аксиомы.
@@ -19,7 +19,7 @@ namespace AxiomLib {
 				return 0;
 			}
 
-			ECStageClusteringElemCond(int clusterNumber, int length, const std::list<ClusteringFeature*>& clusteringFeatures, IClusteringModel* model);
+			ElemCondClustering(int clusterNumber, int length, const std::list<ClusteringFeature*>& clusteringFeatures, FuzzyMultiDataExt::ClusteringModel* model);
 
 			// Проверка выполнения данной аксиомы. На входе - точка временного ряда k
 			// и сам временной ряд x. На выходе 1, если выполняется, 0 если не
@@ -126,7 +126,7 @@ namespace AxiomLib {
 
 				std::list<ClusteringFeature*> clusteringFeatures;
 
-				IClusteringModel* clusteringModel;
+				ClusteringModel* clusteringModel;
 		};
 	};
 };

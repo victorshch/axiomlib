@@ -1,20 +1,20 @@
-#include "ECStageClusteringElemCond.h"
+#include "ElemCondClustering.h"
 
-#include "ClusteringRealizations\SharkClusteringModel.h"
+#include "ClusteringRealizations\KMeansClusteringModel.h"
 
 using namespace AxiomLib;
 using namespace std;
 using namespace AxiomLib::FuzzyMultiDataExt;
 using namespace shark;
 
-ECStageClusteringElemCond::ECStageClusteringElemCond(int clusterNumber, int length, const std::list<ClusteringFeature*>& clusteringFeatures, IClusteringModel* model){
+ElemCondClustering::ElemCondClustering(int clusterNumber, int length, const std::list<ClusteringFeature*>& clusteringFeatures, FuzzyMultiDataExt::ClusteringModel* model){
 	this->clusterNumber = clusterNumber;
 	this->length = length;
 	this->clusteringFeatures = clusteringFeatures;
 	this->clusteringModel = model;
 }
 
-signed int ECStageClusteringElemCond::check(const unsigned long k, const std::vector<double>& x) const {
+signed int ElemCondClustering::check(const unsigned long k, const std::vector<double>& x) const {
 	int featuresCount = clusteringFeatures.size();
 	
 	vector<double> feature;

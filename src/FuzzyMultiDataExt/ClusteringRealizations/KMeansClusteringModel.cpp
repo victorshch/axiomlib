@@ -1,26 +1,27 @@
-#include "SharkClusteringModel.h"
+#include "KMeansClusteringModel.h"
+
 
 using namespace std;
 using namespace AxiomLib;
 using namespace AxiomLib::FuzzyMultiDataExt;
 using namespace shark;
 
-void SharkClusteringModel::addElement(const vector<double>& element){
+void KMeansClusteringModel::addElement(const vector<double>& element){
 	this->store.push_back(element);
 }
 
-void SharkClusteringModel::addElements(const vector<vector<double>>& elements){
+void KMeansClusteringModel::addElements(const vector<vector<double> >& elements){
 	for(auto i = 0; i < elements.size(); i++){
 		addElement(elements[i]);
 	}
 }
 
-void SharkClusteringModel::makeClustering(){
+void KMeansClusteringModel::makeClustering(){
 	Normalizer<> normalizer;
 	NormalizeComponentsUnitVariance<> normalizingTrainer;
 	UnlabeledData<RealVector> data;
 
-	vector<vector<double>> rows = this->store;
+	vector<vector<double> > rows = this->store;
 	vector<size_t> batchSizes = shark::detail::optimalBatchSizes(rows.size(), Data<RealVector>::DefaultBatchSize);
 	data = shark::Data<RealVector>(batchSizes.size());	
 
@@ -33,7 +34,7 @@ void SharkClusteringModel::makeClustering(){
 		//copy the rows into the batch
 		for(size_t i = 0; i != batchSizes[b]; ++i,++currentRow){
 			if(rows[currentRow].size() != dimension)
-				throw SHARKEXCEPTION("vectors are required to have same size");
+				throw AxiomLibException("vectors are required to have same size");
 			
 			for(size_t j = 0; j != dimension; ++j){
 				batch(i,j) = rows[currentRow][j];
@@ -49,7 +50,7 @@ void SharkClusteringModel::makeClustering(){
 	model = new HardClusteringModel<shark::RealVector>(&centroids);
 }
 
-unsigned int SharkClusteringModel::getClusterNumberToElement(const std::vector<double>& element) const{
+unsigned int KMeansClusteringModel::getClusterNumberToElement(const std::vector<double>& element) const{
 	UnlabeledData<RealVector> data;
 
 	vector<size_t> batchSizes = shark::detail::optimalBatchSizes(1, Data<RealVector>::DefaultBatchSize);
@@ -71,11 +72,11 @@ unsigned int SharkClusteringModel::getClusterNumberToElement(const std::vector<d
 	return clusters.element(0);
 }
 
-void SharkClusteringModel::reserve(int k){	
+void KMeansClusteringModel::reserve(int k){	
 	this->store.reserve(k);
 }
 
-void SharkClusteringModel::clearStore(){
+void KMeansClusteringModel::clearStore(){
 	this->store.clear();
 	this->store.resize(0);
 }

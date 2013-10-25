@@ -15,7 +15,7 @@ namespace FuzzyMultiDataExt {
 				// nothing
 			}
 
-			double calculate(const std::vector<double> trajectory, int start, int size) {
+			double calculate(const std::vector<double>& trajectory, int start, int size) {
 				return *std::max_element(trajectory.begin() + start, trajectory.end() + start + size);
 			}
 	};
