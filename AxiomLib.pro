@@ -227,7 +227,8 @@ SOURCES += src/TreatmentSample.cxx \
     src/elem_conditions/Variance.cxx \
     src/FuzzyMultiDataExt/AXStageSimple.cpp \
     src/FuzzyMultiDataExt/AXStageTree.cpp \
-    src/MultiMarking/WeightedHamming.cxx
+    src/MultiMarking/WeightedHamming.cxx \
+    src/FuzzyMultiDataExt/AXStageCombined.cxx
 HEADERS += src/undefs.h \
     src/TreatmentSample.h \
     src/TreatmentFactory.h \
@@ -446,5 +447,6 @@ HEADERS += src/undefs.h \
     src/elem_conditions/Variance.h \
     src/FuzzyMultiDataExt/AXStageSimple.h \
     src/FuzzyMultiDataExt/AXStageTree.h \
-    src/MultiMarking/WeightedHamming.h
+    src/MultiMarking/WeightedHamming.h \
+    src/FuzzyMultiDataExt/AXStageCombined.h
 OTHER_FILES += 

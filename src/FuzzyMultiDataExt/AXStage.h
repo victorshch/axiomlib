@@ -35,6 +35,8 @@ public:
 
 	AXStage(FuzzyDataSet* fuzzyDataSet,
 	                     ECStage* stage1);
+
+	virtual ~AXStage() {}
 	
 	virtual void initFromEnv(const Environment& env) = 0;
 	
@@ -58,8 +60,8 @@ protected:
 	
 	FuzzyMultiDataExtAlgorithm* parent;
 		
-	const FuzzyDataSet* fuzzyDataSet;
-	const ECStage* stage1;	
+	FuzzyDataSet* fuzzyDataSet;
+	ECStage* stage1;
 };
 
 };

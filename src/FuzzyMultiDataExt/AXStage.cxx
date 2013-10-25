@@ -14,13 +14,9 @@
 
 #include "AXStageSimple.h"
 #include "AXStageTree.h"
+#include "AXStageCombined.h"
 
 #include "AXStage.h"
-
-#undef FUZZYMULTIDATA_AXIOMGOAL_EXPERIMENTAL
-
-#define eps						0.0000001 // используется в некоторых формулах, чтобы исплючить ошибку машинного округления
-#define max_goal_val			100000 // максимальное значение целевой функции для аксиомы (просто достаточно большое число)
 
 using namespace AxiomLib;
 using namespace AxiomLib::FuzzyMultiDataExt;
@@ -34,6 +30,9 @@ AXStage *AXStage::create(std::string name, FuzzyDataSet *fuzzyDataSet, ECStage *
 	}
 	if(name == "tree") {
 		return new AXStageTree(fuzzyDataSet, stage1);
+	}
+	if(name == "combined") {
+		return new AXStageCombined(fuzzyDataSet, stage1);
 	}
 
 	throw AxiomLibException("AXStage::create() : unknown ASStage type : '" + name + "'");
