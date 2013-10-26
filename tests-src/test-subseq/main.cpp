@@ -235,7 +235,92 @@ int main(){
 
 // Test stringIn stringOut
 
+    //Comparing 01    01      01      01      01      01      11      11      01      01      01      01      01      01      01      01 01   00      00      00      00      10      00      00      00      00      00      00      00      10
 
+   // with01  01      01      01      01      01      01      01
+
+    s41.clear();
+    s42.clear();
+    std::vector<bool> part, part2, part3, part4;
+    part.push_back(false);
+    part.push_back(true);
+
+    for (int i = 0; i < 7; i++)
+    {
+        s42.push_back(part);
+    }
+    // 01    01      01      01      01      01
+    for (int i = 0; i < 6; i++)
+    {
+        s41.push_back(part);
+    }
+
+    part2.push_back(true);
+    part2.push_back(true);
+    // 11   11
+    s41.push_back(part2);
+    s41.push_back(part2);
+    // 01      01      01      01      01      01      01      01 01
+    for (int i = 0; i < 9; i++)
+    {
+        s41.push_back(part);
+    }
+    part3.push_back(false);
+    part3.push_back(false);
+    // 00      00      00      00
+    for (int i = 0; i < 4; i++)
+    {
+        s41.push_back(part3);
+    }
+    part4.push_back(true);
+    part4.push_back(false);
+    // 10
+    s41.push_back(part4);
+
+    //00      00      00      00      00      00      00
+    for (int i = 0; i < 7; i++)
+    {
+        s41.push_back(part3);
+    }
+    //10
+    s41.push_back(part4);
+
+
+    std::cout << "-----------------------------------------------------------" ;
+
+    std::cout << "\nCompare";
+
+    cout << '{';
+    for (int j = 0;j< s41.size(); j++){
+        cout <<'{';
+        std::vector<bool> element;
+        element = s41[j];
+
+        for (int k = 0;k < element.size(); k++){
+            cout << element[k];
+        }
+        cout << '}';
+    }
+    cout << '}';
+    cout << '\n';
+
+    std::cout << "\nWith";
+    cout << '{';
+    for (int j = 0;j< s42.size(); j++){
+        cout <<'{';
+        std::vector<bool> element;
+        element = s42[j];
+
+        for (int k = 0;k < element.size(); k++){
+            cout << element[k];
+        }
+        cout << '}';
+    }
+    cout << '}';
+    cout << '\n';
+
+
+    startTest();
 
     return 0;
 }
