@@ -4,9 +4,15 @@
 *	Description:	"Супер-include", содержащий все includes частных аксиом
 *			генерируется автоматически (not anymore =\)
 *	Author:		Eugene A. Vasin
-*	History:	
+*	History:
 *
 ****************************************************************************/
+/*!
+  @file all_axioms.h
+  @author Eugene A. Vasin
+  Super-include, which contains each includes of particular axioms
+  Generate automatically(not anymore =\)
+ */
 
 // BEGIN AXIOM HEADERS
 #include "elem_conditions/ElemCondition.h"
@@ -28,5 +34,9 @@
 #include "elem_conditions/Variance.h"
 
 // TODO refactor
+/*!
+ @def N_EL_AXIOMS
+ N_EL_AXIOMS = 16
+*/
 #define N_EL_AXIOMS 16
 // END AXIOM HEADERS
