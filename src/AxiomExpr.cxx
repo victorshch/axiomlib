@@ -17,6 +17,8 @@ using namespace AxiomLib;
 
 // Пустой конструктор - с заданием имени аксиомы по умолчанию
 AxiomExpr::AxiomExpr () {
+	isVoting = false;
+	votingThreshold = 2;
 	setDefaultName();
 	expression.clear();
 	nameOfECBank.assign ("no_name_Elem_Cond_Bank");
@@ -25,6 +27,8 @@ AxiomExpr::AxiomExpr () {
 
 // пустой конструктор с заданием имени аксиомы во входном параметре
 AxiomExpr::AxiomExpr (const std::string sName) {
+	votingThreshold = 2;
+	isVoting = false;
 	this->nameOfAxiomExpr.assign (sName);
 	expression.clear();
 	nameOfECBank.assign ("no_name_Elem_Cond_Bank");
@@ -32,6 +36,8 @@ AxiomExpr::AxiomExpr (const std::string sName) {
 
 AxiomExpr::AxiomExpr(const ElemCondPlus &ec)
 {
+	isVoting = false;
+	votingThreshold = 2;
 	expression.resize(1);
 	expression[0].resize(1);
 	expression[0][0] = ec;
@@ -114,20 +120,39 @@ signed int AxiomExpr::clear (void) {
 *
 ****************************************************************************/
 signed int AxiomExpr::check (const unsigned long k, const std::vector<double>& ts) const {
-	int res = 1;
-	for (unsigned int i = 0; i < expression.size(); i++) {
-		res = 1;
-		for (unsigned int j = 0; j < expression[i].size(); j++){
-			res *= expression[i][j].check(k,ts);
-			if (res <= 0) {
+	if(!isVoting) {
+		int res = 1;
+		for (unsigned int i = 0; i < expression.size(); i++) {
+			res = 1;
+			for (unsigned int j = 0; j < expression[i].size(); j++){
+				res *= expression[i][j].check(k,ts);
+				if (res <= 0) {
+					break;
+				}
+			}
+			if (res > 0) {
 				break;
 			}
 		}
-		if (res > 0) {
-			break;
+		return res;
+	} else {
+		if(voters.empty()) {
+			return -1;
 		}
-	}  
-	return res;
+
+		unsigned voteCount = 0;
+
+		for(unsigned i = 0; i < voters.size(); ++i) {
+			int currentResult = voters[i].check(k, ts);
+			if(currentResult == 1) {
+				++voteCount;
+			} else if (currentResult == -1) {
+				return -1;
+			}
+		}
+
+		return voteCount >= votingThreshold ? 1 : 0;
+	}
 }
 
 
@@ -146,22 +171,41 @@ signed int AxiomExpr::check (const unsigned long k, const std::vector<double>& t
 *
 ****************************************************************************/
 signed int AxiomExpr::check (const unsigned long k, const std::vector < std::vector<double> >& ts) const {
-	int res = 1;
-	for (unsigned int i = 0; i < expression.size(); i++) {
-		res = 1;
-		for (unsigned int j = 0; j < expression[i].size(); j++){
-			if  ((expression[i][j].dimension < 0) || (expression[i][j].dimension >= (int) ts.size()))
-				throw AxiomLibException("Error in AxiomExpr::check : wrong input parameters.");
-			res *= expression[i][j].check(k, ts[expression[i][j].dimension]);
-			if (res <= 0) {
-				break;
+	if(!isVoting) {
+		int res = 1;
+		for (unsigned int i = 0; i < expression.size(); i++) {
+			res = 1;
+			for (unsigned int j = 0; j < expression[i].size(); j++){
+				if  ((expression[i][j].dimension < 0) || (expression[i][j].dimension >= (int) ts.size()))
+					throw AxiomLibException("Error in AxiomExpr::check : wrong input parameters.");
+				res *= expression[i][j].check(k, ts[expression[i][j].dimension]);
+				if (res <= 0) {
+					break;
+				}
+			}
+			if (res > 0) {
+				return res;
 			}
 		}
-		if (res > 0) {
-			return res;
+		return res;
+	} else {
+		if(voters.empty()) {
+			return -1;
 		}
-	}  
-	return res;
+
+		unsigned voteCount = 0;
+
+		for(unsigned i = 0; i < voters.size(); ++i) {
+			int currentResult = voters[i].check(k, ts);
+			if(currentResult == 1) {
+				++voteCount;
+			} else if (currentResult == -1) {
+				return -1;
+			}
+		}
+
+		return voteCount >= votingThreshold ? 1 : 0;
+	}
 }
 
 
@@ -702,4 +746,49 @@ signed int AxiomExpr::saveAxiomToFile (const std::string baseDir, const std::str
 	AxiomBase axiomBase;
 	axiomBase.saveToAX (baseDir, aes, paramNames);
 	return 0;
+}
+
+bool AxiomExpr::setVoting(bool value)
+{
+	isVoting = value;
+}
+
+void AxiomExpr::setVotingThreshold(unsigned value)
+{
+	votingThreshold = value;
+}
+
+void AxiomExpr::addVoter(const AxiomExpr &a)
+{
+	voters.push_back(a);
+}
+
+void AxiomExpr::clearVoters()
+{
+	voters.clear();
+}
+
+void AxiomExpr::print(std::ostream &ostr) const
+{
+	if(!isVoting) {
+		ostr << "(";
+		for(int i = 0; i < expression.size(); ++i) {
+			for(int j = 0; j  < expression[i].size(); ++j) {
+				if(!expression[i][j].sign) {
+					ostr << "!";
+				}
+				ostr << expression[i][j].ecTypeName();
+				ostr << "&";
+			}
+			ostr << "|";
+		}
+		ostr << ")";
+	} else {
+		ostr << "vote " << votingThreshold << " (";
+		for(unsigned i = 0; i < voters.size(); ++i) {
+			voters[i].print(ostr);
+			ostr << ", ";
+		}
+		ostr << ")";
+	}
 }

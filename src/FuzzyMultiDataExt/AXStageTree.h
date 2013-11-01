@@ -112,6 +112,8 @@ private:
 	int axiomDepth;
 	double threshSplitLevel;
 	double maxSplitLevel;
+	unsigned population;
+	unsigned votingThreshold;
 
 	bool oneVsAll;
 

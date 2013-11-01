@@ -40,7 +40,13 @@ class AxiomExpr {
 	void serialize(Archive &archive, const unsigned int /*version*/) {
 		archive & BOOST_SERIALIZATION_NVP(nameOfAxiomExpr);
 		archive & BOOST_SERIALIZATION_NVP(nameOfECBank);
-		archive & BOOST_SERIALIZATION_NVP(expression);
+		archive & BOOST_SERIALIZATION_NVP(isVoting);
+		if(!isVoting) {
+			archive & BOOST_SERIALIZATION_NVP(expression);
+		} else {
+			archive & BOOST_SERIALIZATION_NVP(votingThreshold);
+			archive & BOOST_SERIALIZATION_NVP(voters);
+		}
 	}
   
 	// Данный друг необходим для проверки совместимости заданных элементарных условий в аксиомах
@@ -48,6 +54,12 @@ class AxiomExpr {
 
 	// Устанавливает дефолтное имя для экземпляра класса
 	signed int setDefaultName (void);
+
+	bool isVoting;
+
+	unsigned votingThreshold;
+
+	std::vector<AxiomExpr> voters;
 
  protected:
 
@@ -159,6 +171,16 @@ class AxiomExpr {
 	// Функция сохранения системы аксиом в файл (с указанием размерности набора данных, на которой проверяется каждое элементарное условие из данной аксиомы)
 	signed int saveAxiomToFile (const std::string baseDir, const std::string axiomName, std::vector <std::string> &paramNames) const;
     
+	bool setVoting(bool value);
+
+	void setVotingThreshold(unsigned value);
+
+	void addVoter(const AxiomExpr& a);
+
+	void clearVoters();
+
+	void print(std::ostream& ostr) const;
+
 };
 
 }; //  end of namespace

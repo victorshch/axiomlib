@@ -116,6 +116,9 @@ void AXStageTree::initFromEnv(const Environment &env)
 	env.getParamValue(oneVsAll, "OneVsAllMode", false);
 	env.getParamValue(maxSplitLevel, "AXStageMaxSplitLevel", 0.2);
 	env.getParamValue(threshSplitLevel, "AXStageThreshSplitLevel", 0.1);
+
+	env.getParamValue(population, "AXStageForestPopulation", 1u);
+	env.getParamValue(votingThreshold, "AXStageVotingThreshold", 1u);
 }
 
 void AXStageTree::setAxioms(const std::vector<std::vector<AxiomExprPlus> > &initial)
@@ -308,36 +311,50 @@ double AXStageTree::informationGain(const ElemCondPlus &ec, const BootstrappedDa
 
 void AXStageTree::formAxiomsForClass(int classNo)
 {
-	axioms[classNo].resize(numOfAxioms);
+	axioms[classNo].reserve(numOfAxioms * population);
 
 	for(int i = 0; i < numOfAxioms; ++i) {
-		Logger::debug("Bootstrapping data set...");
-		BootstrappedDataSet currentDataSet(fuzzyDataSet, classNo, oneVsAll);
-		if(currentDataSet.abnormalTrajCount() == 0 || currentDataSet.normalTrajCount() == 0) {
-			Logger::debug("Failed to bootstrap dataset");
-			continue;
-		}
+
 		Logger::debug("Creating axiom " + boost::lexical_cast<std::string>(i+1) + " out of "
 					  + boost::lexical_cast<std::string>(numOfAxioms) + "...");
 
-		Logger::debug("Constructing tree for axiom " + boost::lexical_cast<std::string>(i+1) + " out of "
-					  + boost::lexical_cast<std::string>(numOfAxioms) + "...");
-		AXTree* tree = constructTree(currentDataSet, axiomDepth);
-		Logger::debug("Constructing axiom from tree " + boost::lexical_cast<std::string>(i+1) + " out of "
-					  + boost::lexical_cast<std::string>(numOfAxioms) + "...");
-		Logger::debug(tree->toString());
-		tree->normalize();
 
-		if(tree->ecPlus().elemCondition == 0) {
-			Logger::debug("Failed to construct axiom tree");
-			continue;
+		AxiomExpr currentAxiom;
+
+		currentAxiom.setVoting(true);
+
+		for(int j = 0; j < population; ++j) {
+			Logger::debug("Bootstrapping data set...");
+			BootstrappedDataSet currentDataSet(fuzzyDataSet, classNo, oneVsAll);
+			if(currentDataSet.abnormalTrajCount() == 0 || currentDataSet.normalTrajCount() == 0) {
+				Logger::debug("Failed to bootstrap dataset");
+				continue;
+			}
+
+			debug() << "Constructing tree for axiom " << i+1 << " out of " << numOfAxioms << ", voter " << j+1
+					<< " out of " << population;
+
+			AXTree* tree = constructTree(currentDataSet, axiomDepth);
+
+			tree->normalize();
+
+			if(tree->ecPlus().elemCondition == 0) {
+				Logger::debug("Failed to construct axiom tree");
+				continue;
+			}
+
+			currentAxiom.addVoter(tree->toAxiom());
+			currentAxiom.setVotingThreshold(votingThreshold);
+
+			delete tree;
 		}
 
-		axioms[classNo][i] = AxiomExprPlus(tree->toAxiom());
+		axioms[classNo].push_back(AxiomExprPlus(currentAxiom));
 		Logger::debug("Finished creating axiom " + boost::lexical_cast<std::string>(i+1) + " out of "
 					  + boost::lexical_cast<std::string>(numOfAxioms) + ".");
-		Logger::debug(axiomToString(axioms[classNo][i]));
-		delete tree;
+		std::ostringstream ostr;
+		axioms[classNo].back().print(ostr);
+		debug() << ostr.str();
 	}
 }
 
