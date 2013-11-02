@@ -91,7 +91,7 @@ const AxiomExprSetPlus &ASStageSimple::getAS(int n) const {
 	return bestAxiomSets[n];
 }
 
-void ASStageSimple::recalculateMatterASFunc(AxiomExprSetPlus &as) {
+void ASStageSimple::recalculateMatterASFunc(AxiomExprSetPlus &as) const {
 	this->setSatPointsSize(as.axioms.size());
 	
 	for(int i = 0; i < as.axioms.size(); i++) {
@@ -1468,12 +1468,12 @@ int ASStageSimple::getSquare (const std::vector <int> &str1, const std::vector <
 	return 0;
 }
 
-void ASStageSimple::setSatPointsSize(int size) {
+void ASStageSimple::setSatPointsSize(int size) const {
 	satPoints.clear();
 	satPoints.reserve(size);
 }
 
-void ASStageSimple::addToSatPoints(AxiomExpr &ax) {
+void ASStageSimple::addToSatPoints(AxiomExpr &ax) const {
 	int index = satPoints.size();
 	ax.index = index;
 	

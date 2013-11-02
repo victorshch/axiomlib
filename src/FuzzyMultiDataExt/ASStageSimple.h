@@ -34,7 +34,7 @@ public:
 	const AxiomExprSetPlus &getAS(int n) const;
 	int getASSize() const;
 	
-	void recalculateMatterASFunc(AxiomExprSetPlus& as);
+	void recalculateMatterASFunc(AxiomExprSetPlus& as) const;
 
 private:
 	class AXSatPointSet {
@@ -81,10 +81,10 @@ private:
 	// Вес слагаемого (1/длина разметки) в целевой функции
 	double singleAxiomMarkupPenalty;
 	
-	std::vector<AXSatPointSet> satPoints;
+	mutable std::vector<AXSatPointSet> satPoints;
 	
-	void setSatPointsSize(int size);
-	void addToSatPoints(AxiomExpr& ax);
+	void setSatPointsSize(int size) const;
+	void addToSatPoints(AxiomExpr& ax) const;
 	
 	const SatPointSet& getSatPoints(const AxiomExpr& ax, FuzzyDataSet::DataSetDivisionType type, int classNo) const;
 	

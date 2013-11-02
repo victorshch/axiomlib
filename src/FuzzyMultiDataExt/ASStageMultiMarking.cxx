@@ -70,7 +70,12 @@ int ASStageMultiMarking::getASSize() const{
     return bestAxiomSets.size();
 }
 
-void ASStageMultiMarking::recalculateMatterASFunc(AxiomExprSetPlus& as){}
+void ASStageMultiMarking::recalculateMatterASFunc(AxiomExprSetPlus& as) const
+{
+	if(!as.multiMarkUps.empty()) {
+		matterAxiomSetFunc(as, as.multiMarkUps);
+	}
+}
 
 void ASStageMultiMarking::setAxiomSets(const std::vector<AxiomExprSetPlus>& initialAS){
     bestAxiomSets  =  initialAS;
@@ -157,7 +162,7 @@ ASStageMultiMarking::ASStageMultiMarking(FuzzyDataSet* fuzzyDataSet,
 *	History:
 *
 ****************************************************************************/
-int ASStageMultiMarking::chooseBestMarkUp (AxiomExprSetPlus &as, int abType, std::vector <std::vector <bool> > &markUp, const std::vector <std::vector <std::vector <bool> > > &genMarkUps, int &errFirstVal, int &errSecondVal) {
+int ASStageMultiMarking::chooseBestMarkUp (AxiomExprSetPlus &as, int abType, std::vector <std::vector <bool> > &markUp, const std::vector <std::vector <std::vector <bool> > > &genMarkUps, int &errFirstVal, int &errSecondVal) const {
 
     // Проверяем размер вектора кандидатов в разметки эталонной траектории заданного типа
         if (genMarkUps.size() < 1) {
@@ -203,7 +208,7 @@ double minimum (const std::vector<double> &r){
         }
         return min;
 }
-std::vector<int> ASStageMultiMarking::convert(std::vector<double> resultInDouble){  
+std::vector<int> ASStageMultiMarking::convert(std::vector<double> resultInDouble) const{
     std::vector<int> result;
     int toPush = 0;
     for (int i = 0;i<resultInDouble.size();i++){
@@ -219,7 +224,7 @@ return result;
 }
 
 // Функция запуска поиска разметки ethalon в markUp и запись результатов поиска в result
-void ASStageMultiMarking::recognize (std::vector <std::vector<bool> > &markUp, const std::vector <std::vector<bool> > &genMarkUp, std::vector <int> &result){
+void ASStageMultiMarking::recognize (const AxiomExprSetPlus &as, std::vector <std::vector<bool> > &markUp, const std::vector <std::vector<bool> > &genMarkUp, std::vector <int> &result) const{
 
     std::vector<double> resultInDouble(markUp.size(), 1.0);
     std::vector<double> temp_result;
@@ -259,7 +264,7 @@ void ASStageMultiMarking::recognize (std::vector <std::vector<bool> > &markUp, c
 *	History:
 *
 ****************************************************************************/
-double ASStageMultiMarking::matterAxiomSetFunc (AxiomExprSetPlus &as)  {
+double ASStageMultiMarking::matterAxiomSetFunc (AxiomExprSetPlus &as) const  {
     int numOfClasses;
         std::vector <int> numOfMultiTS;
         std::vector < std::vector <int> > numOfTS;
@@ -307,7 +312,7 @@ double ASStageMultiMarking::matterAxiomSetFunc (AxiomExprSetPlus &as)  {
         return as.goal;
 }
 
-double ASStageMultiMarking::matterAxiomSetFunc(AxiomExprSetPlus &as, const std::vector<std::vector<std::vector<std::vector<bool> > > >& markupVariants) {
+double ASStageMultiMarking::matterAxiomSetFunc(AxiomExprSetPlus &as, const std::vector<std::vector<std::vector<std::vector<bool> > > >& markupVariants) const {
     int numOfClasses  =  fuzzyDataSet->getClassCount();
         int errFirstVal, errSecondVal;
         as.errFirst  =  0;
@@ -342,7 +347,7 @@ double ASStageMultiMarking::matterAxiomSetFunc(AxiomExprSetPlus &as, const std::
 *
 ****************************************************************************/
 
-double ASStageMultiMarking::matterAxiomSetFunc (AxiomExprSetPlus &as, std::vector <std::vector <std::vector <bool> > > &markUps) {
+double ASStageMultiMarking::matterAxiomSetFunc (AxiomExprSetPlus &as, std::vector <std::vector <std::vector <bool> > > &markUps) const {
     int tmpFirst, tmpSecond;
         double tmpGoal;
         as.errFirst  =  0;
@@ -379,7 +384,7 @@ double ASStageMultiMarking::matterAxiomSetFunc (AxiomExprSetPlus &as, std::vecto
 *
 ****************************************************************************/
 
-double ASStageMultiMarking::matterAxiomSetFunc (AxiomExprSetPlus &as, int abType, const std::vector <std::vector<bool> > &genMarkUp, double &goalVal, int &errFirstVal, int &errSecondVal) {
+double ASStageMultiMarking::matterAxiomSetFunc (AxiomExprSetPlus &as, int abType, const std::vector <std::vector<bool> > &genMarkUp, double &goalVal, int &errFirstVal, int &errSecondVal) const {
     int numOfClasses;
         std::vector <int> numOfMultiTS;
         std::vector < std::vector <int> > numOfTS;
@@ -494,7 +499,7 @@ double ASStageMultiMarking::matterAxiomSetFunc (const std::string baseDir, const
 *	History:
 *
 ****************************************************************************/
-inline int ASStageMultiMarking::getStatistic (std::vector <int> &row) {
+inline int ASStageMultiMarking::getStatistic (std::vector <int> &row) const {
     int num  =  0;
         int i  =  0;
         int j;
@@ -549,7 +554,7 @@ inline int ASStageMultiMarking::createSimpleMarkUpVariants (std::vector<std::vec
      return numOfAxioms;
 }
 
-void ASStageMultiMarking::createRefMarkUp ( AxiomExprSetPlus &as, FuzzyDataSet::DataSetDivisionType division, int classNo, int multiTSNo, std::vector <std::vector<bool> >& result){
+void ASStageMultiMarking::createRefMarkUp ( AxiomExprSetPlus &as, FuzzyDataSet::DataSetDivisionType division, int classNo, int multiTSNo, std::vector <std::vector<bool> >& result) const {
 
     result.clear();
     std::vector<std::vector<double> > row;
@@ -622,7 +627,7 @@ return 0;
 
 
 
-void ASStageMultiMarking::createAllMarkUpVariants(AxiomExprSetPlus &as, std::vector<std::vector<std::vector<std::vector<bool> > > > &markUpVariants) {
+void ASStageMultiMarking::createAllMarkUpVariants(AxiomExprSetPlus &as, std::vector<std::vector<std::vector<std::vector<bool> > > > &markUpVariants) const {
     int numOfClasses;
         std::vector <int> numOfMultiTS;
         std::vector < std::vector <int> > numOfTS;
@@ -743,7 +748,7 @@ std::vector<std::vector<std::vector<bool> > > ASStageMultiMarking::stringOut(std
 }
 
 
-inline int ASStageMultiMarking::createMarkUpVariants (std::vector<std::vector<std::vector<bool> > > &genMarkUps,std::vector<std::vector<std::vector<bool> > >  &resMarkUps) {
+inline int ASStageMultiMarking::createMarkUpVariants (std::vector<std::vector<std::vector<bool> > > &genMarkUps,std::vector<std::vector<std::vector<bool> > >  &resMarkUps) const {
     std::cerr << "\nFinding common sequences\n";
     if (!areMultiMark){
         std::vector<std::vector<int > > _resMarkUps,_genMarkUps, fordebug;

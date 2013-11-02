@@ -328,26 +328,26 @@ namespace FuzzyMultiDataExt {
         double extendMarkUpLensLevel;
     private:
         // Функции, используемые в run
-        std::vector<int> convert(std::vector<double> resultInDouble);
-        void recognize (std::vector <std::vector<bool> > &markUp, const std::vector <std::vector<bool> > &genMarkUp, std::vector <int> &result);
+		std::vector<int> convert(std::vector<double> resultInDouble) const;
+		void recognize (const AxiomExprSetPlus& as, std::vector <std::vector<bool> > &markUp, const std::vector <std::vector<bool> > &genMarkUp, std::vector <int> &result) const;
         int sortBestAxiomSets (void);
         int cutDownAxiomSets (std::vector <AxiomExprSetPlus> &axiomSets) const;
         int addAxiomSets(std::vector <AxiomExprSetPlus> &nextStepAxiomSets, std::vector <AxiomExprSetPlus> &newAxiomSets, std::vector <int> &indicesOfBestSets) const;
         int sortAxiomSets (const std::vector <AxiomExprSetPlus> &axiomSets, std::vector <int> &indecies) const;
-        inline int getStatistic (std::vector <int> &row);
-        int chooseBestMarkUp (AxiomExprSetPlus &as, int abType, std::vector <std::vector <bool> > &markUp, const std::vector <std::vector <std::vector <bool> > > &genMarkUps, int &errFirstVal, int &errSecondVal);
-        double matterAxiomSetFunc(AxiomExprSetPlus &as, const std::vector<std::vector<std::vector<std::vector<bool> > > >& markupVariants);
-        double matterAxiomSetFunc (AxiomExprSetPlus &as, std::vector <std::vector <std::vector <bool> > > &markUps);
-        double matterAxiomSetFunc (AxiomExprSetPlus &as, int abType, const std::vector <std::vector<bool> > &genMarkUp, double &goalVal, int &errFirstVal, int &errSecondVal);
-        double matterAxiomSetFunc (AxiomExprSetPlus &as);
+		inline int getStatistic (std::vector <int> &row) const;
+		int chooseBestMarkUp (AxiomExprSetPlus &as, int abType, std::vector <std::vector <bool> > &markUp, const std::vector <std::vector <std::vector <bool> > > &genMarkUps, int &errFirstVal, int &errSecondVal) const;
+		double matterAxiomSetFunc(AxiomExprSetPlus &as, const std::vector<std::vector<std::vector<std::vector<bool> > > >& markupVariants) const;
+		double matterAxiomSetFunc (AxiomExprSetPlus &as, std::vector <std::vector <std::vector <bool> > > &markUps) const;
+		double matterAxiomSetFunc (AxiomExprSetPlus &as, int abType, const std::vector <std::vector<bool> > &genMarkUp, double &goalVal, int &errFirstVal, int &errSecondVal) const;
+		double matterAxiomSetFunc (AxiomExprSetPlus &as) const;
         static std::vector<std::vector<int > > stringIn(std::vector<std::vector<std::vector<bool> > > &genMarkUps,int &numberOfAxiom);
         static std::vector<std::vector<std::vector<bool> > > stringOut(std::vector<std::vector<int > > &genMarkUps,int &numberOfAxiom);
 
         inline int createSimpleMarkUpVariants (std::vector<std::vector<std::vector<bool> > > &genMarkUps, const int numOfAxioms) const ;
-        inline int createMarkUpVariants (std::vector<std::vector<std::vector<bool> > > &genMarkUps,std::vector<std::vector<std::vector<bool> > >  &resMarkUps);
-        void createRefMarkUp ( AxiomExprSetPlus &as, FuzzyDataSet::DataSetDivisionType division, int classNo, int multiTSNo, std::vector <std::vector<bool> >& result);
+		inline int createMarkUpVariants (std::vector<std::vector<std::vector<bool> > > &genMarkUps,std::vector<std::vector<std::vector<bool> > >  &resMarkUps) const;
+		void createRefMarkUp ( AxiomExprSetPlus &as, FuzzyDataSet::DataSetDivisionType division, int classNo, int multiTSNo, std::vector <std::vector<bool> >& result) const;
         int tryAddAxiom(AxiomExprSetPlus &as, const AxiomExpr &ax, int axIndex);
-        void createAllMarkUpVariants(AxiomExprSetPlus &as,std::vector<std::vector<std::vector<std::vector<bool> > > > &markUpVariants);
+		void createAllMarkUpVariants(AxiomExprSetPlus &as,std::vector<std::vector<std::vector<std::vector<bool> > > > &markUpVariants) const;
 
 
         inline int simplifyMarkUps (std::vector <std::vector <std::vector<bool> > > &markUps) const;
@@ -365,7 +365,7 @@ namespace FuzzyMultiDataExt {
         AxiomExprSetPlus &getAS(int n);
         const AxiomExprSetPlus &getAS(int n) const;
         int getASSize() const;
-        void recalculateMatterASFunc(AxiomExprSetPlus& as);
+		void recalculateMatterASFunc(AxiomExprSetPlus& as) const;
         void setAxiomSets(const std::vector<AxiomExprSetPlus>& initialAS);
 
     };

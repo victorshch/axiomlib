@@ -39,7 +39,7 @@ public:
 	virtual AxiomExprSetPlus &getAS(int n) = 0;
 	virtual const AxiomExprSetPlus &getAS(int n) const = 0;
 	virtual int getASSize() const = 0;
-	virtual void recalculateMatterASFunc(AxiomExprSetPlus& as) = 0;
+	virtual void recalculateMatterASFunc(AxiomExprSetPlus& as) const = 0;
 	virtual void setAxiomSets(const std::vector<AxiomExprSetPlus>& initialAS) = 0;
 };
 
