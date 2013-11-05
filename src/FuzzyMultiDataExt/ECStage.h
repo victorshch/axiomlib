@@ -29,33 +29,39 @@ class ECStage
 public:		
 	static ECStage* create(const std::string& name, FuzzyDataSet* fuzzyDataSet, ECTypeStage* stage0);
 
-	virtual void setECs(const std::vector<std::vector<std::vector<std::vector<ElemCondPlusStat> > > > & value) = 0;
+	virtual void setECs(const std::vector<std::vector<std::vector<std::vector<ElemCondPlusStat> > > > & value);
 	
 	virtual int initFromEnv(const Environment& env) = 0;
 	
 	virtual void run() = 0;
 	
 	// Функции доступа к набору ЭУ
-	virtual const ElemCondPlusStat & getEC(int aType, int dimension, int type, int n) const = 0;
+	virtual const ElemCondPlusStat & getEC(int aType, int dimension, int type, int n) const;
+
+	virtual int getECSize() const ;
+	virtual int getECSize(int aType) const ;
+	virtual int getECSize(int aType, int dimension) const;
+	virtual int getECSize(int aType, int dimension, int ecType) const;
+	virtual void getECSize(std::vector<std::vector<std::vector<int> > > &result) const ;
 	
-	virtual bool isECSelected(int aType, int dimension, int type, int n) const = 0;
+	virtual int getECTotalCount() const;
+
+	virtual bool isECSelected(int aType, int dimension, int type, int n) const { return false; }
 	
-	virtual void setECSelected(int aType, int dimension, int type, int n, bool value) = 0;
-	
-	virtual void getECSize(std::vector<std::vector<std::vector<int> > > &result) const = 0;
-	
-	virtual int getECSize() const  = 0;
-	virtual int getECSize(int aType) const  = 0;
-	virtual int getECSize(int aType, int dimension) const = 0;
-	virtual int getECSize(int aType, int dimension, int ecType) const = 0;
-	
-	virtual int getECTotalCount() const = 0;
-	
-	virtual void recalculateMatterECFunc(ElemCondPlusStat& ec, int abType) const = 0;
+	virtual void setECSelected(int aType, int dimension, int type, int n, bool value) {}
+
+	virtual void recalculateMatterECFunc(ElemCondPlusStat& ec, int abType) const {}	
 
 	FuzzyMultiDataExtAlgorithm* getParent() const { return parent; }
-	
 protected:
+
+	void checkIndices(int i, int j, int k, int l) const;
+
+	typedef std::vector<std::vector<std::vector<std::vector<
+		ECSelection
+		> > > > ECMultiVector;
+
+	ECMultiVector elemConditions;	
 	
 	const FuzzyDataSet* fuzzyDataSet;
 	const ECTypeStage* stage0;

@@ -11,6 +11,8 @@ namespace FuzzyMultiDataExt {
 
 class ClusteringModel {
 public:
+	static ClusteringModel* create(std::string s);
+
 	unsigned int getClustersCount() { return this->k; }
 
 	virtual void reserve(int k) = 0;
@@ -21,6 +23,8 @@ public:
 	virtual unsigned int getClusterNumberToElement(const std::vector<double>& element) const = 0;
 	//virtual std::vector<unsigned int> getClassNumberToElements(const std::vector<std::vector<double>>& elements) = 0;
 protected: 
+	virtual void setParam(std::string name, std::string value);
+
 	bool wasTrained;
 
 	// clusters count

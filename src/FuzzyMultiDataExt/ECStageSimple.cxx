@@ -29,7 +29,6 @@ using namespace AxiomLib::FuzzyMultiDataExt;
 ECStageSimple::ECStageSimple(FuzzyDataSet* fuzzyDataSet, 
 										   ECTypeStage* stage0)
 {
-
 	this->stage0 = stage0;
 	this->fuzzyDataSet = fuzzyDataSet;
 	this->logger = Logger::getInstance();
@@ -48,14 +47,14 @@ ECStageSimple::ECStageSimple(FuzzyDataSet* fuzzyDataSet,
 	ecNameTemplate = "elemCondition";
 }
 
-ECSelection ecSelectionCreator(const ElemCondPlusStat& ec) { return ECSelection(ec); }
-
-void ECStageSimple::setECs(const std::vector<std::vector<std::vector<std::vector<ElemCondPlusStat> > > > &value) {
-	this->elemConditions.clear();
-	TransformMultiVectorHelper<4>::transform(value, this->elemConditions, 
-											 ecSelectionCreator
-	);	
-}
+//ECSelection ecSelectionCreator(const ElemCondPlusStat& ec) { return ECSelection(ec); }
+//
+//void ECStageSimple::setECs(const std::vector<std::vector<std::vector<std::vector<ElemCondPlusStat> > > > &value) {
+//	this->elemConditions.clear();
+//	TransformMultiVectorHelper<4>::transform(value, this->elemConditions, 
+//											 ecSelectionCreator
+//	);	
+//}
 
 int ECStageSimple::initFromEnv(const Environment &env) {
 	// Параметры алгоритма настройки элементарных условий
@@ -135,55 +134,6 @@ void ECStageSimple::run() {
 	Logger::getInstance()->writeDebug("Finished EC selection stage. EC count: " + boost::lexical_cast<std::string>(totalCount));
 }
 
-const ElemCondPlusStat &ECStageSimple::getEC(int aType, int dimension, int type, int n) const {
-	checkIndices(aType, dimension, type, n);
-	return this->elemConditions[aType][dimension][type][n].element();
-}
-
-bool ECStageSimple::isECSelected(int aType, int dimension, int type, int n) const {
-	checkIndices(aType, dimension, type, n);
-	return this->elemConditions[aType][dimension][type][n].selected();
-}
-
-int sizeGetter(const std::vector<ECSelection>& v) { return (int)v.size(); }
-
-void ECStageSimple::getECSize(std::vector<std::vector<std::vector<int> > > &result) const {
-
-	TransformMultiVectorHelper<3>::transform(elemConditions, result, 
-											 sizeGetter
-	);
-}
-
-int ECStageSimple::getECSize() const {
-	return elemConditions.size();
-}
-
-int ECStageSimple::getECSize(int aType) const {
-	return elemConditions[aType].size();
-}
-
-int ECStageSimple::getECSize(int aType, int dimension) const {
-	return elemConditions[aType][dimension].size();
-}
-
-int ECStageSimple::getECSize(int aType, int dimension, int ecType) const {
-	return elemConditions[aType][dimension][ecType].size();
-}
-
-int ECStageSimple::getECTotalCount() const
-{
-	int result = 0;
-	
-	for(int i = 0; i  < getECSize(); ++i) {
-		for(int j = 0; j < getECSize(i); ++j) {
-			for(int k = 0; k  < getECSize(i, j); ++k) {
-				result += getECSize(i, j, k);
-			}
-		}
-	}
-	
-	return result;
-}
 
 void ECStageSimple::setECSelected(int aType, int dimension, int type, int n, bool value) {
 	this->elemConditions[aType][dimension][type][n].setSelected(value);
@@ -605,13 +555,6 @@ inline int ECStageSimple::storeBestECs (std::vector <ECSelection> &bestECs, Elem
 //	return 0;
 }
 
-void ECStageSimple::checkIndices(int i, int j, int k, int l) const {
-	if(i < 0 || i >= this->elemConditions.size() || j < 0 || j >= elemConditions[i].size()
-			|| k < 0 || k >= elemConditions[i][j].size() || l < 0 || l >= elemConditions[i][j][k].size()) {
-		throw AxiomLibException("Invalid subscript in FuzzyMultiDataExt_EC : "+str(i)+" "+str(j)+" "+str(k)+" "+str(l));
-	}
-}
-
 void ECStageSimple::setNames() {
 	for(int aType = 0; aType < getECSize(); aType++) {
 		for(int dimension = 0; dimension < getECSize(aType); dimension++) {
@@ -638,5 +581,12 @@ void AxiomLib::FuzzyMultiDataExt::ECStageSimple::prune() {
 			for(int ecType = 0; ecType < getECSize(abType, dimension); ecType++) {
 				auto it = std::remove_if(elemConditions[abType][dimension][ecType].begin(), elemConditions[abType][dimension][ecType].end(), isEcNull);
 				elemConditions[abType][dimension][ecType].erase(it, elemConditions[abType][dimension][ecType].end());
-}}}	
+			}
+		}
+	}	
+}
+
+bool ECStageSimple::isECSelected(int aType, int dimension, int type, int n) const {
+	checkIndices(aType, dimension, type, n);
+	return this->elemConditions[aType][dimension][type][n].selected();
 }

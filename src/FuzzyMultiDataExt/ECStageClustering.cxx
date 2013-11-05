@@ -5,6 +5,10 @@
 #include "ClusteringRealizations\KMeansClusteringModel.h"
 #include "ElemCondClustering.h"
 
+#include <boost/algorithm/string/split.hpp>
+#include <boost/algorithm/string/trim.hpp>
+#include <boost/algorithm/string/classification.hpp>
+
 using namespace AxiomLib;
 using namespace std;
 using namespace AxiomLib::FuzzyMultiDataExt;
@@ -18,9 +22,25 @@ ECStageClustering::ECStageClustering(FuzzyDataSet* fuzzyDataSet, ECTypeStage* st
 
 int ECStageClustering::initFromEnv(const Environment& env){
 	set<string> clusteringParams;
-	//if (!env.getStringSetParamValue(clusteringParams, "ECClustering")){
-	//	throw AxiomLibException("ECStageClustering::initFromEnv : ECClustering is undefined.");
-	//}
+	
+	if (!env.getStringSetParamValue(clusteringParams, "ECClusteringModel")){
+		throw AxiomLibException("ECStageClustering::initFromEnv : ECClustering is undefined.");
+	}
+
+	vector<string> strs;
+
+	for (auto start = clusteringParams.begin(),
+		      end = clusteringParams.end(); start != end; start++)
+	{		
+		boost::split(strs, *start,boost::is_any_of(","));
+
+		if (strs.size() < 2) {
+			throw AxiomLibException();
+		}
+
+		boost::trim(strs[0]);
+		ClusteringModel* model = ClusteringModel::create(strs[0]);
+	}
 
 	//for (auto start = clusteringParams.begin(), 
 	//	 end = clusteringParams.end(); start != end; start++){
@@ -106,4 +126,3 @@ void ECStageClustering::run(){
 		}
 	}
 }
-

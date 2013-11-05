@@ -21,8 +21,6 @@ namespace FuzzyMultiDataExt {
 class ECStageClustering : public ECStage {
 public: 
 	ECStageClustering(FuzzyDataSet* fuzzyDataSet, ECTypeStage* stage0);
-
-	virtual void setECs(const std::vector<std::vector<std::vector<std::vector<ElemCondPlusStat> > > > & value) = 0;
 	
 	virtual int initFromEnv(const Environment& env);
 	
@@ -40,30 +38,6 @@ public:
 	// dimension - размерность
 	// type - тип элементарного условия (алгоритм кластеризации + набор фич + длина и колво участков)
 	// n - Номер Э условия
-	virtual const ElemCondPlusStat & getEC(int aType, int dimension, int type, int n) const = 0;
-	
-	virtual bool isECSelected(int aType, int dimension, int type, int n) {
-		return true;
-	}
-	
-	virtual void setECSelected(int aType, int dimension, int type, int n, bool value) {
-
-	}
-	
-	virtual void getECSize(std::vector<std::vector<std::vector<int> > > &result) {
-		// TODO: 
-	}
-	
-	virtual int getECSize() const  = 0; // Количество типов нештатного поведения
-	virtual int getECSize(int aType) const  = 0; 
-	virtual int getECSize(int aType, int dimension) const = 0;
-	virtual int getECSize(int aType, int dimension, int ecType) const = 0;
-	
-	// TODO: определить в родителе
-	virtual int getECTotalCount() const = 0;
-	
-	virtual void recalculateMatterECFunc(ElemCondPlusStat& ec, int abType) {
-	}
 private:
 	Logger* logger;
 

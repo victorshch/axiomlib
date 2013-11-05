@@ -27,6 +27,10 @@ public:
 
 	virtual unsigned int getClusterNumberToElement(const std::vector<double>& element) const;
 	//virtual std::vector<unsigned int> getClassNumberToElements(const std::vector<std::vector<double>>& elements);
+
+protected:
+	void setParam(std::string name, std::string value);
+
 private:
 	shark::Centroids centroids;
 	std::vector<shark::RealVector> data;

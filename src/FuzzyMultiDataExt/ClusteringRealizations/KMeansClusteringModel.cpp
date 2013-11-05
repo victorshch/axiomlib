@@ -1,6 +1,5 @@
 #include "KMeansClusteringModel.h"
 
-
 using namespace std;
 using namespace AxiomLib;
 using namespace AxiomLib::FuzzyMultiDataExt;
@@ -79,4 +78,10 @@ void KMeansClusteringModel::reserve(int k){
 void KMeansClusteringModel::clearStore(){
 	this->store.clear();
 	this->store.resize(0);
+}
+
+void KMeansClusteringModel::setParam(std::string name, std::string value){
+	if (strcmp(name.c_str(), "k") == 0){
+		this->setClustersCount(atoi(value.c_str()));
+	}
 }
