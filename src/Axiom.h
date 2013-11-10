@@ -164,23 +164,22 @@ class Axiom {
   // На вход принимается параметр - число элем условий в создаваемой аксиоме
   // в случае - если не удалось произвести заполнение аксиомы таким образом  - функция возвращает -1
     /*!
-
-/****************************************************************************
-*				Axiom::initAxiomByRand
-*
-*	Description:	Функция задает данную аксиому как конъюнкцию элементарных условий выбранных случайным образом
-*				Реализауия предполагает обращение к более низкому уровню - уровню создания элементарных условий -
-*				и получение случайно выбранного набора совместимых элементарных условий,
-*				число элементарных условий при этом задается как параметр
-*	Parameters:	numOfEC - число элементарных условий, которые будут входить в данную аксиому
-*	Returns:		-1 - Если  создать не удалось
-*				 0 - Если все прошло нормально
-*	Throws:		AxiomLibExeption - если невозможно подобрать numOfEC совместимых элементарных условий
-*	Author:		dk
-*	History:
-*
-****************************************************************************/
-
+    The function sets this axiom as a conjunction of elementary conditions
+    selected randomly. The implementation involves an appeal to a lower
+    level - the level of creating the basic conditions - and receiving a
+    randomly selected set of compatible elementary conditions, the number
+    of elementary conditions is defined as parameter
+        @brief Function to fill randomly the axiom with elementary conditions
+        Takes the input parameter - the number of elementary conditions in
+        created axiom. In case - if you can not make the filling the axiom in
+        such way - the function returns -1
+        @param numOfEC - the number of elementary conditions that will be
+                included in this axiom
+        @author dk
+        @retval -1 - If creation is fault
+        @retval 0 - if all goes well
+        @throws AxiomLibExeption - if you can not find numOfEC compatible
+        elementary conditions
       */
     signed int initAxiomByRand (const int numOfEC);
 
@@ -189,178 +188,160 @@ class Axiom {
   // Эта штука используется для создания фиксированных экспертом аксиом
   // При создании используются конструкторы аксиом без параметров
     /*!
+        Sets this axiom as a conjunction of elementary axioms with the
+        names given in the axiom_names vector. In principle , here parameters
+        should be added. This function is used to create axioms which are fixed
+        by expert. Constructors of the axioms without parameters are used when
+        creating.
+        @brief Sets this axiom as a conjunction of elementary axioms with the
+        names given in the axiom_names vector. In principle , here parameters
+        should be added. This function is used to create axioms which are fixed
+        by expert. Constructors of the axioms without parameters are used when
+        creating
+        @param axiomNums - vector of numbers to appropriate elementary
+        conditions that will be added to the axiom.
+        @author dk
+        @retval 0 - if all is successful
+        @retval otherwise - exit from the functions by throw
+        @throws AxiomLibException - 1) if it is unable to create some of the
+        elementary conditions listed in the list
+        2 ) If listed axioms in the input parameter is not compatible
+  */
 
-/****************************************************************************
-*				Axiom::initAxiomByNames
-*
-*	Description:	Задает данную аксиому как конъюнкцию элементарных аксиом с именами, перечисленными в векторе axiom_nums.
-*				Эта штука используется для создания экспертом аксиом. При создании используются конструкторы элементарных условий  без параметров
-*	Parameters:	axiomNums - вектор номеров соответсвующих элементарным условиям, которые будут добавлены в аксиому.
-*	Returns:		0 - если все выполнено успешно, в противном случае - выход из функции по throw
-*	Throws:		AxiomLibException -  1)если не удалось создать некоторое из элементарных условий, перечисленных в списке
-*								2)если перчисленные во входном параметре аксиомы не совместимы
-*	Author:		dk
-*	History:
-*
-****************************************************************************/
-
-      */
     signed int initAxiomByNames (const std::vector<std::string>& axiomNames);
-
-  // Инициализация параметров элементарных условий, входящих в аксиому
     /*!
-
-/****************************************************************************
-*				Axiom::setECParameters
-*
-*	Description:	Инициализация параметров элементарных условий, входящих в аксиому
-*	Parameters:	setECParameters - задает отображение из имен элементарныз условий в "низкое отображение"
-*				"низкое отображение" - это отобрадение из имен параметров элементарных условий в значения этих параметров
-*				Значения параметров задаются в виде строк, для удобства ( если это числа то они переводятся функцией atof() )
-*	Returns:		0  - если хотя бы один парамтр был изменен
-*				-2 - в ecParams не нашлось ни одного подхдяшего отображения
-*	Throws:		AxiomLibExeption - если отображение ecParams пусто
-*	Author:		dk
-*	History:
-*
-****************************************************************************/
-
+        Initialize the parameters of the elementary conditions included in the
+        axiom
+        @brief Initialize the parameters of the elementary conditions included
+        in the axiom
+        @param
+        @author dk
+        @retval 0 - if at least one parameter was changed
+        @retval -2 - in ecParams there are no proper reflection
+        @throws AxiomLibExeption - if the ecParams reflection is empty
       */
     signed int setECParameters (const std::map <std::string, std::map <std::string, std::string> >& ecParams);
 
   // Функция возвращает параметры акиомы
     /*!
-
-/****************************************************************************
-*				Axiom::getECParameters
-*
-*	Description:	Функция возвращает параметры акиомы
-*	Parameters:	ecParams - заполняется - задает отображение из имен элементарныз условий в "низкое отображение"
-*				"низкое отображение" - это отобрадение из имен параметров элементарных условий в значения этих параметров
-*				Значения параметров задаются в виде строк, для удобства ( если это числа то они переводятся функцией atof() )
-*	Returns:		0
-*	Throws:		-
-*	Author:		dk
-*	History:
-*
-****************************************************************************/
-
-
+        This function returns the parameters of axiom
+        @brief This function returns the parameters of axiom
+        @param ecParams - filling - sets the reflection of the names elementary
+        conditions in the "low-mapping". "Low-mapping" is a reflection of the
+        names of the parameters of the elementary conditions in the values ??of
+        these parameters. The values of parameters are ??given in the form of
+        lines, for convenience (if this are numbers then they are transferred
+        by function atof ())
+        @author dk
+        @return 0
       */
     signed int getECParameters (std::map <std::string, std::map <std::string, std::string> > &ecParams) const;
 
   // Функция устанавливает значение определенного параметра определенного элементарного условия
-    /*!
-      // Функция устанавливает значение определенного параметра определенного элементарного условия
-      */
+
+    //!
+    //! \brief This function sets the value of a specific parameter of certain
+    //!  elementary condition
+    //! \param param
+    //! \param ecNum
+    //! \param paramName
+    //! \return
+    //!
     signed int setParamValue (const double param, const int ecNum, const std::string &paramName);
 
   // Функция возвращает значение определенного параметра определенного элементарного условия
-    /*!
-      // Функция возвращает значение определенного параметра определенного элементарного условия
-
-      */
+    //!
+    //! \brief This function returns the value of a specific parameter of certain
+    //! elementary condition
+    //! \param param
+    //! \param ecNum
+    //! \param paramName
+    //! \return
+    //!
     signed int getParamValue (double &param, const int ecNum, const std::string &paramName) const;
 
   // Функция заполняет входной вектор именами параметров элементарного условия с заданным номером в векторе элементарных условий
     /*!
-
-/****************************************************************************
-*				Axiom::getECParamNames
-*
-*	Description:	Функция заполняет входной вектор именами параметров элементарного
-*				условия с заданным номером в векторе элементарных условий
-*	Parameters:	ecNum - номер элементарного условия, о котором запрашивается информация
-*				ecParamNames - заполняемый вектор строк с названиями параметров
-*	Returns:		0
-*	Throws:		AxiomLibException - если номер указанного элементарного условия
-*				выходит за границы числа элементарных условий данной аксиомы
-*	Author:		dk
-*	History:
-*
-****************************************************************************/
-
-
+        This function fills the input vector of the parameter names of the
+        elementary conditions for a given number in the vector of elementary
+        conditions
+        @brief This function fills the input vector of the parameter names of the
+        elementary conditions for a given number in the vector of elementary
+        conditions
+        @param ecNum - number of elementary conditions for requesting
+                information
+        @param EcParamNames - filled vector of strings with the names of the
+                parameters
+        @author dk
+        @return 0
+        @throws AxiomLibException - if the specified number of elementary
+        condition goes beyond the number of elementary conditions of this axiom
       */
     signed int getECParamNames(int ecNum, std::vector<std::string> &ecParamNames) const;
 
   // Функция возвращает номер элементарного условия в векторе условий по его имени
     /*!
-/****************************************************************************
-*				Axiom::getECNumByName
-*
-*	Description:	Функция возвращает номер элементарного условия в векторе условий по его имени
-*	Parameters:	ecName - имя элементарного условия
-*	Returns:		>= 0 - если эелементарное условие с заданным именем нашлось
-*				< 0 - если элементарного условия с заданным именем не нашлось
-*	Throws:		-
-*	Author:		dk
-*	History:
-*
-****************************************************************************/
-
-
+        This function returns the number of elementary conditions in the
+        vector of conditions by its name
+        @brief This function returns the number of elementary conditions in the
+        vector of conditions by its name
+        @param ecName - the name of the elementary conditions
+        @author dk
+        @retval >=0 - if elementary condition with the specified name was found
+        @retval <0 - if elementary condition with the specified name was not found
       */
     signed int getECNumByName (std::string &ecName) const;
 
   // Функция заполняет входной вектор именами элементарных условий данной аксиомы
     /*!
-
-/****************************************************************************
-*				Axiom::getECNames
-*
-*	Description:	Функция заполняет входной вектор именами элементарных условий данной аксиомы
-*	Parameters:	ecParamNames - заполняемый вектор строк с названиями элементарных условий
-*	Returns:		положительное целое - число элементов вектора
-*	Throws:		-
-*	Author:		dk
-*	History:
-*
-****************************************************************************/
-
+        This function fills the input vector in the names of the elementary
+        conditions
+        @brief This function fills the input vector in the names of the
+        elementary conditions
+        @param ecParamNames - filled with a vector of strings with the names of
+               the elementary conditions
+        @author dk
+        @return a positive integer - the number of elements of the vector
       */
+
     signed int getECNames(std::vector<std::string> &ecNames) const;
 
   // Функция сохраняет структуру данной аксиомы в AxiomStructure
     /*!
-
- /****************************************************************************
-*					Axiom::createAxiomStructure
-*
-*	Description:	Функция сохраняет структуру данной системы аксиом в AxiomStructure
-*	Parameters:		as - структура, в которую записывает описание акисомы
-*	Returns:		0
-*	Throws:			-
-*	Author:			dk
-*	History:
-*
-****************************************************************************/
-
+        This function will save the structure of the system of axioms in
+        AxiomStructure
+        @brief This function will save the structure of the system of axioms
+               in AxiomStructure
+        @param as - a structure in which to write the description of the axiom
+        @author dk
       */
+
     signed int createAxiomStructure (AxiomStructure &as) const;
 
   // Мутация на уровне параметров элементраных условий, входящих в состав аксиомы (ectp). и на
   // уровне структуры самой аксиомы (параметр atp)
     /*!
-
- /****************************************************************************
-*				Axiom::transmute
-*
-*	Description:	Мутация на уровне параметров элементраных условий, входящих в состав аксиомы (ectp)
-*				и на уровне структуры самой аксиомы (параметр atp)
-*				Мутация на уровне элементарного условия определяет (как правило) некоторое изменение параметров
-*				Мутация на уровне аксиомы пердполагает замену, удаление или добавлние некоторого случано выбранного элементарного условия
-*	Parameters:	ectp - параметр определяет степень мутации на уровне элементарных условий - значения параметра обязаны варьироваться то 0 до 1
-*				atp  - параметр определяет степень мутации на уровне аксиомы - значения параметра обязаны варьироваться то 0 до 1
-*	Returns:		0 - если мутация прошла успешно, в противном случае - если что-то идет не так - мутации просто не происходит
-*	Throws:		-
-*	Author:		dk
-*	History:
-*
-****************************************************************************/
-
-
+        A mutation in the parameter level of elementary conditions that are
+        part of the axiom (ectp) and at the level of the structure of the
+        axioms (parameter atp). A mutation at the level of the elementary
+        conditions determines the (usually) a change in the parameters.
+        A mutation at the level of axioms assumes replacement, removal or
+        addition some cases selected elementary condition.
+        @brief Mutation in the parameter level of elementary conditions that
+        are part of the axiom (ectp) and in the level of the structure of the
+        axioms (parameter atp)
+        @param ectp - parameter determines the degree of mutation at the level
+              of elementary conditions - the parameter value must vary a 0 to 1
+        @param atp - parameter determines the degree of mutation at the level
+               of axioms - the parameter value must vary a 0 to 1
+        @author dk
+        @retval 0 - if the mutation is successful
+        @retval otherwise - if something goes wrong - a mutation is just not
+                happening
       */
+
+
+
     signed int transmute (const double ectp, const double atp);
 
   // Сравнение данной аксиомы с ее внутренними параметрами с другой аксиомой того же типа.
@@ -368,7 +349,7 @@ class Axiom {
     /*!
         Comparison of given axiom with its internal parameters and other axiom
         By default comparison is accurate
-        @brief Assignment operator
+        @brief Comparison
         @param second - second axiom to be compared
         @author dk
         @return double - real number from -1 to 1
