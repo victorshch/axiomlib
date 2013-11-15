@@ -29,7 +29,9 @@ class ECStage
 public:		
 	static ECStage* create(const std::string& name, FuzzyDataSet* fuzzyDataSet, ECTypeStage* stage0);
 
-	virtual void setECs(const std::vector<std::vector<std::vector<std::vector<ElemCondPlusStat> > > > & value);
+	virtual void setECs(const std::vector<std::vector<std::vector<std::vector<ElemCondPlusStat> > > > & value) {
+		// TODO:
+	}
 	
 	virtual int initFromEnv(const Environment& env) = 0;
 	

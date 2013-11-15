@@ -235,6 +235,7 @@ SOURCES += src/TreatmentSample.cxx \
     src/FuzzyMultiDataExt/ECStageSimple.cxx \
     src/FuzzyMultiDataExt/ClusteringRealizations/KMeansClusteringModel.cpp \
     src/FuzzyMultiDataExt/ElemCondClustering.cxx \
+    src/FuzzyMultiDataExt/ECClusteringConfiguration.cxx \
     src/FuzzyMultiDataExt/ECStageClustering.cxx
 HEADERS += src/undefs.h \
     src/TreatmentSample.h \
@@ -460,4 +461,5 @@ HEADERS += src/undefs.h \
     src/FuzzyMultiDataExt/ClusteringRealizations/ClusteringModel.h \
     src/FuzzyMultiDataExt/ElemCondClustering.h \
     src/FuzzyMultiDataExt/ECStageClustering.h \
+    src/FuzzyMultiDataExt/ECClusteringConfiguration.h \
     src/FuzzyMultiDataExt/ClusteringFeatures/ClusteringFeature.h

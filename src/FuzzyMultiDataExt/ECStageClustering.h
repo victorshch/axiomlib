@@ -11,6 +11,7 @@
 #include "ClusteringFeatures/ClusteringFeature.h"
 #include "ClusteringRealizations\ClusteringModel.h"
 #include "ElemCondClustering.h"
+#include "ECClusteringConfiguration.h"
 
 using namespace std;
 
@@ -40,33 +41,8 @@ public:
 	// n - Номер Э условия
 private:
 	Logger* logger;
-
-	// List of clustering features using for transform strip to vector of features
-	std::list<ClusteringFeature*> clusteringFeatures;
-
-	// List of elementary conditions
-	std::list<ElemCondClustering*> elemCond;
 	
-	// Count of features in list "clusteringFeatures"
-	int featuresCount;
-
-	int dimensions;
-
-	// result data after getting strips and trasforming into vector of feature 
-	vector<vector<vector<double> > > resultFeatures;
-
-	// count of strips which are randomly taken from trajectory
-	int stripsCount;
-
-	int stripLength;
-
-	// k-means cluster's count
-	int k;
-	
-	// Realization of clustering algorithm
-	std::vector<ClusteringModel*> clusteringModels;
-
-	void handleTrajectory(const std::vector<double>& trajectory, int dimension);
+	std::vector<ECClusteringConfiguration*> clusteringConfigurations;	
 };
 
 };

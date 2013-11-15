@@ -20,7 +20,7 @@ ClusteringModel* getModelByName(string name){
 	throw AxiomLibException();
 }
 
-ClusteringModel* ClusteringModel::create(string s){
+ClusteringModel* ClusteringModel::create(const string& s){
 	if (s.empty()) {
 		throw AxiomLibException();			
 	}

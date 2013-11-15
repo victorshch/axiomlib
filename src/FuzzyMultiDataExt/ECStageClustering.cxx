@@ -24,7 +24,7 @@ int ECStageClustering::initFromEnv(const Environment& env){
 	set<string> clusteringParams;
 	
 	if (!env.getStringSetParamValue(clusteringParams, "ECClusteringModel")){
-		throw AxiomLibException("ECStageClustering::initFromEnv : ECClustering is undefined.");
+		throw AxiomLibException("ECStageClustering::initFromEnv : ECClusteringModel is undefined.");
 	}
 
 	vector<string> strs;
@@ -32,97 +32,56 @@ int ECStageClustering::initFromEnv(const Environment& env){
 	for (auto start = clusteringParams.begin(),
 		      end = clusteringParams.end(); start != end; start++)
 	{		
-		boost::split(strs, *start,boost::is_any_of(","));
-
-		if (strs.size() < 2) {
-			throw AxiomLibException();
-		}
-
-		boost::trim(strs[0]);
-		ClusteringModel* model = ClusteringModel::create(strs[0]);
+		auto clusteringConfiguration = ECClusteringConfiguration::create(fuzzyDataSet, *start);
+		clusteringConfigurations.push_back(clusteringConfiguration);
 	}
-
-	//for (auto start = clusteringParams.begin(), 
-	//	 end = clusteringParams.end(); start != end; start++){
-	//		 // Parse params and create Clustering features using class ClusteringfeatureFactory
-	//}
-
-	this->clusteringFeatures.push_back(&MaxValueFeature());
-	this->clusteringFeatures.push_back(&MinValueFeature());
-
-	this->featuresCount = clusteringFeatures.size();
+	
 	return 0;
 }
 
-void ECStageClustering::handleTrajectory(const vector<double>& trajectory, int dimension) {	
-	int length = trajectory.size();
-
-	for (int i = 0; i < stripsCount; i++){
-		vector<double> feature;
-		feature.reserve(featuresCount);
-
-		int position = rand() % (length - stripLength);
-		for (auto begin = clusteringFeatures.begin(), end = clusteringFeatures.end();
-			begin != end; begin++){
-				feature.push_back((*begin)->calculate(trajectory, position, stripLength));
-		}
-
-		this->clusteringModels[dimension]->addElement(feature);
-	}
-}
-
 void ECStageClustering::run(){
+	for (auto start = clusteringConfigurations.begin(),
+		    end = clusteringConfigurations.end(); start != end; start++)
+	{	
+		(*start)->run();
+	}
+
+	int classCount = fuzzyDataSet->getClassCount();	
+
 	vector<int> dataSetParams;
 
-	this->fuzzyDataSet->getParamNums(dataSetParams);
-	dimensions = dataSetParams.size();
+	fuzzyDataSet->getParamNums(dataSetParams);
+	int dimensionsCount = dataSetParams.size();
 
-	auto dataSetParamNames = fuzzyDataSet->getParamNames();
-		
-	auto classesCount = fuzzyDataSet->getClassCount();	
+	int configurationsCount = clusteringConfigurations.size();
 
-	resultFeatures.resize(dimensions);
+	elemConditions.reserve(classCount);
 
-	this->clusteringModels.reserve(featuresCount);
-
-	for(int i = 0; i < this->dimensions; i++){
-		this->clusteringModels[i] = new KMeansClusteringModel();
+	vector<vector<vector< ElemCondClustering* > > > ecs;
+	
+	for (int conf = 0; conf < configurationsCount; conf++){
+		ecs.push_back(clusteringConfigurations[conf]->getCreatedEC());
 	}
 
-	// foreach class
-	for (auto i = -1; i < classesCount; ++i){			
-		vector<int> numOfTS; 
-		int numOfMultiTS; 
+	for (int c = 0; c < classCount; c++){
+		elemConditions.push_back(vector<vector<vector<ECSelection> > >());
+		elemConditions[c].reserve(dimensionsCount);
 
-		numOfMultiTS = fuzzyDataSet->getMutiTSCount(FuzzyDataSet::Reference, i);
+		for (int dim = 0; dim < dimensionsCount; dim++){
+			elemConditions[c].push_back(vector<vector<ECSelection> >());
+			elemConditions[c][dim].reserve(configurationsCount);
 
-		//foreach dimension
-		for (int k = 0; k < dimensions; ++k){
+			for (int conf = 0; conf < configurationsCount; conf++){
 
-			//foreach trajectory
-			for (int j = 0; j < numOfMultiTS; j++){				
-				vector<double> row;
+				for (int n = 0; n < ecs[conf][dim].size(); n++){
+					ElemCondPlus ec;
+					ec.elemCondition = ecs[conf][dim][n];
+					ec.dimension = dim;
 
-				if (i == -1) {
-					fuzzyDataSet->getNormalTSFromClass (row, j , k);
-				} else {
-					fuzzyDataSet->getTSByIndexFromClass (row, i, j, k);
-				}
-
-				handleTrajectory(row, k);
-			}			
-		}
-	}
-
-	auto feautureVectorSize = this->clusteringFeatures.size();
-
-	for (int i = 0; i < this->dimensions; i++){
-		this->clusteringModels[i]->makeClustering();
-	}
-
-	for (int j = 0; j < dimensions; j++){
-		for (int i = 0; i < this->k; i++){
-			this->elemCond.push_back(new ElemCondClustering(i, stripLength, clusteringFeatures, this->clusteringModels[i]));
+					elemConditions[c][dim][conf].push_back(
+						ECSelection(ElemCondPlusStat(ec)));
+				}	
+			}
 		}
 	}
 }

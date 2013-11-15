@@ -16,8 +16,13 @@ namespace AxiomLib {
 namespace FuzzyMultiDataExt {	
 
 class KMeansClusteringModel : public ClusteringModel {
-
 public:	
+	virtual ClusteringModel* clone(){
+		auto model = new KMeansClusteringModel();
+		model->setClustersCount(this->k);
+		return model;
+	}
+
 	virtual void addElement(const std::vector<double>& element);
 	virtual void addElements(const std::vector<std::vector<double> > & elements);
 	virtual void makeClustering();
