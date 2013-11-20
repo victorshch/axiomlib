@@ -26,16 +26,21 @@ ECClusteringConfiguration* ECClusteringConfiguration::create(const FuzzyDataSet*
 	configuration->dimensionsCount = dataSetParams.size();
 
 	boost::trim(strs[0]);
+	boost::trim(strs[1]);
+	boost::trim(strs[2]);
 
-	ClusteringModel* clusteringModel = ClusteringModel::create(strs[0]);
+	configuration->stripLength = atoi(strs[1].c_str());
+	configuration->stripsCount = atoi(strs[0].c_str());
+
+	ClusteringModel* clusteringModel = ClusteringModel::create(strs[2]);
 
 	configuration->clusteringModels.push_back(clusteringModel);
 	for (int i = 1; i < configuration->dimensionsCount;++i){
 		configuration->clusteringModels.push_back(clusteringModel->clone());
 	}
 
-	for(int i = 1; i < strs.size(); ++i){
-		boost::trim(strs[1]);
+	for(int i = 3; i < strs.size(); ++i){
+		boost::trim(strs[i]);
 		ClusteringFeature* feature = ClusteringFeature::create(strs[i]);
 		configuration->clusteringFeatures.push_back(feature);
 	}

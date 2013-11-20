@@ -19,6 +19,11 @@ namespace AxiomLib {
 				return 0;
 			}
 
+			virtual ElemCondition* clone() const {
+				ElemCondClustering* clone = new ElemCondClustering(*this);
+				return clone;
+			}
+
 			ElemCondClustering(int clusterNumber, int length, const std::list<ClusteringFeature*>& clusteringFeatures, FuzzyMultiDataExt::ClusteringModel* model);
 
 			// Проверка выполнения данной аксиомы. На входе - точка временного ряда k
@@ -104,11 +109,6 @@ namespace AxiomLib {
 			  // Значение delta определяется при установке лимитов изменения.
 			virtual signed int changeParams (const int numOfSteps) {
 				return -1;
-			}
-
-			// Функция клонирования - реализация шаблона "виртуальный конструктор копирования"
-			virtual ElemCondition * clone() const {
-				return 0;
 			}
 
 			// Функция присваивает данному ЭУ ЭУ other и возвращает true, если у них совпадает тип

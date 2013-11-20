@@ -1,4 +1,7 @@
 #include "ECStageClustering.h"
+
+#include "ECTypeStage.h"
+
 #include "Clusteringfeatures/MaxValuefeature.h"
 #include "Clusteringfeatures/MinValuefeature.h"
 
@@ -18,12 +21,13 @@ ECStageClustering::ECStageClustering(FuzzyDataSet* fuzzyDataSet, ECTypeStage* st
 	this->stage0 = stage0;
 	this->fuzzyDataSet = fuzzyDataSet;
 	this->logger = Logger::getInstance();	
+	this->parent = stage0->getParent();
 }
 
 int ECStageClustering::initFromEnv(const Environment& env){
 	set<string> clusteringParams;
 	
-	if (!env.getStringSetParamValue(clusteringParams, "ECClusteringModel")){
+	if (env.getStringSetParamValue(clusteringParams, "ECClusteringModel")){
 		throw AxiomLibException("ECStageClustering::initFromEnv : ECClusteringModel is undefined.");
 	}
 
@@ -72,14 +76,14 @@ void ECStageClustering::run(){
 			elemConditions[c][dim].reserve(configurationsCount);
 
 			for (int conf = 0; conf < configurationsCount; conf++){
-
+				elemConditions[c][dim].push_back(vector<ECSelection>());
 				for (int n = 0; n < ecs[conf][dim].size(); n++){
-					ElemCondPlus ec;
-					ec.elemCondition = ecs[conf][dim][n];
-					ec.dimension = dim;
+					ElemCondPlus* ec = new ElemCondPlus();
+					ec->elemCondition = ecs[conf][dim][n];
+					ec->dimension = dim;
 
 					elemConditions[c][dim][conf].push_back(
-						ECSelection(ElemCondPlusStat(ec)));
+						ECSelection(ElemCondPlusStat(*ec)));
 				}	
 			}
 		}

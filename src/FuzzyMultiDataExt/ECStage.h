@@ -48,7 +48,7 @@ public:
 	
 	virtual int getECTotalCount() const;
 
-	virtual bool isECSelected(int aType, int dimension, int type, int n) const { return false; }
+	virtual bool isECSelected(int aType, int dimension, int type, int n) const { return true; }
 	
 	virtual void setECSelected(int aType, int dimension, int type, int n, bool value) {}
 
