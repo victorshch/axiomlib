@@ -78,12 +78,12 @@ void ECStageClustering::run(){
 			for (int conf = 0; conf < configurationsCount; conf++){
 				elemConditions[c][dim].push_back(vector<ECSelection>());
 				for (int n = 0; n < ecs[conf][dim].size(); n++){
-					ElemCondPlus* ec = new ElemCondPlus();
-					ec->elemCondition = ecs[conf][dim][n];
-					ec->dimension = dim;
+					ElemCondPlus ec = ElemCondPlus();
+					ec.elemCondition = ecs[conf][dim][n];
+					ec.dimension = dim;
 
 					elemConditions[c][dim][conf].push_back(
-						ECSelection(ElemCondPlusStat(*ec)));
+						ECSelection(ElemCondPlusStat(ec)));
 				}	
 			}
 		}

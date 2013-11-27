@@ -1,5 +1,5 @@
-#ifndef MIXCLUSTERINGFEATURE_CPP
-#define MIXCLUSTERINGFEATURE_CPP
+#ifndef MINCLUSTERINGFEATURE_CPP
+#define MINCLUSTERINGFEATURE_CPP
 
 #include "../../Environment.h"
 #include "ClusteringFeature.h"
@@ -25,4 +25,4 @@ namespace FuzzyMultiDataExt {
 
 };
 
-#endif //MIXCLUSTERINGFEATURE_CPP
+#endif //MINCLUSTERINGFEATURE_CPP

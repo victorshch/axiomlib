@@ -55,6 +55,8 @@ unsigned int KMeansClusteringModel::getClusterNumberToElement(const std::vector<
 	vector<size_t> batchSizes = shark::detail::optimalBatchSizes(1, Data<RealVector>::DefaultBatchSize);
 	int dimension = element.size();
 
+	data = shark::Data<RealVector>(batchSizes.size());	
+
 	for(size_t b = 0; b != batchSizes.size(); ++b) {
 		RealMatrix& batch = data.batch(b);
 		batch.resize(batchSizes[b], dimension);
