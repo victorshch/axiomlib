@@ -1,6 +1,6 @@
 #include "ElemCondClustering.h"
 
-#include "ClusteringRealizations\KMeansClusteringModel.h"
+#include "ClusteringRealizations/KMeansClusteringModel.h"
 
 using namespace AxiomLib;
 using namespace std;

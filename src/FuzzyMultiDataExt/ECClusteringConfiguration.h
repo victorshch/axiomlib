@@ -9,7 +9,7 @@
 #include "ECStage.h"
 #include "ForwardDeclarations.h"
 #include "ClusteringFeatures/ClusteringFeature.h"
-#include "ClusteringRealizations\ClusteringModel.h"
+#include "ClusteringRealizations/ClusteringModel.h"
 #include "ElemCondClustering.h"
 
 using namespace std;

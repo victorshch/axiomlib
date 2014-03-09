@@ -4,6 +4,7 @@
 #define FUZZYMULTIDATAEXT_CM_CLUSTERINGMODEL_H
 
 #include <vector>
+#include <string>
 
 namespace AxiomLib {
 

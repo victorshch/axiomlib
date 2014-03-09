@@ -2,10 +2,10 @@
 
 #include "ECTypeStage.h"
 
-#include "Clusteringfeatures/MaxValuefeature.h"
-#include "Clusteringfeatures/MinValuefeature.h"
+#include "ClusteringFeatures/MaxValueFeature.h"
+#include "ClusteringFeatures/MinValueFeature.h"
 
-#include "ClusteringRealizations\KMeansClusteringModel.h"
+#include "ClusteringRealizations/KMeansClusteringModel.h"
 #include "ElemCondClustering.h"
 
 #include <boost/algorithm/string/split.hpp>

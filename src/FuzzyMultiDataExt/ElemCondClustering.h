@@ -4,8 +4,8 @@
 #define FUZZYMULTIDATAEXT_EC_CLUSTERING_ELEM_COND_H
 
 #include "../ElemCondPlus.h"
-#include  "ClusteringFeatures\ClusteringFeature.h"
-#include "ClusteringRealizations\ClusteringModel.h"
+#include "ClusteringFeatures/ClusteringFeature.h"
+#include "ClusteringRealizations/ClusteringModel.h"
 
 using namespace std;
 
