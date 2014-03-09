@@ -58,9 +58,9 @@ linux-icc|linux-icc-64 {
     QMAKE_CXXFLAGS_RELEASE += -openmp
     QMAKE_LFLAGS_RELEASE += -openmp
 }
-win32:# Πζμναΰεοκε ώπτοκοϊπώ, υώσÿβοούι υπ υζβοδβτζούξκ φθομηκσξκ,
+win32:#  ,    ,
 
-# μπζπτύε cl υΰκζβεζ οεχεÿπ βυούξκ
+#  cl   
 QMAKE_CXXFLAGS += -D_SCL_SECURE_NO_WARNINGS \
     -D_CRT_SECURE_NO_WARNINGS
 
@@ -232,11 +232,15 @@ SOURCES += src/TreatmentSample.cxx \
     src/elem_conditions/Variance.cxx \
     src/FuzzyMultiDataExt/AXStageSimple.cpp \
     src/FuzzyMultiDataExt/AXStageTree.cpp \
+    src/FuzzyMultiDataExt/ECStage.cxx \
     src/FuzzyMultiDataExt/ECStageSimple.cxx \
+    src/FuzzyMultiDataExt/ClusteringRealizations/ClusteringModel.cxx \
     src/FuzzyMultiDataExt/ClusteringRealizations/KMeansClusteringModel.cpp \
     src/FuzzyMultiDataExt/ElemCondClustering.cxx \
     src/FuzzyMultiDataExt/ECClusteringConfiguration.cxx \
-    src/FuzzyMultiDataExt/ECStageClustering.cxx
+    src/FuzzyMultiDataExt/ECStageClustering.cxx \
+    src/FuzzyMultiDataExt/AXStageTrivial.cpp \
+    src/FuzzyMultiDataExt/ClusteringFeatures/ClusteringFeature.cxx
 HEADERS += src/undefs.h \
     src/TreatmentSample.h \
     src/TreatmentFactory.h \
@@ -462,4 +466,8 @@ HEADERS += src/undefs.h \
     src/FuzzyMultiDataExt/ElemCondClustering.h \
     src/FuzzyMultiDataExt/ECStageClustering.h \
     src/FuzzyMultiDataExt/ECClusteringConfiguration.h \
-    src/FuzzyMultiDataExt/ClusteringFeatures/ClusteringFeature.h
+    src/FuzzyMultiDataExt/ClusteringFeatures/ClusteringFeature.h \
+    src/FuzzyMultiDataExt/AXStageTrivial.h \
+    src/FuzzyMultiDataExt/ClusteringFeatures/StandardDeviationFeature.h \
+    src/FuzzyMultiDataExt/ClusteringFeatures/RegressionErrorFeature.h \
+    src/FuzzyMultiDataExt/ClusteringFeatures/RegressionAngleFeature.h
