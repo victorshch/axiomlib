@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>533</width>
+    <width>796</width>
     <height>703</height>
    </rect>
   </property>
@@ -80,7 +80,7 @@
       </property>
      </widget>
     </item>
-    <item row="6" column="1">
+    <item row="7" column="1">
      <widget class="QCheckBox" name="checkBox_saveResults">
       <property name="sizePolicy">
        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
@@ -96,7 +96,7 @@
       </property>
      </widget>
     </item>
-    <item row="7" column="0">
+    <item row="8" column="0">
      <widget class="QLabel" name="label_whereToSave">
       <property name="enabled">
        <bool>false</bool>
@@ -108,7 +108,7 @@
       </property>
      </widget>
     </item>
-    <item row="7" column="1">
+    <item row="8" column="1">
      <widget class="QLineEdit" name="lineEdit_whereToSave">
       <property name="enabled">
        <bool>false</bool>
@@ -121,7 +121,7 @@
       </property>
      </widget>
     </item>
-    <item row="12" column="1">
+    <item row="13" column="1">
      <widget class="QLabel" name="label_results">
       <property name="sizePolicy">
        <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
@@ -134,14 +134,14 @@
       </property>
      </widget>
     </item>
-    <item row="14" column="0">
+    <item row="15" column="0">
      <widget class="QLabel" name="label_output">
       <property name="text">
        <string>Вывод алгоритма</string>
       </property>
      </widget>
     </item>
-    <item row="17" column="3">
+    <item row="18" column="3">
      <spacer name="verticalSpacer">
       <property name="orientation">
        <enum>Qt::Vertical</enum>
@@ -154,33 +154,14 @@
       </property>
      </spacer>
     </item>
-    <item row="21" column="0">
+    <item row="22" column="0">
      <widget class="QLabel" name="label_status">
       <property name="text">
        <string>Статус</string>
       </property>
      </widget>
     </item>
-    <item row="4" column="3">
-     <widget class="QPushButton" name="browseButton_params">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="minimumSize">
-       <size>
-        <width>0</width>
-        <height>25</height>
-       </size>
-      </property>
-      <property name="text">
-       <string>Открыть</string>
-      </property>
-     </widget>
-    </item>
-    <item row="14" column="1" rowspan="7">
+    <item row="15" column="1" rowspan="7">
      <widget class="QTextEdit" name="textEdit_output">
       <property name="sizePolicy">
        <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
@@ -193,7 +174,7 @@
       </property>
      </widget>
     </item>
-    <item row="22" column="1">
+    <item row="23" column="1">
      <layout class="QGridLayout" name="gridLayout_2" rowstretch="1,1" columnstretch="1,1,1" rowminimumheight="30,30" columnminimumwidth="180,10,180">
       <property name="sizeConstraint">
        <enum>QLayout::SetDefaultConstraint</enum>
@@ -285,7 +266,15 @@
       </item>
      </layout>
     </item>
-    <item row="21" column="1" colspan="2">
+    <item row="20" column="3">
+     <widget class="QPushButton" name="pushButton_resBrowser">
+      <property name="text">
+       <string>Просмотр
+результатов</string>
+      </property>
+     </widget>
+    </item>
+    <item row="22" column="1" colspan="2">
      <widget class="QLineEdit" name="lineEdit_status">
       <property name="enabled">
        <bool>true</bool>
@@ -344,7 +333,7 @@
       </property>
      </widget>
     </item>
-    <item row="14" column="3">
+    <item row="15" column="3">
      <widget class="QPushButton" name="clearButton">
       <property name="sizePolicy">
        <sizepolicy hsizetype="Minimum" vsizetype="MinimumExpanding">
@@ -386,7 +375,7 @@
       </property>
      </widget>
     </item>
-    <item row="8" column="1" rowspan="2">
+    <item row="9" column="1" rowspan="2">
      <layout class="QHBoxLayout" name="horizontalLayout">
       <property name="spacing">
        <number>8</number>
@@ -452,7 +441,7 @@
       </item>
      </layout>
     </item>
-    <item row="10" column="0">
+    <item row="11" column="0">
      <widget class="QLabel" name="label_pathToMpi">
       <property name="enabled">
        <bool>false</bool>
@@ -462,14 +451,14 @@
       </property>
      </widget>
     </item>
-    <item row="10" column="1">
+    <item row="11" column="1">
      <widget class="QLineEdit" name="lineEdit_pathToMpi">
       <property name="enabled">
        <bool>false</bool>
       </property>
      </widget>
     </item>
-    <item row="10" column="3">
+    <item row="11" column="3">
      <widget class="QPushButton" name="browseButton_mpi">
       <property name="enabled">
        <bool>false</bool>
@@ -485,7 +474,7 @@
       </property>
      </widget>
     </item>
-    <item row="11" column="0">
+    <item row="12" column="0">
      <widget class="QLabel" name="label_mpiOps">
       <property name="enabled">
        <bool>false</bool>
@@ -496,14 +485,14 @@
       </property>
      </widget>
     </item>
-    <item row="11" column="1">
+    <item row="12" column="1">
      <widget class="QLineEdit" name="lineEdit_mpiOps">
       <property name="enabled">
        <bool>false</bool>
       </property>
      </widget>
     </item>
-    <item row="7" column="3">
+    <item row="8" column="3">
      <widget class="QPushButton" name="browseButton_whereToSave">
       <property name="enabled">
        <bool>false</bool>
@@ -525,20 +514,7 @@
       </property>
      </widget>
     </item>
-    <item row="5" column="3">
-     <widget class="QPushButton" name="editButton_config">
-      <property name="minimumSize">
-       <size>
-        <width>0</width>
-        <height>25</height>
-       </size>
-      </property>
-      <property name="text">
-       <string>Редактировать</string>
-      </property>
-     </widget>
-    </item>
-    <item row="18" column="3">
+    <item row="19" column="3">
      <widget class="QPushButton" name="pushButton_asBrowser">
       <property name="text">
        <string>Просмотр
@@ -546,7 +522,7 @@
       </property>
      </widget>
     </item>
-    <item row="15" column="3">
+    <item row="16" column="3">
      <widget class="QPushButton" name="aboutButton">
       <property name="sizePolicy">
        <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
@@ -565,11 +541,60 @@
       </property>
      </widget>
     </item>
-    <item row="19" column="3">
-     <widget class="QPushButton" name="pushButton_resBrowser">
+    <item row="6" column="0">
+     <widget class="QLabel" name="label_command">
       <property name="text">
-       <string>Просмотр
-результатов</string>
+       <string>Команда</string>
+      </property>
+     </widget>
+    </item>
+    <item row="6" column="1">
+     <widget class="QLineEdit" name="lineEdit_command">
+      <property name="readOnly">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </item>
+    <item row="4" column="3">
+     <layout class="QHBoxLayout" name="horizontalLayout_2">
+      <item>
+       <widget class="QPushButton" name="browseButton_params">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>25</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>Открыть</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="editButton_config">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>25</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>Редактировать</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item row="6" column="3">
+     <widget class="QPushButton" name="pushButton_copyCommand">
+      <property name="text">
+       <string>Копировать в буфер обмена</string>
       </property>
      </widget>
     </item>
@@ -580,7 +605,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>533</width>
+     <width>796</width>
      <height>25</height>
     </rect>
    </property>
@@ -630,8 +655,6 @@
   <tabstop>lineEdit_dataSet</tabstop>
   <tabstop>browseButton_dataSet</tabstop>
  </tabstops>
- <resources>
-  <include location="qtgui.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>

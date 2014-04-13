@@ -82,6 +82,9 @@ class QtGui :public QMainWindow, public Ui::mainWindow {
 	// Функция останвливает запись в лог-файл и закрывает его
 	void closeLogFile ();
 
+	// Возвращает имя и параметры команды запуска алгоритма
+	QStringList getCommand();
+
  public slots:
 	
 	// Функции, вызываемые внешними воздействиями, например нажатием кнопки в ГПИ:
@@ -106,6 +109,9 @@ class QtGui :public QMainWindow, public Ui::mainWindow {
 	void clearAllFields(); // Очищает содержимое всех полей ГПИ
 	void exit(); // Закрывает основное окно ГПИ
 	void processOutput(); // Запускается при поступлении данных от внешнего процесса, обрабатывает их.
+
+	void updateCommand(); // Обновление команды
+	void copyCommand(); // Копирование команды в буфер обмена
 
 }; // end of class
 

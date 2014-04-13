@@ -134,8 +134,20 @@ QtGui::QtGui(QWidget *parent, Qt::WFlags flags) {
 	
 	lineEdit_workingDir->setText(QDir::currentPath());
 
-}
+	connect(lineEdit_dataSet, SIGNAL(textChanged(QString)), this, SLOT(updateCommand()));
+	connect(lineEdit_mpiOps, SIGNAL(textChanged(QString)), this, SLOT(updateCommand()));
+	connect(lineEdit_params, SIGNAL(textChanged(QString)), this, SLOT(updateCommand()));
+	connect(lineEdit_pathToMpi, SIGNAL(textChanged(QString)), this, SLOT(updateCommand()));
+	connect(lineEdit_workingDir, SIGNAL(textChanged(QString)), this, SLOT(updateCommand()));
+	connect(checkBox_saveResults, SIGNAL(toggled(bool)), this, SLOT(updateCommand()));
+	connect(checkBox_saveResults, SIGNAL(toggled(bool)), this, SLOT(updateCommand()));
+	connect(comboBox_algorithm, SIGNAL(currentIndexChanged(int)), this, SLOT(updateCommand()));
+	connect(spinBox_numProc, SIGNAL(valueChanged(int)), this, SLOT(updateCommand()));
 
+	connect(pushButton_copyCommand, SIGNAL(clicked()), this, SLOT(copyCommand()));
+
+	updateCommand();
+}
 
 /****************************************************************************
 *					QtGui::~QtGui
@@ -775,7 +787,23 @@ void QtGui::processOutput() {
 		toLogFile (strAll);
 	// Если при обработке было найдено служебное сообщение об останове процесса - то вызываем функцию остановки
 //	if (res == 1)
-//		stop();
+	//		stop();
+}
+
+void QtGui::updateCommand()
+{
+	QStringList commandArgs = getCommand();
+
+	for(int i = 1; i < commandArgs.count(); ++i) {
+		commandArgs[i] = "'" + commandArgs[i] + "'";
+	}
+
+	lineEdit_command->setText(commandArgs.join(" "));
+}
+
+void QtGui::copyCommand()
+{
+	QApplication::clipboard()->setText(lineEdit_command->text());
 }
 
 
@@ -1139,6 +1167,72 @@ int QtGui::createDir (std::string dir) {
 void QtGui::closeLogFile () {
 	if (logFile)
 		fclose (logFile);
+}
+
+QStringList QtGui::getCommand()
+{
+	QString workDir;
+	workDir = lineEdit_workingDir->text();
+	addSplashes (workDir);
+
+	// Получение пути запуска файла
+	QString path, algName;
+	path = getAlgPath (comboBox_algorithm->currentText (), workDir, algName);
+
+	QStringList args;
+
+	int procNum;
+
+	// Если используется MPI - модификация пути запуска
+	if (checkBox_useMpi->isChecked()) {
+		procNum = spinBox_numProc->value();
+		QString mpiPath;
+		mpiPath = lineEdit_pathToMpi->text();
+		addQuotes (mpiPath);
+		addSplashes (mpiPath);
+		args << "-n";
+		QString numStr;
+		QTextStream(&numStr) << procNum;
+		args << numStr;
+		QString ops (lineEdit_mpiOps->text());
+		if (ops.size() > 0)
+			addArgsToList(ops.toStdString(), args);
+		args << path;
+		path = mpiPath;
+		//printf ("\n\t");printf (path.toStdString().c_str());printf ("\n");
+	} else {
+		procNum = 1;
+	}
+
+	// Дополнительные параметры запуска:
+	// Обработка специально указанного конфигурационного файла
+	if (lineEdit_params->text().size() > 0) {
+		QString pathToConfigFile;
+		pathToConfigFile = lineEdit_params->text();
+		addSplashes (pathToConfigFile);
+		args << str_configFile;
+		args << pathToConfigFile;
+	}
+	// Обработка специально указанного внешнего набора данных
+	if (lineEdit_dataSet->text().size() > 0) {
+		QString dataSetName, dataSetPath;
+		getDataSetNamePath(lineEdit_dataSet->text(), dataSetName, dataSetPath);
+		args << str_dataSetDir;
+		args << dataSetPath;
+		args << str_dataSetName;
+		args << dataSetName;
+	}
+	// Обработка параметра - сохранять ли результаты работы внешнего процесса
+	if (checkBox_saveResults->isChecked()) {
+		args << str_resultsDir;
+		if (lineEdit_whereToSave->text().size() > 0)
+			args << lineEdit_whereToSave->text();
+		else
+			args << "./";
+	}
+
+	args.prepend(path);
+	return args;
 }
 
 
