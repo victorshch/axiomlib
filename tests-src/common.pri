@@ -1,4 +1,5 @@
-CONFIG -= console
+CONFIG -= console release
+CONFIG += debug
 
 include(../../AxiomLibConfig.pri)
 

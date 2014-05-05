@@ -1,8 +1,8 @@
 # -------------------------------------------------
 # Project created by QtCreator 2010-04-02T11:28:45
 # -------------------------------------------------
-
-CONFIG += static
+CONFIG += static debug
+CONFIG -= release
 
 include(AxiomLibConfig.pri)
 

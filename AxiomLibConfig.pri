@@ -46,9 +46,19 @@ debug {
 # ‰Ã— unix
 unix {
 linux-icc-64|linux-icc {
-        AXIOMLIB_LIB = /home/wictor/projects/axiomlib/release/libAxiomLib.a
+debug {
+        AXIOMLIB_LIB = /home/wictor/projects/axiomlib/debug/libAxiomLib.a
+}
+release {
+    AXIOMLIB_LIB = /home/wictor/projects/axiomlib/release/libAxiomLib.a
+}
 } else {
+debug {
+    AXIOMLIB_LIB = /home/wictor/projects/axiomlib/debug/libAxiomLib.a
+}
+release {
         AXIOMLIB_LIB = /home/wictor/projects/axiomlib/release/libAxiomLib.a
+}
 }
         BOOST_LIB = -lboost_filesystem -lboost_system -lboost_thread -lboost_serialization
         MPICH_LIB = -lmpi -lgomp -lmpich
