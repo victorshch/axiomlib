@@ -17,12 +17,12 @@ ClusteringModel* getModelByName(string name){
 		return new KMeansClusteringModel();
 	}
 
-	throw AxiomLibException();
+	throw AxiomLibException("ClusteringModel::getModelByName. Model with name \"" + name +"\" not found!");
 }
 
 ClusteringModel* ClusteringModel::create(const string& s){
 	if (s.empty()) {
-		throw AxiomLibException();			
+		throw AxiomLibException("ClusteringModel::create. S is empty.");			
 	}
 
 	vector<string> strs;
@@ -41,7 +41,7 @@ ClusteringModel* ClusteringModel::create(const string& s){
 			boost::split(param, strs[i], boost::is_any_of("="));
 
 			if (param.size() != 2){
-				throw AxiomLibException();
+				throw AxiomLibException("ClusetringModel::create. Parameters error.");
 			}
 
 			boost::trim(param[0]);

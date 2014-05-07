@@ -37,6 +37,7 @@ struct ResultInfo {
 
 int main (int argc, char** argv) {
 	try {
+		srand (time(NULL));
 		Logger::getInstance()->setDebug(true);
 		Logger::getInstance()->setComments(true);
 
@@ -56,7 +57,7 @@ int main (int argc, char** argv) {
 
 		alg.run();
 
-		alg.saveAxiomSetsToXml();
+		//alg.saveAxiomSetsToXml();
 
 		std::vector<ResultInfo> result;
 		result.reserve(alg.getASSize());

@@ -20,7 +20,7 @@ signed int ElemCondClustering::check(const unsigned long k, const std::vector<do
 	vector<double> feature;
 	feature.reserve(featuresCount);
 	
-	if (k - length / 2 < 0){
+	if ((int) k - length / 2 < 0){
 		return -1;	
 	}
 

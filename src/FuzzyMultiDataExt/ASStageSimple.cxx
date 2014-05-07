@@ -211,7 +211,13 @@ void ASStageSimple::run() {
 				}
 				// выбираем заданное число лучших систем аксиом и добавляем их в популяцию на следующем шаге алгоритма
 				indicesOfBestSets.clear();
-				chooseIndicesOfBestAxiomSets (newAxiomSets, indicesOfBestSets, axiomSets[axSet].goal);
+				chooseIndicesOfBestAxiomSets (newAxiomSets, indicesOfBestSets, axiomSets[axSet].goal);				
+
+				if (!indicesOfBestSets.size()) {
+					Logger::comment("Vector of indices of best sets is empty");
+					continue;
+				}
+
 				const AxiomExprSetPlus& bestAS = newAxiomSets[indicesOfBestSets[0]];
 				{
 					char buf[256];

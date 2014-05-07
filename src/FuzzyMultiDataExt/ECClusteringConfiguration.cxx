@@ -14,7 +14,7 @@ ECClusteringConfiguration* ECClusteringConfiguration::create(const FuzzyDataSet*
 	boost::split(strs, s, boost::is_any_of(","));
 
 	if (strs.size() < 2) {
-		throw AxiomLibException();
+		throw AxiomLibException("ECClusteringConfiguration::create exception");
 	}
 
 	ECClusteringConfiguration* configuration = new ECClusteringConfiguration();
@@ -45,12 +45,13 @@ ECClusteringConfiguration* ECClusteringConfiguration::create(const FuzzyDataSet*
 		configuration->clusteringFeatures.push_back(feature);
 	}
 
-	configuration->featuresCount = strs.size() - 1;
+	configuration->featuresCount = configuration->clusteringFeatures.size();
 
 	return configuration;
 }
 
 void ECClusteringConfiguration::run(){
+	Logger::comment("Run ECClusteringConfiguration");
 	auto dataSetParamNames = fuzzyDataSet->getParamNames();
 		
 	auto classesCount = fuzzyDataSet->getClassCount();	
@@ -65,7 +66,7 @@ void ECClusteringConfiguration::run(){
 		numOfMultiTS = fuzzyDataSet->getMutiTSCount(FuzzyDataSet::Reference, i);
 
 		//foreach dimension
-		for (int dim = 0; dim < dimensionsCount; ++dim){
+		for (int dim = 1; dim < dimensionsCount + 1; ++dim){
 
 			//foreach trajectory
 			for (int j = 0; j < numOfMultiTS; j++){				
@@ -77,13 +78,15 @@ void ECClusteringConfiguration::run(){
 					fuzzyDataSet->getTSByIndexFromClass (row, i, j, dim);
 				}
 
-				handleTrajectory(row, dim);
+				handleTrajectory(row, dim - 1);
 			}			
 		}
 	}
-
+	
 	for (int i = 0; i < this->dimensionsCount; i++){
+		Logger::comment("Make clustering");
 		this->clusteringModels[i]->makeClustering();
+		Logger::comment("Stop clustering");
 	}
 
 	for (int i = 0; i < this->clusteringModels.size(); i++){

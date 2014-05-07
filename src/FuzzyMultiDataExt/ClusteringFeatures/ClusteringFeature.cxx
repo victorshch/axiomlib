@@ -5,26 +5,38 @@
 
 #include "MaxValueFeature.h"
 #include "MinValueFeature.h"
+#include "MeanValueFeature.h"
+#include "StandardDeviationFeature.h"
+#include "RegressionErrorFeature.h"
+#include "RegressionAngleFeature.h"
 
 using namespace std;
 using namespace AxiomLib;
 using namespace AxiomLib::FuzzyMultiDataExt;
 
 ClusteringFeature* getFeatureByName(string name){
-	if (strcmp(name.c_str(), "max") == 0)
+	if (name == "max")
 	{
 		return new MaxValueFeature();
-	} else if (strcmp(name.c_str(), "min") == 0)
+	} else if (name == "min")
 	{
 		return new MinValueFeature();
+	} else if (name == "mean"){
+		return new MeanValueFeature();
+	} else if (name == "standartdeviation"){
+		return new StandardDeviationFeature();
+	} else if (name == "regressionerror"){
+		return new RegressionErrorFeature();
+	} else if (name == "regressionangle"){
+		return new RegressionAngleFeature();
 	}
 
-	throw AxiomLibException();
+	throw AxiomLibException("Feature with name \"" + name + "\" not found!");
 }
 
 ClusteringFeature* ClusteringFeature::create(const std::string& s){
 	if (s.empty()) {
-		throw AxiomLibException();			
+		throw AxiomLibException("ClusteringFeature::create string s in empty.");			
 	}
 
 	vector<string> strs;
@@ -43,7 +55,7 @@ ClusteringFeature* ClusteringFeature::create(const std::string& s){
 			boost::split(param, strs[i], boost::is_any_of("="));
 
 			if (param.size() != 2){
-				throw AxiomLibException();
+				throw AxiomLibException("ClusteringFeature::create. Parameter error.");
 			}
 
 			boost::trim(param[0]);

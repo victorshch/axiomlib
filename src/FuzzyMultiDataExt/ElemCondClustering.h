@@ -12,11 +12,11 @@ using namespace std;
 namespace AxiomLib {
 	namespace FuzzyMultiDataExt {
 		class ElemCondClustering : public ElemCondition {
-			
+				
 		public: 
 			// Возвращает имя данной аксиомы.
 			virtual std::string name (void) const {
-				return 0;
+				return "elemCondClustering";
 			}
 
 			virtual ElemCondition* clone() const {
@@ -120,6 +120,19 @@ namespace AxiomLib {
 			}
 
 			private: 			
+				//объявления, необходимые для сериализации
+				friend class boost::serialization::access;
+
+				//функция сериализации - в ней должны быть указаны члены-данные,
+				//характеризующие состояние объекта
+				template<class Archive>
+				void serialize(Archive & archive, const unsigned int /*version*/)
+				{
+					archive & BOOST_SERIALIZATION_BASE_OBJECT_NVP(ElemCondition);
+					archive & BOOST_SERIALIZATION_NVP(clusterNumber);
+					archive & BOOST_SERIALIZATION_NVP(length);
+				}
+
 				int clusterNumber;
 
 				int length;
