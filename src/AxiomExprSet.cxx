@@ -76,7 +76,6 @@ void AxiomExprSet::addAxioms (std::vector <AxiomExpr*> &newAxiomExpr) {
 	}
 }
 
-
 // Устанавливает новый вектор аксиом
 void AxiomExprSet::setAxioms (std::vector <AxiomExpr*> &newAxiomExpr) {
 	clear();
@@ -235,6 +234,10 @@ int AxiomExprSet::enter (std::vector<int>& marked, const std::vector<double>& ro
 *
 ****************************************************************************/
 AxiomExprSet& AxiomExprSet::operator= (const AxiomExprSet &second) {
+	if(this == &second) {
+		return *this;
+	}
+
 	// Копируем имя системы аксиом
 	this->nameOfAxiomSet = second.nameOfAxiomSet;
 	this->nameOfAxiomBank = second.nameOfAxiomBank;
