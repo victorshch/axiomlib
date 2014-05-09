@@ -11,8 +11,48 @@
 
 using namespace AxiomLib;
 
+void AxiomExprSetPlus::addAxiom(const AxiomExpr &newAxiom)
+{
+	AxiomExprSet::addAxiom(newAxiom);
+}
 
+void AxiomExprSetPlus::addAxiom(const AxiomExpr &newAxiom, int priority)
+{
+	if(priority == 0 || priority > axioms.size()) {
+		addAxiom(newAxiom);
+		return;
+	}
 
+	int axiomIndex = priority - 1;
+
+	AxiomExpr* axiomExpr = new AxiomExpr();
+	*axiomExpr = newAxiom;
+
+	axioms.insert(axioms.begin() + axiomIndex, axiomExpr);
+
+	for(int classNo = 0; classNo < markUps.size(); ++classNo) {
+		for(int i = 0; i < markUps[classNo].size(); ++i) {
+			if(markUps[classNo][i] >= priority) {
+				markUps[classNo][i]++;
+			}
+		}
+	}
+}
+
+void AxiomExprSetPlus::removeAxiom(int axiomNumber)
+{
+	delete axioms[axiomNumber - 1];
+	axioms.erase(axioms.begin() + (axiomNumber - 1));
+	for(int classNo = 0; classNo < markUps.size(); ++classNo) {
+		for(int i = 0; i < markUps[classNo].size(); ++i) {
+			if(markUps[classNo][i] == axiomNumber) {
+				markUps[classNo][i] = 0;
+			} else if(markUps[classNo][i] > axiomNumber) {
+				markUps[classNo][i]--;
+			}
+		}
+	}
+}
 
 bool AxiomExprSetPlus::operator <(const AxiomExprSetPlus &other) const
 {
