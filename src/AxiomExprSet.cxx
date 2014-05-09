@@ -76,7 +76,6 @@ void AxiomExprSet::addAxioms (std::vector <AxiomExpr*> &newAxiomExpr) {
 	}
 }
 
-
 // Устанавливает новый вектор аксиом
 void AxiomExprSet::setAxioms (std::vector <AxiomExpr*> &newAxiomExpr) {
 	clear();

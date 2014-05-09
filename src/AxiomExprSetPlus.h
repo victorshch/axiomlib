@@ -43,6 +43,13 @@ class AxiomExprSetPlus : public AxiomExprSet {
 
  public:
 	
+	// Добавляет аксиому с заданным приоритетом (от 1) и обновляет разметки
+	void addAxiom(const AxiomExpr &newAxiom, int priority);
+
+	// Удаляет аксиому из системы по номеру (от 1),
+	// обновляя значения в разметке
+	void removeAxiom(int axiomNumber);
+
 	bool operator <(const AxiomExprSetPlus& other) const;
 
 	//	Расширение исходного класса AxiomExprSet за счет следующих переменных:
