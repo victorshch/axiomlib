@@ -510,7 +510,7 @@ signed int Environment::readConfigFile(const char* filename) {
   bool tempBool = boost::filesystem::exists( fPath );
   if ( !boost::filesystem::exists( fileName ) ) {
 	throw AxiomLibException("Error in Environment::ReadConfigFile: cannot find the config file at path '"
-							+ std::string(fileName) + "'");
+							+ std::string(filename) + "'");
   }
 
   // Открываем файл

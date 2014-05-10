@@ -43,6 +43,8 @@ class AxiomExprSetPlus : public AxiomExprSet {
 
  public:
 	
+	void addAxiom(const AxiomExpr& newAxiom);
+
 	// Добавляет аксиому с заданным приоритетом (от 1) и обновляет разметки
 	void addAxiom(const AxiomExpr &newAxiom, int priority);
 

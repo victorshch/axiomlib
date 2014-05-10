@@ -13,6 +13,7 @@
 #include <shark/Algorithms/DirectSearch/Operators/Selection/LinearRanking.h>
 
 #include <string>
+#include <iterator>
 
 using namespace AxiomLib;
 using namespace AxiomLib::FuzzyMultiDataExt;
@@ -20,6 +21,7 @@ using namespace AxiomLib::FuzzyMultiDataExt;
 AxiomContainer::AxiomContainer(AXStage *stage2, FuzzyDataSet *fuzzyDataSet)
 {
 	mAxiomInfo.resize(stage2->getAXSize());
+
 	mTotalCount = 0;
 	int globalIndex = 0;
 
@@ -60,7 +62,7 @@ const AxiomExpr &AxiomContainer::axiom(int classNo, int i) const
 
 int AxiomContainer::classCount() const
 {
-	return mAxiomInfo.size() - 1;
+	return mAxiomInfo.size();
 }
 
 bool AxiomContainer::isSat(int axiomClassNo, int axiomNo, int division, int classNumber, int trajectoryNumber, int point) const
@@ -78,7 +80,7 @@ bool AxiomContainer::isSat(int globalAxiomIndex, int division, int classNumber, 
 void AxiomContainer::toLocalIndex(int globalIndex, int &classNo, int &i) const
 {
 	i = globalIndex;
-	for(classNo = -1; classNo < classCount(); ++classNo) {
+	for(classNo = 0; classNo < classCount(); ++classNo) {
 		if(i < axiomCount(classNo)) {
 			return;
 		}
@@ -92,7 +94,7 @@ void AxiomContainer::toLocalIndex(int globalIndex, int &classNo, int &i) const
 int AxiomContainer::classIndex(int classNo)
 {
 	if(classNo < 0) classNo = -1;
-	return classNo + 1;
+	return classNo;
 }
 
 AxiomContainer::ExtendedSatPointSet::ExtendedSatPointSet(const AxiomExpr &axiom, FuzzyDataSet *fuzzyDataSet)
@@ -115,8 +117,26 @@ bool AxiomContainer::ExtendedSatPointSet::isSat(int division, int classNumber, i
 	return mSatPoints[division][classNumber + 1].isSat(trajectoryNumber, point);
 }
 
-ASObjectiveFunction::ASObjectiveFunction(const FuzzyDataSet *fuzzyDataSet, const AxiomContainer *axiomContainer)
-	:mFuzzyDataSet(fuzzyDataSet), mAxiomContainer(axiomContainer)
+
+string ASObjectiveValue::toString() const
+{
+	return boost::lexical_cast<std::string>(this->goalValue) + " ("
+			+ boost::lexical_cast<std::string>(this->errI)
+			+ ", "
+			+ boost::lexical_cast<std::string>(this->errII)
+			+ ")";
+}
+
+shark::RealVector ASObjectiveValue::toRealVector() const
+{
+	shark::RealVector result(2);
+	result[0] = errI;
+	result[1] = errII;
+	return result;
+}
+
+ASObjectiveFunction::ASObjectiveFunction(const FuzzyDataSet *fuzzyDataSet)
+	:mFuzzyDataSet(fuzzyDataSet), mAxiomContainer(0)
 {
 }
 
@@ -140,21 +160,25 @@ void ASObjectiveFunction::initFromEnv(const Environment &env)
 		throw AxiomLibException("FuzzyMultiDataExt_AS::initFromEnv: goal-class is undefined.");
 	mGoalStrategy = std::auto_ptr<GoalStrategy>(gsf.create(goalStrategyName));
 	mGoalStrategy->setParamsFromEnv(env);
+
+	env.getParamValue(penaltyObjective, "ASStageGenetic_penaltyObjective", 10000.0);
 }
 
-std::string goalStr(const AxiomExprSetPlus& as) {
-	return boost::lexical_cast<std::string>(as.goal) + " ("
-			+ boost::lexical_cast<std::string>(as.errFirst)
-			+ ", "
-			+ boost::lexical_cast<std::string>(as.errSecond)
-			+ ")";
-}
-
-double ASObjectiveFunction::eval(const AxiomExprSetPlus &input) const
+ASObjectiveValue ASObjectiveFunction::eval(const AxiomExprSetPlus &input) const
 {
+	if(!mAxiomContainer) {
+		exception() << "ASObjectiveFunction::eval(): AxiomContainer not set";
+	}
+
+	for(unsigned i = 0; i < input.markUps.size(); ++i) {
+		if(input.markUps[i].empty()) {
+			return ASObjectiveValue();
+		}
+	}
+
 	AxiomExprSetPlus copy(input);
 	matterAxiomSetFunc(copy);
-	return copy.goal;
+	return ASObjectiveValue(copy.goal, copy.errFirst, copy.errSecond);
 }
 
 double ASObjectiveFunction::matterAxiomSetFunc(AxiomExprSetPlus &as) const
@@ -295,16 +319,24 @@ int ASObjectiveFunction::getStatistic(std::vector<int> &row) const
 void ASMutation::operator ()(ASIndividual &i) const
 {
 	AxiomExprSetPlus& as = *i;
-	int action = shark::Rng::discrete(FirstAction, LastAction);
 	int classToMutate = 0;
-	if(as.markUps.size() > 1) {
+	if(as.markUps.size() > 1)
+	{
 		classToMutate = shark::Rng::discrete(0, as.markUps.size() - 1);
 	}
+
+	int action;
+	if((*i).axioms.empty() || as.markUps[classToMutate].empty()) {
+		action = AddForeign;
+	} else {
+		action = shark::Rng::discrete(FirstAction, LastAction);
+	}
+
 	switch(action) {
 		case AddOwn: {
 			int newAxiomNo = shark::Rng::discrete(1, as.axioms.size());
 			int newPosition = shark::Rng::discrete(0, as.markUps[classToMutate].size());
-			addAxiom(as, classToMutate, as.axioms[newAxiomNo]->index, newPosition);
+			addAxiom(as, classToMutate, as.axioms[newAxiomNo - 1]->index, newPosition);
 		} break;
 		case AddForeign: {
 			int newAxiomGlobalIndex = shark::Rng::discrete(0, mAxiomContainer->totalAxiomCount() - 1);
@@ -313,9 +345,10 @@ void ASMutation::operator ()(ASIndividual &i) const
 		} break;
 		case ReplaceWithOwn: {
 			int newAxiomNo = shark::Rng::discrete(1, as.axioms.size());
+			int newGlobalAxiomIndex = as.axioms[newAxiomNo - 1]->index;
 			int newPosition = shark::Rng::discrete(0, as.markUps[classToMutate].size() - 1);
 			removeAxiom(as, classToMutate, newPosition);
-			addAxiom(as, classToMutate, as.axioms[newAxiomNo]->index, newPosition);
+			addAxiom(as, classToMutate, newGlobalAxiomIndex, newPosition);
 		} break;
 		case ReplaceWithForeign: {
 			int newAxiomGlobalIndex = shark::Rng::discrete(0, mAxiomContainer->totalAxiomCount() - 1);
@@ -336,7 +369,7 @@ void ASMutation::addAxiom(AxiomExprSetPlus &as, int classNo, int newAxiomGlobalI
 	std::vector<int>& marking = as.markUps[classNo];
 
 	int newAxiomLocalIndex = 0;
-	for(int i = 0; i < as.axioms.size(); ++i) {
+	for(unsigned i = 0; i < as.axioms.size(); ++i) {
 		if(as.axioms[i]->index == newAxiomGlobalIndex) {
 			newAxiomLocalIndex = i + 1;
 		}
@@ -359,15 +392,104 @@ void ASMutation::removeAxiom(AxiomExprSetPlus &as, int classNo, int position) co
 	int axiomToRemove = marking[position];
 	marking.erase(marking.begin() + position);
 
-	if(std::find(marking.begin(), marking.end(), axiomToRemove) == marking.end()) {
+	if(axiomToRemove != 0 && std::find(marking.begin(), marking.end(), axiomToRemove) == marking.end()) {
 		// Если такой аксиомы в разметке больше нет, удаляем ее из системы аксиом
 		as.removeAxiom(axiomToRemove);
 	}
 }
 
+void ASOnePointCrossover::operator ()(const ASIndividual &ind1, const ASIndividual &ind2, ASIndividual &off1, ASIndividual &off2) const
+{
+	int classToCrossover = 0;
+	if(mAxiomContainer->classCount() > 1) {
+		//TODO multiple classes
+	}
+
+	off1 = ind1;
+	off2 = ind2;
+
+	std::vector<int> ind1Marking = makeGlobalMarkings((*ind1), classToCrossover);
+	std::vector<int> ind2Marking = makeGlobalMarkings((*ind2), classToCrossover);
+
+	std::vector<int> off1Marking, off2Marking;
+
+	onePointCrossover(ind1Marking, ind2Marking, off1Marking, off2Marking);
+
+	addLocalMarking((*off1), classToCrossover, off1Marking);
+	addLocalMarking((*off2), classToCrossover, off2Marking);
+}
+
+std::vector<int> ASOnePointCrossover::makeGlobalMarkings(const AxiomExprSetPlus &as, int classNo) const
+{
+	const std::vector<int>& marking = as.markUps[classNo];
+
+	std::vector<int> result(marking.size());
+
+	for(unsigned i = 0; i < result.size(); ++i) {
+		result[i] = marking[i] > 0 ? as.axioms[(unsigned)marking[i] - 1]->index : -1;
+	}
+
+	return result;
+}
+
+void ASOnePointCrossover::addLocalMarking(AxiomExprSetPlus &as, int classNo, const std::vector<int> &globalMarking) const
+{
+	std::map<int, unsigned> existingAxioms; // global -> local
+	existingAxioms.insert(std::make_pair(-1, 0u));
+
+	for(unsigned i = 0; i < as.axioms.size(); ++i) {
+		existingAxioms.insert(std::make_pair(as.axioms[i]->index, i + 1));
+	}
+
+	for(unsigned p = 0; p < globalMarking.size(); ++p) {
+		if(!existingAxioms.count(globalMarking[p])) {
+			as.addAxiom(mAxiomContainer->axiom(globalMarking[p]));
+		}
+	}
+
+	existingAxioms.clear();
+	for(unsigned i = 0; i < as.axioms.size(); ++i) {
+		existingAxioms.insert(std::make_pair(as.axioms[i]->index, i + 1));
+	}
+
+	as.markUps[classNo].resize(globalMarking.size());
+	for(unsigned p = 0; p < globalMarking.size(); ++p) {
+		as.markUps[classNo][p] = existingAxioms[globalMarking[p]];
+	}
+}
+
+void ASOnePointCrossover::onePointCrossover(const std::vector<int> &dad, const std::vector<int> &mom, std::vector<int> &off1, std::vector<int> &off2) const
+{
+	unsigned dadCrossoverPoint = (unsigned)shark::Rng::discrete(0, dad.size());
+	unsigned momCrossoverPoint = (unsigned)shark::Rng::discrete(0, mom.size());
+
+	off1.clear();
+	off1.reserve(dad.size() + mom.size());
+
+	off2.clear();
+	off2.reserve(dad.size() + mom.size());
+
+	for(unsigned i = 0; i < dadCrossoverPoint; ++i) {
+		off1.push_back(dad[i]);
+	}
+
+	for(unsigned i = 0; i < momCrossoverPoint; ++i) {
+		off2.push_back(mom[i]);
+	}
+
+	for(unsigned i = momCrossoverPoint; i < mom.size(); ++i) {
+		off1.push_back(mom[i]);
+	}
+
+	for(unsigned i = dadCrossoverPoint; i < dad.size(); ++i) {
+		off2.push_back(dad[i]);
+	}
+}
+
 ASStageGenetic::ASStageGenetic(FuzzyDataSet* fuzzyDataSet,
 							   AXStage* stage2)
-	:  mAxiomContainer(stage2, fuzzyDataSet), mObjective(fuzzyDataSet, &mAxiomContainer)
+	: stage2(stage2), fuzzyDataSet(fuzzyDataSet), mObjective(fuzzyDataSet)
+
 {
 }
 
@@ -375,6 +497,7 @@ void ASStageGenetic::initFromEnv(const Environment &env)
 {
 	env.getMandatoryParamValue(mPopulationSize, "ASStageGenetic_populationSize");
 	env.getParamValue(mInitialMarkingLength, "ASStageGenetic_initialMarkingLength", 10);
+	env.getParamValue(mInitialASSize, "ASStageGenetic_initialASSize", 5);
 	env.getMandatoryParamValue(mMaxIterations, "ASStageGenetic_maxIterations");
 	env.getMandatoryParamValue(mElitism, "ASStageGenetic_elitism");
 	env.getMandatoryParamValue(mSelectivePressure, "ASStageGenetic_selectivePressure");
@@ -384,76 +507,104 @@ void ASStageGenetic::initFromEnv(const Environment &env)
 	}
 
 	env.getParamValue(mFinalAxiomSetCount, "ASStageGenetic_finalAxiomSetCount", 40);
+
+	mObjective.initFromEnv(env);
 }
 
 void ASStageGenetic::run()
 {
-	std::vector<ASIndividual> population, offspring;
+	AxiomContainer* axiomContainer = new AxiomContainer(stage2, fuzzyDataSet);
 
-	int elitismNumber = (int) mElitism * mPopulationSize;
+	mObjective.setAxiomContainer(axiomContainer);
 
-	ASMutation mutation(&mAxiomContainer);
+	std::vector<ASIndividual> population;
 
-	shark::LinearRankingSelection<shark::tag::UnpenalizedFitness> selection;
+	int elitismNumber = (int) (mElitism * mPopulationSize);
+
+	ASMutation mutation(axiomContainer);
+	ASOnePointCrossover crossover(axiomContainer);
+
+	shark::LinearRankingSelection<shark::tag::PenalizedFitness> selection;
 
 	comment() << "Starting ASStageGenetic algorithm";
 
 	population.resize(mPopulationSize);
 	for(unsigned i = 0; i < population.size(); ++i) {
-		*population[i] = generateInitialAS();
-		population[i].fitness(shark::tag::UnpenalizedFitness()) = shark::RealVector(1, mObjective.eval(*(population[i])));
+		*population[i] = generateInitialAS(axiomContainer);
+		ASObjectiveValue objectiveValue = mObjective.eval(*(population[i]));
+		population[i].fitness(shark::tag::PenalizedFitness()) = shark::RealVector(1, objectiveValue.goalValue);
 	}
 
-	std::sort(population.begin(), population.end(), shark::FitnessComparator<shark::tag::UnpenalizedFitness>());
+	std::sort(population.begin(), population.end(), shark::FitnessComparator<shark::tag::PenalizedFitness>());
 
-	AxiomExprSetPlus bestAS = *population.front();
+	comment() << "Initial population best goal value: " << mObjective.eval(*population.front()).toString();
 
-	mObjective.matterAxiomSetFunc(bestAS);
-
-	comment() << "Initial population best goal value: " << goalStr(bestAS);
+	population.reserve(4*mPopulationSize);
 
 	for(int i = 0; i < mMaxIterations; ++i) {
 
-		std::sort(population.begin(), population.end(), shark::FitnessComparator<shark::tag::UnpenalizedFitness>());
+		std::sort(population.begin(), population.end(), shark::FitnessComparator<shark::tag::PenalizedFitness>());
 
-		comment() << "Iteration number: " << i;
+		comment() << "Iteration number: " << (i + 1);
 
-		bestAS = *population.front();
-		mObjective.matterAxiomSetFunc(bestAS);
-
-		comment() << "Best goal value: " << goalStr(bestAS);
-
-		offspring = population;
+		comment() << "Best goal value: " << mObjective.eval(*population.front()).toString();
+		debug() << "Performing mutation...";
+		std::copy(population.begin(), population.end(), std::back_inserter(population));
 		// Mutation
-		for(unsigned p = 0; p < offspring.size(); ++p) {
+		for(unsigned p = mPopulationSize; p < 2 * mPopulationSize; ++p) {
 			//TODO mutation strength, mutation probability
-			mutation(offspring[p]);
+			mutation(population[p]);
 		}
 
+		debug() << "Performing crossover...";
 		// Crossover
-		// TODO
+		for(unsigned p = 0; p < mPopulationSize; ++p) {
+			ASIndividual off1, off2;
+			unsigned dadIndex = (unsigned)shark::Rng::discrete(0, 2*(int)mPopulationSize - 1);
+			unsigned momIndex = (unsigned)shark::Rng::discrete(0, 2*(int)mPopulationSize - 1);
+
+			const ASIndividual& dad = population[dadIndex];
+
+			const ASIndividual& mom = population[momIndex];
+
+			crossover(dad, mom, off1, off2);
+
+			population.push_back(off1);
+			population.push_back(off2);
+		}
+
+		debug() << "Re-evaluating objective function for extended population...";
+		// Evaluate objective function
+		for(unsigned i = mPopulationSize; i < population.size(); ++i) {
+			population[i].fitness(shark::tag::PenalizedFitness()) =
+					shark::RealVector(1, mObjective.eval(*(population[i])).goalValue);
+		}
 
 		// Selection
-		std::sort(offspring.begin(), offspring.end(), shark::FitnessComparator<shark::tag::UnpenalizedFitness>());
+		std::sort(population.begin(), population.end(), shark::FitnessComparator<shark::tag::PenalizedFitness>());
 
-		// elitism
-		std::copy(offspring.begin(), offspring.begin() + elitismNumber, population.begin());
+		debug() << "Performing selection...";
+		selection(population.begin() + elitismNumber, population.end(), population.end(), population.end(),
+				  population.begin() + elitismNumber, population.begin() + mPopulationSize, mSelectivePressure);
 
-		selection(population.begin() + elitismNumber, population.end(), offspring.begin() + elitismNumber, offspring.end(),
-				  population.begin() + elitismNumber, population.end(), mSelectivePressure);
+		population.resize(mPopulationSize);
 
 	}
 
-	std::sort(population.begin(), population.end(), shark::FitnessComparator<shark::tag::UnpenalizedFitness>());
+	std::sort(population.begin(), population.end(), shark::FitnessComparator<shark::tag::PenalizedFitness>());
 
-	bestAS = *population.front();
-	mObjective.matterAxiomSetFunc(bestAS);
-	comment() << "Final best goal value: " << goalStr(bestAS);
+	comment() << "Final best goal value: " << mObjective.eval(*population.front()).toString();
 
 	mFinalAxiomSets.clear();
 	for(int i = 0; i < std::min(mFinalAxiomSetCount, (int)population.size()); ++i) {
-		mFinalAxiomSets.push_back(*population[i]);
+		AxiomExprSetPlus as = *population[i];
+		mObjective.matterAxiomSetFunc(as);
+		mFinalAxiomSets.push_back(as);
 	}
+
+	mObjective.setAxiomContainer(0);
+
+	delete axiomContainer;
 }
 
 AxiomExprSetPlus &ASStageGenetic::getAS(int n)
@@ -481,80 +632,28 @@ void ASStageGenetic::setAxiomSets(const std::vector<AxiomExprSetPlus> &initialAS
 	mFinalAxiomSets = initialAS;
 }
 
-AxiomExprSetPlus ASStageGenetic::generateInitialAS() const
+AxiomExprSetPlus ASStageGenetic::generateInitialAS(const AxiomContainer *axiomContainer) const
 {
 	AxiomExprSetPlus result("");
 
-	// Generate AS with single random axiom for each class
-	// Maybe it's not a very good idea
-	result.markUps.resize(mAxiomContainer.classCount());
-	for(int i = 0; i < mAxiomContainer.classCount(); ++i) {
-		AxiomExpr newAxiom = mAxiomContainer.axiom(i, shark::Rng::discrete(0, mAxiomContainer.axiomCount(i) - 1));
-		result.addAxiom(newAxiom);
-		result.markUps[i] = std::vector<int>(1, i + 1);
-	}
+	int classCount = axiomContainer->classCount();
 
-	return result;
-}
+	result.markUps.resize(classCount);
+	for(int i = 0; i < axiomContainer->classCount(); ++i) {
+		int firstAxiomNumber = result.axioms.size() + 1;
+		for(int j = 0; j < mInitialASSize; ++j) {
+			AxiomExpr newAxiom = axiomContainer->axiom(i, shark::Rng::discrete(0, axiomContainer->axiomCount(i) - 1));
+			result.addAxiom(newAxiom);
+		}
 
-void ASOnePointCrossover::operator ()(const ASIndividual &ind1, const ASIndividual &ind2, ASIndividual &off1, ASIndividual &off2) const
-{
-	int classToCrossover = 0;
-	if(mAxiomContainer->classCount() > 1) {
-		//TODO multiple classes
-	}
+		int lastAxiomNumber = result.axioms.size();
 
-	off1 = ind1;
-	off2 = ind2;
-
-	std::vector<int> ind1Marking = makeGlobalMarkings((*off1), classToCrossover);
-	std::vector<int> ind2Marking = makeGlobalMarkings((*off2), classToCrossover);
-
-	std::vector<int> off1Marking, off2Marking;
-
-	onePointCrossover(ind1Marking, ind2Marking, off1Marking, off2Marking);
-
-	addLocalMarking((*off1), classToCrossover, off1Marking);
-	addLocalMarking((*off2), classToCrossover, off2Marking);
-}
-
-std::vector<int> ASOnePointCrossover::makeGlobalMarkings(const AxiomExprSetPlus &as, int classNo) const
-{
-	const std::vector<int>& marking = as.markUps[classNo];
-
-	std::vector<int> result(marking.size());
-
-	for(int i = 0; i < result.size(); ++i) {
-		result[i] = marking[i] > 0 ? as.axioms[marking[i] - 1].index : -1;
-	}
-
-	return result;
-}
-
-void ASOnePointCrossover::addLocalMarking(AxiomExprSetPlus &as, int classNo, const std::vector<int> &globalMarking) const
-{
-	std::map<int, int> existingAxioms; // global -> local
-	for(int i = 0; i < as.axioms.size(); ++i) {
-		existingAxioms.insert(std::make_pair(as.axioms[i].index, i + 1));
-	}
-
-	for(int p = 0; p < globalMarking.size(); ++p) {
-		if(!existingAxioms.count(globalMarking[p])) {
-			as.addAxiom(mAxiomContainer->axiom(globalMarking[p]));
+		for(int j = 0; j < mInitialMarkingLength; ++j) {
+			int axiomNum = shark::Rng::discrete(firstAxiomNumber - 1, lastAxiomNumber);
+			if(axiomNum < firstAxiomNumber) axiomNum = 0;
+			result.markUps[i].push_back(axiomNum);
 		}
 	}
 
-	existingAxioms.clear();
-	for(int i = 0; i < as.axioms.size(); ++i) {
-		existingAxioms.insert(std::make_pair(as.axioms[i].index, i + 1));
-	}
-
-	as.markUps[classNo].resize(globalMarking.size());
-	for(int p = 0; p < globalMarking.size(); ++p) {
-		as.markUps[classNo][p] = existingAxioms[globalMarking[p]];
-	}
-}
-
-void ASOnePointCrossover::onePointCrossover(const std::vector<int> &dad, const std::vector<int> &mom, std::vector<int> &off1, std::vector<int> &off2) const
-{
+	return result;
 }

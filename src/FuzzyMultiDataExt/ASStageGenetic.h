@@ -65,13 +65,25 @@ struct ASSpace {
 	typedef AxiomExprSetPlus PointType;
 };
 
-class ASObjectiveFunction: public shark::AbstractObjectiveFunction<ASSpace, double> {
+struct ASObjectiveValue {
+	double goalValue;
+	int errI, errII;
+	ASObjectiveValue(): goalValue(std::numeric_limits<double>::max()), errI(-1), errII(-1) {}
+	ASObjectiveValue(double goal, int errI, int errII) : goalValue(goal), errI(errI), errII(errII) {}
+
+	std::string toString() const;
+	shark::RealVector toRealVector() const;
+};
+
+class ASObjectiveFunction: public shark::AbstractObjectiveFunction<ASSpace, ASObjectiveValue> {
 public:
-	ASObjectiveFunction(const FuzzyDataSet* fuzzyDataSet, const AxiomContainer* axiomContainer);
+	ASObjectiveFunction(const FuzzyDataSet* fuzzyDataSet);
 
 	void initFromEnv(const Environment& env);
 
-	double eval(const AxiomExprSetPlus &input) const;
+	void setAxiomContainer(const AxiomContainer* newAxiomContainer) { mAxiomContainer = newAxiomContainer; }
+
+	ASObjectiveValue eval(const AxiomExprSetPlus &input) const;
 
 	double matterAxiomSetFunc(AxiomExprSetPlus& as) const;
 
@@ -90,6 +102,8 @@ private:
 	const AxiomContainer *mAxiomContainer;
 
 	int ccNumPoints;
+
+	double penaltyObjective;
 };
 
 /// Returns indexCount random numbers from 0 to size-1 without repetitions
@@ -134,6 +148,7 @@ private:
 
 	void addLocalMarking(AxiomExprSetPlus& as, int classNo, const std::vector<int>& globalMarking) const;
 
+	// One-point crossover for two different-length strings
 	void onePointCrossover(const std::vector<int>& dad, const std::vector<int>& mom,
 						   std::vector<int>& off1, std::vector<int>& off2) const;
 
@@ -159,11 +174,13 @@ public:
 	virtual void setAxiomSets(const std::vector<AxiomExprSetPlus>& initialAS);
 private:
 	/// Генерация случайной системы аксиом для начальной популяции
-	AxiomExprSetPlus generateInitialAS() const;
+	AxiomExprSetPlus generateInitialAS(const AxiomContainer* axiomContainer) const;
 
 
-	int mPopulationSize;
+	unsigned mPopulationSize;
 	int mInitialMarkingLength;
+	int mInitialASSize;
+	int mMaxASSize; // TODO
 	int mMaxIterations;
 
 	double mElitism;
@@ -177,7 +194,10 @@ private:
 
 	int mFinalAxiomSetCount;
 
-	AxiomContainer mAxiomContainer;
+
+	AXStage* stage2;
+	FuzzyDataSet* fuzzyDataSet;
+
 	ASObjectiveFunction mObjective;
 
 	std::vector<AxiomExprSetPlus> mFinalAxiomSets;

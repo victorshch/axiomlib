@@ -11,6 +11,11 @@
 
 using namespace AxiomLib;
 
+void AxiomExprSetPlus::addAxiom(const AxiomExpr &newAxiom)
+{
+	AxiomExprSet::addAxiom(newAxiom);
+}
+
 void AxiomExprSetPlus::addAxiom(const AxiomExpr &newAxiom, int priority)
 {
 	if(priority == 0 || priority > axioms.size()) {
