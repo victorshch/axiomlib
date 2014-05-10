@@ -28,7 +28,7 @@ def normalTraject(l, b, k, n, offsetX, offsetY, filename):
 	print(param_names, file = f);
 	for i in range(n):
 		value = getValue(i, l, b, k, n,offsetX, offsetY);
-		print("{0};{1};".format(i + 1, value).replace(".", ","), file = f);
+		print("{0};{1};".format(i + 1, value), file = f);
 	f.close();
 
 def badTraject(l,b,k,n,offsetX, offsetY, filename, errorsCount):
@@ -36,8 +36,8 @@ def badTraject(l,b,k,n,offsetX, offsetY, filename, errorsCount):
 
 	errorsPos = [];
 
-	for i in range(errorsCount):
-		errorsPos.append(random.randint(2, zerosCount) * 2 * l - offsetX);
+	#for i in range(errorsCount):
+	errorsPos.append(1);
 	
 	f = open(filename, "w")
 	print(param_names, file = f);
@@ -48,11 +48,11 @@ def badTraject(l,b,k,n,offsetX, offsetY, filename, errorsCount):
 		if ((i) in errorsPos):
 			for j in range(2*l):				
 				value = getValue(i - 2*l + j, l, b, k, n, offsetX, offsetY);
-				print("{0};{1};".format(counter, value).replace(".", ","), file = f);
+				print("{0};{1};".format(counter, value), file = f);
 				counter += 1;
 
 		value = getValue(i, l,b,k,n,offsetX, offsetY);
-		print("{0};{1};".format(counter, value).replace(".", ","), file = f);
+		print("{0};{1};".format(counter, value), file = f);
 		counter += 1;
 	f.close();
 
@@ -63,14 +63,15 @@ def initEnv():
 		if not os.path.exists(p):
 			os.makedirs(p)
 
-	f1 = open(datasetName + ".conf", "w");	
-	f1.close();
-
-	f1 = open("class_names", "w");
+	f1 = open(path + '/' + datasetName + ".conf", "w");	
 	print("1;", file = f1);
 	f1.close();
 
-	f1 = open("param_names", "w");
+	f1 = open(path + '/' + "class_names", "w");
+	print("1;", file = f1);
+	f1.close();
+
+	f1 = open(path + '/' + "param_names", "w");
 	print(param_names, file = f1);
 	f1.close();
 
@@ -79,18 +80,18 @@ initEnv();
 
 # generate normal trajectories
 
-for i in range(100):
-	normalTraject(random.randint(2, 20), 0, 1, 400, random.randint(0, 100), random.randint(-30, 30), reference_normal + "/r{0}.csv".format(i+1));
+for i in range(2):
+	normalTraject(5, 0, 1, 100, random.randint(0, 100), random.randint(-30, 30), reference_normal + "/r{0}.csv".format(i+1));
 
-for i in range(200):
-	normalTraject(random.randint(2, 20), 0, 1, 800, random.randint(0, 100), random.randint(-30, 30), testing_normal + "/r{0}.csv".format(i+1));
+# for i in range(200):
+# 	normalTraject(random.randint(2, 20), 0, 1, 800, random.randint(0, 100), random.randint(-30, 30), testing_normal + "/r{0}.csv".format(i+1));
 
 # generate bad trajectories
 
-for i in range(100):
-	badTraject(random.randint(2, 20), 0, 1, 400, random.randint(0, 100), random.randint(-30, 30), reference_bad + "/r{0}.csv".format(i+1), 1);
+# for i in range(100):
+# 	badTraject(random.randint(2, 20), 0, 1, 100, 0, 0, reference_bad + "/r{0}.csv".format(i+1), 1);
 
-for i in range(200):
-	badTraject(random.randint(2, 20), 0, 1, 800, random.randint(0, 100), random.randint(-30, 30), testing_bad + "/r{0}.csv".format(i + 1), 1);
+# for i in range(200):
+# 	badTraject(random.randint(2, 20), 0, 1, 100, 0, 0, testing_bad + "/r{0}.csv".format(i + 1), 1);
 
 
