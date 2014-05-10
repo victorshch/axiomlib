@@ -56,8 +56,6 @@ int main (int argc, char** argv) {
 
 		alg.run();
 
-		alg.saveAxiomSetsToXml();
-
 		std::vector<ResultInfo> result;
 		result.reserve(alg.getASSize());
 
@@ -86,6 +84,8 @@ int main (int argc, char** argv) {
 						 % currentInfo.secondKindErrors
 						<< std::endl;
 		}
+
+		alg.saveAxiomSetsToXml();
 
 		return 0;
 	}
