@@ -16,7 +16,7 @@ namespace AxiomLib {
 		public: 
 			// Возвращает имя данной аксиомы.
 			virtual std::string name (void) const {
-				return "elemCondClustering";
+				return "ElemCondClustering";
 			}
 
 			virtual ElemCondition* clone() const {
@@ -25,6 +25,11 @@ namespace AxiomLib {
 			}
 
 			ElemCondClustering(int clusterNumber, int length, const std::list<ClusteringFeature*>& clusteringFeatures, FuzzyMultiDataExt::ClusteringModel* model);
+
+			ElemCondClustering() {
+			};
+				
+			~ElemCondClustering(void) {};
 
 			// Проверка выполнения данной аксиомы. На входе - точка временного ряда k
 			// и сам временной ряд x. На выходе 1, если выполняется, 0 если не
@@ -118,6 +123,7 @@ namespace AxiomLib {
 			virtual bool assign(const ElemCondition* other) {
 				return false;
 			}
+			
 
 			private: 			
 				//объявления, необходимые для сериализации

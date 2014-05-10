@@ -80,7 +80,9 @@ void ECStageClustering::run(){
 				for (int n = 0; n < ecs[conf][dim].size(); n++){
 					ElemCondPlus ec = ElemCondPlus();
 					ec.elemCondition = ecs[conf][dim][n];
-					ec.dimension = dim;
+
+					//TODO: убрать костыль
+					ec.dimension = dim + 1;
 
 					elemConditions[c][dim][conf].push_back(
 						ECSelection(ElemCondPlusStat(ec)));

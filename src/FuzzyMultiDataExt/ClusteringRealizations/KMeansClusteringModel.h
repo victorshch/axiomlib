@@ -41,6 +41,9 @@ private:
 	std::vector<shark::RealVector> data;
 	std::vector<std::vector<double> > store;
 
+	void setItersCount(unsigned int iters){ this->iters = iters; }
+	int iters;
+
 	shark::HardClusteringModel<shark::RealVector>* model;
 
 	void clearStore();

@@ -57,7 +57,7 @@ int main (int argc, char** argv) {
 
 		alg.run();
 
-		//alg.saveAxiomSetsToXml();
+		alg.saveAxiomSetsToXml();
 
 		std::vector<ResultInfo> result;
 		result.reserve(alg.getASSize());

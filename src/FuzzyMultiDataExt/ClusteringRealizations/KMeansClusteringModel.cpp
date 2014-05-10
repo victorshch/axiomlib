@@ -44,7 +44,7 @@ void KMeansClusteringModel::makeClustering(){
 	normalizingTrainer.train(normalizer, data);
 	data = normalizer(data);
 
-	size_t iterations = kMeans(data, this->k, centroids);
+	size_t iterations = kMeans(data, this->k, centroids, this->iters);
 
 	model = new HardClusteringModel<shark::RealVector>(&centroids);
 }
@@ -85,5 +85,9 @@ void KMeansClusteringModel::clearStore(){
 void KMeansClusteringModel::setParam(std::string name, std::string value){
 	if (strcmp(name.c_str(), "k") == 0){
 		this->setClustersCount(atoi(value.c_str()));
+	}
+
+	if (strcmp(name.c_str(), "i") == 0){
+		this->setItersCount(atoi(value.c_str()));
 	}
 }
