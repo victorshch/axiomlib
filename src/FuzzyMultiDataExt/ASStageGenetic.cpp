@@ -530,8 +530,11 @@ void ASStageGenetic::run()
 
 	population.resize(mPopulationSize);
 	for(unsigned i = 0; i < population.size(); ++i) {
+		debug() << "Generating initial AS " << i;
 		*population[i] = generateInitialAS(axiomContainer);
+		debug() << "Computing objective value for initial AS " << i;
 		ASObjectiveValue objectiveValue = mObjective.eval(*(population[i]));
+		debug() << "Assigning fitness to individual " << i;
 		population[i].fitness(shark::tag::PenalizedFitness()) = shark::RealVector(1, objectiveValue.goalValue);
 	}
 
@@ -638,16 +641,26 @@ AxiomExprSetPlus ASStageGenetic::generateInitialAS(const AxiomContainer *axiomCo
 
 	int classCount = axiomContainer->classCount();
 
+	debug() << "Class count: " << classCount;
+
 	result.markUps.resize(classCount);
 	for(int i = 0; i < axiomContainer->classCount(); ++i) {
+		debug() << "Creating axioms for class " << i;
 		int firstAxiomNumber = result.axioms.size() + 1;
+		debug() << "Adding axioms to AS";
 		for(int j = 0; j < mInitialASSize; ++j) {
-			AxiomExpr newAxiom = axiomContainer->axiom(i, shark::Rng::discrete(0, axiomContainer->axiomCount(i) - 1));
+			debug() << "Getting axiom " << j << " from container...";
+			int axNo = shark::Rng::discrete(0, axiomContainer->axiomCount(i) - 1);
+			debug() << "i = " << i << ", axNo = " << axNo;
+			AxiomExpr newAxiom = axiomContainer->axiom(i, axNo);
+			debug() << "Adding axiom to AS...";
 			result.addAxiom(newAxiom);
 		}
 
 		int lastAxiomNumber = result.axioms.size();
 
+
+		debug() << "Adding axioms to marking";
 		for(int j = 0; j < mInitialMarkingLength; ++j) {
 			int axiomNum = shark::Rng::discrete(firstAxiomNumber - 1, lastAxiomNumber);
 			if(axiomNum < firstAxiomNumber) axiomNum = 0;

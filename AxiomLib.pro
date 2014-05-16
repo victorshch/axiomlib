@@ -471,4 +471,6 @@ HEADERS += src/undefs.h \
     src/FuzzyMultiDataExt/ClusteringFeatures/StandardDeviationFeature.h \
     src/FuzzyMultiDataExt/ClusteringFeatures/RegressionErrorFeature.h \
     src/FuzzyMultiDataExt/ClusteringFeatures/RegressionAngleFeature.h \
-    src/FuzzyMultiDataExt/ASStageGenetic.h
+    src/FuzzyMultiDataExt/ASStageGenetic.h \
+    src/FuzzyMultiDataExt/GeneticUtils/RouletteWheelSelection.h \
+    src/FuzzyMultiDataExt/GeneticUtils/ProbabilityMapping.h
