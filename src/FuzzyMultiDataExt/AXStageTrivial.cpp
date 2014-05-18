@@ -51,8 +51,6 @@ int AXStageTrivial::getAXSize(int aType) const {
 }
 
 void AXStageTrivial::run(){
-	this->axioms.resize(this->stage1->getECSize());
-
 	for (int i = 0; i  < this->stage1->getECSize(); ++i) {
 
 		vector<AXSelection> axSelection;
