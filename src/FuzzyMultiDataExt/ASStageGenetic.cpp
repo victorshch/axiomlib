@@ -162,6 +162,8 @@ void ASObjectiveFunction::initFromEnv(const Environment &env)
 	mGoalStrategy->setParamsFromEnv(env);
 
 	env.getParamValue(penaltyObjective, "ASStageGenetic_penaltyObjective", 10000.0);
+
+	env.getParamValue(numAxiomsWeight, "ASStageGenetic_numAxiomsWeight", 0.0);
 }
 
 ASObjectiveValue ASObjectiveFunction::eval(const AxiomExprSetPlus &input) const
@@ -178,7 +180,7 @@ ASObjectiveValue ASObjectiveFunction::eval(const AxiomExprSetPlus &input) const
 
 	AxiomExprSetPlus copy(input);
 	matterAxiomSetFunc(copy);
-	return ASObjectiveValue(copy.goal, copy.errFirst, copy.errSecond);
+	return ASObjectiveValue(copy.goal + numAxiomsWeight * copy.axioms.size(), copy.errFirst, copy.errSecond);
 }
 
 double ASObjectiveFunction::matterAxiomSetFunc(AxiomExprSetPlus &as) const
@@ -448,6 +450,7 @@ void ASOnePointCrossover::addLocalMarking(AxiomExprSetPlus &as, int classNo, con
 	}
 
 	existingAxioms.clear();
+	existingAxioms.insert(std::make_pair(-1, 0u));
 	for(unsigned i = 0; i < as.axioms.size(); ++i) {
 		existingAxioms.insert(std::make_pair(as.axioms[i]->index, i + 1));
 	}

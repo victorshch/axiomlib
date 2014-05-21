@@ -104,6 +104,7 @@ private:
 	int ccNumPoints;
 
 	double penaltyObjective;
+	double numAxiomsWeight;
 };
 
 /// Returns indexCount random numbers from 0 to size-1 without repetitions
