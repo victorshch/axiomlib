@@ -71,20 +71,19 @@ void ECStageClustering::run(){
 		elemConditions.push_back(vector<vector<vector<ECSelection> > >());
 		elemConditions[c].reserve(dimensionsCount);
 
-		for (int dim = 0; dim < dimensionsCount; dim++){
+		for (int dimIndex = 0; dimIndex < dataSetParams.size(); dimIndex++){
 			elemConditions[c].push_back(vector<vector<ECSelection> >());
-			elemConditions[c][dim].reserve(configurationsCount);
+			elemConditions[c][dimIndex].reserve(configurationsCount);
 
 			for (int conf = 0; conf < configurationsCount; conf++){
-				elemConditions[c][dim].push_back(vector<ECSelection>());
-				for (int n = 0; n < ecs[conf][dim].size(); n++){
+				elemConditions[c][dimIndex].push_back(vector<ECSelection>());
+				for (int n = 0; n < ecs[conf][dimIndex].size(); n++){
 					ElemCondPlus ec = ElemCondPlus();
-					ec.elemCondition = ecs[conf][dim][n];
+					ec.elemCondition = ecs[conf][dimIndex][n];
 
-					//TODO: убрать костыль
-					ec.dimension = dim + 1;
+					ec.dimension = dataSetParams[dimIndex];
 
-					elemConditions[c][dim][conf].push_back(
+					elemConditions[c][dimIndex][conf].push_back(
 						ECSelection(ElemCondPlusStat(ec)));
 				}	
 			}

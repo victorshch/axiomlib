@@ -32,6 +32,8 @@ class ECClusteringConfiguration {
 			
 		// dimensions count in fuzzyDataSet
 		int dimensionsCount;
+		
+		std::vector<int> dataSetParams;		
 
 		std::vector<ClusteringModel*> clusteringModels;
 

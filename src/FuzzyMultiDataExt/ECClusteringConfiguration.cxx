@@ -20,10 +20,8 @@ ECClusteringConfiguration* ECClusteringConfiguration::create(const FuzzyDataSet*
 	ECClusteringConfiguration* configuration = new ECClusteringConfiguration();
 	configuration->fuzzyDataSet = fuzzyDataSet;
 
-	vector<int> dataSetParams;
-
-	fuzzyDataSet->getParamNums(dataSetParams);
-	configuration->dimensionsCount = dataSetParams.size();
+	configuration->dataSetParams = fuzzyDataSet->getParamNums();
+	configuration->dimensionsCount = configuration->dataSetParams.size();
 
 	boost::trim(strs[0]);
 	boost::trim(strs[1]);
@@ -52,8 +50,6 @@ ECClusteringConfiguration* ECClusteringConfiguration::create(const FuzzyDataSet*
 
 void ECClusteringConfiguration::run(){
 	Logger::comment("Run ECClusteringConfiguration");
-	auto dataSetParamNames = fuzzyDataSet->getParamNames();
-		
 	auto classesCount = fuzzyDataSet->getClassCount();	
 
 	this->clusteringModels.reserve(featuresCount);
@@ -66,19 +62,19 @@ void ECClusteringConfiguration::run(){
 		numOfMultiTS = fuzzyDataSet->getMutiTSCount(FuzzyDataSet::Reference, i);
 
 		//foreach dimension
-		for (int dim = 1; dim < dimensionsCount + 1; ++dim){
+		for (int dimIndex = 0; dimIndex < this->dataSetParams.size(); ++dimIndex){
 
 			//foreach trajectory
 			for (int j = 0; j < numOfMultiTS; j++){				
 				vector<double> row;
 
 				if (i == -1) {
-					fuzzyDataSet->getNormalTSFromClass (row, j , dim);
+					fuzzyDataSet->getNormalTSFromClass (row, j , this->dataSetParams[dimIndex]);
 				} else {
-					fuzzyDataSet->getTSByIndexFromClass (row, i, j, dim);
+					fuzzyDataSet->getTSByIndexFromClass (row, i, j, this->dataSetParams[dimIndex]);
 				}
 
-				handleTrajectory(row, dim - 1);
+				handleTrajectory(row, dimIndex);
 			}			
 		}
 	}
@@ -102,7 +98,7 @@ void ECClusteringConfiguration::run(){
 	} 
 }
 
-void ECClusteringConfiguration::handleTrajectory(const vector<double>& trajectory, int dimension) {	
+void ECClusteringConfiguration::handleTrajectory(const vector<double>& trajectory, int dimIndex) {	
 	int length = trajectory.size();
 
 	for (int i = 0; i < stripsCount; i++){
@@ -115,6 +111,6 @@ void ECClusteringConfiguration::handleTrajectory(const vector<double>& trajector
 				feature.push_back((*begin)->calculate(trajectory, position, stripLength));
 		}
 
-		this->clusteringModels[dimension]->addElement(feature);
+		this->clusteringModels[dimIndex]->addElement(feature);
 	}
 }
