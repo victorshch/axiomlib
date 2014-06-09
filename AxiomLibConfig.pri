@@ -2,6 +2,8 @@
 
 ### Пути include'ов ###
 
+DEFINES += BOOST_NO_CXX11_SCOPED_ENUMS
+DEFINES += BOOST_NO_SCOPED_ENUMS
 # Для windows
 win32 {
         AXIOMLIB_INCLUDE = F:/Workspace/Axiomlib_working_copy2/src

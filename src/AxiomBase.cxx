@@ -304,15 +304,15 @@ signed int AxiomBase::readAxioms (const char* axiomBaseDir) {
         		}
 			else {
 				filePath = fullPath;
-				filePath /= *dir_itr;
-				aa = dir_itr->leaf();
+				filePath /= dir_itr->path();
+				aa = dir_itr->path().filename().c_str();
 				if ( checkName (aa, (int) (aa.size() - 4), (int) (aa.size() - 3), templateAxiomFile) ) {
 					// то есть в dir_itr сейчас имя файла описания аксиомы
 					std::vector<std::string> vec;
-					aa = (*dir_itr).string();
+					aa = (*dir_itr).path().string().c_str();
 					this->readFromAX (aa, vec);
 					if (vec.size() > 0) {
-						aa = dir_itr->leaf();
+						aa = dir_itr->path().filename().c_str();
 						this->axioms[aa.substr(0, aa.size() - 3)] = vec;
 					}
 				}
@@ -321,7 +321,7 @@ signed int AxiomBase::readAxioms (const char* axiomBaseDir) {
 						// то есть в dir_itr_int сейчас имя файла с названием банка аксиом
 						if (numOfXFiles == 0) {
 							std::string strName;
-							aa = (*dir_itr).string();
+							aa = (*dir_itr).path().string().c_str();
 							this->readFromX (aa, strName);
 							this->name = strName;
 							numOfXFiles++;

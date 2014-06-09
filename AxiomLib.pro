@@ -9,7 +9,6 @@ include(AxiomLibConfig.pri)
 QT -= core gui
 CONFIG -= qt
 
-DEFINES += "BOOST_FILESYSTEM_VERSION=2"
 INCLUDEPATH += $$MPICH_INCLUDE \
     $$BOOST_INCLUDE \
     $$OTHER_INCLUDE
