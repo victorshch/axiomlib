@@ -11,7 +11,9 @@ CONFIG -= qt
 
 DEFINES += "BOOST_FILESYSTEM_VERSION=2"
 INCLUDEPATH += $$MPICH_INCLUDE \
-    $$BOOST_INCLUDE
+    $$BOOST_INCLUDE \
+    $$OTHER_INCLUDE
+
 QT -= core \
     gui
 TARGET = AxiomLib
@@ -56,9 +58,9 @@ linux-icc|linux-icc-64 {
     QMAKE_CXXFLAGS_RELEASE += -openmp
     QMAKE_LFLAGS_RELEASE += -openmp
 }
-win32:# пФЛМАЮЕОЙЕ ЧПТОЙОЗПЧ, УЧСЪБООЩИ УП УФБОДБТФОЩНЙ ЖХОЛГЙСНЙ,
+win32:#  ,    ,
 
-# ЛПФПТЩЕ cl УЮЙФБЕФ ОЕВЕЪП БУОЩНЙ
+#  cl   
 QMAKE_CXXFLAGS += -D_SCL_SECURE_NO_WARNINGS \
     -D_CRT_SECURE_NO_WARNINGS
 
@@ -179,7 +181,6 @@ SOURCES += src/TreatmentSample.cxx \
     src/Logger.cxx \
     src/FuzzyMultiDataExt/Heuristics.cxx \
     src/FuzzyMultiDataExt/ECTypeStage.cxx \
-    src/FuzzyMultiDataExt/ECStage.cxx \
     src/FuzzyMultiDataExt/AXStage.cxx \
     src/FuzzyMultiDataExt/ASStage.cxx \
     src/FuzzyMultiDataExtAlgorithm.cxx \
@@ -230,7 +231,16 @@ SOURCES += src/TreatmentSample.cxx \
     src/FuzzyDataSet.cxx \
     src/elem_conditions/Variance.cxx \
     src/FuzzyMultiDataExt/AXStageSimple.cpp \
-    src/FuzzyMultiDataExt/AXStageTree.cpp
+    src/FuzzyMultiDataExt/AXStageTree.cpp \
+    src/FuzzyMultiDataExt/ECStage.cxx \
+    src/FuzzyMultiDataExt/ECStageSimple.cxx \
+    src/FuzzyMultiDataExt/ClusteringRealizations/ClusteringModel.cxx \
+    src/FuzzyMultiDataExt/ClusteringRealizations/KMeansClusteringModel.cpp \
+    src/FuzzyMultiDataExt/ElemCondClustering.cxx \
+    src/FuzzyMultiDataExt/ECClusteringConfiguration.cxx \
+    src/FuzzyMultiDataExt/ECStageClustering.cxx \
+    src/FuzzyMultiDataExt/AXStageTrivial.cpp \
+    src/FuzzyMultiDataExt/ClusteringFeatures/ClusteringFeature.cxx
 HEADERS += src/undefs.h \
     src/TreatmentSample.h \
     src/TreatmentFactory.h \
@@ -394,7 +404,6 @@ HEADERS += src/undefs.h \
     src/Logger.h \
     src/FuzzyMultiDataExt/Heuristics.h \
     src/FuzzyMultiDataExt/ECTypeStage.h \
-    src/FuzzyMultiDataExt/ECStage.h \
     src/FuzzyMultiDataExt/Common.h \
     src/FuzzyMultiDataExt/AXStage.h \
     src/FuzzyMultiDataExt/ASStage.h \
@@ -446,5 +455,19 @@ HEADERS += src/undefs.h \
     src/FuzzyDataSet.h \
     src/elem_conditions/Variance.h \
     src/FuzzyMultiDataExt/AXStageSimple.h \
-    src/FuzzyMultiDataExt/AXStageTree.h
-OTHER_FILES += 
+    src/FuzzyMultiDataExt/AXStageTree.h \
+    src/FuzzyMultiDataExt/ECStageSimple.h \
+    src/FuzzyMultiDataExt/ECStage.h \
+    src/FuzzyMultiDataExt/ClusteringFeatures/MinValueFeature.h \
+    src/FuzzyMultiDataExt/ClusteringFeatures/MaxValueFeature.h \
+    src/FuzzyMultiDataExt/ClusteringFeatures/ClusteringFeatureFactory.h \
+    src/FuzzyMultiDataExt/ClusteringRealizations/KMeansClusteringModel.h \
+    src/FuzzyMultiDataExt/ClusteringRealizations/ClusteringModel.h \
+    src/FuzzyMultiDataExt/ElemCondClustering.h \
+    src/FuzzyMultiDataExt/ECStageClustering.h \
+    src/FuzzyMultiDataExt/ECClusteringConfiguration.h \
+    src/FuzzyMultiDataExt/ClusteringFeatures/ClusteringFeature.h \
+    src/FuzzyMultiDataExt/AXStageTrivial.h \
+    src/FuzzyMultiDataExt/ClusteringFeatures/StandardDeviationFeature.h \
+    src/FuzzyMultiDataExt/ClusteringFeatures/RegressionErrorFeature.h \
+    src/FuzzyMultiDataExt/ClusteringFeatures/RegressionAngleFeature.h

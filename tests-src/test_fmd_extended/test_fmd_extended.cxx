@@ -37,6 +37,7 @@ struct ResultInfo {
 
 int main (int argc, char** argv) {
 	try {
+		srand (time(NULL));
 		Logger::getInstance()->setDebug(true);
 		Logger::getInstance()->setComments(true);
 

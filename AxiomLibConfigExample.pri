@@ -8,7 +8,7 @@ win32 {
         QWT_INCLUDE = D:\lib\qwt-5.2.1\src
 	MPICH_INCLUDE = "C:\Program Files (x86)\MPICH2\include"
         BOOST_INCLUDE = D:\lib\boost_1_44_0
-	OTHER_INCLUDE =
+	OTHER_INCLUDE += "c:/libs/shark/include"
 }
 # Для unix
 unix {
@@ -16,7 +16,7 @@ unix {
         QWT_INCLUDE = "/usr/include/qwt-qt4"
         MPICH_INCLUDE = "/usr/include/mpich2"
         BOOST_INCLUDE = "/home/wictor/boost_1_46_1/include"
-	OTHER_INCLUDE =	
+	OTHER_INCLUDE += "/home/wictor/shark/include"
 }
 
 ### Спецификация библиотек ###

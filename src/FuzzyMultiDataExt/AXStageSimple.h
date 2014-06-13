@@ -30,8 +30,6 @@ public:
 	void run();
 
 private:
-	typedef std::vector<std::vector<AXSelection> > AXMultiVector;
-
 	// Набор точек выполнения на нештатном и нормальном поведении
 	//typedef boost::tuples::tuple<PSatPointSet, PSatPointSet> ReducedSatPointSet;
 

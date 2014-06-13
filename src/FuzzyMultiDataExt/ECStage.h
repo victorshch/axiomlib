@@ -26,97 +26,49 @@ typedef ElementSelection<AxiomLib::ElemCondPlusStat> ECSelection;
 	
 class ECStage
 {
-public:	
-	ECStage(FuzzyDataSet* fuzzyDataSet,
-	                     ECTypeStage* stage0);
+public:		
+	static ECStage* create(const std::string& name, FuzzyDataSet* fuzzyDataSet, ECTypeStage* stage0);
+
+	virtual void setECs(const std::vector<std::vector<std::vector<std::vector<ElemCondPlusStat> > > > & value) {
+		// TODO:
+	}
 	
-	void setECs(const std::vector<std::vector<std::vector<std::vector<ElemCondPlusStat> > > > & value);
+	virtual int initFromEnv(const Environment& env) = 0;
 	
-	int initFromEnv(const Environment& env);
-	
-	void run();
+	virtual void run() = 0;
 	
 	// Функции доступа к набору ЭУ
-	const ElemCondPlusStat & getEC(int aType, int dimension, int type, int n) const;
+	virtual const ElemCondPlusStat & getEC(int aType, int dimension, int type, int n) const;
+
+	virtual int getECSize() const ;
+	virtual int getECSize(int aType) const ;
+	virtual int getECSize(int aType, int dimension) const;
+	virtual int getECSize(int aType, int dimension, int ecType) const;
+	virtual void getECSize(std::vector<std::vector<std::vector<int> > > &result) const ;
 	
-	bool isECSelected(int aType, int dimension, int type, int n) const;
+	virtual int getECTotalCount() const;
+
+	virtual bool isECSelected(int aType, int dimension, int type, int n) const { return true; }
 	
-	void setECSelected(int aType, int dimension, int type, int n, bool value);
-	
-	void getECSize(std::vector<std::vector<std::vector<int> > > &result) const;
-	
-	int getECSize() const ;
-	int getECSize(int aType) const ;
-	int getECSize(int aType, int dimension) const;
-	int getECSize(int aType, int dimension, int ecType) const;
-	
-	int getECTotalCount() const;
-	
-	void recalculateMatterECFunc(ElemCondPlusStat& ec, int abType) const;
+	virtual void setECSelected(int aType, int dimension, int type, int n, bool value) {}
+
+	virtual void recalculateMatterECFunc(ElemCondPlusStat& ec, int abType) const {}	
 
 	FuzzyMultiDataExtAlgorithm* getParent() const { return parent; }
-	
-private:
-	
-	typedef std::vector<std::vector<std::vector<std::vector<
-			ECSelection
-			> > > > ECMultiVector;
+protected:
 
-	typedef boost::tuples::tuple<double, double, double, double> StatVector;
+	void checkIndices(int i, int j, int k, int l) const;
+
+	typedef std::vector<std::vector<std::vector<std::vector<
+		ECSelection
+		> > > > ECMultiVector;
+
+	ECMultiVector elemConditions;	
 	
 	const FuzzyDataSet* fuzzyDataSet;
 	const ECTypeStage* stage0;
 
 	FuzzyMultiDataExtAlgorithm* parent;
-	
-	ECMultiVector elemConditions;	
-	
-	
-	std::vector<int> dataSetParams;
-	std::vector<std::string> dataSetParamNames;
-	
-	bool entropyObjective;
-	bool ecReversing;
-
-	// Параметры алгоритма настройки элементарных условий
-	int leftLimit;
-	int rightLimit;
-	// Величина, на которую ослаблять граничные значения для поиска
-	double reserve;
-	// Число градаций, на которые разбивать диапазон изменения параметров для поиска (диаметр сетки)
-	int numOfLevels;
-	// Число лучших экземпляров элементарных условий каждого типа, которые сохраняются после первого этапа работы алгоритма
-	int numBestECs;
-	// Максимальное число, до которого можно по требованию расширить numBestECs
-	int numBestECsMax;	
-	
-	double goalOccurenceWeight;
-	
-	// Шаблон для названий файлов, под которыми сохрянять элементарные условия, после первого этапа алгоритма
-	std::string ecNameTemplate;	
-	
-	Logger* logger;
-	
-	// Здесь будут храниться врЕменные временнЫе ряды для каждой нити
-	mutable std::vector<std::vector<double> > m_storage;
-	
-	void setTaskCount(int n) const;
-	
-	void selectElemCond(int classNo, int dimensionNo, int dimensionIndex, int taskNo);
-	
-	double matterECFunc (ElemCondPlusStat &ec, const int param, const int abnormalBehaviourType, int taskNo) const;
-	
-	int storeBestECs (std::vector <ECSelection> &bestECs, ElemCondPlusStat &ec, double &goal, double &statNorm, double &statAbnorm) const;
-	
-	int numOfCarriedOutItems (ElemCondPlus &ec, std::vector <double> &row) const;
-	
-	void checkIndices(int i, int j, int k, int l) const;
-	
-	std::string getECName(int abType, int dimension, int ecType, int n) const;
-	
-	void prune();
-	
-	void setNames();
 };
 
 };

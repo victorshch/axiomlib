@@ -54,8 +54,9 @@ public:
 	FuzzyMultiDataExtAlgorithm* getParent() const { return parent; }
 	void getAXSize(std::vector<int> &result) const;
 	
-protected:
-	
+protected:	
+	typedef std::vector<std::vector<AXSelection> > AXMultiVector;
+
 	FuzzyMultiDataExtAlgorithm* parent;
 		
 	const FuzzyDataSet* fuzzyDataSet;
