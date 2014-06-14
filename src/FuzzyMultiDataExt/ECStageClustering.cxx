@@ -79,13 +79,21 @@ void ECStageClustering::run(){
 				elemConditions[c][dimIndex].push_back(vector<ECSelection>());
 				for (int n = 0; n < ecs[conf][dimIndex].size(); n++){
 					ElemCondPlus ec = ElemCondPlus();
-					ec.elemCondition = ecs[conf][dimIndex][n];
+					ec.elemCondition = ecs[conf][dimIndex][n]->clone();
 
 					ec.dimension = dataSetParams[dimIndex];
 
 					elemConditions[c][dimIndex][conf].push_back(
 						ECSelection(ElemCondPlusStat(ec)));
 				}	
+			}
+		}
+	}
+
+	for(int conf = 0; conf < ecs.size(); ++conf) {
+		for(int dimIndex = 0; dimIndex < ecs[conf].size(); ++dimIndex) {
+			for(int n = 0; n < ecs[conf][dimIndex].size(); ++n) {
+				delete ecs[conf][dimIndex][n];
 			}
 		}
 	}
