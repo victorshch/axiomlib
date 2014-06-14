@@ -17,6 +17,7 @@
 #include <fstream>
 #include <string>
 #include <vector>
+#include <ostream>
 #include <list>
 #include <map>
 #include <set>
@@ -219,7 +220,8 @@ void Environment::setParamValue(const T &value, const std::string &name) {
 	configFileParams.insert(std::make_pair(name, boost::lexical_cast<std::string>(value)));
 }
 
-
 }; //  end of namespace
+
+std::ostream& operator<<(std::ostream& ostr, const AxiomLib::Environment& env);
 
 #endif /* __AXIOMS_LIB_ENVIRONMENT_HXX */

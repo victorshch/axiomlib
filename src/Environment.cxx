@@ -443,18 +443,10 @@ std::string Environment::getStringRepresentation() const {
 }
 
 void Environment::getParamNames(std::vector<std::string> &result) const {
-	if(configFileParams.size() == 0) {
-		return;
-	}
-	
-	result.reserve(configFileParams.size());
-	auto it = configFileParams.begin();
-	result.push_back(it->first);
-	
-	for(++it; it != configFileParams.end(); ++it) {
-		if(it->first != result.back()) {
-			result.push_back(it->first);
-		}
+	result.clear();
+
+	for(auto it = configFileParams.begin(); it != configFileParams.end(); ++it) {
+		result.push_back(it->first);
 	}
 }
 
@@ -517,7 +509,8 @@ signed int Environment::readConfigFile(const char* filename) {
   boost::filesystem::path fPath (filename);
   bool tempBool = boost::filesystem::exists( fPath );
   if ( !boost::filesystem::exists( fileName ) ) {
-    throw AxiomLibException("Error in Environment::ReadConfigFile: cannot find the config file.");
+	throw AxiomLibException("Error in Environment::ReadConfigFile: cannot find the config file at path '"
+							+ std::string(fileName) + "'");
   }
 
   // Открываем файл
@@ -630,4 +623,28 @@ Environment& Environment::operator %= (const Environment& other) {
 	}
 	
 	return *this;
+}
+
+std::ostream& operator<<(std::ostream& ostr, const Environment& env) {
+	std::vector<std::string> paramNames;
+	env.getParamNames(paramNames);
+
+	ostr << "{\n";
+	for(auto it = paramNames.begin(); it != paramNames.end(); ++it) {
+		std::set<std::string> paramValues;
+		env.getStringSetParamValue(paramValues, *it);
+		ostr << *it << " = {";
+		for(auto vIt = paramValues.begin(); vIt != paramValues.end(); ++vIt) {
+			if(vIt != paramValues.begin()) {
+				ostr << ", ";
+			}
+
+			ostr << "'" << *vIt << "'";
+		}
+
+		ostr << "}\n";
+	}
+	ostr << "}\n";
+
+	return ostr;
 }
