@@ -8,7 +8,7 @@ include(../common.pri)
 
 QT       -= core gui
 
-TARGET = Fuzzy_data
+TARGET = test_fuzzy_multi_data
 
 CONFIG   -= app_bundle
 
