@@ -70,9 +70,12 @@ class Integral : public ElemCondition {
 	
 	// Пустой конструктор
 	Integral(void);
+
+	// Конструктор, в котором задаются параметры
+	Integral(int left, int right, double minLevel, double maxLevel);
 	
 	// Деструктор - удаляает все созданные динамические объекты
-	~Integral(void) {};
+	~Integral(void) {}
 	
 	// Функция возвращает имя данного элементарного условия
 	std::string name(void) const;

@@ -118,7 +118,7 @@ bool AxiomContainer::ExtendedSatPointSet::isSat(int division, int classNumber, i
 }
 
 
-string ASObjectiveValue::toString() const
+std::string ASObjectiveValue::toString() const
 {
 	return boost::lexical_cast<std::string>(this->goalValue) + " ("
 			+ boost::lexical_cast<std::string>(this->errI)

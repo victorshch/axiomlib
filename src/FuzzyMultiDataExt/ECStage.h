@@ -17,6 +17,8 @@
 #include "Common.h"
 #include "ForwardDeclarations.h"
 
+#include "ECTypeStage.h"
+
 
 namespace AxiomLib {
 
@@ -28,6 +30,11 @@ class ECStage
 {
 public:		
 	static ECStage* create(const std::string& name, FuzzyDataSet* fuzzyDataSet, ECTypeStage* stage0);
+
+	ECStage(): fuzzyDataSet(0), stage0(0), parent(0) {}
+
+	ECStage(FuzzyDataSet* fuzzyDataSet, ECTypeStage* stage0)
+		: fuzzyDataSet(fuzzyDataSet), stage0(stage0), parent(stage0->getParent()) {}
 
 	virtual void setECs(const std::vector<std::vector<std::vector<std::vector<ElemCondPlusStat> > > > & value) {
 		// TODO:
