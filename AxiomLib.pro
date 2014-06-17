@@ -240,7 +240,9 @@ SOURCES += src/TreatmentSample.cxx \
     src/FuzzyMultiDataExt/ECStageClustering.cxx \
     src/FuzzyMultiDataExt/AXStageTrivial.cpp \
     src/FuzzyMultiDataExt/ClusteringFeatures/ClusteringFeature.cxx \
-    src/FuzzyMultiDataExt/ASStageGenetic.cpp
+    src/FuzzyMultiDataExt/ASStageGenetic.cpp \
+    src/FuzzyMultiDataExt/ECStageDiscretization.cpp \
+    src/FuzzyMultiDataExt/ElemCondMean.cxx
 HEADERS += src/undefs.h \
     src/TreatmentSample.h \
     src/TreatmentFactory.h \
@@ -473,4 +475,6 @@ HEADERS += src/undefs.h \
     src/FuzzyMultiDataExt/ClusteringFeatures/RegressionAngleFeature.h \
     src/FuzzyMultiDataExt/ASStageGenetic.h \
     src/FuzzyMultiDataExt/GeneticUtils/RouletteWheelSelection.h \
-    src/FuzzyMultiDataExt/GeneticUtils/ProbabilityMapping.h
+    src/FuzzyMultiDataExt/GeneticUtils/ProbabilityMapping.h \
+    src/FuzzyMultiDataExt/ECStageDiscretization.h \
+	src/FuzzyMultiDataExt/ElemCondMean.h

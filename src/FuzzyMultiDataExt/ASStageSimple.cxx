@@ -63,8 +63,6 @@ void ASStageSimple::initFromEnv(const Environment &env) {
 	if (env.getDoubleParamValue (shiftErrIn, "shiftErrIn") < 0)
 		throw AxiomLibException("FuzzyMultiDataExt_AS::setParamsFromEnv : shiftErrIn is undefined.");
 	// Степень расширения длины вхождения разметки (при поиске разметок во время их подбора)
-	if (env.getDoubleParamValue (extendMarkUpLensLevel, "extendMarkUpLensLevel") < 0)
-		throw AxiomLibException("FuzzyMultiDataExt_AS::setParamsFromEnv : extendMarkUpLensLevel is undefined.");
 	if (env.getIntParamValue (maxAxiomSetPopSize, "maxAxiomSetPopSize") < 0)
 		throw AxiomLibException("FuzzyMultiDataExt_AS::setParamsFromEnv : maxAxiomSetPopSize is undefined.");
 	if (env.getIntParamValue (maxNumberOfSteps, "maxNumberOfSteps") < 0)

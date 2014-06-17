@@ -27,6 +27,9 @@
 #include "elem_conditions/IncreaseLeftElemCondition.h"
 #include "elem_conditions/Variance.h"
 
+#include "FuzzyMultiDataExt/ElemCondClustering.h"
+#include "FuzzyMultiDataExt/ElemCondMean.h"
+
 // TODO refactor
 #define N_EL_AXIOMS 16
 // END AXIOM HEADERS
