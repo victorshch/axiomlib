@@ -4,6 +4,8 @@
 *
 ****************************************************************************/
 
+#include "../Logger.h"
+
 #include <string>
 #include "Integral.h"
 #include <stdlib.h>
@@ -57,6 +59,15 @@ Integral::Integral (void) {
 	
 	// Максимальное значение параметра right, которое учитывается при подборе параметров перебором
 	rightLimit = right;
+}
+
+Integral::Integral(int left, int right, double minLevel, double maxLevel)
+	: left(left), leftLimit(left), right(right), rightLimit(right),
+	  minLevel(minLevel), minLevelLimit(minLevel), maxLevel(maxLevel), maxLevelLimit(maxLevel)
+{
+	if(maxLevel <= minLevel) {
+		exception() << "Integral(): incorrect levels: minLevel = " << minLevel << ", maxLevel = " << maxLevel;
+	}
 }
 
 /****************************************************************************
