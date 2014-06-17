@@ -5,6 +5,7 @@
 #include "ECStage.h"
 #include "ECStageSimple.h"
 #include "ECStageClustering.h"
+#include "ECStageDiscretization.h"
 
 using namespace AxiomLib;
 using namespace AxiomLib::FuzzyMultiDataExt;
@@ -17,6 +18,8 @@ ECStage *ECStage::create(const std::string &name, FuzzyDataSet *fuzzyDataSet, EC
 		return new ECStageSimple(fuzzyDataSet, stage0);
 	} else if (nameCopy == "clustering"){
 		return new ECStageClustering(fuzzyDataSet, stage0);
+	} else if (nameCopy == "discretization") {
+		return new ECStageDiscretization(fuzzyDataSet, stage0);
 	}
 	
 	return 0;
