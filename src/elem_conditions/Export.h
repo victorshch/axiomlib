@@ -15,7 +15,6 @@
 #include <boost/serialization/extended_type_info.hpp>
 #include <boost/serialization/export.hpp>
 #include "../all_axioms.h"
-#include "../FuzzyMultiDataExt/ElemCondClustering.h"
 
 BOOST_CLASS_EXPORT_KEY2(AxiomLib::BetweenTwoLevels, "BetweenTwoLevels");
 BOOST_CLASS_EXPORT_KEY2(AxiomLib::DecreaseLeftElemCondition, "DecreaseLeftElemCondition");
@@ -34,5 +33,6 @@ BOOST_CLASS_EXPORT_KEY2(AxiomLib::SecDerivativeIncreaseRight, "SecDerivativeIncr
 BOOST_CLASS_EXPORT_KEY2(AxiomLib::Volatility, "Volatility");
 BOOST_CLASS_EXPORT_KEY2(AxiomLib::Variance, "Variance");
 BOOST_CLASS_EXPORT_KEY2(AxiomLib::FuzzyMultiDataExt::ElemCondClustering, "ElemCondClustering");
+BOOST_CLASS_EXPORT_GUID(AxiomLib::ElemCondMean, "ElemCondMean");
 
 #endif // EXPORT_H
