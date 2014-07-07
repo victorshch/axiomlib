@@ -169,18 +169,22 @@ l = 5
 trajCount = 50
 
 for i in range(trajCount):
-	base = random.randint(-100, 100) * 2		
+	#base = random.randint(-100, 100) * 2
+	base = 0
 	normalTraject(base, base  + height, count, l, reference_normal + "/r{0}.csv".format(i+1));
 
 for i in range(trajCount):
-	base = random.randint(-100, 100) * 2
+	#base = random.randint(-100, 100) * 2
+	base = 0
 	normalTraject(base , base + height, count, l, testing_normal + "/r{0}.csv".format(i+1));
 
 for i in range(trajCount):
-	base = random.randint(-100, 100) * 2		
+	#base = random.randint(-100, 100) * 2
+	base = 0
 	badTraject(base , base + height, 1, l, 1,  reference_bad + "/r{0}.csv".format(i+1));
 
 for i in range(trajCount):
-	base = random.randint(-100, 100) * 2			
+	#base = random.randint(-100, 100) * 2
+	base = 0
 	badTraject(base , base + height, 1, l, 1, testing_bad + "/r{0}.csv".format(i + 1));
 
