@@ -81,7 +81,7 @@ int ReducedRecognizerDTW::countDTWDist (const std::vector <int> &markup, const s
 		minLen = 1;
 	// Сохраняем длину ряда, чтобы каждый раз к функции не обращаться
 	int len = (int) markup.size();
-	result.assign(len, 0);
+	result.assign(len, -1);
 	// Подготавливаем матрицы для ошибок и длины пути
 	std::vector <std::vector <int> > matrixLen, matrixErr;
 	int etLen = etalon.size();
