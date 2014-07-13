@@ -43,6 +43,8 @@ public:
 
 	// Возвращает одномерный ряд по разделу, номеру класса, траектории и размерности
 	bool getTSByIndex(DataSetDivisionType division, std::vector<double>& vec, int indexClass, int indexMultiTS, int indexTS) const;
+
+	bool getMultiTSByIndex(DataSetDivisionType division, std::vector<std::vector<double> >& v, int indexClass, int indexMultiTS) const;
 	
 	// Функция возвращает временной ряд из переменных класса по определенным - номеру класса, номеру мультиряда в классе, номеру ряда в мультиряде
 	bool getTSByIndexFromClass (std::vector<double> &vec, int indexClass, int indexMultiTS, int indexTS) const;	
