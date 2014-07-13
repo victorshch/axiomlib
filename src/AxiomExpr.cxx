@@ -7,8 +7,11 @@
 *
 ****************************************************************************/
 #include <algorithm>
+#include <iostream>
 
 #include "AxiomExpr.h"
+
+#include "prettyprint.hpp"
 
 using namespace AxiomLib;
 
@@ -702,4 +705,10 @@ signed int AxiomExpr::saveAxiomToFile (const std::string baseDir, const std::str
 	AxiomBase axiomBase;
 	axiomBase.saveToAX (baseDir, aes, paramNames);
 	return 0;
+}
+
+std::ostream &operator<<(std::ostream &ostr, const AxiomExpr &axiomExpr)
+{
+	ostr << axiomExpr.expression;
+	return ostr;
 }

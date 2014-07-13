@@ -117,6 +117,8 @@ class ElemCondPlus {
 
 }; //  end of namespace
 
+std::ostream& operator<<(std::ostream& ostr, const AxiomLib::ElemCondPlus& ecPlus);
+
 //BOOST_CLASS_EXPORT_GUID(AxiomLib::ElemCondPlus, "ElemCondPlus");
 
 #endif /* _Elem_Cond_Plus_HXX */
