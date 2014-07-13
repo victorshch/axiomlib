@@ -477,4 +477,5 @@ HEADERS += src/undefs.h \
     src/FuzzyMultiDataExt/GeneticUtils/RouletteWheelSelection.h \
     src/FuzzyMultiDataExt/GeneticUtils/ProbabilityMapping.h \
     src/FuzzyMultiDataExt/ECStageDiscretization.h \
-	src/FuzzyMultiDataExt/ElemCondMean.h
+	src/FuzzyMultiDataExt/ElemCondMean.h \
+    src/prettyprint.hpp
