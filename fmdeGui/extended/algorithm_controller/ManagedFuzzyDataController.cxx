@@ -32,7 +32,6 @@
 
 #include "../utilities.h"
 #include "../QtGuiException.h"
-#include "elem_conditions/Export.h"
 
 #include "Logger.h"
 
