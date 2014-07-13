@@ -470,4 +470,5 @@ HEADERS += src/undefs.h \
     src/FuzzyMultiDataExt/AXStageTrivial.h \
     src/FuzzyMultiDataExt/ClusteringFeatures/StandardDeviationFeature.h \
     src/FuzzyMultiDataExt/ClusteringFeatures/RegressionErrorFeature.h \
-    src/FuzzyMultiDataExt/ClusteringFeatures/RegressionAngleFeature.h
+    src/FuzzyMultiDataExt/ClusteringFeatures/RegressionAngleFeature.h \
+    src/prettyprint.hpp
