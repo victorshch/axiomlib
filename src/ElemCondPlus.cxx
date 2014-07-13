@@ -7,6 +7,9 @@
 #include "ElemCondPlus.h"
 #include "ElemConditionsFactory.h"
 #include "AxiomLibException.h"
+
+#include "prettyprint.hpp"
+
 #include <boost/lexical_cast.hpp>
 		
 using namespace AxiomLib;
@@ -484,4 +487,15 @@ signed int ElemCondPlus::initFromFile (const std::string &filePath, const std::v
 	// Инициализация данного класса из считанной структуры
 	initFromStructure(ecps);
 	return 0;
+}
+
+std::ostream& operator<<(std::ostream& ostr, const ElemCondPlus& ecPlus) {
+	ostr << ecPlus.dimension << " : ";
+	ostr << (ecPlus.sign ? "+" : "-");
+	ostr << ecPlus.elemCondition->name();
+	std::map<std::string, std::string> ecParams;
+	ecPlus.elemCondition->getParams(ecParams);
+	ostr << " {" << ecParams << "}";
+
+	return ostr;
 }

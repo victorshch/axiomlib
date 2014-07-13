@@ -158,9 +158,13 @@ class AxiomExpr {
 
 	// Функция сохранения системы аксиом в файл (с указанием размерности набора данных, на которой проверяется каждое элементарное условие из данной аксиомы)
 	signed int saveAxiomToFile (const std::string baseDir, const std::string axiomName, std::vector <std::string> &paramNames) const;
+
+	std::string toString() const;
     
 };
 
 }; //  end of namespace
+
+std::ostream& operator<<(std::ostream& ostr, const AxiomLib::AxiomExpr& axiomExpr);
 
 #endif /* _Axiom_Expr_HXX */
