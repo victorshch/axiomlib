@@ -10,6 +10,8 @@
 
 #include "AxiomExpr.h"
 
+#include "prettyprint.hpp"
+
 using namespace AxiomLib;
 
 // Вероятность, что какому-то элементарному условию при случайном создании аксиомы будет преставлен знак отрицания
@@ -702,4 +704,10 @@ signed int AxiomExpr::saveAxiomToFile (const std::string baseDir, const std::str
 	AxiomBase axiomBase;
 	axiomBase.saveToAX (baseDir, aes, paramNames);
 	return 0;
+}
+
+ostream &operator<<(ostream &ostr, const AxiomExpr &axiomExpr)
+{
+	ostr << axiomExpr.expression;
+	return ostr;
 }
