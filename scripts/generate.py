@@ -2,7 +2,7 @@
 import os;
 import random;
 
-datasetName = "new";
+datasetName = "new3";
 path = "./test/" + datasetName;
 
 testing = path + "/testing"
@@ -162,11 +162,11 @@ def initEnv():
 initEnv();
 
 height = 10
-count = 5
+count = 14
 l = 5
 
 
-trajCount = 50
+trajCount = 14
 
 for i in range(trajCount):
 	#base = random.randint(-100, 100) * 2
@@ -181,10 +181,12 @@ for i in range(trajCount):
 for i in range(trajCount):
 	#base = random.randint(-100, 100) * 2
 	base = 0
-	badTraject(base , base + height, 1, l, 1,  reference_bad + "/r{0}.csv".format(i+1));
+	errorIn = random.randint(1, int((count + 1) / 2)) * 2 - 1
+	badTraject(base , base + height, count, l, errorIn,  reference_bad + "/r{0}.csv".format(i+1));
 
 for i in range(trajCount):
 	#base = random.randint(-100, 100) * 2
 	base = 0
-	badTraject(base , base + height, 1, l, 1, testing_bad + "/r{0}.csv".format(i + 1));
+	errorIn = random.randint(1, int((count + 1) / 2)) * 2 - 1
+	badTraject(base , base + height, count, l, errorIn, testing_bad + "/r{0}.csv".format(i + 1));
 
