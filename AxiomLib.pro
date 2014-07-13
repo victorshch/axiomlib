@@ -474,4 +474,5 @@ HEADERS += src/undefs.h \
     src/FuzzyMultiDataExt/ClusteringFeatures/RegressionErrorFeature.h \
     src/FuzzyMultiDataExt/ClusteringFeatures/RegressionAngleFeature.h \
     src/FuzzyMultiDataExt/ECStageDiscretization.h \
-	src/FuzzyMultiDataExt/ElemCondMean.h
+	src/FuzzyMultiDataExt/ElemCondMean.h \
+    src/prettyprint.hpp
