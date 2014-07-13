@@ -30,9 +30,10 @@ class ElemCondition {
 	//объявления, необходимые для сериализации
 	friend class boost::serialization::access;
 	template<class Archive>
-	void serialize(Archive & /*archive*/, const unsigned int /*version*/)
+	void serialize(Archive & archive, const unsigned int /*version*/)
 	{
-		//данный класс сам по себе не требует сериализации каких-либо данных
+		std::string name = this->name();
+		archive & BOOST_SERIALIZATION_NVP(name);
 	}
 
   protected:
