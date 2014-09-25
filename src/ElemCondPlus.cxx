@@ -495,7 +495,7 @@ std::ostream& operator<<(std::ostream& ostr, const ElemCondPlus& ecPlus) {
 	ostr << ecPlus.elemCondition->name();
 	std::map<std::string, std::string> ecParams;
 	ecPlus.elemCondition->getParams(ecParams);
-	ostr << " {" << ecParams << "}";
+	//ostr << " {" << ecParams << "}";
 
 	return ostr;
 }
