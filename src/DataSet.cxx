@@ -451,7 +451,7 @@ signed int DataSet::readTestesTS (const std::string &path) {
 			filePath = fullPath;
 			filePath /= dir_itr->path();
 			// Переводим имя текущего обрабатываемого файла в строку
-			aa = dir_itr->path().filename().c_str();
+			aa = dir_itr->path().filename().string();
 			// Составляем число по имени файла
 			intByName = this->getIntByName(aa);
 			// Проверяем - по полученному числу - удовлетворяет ли имя файла формату имен тестовых рядов
@@ -491,7 +491,7 @@ signed int DataSet::readTestesTS (const std::string &path) {
 						// Значит это просто cvs - файл с одежанием тестового ряда
 						// Производим чтение данного файла
 						MultiTS multiTStemp;
-						aa = (*dir_itr).path().native();
+						aa = (*dir_itr).path().string();
 						this->readFromCSV (aa, multiTStemp);
 						Logger::getInstance()->writeDebug("Read test csv length: " +
 														  boost::lexical_cast<std::string>(multiTStemp.length()));

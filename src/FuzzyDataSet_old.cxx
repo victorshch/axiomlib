@@ -169,7 +169,7 @@ signed int FuzzyDataSet_old::readNormalClassTS (std::string &path) {
 		for ( boost::filesystem::directory_iterator dir_itr_int( classPath ); dir_itr_int != end_iter_int; ++dir_itr_int ) {
 			filePath = *dir_itr_int;
 			// переводим названия файла и шаблона в char* - чтобы сравнить на соответствие (см ./formats.x)
-			aa = dir_itr_int->path().filename().c_str();
+			aa = dir_itr_int->path().filename().string();
 			if ((checkName (aa, -1, 0, fileNameFirstHalf)) && (checkName (aa, (int) aa.size() - 5, (int) aa.size() - 4, fileNameLastHalf))) {
 				//осталось тока считать файл и записать в специально описанный класс multiTS
 				MultiTS multiTStemp;
