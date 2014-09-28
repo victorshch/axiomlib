@@ -305,14 +305,14 @@ signed int AxiomBase::readAxioms (const char* axiomBaseDir) {
 			else {
 				filePath = fullPath;
 				filePath /= dir_itr->path();
-				aa = dir_itr->path().filename().c_str();
+				aa = dir_itr->path().filename().string();
 				if ( checkName (aa, (int) (aa.size() - 4), (int) (aa.size() - 3), templateAxiomFile) ) {
 					// то есть в dir_itr сейчас имя файла описания аксиомы
 					std::vector<std::string> vec;
 					aa = (*dir_itr).path().string().c_str();
 					this->readFromAX (aa, vec);
 					if (vec.size() > 0) {
-						aa = dir_itr->path().filename().c_str();
+						aa = dir_itr->path().filename().string();
 						this->axioms[aa.substr(0, aa.size() - 3)] = vec;
 					}
 				}

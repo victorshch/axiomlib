@@ -824,7 +824,7 @@ void DataSetBase::setupParamNums(const Environment &env, const EnvDataSet &envDa
 		 //std::cout << "\n	EPT 2 \n";
 		 //filePath = *dir_itr_int;
 		 // переводим названия файла и шаблона в char* - чтобы сравнить на соответствие (см ./formats.x)
-		 std::string currentFileName = dir_itr_int->path().filename().c_str();
+		 std::string currentFileName = dir_itr_int->path().filename().string();
 		 if (checkRefCSVName(currentFileName)) {
 			 //осталось тока считать файл и записать в специально описанный класс multiTS
 			 //std::cout << "\n	EPT 3 \n";
@@ -891,7 +891,7 @@ void DataSetBase::setupParamNums(const Environment &env, const EnvDataSet &envDa
 		 for ( boost::filesystem::directory_iterator dir_itr( fullPath ); dir_itr != end_iter; ++dir_itr ) {
 			 if ( boost::filesystem::is_directory( *dir_itr ) ) {
 				 // проверяем - учтен ли класс неисправностей с именем текущей обрабатываемой директории в конфиг. файле
-					 isin = isIn(std::string(dir_itr->path().filename().c_str()), classNames);
+					 isin = isIn(dir_itr->path().filename().string(), classNames);
 				 //std::cout<< "\n WARN isin is " << isin << "\n";
 				 //std::cout << "\n	EPT 0 \n";
 				 if ( isin != -1) {//Имя класса есть в векторе DataSet - то есть теперь работаем с содежимым директории
