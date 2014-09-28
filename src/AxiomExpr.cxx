@@ -7,7 +7,6 @@
 *
 ****************************************************************************/
 #include <algorithm>
-#include <string>
 
 #include "AxiomExpr.h"
 
@@ -709,6 +708,11 @@ signed int AxiomExpr::saveAxiomToFile (const std::string baseDir, const std::str
 
 ostream &operator<<(ostream &ostr, const AxiomExpr &axiomExpr)
 {
-	//ostr << axiomExpr.expression;
+	for (auto iter = axiomExpr.expression.begin(); iter != axiomExpr.expression.end(); iter++){
+		for (auto item_iter = (*iter).begin(); item_iter != (*iter).end(); item_iter++){
+			ostr << (*item_iter) << std::endl;
+		}
+		ostr << std::endl;
+	}
 	return ostr;
 }

@@ -32,6 +32,7 @@ int ECStageDiscretization::initFromEnv(const Environment &env)
 {
 	env.getMandatoryParamValue(numOfLevels, "ECStageDiscretization_numOfLevels");
 	env.getMandatoryParamValue(windowSize, "ECStageDiscretization_windowSize");
+	return 0;
 }
 
 ECSelection makeECSelection(const ElemCondPlus& ec) {
