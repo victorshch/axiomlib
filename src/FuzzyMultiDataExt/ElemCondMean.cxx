@@ -56,6 +56,7 @@ signed int ElemCondMean::getParams(std::map<std::string, std::string> &newParams
 	newParams["right"] = boost::lexical_cast<std::string>(right);
 	newParams["minLevel"] = boost::lexical_cast<std::string>(minLevel);
 	newParams["maxLevel"] = boost::lexical_cast<std::string>(maxLevel);
+	return 0;
 }
 
 }
