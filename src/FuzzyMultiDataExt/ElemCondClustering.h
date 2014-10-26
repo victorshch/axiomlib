@@ -137,6 +137,7 @@ namespace AxiomLib {
 					archive & BOOST_SERIALIZATION_BASE_OBJECT_NVP(ElemCondition);
 					archive & BOOST_SERIALIZATION_NVP(clusterNumber);
 					archive & BOOST_SERIALIZATION_NVP(length);
+					archive & BOOST_SERIALIZATION_NVP(clusteringModel);
 				}
 
 				int clusterNumber;
