@@ -20,9 +20,11 @@ namespace FuzzyMultiDataExt {
 
 class ECClusteringConfiguration {				
 	public:						
-		static ECClusteringConfiguration* create(const FuzzyDataSet* fuzzyDataSet, const std::string& s);	
-			
+		static ECClusteringConfiguration* create(const FuzzyDataSet* fuzzyDataSet, const std::string& s);				
+		
+		
 		void run();
+
 
 		std::vector<std::vector<ElemCondClustering*> > getCreatedEC() { return elemCond; }
 	private:			
