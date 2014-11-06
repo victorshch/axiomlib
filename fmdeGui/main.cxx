@@ -9,6 +9,8 @@
 #include "extended/MainWindowContent.h"
 #include "extended/signalproxy.h"
 
+#include "extended/configselectwidget.h"
+
 // Наследник класса QApplication, в котором реализована поимка
 // и отображение исключений при обработке событий
 class AxiomLibGuiApplication : public QApplication {
@@ -47,6 +49,16 @@ public:
 	}
 };
 
+void getDirectoryAndFile(QString src, QString& dir, QString& file) {
+	src = QDir::fromNativeSeparators(src);
+	QStringList list = src.split(QDir::separator());
+	file = list.value(list.size() - 1);
+	dir = QString();
+	if(list.size() > 1) {
+		list.removeAt(list.size() - 1);
+		dir = list.join(QDir::separator());
+	}
+}
 
 int main(int argc, char *argv[])
 {
@@ -56,9 +68,25 @@ int main(int argc, char *argv[])
 		QStringList args = QApplication::arguments();
 		args.removeAt(0);
 
+		ConfigSelectWidget configSelect;
+		// TODO set default values for workdir, dataset, config file name
+		configSelect.setWorkdir(QDir::currentPath());
+		configSelect.exec();
+
+		if(configSelect.result() == QDialog::Rejected) {
+			return 0;
+		}
+
+		args << "ConfigFile" << configSelect.configFile();
+		QString dataSetDir;
+		QString dataSetName;
+		getDirectoryAndFile(configSelect.dataset(), dataSetDir, dataSetName);
+		args << "Dataset" << dataSetName;
+		args << "BaseDataSetDir" << dataSetDir;
+
 		MainWindowContent* mainWindowContent = new MainWindowContent(0, 
 																	 args,
-																	 QDir::currentPath());
+																	 configSelect.workdir());
 		
 		MainWindow* mainWindow = new MainWindow(0, (mainWindowContent->controller));
 		mainWindow->setAttribute(Qt::WA_DeleteOnClose, true);

@@ -11,7 +11,7 @@ TEMPLATE = app
 
 include(../AxiomLibConfig.pri)
 
-### Конфигурация - release или debug ###
+### О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫ - release О©╫О©╫О©╫ debug ###
 
 CONFIG += release
 CONFIG -= debug
@@ -23,7 +23,7 @@ unix {
 #    QMAKE_CXX = g++-4.5
 }
 
-### Задание папки, куда будет положен исполняемый файл ###
+### О©╫О©╫О©╫О©╫О©╫О©╫О©╫ О©╫О©╫О©╫О©╫О©╫, О©╫О©╫О©╫О©╫ О©╫О©╫О©╫О©╫О©╫ О©╫О©╫О©╫О©╫О©╫О©╫О©╫ О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫ О©╫О©╫О©╫О©╫ ###
 debug {
 DESTDIR = ./debug/
 OBJECTS_DIR = ./obj_debug/
@@ -106,7 +106,9 @@ SOURCES += main.cxx\
     extended/model/Schema.cxx \
     extended/model/ModelNode.cxx \
     extended/model/DataHandler.cxx \
-    extended/model/CheckedDataHandler.cxx
+    extended/model/CheckedDataHandler.cxx \
+    extended/fileselectform.cpp \
+    extended/configselectwidget.cpp
 
 HEADERS  += \
     extended/VectorQwtAdapter.h \
@@ -186,7 +188,9 @@ HEADERS  += \
     extended/model/Schema.h \
     extended/model/ModelNode.h \
     extended/model/DataHandler.h \
-    extended/model/CheckedDataHandler.h
+    extended/model/CheckedDataHandler.h \
+    extended/fileselectform.h \
+    extended/configselectwidget.h
 
 FORMS += \
     extended/valuedsliderwidget.ui \
