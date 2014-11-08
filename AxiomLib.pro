@@ -239,7 +239,8 @@ SOURCES += src/TreatmentSample.cxx \
     src/FuzzyMultiDataExt/ECClusteringConfiguration.cxx \
     src/FuzzyMultiDataExt/ECStageClustering.cxx \
     src/FuzzyMultiDataExt/AXStageTrivial.cpp \
-    src/FuzzyMultiDataExt/ClusteringFeatures/ClusteringFeature.cxx
+    src/FuzzyMultiDataExt/ClusteringFeatures/ClusteringFeature.cxx \
+    src/elem_conditions/Export.cxx
 HEADERS += src/undefs.h \
     src/TreatmentSample.h \
     src/TreatmentFactory.h \

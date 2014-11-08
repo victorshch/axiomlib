@@ -2,16 +2,24 @@
 Данная программа - инструмент для запуска этапов алгоритма fuzzy_multi_data_ext.
 **********************************************************************/
 
-#include <boost/format.hpp>
+#include "all_axioms.h"
 
+#include <boost/format.hpp>
 #include "Environment.h"
 #include "AxiomLibException.h"
 #include "FuzzyMultiDataExtAlgorithm.h"
 #include "Check.h"
+
 #include <iostream>
 #include <time.h>
 #include <string>
 #include <algorithm>
+
+#include <boost/archive/xml_iarchive.hpp>
+#include <boost/archive/xml_oarchive.hpp>
+
+#include "elem_conditions/Export.h"
+#include "elem_conditions/Export.cxx"
 
 #undef SEEK_SET
 #undef SEEK_END

@@ -1,7 +1,7 @@
 /****************************************************************************
 *			ElemCondition
 *
-*	Description:	Данный файл содержит все макросы BOOST_CLASS_EXPORT_GUID,
+*	Description:	Данный файл содержит все макросы BOOST_CLASS_EXPORT_KEY2,
 *				необходимые для сериализации полиморфных классов ЭУ.
 *				Его необходимо включать в проект, использующий сериализацию ЭУ,
 *				ровно в одном месте
@@ -17,22 +17,22 @@
 #include "../all_axioms.h"
 #include "../FuzzyMultiDataExt/ElemCondClustering.h"
 
-BOOST_CLASS_EXPORT_GUID(AxiomLib::BetweenTwoLevels, "BetweenTwoLevels");
-BOOST_CLASS_EXPORT_GUID(AxiomLib::DecreaseLeftElemCondition, "DecreaseLeftElemCondition");
-BOOST_CLASS_EXPORT_GUID(AxiomLib::DecreaseRightElemCondition, "DecreaseRightElemCondition");
-BOOST_CLASS_EXPORT_GUID(AxiomLib::DerivativeDecreaseLeft, "DerivativeDecreaseLeft");
-BOOST_CLASS_EXPORT_GUID(AxiomLib::DerivativeDecreaseRight, "DerivativeDecreaseRight");
-BOOST_CLASS_EXPORT_GUID(AxiomLib::DerivativeIncreaseLeft, "DerivativeIncreaseLeft");
-BOOST_CLASS_EXPORT_GUID(AxiomLib::DerivativeIncreaseRight, "DerivativeIncreaseRight");
-BOOST_CLASS_EXPORT_GUID(AxiomLib::IncreaseLeftElemCondition, "IncreaseLeftElemCondition");
-BOOST_CLASS_EXPORT_GUID(AxiomLib::IncreaseRightElemCondition, "IncreaseRightElemCondition");
-BOOST_CLASS_EXPORT_GUID(AxiomLib::Integral, "Integral");
-BOOST_CLASS_EXPORT_GUID(AxiomLib::SecDerivativeDecreaseLeft, "SecDerivativeDecreaseLeft");
-BOOST_CLASS_EXPORT_GUID(AxiomLib::SecDerivativeDecreaseRight, "SecDerivativeDecreaseRight");
-BOOST_CLASS_EXPORT_GUID(AxiomLib::SecDerivativeIncreaseLeft, "SecDerivativeIncreaseLeft");
-BOOST_CLASS_EXPORT_GUID(AxiomLib::SecDerivativeIncreaseRight, "SecDerivativeIncreaseRight");
-BOOST_CLASS_EXPORT_GUID(AxiomLib::Volatility, "Volatility");
-BOOST_CLASS_EXPORT_GUID(AxiomLib::Variance, "Variance");
-BOOST_CLASS_EXPORT_GUID(AxiomLib::FuzzyMultiDataExt::ElemCondClustering, "ElemCondClustering");
+BOOST_CLASS_EXPORT_KEY2(AxiomLib::BetweenTwoLevels, "BetweenTwoLevels");
+BOOST_CLASS_EXPORT_KEY2(AxiomLib::DecreaseLeftElemCondition, "DecreaseLeftElemCondition");
+BOOST_CLASS_EXPORT_KEY2(AxiomLib::DecreaseRightElemCondition, "DecreaseRightElemCondition");
+BOOST_CLASS_EXPORT_KEY2(AxiomLib::DerivativeDecreaseLeft, "DerivativeDecreaseLeft");
+BOOST_CLASS_EXPORT_KEY2(AxiomLib::DerivativeDecreaseRight, "DerivativeDecreaseRight");
+BOOST_CLASS_EXPORT_KEY2(AxiomLib::DerivativeIncreaseLeft, "DerivativeIncreaseLeft");
+BOOST_CLASS_EXPORT_KEY2(AxiomLib::DerivativeIncreaseRight, "DerivativeIncreaseRight");
+BOOST_CLASS_EXPORT_KEY2(AxiomLib::IncreaseLeftElemCondition, "IncreaseLeftElemCondition");
+BOOST_CLASS_EXPORT_KEY2(AxiomLib::IncreaseRightElemCondition, "IncreaseRightElemCondition");
+BOOST_CLASS_EXPORT_KEY2(AxiomLib::Integral, "Integral");
+BOOST_CLASS_EXPORT_KEY2(AxiomLib::SecDerivativeDecreaseLeft, "SecDerivativeDecreaseLeft");
+BOOST_CLASS_EXPORT_KEY2(AxiomLib::SecDerivativeDecreaseRight, "SecDerivativeDecreaseRight");
+BOOST_CLASS_EXPORT_KEY2(AxiomLib::SecDerivativeIncreaseLeft, "SecDerivativeIncreaseLeft");
+BOOST_CLASS_EXPORT_KEY2(AxiomLib::SecDerivativeIncreaseRight, "SecDerivativeIncreaseRight");
+BOOST_CLASS_EXPORT_KEY2(AxiomLib::Volatility, "Volatility");
+BOOST_CLASS_EXPORT_KEY2(AxiomLib::Variance, "Variance");
+BOOST_CLASS_EXPORT_KEY2(AxiomLib::FuzzyMultiDataExt::ElemCondClustering, "ElemCondClustering");
 
 #endif // EXPORT_H

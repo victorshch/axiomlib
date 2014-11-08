@@ -8,6 +8,12 @@
 #include <string>
 #include <set>
 
+#include <boost/archive/xml_iarchive.hpp>
+#include <boost/archive/xml_oarchive.hpp>
+
+#include "elem_conditions/Export.h"
+#include "elem_conditions/Export.cxx"
+
 #undef SEEK_SET
 #undef SEEK_END
 #undef SEEK_CUR
@@ -41,7 +47,7 @@ std::set<std::string> getAxiomSetNames(const std::string& axiomSetNameTemplate, 
 		// Skip if not a file
 		if( !boost::filesystem::is_regular_file( i->status() ) ) continue;
 
-		std::string currentAxiomName = i->path().stem();
+		std::string currentAxiomName = i->path().stem().string();
 
 		if(currentAxiomName.compare(0, axiomSetNameTemplate.size(), axiomSetNameTemplate) != 0) {
 			continue;
@@ -75,12 +81,12 @@ int main (int argc, char** argv) {
 		// Параметры, по которым сохранять лучщие решения
 		std::string axiomSetBaseDir;
 		if (env.getStringParamValue(axiomSetBaseDir, "AxiomSetBaseDir") < 0)
-			throw AxiomLibException("Execute_fuzzy : axiomSetBaseDir directory is undefined.");
+			throw AxiomLibException("Execute_fuzzy : axiomSetBaseDir directory is undefined in config");
 		std::set <std::string> axiomSetNames;
 		if (env.getStringSetParamValue(axiomSetNames, "AxiomSet") < 0) {
 			std::string axiomSetNameTemplate;
 			if (env.getStringParamValue(axiomSetNameTemplate, "AxiomSetNameTemplate")) {
-				throw AxiomLibException("Execute_fuzzy : no AxiomSet specified");
+				throw AxiomLibException("Execute_fuzzy : AxiomSetNameTemplate is undefined in config");
 			}
 			axiomSetNames = getAxiomSetNames(axiomSetNameTemplate, axiomSetBaseDir);
 		}
@@ -98,6 +104,8 @@ int main (int argc, char** argv) {
 			 c_iter != axiomSetNames.end(); ++c_iter) {
 			asNames.push_back(*c_iter);
 		}
+
+		std::cout << "Loading axiom sets from directory: " << axiomSetBaseDir << std::endl;
 
 		fuzzyMultiDataExtAlgorithm.loadAxiomSetsFromXml(asNames);
 
