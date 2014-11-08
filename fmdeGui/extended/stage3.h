@@ -30,6 +30,7 @@ public:
 public slots:
 //	void treeItemClicked(QTreeWidgetItem *item);
 	void loadAS();
+	void showPlot();
 	
 private:
     Ui::stage3Class ui;
@@ -41,7 +42,7 @@ private:
 	void init();
 	void buildTree();
 	
-	AxiomLib::AxiomExprSet loadAS(const QString& fileName);
+	AxiomLib::AxiomExprSetPlus loadAS(const QString& fileName);
 
 };
 

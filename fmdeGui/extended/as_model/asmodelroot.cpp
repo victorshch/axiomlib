@@ -16,7 +16,21 @@ ASModelRoot::ASModelRoot(ManagedFuzzyDataController *controller)
 void ASModelRoot::addAxiomSet(AxiomLib::AxiomExprSetPlus &as) {
 	addChild(
 		new ASModelAxiomSet(this, as)
-	);	
+				);
+}
+
+AxiomLib::AxiomExprSetPlus ASModelRoot::getAxiomSet(int row) const
+{
+	if(row < 0 || row >= childCount()) {
+		return AxiomLib::AxiomExprSetPlus();
+	}
+
+	ASModelAxiomSet* axiomSetNode = dynamic_cast<ASModelAxiomSet*>(child(row));
+	if(!axiomSetNode) {
+		return AxiomLib::AxiomExprSetPlus();
+	}
+
+	return axiomSetNode->axiomSet();
 }
 
 void ASModelRoot::clear() {

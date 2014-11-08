@@ -42,6 +42,8 @@ Index makeIndex(int i, int j, int k, int l);
 
 Index makeIndex(int i, int j);
 
+Index makeIndex(int i);
+
 /*
 
 class Index;

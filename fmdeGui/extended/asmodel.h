@@ -21,6 +21,8 @@ public:
 
 	void addAxiomSet(AxiomLib::AxiomExprSetPlus& as);
 	void clear();
+
+	AxiomLib::AxiomExprSetPlus getAxiomSet(int row);
 signals:
 
 public slots:

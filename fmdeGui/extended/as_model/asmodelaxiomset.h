@@ -25,6 +25,7 @@ public:
     ASModelAxiomSet(ASModelTreeItem * parent, AxiomLib::AxiomExprSetPlus &as);
 	
 	AxiomLib::AxiomExprSetPlus &axiomSet() { return as; }
+	AxiomLib::AxiomExprSetPlus axiomSet() const { return as; }
 	
 	virtual ASModelTreeItem *child(int row) const;
 	virtual int childCount() const;

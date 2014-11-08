@@ -26,3 +26,9 @@ std::ostream& operator<<(std::ostream& ostr, const Index& index) {
 	ostr<<")";
 	return ostr;
 }
+
+
+Index makeIndex(int i)
+{
+	return makeIndex(i, -1);
+}

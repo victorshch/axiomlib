@@ -52,3 +52,8 @@ void ASModel::clear() {
 	root()->clear();
 	endResetModel();
 }
+
+AxiomLib::AxiomExprSetPlus ASModel::getAxiomSet(int row)
+{
+	return root()->getAxiomSet(row);
+}

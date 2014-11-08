@@ -28,6 +28,8 @@ public:
     void addDotPlot(const MarkupQwtAdapter & adapter,
     		QColor color,
     		const QString &name = QString(), bool addToLegend = false);
+
+	void addMarking(const std::vector<int>& marking);
 	
 	void adjustMarkers(int left, int right);
 
@@ -37,8 +39,15 @@ public:
 
     void commit();
 	void clear();
+
+	QwtDoubleRect boundingRect() const;
 	
-	
+public slots:
+	void zoom(const QwtDoubleRect& rect);
+
+signals:
+	void zoomed(const QwtDoubleRect& rect);
+
 protected:
     void resizeEvent(QResizeEvent * event);
 private:
@@ -49,6 +58,8 @@ private:
 	QwtPlotMarker *marker1, *marker2;
 
 	QwtPlotZoomer *zoomer;
+
+	QwtDoubleRect mBoundingRect;
 	
     void setupPlot(const QwtDoubleRect & rect);
 	void resetPlot();

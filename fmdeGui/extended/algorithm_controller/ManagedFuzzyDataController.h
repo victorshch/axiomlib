@@ -52,6 +52,8 @@ class ManagedFuzzyDataController {
 	char** argv;
 	int size, rank;
 
+	std::string workDir;
+
 	int stage;
 	
 	mutable int numDimensions_;
@@ -128,6 +130,8 @@ public:
 	int getStage() const { return stage; }
 	//void nextStage() { stage++; }
 	void setStage(int newStage) { stage = newStage; }
+
+	std::string getWorkDir() const { return workDir; }
 };
 
 template<class ForwardIterator, class ConvertFunctor>

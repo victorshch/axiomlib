@@ -113,6 +113,27 @@ void VectorPlot::addDotPlot(const MarkupQwtAdapter&adapter,
 	legend->insert(curve, item);
 }
 
+void VectorPlot::addMarking(const std::vector<int> &marking)
+{
+	QwtDoubleRect boundingRect(0, 1, marking.size() - 1, 2);
+
+	setupPlot(boundingRect);
+
+	// this is gonna be slow...
+	for(unsigned i = 0; i < marking.size(); ++i) {
+		QwtPlotMarker* marker = new QwtPlotMarker();
+		QwtText text;
+		text.setText(QString::number(marking[i]));
+
+		marker->setLabel(text);
+
+		marker->setXValue((double)i);
+		marker->setYValue(0.0);
+
+		marker->attach(plot);
+	}
+}
+
 void VectorPlot::setupPlot(const QwtDoubleRect &rect) {
 	QwtScaleDiv *hDiv = plot->axisScaleDiv(QwtPlot::xBottom);
 	QwtScaleDiv *vDiv = plot->axisScaleDiv(QwtPlot::yLeft);
@@ -130,6 +151,16 @@ void VectorPlot::setupPlot(const QwtDoubleRect &rect) {
 #endif
 	plot->setAxisScale(QwtPlot::xBottom, lLimit, rLimit);
 	plot->setAxisScale(QwtPlot::yLeft, bLimit, tLimit);
+
+	double xMargin = plot->invTransform(QwtPlot::xBottom, plot->margin());
+	double yMargin = plot->invTransform(QwtPlot::yLeft, plot->margin());
+	mBoundingRect = QwtDoubleRect(QwtDoublePoint(lLimit - xMargin, tLimit + yMargin),
+								  QwtDoublePoint(rLimit + xMargin, bLimit - yMargin));
+
+	qDebug() << "xMargin:" << xMargin;
+	qDebug() << "yMargin:" << yMargin;
+	qDebug() << "mBoundingRect:" << mBoundingRect;
+//	mBoundingRect = rect;
 }
 
 void VectorPlot::resetPlot() {
@@ -150,6 +181,9 @@ void VectorPlot::commit() {
 		zoomer->setRubberBandPen(QColor(Qt::green));
 		zoomer->setTrackerMode(QwtPicker::ActiveOnly);
 		zoomer->setTrackerPen(QColor(Qt::white));
+
+		connect(zoomer, SIGNAL(zoomed(QwtDoubleRect)), this, SIGNAL(zoomed(QwtDoubleRect)));
+
 		zoomer->setEnabled(true);			
 	}
 	
@@ -161,6 +195,18 @@ void VectorPlot::clear() {
 	delete zoomer;
 	zoomer = 0;
 	resetPlot();
+}
+
+QwtDoubleRect VectorPlot::boundingRect() const
+{
+	return mBoundingRect;
+}
+
+void VectorPlot::zoom(const QwtDoubleRect &rect)
+{
+	if(zoomer) {
+		zoomer->zoom(rect);
+	}
 }
 
 void VectorPlot::resizeEvent(QResizeEvent * event) {

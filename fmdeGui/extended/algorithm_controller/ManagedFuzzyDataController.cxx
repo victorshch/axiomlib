@@ -32,9 +32,13 @@
 
 #include "../utilities.h"
 #include "../QtGuiException.h"
-//#include "elem_conditions/Export.h"
+#include "elem_conditions/Export.h"
+#include "elem_conditions/Export.cxx"
 
 #include "Logger.h"
+
+#include "elem_conditions/Export.h"
+
 
 BOOST_CLASS_EXPORT_GUID(ManagedFuzzyDataStage0, "ManagedFuzzyDataStage0");
 BOOST_CLASS_EXPORT_GUID(ManagedFuzzyDataStage1, "ManagedFuzzyDataStage1");
@@ -85,6 +89,12 @@ void ManagedFuzzyDataController::init(const std::string &workDir) {
 	fuzzyMultiDataLearnAlgorithm.initFromEnv(env);
 	fuzzyMultiDataLearnAlgorithm.setComments(true);	
 	AxiomLib::Logger::getInstance()->setDebug(true);
+
+	this->workDir = workDir;
+
+	stage1.initClipping();
+	stage2.initClipping();
+	stage3.initClipping();
 }
 
 void ManagedFuzzyDataController::recomputeMatterECFunc() {
@@ -145,9 +155,6 @@ void ManagedFuzzyDataController::runLevel1() {
 
 void ManagedFuzzyDataController::createStage1() {
 	stage1.init();
-	stage1.initClipping();
-	
-	//this->recomputeMatterECFunc();
 }
 
 void ManagedFuzzyDataController::applyStage1() {
@@ -163,7 +170,6 @@ void ManagedFuzzyDataController::runLevel2() {
 
 void ManagedFuzzyDataController::createStage2() {
 	stage2.init();
-	stage2.initClipping();
 }
 
 void ManagedFuzzyDataController::applyStage2() {
@@ -180,7 +186,6 @@ void ManagedFuzzyDataController::runLevel3() {
 
 void ManagedFuzzyDataController::createStage3() {
 	stage3.init();
-	stage3.initClipping();
 }
 
 void ManagedFuzzyDataController::applyStage3() {

@@ -3,6 +3,8 @@
 #include <QDir>
 #include <QDebug>
 
+#include <QSettings>
+
 #include "AxiomLibException.h"
 
 #include "extended/MainWindow.h"
@@ -62,20 +64,31 @@ void getDirectoryAndFile(QString src, QString& dir, QString& file) {
 
 int main(int argc, char *argv[])
 {
-	AxiomLibGuiApplication a(argc, argv);
+	QLocale::setDefault(QLocale::c());
+//	AxiomLibGuiApplication a(argc, argv);
+	QApplication a(argc, argv);
 	
 	try {		
 		QStringList args = QApplication::arguments();
 		args.removeAt(0);
 
+		QSettings settings("fmdegui_settings.ini", QSettings::IniFormat);
+
 		ConfigSelectWidget configSelect;
 		// TODO set default values for workdir, dataset, config file name
-		configSelect.setWorkdir(QDir::currentPath());
+		QString workDir = settings.value("WorkingDirectory", QDir::currentPath()).toString();
+		configSelect.setWorkdir(workDir);
+		configSelect.setDataset(settings.value("Dataset", QString()).toString());
+		configSelect.setConfigFile(settings.value("ConfigFile", QString()).toString());
 		configSelect.exec();
 
 		if(configSelect.result() == QDialog::Rejected) {
 			return 0;
 		}
+
+		settings.setValue("WorkingDirectory", configSelect.workdir());
+		settings.setValue("Dataset", configSelect.dataset());
+		settings.setValue("ConfigFile", configSelect.configFile());
 
 		args << "ConfigFile" << configSelect.configFile();
 		QString dataSetDir;
@@ -87,7 +100,7 @@ int main(int argc, char *argv[])
 		MainWindowContent* mainWindowContent = new MainWindowContent(0, 
 																	 args,
 																	 configSelect.workdir());
-		
+
 		MainWindow* mainWindow = new MainWindow(0, (mainWindowContent->controller));
 		mainWindow->setAttribute(Qt::WA_DeleteOnClose, true);
 		//mainWindow->setWindowModality(Qt::WindowModal);

@@ -13,8 +13,8 @@
 
 #include "algorithm_controller/ManagedFuzzyDataController.h"
 
-PlotBrowser::PlotBrowser(ManagedFuzzyDataController *controller, int stage, QWidget *parent) 
-	: controller(controller), stage(stage), QWidget(parent) {
+PlotBrowser::PlotBrowser(ManagedFuzzyDataController *controller, int stage, bool showMarking, QWidget *parent)
+	: controller(controller), stage(stage), mShowMarking(showMarking), mMarkingPlot(0), QWidget(parent) {
 	ui.setupUi(this);
 	
 	qDebug()<<"entering PlotBrowser::PlotBrowser()";
@@ -36,39 +36,30 @@ PlotBrowser::PlotBrowser(ManagedFuzzyDataController *controller, int stage, QWid
 	std::vector<int> paramNums;
 	controller->fuzzyMultiDataLearnAlgorithm.getDataSet().getParamNums(paramNums);
 	
-	//qDebug()<<"Plotbrowser - num dimensions: "<<controller->numDimensions();
-	
 	// проход по размерностям
 	for(int i = 0; i < paramNums.size(); i++) {
 		VectorPlot * vectorPlot = new VectorPlot(0, paramNames[paramNums[i]].c_str(), legend);
 		ui.verticalLayout_plots->addWidget(vectorPlot);
 
 		vectorPlotList.push_back(vectorPlot);
+		connect(vectorPlot, SIGNAL(zoomed(QwtDoubleRect)), this, SLOT(onZoomed(QwtDoubleRect)));
+	}
+
+	if(mShowMarking) {
+		mMarkingPlot = new VectorPlot(0, "Marking");
+		mMarkingPlot->setMinimumHeight(100);
+		ui.verticalLayout_plots->addWidget(mMarkingPlot);
+
+		connect(mMarkingPlot, SIGNAL(zoomed(QwtDoubleRect)), this, SLOT(onZoomed(QwtDoubleRect)));
 	}
 	
 	connect(intervalWidget, SIGNAL(intervalChanged(int,int)), this, SLOT(adjustInterval(int,int)));
-	connect(trajSelectGroupBox, SIGNAL(trajSelected(int,int,int)), this, SLOT(replot()));
-	
+	connect(trajSelectGroupBox, SIGNAL(trajSelected(int,int,int)), this, SLOT(replot()));	
 }
 
 void PlotBrowser::addCondition(PCondition condition) {
 	conditionList.push_back(condition);
 }
-
-//class FindById {
-//	Index *id;
-//public:
-//	FindById(Index *id): id(id) {}
-//	bool operator()(const PCondition &condition) {
-//		return condition->identifier()->compare(id);
-//	}
-//};
-
-//void PlotBrowser::removeCondition(Index *identifier) {
-//	QList<PCondition>::iterator it = 
-//			std::remove_if(conditionList.begin(), conditionList.end(), FindById(identifier));
-//	conditionList.erase(it, conditionList.end());
-//}
 
 void PlotBrowser::replot() const {
 	legend->clear();
@@ -99,12 +90,29 @@ void PlotBrowser::replot() const {
 	// Отмечаем выполнение условий
 	ColorManager colorManager;
 	std::vector<int> markup;
+	std::vector<int> marking;
+	if(multiTS->size() > 0) {
+		marking.resize((*multiTS)[0].size(), 0);
+	} else {
+		qDebug() << "PlotBrowser::replot(): Warning: empty MultiTS";
+	}
 	for(int i = 0; i < conditionList.size(); i++) {
 		Condition *currentCondition = conditionList[i].get();
-		if(currentClass >= 0 && currentCondition->abnormalType() != currentClass) {
+		if(currentClass >= 0
+				&& currentCondition->abnormalType() != currentClass
+				// if condition's abnormal type is -1, we show it on all trajectories
+				&& currentCondition->abnormalType() != -1) {
 			continue;
 		}
 		int numSat = currentCondition->markUp(*multiTS, markup);
+		if(marking.size() != markup.size()) {
+			marking.resize(markup.size());
+		}
+		for(unsigned j = 0; j < marking.size(); ++j) {
+			if(markup[j]) {
+				marking[j] = i + 1;
+			}
+		}
 		QString nameExt = QString("%1 [%2]").arg(currentCondition->name().c_str(), QString::number(numSat));
 		for(std::set<int>::const_iterator it = currentCondition->dimensions().begin();
 			it != currentCondition->dimensions().end(); ++it) {
@@ -125,10 +133,18 @@ void PlotBrowser::replot() const {
 		}
 	}
 	
+	if(mShowMarking) {
+		mMarkingPlot->addMarking(marking);
+	}
+
 	legend->commit();
 	
 	for(int i = 0; i < vectorPlotList.size(); i++) {
 		vectorPlotList[i]->commit();
+	}
+
+	if(mShowMarking) {
+		mMarkingPlot->commit();
 	}
 	
 	AxiomLib::IntInterval range = controller->getRange(currentClass, currentMultiTS);
@@ -136,7 +152,50 @@ void PlotBrowser::replot() const {
 	
 	AxiomLib::IntInterval interval = controller->getStage(stage).clippingIntervals->
 									 getClippingInterval(currentClass, currentMultiTS);
-	intervalWidget->setInterval(interval.left(), interval.right());	
+	intervalWidget->setInterval(interval.left(), interval.right());
+}
+
+#define EPS 0.00001
+#define ISZERO(d) (d<EPS && d>-EPS)
+
+void PlotBrowser::onZoomed(const QwtDoubleRect &rect)
+{
+	VectorPlot* source = dynamic_cast<VectorPlot*>(sender());
+	if(!source) {
+		qDebug() << "PlotBrowser::onZoomed(): invalid sender";
+		return;
+	}
+
+	qDebug() << "Entering PlotBrowser::onZoomed(), rect: " << rect;
+
+	QwtDoubleRect normalizedRect = rect;
+
+	normalizedRect.setTop(ISZERO(source->boundingRect().top()) ?
+							0 :
+							rect.top() / source->boundingRect().top());
+	normalizedRect.setBottom(ISZERO(source->boundingRect().bottom()) ?
+							 0 :
+							 rect.bottom() / source->boundingRect().bottom());
+
+	foreach(VectorPlot* vectorPlot, vectorPlotList) {
+		if(vectorPlot != sender()) {
+			QwtDoubleRect scaledRect = normalizedRect;
+			scaledRect.setBottom(scaledRect.bottom() * vectorPlot->boundingRect().bottom());
+			scaledRect.setTop(scaledRect.top() * vectorPlot->boundingRect().top());
+			vectorPlot->blockSignals(true);
+			vectorPlot->zoom(scaledRect);
+			vectorPlot->blockSignals(false);
+		}
+	}
+
+	if(mMarkingPlot && sender() != mMarkingPlot) {
+		QwtDoubleRect scaledRect = normalizedRect;
+		scaledRect.setBottom(-1);
+		scaledRect.setTop(1);
+		mMarkingPlot->blockSignals(true);
+		mMarkingPlot->zoom(scaledRect);
+		mMarkingPlot->blockSignals(false);
+	}
 }
 
 void PlotBrowser::setInterval(int left, int right) {

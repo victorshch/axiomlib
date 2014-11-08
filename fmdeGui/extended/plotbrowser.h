@@ -20,7 +20,7 @@ class PlotBrowser : public QWidget
     Q_OBJECT
 
 public:	
-	PlotBrowser(ManagedFuzzyDataController *controller, int stage, QWidget *parent = 0);
+	PlotBrowser(ManagedFuzzyDataController *controller, int stage, bool showMarking = false, QWidget *parent = 0);
 	
 	void addCondition(PCondition condition);
 	
@@ -32,6 +32,10 @@ public slots:
 	
 signals:
 	void intervalChanged(int left, int right);
+
+private slots:
+	void onZoomed(const QwtDoubleRect& rect);
+
 private:
     Ui::PlotBrowserClass ui;
 
@@ -40,6 +44,7 @@ private:
 	int stage;
 	
 	QList<VectorPlot *> vectorPlotList;
+	VectorPlot* mMarkingPlot;
 	QList<PCondition> conditionList;
 	
 	IntervalWidget *intervalWidget;
@@ -53,6 +58,8 @@ private:
 	SetLegend * legend;
 	
 	QScrollArea *scrollAreaLegend;
+
+	bool mShowMarking;
 private slots:
 	void adjustInterval(int left, int right);
 	

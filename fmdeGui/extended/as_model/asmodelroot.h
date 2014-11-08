@@ -22,6 +22,8 @@ public:
     ASModelRoot(ManagedFuzzyDataController *m_controller);
 	
 	void addAxiomSet(AxiomLib::AxiomExprSetPlus& as);
+
+	AxiomLib::AxiomExprSetPlus getAxiomSet(int row) const;
 	
 	void clear();
 	
