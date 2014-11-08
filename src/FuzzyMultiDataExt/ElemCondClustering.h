@@ -3,7 +3,7 @@
 #ifndef FUZZYMULTIDATAEXT_EC_CLUSTERING_ELEM_COND_H
 #define FUZZYMULTIDATAEXT_EC_CLUSTERING_ELEM_COND_H
 
-#include "../ElemCondPlus.h"
+#include "../elem_conditions/ElemCondition.h"
 #include "ClusteringFeatures/ClusteringFeature.h"
 #include "ClusteringRealizations/ClusteringModel.h"
 
