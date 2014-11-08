@@ -13,10 +13,10 @@ include(../AxiomLibConfig.pri)
 
 ### ������������ - release ��� debug ###
 
-CONFIG += release
-CONFIG -= debug
-#CONFIG += debug
-#CONFIG -= release
+#CONFIG += release
+#CONFIG -= debug
+CONFIG += debug
+CONFIG -= release
 
 unix {
 #    QMAKE_CC = gcc-4.5

@@ -3,6 +3,8 @@
 # -------------------------------------------------
 
 CONFIG += static
+CONFIG -= release
+CONFIG += debug
 
 include(AxiomLibConfig.pri)
 
