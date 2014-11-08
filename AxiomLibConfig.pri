@@ -48,7 +48,11 @@ unix {
 linux-icc-64|linux-icc {
         AXIOMLIB_LIB = /home/wictor/Projects/axiomlib/release/libAxiomLib.a
 } else {
-        AXIOMLIB_LIB = /home/wictor/Projects/axiomlib/release/libAxiomLib.a
+release {
+        AXIOMLIB_LIB = /home/wictor/projects/axiomlib/release/libAxiomLib.a
+} debug {
+		AXIOMLIB_LIB = /home/wictor/projects/axiomlib/debug/libAxiomLib.a
+}
 }
         BOOST_LIBDIR = /home/wictor/boost_1_46_1/lib
 
