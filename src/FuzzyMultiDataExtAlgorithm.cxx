@@ -503,7 +503,7 @@ void FuzzyMultiDataExtAlgorithm::loadAxiomSetsFromXml(const std::string &dirName
 		}
 		else
 		{
-			throw AxiomLibException("ECStatistics:initFromFile(): Couldn't open file '"
+			throw AxiomLibException("FuzzyMultiDataExtAlgorithm::loadAxiomSetsFromXml(): Couldn't open file '"
 									+ currentFileName + "' for reading");
 		}
 	}
