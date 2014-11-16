@@ -14,8 +14,6 @@
 #include "boost/serialization/access.hpp"
 #include "boost/serialization/nvp.hpp"
 
-
-
 namespace AxiomLib {
 
 namespace FuzzyMultiDataExt {	
@@ -51,9 +49,11 @@ private:
 	template<class Archive>
 	void serialize(Archive & archive, const unsigned int /*version*/)
 	{
-		archive & BOOST_SERIALIZATION_BASE_OBJECT_NVP(ClusteringModel);
-		centroids.write(archive);
+		archive & BOOST_SERIALIZATION_BASE_OBJECT_NVP(ClusteringModel);		
+		archive & BOOST_SERIALIZATION_NVP(iters);
+		archive & BOOST_SERIALIZATION_NVP(centroids);
 	}
+
 
 	shark::Centroids centroids;
 	std::vector<shark::RealVector> data;

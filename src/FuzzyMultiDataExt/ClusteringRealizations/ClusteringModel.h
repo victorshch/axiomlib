@@ -46,7 +46,7 @@ private:
 	template<class Archive>
 	void serialize(Archive & archive, const unsigned int /*version*/)
 	{
-		
+		archive & BOOST_SERIALIZATION_NVP(k);
 	}
 };
 
@@ -56,4 +56,4 @@ private:
 
 BOOST_SERIALIZATION_ASSUME_ABSTRACT(AxiomLib::ClusteringModel);
 
-#endif //FUZZYMULTIDATAEXT_CM_CLUSTERINGMODEL_H
+#endif //FUZZYMULTIDATAEXT_CM_CLUSTERINGMODEL_Hb

@@ -9,6 +9,7 @@
 #include "AxiomLibException.h"
 #include "FuzzyMultiDataExtAlgorithm.h"
 #include "Check.h"
+#include "Check.cxx"
 
 #include <iostream>
 #include <time.h>
