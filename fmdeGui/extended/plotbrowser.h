@@ -23,6 +23,8 @@ public:
 	PlotBrowser(ManagedFuzzyDataController *controller, int stage, bool showMarking = false, QWidget *parent = 0);
 	
 	void addCondition(PCondition condition);
+
+	void setAxiomSet(AxiomLib::AxiomExprSetPlus as);
 	
 	void setInterval(int left, int right);
 	
@@ -45,6 +47,9 @@ private:
 	
 	QList<VectorPlot *> vectorPlotList;
 	VectorPlot* mMarkingPlot;
+
+	QList<VectorPlot *> mAbnormalMarkingPlots;
+
 	QList<PCondition> conditionList;
 	
 	IntervalWidget *intervalWidget;
@@ -60,6 +65,8 @@ private:
 	QScrollArea *scrollAreaLegend;
 
 	bool mShowMarking;
+
+	AxiomLib::AxiomExprSetPlus mAs;
 private slots:
 	void adjustInterval(int left, int right);
 	

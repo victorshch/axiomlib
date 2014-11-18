@@ -25,7 +25,7 @@ PlotBrowser::PlotBrowser(ManagedFuzzyDataController *controller, int stage, bool
 	
 	qDebug()<<"creating legend";
 	legend = new SetLegend(0);
-	ui.verticalLayout_legend->addWidget(legend);
+	ui.verticalLayout_legend->addWidget(legend, 1);
 
 	qDebug()<<"creating intervalwidget";
 	intervalWidget = new IntervalWidget(0, 20, 0);
@@ -51,6 +51,19 @@ PlotBrowser::PlotBrowser(ManagedFuzzyDataController *controller, int stage, bool
 		ui.verticalLayout_plots->addWidget(mMarkingPlot);
 
 		connect(mMarkingPlot, SIGNAL(zoomed(QwtDoubleRect)), this, SLOT(onZoomed(QwtDoubleRect)));
+
+		std::vector<std::string> classNames = controller->fuzzyMultiDataLearnAlgorithm.getDataSet().getClassNames();
+
+		for(unsigned i = 0; i < classNames.size(); ++i) {
+			VectorPlot* abnormalMarkingPlot = new VectorPlot(0,
+				QString("Marking for '%1'").arg(QString::fromStdString(classNames[i])));
+			abnormalMarkingPlot->setMinimumHeight(100);
+
+			mAbnormalMarkingPlots.append(
+				abnormalMarkingPlot
+				);
+			ui.verticalLayout_legend->addWidget(abnormalMarkingPlot, 0);
+		}
 	}
 	
 	connect(intervalWidget, SIGNAL(intervalChanged(int,int)), this, SLOT(adjustInterval(int,int)));
@@ -59,6 +72,17 @@ PlotBrowser::PlotBrowser(ManagedFuzzyDataController *controller, int stage, bool
 
 void PlotBrowser::addCondition(PCondition condition) {
 	conditionList.push_back(condition);
+}
+
+void PlotBrowser::setAxiomSet(AxiomLib::AxiomExprSetPlus as)
+{
+	mAs = as;
+	for(unsigned i = 0; i < as.axioms.size(); ++i) {
+		PCondition condition = PCondition(new ConditionAxiom(*as.axioms[i],
+															 makeIndex(i+1),
+															 -1));
+		addCondition(condition);
+	}
 }
 
 void PlotBrowser::replot() const {
@@ -153,6 +177,16 @@ void PlotBrowser::replot() const {
 	AxiomLib::IntInterval interval = controller->getStage(stage).clippingIntervals->
 									 getClippingInterval(currentClass, currentMultiTS);
 	intervalWidget->setInterval(interval.left(), interval.right());
+
+	if(mShowMarking && mAs.markUps.size()) {
+		for(int i = 0; i < mAbnormalMarkingPlots.size(); ++i) {
+			mAbnormalMarkingPlots[i]->clear();
+			mAbnormalMarkingPlots[i]->addMarking(
+						mAs.markUps[i]
+						);
+			mAbnormalMarkingPlots[i]->commit();
+		}
+	}
 }
 
 #define EPS 0.00001

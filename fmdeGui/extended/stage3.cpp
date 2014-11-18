@@ -156,12 +156,7 @@ void Stage3::showPlot()
 	QModelIndex currentIndex = ui.treeView_AxiomSets->currentIndex();
 	if(currentIndex.isValid() && !currentIndex.parent().isValid()) {
 		AxiomLib::AxiomExprSetPlus as = m_model->getAxiomSet(currentIndex.row());
-		for(int i = 0; i < as.axioms.size(); ++i) {
-			PCondition condition = PCondition(new ConditionAxiom(*as.axioms[i],
-																 makeIndex(i+1),
-																 -1));
-			plotBrowser->addCondition(condition);
-		}
+		plotBrowser->setAxiomSet(as);
 	}
 
 	plotBrowser->replot();
