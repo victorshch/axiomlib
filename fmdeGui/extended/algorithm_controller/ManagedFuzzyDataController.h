@@ -132,6 +132,8 @@ public:
 	void setStage(int newStage) { stage = newStage; }
 
 	std::string getWorkDir() const { return workDir; }
+
+	boost::shared_ptr<AxiomLib::ReducedRecognizer> createReducedRecognizer() const;
 };
 
 template<class ForwardIterator, class ConvertFunctor>

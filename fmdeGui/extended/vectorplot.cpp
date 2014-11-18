@@ -134,6 +134,25 @@ void VectorPlot::addMarking(const std::vector<int> &marking)
 	}
 }
 
+void VectorPlot::addPrelabelingPlot(const std::vector<double> &preLabeling)
+{
+	QwtDoubleRect boundingRect(0, 1, preLabeling.size() - 1, 2);
+
+	setupPlot(boundingRect);
+
+	QwtPlotCurve* curve = new QwtPlotCurve;
+
+	QwtArray<double> xData, yData;
+	for(unsigned i = 0; i < preLabeling.size(); ++i) {
+		xData.push_back(i);
+		yData.push_back(preLabeling[i] >= 0 ? preLabeling[i] : 1);
+	}
+
+	curve->setData(xData, yData);
+
+	curve->attach(plot);
+}
+
 void VectorPlot::setupPlot(const QwtDoubleRect &rect) {
 	QwtScaleDiv *hDiv = plot->axisScaleDiv(QwtPlot::xBottom);
 	QwtScaleDiv *vDiv = plot->axisScaleDiv(QwtPlot::yLeft);

@@ -50,6 +50,8 @@ private:
 
 	QList<VectorPlot *> mAbnormalMarkingPlots;
 
+	QList<VectorPlot *> mPrelabelingPlots;
+
 	QList<PCondition> conditionList;
 	
 	IntervalWidget *intervalWidget;

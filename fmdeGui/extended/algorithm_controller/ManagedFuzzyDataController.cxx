@@ -35,6 +35,8 @@
 #include "elem_conditions/Export.h"
 #include "elem_conditions/Export.cxx"
 
+#include "ReducedRecognizerFactory.h"
+
 #include "Logger.h"
 
 #include "elem_conditions/Export.h"
@@ -366,6 +368,19 @@ void ManagedFuzzyDataController::getMultiTS(int classNo, int tsNo,
 	qDebug()<<"Performing apply...";
 	intervals.apply(dataSet, AxiomLib::FuzzyDataSet::Reference);
 	qDebug()<<"Apply done.";
+}
+
+boost::shared_ptr<AxiomLib::ReducedRecognizer> ManagedFuzzyDataController::createReducedRecognizer() const
+{
+	AxiomLib::ReducedRecognizerFactory factory;
+	std::string name;
+	env.getMandatoryParamValue(name, "ReducedRecognizer");
+	AxiomLib::ReducedRecognizer* result = factory.create(name);
+	if(!result) {
+		throw std::runtime_error("No recognizer with name " + name);
+	}
+	result->setParamsFromEnv(env);
+	return boost::shared_ptr<AxiomLib::ReducedRecognizer>(result);
 }
 
 //void ManagedFuzzyDataController::getTS(int classNo, int tsNo, int dimensionNo, std::vector<double> &ts) {

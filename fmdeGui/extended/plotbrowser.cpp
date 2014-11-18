@@ -64,6 +64,16 @@ PlotBrowser::PlotBrowser(ManagedFuzzyDataController *controller, int stage, bool
 				);
 			ui.verticalLayout_legend->addWidget(abnormalMarkingPlot, 0);
 		}
+
+		for(unsigned i = 0; i < classNames.size(); ++i) {
+			VectorPlot* vectorPlot = new VectorPlot(0,
+				QString("Prelabeling '%1'").arg(QString::fromStdString(classNames[i])));
+
+			mPrelabelingPlots.append(vectorPlot);
+			ui.verticalLayout_plots->addWidget(vectorPlot);
+
+			connect(vectorPlot, SIGNAL(zoomed(QwtDoubleRect)), this, SLOT(onZoomed(QwtDoubleRect)));
+		}
 	}
 	
 	connect(intervalWidget, SIGNAL(intervalChanged(int,int)), this, SLOT(adjustInterval(int,int)));
@@ -185,6 +195,16 @@ void PlotBrowser::replot() const {
 						mAs.markUps[i]
 						);
 			mAbnormalMarkingPlots[i]->commit();
+		}
+
+		boost::shared_ptr<AxiomLib::ReducedRecognizer> recognizer = controller->createReducedRecognizer();
+
+		for(int i = 0; i < mPrelabelingPlots.size(); ++i) {
+			std::vector<double> prelabeling;
+			recognizer->run(marking, mAs.markUps[i], prelabeling);
+
+			mPrelabelingPlots[i]->clear();
+			mPrelabelingPlots[i]->addPrelabelingPlot(prelabeling);
 		}
 	}
 }

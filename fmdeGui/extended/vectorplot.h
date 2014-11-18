@@ -31,6 +31,8 @@ public:
 
 	void addMarking(const std::vector<int>& marking);
 	
+	void addPrelabelingPlot(const std::vector<double>& preLabeling);
+
 	void adjustMarkers(int left, int right);
 
     void setLegend(SetLegend * newLegend) {
