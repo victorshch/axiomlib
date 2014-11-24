@@ -7,4 +7,5 @@ SUBDIRS = test_axioms test_base_genetics test_data_set \
     test_fuzzy_multi_data test_neural test_precision \
     test_reading_ec test_start test_template \
     test_golden_section \
-    test-dtw
+    test-dtw \
+    test_serialization
