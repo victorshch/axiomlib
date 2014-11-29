@@ -33,6 +33,8 @@ public:
 	
 	void addPrelabelingPlot(const std::vector<double>& preLabeling);
 
+	void addClippingMarkers();
+	void addHorizontalLine(double value, QString label);
 	void adjustMarkers(int left, int right);
 
     void setLegend(SetLegend * newLegend) {

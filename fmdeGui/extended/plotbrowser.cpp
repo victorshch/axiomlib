@@ -119,6 +119,7 @@ void PlotBrowser::replot() const {
 						paramNums[i]
 						)
 				);
+		currentPlot->addClippingMarkers();
 	}
 	
 	// Отмечаем выполнение условий
@@ -205,6 +206,10 @@ void PlotBrowser::replot() const {
 
 			mPrelabelingPlots[i]->clear();
 			mPrelabelingPlots[i]->addPrelabelingPlot(prelabeling);
+			double precision;
+			if(!controller->env.getDoubleParamValue(precision, "precision")) {
+				mPrelabelingPlots[i]->addHorizontalLine(precision, "Precision");
+			}
 		}
 	}
 }

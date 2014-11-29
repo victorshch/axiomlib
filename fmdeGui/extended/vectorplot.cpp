@@ -48,13 +48,11 @@ VectorPlot::VectorPlot(QWidget *parent, const QString &title, SetLegend * extern
 	marker1->setLineStyle(QwtPlotMarker::VLine);
 	marker1->setLinePen(pen);
 	marker1->setXValue(0);
-	marker1->attach(plot);
 	
 	marker2 = new QwtPlotMarker();
 	marker2->setLineStyle(QwtPlotMarker::VLine);
 	marker2->setLinePen(pen);
-	marker2->setXValue(0);
-	marker2->attach(plot);	
+	marker2->setXValue(0);	
 
 	zoomer = 0;
 }
@@ -153,6 +151,33 @@ void VectorPlot::addPrelabelingPlot(const std::vector<double> &preLabeling)
 	curve->attach(plot);
 }
 
+void VectorPlot::addClippingMarkers()
+{
+	marker1->attach(plot);
+	marker2->attach(plot);
+}
+
+void VectorPlot::addHorizontalLine(double value, QString labelText)
+{
+	QPen pen(QColor(0, 0, 255));
+
+	QwtPlotMarker* horizontalLineMarker = new QwtPlotMarker();
+	horizontalLineMarker->setLineStyle(QwtPlotMarker::HLine);
+	horizontalLineMarker->setLinePen(pen);
+	horizontalLineMarker->setYValue(value);
+
+	QwtText label;
+	label.setText(labelText);
+	QFont font = label.font();
+	font.setPointSize(9);
+	label.setFont(font);
+
+	horizontalLineMarker->setLabel(label);
+	horizontalLineMarker->setLabelAlignment(Qt::AlignTop | Qt::AlignLeft);
+
+	horizontalLineMarker->attach(plot);
+}
+
 void VectorPlot::setupPlot(const QwtDoubleRect &rect) {
 	QwtScaleDiv *hDiv = plot->axisScaleDiv(QwtPlot::xBottom);
 	QwtScaleDiv *vDiv = plot->axisScaleDiv(QwtPlot::yLeft);
@@ -210,7 +235,10 @@ void VectorPlot::commit() {
 }
 
 void VectorPlot::clear() {
+	marker1->detach();
+	marker2->detach();
 	plot->detachItems(QwtPlotItem::Rtti_PlotCurve);
+	plot->detachItems(QwtPlotItem::Rtti_PlotMarker);
 	delete zoomer;
 	zoomer = 0;
 	resetPlot();
