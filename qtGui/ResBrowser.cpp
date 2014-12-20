@@ -271,7 +271,7 @@ void ResBrowser::findAxiomSets(const std::string pathToDir) {
 		boost::filesystem::directory_iterator end_iter;
 		for ( boost::filesystem::directory_iterator dir_itr( fullPath ); dir_itr != end_iter; ++dir_itr ) {
 			if ( boost::filesystem::is_directory( *dir_itr ) ) {
-				curDirName = dir_itr->leaf();
+				curDirName = dir_itr->path().filename().c_str();
 				/*std::string::size_type ind = curDirName.find_first_not_of ("0123456789");
 				if ((ind != std::string::npos) && (ind != 0))
 					ind += 1;
@@ -282,12 +282,12 @@ void ResBrowser::findAxiomSets(const std::string pathToDir) {
 				// ищем файл с описанием системы аксиом
 				#if check_axiomSet_file_presence
 				for ( boost::filesystem::directory_iterator file_itr( fullPath ); file_itr != end_iter; ++file_itr ) {
-					curFileName = file_itr->leaf();
+					curFileName = file_itr->path().filename().c_str();
 					if (curFileName.find(fileNameLastHalf) == (curFileName.size() - fileNameLastHalf.size())) {
 						// Значит текущий файл - это файл с описанием системы аксиом 
 						curFileName = curFileName.substr(0, curFileName.size() - fileNameLastHalf.size());
 						if (curDirName == curFileName) {
-							addAxiomSetResults (dir_itr->string(), curDirName);
+							addAxiomSetResults (dir_itr->path().string(), curDirName);
 						}
 					}
 				}
@@ -364,7 +364,7 @@ void ResBrowser::loadContents (int index) {
 	for ( boost::filesystem::directory_iterator file_itr( path ); file_itr != end_iter; ++file_itr ) {
 		if ( boost::filesystem::is_directory (*file_itr) )
 			continue;
-		curFileName = file_itr->leaf();
+		curFileName = file_itr->path().filename().c_str();
 		if (curFileName.find(fileLastHalf) == (curFileName.size() - fileLastHalf.size())) {
 			// значит файл оканчивается как должен файл с рядами
 			if (curFileName.find(muFileFirstHalf) == 0) {

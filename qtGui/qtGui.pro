@@ -1,6 +1,6 @@
-# Файл проекта qtGui
+# О©╫О©╫О©╫О©╫ О©╫О©╫О©╫О©╫О©╫О©╫О©╫ qtGui
 
-# имя исполняемого файла
+# О©╫О©╫О©╫ О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫ О©╫О©╫О©╫О©╫О©╫
 TARGET = qtGui
 
 TEMPLATE = app
@@ -20,14 +20,12 @@ release {
 OBJECTS_DIR = ./obj_release/
 }
 
-DEFINES += "BOOST_FILESYSTEM_VERSION=2"
-
-# Включение файла, в котором задаются параметры include'ов и библиотек
+# О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫ О©╫О©╫О©╫О©╫О©╫, О©╫ О©╫О©╫О©╫О©╫О©╫О©╫О©╫ О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫ О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫ include'О©╫О©╫ О©╫ О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫
 include(../AxiomLibConfig.pri)
 #include(dkNoteDebug.pri)
 # include(dkNoteRelease.pri)
 
-### Конфигурация - release или debug ###
+### О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫ - release О©╫О©╫О©╫ debug ###
 
 #CONFIG += debug
 #CONFIG -= release
@@ -42,7 +40,7 @@ INCLUDEPATH += $$BOOST_INCLUDE \
 LIBS += $$BOOST_LIB \
     $$OTHER_LIB
 
-# Включение файла со списком файлов проекта
+# О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫ О©╫О©╫О©╫О©╫О©╫ О©╫О©╫ О©╫О©╫О©╫О©╫О©╫О©╫О©╫ О©╫О©╫О©╫О©╫О©╫О©╫ О©╫О©╫О©╫О©╫О©╫О©╫О©╫
 include(qtGui.pri)
 
 CONFIG -= release

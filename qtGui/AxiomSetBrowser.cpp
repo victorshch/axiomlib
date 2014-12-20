@@ -165,10 +165,10 @@ void AxiomSetBrowser::findAxiomSets(const std::string pathToAxiomSets) {
 		boost::filesystem::directory_iterator end_iter;
 		for ( boost::filesystem::directory_iterator dir_itr( fullPath ); dir_itr != end_iter; ++dir_itr ) {
 			if ( !boost::filesystem::is_directory( *dir_itr ) ) {
-                                curFileName = dir_itr->leaf();
+								curFileName = dir_itr->path().filename().c_str();
 				if (curFileName.find(fileNameLastHalf) == (curFileName.size() - fileNameLastHalf.size())) {
 					// Значит нашли необходимый файл - обрабатываем его содержимое
-					curFileName = (*dir_itr).string();
+					curFileName = (*dir_itr).path().string();
 					addAxiomSet (curFileName);
 				}
         	}
