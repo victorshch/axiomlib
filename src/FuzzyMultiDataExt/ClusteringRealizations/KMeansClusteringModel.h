@@ -3,11 +3,9 @@
 #ifndef FUZZYMULTIDATAEXT_CM_SHARKCLUSTERINGMODEL_H
 #define FUZZYMULTIDATAEXT_CM_SHARKCLUSTERINGMODEL_H
 
-
 #include <shark/Algorithms/Trainers/NormalizeComponentsUnitVariance.h> //normalize
 #include <shark/Algorithms/KMeans.h> //k-means algorithm
 #include <shark/Models/Clustering/HardClusteringModel.h>//model performing hard clustering of points
-#include <shark/Models/Normalizer.h>
 #include "ClusteringModel.h"
 #include "../../AxiomLibException.h"
 

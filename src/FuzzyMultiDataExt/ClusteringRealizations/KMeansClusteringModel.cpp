@@ -16,8 +16,6 @@ void KMeansClusteringModel::addElements(const vector<vector<double> >& elements)
 }
 
 void KMeansClusteringModel::makeClustering(){
-	Normalizer<> normalizer;
-	NormalizeComponentsUnitVariance<> normalizingTrainer;
 	UnlabeledData<RealVector> data;
 
 	vector<vector<double> > rows = this->store;
@@ -28,8 +26,8 @@ void KMeansClusteringModel::makeClustering(){
 
 	size_t currentRow = 0;
 	for(size_t b = 0; b != batchSizes.size(); ++b) {
-		RealMatrix& batch = data.batch(b);
-		batch.resize(batchSizes[b], dimension);
+        RealMatrix& batch = data.batch(b);
+        batch.resize(batchSizes[b], dimension);
 		//copy the rows into the batch
 		for(size_t i = 0; i != batchSizes[b]; ++i,++currentRow){
 			if(rows[currentRow].size() != dimension)
@@ -41,10 +39,7 @@ void KMeansClusteringModel::makeClustering(){
 		}
 	}
 
-	normalizingTrainer.train(normalizer, data);
-	data = normalizer(data);
-
-	size_t iterations = kMeans(data, this->k, centroids, this->iters);
+    kMeans(data, this->k, centroids, this->iters);
 
 	model = new HardClusteringModel<shark::RealVector>(&centroids);
 }
