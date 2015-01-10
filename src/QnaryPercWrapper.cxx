@@ -56,7 +56,7 @@ void QnaryPercWrapper<Holder>::construct(const Settings &settings) {
 			actualQo,
 			// число входных нейронов - максимальная длина 
 			// закодированной обучающей строки
-			getCoderDstLen(Holder::getMaxTrainDim()),
+            Holder::getCoderDstLen(Holder::getMaxTrainDim()),
 			// число выходных нейронов - достаточное для того, чтобы представить
 			// самый большой номер обучающей строки в qO-ичной системе счисления
 			numDigits(actualQo, (Holder::getNumTrain() - 1)

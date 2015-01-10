@@ -22,20 +22,20 @@ void KMeansClusteringModel::makeClustering(){
 	vector<size_t> batchSizes = shark::detail::optimalBatchSizes(rows.size(), Data<RealVector>::DefaultBatchSize);
 	data = shark::Data<RealVector>(batchSizes.size());	
 
-	int dimension = rows[0].size();
+    this->dimension = rows[0].size();
 
 	size_t currentRow = 0;
 	for(size_t b = 0; b != batchSizes.size(); ++b) {
         RealMatrix& batch = data.batch(b);
-        batch.resize(batchSizes[b], dimension);
+        batch.resize(batchSizes[b], this->dimension);
 		//copy the rows into the batch
 		for(size_t i = 0; i != batchSizes[b]; ++i,++currentRow){
-			if(rows[currentRow].size() != dimension)
+            if(rows[currentRow].size() != this->dimension)
 				throw AxiomLibException("vectors are required to have same size");
 			
-			for(size_t j = 0; j != dimension; ++j){
+            for(size_t j = 0; j != this->dimension; ++j){
 				batch(i,j) = rows[currentRow][j];
-			}
+            }
 		}
 	}
 

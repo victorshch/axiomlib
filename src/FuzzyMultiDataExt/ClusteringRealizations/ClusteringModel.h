@@ -6,9 +6,8 @@
 #include <vector>
 #include <string>
 #include "boost/serialization/assume_abstract.hpp"
-#include "boost/serialization/access.hpp"
+#include "boost/serialization/split_member.hpp"
 #include "boost/serialization/nvp.hpp"
-
 
 namespace AxiomLib {
 
@@ -38,16 +37,21 @@ protected:
 	unsigned int k;
 
 private:
-	//объ€влени€, необходимые дл€ сериализации
 	friend class boost::serialization::access;
 
-	//функци€ сериализации - в ней должны быть указаны члены-данные,
-	//характеризующие состо€ние объекта
-	template<class Archive>
-	void serialize(Archive & archive, const unsigned int /*version*/)
-	{
-		
-	}
+    template<class Archive>
+    void save(Archive & ar, const unsigned int version) const
+    {
+        ar << k;
+    }
+
+    template<class Archive>
+    void load(Archive & ar, const unsigned int version)
+    {
+        ar >> k;
+    }
+
+    BOOST_SERIALIZATION_SPLIT_MEMBER()
 };
 
 };
@@ -56,4 +60,4 @@ private:
 
 BOOST_SERIALIZATION_ASSUME_ABSTRACT(AxiomLib::ClusteringModel);
 
-#endif //FUZZYMULTIDATAEXT_CM_CLUSTERINGMODEL_H
+#endif //FUZZYMULTIDATAEXT_CM_CLUSTERINGMODEL_Hb

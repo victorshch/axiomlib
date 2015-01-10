@@ -17,4 +17,4 @@ BOOST_CLASS_EXPORT_IMPLEMENT(AxiomLib::SecDerivativeIncreaseRight);
 BOOST_CLASS_EXPORT_IMPLEMENT(AxiomLib::Volatility);
 BOOST_CLASS_EXPORT_IMPLEMENT(AxiomLib::Variance);
 BOOST_CLASS_EXPORT_IMPLEMENT(AxiomLib::FuzzyMultiDataExt::ElemCondClustering);
-
+BOOST_CLASS_EXPORT_IMPLEMENT(AxiomLib::FuzzyMultiDataExt::KMeansClusteringModel);
