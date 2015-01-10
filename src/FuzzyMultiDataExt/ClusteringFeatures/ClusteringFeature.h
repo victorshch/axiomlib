@@ -4,6 +4,10 @@
 #include "../../Environment.h"
 #include <vector>
 
+#include "boost/serialization/assume_abstract.hpp"
+#include "boost/serialization/access.hpp"
+#include "boost/serialization/nvp.hpp"
+
 namespace AxiomLib {
 
 namespace FuzzyMultiDataExt {	
@@ -16,9 +20,17 @@ class ClusteringFeature {
 
 	protected: 
 		virtual void setParam(std::string name, std::string value) = 0;
+
+    private:
+        friend class boost::serialization::access;
+
+        template<class Archive>
+        void serialize(Archive & ar, const unsigned int version) const { }
 };
 };
 
 };
+
+BOOST_SERIALIZATION_ASSUME_ABSTRACT(AxiomLib::ClusteringFeature);
 
 #endif //CLUSTERINGFEAUTURE_H

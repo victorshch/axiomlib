@@ -14,11 +14,16 @@
 
 #include <boost/serialization/extended_type_info.hpp>
 #include <boost/serialization/export.hpp>
-
 #include "../all_axioms.h"
-
 #include "../FuzzyMultiDataExt/ElemCondClustering.h"
 #include "../FuzzyMultiDataExt/ClusteringRealizations/KMeansClusteringModel.h"
+#include "../FuzzyMultiDataExt/ClusteringFeatures/ClusteringFeature.h"
+#include "../FuzzyMultiDataExt/ClusteringFeatures/MaxValueFeature.h"
+#include "../FuzzyMultiDataExt/ClusteringFeatures/MeanValueFeature.h"
+#include "../FuzzyMultiDataExt/ClusteringFeatures/MinValueFeature.h"
+#include "../FuzzyMultiDataExt/ClusteringFeatures/RegressionAngleFeature.h"
+#include "../FuzzyMultiDataExt/ClusteringFeatures/RegressionErrorFeature.h"
+#include "../FuzzyMultiDataExt/ClusteringFeatures/StandardDeviationFeature.h"
 
 BOOST_CLASS_EXPORT_KEY2(AxiomLib::BetweenTwoLevels, "BetweenTwoLevels");
 BOOST_CLASS_EXPORT_KEY2(AxiomLib::DecreaseLeftElemCondition, "DecreaseLeftElemCondition");
@@ -36,8 +41,14 @@ BOOST_CLASS_EXPORT_KEY2(AxiomLib::SecDerivativeIncreaseLeft, "SecDerivativeIncre
 BOOST_CLASS_EXPORT_KEY2(AxiomLib::SecDerivativeIncreaseRight, "SecDerivativeIncreaseRight");
 BOOST_CLASS_EXPORT_KEY2(AxiomLib::Volatility, "Volatility");
 BOOST_CLASS_EXPORT_KEY2(AxiomLib::Variance, "Variance");
-
 BOOST_CLASS_EXPORT_KEY2(AxiomLib::FuzzyMultiDataExt::ElemCondClustering, "ElemCondClustering");
-BOOST_CLASS_EXPORT_KEY2(AxiomLib::FuzzyMultiDataExt::KMeansClusteringModel, "KMeansElemCondClustering");
+BOOST_CLASS_EXPORT_KEY2(AxiomLib::FuzzyMultiDataExt::KMeansClusteringModel, "ElemCondClustering");
+BOOST_CLASS_EXPORT_KEY2(AxiomLib::FuzzyMultiDataExt::ClusteringFeature, "ClusteringFeature");
+BOOST_CLASS_EXPORT_KEY2(AxiomLib::FuzzyMultiDataExt::MaxValueFeature, "MaxValueFeature");
+BOOST_CLASS_EXPORT_KEY2(AxiomLib::FuzzyMultiDataExt::MeanValueFeature, "MeanValueFeature");
+BOOST_CLASS_EXPORT_KEY2(AxiomLib::FuzzyMultiDataExt::MinValueFeature, "MinValueFeature");
+BOOST_CLASS_EXPORT_KEY2(AxiomLib::FuzzyMultiDataExt::RegressionAngleFeature, "RegressionAngleFeature");
+BOOST_CLASS_EXPORT_KEY2(AxiomLib::FuzzyMultiDataExt::RegressionErrorFeature, "RegressionErrorFeature");
+BOOST_CLASS_EXPORT_KEY2(AxiomLib::FuzzyMultiDataExt::StandardDeviationFeature, "StandardDeviationFeature");
 
 #endif // EXPORT_H

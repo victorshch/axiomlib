@@ -51,6 +51,14 @@ namespace FuzzyMultiDataExt {
 
 			void setParam(std::string name, std::string value){
 			}
+        private:
+           friend class boost::serialization::access;
+
+           template<class Archive>
+           void serialize(Archive &, const unsigned int) const
+           {
+               boost::serialization::base_object<ClusteringFeature>(*this);
+           }
 	};
 };
 

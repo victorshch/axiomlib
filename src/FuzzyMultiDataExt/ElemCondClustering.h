@@ -6,6 +6,7 @@
 #include "../elem_conditions/ElemCondition.h"
 #include "ClusteringFeatures/ClusteringFeature.h"
 #include "ClusteringRealizations/ClusteringModel.h"
+#include "boost/serialization/list.hpp"
 
 using namespace std;
 
@@ -138,6 +139,7 @@ namespace AxiomLib {
 					archive & BOOST_SERIALIZATION_NVP(clusterNumber);
 					archive & BOOST_SERIALIZATION_NVP(length);
 					archive & BOOST_SERIALIZATION_NVP(clusteringModel);
+                    archive & BOOST_SERIALIZATION_NVP(clusteringFeatures);
 				}
 
 				int clusterNumber;
