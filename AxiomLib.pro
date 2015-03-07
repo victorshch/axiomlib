@@ -9,6 +9,9 @@ include(AxiomLibConfig.pri)
 QT -= core gui
 CONFIG -= qt
 
+CONFIG -= release
+CONFIG += debug
+
 INCLUDEPATH += $$MPICH_INCLUDE \
     $$BOOST_INCLUDE \
     $$OTHER_INCLUDE
@@ -461,7 +464,6 @@ HEADERS += src/undefs.h \
     src/FuzzyMultiDataExt/ECStage.h \
     src/FuzzyMultiDataExt/ClusteringFeatures/MinValueFeature.h \
     src/FuzzyMultiDataExt/ClusteringFeatures/MaxValueFeature.h \
-    src/FuzzyMultiDataExt/ClusteringFeatures/ClusteringFeatureFactory.h \
     src/FuzzyMultiDataExt/ClusteringRealizations/KMeansClusteringModel.h \
     src/FuzzyMultiDataExt/ClusteringRealizations/ClusteringModel.h \
     src/FuzzyMultiDataExt/ElemCondClustering.h \

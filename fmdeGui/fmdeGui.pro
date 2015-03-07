@@ -4,7 +4,8 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT       += core gui widgets
+
 
 TARGET = fmdeGui
 TEMPLATE = app
@@ -13,10 +14,13 @@ include(../AxiomLibConfig.pri)
 
 ### ������������ - release ��� debug ###
 
-CONFIG += release
-CONFIG -= debug
-#CONFIG += debug
+#CONFIG += release
+#CONFIG -= debug
+##CONFIG += debug
+##CONFIG -= release
+
 #CONFIG -= release
+#CONFIG += debug
 
 unix {
 #    QMAKE_CC = gcc-4.5
@@ -42,6 +46,7 @@ LIBS += $$AXIOMLIB_LIB \
     $$MPICH_LIB \
     $$QWT_LIB \
     $$BOOST_LIB \
+    $$SHARK_LIB \
     $$OTHER_LIB
 
 

@@ -14,11 +14,12 @@ win32 {
 }
 # Для unix
 unix {
-	AXIOMLIB_INCLUDE = /home/wictor/Projects/axiomlib/src
+        AXIOMLIB_INCLUDE = /home/bilalov/study/axiomlib/axiomlib/src
         QWT_INCLUDE = "/usr/include/qwt-qt4"
-        MPICH_INCLUDE = "/usr/include/mpich2"
-        BOOST_INCLUDE = "/home/wictor/boost_1_46_1/include"
-	OTHER_INCLUDE =	
+        # MPICH_INCLUDE = "/usr/include/mpich"
+        BOOST_INCLUDE = "/home/bilalov/libs/boost_1_55_0"
+        OTHER_INCLUDE += "/home/bilalov/libs/Shark/include"
+        OTHER_INCLUDE += "/usr/include/mpi"
 }
 
 ### Спецификация библиотек ###
@@ -46,15 +47,18 @@ debug {
 # Для unix
 unix {
 linux-icc-64|linux-icc {
-        AXIOMLIB_LIB = /home/wictor/Projects/axiomlib/release/libAxiomLib.a
+        AXIOMLIB_LIB = /home/bilalov/study/axiomlib/build-AxiomLib-Desktop-Debug/release/libAxiomLib.a
+        SHARK_LIB = /home/bilalov/libs/Shark/lib/libshark.a
 } else {
 release {
-        AXIOMLIB_LIB = /home/wictor/projects/axiomlib/release/libAxiomLib.a
+        AXIOMLIB_LIB = /home/bilalov/study/axiomlib/build-AxiomLib-Desktop-Debug/release/libAxiomLib.a
+        SHARK_LIB = /home/bilalov/libs/Shark/lib/libshark.a
 } debug {
-		AXIOMLIB_LIB = /home/wictor/projects/axiomlib/debug/libAxiomLib.a
+        AXIOMLIB_LIB = /home/bilalov/study/axiomlib/build-AxiomLib-Desktop-Debug/debug/libAxiomLib.a
+        SHARK_LIB = /home/bilalov/libs/Shark/lib/libshark.a
 }
 }
-        BOOST_LIBDIR = /home/wictor/boost_1_46_1/lib
+        BOOST_LIBDIR = /home/bilalov/libs/boost_1_55_0/stage/lib
 
         MPICH_LIB = -lmpi -lgomp -lmpich
 	QWT_LIB = -lqwt-qt4
@@ -62,7 +66,7 @@ release {
         $${BOOST_LIBDIR}/libboost_system.a \
         $${BOOST_LIBDIR}/libboost_serialization.a \
         $${BOOST_LIBDIR}/libboost_thread.a
-        OTHER_LIB = -lpthread
+        OTHER_LIB = -lpthread -lblas -llapack
 }
 
 
@@ -76,8 +80,10 @@ win32 {
 }
 # Для unix
 linux-g++|linux-g++-64 {
-        QMAKE_CXXFLAGS_RELEASE += -fopenmp -o2 -std=c++0x
+        QMAKE_CXXFLAGS_RELEASE += -fopenmp -o2 -std=c++11
+        QMAKE_CXXFLAGS_DEBUG += -std=c++11
 }
+
 linux-icc|linux-icc-64 {
         QMAKE_CXXFLAGS += -std=c++0x -no-multibyte-chars -wd913
         QMAKE_CXXFLAGS_RELEASE += -openmp

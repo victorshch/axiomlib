@@ -64,7 +64,7 @@ void getDirectoryAndFile(QString src, QString& dir, QString& file) {
 
 int main(int argc, char *argv[])
 {
-	QLocale::setDefault(QLocale::c());
+    QLocale::setDefault(QLocale::c());
 	AxiomLibGuiApplication a(argc, argv);
 //	QApplication a(argc, argv);
 	

@@ -42,7 +42,7 @@ BOOST_CLASS_EXPORT_KEY2(AxiomLib::SecDerivativeIncreaseRight, "SecDerivativeIncr
 BOOST_CLASS_EXPORT_KEY2(AxiomLib::Volatility, "Volatility");
 BOOST_CLASS_EXPORT_KEY2(AxiomLib::Variance, "Variance");
 BOOST_CLASS_EXPORT_KEY2(AxiomLib::FuzzyMultiDataExt::ElemCondClustering, "ElemCondClustering");
-BOOST_CLASS_EXPORT_KEY2(AxiomLib::FuzzyMultiDataExt::KMeansClusteringModel, "ElemCondClustering");
+BOOST_CLASS_EXPORT_KEY2(AxiomLib::FuzzyMultiDataExt::KMeansClusteringModel, "KMeansClustering");
 BOOST_CLASS_EXPORT_KEY2(AxiomLib::FuzzyMultiDataExt::ClusteringFeature, "ClusteringFeature");
 BOOST_CLASS_EXPORT_KEY2(AxiomLib::FuzzyMultiDataExt::MaxValueFeature, "MaxValueFeature");
 BOOST_CLASS_EXPORT_KEY2(AxiomLib::FuzzyMultiDataExt::MeanValueFeature, "MeanValueFeature");

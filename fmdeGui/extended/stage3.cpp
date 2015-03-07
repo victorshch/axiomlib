@@ -141,10 +141,10 @@ void Stage3::loadAS() {
 		throw;
 	}
 	
-	for(int i = oldSize; i < axiomSets.size(); i++) {
-		controller->fuzzyMultiDataLearnAlgorithm.recalculateMatterAxiomSetFunc(axiomSets[i]);
-		m_model->addAxiomSet(axiomSets[i]);
-	}
+    for(int i = oldSize; i < axiomSets.size(); i++) {
+        //controller->fuzzyMultiDataLearnAlgorithm.recalculateMatterAxiomSetFunc(axiomSets[i]);
+        m_model->addAxiomSet(axiomSets[i]);
+    }
 }
 
 void Stage3::showPlot()

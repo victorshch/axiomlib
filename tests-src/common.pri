@@ -1,9 +1,10 @@
 CONFIG -= console
 
-include(../../AxiomLibConfig.pri)
+include(../AxiomLibConfig.pri)
 
 QT -= core gui
 CONFIG -= qt
+CONFIG += c++11
 
 INCLUDEPATH += $$BOOST_INCLUDE $$MPICH_INCLUDE $$OTHER_INCLUDE
 
@@ -11,7 +12,10 @@ INCLUDEPATH += $$AXIOMLIB_INCLUDE
 
 LIBS += $$AXIOMLIB_LIB
 
-LIBS += $$BOOST_LIB $$MPICH_LIB $$OTHER_LIB
+LIBS += $$BOOST_LIB $$MPICH_LIB $$SHARK_LIB $$OTHER_LIB
+
+QMAKE_CXXFLAGS += -fopenmp
+QMAKE_LFLAGS += -fopenmp
 
 unix {
     LIBS += -lmpl -lopa

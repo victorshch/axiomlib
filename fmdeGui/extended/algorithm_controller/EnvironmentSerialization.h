@@ -52,7 +52,7 @@ namespace boost {
 	}
 }
 
-BOOST_SERIALIZATION_SPLIT_FREE(AxiomLib::Environment);
+BOOST_SERIALIZATION_SPLIT_FREE(AxiomLib::Environment)
 
 
 #endif // ENVIRONMENTSERIALIZATION_H
