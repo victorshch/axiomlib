@@ -149,7 +149,7 @@ void Stage3::loadAS() {
 
 void Stage3::showPlot()
 {
-	PlotBrowser* plotBrowser = new PlotBrowser(controller, 3, true);
+	PlotBrowser* plotBrowser = new PlotBrowser(controller, 3, true, 0, AxiomLib::FuzzyDataSet::Testing);
 	plotBrowser->setWindowModality(Qt::ApplicationModal);
 	plotBrowser->setAttribute(Qt::WA_DeleteOnClose);
 

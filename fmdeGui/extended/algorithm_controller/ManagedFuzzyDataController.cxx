@@ -325,13 +325,15 @@ int ManagedFuzzyDataController::getMultiTSCount(int classNo) {
 			.getMutiTSCount(AxiomLib::FuzzyDataSet::Reference, classNo);
 }
 
-void ManagedFuzzyDataController::getMultiTS(int classNo, int tsNo, 
-											std::vector<std::vector<double> > &multiTS)
+void ManagedFuzzyDataController::getMultiTS(int classNo, int tsNo,
+											std::vector<std::vector<double> > &multiTS,
+											int division)
 {
 	AxiomLib::FuzzyDataSet &dataSet = fuzzyMultiDataLearnAlgorithm.getDataSet();
 	
 	qDebug()<<"Performing reset...";
-	AxiomLib::IntervalSet intervals = AxiomLib::IntervalSet::reset(dataSet, AxiomLib::FuzzyDataSet::Reference);
+	AxiomLib::IntervalSet intervals = AxiomLib::IntervalSet::reset(dataSet,
+																   (AxiomLib::FuzzyDataSet::DataSetDivisionType)division);
 	qDebug()<<"Reset done";
 	int size1;
 	std::vector<int> size2;
@@ -342,11 +344,9 @@ void ManagedFuzzyDataController::getMultiTS(int classNo, int tsNo,
 		multiTS.resize(size2[tsNo]);
 		
 		for(unsigned int i = 0; i < multiTS.size(); i++) {
-			dataSet.getNormalTSFromClass(
-					multiTS[i],
-					tsNo,
-					i
-					);
+			dataSet.getTSByIndex((AxiomLib::FuzzyDataSet::DataSetDivisionType)division, multiTS[i], -1,
+								 tsNo,
+								 i);
 		}
 	} else {
 		std::vector<std::vector<int> > size3;
@@ -356,18 +356,13 @@ void ManagedFuzzyDataController::getMultiTS(int classNo, int tsNo,
 		multiTS.resize(size3[classNo][tsNo]);
 		
 		for(int i = 0; i < size3[classNo][tsNo]; i++) {
-			dataSet.getTSByIndexFromClass(
-					multiTS[i],
-					classNo,
-					tsNo,
-					i
-					);
+			dataSet.getTSByIndex((AxiomLib::FuzzyDataSet::DataSetDivisionType)division, multiTS[i], classNo,
+								 tsNo,
+								 i);
 		}
 	}
 	
-	qDebug()<<"Performing apply...";
 	intervals.apply(dataSet, AxiomLib::FuzzyDataSet::Reference);
-	qDebug()<<"Apply done.";
 }
 
 boost::shared_ptr<AxiomLib::ReducedRecognizer> ManagedFuzzyDataController::createReducedRecognizer() const

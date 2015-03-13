@@ -13,8 +13,8 @@
 
 #include "algorithm_controller/ManagedFuzzyDataController.h"
 
-PlotBrowser::PlotBrowser(ManagedFuzzyDataController *controller, int stage, bool showMarking, QWidget *parent)
-	: controller(controller), stage(stage), mShowMarking(showMarking), mMarkingPlot(0), QWidget(parent) {
+PlotBrowser::PlotBrowser(ManagedFuzzyDataController *controller, int stage, bool showMarking, QWidget *parent, int dataSetDivision)
+	: controller(controller), stage(stage), mShowMarking(showMarking), mMarkingPlot(0), QWidget(parent), dataSetDivision(dataSetDivision) {
 	ui.setupUi(this);
 	
 	qDebug()<<"entering PlotBrowser::PlotBrowser()";
@@ -104,7 +104,8 @@ void PlotBrowser::replot() const {
 	controller->getMultiTS(
 			currentClass,
 			trajSelectGroupBox->currentTS(),
-			*multiTSRaw
+			*multiTSRaw,
+				dataSetDivision
 			);
 	PCMultiVector multiTS = PCMultiVector(multiTSRaw);
 	std::vector<int> paramNums;

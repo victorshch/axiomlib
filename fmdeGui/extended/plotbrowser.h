@@ -10,6 +10,7 @@
 #include "ui_plotbrowser.h"
 #include "vectorplot.h"
 #include "ElemCondPlus.h"
+#include "FuzzyDataSet.h"
 #include "Condition.h"
 #include "intervalwidget.h"
 #include "trajselectgroupbox.h"
@@ -20,7 +21,8 @@ class PlotBrowser : public QWidget
     Q_OBJECT
 
 public:	
-	PlotBrowser(ManagedFuzzyDataController *controller, int stage, bool showMarking = false, QWidget *parent = 0);
+	PlotBrowser(ManagedFuzzyDataController *controller, int stage, bool showMarking = false, QWidget *parent = 0,
+				int dataSetDivision = AxiomLib::FuzzyDataSet::Reference);
 	
 	void addCondition(PCondition condition);
 
@@ -44,6 +46,8 @@ private:
 	ManagedFuzzyDataController *controller;
 	
 	int stage;
+
+	int dataSetDivision;
 	
 	QList<VectorPlot *> vectorPlotList;
 	VectorPlot* mMarkingPlot;

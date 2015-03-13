@@ -123,7 +123,7 @@ public:
 	void runHeuristics(int i);
 	
 	int getMultiTSCount(int classNo);
-	void getMultiTS(int classNo, int tsNO, std::vector<std::vector<double> > &multiTS);
+	void getMultiTS(int classNo, int tsNO, std::vector<std::vector<double> > &multiTS, int division = AxiomLib::FuzzyDataSet::Reference);
 	//void getTS(int classNo, int tsNo, int dimensionNo, std::vector<double> &ts);
 
 
