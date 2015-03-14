@@ -1,6 +1,7 @@
 #include <set>
 
 #include "Common.h"
+#include "Logger.h"
 
 #include "DataSetBase.h"
 
@@ -819,29 +820,26 @@ void DataSetBase::setupParamNums(const Environment &env, const EnvDataSet &envDa
 	 classTS.clear();
 	 // Выделение памяти под fileCount временных рядов
 	 classTS.reserve(fileCount);
-	 
-	 for ( boost::filesystem::directory_iterator dir_itr_int( classPath ); dir_itr_int != end_iter_int; ++dir_itr_int ) {
+
+     std::vector<boost::filesystem::path> files;
+     std::copy(boost::filesystem::directory_iterator(classPath), boost::filesystem::directory_iterator(), std::back_inserter(files));
+
+     // Сортируем пути, т. к. directory_iterator не гарантирует их отсортированность
+     std::sort(files.begin(), files.end());
+
+     for (std::vector<boost::filesystem::path>::const_iterator it = files.begin(); it != files.end(); ++it) {
 		 //std::cout << "\n	EPT 2 \n";
 		 //filePath = *dir_itr_int;
 		 // переводим названия файла и шаблона в char* - чтобы сравнить на соответствие (см ./formats.x)
-		 std::string currentFileName = dir_itr_int->path().filename().c_str();
+         std::string currentFileName = it->filename().c_str();
+         debug() << "Current filename: " <<  currentFileName;
 		 if (checkRefCSVName(currentFileName)) {
-			 //осталось тока считать файл и записать в специально описанный класс multiTS
+             //осталось только считать файл и записать в специально описанный класс multiTS
 			 //std::cout << "\n	EPT 3 \n";
 			 MultiTS multiTStemp;
-			 currentFileName = (*dir_itr_int).path().string().c_str();
+             currentFileName = it->string().c_str();
+             debug() << "Reading CSV...";
 			 this->readFromCSV (currentFileName, multiTStemp);
-			 /*// Test Output
-			 std::vector<double> vecTemp;
-			 std::cout << "\n MultiTS \n";
-			 for (int nR = 0; nR < multiTStemp.size(); nR++) {
-				 multiTStemp.getTSByIndex(vecTemp, nR);
-				 std::cout << "\n";
-				 for (int fR = 0; fR < vecTemp.size(); fR++) {
-					 std::cout << "  " << vecTemp[fR];
-				 }
-			 }*/
-			 // Storing multiTS
 			 classTS.push_back(multiTStemp);
 		 }
 	 }
