@@ -13,6 +13,8 @@
 
 #include "extended/configselectwidget.h"
 
+#include <clocale>
+
 // Наследник класса QApplication, в котором реализована поимка
 // и отображение исключений при обработке событий
 class AxiomLibGuiApplication : public QApplication {
@@ -64,10 +66,10 @@ void getDirectoryAndFile(QString src, QString& dir, QString& file) {
 
 int main(int argc, char *argv[])
 {
-    QLocale::setDefault(QLocale::c());
+    std::setlocale(LC_ALL,"C");
 	AxiomLibGuiApplication a(argc, argv);
 //	QApplication a(argc, argv);
-	
+
 	try {		
 		QStringList args = QApplication::arguments();
 		args.removeAt(0);
