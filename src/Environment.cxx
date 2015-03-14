@@ -23,6 +23,7 @@
 
 #include "AxiomLibException.h"
 #include "Environment.h"
+#include "Logger.h"
 
 using namespace AxiomLib;
 using namespace std;
@@ -76,8 +77,10 @@ int Environment::getDoubleParamValue(double& value, const string& name) const
   if (i == configFileParams.end())
     return -1;
 
+  std::string stringValue = i->second;
   // приводим к double
-  value = atof((*i).second.c_str());
+  value = boost::lexical_cast<double>(stringValue);
+//  value = atof(stringValue.c_str());
   return 0;
 }
 
