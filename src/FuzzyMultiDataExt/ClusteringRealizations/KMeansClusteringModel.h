@@ -93,7 +93,7 @@ private:
         }
 
         centroids.setCentroids(restoredCentroidsData);
-        model = new HardClusteringModel<shark::RealVector>(&centroids);
+        model = new shark::HardClusteringModel<shark::RealVector>(&centroids);
     }
 
     BOOST_SERIALIZATION_SPLIT_MEMBER()
