@@ -24,49 +24,30 @@ unix {
 
 ### Спецификация библиотек ###
 
-# Для windows
-win32 {
-
-debug {
-        AXIOMLIB_LIB = F:/Workspace/Axiomlib_working_copy2/debug/AxiomLib.lib
-        QWT_LIB = D:/lib/qwt-5.2.1/lib/qwtd.lib
-} release {
-        AXIOMLIB_LIB = F:/Workspace/Axiomlib_working_copy2/release/AxiomLib.lib
-        QWT_LIB = D:/lib/qwt-5.2.1/lib/qwt.lib
-}
-        BOOST_LIB = /LIBPATH:"C:/Program Files (x86)/boost/boost_1_47/lib"
-        MPICH_LIB = "C:/Program Files (x86)/MPICH2/lib/mpi.lib"
-        #MPICH_LIB = /LIBPATH:"C:/Program Files (x86)/MPICH2/lib"
-
-#        BOOST_LIB = D:/lib/boost_1_44_0/stage/lib/boost_filesystem-vc100-mt.lib \
-#            D:/lib/boost_1_44_0/stage/lib/boost_system-vc100-mt.lib \
-#            D:/lib/boost_1_44_0/stage/lib/boost_serialization-vc100-mt.lib
-	OTHER_LIB = Shell32.lib
-}
-
 # Для unix
 unix {
-linux-icc-64|linux-icc {
-        AXIOMLIB_LIB = /home/bilalov/study/axiomlib/build-AxiomLib-Desktop-Debug/release/libAxiomLib.a
-        SHARK_LIB = /home/bilalov/libs/Shark/lib/libshark.a
-} else {
-release {
-        AXIOMLIB_LIB = /home/bilalov/study/axiomlib/build-AxiomLib-Desktop-Debug/release/libAxiomLib.a
-        SHARK_LIB = /home/bilalov/libs/Shark/lib/libshark.a
-} debug {
-        AXIOMLIB_LIB = /home/bilalov/study/axiomlib/build-AxiomLib-Desktop-Debug/debug/libAxiomLib.a
-        SHARK_LIB = /home/bilalov/libs/Shark/lib/libshark.a
-}
-}
-        BOOST_LIBDIR = /home/bilalov/libs/boost_1_55_0/stage/lib
+    linux-icc-64|linux-icc {
+            AXIOMLIB_LIB = /home/bilalov/study/axiomlib/build-AxiomLib-Desktop-Release/release/libAxiomLib.a
+            SHARK_LIB = /home/bilalov/libs/Shark/lib/libshark.a
+    } else {
+        release {
+                AXIOMLIB_LIB = /home/bilalov/study/axiomlib/build-AxiomLib-Desktop-Release/release/libAxiomLib.a
+                SHARK_LIB = /home/bilalov/libs/Shark/lib/libshark.a
+        } debug {
+                AXIOMLIB_LIB = /home/bilalov/study/axiomlib/build-AxiomLib-Desktop-Release/release/libAxiomLib.a
+                SHARK_LIB = /home/bilalov/libs/Shark/lib/libshark.a
+        }
+    }
 
-        MPICH_LIB = -lmpi -lgomp -lmpich
-	QWT_LIB = -lqwt-qt4
-        BOOST_LIB = $${BOOST_LIBDIR}/libboost_filesystem.a \
-        $${BOOST_LIBDIR}/libboost_system.a \
-        $${BOOST_LIBDIR}/libboost_serialization.a \
-        $${BOOST_LIBDIR}/libboost_thread.a
-        OTHER_LIB = -lpthread -lblas -llapack
+    BOOST_LIBDIR = /home/bilalov/libs/boost_1_55_0/stage/lib
+
+    MPICH_LIB = -lmpi -lgomp -lmpich
+    QWT_LIB = -lqwt-qt4
+    BOOST_LIB = $${BOOST_LIBDIR}/libboost_filesystem.a \
+    $${BOOST_LIBDIR}/libboost_system.a \
+    $${BOOST_LIBDIR}/libboost_serialization.a \
+    $${BOOST_LIBDIR}/libboost_thread.a
+    OTHER_LIB = -lpthread -lblas -llapack
 }
 
 
@@ -75,19 +56,19 @@ release {
 # Для windows
 win32 {
 	QMAKE_CXXFLAGS_RELEASE += -openmp
-	QMAKE_CXXFLAGS_RELEASE += -o2 -DRELEASE
+        QMAKE_CXXFLAGS_RELEASE += -O2 -DRELEASE
         QMAKE_CXXFLAGS_DEBUG += /ZI /Od
 }
 # Для unix
 linux-g++|linux-g++-64 {
-        QMAKE_CXXFLAGS_RELEASE += -fopenmp -o2 -std=c++11
+        QMAKE_CXXFLAGS_RELEASE += -fopenmp -O2 -std=c++11
         QMAKE_CXXFLAGS_DEBUG += -std=c++11
 }
 
 linux-icc|linux-icc-64 {
-        QMAKE_CXXFLAGS += -std=c++0x -no-multibyte-chars -wd913
-        QMAKE_CXXFLAGS_RELEASE += -openmp
-        QMAKE_LFLAGS_RELEASE += -openmp
+        QMAKE_CXXFLAGS += -std=c++0x -O2 -no-multibyte-chars -wd913
+        QMAKE_CXXFLAGS_RELEASE += -openmp -O2
+        QMAKE_LFLAGS_RELEASE += -openmp -O2
 }
 
 ### Дополнительные флаги линковки ###

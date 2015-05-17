@@ -9,8 +9,8 @@ include(AxiomLibConfig.pri)
 QT -= core gui
 CONFIG -= qt
 
-CONFIG -= release
-CONFIG += debug
+CONFIG -= debug
+CONFIG += release
 
 INCLUDEPATH += $$MPICH_INCLUDE \
     $$BOOST_INCLUDE \
@@ -34,7 +34,7 @@ DEFINES += AXIOMLIB_LIBRARY
 # windows
 win32 { 
     QMAKE_CXXFLAGS_RELEASE += -openmp
-    QMAKE_CXXFLAGS_RELEASE += -o2 \
+    QMAKE_CXXFLAGS_RELEASE += -O2 \
         -DRELEASE
     QMAKE_CXXFLAGS_DEBUG += /ZI \
         /Od
@@ -44,7 +44,7 @@ win32 {
 linux-g++|linux-g++-64 { 
     QMAKE_CXXFLAGS += -std=c++0x
     QMAKE_CXXFLAGS_RELEASE += -fopenmp \
-        -o2
+        -O2
 }
 linux-icc|linux-icc-64 { 
     QMAKE_CXXFLAGS += -std=c++0x \

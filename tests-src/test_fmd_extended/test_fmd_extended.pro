@@ -14,5 +14,7 @@ CONFIG   -= app_bundle
 
 TEMPLATE = app
 
+CONFIG -= debug
+CONFIG += release
 
 SOURCES += test_fmd_extended.cxx
