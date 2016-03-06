@@ -15,11 +15,11 @@
 #include <string>
 #include <algorithm>
 
-#include <boost/archive/xml_iarchive.hpp>
-#include <boost/archive/xml_oarchive.hpp>
+//#include <boost/archive/xml_iarchive.hpp>
+//#include <boost/archive/xml_oarchive.hpp>
 
-#include "elem_conditions/Export.h"
-#include "elem_conditions/Export.cxx"
+//#include "elem_conditions/Export.h"
+//#include "elem_conditions/Export.cxx"
 
 #undef SEEK_SET
 #undef SEEK_END
@@ -94,7 +94,7 @@ int main (int argc, char** argv) {
 						<< std::endl;
 		}
 
-		alg.saveAxiomSetsToXml();
+        //alg.saveAxiomSetsToXml();
 
 		return 0;
 	}
