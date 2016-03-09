@@ -519,7 +519,7 @@ signed int Environment::readConfigFile(const char* filename) {
   // Открываем файл
   boost::filesystem::ifstream file( fileName );
   // задаем сепаратор
-  boost::char_separator<char> sep("';:\t ");
+  boost::char_separator<char> sep("';:\t \r\n");
 
   // Цикл - считывается по одной строке файла и они переходит в вид набора токенов, 
   // которые после чего посылаются на обработку дополнительной функции
@@ -569,7 +569,9 @@ signed int Environment::processTokens (token_separator tokens) {
 	
     ++tok_iter;
     if (tok_iter == tokens.end()) {
-      throw AxiomLibException ("Error in Environment::processTokens : error in config file - value not set. name = '" + name + "'");
+      std::cout << "Warning: Environment::processTokens : config file value not set. name = '" + name + "'" << std::endl;
+      std::cout << "Ignoring" << std::endl;
+      continue;
     }
 	//cerr << "Value token: " << *tok_iter << "\n";
 	
