@@ -136,6 +136,7 @@ private:
 		ReplaceWithForeign,
 		AddOwn,
 		AddForeign,
+        AddQuestionMarkSymbol,
 		Remove,
 		LastAction = Remove
 	};

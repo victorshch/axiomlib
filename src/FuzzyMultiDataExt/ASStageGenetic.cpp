@@ -21,6 +21,8 @@
 using namespace AxiomLib;
 using namespace AxiomLib::FuzzyMultiDataExt;
 
+#define QUESTION_MARK_GLOBAL_INDEX -2
+
 AxiomContainer::AxiomContainer(AXStage *stage2, FuzzyDataSet *fuzzyDataSet)
 	: mFuzzyDataSet(fuzzyDataSet)
 {
@@ -374,6 +376,11 @@ void ASMutation::operator ()(ASIndividual &i) const
 			removeAxiom(as, classToMutate, newPosition);
 			addAxiom(as, classToMutate, newGlobalAxiomIndex, newPosition);
 		} break;
+        case AddQuestionMarkSymbol: {
+            int newPosition = shark::Rng::discrete(0, as.markUps[classToMutate].size() - 1);
+            removeAxiom(as, classToMutate, newPosition);
+            addAxiom(as, classToMutate, QUESTION_MARK_GLOBAL_INDEX, newPosition);
+        } break;
 		case ReplaceWithForeign: {
 			int newAxiomGlobalIndex = shark::Rng::discrete(0, mAxiomContainer->totalAxiomCount() - 1);
 			int newPosition = shark::Rng::discrete(0, as.markUps[classToMutate].size() - 1);
@@ -395,7 +402,7 @@ void ASMutation::addAxiom(AxiomExprSetPlus &as, int classNo, int newAxiomGlobalI
 	int newAxiomLocalIndex = 0;
 	for(unsigned i = 0; i < as.axioms.size(); ++i) {
 		if(as.axioms[i]->index == newAxiomGlobalIndex) {
-			newAxiomLocalIndex = i + 1;
+            newAxiomLocalIndex = i + 1;
 		}
 	}
 	if(!newAxiomLocalIndex) {
@@ -450,10 +457,10 @@ std::vector<int> ASOnePointCrossover::makeGlobalMarkings(const AxiomExprSetPlus 
 	std::vector<int> result(marking.size());
 
 	for(unsigned i = 0; i < result.size(); ++i) {
-		result[i] = marking[i] > 0 ? as.axioms[(unsigned)marking[i] - 1]->index : -1;
+        result[i] = marking[i] > 0 ? as.axioms[(unsigned)marking[i] - 1]->index : -1;
 	}
 
-	return result;
+    return result;
 }
 
 void ASOnePointCrossover::addLocalMarking(AxiomExprSetPlus &as, int classNo, const std::vector<int> &globalMarking) const
@@ -462,7 +469,7 @@ void ASOnePointCrossover::addLocalMarking(AxiomExprSetPlus &as, int classNo, con
 	existingAxioms.insert(std::make_pair(-1, 0u));
 
 	for(unsigned i = 0; i < as.axioms.size(); ++i) {
-		existingAxioms.insert(std::make_pair(as.axioms[i]->index, i + 1));
+        existingAxioms.insert(std::make_pair(as.axioms[i]->index, i + 1));
 	}
 
 	for(unsigned p = 0; p < globalMarking.size(); ++p) {
