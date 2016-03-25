@@ -399,6 +399,11 @@ void ASMutation::addAxiom(AxiomExprSetPlus &as, int classNo, int newAxiomGlobalI
 {
 	std::vector<int>& marking = as.markUps[classNo];
 
+    if (newAxiomGlobalIndex == QUESTION_MARK_GLOBAL_INDEX) {
+        marking.insert(marking.begin() + position, -1);
+        return;
+    }
+
 	int newAxiomLocalIndex = 0;
 	for(unsigned i = 0; i < as.axioms.size(); ++i) {
 		if(as.axioms[i]->index == newAxiomGlobalIndex) {
@@ -409,7 +414,9 @@ void ASMutation::addAxiom(AxiomExprSetPlus &as, int classNo, int newAxiomGlobalI
 		as.addAxiom(mAxiomContainer->axiom(newAxiomGlobalIndex));
 		newAxiomLocalIndex = as.size() - 1;
 	}
-	marking.insert(marking.begin() + position, newAxiomLocalIndex);
+
+    marking.insert(marking.begin() + position, newAxiomLocalIndex);
+
 }
 
 void ASMutation::removeAxiom(AxiomExprSetPlus &as, int classNo, int position) const
@@ -457,7 +464,13 @@ std::vector<int> ASOnePointCrossover::makeGlobalMarkings(const AxiomExprSetPlus 
 	std::vector<int> result(marking.size());
 
 	for(unsigned i = 0; i < result.size(); ++i) {
-        result[i] = marking[i] > 0 ? as.axioms[(unsigned)marking[i] - 1]->index : -1;
+        if (marking[i] == -1) {
+            result[i] = -2;
+        } else if (marking[i] == 0) {
+            result[i] = -1;
+        } else {
+            result[i] = as.axioms[(unsigned)marking[i] - 1]->index;
+        }
 	}
 
     return result;
@@ -465,8 +478,9 @@ std::vector<int> ASOnePointCrossover::makeGlobalMarkings(const AxiomExprSetPlus 
 
 void ASOnePointCrossover::addLocalMarking(AxiomExprSetPlus &as, int classNo, const std::vector<int> &globalMarking) const
 {
-	std::map<int, unsigned> existingAxioms; // global -> local
-	existingAxioms.insert(std::make_pair(-1, 0u));
+    std::map<int, int> existingAxioms; // global -> local
+    existingAxioms.insert(std::make_pair(-2, -1));
+    existingAxioms.insert(std::make_pair(-1, 0));
 
 	for(unsigned i = 0; i < as.axioms.size(); ++i) {
         existingAxioms.insert(std::make_pair(as.axioms[i]->index, i + 1));
@@ -479,7 +493,8 @@ void ASOnePointCrossover::addLocalMarking(AxiomExprSetPlus &as, int classNo, con
 	}
 
 	existingAxioms.clear();
-	existingAxioms.insert(std::make_pair(-1, 0u));
+    existingAxioms.insert(std::make_pair(-2, -1));
+    existingAxioms.insert(std::make_pair(-1, 0));
 	for(unsigned i = 0; i < as.axioms.size(); ++i) {
 		existingAxioms.insert(std::make_pair(as.axioms[i]->index, i + 1));
 	}
