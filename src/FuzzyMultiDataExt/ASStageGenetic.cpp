@@ -355,7 +355,11 @@ void ASMutation::operator ()(ASIndividual &i) const
 	if((*i).axioms.empty() || as.markUps[classToMutate].empty()) {
 		action = AddForeign;
 	} else {
-		action = shark::Rng::discrete(FirstAction, LastAction);
+        if (mUseQuestionMark) {
+            action = shark::Rng::discrete(FirstAction, LastAction);
+        } else {
+            action = shark::Rng::discrete(FirstAction, Remove);
+        }
 	}
 
 	switch(action) {
@@ -430,7 +434,7 @@ void ASMutation::removeAxiom(AxiomExprSetPlus &as, int classNo, int position) co
 	int axiomToRemove = marking[position];
 	marking.erase(marking.begin() + position);
 
-	if(axiomToRemove != 0 && std::find(marking.begin(), marking.end(), axiomToRemove) == marking.end()) {
+    if(axiomToRemove != 0 && axiomToRemove != -1 && std::find(marking.begin(), marking.end(), axiomToRemove) == marking.end()) {
 		// Если такой аксиомы в разметке больше нет, удаляем ее из системы аксиом
 		as.removeAxiom(axiomToRemove);
 	}
@@ -548,7 +552,9 @@ void ASStageGenetic::initFromEnv(const Environment &env)
 	env.getMandatoryParamValue(mMaxIterations, "ASStageGenetic_maxIterations");
 	env.getMandatoryParamValue(mElitism, "ASStageGenetic_elitism");
 	env.getMandatoryParamValue(mSelectivePressure, "ASStageGenetic_selectivePressure");
-	if(mSelectivePressure < 1.0 || mSelectivePressure > 2.0) {
+    env.getParamValue(useQuestionMark, "ASStageGenetic_useQuestionMark", 0);
+
+    if(mSelectivePressure < 1.0 || mSelectivePressure > 2.0) {
 		exception() << "ASStageGenetic::initFromEnv() : invalid selectivePressure value: " << mSelectivePressure
 					<< ", selective pressure must be from [1, 2]";
 	}
@@ -597,7 +603,7 @@ void ASStageGenetic::run()
 
 	int elitismNumber = (int) (mElitism * mPopulationSize);
 
-	ASMutation mutation(axiomContainer);
+    ASMutation mutation(axiomContainer, useQuestionMark);
 	ASOnePointCrossover crossover(axiomContainer);
 
 	shark::LinearRankingSelection<FitnessExtractor> selection;
