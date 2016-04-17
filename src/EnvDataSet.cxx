@@ -142,7 +142,7 @@ signed int EnvDataSet::readConfigFile(std::string confDir, std::string confName)
 	tmpSaveTo = 0;
 	// Открываем файл
 	boost::filesystem::ifstream file( fileName );
-	boost::char_separator<char> sep("';:\t");
+    boost::char_separator<char> sep("';:\t \r\n");
 	// Цикл - считывается по одной строке файла и они переходит в вид набора токенов, 
 	// которые после чего посылаются на обработку дополнительной функцие
 	while (i = std::getline(file, str) && i != EOF)  {
