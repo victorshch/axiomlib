@@ -14,6 +14,8 @@
 #include <time.h>
 #include <string>
 #include <algorithm>
+#include <vector>
+#include <string>
 
 //#include <boost/archive/xml_iarchive.hpp>
 //#include <boost/archive/xml_oarchive.hpp>
@@ -30,11 +32,14 @@ using namespace AxiomLib;
 #define comments true
 #define defaultConfigFile	"./axiomlib_fmd.conf"
 
+#define QUESTION_MARK_LOCAL_INDEX -1
+
 struct ResultInfo {
 	std::string asName;
 	double objectiveValue;
 	int firstKindErrors;
 	int secondKindErrors;
+    std::vector<std::string> stringMarkUps;
 
 	ResultInfo() : objectiveValue(-1), firstKindErrors(-1), secondKindErrors(-1) {}
 
@@ -49,7 +54,7 @@ int main (int argc, char** argv) {
 		Logger::getInstance()->setDebug(true);
 		Logger::getInstance()->setComments(true);
 
-		Environment envStart;
+        Environment envStart;
 		envStart.readConfigParams (argc, argv);
 
 		std::string pathToConfigFile;
@@ -75,7 +80,17 @@ int main (int argc, char** argv) {
 			info.objectiveValue = as.goal;
 			info.firstKindErrors = as.errFirst;
 			info.secondKindErrors = as.errSecond;
-
+            for (int classNo = 0; classNo < as.markUps.size(); classNo++) {
+                std::string markUp;
+                for (int j = 0; j < as.markUps[classNo].size(); j++) {
+                    if (as.markUps[classNo][j] == QUESTION_MARK_LOCAL_INDEX) {
+                        markUp += "(?)";
+                    } else {
+                        markUp += "(" + std::to_string(as.markUps[classNo][j]) + ")";
+                    }
+                }
+                info.stringMarkUps.push_back(markUp);
+            }
 			result.push_back(info);
 		}
 
@@ -92,6 +107,11 @@ int main (int argc, char** argv) {
 						 % currentInfo.firstKindErrors
 						 % currentInfo.secondKindErrors
 						<< std::endl;
+            std::cout << std::endl;
+            for (int classNo = 0; classNo < currentInfo.stringMarkUps.size(); classNo++) {
+                std::cout << "Markup for class " + std::to_string(classNo) << std::endl;
+                std::cout << currentInfo.stringMarkUps[classNo] << std::endl;
+            }
 		}
 
         //alg.saveAxiomSetsToXml();
