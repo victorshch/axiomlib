@@ -51,10 +51,10 @@ for dataset in datasets:
     print 'Creating config file'
     f = open(os.path.join(dataset_dir, dataset + '.conf'), 'w')
     f.write('//Dataset parameters\n')
-    f.write("    null:    'null'\n")
-    f.write("    analizeParameter:    'row_1'\n")
+    f.write("    null:\t'null'\n")
+    f.write("    analizeParameter:\t'row_1'\n")
     f.write("// class name in referenceClasses for normal behaviour\n")
-    f.write("    normalClass:    'normal'\n")
+    f.write("    normalClass:\t'normal'\n")
     f.close()
     
     print 'Creating files with train dataset'
