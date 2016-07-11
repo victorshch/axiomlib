@@ -14,12 +14,12 @@ win32 {
 }
 # Для unix
 unix {
-        AXIOMLIB_INCLUDE = /home/bilalov/study/axiomlib/axiomlib/src
+        AXIOMLIB_INCLUDE = /home/wictor/projects/axiomlib/src
         QWT_INCLUDE = "/usr/include/qwt-qt4"
-        # MPICH_INCLUDE = "/usr/include/mpich"
-        BOOST_INCLUDE = "/home/bilalov/libs/boost_1_55_0"
-        OTHER_INCLUDE += "/home/bilalov/libs/Shark/include"
-        OTHER_INCLUDE += "/usr/include/mpi"
+		MPICH_INCLUDE = "/usr/include/mpich"
+        BOOST_INCLUDE = "/usr/include/boost"
+		OTHER_INCLUDE =	/home/wictor/Shark_2/include
+		OTHER_INCLUDE += "/usr/includempi"
 }
 
 ### Спецификация библиотек ###
@@ -27,27 +27,21 @@ unix {
 # Для unix
 unix {
     linux-icc-64|linux-icc {
-            AXIOMLIB_LIB = /home/bilalov/study/axiomlib/build-AxiomLib-Desktop-Release/release/libAxiomLib.a
-            SHARK_LIB = /home/bilalov/libs/Shark/lib/libshark.a
+        AXIOMLIB_LIB = /home/wictor/projects/axiomlib/release/libAxiomLib.a
+			SHARK_LIB = /home/wictor/Shark_2/lib/libshark.a
     } else {
         release {
-                AXIOMLIB_LIB = /home/bilalov/study/axiomlib/build-AxiomLib-Desktop-Release/release/libAxiomLib.a
-                SHARK_LIB = /home/bilalov/libs/Shark/lib/libshark.a
+				AXIOMLIB_LIB = /home/wictor/projects/axiomlib/release/libAxiomLib.a
+				SHARK_LIB = /home/wictor/Shark_2/lib/libshark.a
         } debug {
-                AXIOMLIB_LIB = /home/bilalov/study/axiomlib/build-AxiomLib-Desktop-Release/release/libAxiomLib.a
-                SHARK_LIB = /home/bilalov/libs/Shark/lib/libshark.a
+				AXIOMLIB_LIB = /home/wictor/projects/axiomlib/debug/libAxiomLib.a
+				SHARK_LIB = /home/wictor/Shark_2/lib/libshark.a
         }
     }
-
-    BOOST_LIBDIR = /home/bilalov/libs/boost_1_55_0/stage/lib
-
+        BOOST_LIB = -lboost_filesystem -lboost_system -lboost_thread -lboost_serialization
     MPICH_LIB = -lmpi -lgomp -lmpich
     QWT_LIB = -lqwt-qt4
-    BOOST_LIB = $${BOOST_LIBDIR}/libboost_filesystem.a \
-    $${BOOST_LIBDIR}/libboost_system.a \
-    $${BOOST_LIBDIR}/libboost_serialization.a \
-    $${BOOST_LIBDIR}/libboost_thread.a
-    OTHER_LIB = -lpthread -lblas -llapack
+		OTHER_LIB = -L/home/wictor/Shark_2/lib -lpthread -lshark -lblas -llapack
 }
 
 
@@ -63,10 +57,11 @@ win32 {
 linux-g++|linux-g++-64 {
         QMAKE_CXXFLAGS_RELEASE += -fopenmp -O2 -std=c++11
         QMAKE_CXXFLAGS_DEBUG += -std=c++11
+
 }
 
 linux-icc|linux-icc-64 {
-        QMAKE_CXXFLAGS += -std=c++0x -O2 -no-multibyte-chars -wd913
+		QMAKE_CXXFLAGS += -std=c++11 -O2 -no-multibyte-chars -wd913
         QMAKE_CXXFLAGS_RELEASE += -openmp -O2
         QMAKE_LFLAGS_RELEASE += -openmp -O2
 }
