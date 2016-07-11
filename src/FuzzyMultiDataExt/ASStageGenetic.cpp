@@ -21,6 +21,8 @@
 using namespace AxiomLib;
 using namespace AxiomLib::FuzzyMultiDataExt;
 
+#define QUESTION_MARK_GLOBAL_INDEX -2
+
 AxiomContainer::AxiomContainer(AXStage *stage2, FuzzyDataSet *fuzzyDataSet)
 	: mFuzzyDataSet(fuzzyDataSet)
 {
@@ -353,7 +355,11 @@ void ASMutation::operator ()(ASIndividual &i) const
 	if((*i).axioms.empty() || as.markUps[classToMutate].empty()) {
 		action = AddForeign;
 	} else {
-		action = shark::Rng::discrete(FirstAction, LastAction);
+        if (mUseQuestionMark) {
+            action = shark::Rng::discrete(FirstAction, LastAction);
+        } else {
+            action = shark::Rng::discrete(FirstAction, Remove);
+        }
 	}
 
 	switch(action) {
@@ -374,6 +380,11 @@ void ASMutation::operator ()(ASIndividual &i) const
 			removeAxiom(as, classToMutate, newPosition);
 			addAxiom(as, classToMutate, newGlobalAxiomIndex, newPosition);
 		} break;
+        case AddQuestionMarkSymbol: {
+            int newPosition = shark::Rng::discrete(0, as.markUps[classToMutate].size() - 1);
+            removeAxiom(as, classToMutate, newPosition);
+            addAxiom(as, classToMutate, QUESTION_MARK_GLOBAL_INDEX, newPosition);
+        } break;
 		case ReplaceWithForeign: {
 			int newAxiomGlobalIndex = shark::Rng::discrete(0, mAxiomContainer->totalAxiomCount() - 1);
 			int newPosition = shark::Rng::discrete(0, as.markUps[classToMutate].size() - 1);
@@ -392,17 +403,24 @@ void ASMutation::addAxiom(AxiomExprSetPlus &as, int classNo, int newAxiomGlobalI
 {
 	std::vector<int>& marking = as.markUps[classNo];
 
+    if (newAxiomGlobalIndex == QUESTION_MARK_GLOBAL_INDEX) {
+        marking.insert(marking.begin() + position, -1);
+        return;
+    }
+
 	int newAxiomLocalIndex = 0;
 	for(unsigned i = 0; i < as.axioms.size(); ++i) {
 		if(as.axioms[i]->index == newAxiomGlobalIndex) {
-			newAxiomLocalIndex = i + 1;
+            newAxiomLocalIndex = i + 1;
 		}
 	}
 	if(!newAxiomLocalIndex) {
 		as.addAxiom(mAxiomContainer->axiom(newAxiomGlobalIndex));
 		newAxiomLocalIndex = as.size() - 1;
 	}
-	marking.insert(marking.begin() + position, newAxiomLocalIndex);
+
+    marking.insert(marking.begin() + position, newAxiomLocalIndex);
+
 }
 
 void ASMutation::removeAxiom(AxiomExprSetPlus &as, int classNo, int position) const
@@ -416,7 +434,7 @@ void ASMutation::removeAxiom(AxiomExprSetPlus &as, int classNo, int position) co
 	int axiomToRemove = marking[position];
 	marking.erase(marking.begin() + position);
 
-	if(axiomToRemove != 0 && std::find(marking.begin(), marking.end(), axiomToRemove) == marking.end()) {
+    if(axiomToRemove != 0 && axiomToRemove != -1 && std::find(marking.begin(), marking.end(), axiomToRemove) == marking.end()) {
 		// Если такой аксиомы в разметке больше нет, удаляем ее из системы аксиом
 		as.removeAxiom(axiomToRemove);
 	}
@@ -450,19 +468,26 @@ std::vector<int> ASOnePointCrossover::makeGlobalMarkings(const AxiomExprSetPlus 
 	std::vector<int> result(marking.size());
 
 	for(unsigned i = 0; i < result.size(); ++i) {
-		result[i] = marking[i] > 0 ? as.axioms[(unsigned)marking[i] - 1]->index : -1;
+        if (marking[i] == -1) {
+            result[i] = -2;
+        } else if (marking[i] == 0) {
+            result[i] = -1;
+        } else {
+            result[i] = as.axioms[(unsigned)marking[i] - 1]->index;
+        }
 	}
 
-	return result;
+    return result;
 }
 
 void ASOnePointCrossover::addLocalMarking(AxiomExprSetPlus &as, int classNo, const std::vector<int> &globalMarking) const
 {
-	std::map<int, unsigned> existingAxioms; // global -> local
-	existingAxioms.insert(std::make_pair(-1, 0u));
+    std::map<int, int> existingAxioms; // global -> local
+    existingAxioms.insert(std::make_pair(-2, -1));
+    existingAxioms.insert(std::make_pair(-1, 0));
 
 	for(unsigned i = 0; i < as.axioms.size(); ++i) {
-		existingAxioms.insert(std::make_pair(as.axioms[i]->index, i + 1));
+        existingAxioms.insert(std::make_pair(as.axioms[i]->index, i + 1));
 	}
 
 	for(unsigned p = 0; p < globalMarking.size(); ++p) {
@@ -472,7 +497,8 @@ void ASOnePointCrossover::addLocalMarking(AxiomExprSetPlus &as, int classNo, con
 	}
 
 	existingAxioms.clear();
-	existingAxioms.insert(std::make_pair(-1, 0u));
+    existingAxioms.insert(std::make_pair(-2, -1));
+    existingAxioms.insert(std::make_pair(-1, 0));
 	for(unsigned i = 0; i < as.axioms.size(); ++i) {
 		existingAxioms.insert(std::make_pair(as.axioms[i]->index, i + 1));
 	}
@@ -526,7 +552,9 @@ void ASStageGenetic::initFromEnv(const Environment &env)
 	env.getMandatoryParamValue(mMaxIterations, "ASStageGenetic_maxIterations");
 	env.getMandatoryParamValue(mElitism, "ASStageGenetic_elitism");
 	env.getMandatoryParamValue(mSelectivePressure, "ASStageGenetic_selectivePressure");
-	if(mSelectivePressure < 1.0 || mSelectivePressure > 2.0) {
+    env.getParamValue(useQuestionMark, "ASStageGenetic_useQuestionMark", 0);
+
+    if(mSelectivePressure < 1.0 || mSelectivePressure > 2.0) {
 		exception() << "ASStageGenetic::initFromEnv() : invalid selectivePressure value: " << mSelectivePressure
 					<< ", selective pressure must be from [1, 2]";
 	}
@@ -575,7 +603,7 @@ void ASStageGenetic::run()
 
 	int elitismNumber = (int) (mElitism * mPopulationSize);
 
-	ASMutation mutation(axiomContainer);
+    ASMutation mutation(axiomContainer, useQuestionMark);
 	ASOnePointCrossover crossover(axiomContainer);
 
 	shark::LinearRankingSelection<FitnessExtractor> selection;

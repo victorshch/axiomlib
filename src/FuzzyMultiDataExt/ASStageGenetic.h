@@ -124,7 +124,8 @@ public:
 };
 
 struct ASMutation {
-	ASMutation(const AxiomContainer* axiomContainer): mAxiomContainer(axiomContainer) {}
+    ASMutation(const AxiomContainer* axiomContainer, int useQuestionMark): mAxiomContainer(axiomContainer),
+                                                                           mUseQuestionMark(useQuestionMark){}
 
 	void operator()(ASIndividual& i) const;
 	//TODO
@@ -137,7 +138,8 @@ private:
 		AddOwn,
 		AddForeign,
 		Remove,
-		LastAction = Remove
+        AddQuestionMarkSymbol,
+        LastAction = AddQuestionMarkSymbol
 	};
 
 	void addAxiom(AxiomExprSetPlus& as, int classNo, int newAxiomGlobalIndex, int position) const;
@@ -146,6 +148,7 @@ private:
 	void removeAxiom(AxiomExprSetPlus& as, int classNo, int position = -1) const;
 
 	const AxiomContainer* mAxiomContainer;
+    int mUseQuestionMark;
 };
 
 struct ASOnePointCrossover {
@@ -194,6 +197,8 @@ private:
 	int mInitialASSize;
 	int mMaxASSize; // TODO
 	int mMaxIterations;
+
+    int useQuestionMark;
 
 	double mElitism;
 

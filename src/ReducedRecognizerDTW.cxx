@@ -14,13 +14,13 @@
 
 using namespace AxiomLib;
 
+#define QUESTION_MARK_LOCAL_INDEX -1
 
 // Стандартный конструктор - задание значений внутренних переменных по умолчанию
 ReducedRecognizerDTW::ReducedRecognizerDTW (void) { 
-	//precision = 0.0;
+    //precision = 0.0;
 	stretch = 1.0;
 }
-
 
 // Стандартный деструктор - удаление всех динамических объектов класса
 ReducedRecognizerDTW::~ReducedRecognizerDTW (void) { 
@@ -102,7 +102,7 @@ int ReducedRecognizerDTW::countDTWDist (const std::vector <int> &markup, const s
 			matrixLen[j].resize(i+1);
 		}
 		// Вычисляем значение в крайнем элементе матрицы
-		if (markup[i] == etalon[etLenMinusOne])
+        if (markup[i] == etalon[etLenMinusOne] || etalon[etLenMinusOne] == QUESTION_MARK_LOCAL_INDEX)
 			curVal = 0;
 		else
 			curVal = 1;
@@ -110,14 +110,14 @@ int ReducedRecognizerDTW::countDTWDist (const std::vector <int> &markup, const s
 		matrixLen[etLenMinusOne][i] = 1;
 		// Вычисляем значение в крайних элементах матрицы
 		for (int k = etLen - 2; k >= 0; k--) {
-			if (markup[i] != etalon[k])
+            if (markup[i] != etalon[k] && etalon[k] != QUESTION_MARK_LOCAL_INDEX)
 				curVal++;
 			matrixErr[k][i] = curVal;
 			matrixLen[k][i] = etLen - k;
 		}
 		curVal = matrixErr[etLenMinusOne][i];
 		for (int k = i-1; k >= 0; k--) {
-			if (markup[k] != etalon[etLenMinusOne])
+            if (markup[k] != etalon[etLenMinusOne] && etalon[etLenMinusOne] != QUESTION_MARK_LOCAL_INDEX)
 				curVal++;
 			matrixErr[etLenMinusOne][k] = curVal;
 			matrixLen[etLenMinusOne][k] = i - k + 1;
@@ -127,7 +127,7 @@ int ReducedRecognizerDTW::countDTWDist (const std::vector <int> &markup, const s
 			// идем по горизонтали
 			j = etLenMinusOne - k;
 			for (l = i - k; l >= 0; l--) {
-				if (markup[l] == etalon[j])
+                if (markup[l] == etalon[j] || etalon[j] == QUESTION_MARK_LOCAL_INDEX)
 					curVal = 0;
 				else
 					curVal = 1;
@@ -178,7 +178,7 @@ int ReducedRecognizerDTW::countDTWDist (const std::vector <int> &markup, const s
 			// идем по вертикали
 			l = i - k;
 			for (j = etLenMinusOne - k - 1; j >= 0; j--) {
-				if (markup[l] == etalon[j])
+                if (markup[l] == etalon[j] || etalon[j] == QUESTION_MARK_LOCAL_INDEX)
 					curVal = 0;
 				else
 					curVal = 1;
@@ -230,7 +230,7 @@ int ReducedRecognizerDTW::countDTWDist (const std::vector <int> &markup, const s
 	upTo = min(etLenMinusOne, maxLenMinusOne);
 	for (int i = maxLen; i < len; i++) {
 		// Вычисляем значение в крайнем элементе матрицы
-		if (markup[i] == etalon[etLenMinusOne])
+        if (markup[i] == etalon[etLenMinusOne] || etalon[etLenMinusOne] == QUESTION_MARK_LOCAL_INDEX)
 			curVal = 0;
 		else
 			curVal = 1;
@@ -238,14 +238,14 @@ int ReducedRecognizerDTW::countDTWDist (const std::vector <int> &markup, const s
 		//matrixLen[etLenMinusOne][maxLenMinusOne] = 1; // Это присваивание уже и так было сделано
 		// Вычисляем значение в крайних элементах матрицы
 		for (int k = etLen - 2; k >= 0; k--) {
-			if (markup[i] != etalon[k])
+            if (markup[i] != etalon[k] && etalon[k] != QUESTION_MARK_LOCAL_INDEX)
 				curVal++;
 			matrixErr[k][maxLenMinusOne] = curVal;
 			//matrixLen[k][maxLenMinusOne] = etLen - k; // Это присваивание уже и так было сделано
 		}
 		curVal = matrixErr[etLenMinusOne][maxLenMinusOne];
 		for (int k = maxLen - 2; k >= 0; k--) {
-			if (markup[i - maxLenMinusOne + k] != etalon[etLenMinusOne])
+            if (markup[i - maxLenMinusOne + k] != etalon[etLenMinusOne] && etalon[etLenMinusOne] != QUESTION_MARK_LOCAL_INDEX)
 				curVal++;
 			matrixErr[etLenMinusOne][k] = curVal;
 			//matrixLen[etLenMinusOne][k] = maxLen - k; // Это присваивание уже и так было сделано
@@ -255,7 +255,7 @@ int ReducedRecognizerDTW::countDTWDist (const std::vector <int> &markup, const s
 			// идем по горизонтали
 			j = etLenMinusOne - k;
 			for (l = maxLenMinusOne - k; l >= 0; l--) {
-				if (markup[i - maxLenMinusOne + l] == etalon[j])
+                if (markup[i - maxLenMinusOne + l] == etalon[j] || etalon[j] == QUESTION_MARK_LOCAL_INDEX)
 					curVal = 0;
 				else
 					curVal = 1;
@@ -289,7 +289,7 @@ int ReducedRecognizerDTW::countDTWDist (const std::vector <int> &markup, const s
 			// идем по вертикали
 			l = maxLenMinusOne - k;
 			for (j = etLenMinusOne - k - 1; j >= 0; j--) {
-				if (markup[i - k] == etalon[j])
+                if (markup[i - k] == etalon[j] || etalon[j] == QUESTION_MARK_LOCAL_INDEX)
 					curVal = 0;
 				else
 					curVal = 1;
