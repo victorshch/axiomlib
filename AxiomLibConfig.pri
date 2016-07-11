@@ -14,12 +14,11 @@ win32 {
 }
 # ‰Ã— unix
 unix {
-        AXIOMLIB_INCLUDE = /home/natalia/coursework/axiomlib/src
-        # QWT_INCLUDE = "/usr/include/qwt-qt4"
-        MPICH_INCLUDE = "/usr/include/mpich"
-        # BOOST_INCLUDE = "/home/bilalov/libs/boost_1_55_0"
-        BOOST_INCLUDE = ""
-        OTHER_INCLUDE += "/home/natalia/Cloud/Shark/include"
+        AXIOMLIB_INCLUDE = /home/bilalov/study/axiomlib/axiomlib/src
+        QWT_INCLUDE = "/usr/include/qwt-qt4"
+        # MPICH_INCLUDE = "/usr/include/mpich"
+        BOOST_INCLUDE = "/home/bilalov/libs/boost_1_55_0"
+        OTHER_INCLUDE += "/home/bilalov/libs/Shark/include"
         OTHER_INCLUDE += "/usr/include/mpi"
 }
 
@@ -28,20 +27,19 @@ unix {
 # ‰Ã— unix
 unix {
     linux-icc-64|linux-icc {
-            # AXIOMLIB_LIB = /home/natalia/coursework/build-AxiomLib-Qt4-Release/release/libAxiomLib.a
-            AXIOMLIB_LIB = /home/natalia/coursework/build-AxiomLib-Qt4-Debug/debug/libAxiomLib.a
-            SHARK_LIB = /home/natalia/Cloud/Shark/lib/libshark.a
+            AXIOMLIB_LIB = /home/bilalov/study/axiomlib/build-AxiomLib-Desktop-Release/release/libAxiomLib.a
+            SHARK_LIB = /home/bilalov/libs/Shark/lib/libshark.a
     } else {
         release {
-                AXIOMLIB_LIB = /home/natalia/coursework/build-AxiomLib-Qt4-Release/release/libAxiomLib.a
-                SHARK_LIB = /home/natalia/Cloud/Shark/lib/libshark.a
+                AXIOMLIB_LIB = /home/bilalov/study/axiomlib/build-AxiomLib-Desktop-Release/release/libAxiomLib.a
+                SHARK_LIB = /home/bilalov/libs/Shark/lib/libshark.a
         } debug {
-                AXIOMLIB_LIB = /home/natalia/coursework/build-AxiomLib-Qt4-Debug/debug/libAxiomLib.a
-                SHARK_LIB = /home/natalia/Cloud/Shark/lib/libshark.a
+                AXIOMLIB_LIB = /home/bilalov/study/axiomlib/build-AxiomLib-Desktop-Release/release/libAxiomLib.a
+                SHARK_LIB = /home/bilalov/libs/Shark/lib/libshark.a
         }
     }
 
-    BOOST_LIBDIR = /usr/lib/x86_64-linux-gnu
+    BOOST_LIBDIR = /home/bilalov/libs/boost_1_55_0/stage/lib
 
     MPICH_LIB = -lmpi -lgomp -lmpich
     QWT_LIB = -lqwt-qt4
