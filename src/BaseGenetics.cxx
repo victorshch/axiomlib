@@ -1,6 +1,6 @@
 /****************************************************************************
 *
-*			Функции класса BaseGenetics
+*			п╓я┐п╫п╨я├п╦п╦ п╨п╩п╟я│я│п╟ BaseGenetics
 *
 ****************************************************************************/
 
@@ -8,7 +8,7 @@
 
 using namespace AxiomLib;
 
-// Коструктор класса с заданием начальных параметров по умолчанию
+// п п╬я│я┌я─я┐п╨я┌п╬я─ п╨п╩п╟я│я│п╟ я│ п╥п╟п╢п╟п╫п╦п╣п╪ п╫п╟я┤п╟п╩я▄п╫я▀я┘ п©п╟я─п╟п╪п╣я┌я─п╬п╡ п©п╬ я┐п╪п╬п╩я┤п╟п╫п╦я▌
 BaseGenetics::BaseGenetics (void) {
 	numOfIter = -1; 
 	comments = true;
@@ -23,7 +23,7 @@ BaseGenetics::BaseGenetics (void) {
 } 
 
 
-// Деструктор класса - удаляюся все созданные в рамках класса динамические объекты
+// п■п╣я│я┌я─я┐п╨я┌п╬я─ п╨п╩п╟я│я│п╟ - я┐п╢п╟п╩я▐я▌я│я▐ п╡я│п╣ я│п╬п╥п╢п╟п╫п╫я▀п╣ п╡ я─п╟п╪п╨п╟я┘ п╨п╩п╟я│я│п╟ п╢п╦п╫п╟п╪п╦я┤п╣я│п╨п╦п╣ п╬п╠я┼п╣п╨я┌я▀
 BaseGenetics::~BaseGenetics (void) {
 	if (recognizer != NULL) delete recognizer;
 	if (selectionStrategy != NULL) delete selectionStrategy;
@@ -38,24 +38,24 @@ BaseGenetics::~BaseGenetics (void) {
 /****************************************************************************
 *			BaseGenetics::initFromEnv
 *
-*	Description:	Инициализация параметров с данными из env
-*	Parameters:	const Environment& env - структура с параметрами конфигурации
+*	Description:	п≤п╫п╦я├п╦п╟п╩п╦п╥п╟я├п╦я▐ п©п╟я─п╟п╪п╣я┌я─п╬п╡ я│ п╢п╟п╫п╫я▀п╪п╦ п╦п╥ env
+*	Parameters:	const Environment& env - я│я┌я─я┐п╨я┌я┐я─п╟ я│ п©п╟я─п╟п╪п╣я┌я─п╟п╪п╦ п╨п╬п╫я└п╦пЁя┐я─п╟я├п╦п╦
 *	Returns:	0
-*	Throws:		AxiomLibException - если конфигурация некорректна
+*	Throws:		AxiomLibException - п╣я│п╩п╦ п╨п╬п╫я└п╦пЁя┐я─п╟я├п╦я▐ п╫п╣п╨п╬я─я─п╣п╨я┌п╫п╟
 *	Author:		gevor
 *	History:
 *
 ****************************************************************************/
 int BaseGenetics::initFromEnv(const Environment& env)
 {
-  // проверяем число операций
+  // п©я─п╬п╡п╣я─я▐п╣п╪ я┤п╦я│п╩п╬ п╬п©п╣я─п╟я├п╦п╧
   if (env.getIntParamValue(numOfIter, "numOfIter") < 0)
     throw AxiomLibException("BaseGenetics::initFromEnv : number of iterations has not been set.");
 
-  // инициализируем начальную популяцию
+  // п╦п╫п╦я├п╦п╟п╩п╦п╥п╦я─я┐п╣п╪ п╫п╟я┤п╟п╩я▄п╫я┐я▌ п©п╬п©я┐п╩я▐я├п╦я▌
   axiomSetPop.initFromEnv(env);
 
-  // инициализируем распознаватель
+  // п╦п╫п╦я├п╦п╟п╩п╦п╥п╦я─я┐п╣п╪ я─п╟я│п©п╬п╥п╫п╟п╡п╟я┌п╣п╩я▄
   string recognizerName;
   RecognizerFactory rf;
   if (env.getStringParamValue(recognizerName, "Recognizer") < 0)
@@ -64,7 +64,7 @@ int BaseGenetics::initFromEnv(const Environment& env)
   recognizer = rf.create(recognizerName);
   recognizer->setParamsFromEnv(env);
 
-  // инициализируем стратегию селекции
+  // п╦п╫п╦я├п╦п╟п╩п╦п╥п╦я─я┐п╣п╪ я│я┌я─п╟я┌п╣пЁп╦я▌ я│п╣п╩п╣п╨я├п╦п╦
   string selectionStrategyName;
   SelectionStrategyFactory ssf;
   if (env.getStringParamValue(selectionStrategyName, "selectClass") < 0)
@@ -73,7 +73,7 @@ int BaseGenetics::initFromEnv(const Environment& env)
   selectionStrategy->setParamsFromEnv(env);
   selectionStrategy->setComments(comments);
 
-  // инициализируем стратегию мутации
+  // п╦п╫п╦я├п╦п╟п╩п╦п╥п╦я─я┐п╣п╪ я│я┌я─п╟я┌п╣пЁп╦я▌ п╪я┐я┌п╟я├п╦п╦
   string transmuteStrategyName;
   TransmuteStrategyFactory tsf;
   if (env.getStringParamValue(transmuteStrategyName, "transClass") < 0)
@@ -81,7 +81,7 @@ int BaseGenetics::initFromEnv(const Environment& env)
   transmuteStrategy = tsf.create(transmuteStrategyName);
   transmuteStrategy->setParamsFromEnv(env);
 
-  // инициализируем стратегию скрещивания
+  // п╦п╫п╦я├п╦п╟п╩п╦п╥п╦я─я┐п╣п╪ я│я┌я─п╟я┌п╣пЁп╦я▌ я│п╨я─п╣я┴п╦п╡п╟п╫п╦я▐
   string crossoverStrategyName;
   CrossoverStrategyFactory csf;
   if (env.getStringParamValue(crossoverStrategyName, "crossClass") < 0)
@@ -89,7 +89,7 @@ int BaseGenetics::initFromEnv(const Environment& env)
   crossoverStrategy = csf.create(crossoverStrategyName);
   crossoverStrategy->setParamsFromEnv(env);
 
-  // инициализируем стратегию вычисления целевой функции
+  // п╦п╫п╦я├п╦п╟п╩п╦п╥п╦я─я┐п╣п╪ я│я┌я─п╟я┌п╣пЁп╦я▌ п╡я▀я┤п╦я│п╩п╣п╫п╦я▐ я├п╣п╩п╣п╡п╬п╧ я└я┐п╫п╨я├п╦п╦
   string goalStrategyName;
   GoalStrategyFactory gsf;
   if (env.getStringParamValue(goalStrategyName, "goalClass") < 0)
@@ -97,11 +97,11 @@ int BaseGenetics::initFromEnv(const Environment& env)
   goalStrategy = gsf.create(goalStrategyName);
   goalStrategy->setParamsFromEnv(env);
 
-  // нинициализация условия досрочного выхожаи из цикла генетического алгоритма
+  // п╫п╦п╫п╦я├п╦п╟п╩п╦п╥п╟я├п╦я▐ я┐я│п╩п╬п╡п╦я▐ п╢п╬я│я─п╬я┤п╫п╬пЁп╬ п╡я▀я┘п╬п╤п╟п╦ п╦п╥ я├п╦п╨п╩п╟ пЁп╣п╫п╣я┌п╦я┤п╣я│п╨п╬пЁп╬ п╟п╩пЁп╬я─п╦я┌п╪п╟
   if (env.getDoubleParamValue (exitCond, "exitCond") < 0)
     throw AxiomLibException("BaseGenetics::initFromEnv : goal strategy is undefined.");
 
-  // сохраняем путь по которому сохранять лучшую систему аксиом по результатам работы цикла
+  // я│п╬я┘я─п╟п╫я▐п╣п╪ п©я┐я┌я▄ п©п╬ п╨п╬я┌п╬я─п╬п╪я┐ я│п╬я┘я─п╟п╫я▐я┌я▄ п╩я┐я┤я┬я┐я▌ я│п╦я│я┌п╣п╪я┐ п╟п╨я│п╦п╬п╪ п©п╬ я─п╣п╥я┐п╩я▄я┌п╟я┌п╟п╪ я─п╟п╠п╬я┌я▀ я├п╦п╨п╩п╟
   std::string temp;
   if (env.getStringParamValue(temp, "AxiomSetBaseDir") >= 0) {
     axiomSetBaseDir = new string;
@@ -119,20 +119,20 @@ int BaseGenetics::initFromEnv(const Environment& env)
 /****************************************************************************
 *			BaseGenetics::shortInitFromEnv
 *
-*	Description:	Инициализация только определенной части параметров с данными из env
-*	Parameters:	const Environment& env - структура с параметрами конфигурации
+*	Description:	п≤п╫п╦я├п╦п╟п╩п╦п╥п╟я├п╦я▐ я┌п╬п╩я▄п╨п╬ п╬п©я─п╣п╢п╣п╩п╣п╫п╫п╬п╧ я┤п╟я│я┌п╦ п©п╟я─п╟п╪п╣я┌я─п╬п╡ я│ п╢п╟п╫п╫я▀п╪п╦ п╦п╥ env
+*	Parameters:	const Environment& env - я│я┌я─я┐п╨я┌я┐я─п╟ я│ п©п╟я─п╟п╪п╣я┌я─п╟п╪п╦ п╨п╬п╫я└п╦пЁя┐я─п╟я├п╦п╦
 *	Returns:		0
-*	Throws:		AxiomLibException - если конфигурация некорректна
+*	Throws:		AxiomLibException - п╣я│п╩п╦ п╨п╬п╫я└п╦пЁя┐я─п╟я├п╦я▐ п╫п╣п╨п╬я─я─п╣п╨я┌п╫п╟
 *	Author:		gevor, dk
 *	History:
 *
 ****************************************************************************/
 int BaseGenetics::shortInitFromEnv(const Environment& env)
 {
-  // инициализируем начальную популяцию
+  // п╦п╫п╦я├п╦п╟п╩п╦п╥п╦я─я┐п╣п╪ п╫п╟я┤п╟п╩я▄п╫я┐я▌ п©п╬п©я┐п╩я▐я├п╦я▌
   axiomSetPop.initFromEnv (env);
 
-  // инициализируем распознаватель
+  // п╦п╫п╦я├п╦п╟п╩п╦п╥п╦я─я┐п╣п╪ я─п╟я│п©п╬п╥п╫п╟п╡п╟я┌п╣п╩я▄
   string recognizerName;
   RecognizerFactory rf;
   if (env.getStringParamValue(recognizerName, "Recognizer") < 0)
@@ -140,7 +140,7 @@ int BaseGenetics::shortInitFromEnv(const Environment& env)
   recognizer = rf.create(recognizerName);
   recognizer->setNominalParamsFromEnv(env);
   
-  // инициализируем стратегию селекции
+  // п╦п╫п╦я├п╦п╟п╩п╦п╥п╦я─я┐п╣п╪ я│я┌я─п╟я┌п╣пЁп╦я▌ я│п╣п╩п╣п╨я├п╦п╦
   string selectionStrategyName;
   SelectionStrategyFactory ssf;
   if (env.getStringParamValue(selectionStrategyName, "selectClass") < 0)
@@ -149,7 +149,7 @@ int BaseGenetics::shortInitFromEnv(const Environment& env)
   selectionStrategy->setParamsFromEnv (env);
   selectionStrategy->setComments(comments);
 
-  // инициализируем стратегию мутации
+  // п╦п╫п╦я├п╦п╟п╩п╦п╥п╦я─я┐п╣п╪ я│я┌я─п╟я┌п╣пЁп╦я▌ п╪я┐я┌п╟я├п╦п╦
   string transmuteStrategyName;
   TransmuteStrategyFactory tsf;
   if (env.getStringParamValue(transmuteStrategyName, "transClass") < 0)
@@ -157,7 +157,7 @@ int BaseGenetics::shortInitFromEnv(const Environment& env)
   transmuteStrategy = tsf.create(transmuteStrategyName);
   transmuteStrategy->setParamsFromEnv (env);
 
-  // инициализируем стратегию скрещивания
+  // п╦п╫п╦я├п╦п╟п╩п╦п╥п╦я─я┐п╣п╪ я│я┌я─п╟я┌п╣пЁп╦я▌ я│п╨я─п╣я┴п╦п╡п╟п╫п╦я▐
   string crossoverStrategyName;
   CrossoverStrategyFactory csf;
   if (env.getStringParamValue(crossoverStrategyName, "crossClass") < 0)
@@ -165,7 +165,7 @@ int BaseGenetics::shortInitFromEnv(const Environment& env)
   crossoverStrategy = csf.create(crossoverStrategyName);
   crossoverStrategy->setParamsFromEnv (env);
   
-  // инициализируем стратегию вычисления целевой функции
+  // п╦п╫п╦я├п╦п╟п╩п╦п╥п╦я─я┐п╣п╪ я│я┌я─п╟я┌п╣пЁп╦я▌ п╡я▀я┤п╦я│п╩п╣п╫п╦я▐ я├п╣п╩п╣п╡п╬п╧ я└я┐п╫п╨я├п╦п╦
   string goalStrategyName;
   GoalStrategyFactory gsf;
   if (env.getStringParamValue(goalStrategyName, "goalClass") < 0)
@@ -173,7 +173,7 @@ int BaseGenetics::shortInitFromEnv(const Environment& env)
   goalStrategy = gsf.create(goalStrategyName);
   goalStrategy->setParamsFromEnv (env);
   
-  // инициализация условия досрочного выхожаи из цикла генетического алгоритма
+  // п╦п╫п╦я├п╦п╟п╩п╦п╥п╟я├п╦я▐ я┐я│п╩п╬п╡п╦я▐ п╢п╬я│я─п╬я┤п╫п╬пЁп╬ п╡я▀я┘п╬п╤п╟п╦ п╦п╥ я├п╦п╨п╩п╟ пЁп╣п╫п╣я┌п╦я┤п╣я│п╨п╬пЁп╬ п╟п╩пЁп╬я─п╦я┌п╪п╟
   if (env.getDoubleParamValue (exitCond, "exitCond") < 0)
     throw AxiomLibException("BaseGenetics::initFromEnv : goal strategy is undefined.");
   
@@ -184,8 +184,8 @@ int BaseGenetics::shortInitFromEnv(const Environment& env)
 /****************************************************************************
 *				BaseGenetics::setDataSet
 *
-*	Description:	Установка нового набора данных для данного класса подбора системы аксиом
-*	Parameters:	newDataSet - новый набор данных
+*	Description:	пёя│я┌п╟п╫п╬п╡п╨п╟ п╫п╬п╡п╬пЁп╬ п╫п╟п╠п╬я─п╟ п╢п╟п╫п╫я▀я┘ п╢п╩я▐ п╢п╟п╫п╫п╬пЁп╬ п╨п╩п╟я│я│п╟ п©п╬п╢п╠п╬я─п╟ я│п╦я│я┌п╣п╪я▀ п╟п╨я│п╦п╬п╪
+*	Parameters:	newDataSet - п╫п╬п╡я▀п╧ п╫п╟п╠п╬я─ п╢п╟п╫п╫я▀я┘
 *	Returns:		0
 *	Throws:		-
 *	Author:		dk
@@ -200,9 +200,9 @@ int BaseGenetics::setDataSet (const DataSet &newDataSet) {
 /****************************************************************************
 *				BaseGenetics::setParamsOfDataSet
 *
-*	Description:	Установка вектора указания канонического порядка 
-*				параметров набора данных по которым ведется анализ
-*	Parameters:	params - устанавливаемый вектор
+*	Description:	пёя│я┌п╟п╫п╬п╡п╨п╟ п╡п╣п╨я┌п╬я─п╟ я┐п╨п╟п╥п╟п╫п╦я▐ п╨п╟п╫п╬п╫п╦я┤п╣я│п╨п╬пЁп╬ п©п╬я─я▐п╢п╨п╟ 
+*				п©п╟я─п╟п╪п╣я┌я─п╬п╡ п╫п╟п╠п╬я─п╟ п╢п╟п╫п╫я▀я┘ п©п╬ п╨п╬я┌п╬я─я▀п╪ п╡п╣п╢п╣я┌я│я▐ п╟п╫п╟п╩п╦п╥
+*	Parameters:	params - я┐я│я┌п╟п╫п╟п╡п╩п╦п╡п╟п╣п╪я▀п╧ п╡п╣п╨я┌п╬я─
 *	Returns:		0
 *	Throws:		-
 *	Author:		dk
@@ -217,8 +217,8 @@ int BaseGenetics::setParamsOfDataSet (std::vector<int> &params) {
 /****************************************************************************
 *				BaseGenetics::setNumOfIter
 *
-*	Description:	Установка нового значения числа итераций при подборе оптимальной системы аксиом
-*	Parameters:	newNumOfIter - новое значение числа итераций
+*	Description:	пёя│я┌п╟п╫п╬п╡п╨п╟ п╫п╬п╡п╬пЁп╬ п╥п╫п╟я┤п╣п╫п╦я▐ я┤п╦я│п╩п╟ п╦я┌п╣я─п╟я├п╦п╧ п©я─п╦ п©п╬п╢п╠п╬я─п╣ п╬п©я┌п╦п╪п╟п╩я▄п╫п╬п╧ я│п╦я│я┌п╣п╪я▀ п╟п╨я│п╦п╬п╪
+*	Parameters:	newNumOfIter - п╫п╬п╡п╬п╣ п╥п╫п╟я┤п╣п╫п╦п╣ я┤п╦я│п╩п╟ п╦я┌п╣я─п╟я├п╦п╧
 *	Returns:		0
 *	Throws:		-
 *	Author:		dk
@@ -234,60 +234,60 @@ int BaseGenetics::setNumOfIter (const int newNumOfIter) {
 /****************************************************************************
 *			BaseGenetics::run
 *
-*	Description:	Запуск ГА
+*	Description:	п≈п╟п©я┐я│п╨ п⌠п░
 *	Parameters:	-
 *	Returns:		0
-*	Throws:		AxiomLibException - если произошла ошибка или ГА не
-*				был инициализирован
+*	Throws:		AxiomLibException - п╣я│п╩п╦ п©я─п╬п╦п╥п╬я┬п╩п╟ п╬я┬п╦п╠п╨п╟ п╦п╩п╦ п⌠п░ п╫п╣
+*				п╠я▀п╩ п╦п╫п╦я├п╦п╟п╩п╦п╥п╦я─п╬п╡п╟п╫
 *	Author:		gevor, dk
 *	History:
 *
 ****************************************************************************/
 int BaseGenetics::run(void) {
-	// Классический генетический алгоритм:
-	// 0. проверяем, установлены ли параметры
-	// В цикле:
-	// 1. Прогоняем на существующих системах аксиом распознаватель
-	// 2. Вычисляем значение целевой функции по каждой из систем аксиом
-	// 3. Селекционируем, Проверяем критерий останова
-	// 4. Мутируем
-	// 5. Скрещиваем
+	// п п╩п╟я│я│п╦я┤п╣я│п╨п╦п╧ пЁп╣п╫п╣я┌п╦я┤п╣я│п╨п╦п╧ п╟п╩пЁп╬я─п╦я┌п╪:
+	// 0. п©я─п╬п╡п╣я─я▐п╣п╪, я┐я│я┌п╟п╫п╬п╡п╩п╣п╫я▀ п╩п╦ п©п╟я─п╟п╪п╣я┌я─я▀
+	// п▓ я├п╦п╨п╩п╣:
+	// 1. п÷я─п╬пЁп╬п╫я▐п╣п╪ п╫п╟ я│я┐я┴п╣я│я┌п╡я┐я▌я┴п╦я┘ я│п╦я│я┌п╣п╪п╟я┘ п╟п╨я│п╦п╬п╪ я─п╟я│п©п╬п╥п╫п╟п╡п╟я┌п╣п╩я▄
+	// 2. п▓я▀я┤п╦я│п╩я▐п╣п╪ п╥п╫п╟я┤п╣п╫п╦п╣ я├п╣п╩п╣п╡п╬п╧ я└я┐п╫п╨я├п╦п╦ п©п╬ п╨п╟п╤п╢п╬п╧ п╦п╥ я│п╦я│я┌п╣п╪ п╟п╨я│п╦п╬п╪
+	// 3. п║п╣п╩п╣п╨я├п╦п╬п╫п╦я─я┐п╣п╪, п÷я─п╬п╡п╣я─я▐п╣п╪ п╨я─п╦я┌п╣я─п╦п╧ п╬я│я┌п╟п╫п╬п╡п╟
+	// 4. п°я┐я┌п╦я─я┐п╣п╪
+	// 5. п║п╨я─п╣я┴п╦п╡п╟п╣п╪
 
-	// 0. проверка параметров
+	// 0. п©я─п╬п╡п╣я─п╨п╟ п©п╟я─п╟п╪п╣я┌я─п╬п╡
 	if (numOfIter < 0)
 		throw AxiomLibException("BaseGenetics::run : number of iterations < 0; probably GA has not been initialized.");
 		
-	AxiomSetWithStats bestAxiomSet; // заводим переменную дял хранения лучшей системы аксиом за историю
-	// Основной Цикл
+	AxiomSetWithStats bestAxiomSet; // п╥п╟п╡п╬п╢п╦п╪ п©п╣я─п╣п╪п╣п╫п╫я┐я▌ п╢я▐п╩ я┘я─п╟п╫п╣п╫п╦я▐ п╩я┐я┤я┬п╣п╧ я│п╦я│я┌п╣п╪я▀ п╟п╨я│п╦п╬п╪ п╥п╟ п╦я│я┌п╬я─п╦я▌
+	// п·я│п╫п╬п╡п╫п╬п╧ п╕п╦п╨п╩
 	for (int gaIter=0; gaIter < numOfIter; gaIter++) {
 		if (comments) { 
 			cout << "	BaseGenetics: iteration " << gaIter+1 << " out of " << numOfIter << ", pop size = " << axiomSetPop.size() << "\n";
 			std::cout.flush();
 		}
 
-		// 1. Прогоняем на существующей популяции алгоритм разметки и распознавания, получаем число ошибок первого и второго рода, заполняем статистику.
+		// 1. п÷я─п╬пЁп╬п╫я▐п╣п╪ п╫п╟ я│я┐я┴п╣я│я┌п╡я┐я▌я┴п╣п╧ п©п╬п©я┐п╩я▐я├п╦п╦ п╟п╩пЁп╬я─п╦я┌п╪ я─п╟п╥п╪п╣я┌п╨п╦ п╦ я─п╟я│п©п╬п╥п╫п╟п╡п╟п╫п╦я▐, п©п╬п╩я┐я┤п╟п╣п╪ я┤п╦я│п╩п╬ п╬я┬п╦п╠п╬п╨ п©п╣я─п╡п╬пЁп╬ п╦ п╡я┌п╬я─п╬пЁп╬ я─п╬п╢п╟, п╥п╟п©п╬п╩п╫я▐п╣п╪ я│я┌п╟я┌п╦я│я┌п╦п╨я┐.
 		recognizer->run(axiomSetPop);
 		
-		// 2. Прогоняем вычисление H(first, second)
+		// 2. п÷я─п╬пЁп╬п╫я▐п╣п╪ п╡я▀я┤п╦я│п╩п╣п╫п╦п╣ H(first, second)
 		goalStrategy->compute(axiomSetPop);
 		
-		// 3. Проводим операцию селекции (на первом цикле, очевидно, бессмысленная)
+		// 3. п÷я─п╬п╡п╬п╢п╦п╪ п╬п©п╣я─п╟я├п╦я▌ я│п╣п╩п╣п╨я├п╦п╦ (п╫п╟ п©п╣я─п╡п╬п╪ я├п╦п╨п╩п╣, п╬я┤п╣п╡п╦п╢п╫п╬, п╠п╣я│я│п╪я▀я│п╩п╣п╫п╫п╟я▐)
 		if (gaIter != 0) {
 			selectionStrategy->select(axiomSetPop);
 		}
 		
-		// Проверяем условие выхода
+		// п÷я─п╬п╡п╣я─я▐п╣п╪ я┐я│п╩п╬п╡п╦п╣ п╡я▀я┘п╬п╢п╟
 		if (axiomSetPop.exit(exitCond, bestAxiomSet)) break;
 		
-		// 4. Мутируем
+		// 4. п°я┐я┌п╦я─я┐п╣п╪
 		transmuteStrategy->transmute(axiomSetPop);
 		
-		// 5. Скрещиваем    
+		// 5. п║п╨я─п╣я┴п╦п╡п╟п╣п╪    
 		crossoverStrategy->crossover(axiomSetPop);
 		
 		if (comments) cout << "\n";
 	}
-	// сохраняем лучшую систему аксиом в файл
+	// я│п╬я┘я─п╟п╫я▐п╣п╪ п╩я┐я┤я┬я┐я▌ я│п╦я│я┌п╣п╪я┐ п╟п╨я│п╦п╬п╪ п╡ я└п╟п╧п╩
 	if (comments) {
 		int  first, second;
 		double goal;
@@ -305,59 +305,59 @@ int BaseGenetics::run(void) {
 /****************************************************************************
 *			BaseGenetics::run
 *
-*	Description:	Запуск генетического алгоритма с записью получившейся 
-*				популяции и возвратом наилучшего значения целевой функции
-*	Parameters:	asp - переменная для записи значений получившейся популяции
-*	Returns:		double - наилучшее полученное значение целевой функции
-*	Throws:		AxiomLibException - если произошла ошибка или ГА не
-*				был инициализирован
+*	Description:	п≈п╟п©я┐я│п╨ пЁп╣п╫п╣я┌п╦я┤п╣я│п╨п╬пЁп╬ п╟п╩пЁп╬я─п╦я┌п╪п╟ я│ п╥п╟п©п╦я│я▄я▌ п©п╬п╩я┐я┤п╦п╡я┬п╣п╧я│я▐ 
+*				п©п╬п©я┐п╩я▐я├п╦п╦ п╦ п╡п╬п╥п╡я─п╟я┌п╬п╪ п╫п╟п╦п╩я┐я┤я┬п╣пЁп╬ п╥п╫п╟я┤п╣п╫п╦я▐ я├п╣п╩п╣п╡п╬п╧ я└я┐п╫п╨я├п╦п╦
+*	Parameters:	asp - п©п╣я─п╣п╪п╣п╫п╫п╟я▐ п╢п╩я▐ п╥п╟п©п╦я│п╦ п╥п╫п╟я┤п╣п╫п╦п╧ п©п╬п╩я┐я┤п╦п╡я┬п╣п╧я│я▐ п©п╬п©я┐п╩я▐я├п╦п╦
+*	Returns:		double - п╫п╟п╦п╩я┐я┤я┬п╣п╣ п©п╬п╩я┐я┤п╣п╫п╫п╬п╣ п╥п╫п╟я┤п╣п╫п╦п╣ я├п╣п╩п╣п╡п╬п╧ я└я┐п╫п╨я├п╦п╦
+*	Throws:		AxiomLibException - п╣я│п╩п╦ п©я─п╬п╦п╥п╬я┬п╩п╟ п╬я┬п╦п╠п╨п╟ п╦п╩п╦ п⌠п░ п╫п╣
+*				п╠я▀п╩ п╦п╫п╦я├п╦п╟п╩п╦п╥п╦я─п╬п╡п╟п╫
 *	Author:		dk
 *	History:
 *
 ****************************************************************************/
 double BaseGenetics::run(AxiomSetPop &asp) {
-	// Классический генетический алгоритм:
-	// 0. проверяем, установлены ли параметры
-	// В цикле:
-	// 1. Прогоняем на существующих системах аксиом распознаватель
-	// 2. Вычисляем значение целевой функции по каждой из систем аксиом
-	// 3. Селекционируем, Проверяем критерий останова
-	// 4. Мутируем
-	// 5. Скрещиваем
+	// п п╩п╟я│я│п╦я┤п╣я│п╨п╦п╧ пЁп╣п╫п╣я┌п╦я┤п╣я│п╨п╦п╧ п╟п╩пЁп╬я─п╦я┌п╪:
+	// 0. п©я─п╬п╡п╣я─я▐п╣п╪, я┐я│я┌п╟п╫п╬п╡п╩п╣п╫я▀ п╩п╦ п©п╟я─п╟п╪п╣я┌я─я▀
+	// п▓ я├п╦п╨п╩п╣:
+	// 1. п÷я─п╬пЁп╬п╫я▐п╣п╪ п╫п╟ я│я┐я┴п╣я│я┌п╡я┐я▌я┴п╦я┘ я│п╦я│я┌п╣п╪п╟я┘ п╟п╨я│п╦п╬п╪ я─п╟я│п©п╬п╥п╫п╟п╡п╟я┌п╣п╩я▄
+	// 2. п▓я▀я┤п╦я│п╩я▐п╣п╪ п╥п╫п╟я┤п╣п╫п╦п╣ я├п╣п╩п╣п╡п╬п╧ я└я┐п╫п╨я├п╦п╦ п©п╬ п╨п╟п╤п╢п╬п╧ п╦п╥ я│п╦я│я┌п╣п╪ п╟п╨я│п╦п╬п╪
+	// 3. п║п╣п╩п╣п╨я├п╦п╬п╫п╦я─я┐п╣п╪, п÷я─п╬п╡п╣я─я▐п╣п╪ п╨я─п╦я┌п╣я─п╦п╧ п╬я│я┌п╟п╫п╬п╡п╟
+	// 4. п°я┐я┌п╦я─я┐п╣п╪
+	// 5. п║п╨я─п╣я┴п╦п╡п╟п╣п╪
 
-	// 0. проверка параметров
+	// 0. п©я─п╬п╡п╣я─п╨п╟ п©п╟я─п╟п╪п╣я┌я─п╬п╡
 	if (numOfIter < 0)
 		throw AxiomLibException("BaseGenetics::run : number of iterations < 0; probably GA has not been initialized.");
 		
-	AxiomSetWithStats bestAxiomSet; // заводим переменную дял хранения лучшей системы аксиом за историю
-	// Основной Цикл
+	AxiomSetWithStats bestAxiomSet; // п╥п╟п╡п╬п╢п╦п╪ п©п╣я─п╣п╪п╣п╫п╫я┐я▌ п╢я▐п╩ я┘я─п╟п╫п╣п╫п╦я▐ п╩я┐я┤я┬п╣п╧ я│п╦я│я┌п╣п╪я▀ п╟п╨я│п╦п╬п╪ п╥п╟ п╦я│я┌п╬я─п╦я▌
+	// п·я│п╫п╬п╡п╫п╬п╧ п╕п╦п╨п╩
 	for (int gaIter=0; gaIter < numOfIter; gaIter++) {
 		//if (comments) cout << "	BaseGenetics: iteration " << gaIter+1 << " out of " << numOfIter << ", pop size = " << axiomSetPop.size() << "\n";
-		// 1. Прогоняем на существующей популяции алгоритм разметки и распознавания, получаем число ошибок первого и второго рода, заполняем статистику.
+		// 1. п÷я─п╬пЁп╬п╫я▐п╣п╪ п╫п╟ я│я┐я┴п╣я│я┌п╡я┐я▌я┴п╣п╧ п©п╬п©я┐п╩я▐я├п╦п╦ п╟п╩пЁп╬я─п╦я┌п╪ я─п╟п╥п╪п╣я┌п╨п╦ п╦ я─п╟я│п©п╬п╥п╫п╟п╡п╟п╫п╦я▐, п©п╬п╩я┐я┤п╟п╣п╪ я┤п╦я│п╩п╬ п╬я┬п╦п╠п╬п╨ п©п╣я─п╡п╬пЁп╬ п╦ п╡я┌п╬я─п╬пЁп╬ я─п╬п╢п╟, п╥п╟п©п╬п╩п╫я▐п╣п╪ я│я┌п╟я┌п╦я│я┌п╦п╨я┐.
 		recognizer->run(axiomSetPop);
 		
-		// 2. Прогоняем вычисление H(first, second)
+		// 2. п÷я─п╬пЁп╬п╫я▐п╣п╪ п╡я▀я┤п╦я│п╩п╣п╫п╦п╣ H(first, second)
 		goalStrategy->compute(axiomSetPop);
 		
-		// 3. Проводим операцию селекции (на первом цикле, очевидно, бессмысленная)
+		// 3. п÷я─п╬п╡п╬п╢п╦п╪ п╬п©п╣я─п╟я├п╦я▌ я│п╣п╩п╣п╨я├п╦п╦ (п╫п╟ п©п╣я─п╡п╬п╪ я├п╦п╨п╩п╣, п╬я┤п╣п╡п╦п╢п╫п╬, п╠п╣я│я│п╪я▀я│п╩п╣п╫п╫п╟я▐)
 		if (gaIter != 0) {
 			selectionStrategy->select(axiomSetPop);
 		}
 		
-		// Проверяем условие выхода
+		// п÷я─п╬п╡п╣я─я▐п╣п╪ я┐я│п╩п╬п╡п╦п╣ п╡я▀я┘п╬п╢п╟
 		if (axiomSetPop.exit(exitCond, bestAxiomSet)) break;
 		
-		// 4. Мутируем
+		// 4. п°я┐я┌п╦я─я┐п╣п╪
 		transmuteStrategy->transmute(axiomSetPop);
 		
-		// 5. Скрещиваем    
+		// 5. п║п╨я─п╣я┴п╦п╡п╟п╣п╪    
 		crossoverStrategy->crossover(axiomSetPop);
 		
 		if (comments) cout << "\n";
 	}
-	// запись полученной популяции для возврата
+	// п╥п╟п©п╦я│я▄ п©п╬п╩я┐я┤п╣п╫п╫п╬п╧ п©п╬п©я┐п╩я▐я├п╦п╦ п╢п╩я▐ п╡п╬п╥п╡я─п╟я┌п╟
 	//asp = axiomSetPop;
-	// возвращаем лучшее значение целевой функции
+	// п╡п╬п╥п╡я─п╟я┴п╟п╣п╪ п╩я┐я┤я┬п╣п╣ п╥п╫п╟я┤п╣п╫п╦п╣ я├п╣п╩п╣п╡п╬п╧ я└я┐п╫п╨я├п╦п╦
 	int  first, second;
 	double goal;
 	bestAxiomSet.unsafeGetStats (first, second, goal);
@@ -370,11 +370,11 @@ double BaseGenetics::run(AxiomSetPop &asp) {
 /****************************************************************************
 *			BaseGenetics::writeResultsToDisplay
 *
-*	Description:	Вывод результатов ГА на дисплей
+*	Description:	п▓я▀п╡п╬п╢ я─п╣п╥я┐п╩я▄я┌п╟я┌п╬п╡ п⌠п░ п╫п╟ п╢п╦я│п©п╩п╣п╧
 *	Parameters:	0
 *	Returns:	0
-*	Throws:		AxiomLibException - если произошла ошибка или ГА не
-*				был запущен
+*	Throws:		AxiomLibException - п╣я│п╩п╦ п©я─п╬п╦п╥п╬я┬п╩п╟ п╬я┬п╦п╠п╨п╟ п╦п╩п╦ п⌠п░ п╫п╣
+*				п╠я▀п╩ п╥п╟п©я┐я┴п╣п╫
 *	Author:		gevor
 *	History:
 *

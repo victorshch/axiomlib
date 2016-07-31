@@ -1,7 +1,7 @@
 /****************************************************************************
-*			MetricsBetweenSets1.сxx
+*			MetricsBetweenSets1.я│xx
 *
-*	Description: Реализация метода класса
+*	Description: п═п╣п╟п╩п╦п╥п╟я├п╦я▐ п╪п╣я┌п╬п╢п╟ п╨п╩п╟я│я│п╟
 *	Author:		armkor
 *	History:
 *
@@ -15,9 +15,9 @@ namespace MultiMarking {
 
 double BetweenSets1::compute(const std::vector<bool>& v1,const std::vector<bool>& v2) {
     //std::cout << "BetweenSets1::compute";
-    double k=0; /* Расстояние между двумя множествами */
-    int min=0; /* Мощность меньшего множества */
-    int max=0; /* Мощность большего множества */
+    double k=0; /* п═п╟я│я│я┌п╬я▐п╫п╦п╣ п╪п╣п╤п╢я┐ п╢п╡я┐п╪я▐ п╪п╫п╬п╤п╣я│я┌п╡п╟п╪п╦ */
+    int min=0; /* п°п╬я┴п╫п╬я│я┌я▄ п╪п╣п╫я▄я┬п╣пЁп╬ п╪п╫п╬п╤п╣я│я┌п╡п╟ */
+    int max=0; /* п°п╬я┴п╫п╬я│я┌я▄ п╠п╬п╩я▄я┬п╣пЁп╬ п╪п╫п╬п╤п╣я│я┌п╡п╟ */
     for (int i=0;i < v1.size();i++) {
       //  std::cout <<"v1[i]"<< v1[i];
         if (v1[i] == true) {

@@ -1,7 +1,7 @@
 /****************************************************************************
 *					Logger
 *
-*	Description:	Класс для логирования в cout и файл
+*	Description:	п п╩п╟я│я│ п╢п╩я▐ п╩п╬пЁп╦я─п╬п╡п╟п╫п╦я▐ п╡ cout п╦ я└п╟п╧п╩
 *	Author:			wictor
 *	History:	
 *
@@ -19,9 +19,9 @@
 
 namespace AxiomLib {
 
-// singleton для логирования
-// инстанс автоматически удаляется в конце работы программы 
-// (когда выполняются деструкторы статических объектов)
+// singleton п╢п╩я▐ п╩п╬пЁп╦я─п╬п╡п╟п╫п╦я▐
+// п╦п╫я│я┌п╟п╫я│ п╟п╡я┌п╬п╪п╟я┌п╦я┤п╣я│п╨п╦ я┐п╢п╟п╩я▐п╣я┌я│я▐ п╡ п╨п╬п╫я├п╣ я─п╟п╠п╬я┌я▀ п©я─п╬пЁя─п╟п╪п╪я▀ 
+// (п╨п╬пЁп╢п╟ п╡я▀п©п╬п╩п╫я▐я▌я┌я│я▐ п╢п╣я│я┌я─я┐п╨я┌п╬я─я▀ я│я┌п╟я┌п╦я┤п╣я│п╨п╦я┘ п╬п╠я┼п╣п╨я┌п╬п╡)
 class Logger
 {
 public:
@@ -32,14 +32,14 @@ public:
 	bool useLogFile() const;
 	bool timeStamp() const;
 	
-	// не нитебезопасные
+	// п╫п╣ п╫п╦я┌п╣п╠п╣п╥п╬п©п╟я│п╫я▀п╣
 	void setComments(bool value);
 	void setDebug(bool value);
 	void setLogFile(const std::string& fileName);
 	void setTimeStamp(bool value);
 	
-	// Если комментарии включены, то пишет в cout строку, \n и flush'ит буфер
-	// формально не нитебезопасная из-за cout
+	// п∙я│п╩п╦ п╨п╬п╪п╪п╣п╫я┌п╟я─п╦п╦ п╡п╨п╩я▌я┤п╣п╫я▀, я┌п╬ п©п╦я┬п╣я┌ п╡ cout я│я┌я─п╬п╨я┐, \n п╦ flush'п╦я┌ п╠я┐я└п╣я─
+	// я└п╬я─п╪п╟п╩я▄п╫п╬ п╫п╣ п╫п╦я┌п╣п╠п╣п╥п╬п©п╟я│п╫п╟я▐ п╦п╥-п╥п╟ cout
 	void writeComment(const std::string& str) const;
 	void writeDebug(const std::string& str) const;
 
@@ -47,7 +47,7 @@ public:
 	static void debug(const std::string& str);
 	
 private:
-	// Эти функции вынесены в private намеренно
+	// п╜я┌п╦ я└я┐п╫п╨я├п╦п╦ п╡я▀п╫п╣я│п╣п╫я▀ п╡ private п╫п╟п╪п╣я─п╣п╫п╫п╬
 	Logger();
 	Logger(const Logger&);
 	Logger& operator=(const Logger&);

@@ -36,7 +36,7 @@ PlotBrowser::PlotBrowser(ManagedFuzzyDataController *controller, int stage, bool
 	std::vector<int> paramNums;
 	controller->fuzzyMultiDataLearnAlgorithm.getDataSet().getParamNums(paramNums);
 	
-	// проход по размерностям
+	// п©я─п╬я┘п╬п╢ п©п╬ я─п╟п╥п╪п╣я─п╫п╬я│я┌я▐п╪
 	for(int i = 0; i < paramNums.size(); i++) {
 		VectorPlot * vectorPlot = new VectorPlot(0, paramNames[paramNums[i]].c_str(), legend);
 		ui.verticalLayout_plots->addWidget(vectorPlot);
@@ -110,7 +110,7 @@ void PlotBrowser::replot() const {
 	PCMultiVector multiTS = PCMultiVector(multiTSRaw);
 	std::vector<int> paramNums;
 	controller->fuzzyMultiDataLearnAlgorithm.getDataSet().getParamNums(paramNums);
-	// Строим графики рядов
+	// п║я┌я─п╬п╦п╪ пЁя─п╟я└п╦п╨п╦ я─я▐п╢п╬п╡
 	for(int i = 0; i < vectorPlotList.size(); i++) {
 		VectorPlot *currentPlot = vectorPlotList[i];
 		currentPlot->clear();
@@ -123,7 +123,7 @@ void PlotBrowser::replot() const {
 		currentPlot->addClippingMarkers();
 	}
 	
-	// Отмечаем выполнение условий
+	// п·я┌п╪п╣я┤п╟п╣п╪ п╡я▀п©п╬п╩п╫п╣п╫п╦п╣ я┐я│п╩п╬п╡п╦п╧
 	ColorManager colorManager;
 	std::vector<int> markup;
 	std::vector<int> marking;

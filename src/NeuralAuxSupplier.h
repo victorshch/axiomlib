@@ -1,7 +1,7 @@
 /****************************************************************************
 *			NeuralAuxSupplier.h
 *
-*	Description: Описание класса NeuralAuxSupplier
+*	Description: п·п©п╦я│п╟п╫п╦п╣ п╨п╩п╟я│я│п╟ NeuralAuxSupplier
 *	Author:		wictor
 *	History:	
 *
@@ -16,11 +16,11 @@ namespace AxiomLib {
 /****************************************************************************
 *			NeuralAuxSupplier<NetWrapper>
 *
-*	Description: Класс - прослойка, осуществляющая автоматическое добавление
-*				строк для дополнительного обучения (т.е вызывающая supplyAuxTrainingSata()
-*				с автоматически сгенерированными строками)
-*				NetWrapper - должен моделировать NetWrapper или Holder (см. NeuralConcepts.h)
-*				Данный класс моделирует то же, что и NetWrapper
+*	Description: п п╩п╟я│я│ - п©я─п╬я│п╩п╬п╧п╨п╟, п╬я│я┐я┴п╣я│я┌п╡п╩я▐я▌я┴п╟я▐ п╟п╡я┌п╬п╪п╟я┌п╦я┤п╣я│п╨п╬п╣ п╢п╬п╠п╟п╡п╩п╣п╫п╦п╣
+*				я│я┌я─п╬п╨ п╢п╩я▐ п╢п╬п©п╬п╩п╫п╦я┌п╣п╩я▄п╫п╬пЁп╬ п╬п╠я┐я┤п╣п╫п╦я▐ (я┌.п╣ п╡я▀п╥я▀п╡п╟я▌я┴п╟я▐ supplyAuxTrainingSata()
+*				я│ п╟п╡я┌п╬п╪п╟я┌п╦я┤п╣я│п╨п╦ я│пЁп╣п╫п╣я─п╦я─п╬п╡п╟п╫п╫я▀п╪п╦ я│я┌я─п╬п╨п╟п╪п╦)
+*				NetWrapper - п╢п╬п╩п╤п╣п╫ п╪п╬п╢п╣п╩п╦я─п╬п╡п╟я┌я▄ NetWrapper п╦п╩п╦ Holder (я│п╪. NeuralConcepts.h)
+*				п■п╟п╫п╫я▀п╧ п╨п╩п╟я│я│ п╪п╬п╢п╣п╩п╦я─я┐п╣я┌ я┌п╬ п╤п╣, я┤я┌п╬ п╦ NetWrapper
 *	Author:		wictor
 *	History:	
 *
@@ -29,7 +29,7 @@ template<class NetWrapper>
 class NeuralAuxSupplier: public NetWrapper {
 	public:
 	
-	// Генерация дополнительных строк
+	// п⌠п╣п╫п╣я─п╟я├п╦я▐ п╢п╬п©п╬п╩п╫п╦я┌п╣п╩я▄п╫я▀я┘ я│я┌я─п╬п╨
 	template<class Settings>
 	void construct(const Settings &settings);
 };

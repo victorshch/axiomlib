@@ -1,7 +1,7 @@
 /****************************************************************************
 *				IntInterval.h
 *
-*	Description: Класс, описывающий целочисленный интервал
+*	Description: п п╩п╟я│я│, п╬п©п╦я│я▀п╡п╟я▌я┴п╦п╧ я├п╣п╩п╬я┤п╦я│п╩п╣п╫п╫я▀п╧ п╦п╫я┌п╣я─п╡п╟п╩
 *	Author:		wictor
 *	History:	
 *
@@ -17,11 +17,11 @@
 #include "AxiomLibException.h"
 
 namespace AxiomLib {
-	// Класс для целочисленного интервала
+	// п п╩п╟я│я│ п╢п╩я▐ я├п╣п╩п╬я┤п╦я│п╩п╣п╫п╫п╬пЁп╬ п╦п╫я┌п╣я─п╡п╟п╩п╟
 	class IntInterval {
 		int left_, right_;
 		
-		// Объявления, необходимые для сериализации
+		// п·п╠я┼я▐п╡п╩п╣п╫п╦я▐, п╫п╣п╬п╠я┘п╬п╢п╦п╪я▀п╣ п╢п╩я▐ я│п╣я─п╦п╟п╩п╦п╥п╟я├п╦п╦
 		friend class boost::serialization::access;
 		template<class Archive>
 		void serialize(Archive & archive, const unsigned int /*version*/)
@@ -31,38 +31,38 @@ namespace AxiomLib {
 		}
 		
 	public:
-		// Конструктор умолчания
+		// п п╬п╫я│я┌я─я┐п╨я┌п╬я─ я┐п╪п╬п╩я┤п╟п╫п╦я▐
 		IntInterval() : left_(-1), right_(0) { }
 		
-		// Конструктор, задаюищй интервал
+		// п п╬п╫я│я┌я─я┐п╨я┌п╬я─, п╥п╟п╢п╟я▌п╦я┴п╧ п╦п╫я┌п╣я─п╡п╟п╩
 		IntInterval(int left, int right) : left_(left), right_(right) {
 			if(left < 0 || left > right) {
 				throw AxiomLib::AxiomLibException("IntInterval::IntInterval(): invalid range");
 			}
 		}
 		
-		// Конструктор, задающий интервал в соответствии с длиной вектора
+		// п п╬п╫я│я┌я─я┐п╨я┌п╬я─, п╥п╟п╢п╟я▌я┴п╦п╧ п╦п╫я┌п╣я─п╡п╟п╩ п╡ я│п╬п╬я┌п╡п╣я┌я│я┌п╡п╦п╦ я│ п╢п╩п╦п╫п╬п╧ п╡п╣п╨я┌п╬я─п╟
 		template<class T>
 		explicit IntInterval(const std::vector<T> &v) : left_(0), right_(v.size() - 1) { }
 		
-		// Левая граница
+		// п⌡п╣п╡п╟я▐ пЁя─п╟п╫п╦я├п╟
 		int left() const { return left_; }
 		
-		// Правая граница
+		// п÷я─п╟п╡п╟я▐ пЁя─п╟п╫п╦я├п╟
 		int right() const { return right_; }
 		
-		// Длина интервала (обе границы включаются)
+		// п■п╩п╦п╫п╟ п╦п╫я┌п╣я─п╡п╟п╩п╟ (п╬п╠п╣ пЁя─п╟п╫п╦я├я▀ п╡п╨п╩я▌я┤п╟я▌я┌я│я▐)
 		int length() const { return right() - left() + 1; }
 		
-		// Перевод индекса в с.о., в которой задан интервал, в
-		// индекс внутри интервала
+		// п÷п╣я─п╣п╡п╬п╢ п╦п╫п╢п╣п╨я│п╟ п╡ я│.п╬., п╡ п╨п╬я┌п╬я─п╬п╧ п╥п╟п╢п╟п╫ п╦п╫я┌п╣я─п╡п╟п╩, п╡
+		// п╦п╫п╢п╣п╨я│ п╡п╫я┐я┌я─п╦ п╦п╫я┌п╣я─п╡п╟п╩п╟
 		int translateIndex(int index) const { return index - left(); }
 		
-		// Перевод индекса внутри интервала в индекс в с.о., в
-		// которой задан интервал
+		// п÷п╣я─п╣п╡п╬п╢ п╦п╫п╢п╣п╨я│п╟ п╡п╫я┐я┌я─п╦ п╦п╫я┌п╣я─п╡п╟п╩п╟ п╡ п╦п╫п╢п╣п╨я│ п╡ я│.п╬., п╡
+		// п╨п╬я┌п╬я─п╬п╧ п╥п╟п╢п╟п╫ п╦п╫я┌п╣я─п╡п╟п╩
 		int reverseIndex(int clippedIndex) const { return clippedIndex + left(); }
 		
-		// Оператор сравнения на равенство
+		// п·п©п╣я─п╟я┌п╬я─ я│я─п╟п╡п╫п╣п╫п╦я▐ п╫п╟ я─п╟п╡п╣п╫я│я┌п╡п╬
 		bool operator==(const IntInterval &other) const {
 			return left() == other.left() && right() == other.right();
 		}

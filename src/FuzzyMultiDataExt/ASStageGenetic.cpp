@@ -167,7 +167,7 @@ void ASObjectiveFunction::initFromEnv(const Environment &env)
 	if (env.getIntParamValue (ccNumPoints, "ccNumPoints") < 0)
 		throw AxiomLibException("ASObjectiveFunction::setParamsFromEnv : ccNumPoints is undefined.");
 
-	// создание класса распознавания участков разметки в ряду разметки
+	// я│п╬п╥п╢п╟п╫п╦п╣ п╨п╩п╟я│я│п╟ я─п╟я│п©п╬п╥п╫п╟п╡п╟п╫п╦я▐ я┐я┤п╟я│я┌п╨п╬п╡ я─п╟п╥п╪п╣я┌п╨п╦ п╡ я─я▐п╢я┐ я─п╟п╥п╪п╣я┌п╨п╦
 	std::string recogClassName;
 	ReducedRecognizerFactory rrf;
 	if (env.getStringParamValue(recogClassName, "ReducedRecognizer") < 0)
@@ -175,7 +175,7 @@ void ASObjectiveFunction::initFromEnv(const Environment &env)
 	mReducedRecognizer = std::auto_ptr<ReducedRecognizer>(rrf.create(recogClassName));
 	mReducedRecognizer->setParamsFromEnv (env);
 
-	// Инициализируем стратегию вычисления целевой функции
+	// п≤п╫п╦я├п╦п╟п╩п╦п╥п╦я─я┐п╣п╪ я│я┌я─п╟я┌п╣пЁп╦я▌ п╡я▀я┤п╦я│п╩п╣п╫п╦я▐ я├п╣п╩п╣п╡п╬п╧ я└я┐п╫п╨я├п╦п╦
 	std::string goalStrategyName;
 	GoalStrategyFactory gsf;
 	if (env.getStringParamValue(goalStrategyName, "goalClass") < 0)
@@ -224,7 +224,7 @@ double ASObjectiveFunction::matterAxiomSetFunc(AxiomExprSetPlus &as, std::vector
 		as.errFirst += tmpFirst;
 		as.errSecond += tmpSecond;
 	}
-	// Вычисление значения целевой функции для полученного числа ошибок I и II рода
+	// п▓я▀я┤п╦я│п╩п╣п╫п╦п╣ п╥п╫п╟я┤п╣п╫п╦я▐ я├п╣п╩п╣п╡п╬п╧ я└я┐п╫п╨я├п╦п╦ п╢п╩я▐ п©п╬п╩я┐я┤п╣п╫п╫п╬пЁп╬ я┤п╦я│п╩п╟ п╬я┬п╦п╠п╬п╨ I п╦ II я─п╬п╢п╟
 	as.goal = mGoalStrategy->compute(as.errFirst, as.errSecond);
 
 	return as.goal;
@@ -234,14 +234,14 @@ double ASObjectiveFunction::matterAxiomSetFunc (AxiomExprSetPlus &as, int abType
 	int numOfClasses;
 	std::vector <int> numOfMultiTS;
 	std::vector < std::vector <int> > numOfTS;
-	// получаем информацию о числе траекторий контрольной выборки
+	// п©п╬п╩я┐я┤п╟п╣п╪ п╦п╫я└п╬я─п╪п╟я├п╦я▌ п╬ я┤п╦я│п╩п╣ я┌я─п╟п╣п╨я┌п╬я─п╦п╧ п╨п╬п╫я┌я─п╬п╩я▄п╫п╬п╧ п╡я▀п╠п╬я─п╨п╦
 	mFuzzyDataSet->getTestSize (numOfClasses, numOfMultiTS, numOfTS);
 	if ((abType < 0) || (abType >= numOfClasses))
 		throw AxiomLibException("ASObjectiveFunction::matterAxiomSetFunc: incorrect input number of abnormal type.");
-	// подготавливаем перменные для хранения числа ошибок
+	// п©п╬п╢пЁп╬я┌п╟п╡п╩п╦п╡п╟п╣п╪ п©п╣я─п╪п╣п╫п╫я▀п╣ п╢п╩я▐ я┘я─п╟п╫п╣п╫п╦я▐ я┤п╦я│п╩п╟ п╬я┬п╦п╠п╬п╨
 	errFirstVal = 0;
 	errSecondVal = 0;
-	// Выбираем очередную траекторию для заданного типа нештатного поведения и запускаем распознаватель
+	// п▓я▀п╠п╦я─п╟п╣п╪ п╬я┤п╣я─п╣п╢п╫я┐я▌ я┌я─п╟п╣п╨я┌п╬я─п╦я▌ п╢п╩я▐ п╥п╟п╢п╟п╫п╫п╬пЁп╬ я┌п╦п©п╟ п╫п╣я┬я┌п╟я┌п╫п╬пЁп╬ п©п╬п╡п╣п╢п╣п╫п╦я▐ п╦ п╥п╟п©я┐я│п╨п╟п╣п╪ я─п╟я│п©п╬п╥п╫п╟п╡п╟я┌п╣п╩я▄
 	std::vector <int> curMarkUp, curLabeling;
 	int num;
 
@@ -253,17 +253,17 @@ double ASObjectiveFunction::matterAxiomSetFunc (AxiomExprSetPlus &as, int abType
 
 //		debug() << "Abnormal trajectory marking: " << curMarkUp;
 
-		// разметка траектории контрольной выборки системой аксиом as
+		// я─п╟п╥п╪п╣я┌п╨п╟ я┌я─п╟п╣п╨я┌п╬я─п╦п╦ п╨п╬п╫я┌я─п╬п╩я▄п╫п╬п╧ п╡я▀п╠п╬я─п╨п╦ я│п╦я│я┌п╣п╪п╬п╧ п╟п╨я│п╦п╬п╪ as
 		performMarkUp(as, FuzzyDataSet::Testing, abType, t, curMarkUp);
-		// Распознавание нештатного поведения в разметке ряда
+		// п═п╟я│п©п╬п╥п╫п╟п╡п╟п╫п╦п╣ п╫п╣я┬я┌п╟я┌п╫п╬пЁп╬ п©п╬п╡п╣п╢п╣п╫п╦я▐ п╡ я─п╟п╥п╪п╣я┌п╨п╣ я─я▐п╢п╟
 		mReducedRecognizer->run (curMarkUp, genMarkUp, curLabeling);
 
 //		debug() << "Resulting labeling: " << curLabeling;
 
-		// Вычисление числа ошибок первого и второго рода
+		// п▓я▀я┤п╦я│п╩п╣п╫п╦п╣ я┤п╦я│п╩п╟ п╬я┬п╦п╠п╬п╨ п©п╣я─п╡п╬пЁп╬ п╦ п╡я┌п╬я─п╬пЁп╬ я─п╬п╢п╟
 		num = getStatistic (curLabeling);
 
-		// Суммирование числа ошибок
+		// п║я┐п╪п╪п╦я─п╬п╡п╟п╫п╦п╣ я┤п╦я│п╩п╟ п╬я┬п╦п╠п╬п╨
 		if (num == 0) {
 			currentSecondKindErrors = 1;
 		}
@@ -276,7 +276,7 @@ double ASObjectiveFunction::matterAxiomSetFunc (AxiomExprSetPlus &as, int abType
 		errSecondVal+= currentSecondKindErrors;
 		errFirstVal += currentFirstKindErrors;
 	}
-	// Пробегаем по всем рядам нормального поведения
+	// п÷я─п╬п╠п╣пЁп╟п╣п╪ п©п╬ п╡я│п╣п╪ я─я▐п╢п╟п╪ п╫п╬я─п╪п╟п╩я▄п╫п╬пЁп╬ п©п╬п╡п╣п╢п╣п╫п╦я▐
 	int numNormalMultiTS;
 	std::vector <int> numNormalTS;
 	mFuzzyDataSet->getNormalTestSize (numNormalMultiTS, numNormalTS);
@@ -284,19 +284,19 @@ double ASObjectiveFunction::matterAxiomSetFunc (AxiomExprSetPlus &as, int abType
 //	debug() << "Searching for markings in normal trajectory";
 
 	for (int t = 0; t < (int) numNormalTS.size(); t++) {
-		// размечаем траекторию нормального поведения
+		// я─п╟п╥п╪п╣я┤п╟п╣п╪ я┌я─п╟п╣п╨я┌п╬я─п╦я▌ п╫п╬я─п╪п╟п╩я▄п╫п╬пЁп╬ п©п╬п╡п╣п╢п╣п╫п╦я▐
 		performMarkUp(as, FuzzyDataSet::Testing, -1, t, curMarkUp);
 
 //		debug() << "Normal trajectory marking: " << curMarkUp;
-		// Распознавание нештатного поведения в разметке ряда
+		// п═п╟я│п©п╬п╥п╫п╟п╡п╟п╫п╦п╣ п╫п╣я┬я┌п╟я┌п╫п╬пЁп╬ п©п╬п╡п╣п╢п╣п╫п╦я▐ п╡ я─п╟п╥п╪п╣я┌п╨п╣ я─я▐п╢п╟
 		mReducedRecognizer->run (curMarkUp, genMarkUp, curLabeling);
 
 //		debug() << "Resulting labeling: " << curLabeling;
 
-		// Вычисление числа ошибок первого и второго рода
+		// п▓я▀я┤п╦я│п╩п╣п╫п╦п╣ я┤п╦я│п╩п╟ п╬я┬п╦п╠п╬п╨ п©п╣я─п╡п╬пЁп╬ п╦ п╡я┌п╬я─п╬пЁп╬ я─п╬п╢п╟
 		num = getStatistic (curLabeling);
 
-		// Суммирование числа ошибок
+		// п║я┐п╪п╪п╦я─п╬п╡п╟п╫п╦п╣ я┤п╦я│п╩п╟ п╬я┬п╦п╠п╬п╨
 		errFirstVal += num;
 
 		int oldTypeIErrors = as.getErrorsForTraj(-1, t).first;
@@ -305,7 +305,7 @@ double ASObjectiveFunction::matterAxiomSetFunc (AxiomExprSetPlus &as, int abType
 		as.setErrorsForTraj(-1, t, num + oldTypeIErrors, 0);
 	}
 
-	// Вычисление значения целевой функции для полученного числа ошибок I и II рода
+	// п▓я▀я┤п╦я│п╩п╣п╫п╦п╣ п╥п╫п╟я┤п╣п╫п╦я▐ я├п╣п╩п╣п╡п╬п╧ я└я┐п╫п╨я├п╦п╦ п╢п╩я▐ п©п╬п╩я┐я┤п╣п╫п╫п╬пЁп╬ я┤п╦я│п╩п╟ п╬я┬п╦п╠п╬п╨ I п╦ II я─п╬п╢п╟
 	goalVal = mGoalStrategy->compute(errFirstVal, errSecondVal);
 
 	return goalVal;
@@ -435,7 +435,7 @@ void ASMutation::removeAxiom(AxiomExprSetPlus &as, int classNo, int position) co
 	marking.erase(marking.begin() + position);
 
     if(axiomToRemove != 0 && axiomToRemove != -1 && std::find(marking.begin(), marking.end(), axiomToRemove) == marking.end()) {
-		// Если такой аксиомы в разметке больше нет, удаляем ее из системы аксиом
+		// п∙я│п╩п╦ я┌п╟п╨п╬п╧ п╟п╨я│п╦п╬п╪я▀ п╡ я─п╟п╥п╪п╣я┌п╨п╣ п╠п╬п╩я▄я┬п╣ п╫п╣я┌, я┐п╢п╟п╩я▐п╣п╪ п╣п╣ п╦п╥ я│п╦я│я┌п╣п╪я▀ п╟п╨я│п╦п╬п╪
 		as.removeAxiom(axiomToRemove);
 	}
 }
@@ -719,7 +719,7 @@ void ASStageGenetic::setAxiomSets(const std::vector<AxiomExprSetPlus> &initialAS
 }
 
 void trimZeros(std::vector<int> & v) {
-	// Убираем все 0 в начале вектора - их не учитываем
+	// пёп╠п╦я─п╟п╣п╪ п╡я│п╣ 0 п╡ п╫п╟я┤п╟п╩п╣ п╡п╣п╨я┌п╬я─п╟ - п╦я┘ п╫п╣ я┐я┤п╦я┌я▀п╡п╟п╣п╪
 	int k, l;
 	k = 0;
 	while (k < (int) v.size()) {
@@ -727,7 +727,7 @@ void trimZeros(std::vector<int> & v) {
 			break;
 		k++;
 	}
-	// не учитываем все 0 в конце вектора разметки
+	// п╫п╣ я┐я┤п╦я┌я▀п╡п╟п╣п╪ п╡я│п╣ 0 п╡ п╨п╬п╫я├п╣ п╡п╣п╨я┌п╬я─п╟ я─п╟п╥п╪п╣я┌п╨п╦
 	l = (int) v.size() - 1;
 	while (l >= k) {
 		if (v[l] > 0)
@@ -735,10 +735,10 @@ void trimZeros(std::vector<int> & v) {
 		l--;
 	}
 	if (l < k) {
-		// Если были только 0 - делаем разметку из одного 0
+		// п∙я│п╩п╦ п╠я▀п╩п╦ я┌п╬п╩я▄п╨п╬ 0 - п╢п╣п╩п╟п╣п╪ я─п╟п╥п╪п╣я┌п╨я┐ п╦п╥ п╬п╢п╫п╬пЁп╬ 0
 		v.resize(1, 0);
 	} else {
-		// Удаляем 0 в начале и в конце вектора разметки
+		// пёп╢п╟п╩я▐п╣п╪ 0 п╡ п╫п╟я┤п╟п╩п╣ п╦ п╡ п╨п╬п╫я├п╣ п╡п╣п╨я┌п╬я─п╟ я─п╟п╥п╪п╣я┌п╨п╦
 		v.erase(v.begin() + l + 1, v.end());
 		v.erase(v.begin(), v.begin() + k);
 	}

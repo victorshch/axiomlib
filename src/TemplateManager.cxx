@@ -1,6 +1,6 @@
 /****************************************************************************
 *
-*				Функции класса TemplateManager
+*				п╓я┐п╫п╨я├п╦п╦ п╨п╩п╟я│я│п╟ TemplateManager
 *
 ****************************************************************************/
 
@@ -15,7 +15,7 @@
 
 using namespace AxiomLib;
 
-// Коструктор класса
+// п п╬я│я┌я─я┐п╨я┌п╬я─ п╨п╩п╟я│я│п╟
 TemplateManager::TemplateManager (void) {
 	numOfTemplates = 0;
 	templateGenetics.clear();
@@ -23,7 +23,7 @@ TemplateManager::TemplateManager (void) {
 }
 
 
-// Деструктор класса - удаляюся все созданные в рамках класса динамические объекты
+// п■п╣я│я┌я─я┐п╨я┌п╬я─ п╨п╩п╟я│я│п╟ - я┐п╢п╟п╩я▐я▌я│я▐ п╡я│п╣ я│п╬п╥п╢п╟п╫п╫я▀п╣ п╡ я─п╟п╪п╨п╟я┘ п╨п╩п╟я│я│п╟ п╢п╦п╫п╟п╪п╦я┤п╣я│п╨п╦п╣ п╬п╠я┼п╣п╨я┌я▀
 TemplateManager::~TemplateManager (void) {
 	for (unsigned int i = 0; i < templateGenetics.size(); i++)
 		if (templateGenetics[i] != NULL) delete templateGenetics[i];
@@ -33,38 +33,38 @@ TemplateManager::~TemplateManager (void) {
 /****************************************************************************
 *				TemplateManager::initFromEnv
 *
-*	Description:	Функция устанавливает параметры объекта по данным из 
-*					окружения, которое подается как параметр функции
-*	Parameters:	env - объект класса окружения, откуда берутся параметры данного класса
+*	Description:	п╓я┐п╫п╨я├п╦я▐ я┐я│я┌п╟п╫п╟п╡п╩п╦п╡п╟п╣я┌ п©п╟я─п╟п╪п╣я┌я─я▀ п╬п╠я┼п╣п╨я┌п╟ п©п╬ п╢п╟п╫п╫я▀п╪ п╦п╥ 
+*					п╬п╨я─я┐п╤п╣п╫п╦я▐, п╨п╬я┌п╬я─п╬п╣ п©п╬п╢п╟п╣я┌я│я▐ п╨п╟п╨ п©п╟я─п╟п╪п╣я┌я─ я└я┐п╫п╨я├п╦п╦
+*	Parameters:	env - п╬п╠я┼п╣п╨я┌ п╨п╩п╟я│я│п╟ п╬п╨я─я┐п╤п╣п╫п╦я▐, п╬я┌п╨я┐п╢п╟ п╠п╣я─я┐я┌я│я▐ п©п╟я─п╟п╪п╣я┌я─я▀ п╢п╟п╫п╫п╬пЁп╬ п╨п╩п╟я│я│п╟
 *	Returns:	0
-*	Throws:		AxiomLibException - если в одном из алгоритмов возникла ошибка
+*	Throws:		AxiomLibException - п╣я│п╩п╦ п╡ п╬п╢п╫п╬п╪ п╦п╥ п╟п╩пЁп╬я─п╦я┌п╪п╬п╡ п╡п╬п╥п╫п╦п╨п╩п╟ п╬я┬п╦п╠п╨п╟
 *	Author:		dk
 *	History:
 *
 ****************************************************************************/
 int TemplateManager::initFromEnv (const Environment& env) {
-	// Инициализируем dataSet
+	// п≤п╫п╦я├п╦п╟п╩п╦п╥п╦я─я┐п╣п╪ dataSet
 	std::string datasetDir, datasetName;
 	if (env.getStringParamValue(datasetDir, "BaseDataSetDir") < 0)
 		throw AxiomLibException("TemplateManager::setParamsFromEnv : data set directory is undefined.");
 	if (env.getStringParamValue(datasetName, "DataSet") < 0)
 		throw AxiomLibException("TemplateManager::setParamsFromEnv : data set is undefined.");
 
-	// считываем необходимые для данного класса параметры о наборе данных
+	// я│я┤п╦я┌я▀п╡п╟п╣п╪ п╫п╣п╬п╠я┘п╬п╢п╦п╪я▀п╣ п╢п╩я▐ п╢п╟п╫п╫п╬пЁп╬ п╨п╩п╟я│я│п╟ п©п╟я─п╟п╪п╣я┌я─я▀ п╬ п╫п╟п╠п╬я─п╣ п╢п╟п╫п╫я▀я┘
 	EnvDataSet envDataSet;
 	envDataSet.readConfigFile (datasetDir, datasetName);
-	// установка корректного обозначения NullStr - обозначение остутсвия в данной точке ряда какого либо нештатного поведения
+	// я┐я│я┌п╟п╫п╬п╡п╨п╟ п╨п╬я─я─п╣п╨я┌п╫п╬пЁп╬ п╬п╠п╬п╥п╫п╟я┤п╣п╫п╦я▐ NullStr - п╬п╠п╬п╥п╫п╟я┤п╣п╫п╦п╣ п╬я│я┌я┐я┌я│п╡п╦я▐ п╡ п╢п╟п╫п╫п╬п╧ я┌п╬я┤п╨п╣ я─я▐п╢п╟ п╨п╟п╨п╬пЁп╬ п╩п╦п╠п╬ п╫п╣я┬я┌п╟я┌п╫п╬пЁп╬ п©п╬п╡п╣п╢п╣п╫п╦я▐
 	dataSet.setNullStr (envDataSet);
-	// собственно считываем набор данных - заводим его во внутреннее представление
+	// я│п╬п╠я│я┌п╡п╣п╫п╫п╬ я│я┤п╦я┌я▀п╡п╟п╣п╪ п╫п╟п╠п╬я─ п╢п╟п╫п╫я▀я┘ - п╥п╟п╡п╬п╢п╦п╪ п╣пЁп╬ п╡п╬ п╡п╫я┐я┌я─п╣п╫п╫п╣п╣ п©я─п╣п╢я│я┌п╟п╡п╩п╣п╫п╦п╣
 	dataSet.readDataSet(datasetDir, datasetName);
-	// восстанавливаем в данном классе вектор индексов параметров в каноническом представленнии по которым вести поиск нештатых ситуаций
+	// п╡п╬я│я│я┌п╟п╫п╟п╡п╩п╦п╡п╟п╣п╪ п╡ п╢п╟п╫п╫п╬п╪ п╨п╩п╟я│я│п╣ п╡п╣п╨я┌п╬я─ п╦п╫п╢п╣п╨я│п╬п╡ п©п╟я─п╟п╪п╣я┌я─п╬п╡ п╡ п╨п╟п╫п╬п╫п╦я┤п╣я│п╨п╬п╪ п©я─п╣п╢я│я┌п╟п╡п╩п╣п╫п╫п╦п╦ п©п╬ п╨п╬я┌п╬я─я▀п╪ п╡п╣я│я┌п╦ п©п╬п╦я│п╨ п╫п╣я┬я┌п╟я┌я▀я┘ я│п╦я┌я┐п╟я├п╦п╧
 	dataSet.getParamNums(params, env, envDataSet);
-	// Инициализируем шаблоны распознавателей
+	// п≤п╫п╦я├п╦п╟п╩п╦п╥п╦я─я┐п╣п╪ я┬п╟п╠п╩п╬п╫я▀ я─п╟я│п©п╬п╥п╫п╟п╡п╟я┌п╣п╩п╣п╧
 	Logger::getInstance()->writeDebug("Generating templates...");
 	generateTemplates (env);
 	Logger::getInstance()->writeDebug("Finished generating templates.");
 	
-	// Инициализируем алгоритм обучения шаблонов распознавателей
+	// п≤п╫п╦я├п╦п╟п╩п╦п╥п╦я─я┐п╣п╪ п╟п╩пЁп╬я─п╦я┌п╪ п╬п╠я┐я┤п╣п╫п╦я▐ я┬п╟п╠п╩п╬п╫п╬п╡ я─п╟я│п©п╬п╥п╫п╟п╡п╟я┌п╣п╩п╣п╧
 	TemplateGeneticsFactory templateGeneticsFactory;
 	std::string tplGeneticsName;
 	if (env.getStringParamValue(tplGeneticsName, "TplGenetics") < 0)
@@ -78,7 +78,7 @@ int TemplateManager::initFromEnv (const Environment& env) {
 	}
 	Logger::getInstance()->writeDebug("Finished initializing template genetic algorithms.");
 
-	// Параметры, по которым сохранять лучщие решения
+	// п÷п╟я─п╟п╪п╣я┌я─я▀, п©п╬ п╨п╬я┌п╬я─я▀п╪ я│п╬я┘я─п╟п╫я▐я┌я▄ п╩я┐я┤я┴п╦п╣ я─п╣я┬п╣п╫п╦я▐
 	if (env.getStringParamValue(axiomSetBaseDir, "AxiomSetBaseDir") < 0)
 		throw AxiomLibException("TemplateManager::setParamsFromEnv : axiomSetBaseDir directory is undefined.");
 	if (env.getStringParamValue(axiomName, "saveTo") < 0)
@@ -97,11 +97,11 @@ int TemplateManager::initFromEnv (const Environment& env) {
 /****************************************************************************
 *					TemplateManager::run
 *
-*	Description:	Основная функция в классе - реализует алгоритм поиска
-*					распознавателя по шаблону.
+*	Description:	п·я│п╫п╬п╡п╫п╟я▐ я└я┐п╫п╨я├п╦я▐ п╡ п╨п╩п╟я│я│п╣ - я─п╣п╟п╩п╦п╥я┐п╣я┌ п╟п╩пЁп╬я─п╦я┌п╪ п©п╬п╦я│п╨п╟
+*					я─п╟я│п©п╬п╥п╫п╟п╡п╟я┌п╣п╩я▐ п©п╬ я┬п╟п╠п╩п╬п╫я┐.
 *	Parameters:		void
 *	Returns:		0
-*	Throws:			AxiomLibException - если в одном из алгоритмов возникла ошибка
+*	Throws:			AxiomLibException - п╣я│п╩п╦ п╡ п╬п╢п╫п╬п╪ п╦п╥ п╟п╩пЁп╬я─п╦я┌п╪п╬п╡ п╡п╬п╥п╫п╦п╨п╩п╟ п╬я┬п╦п╠п╨п╟
 *	Author:			dk
 *	History:
 *
@@ -110,11 +110,11 @@ int TemplateManager::run (void) {
 	if ((numOfTemplates != templateRecognizers.size()) || (numOfTemplates != templateGenetics.size()))
 		throw AxiomLibException("TemplateManager::run : unable to run templateManager because of wrong number of numOfTemplates.");
 
-	// Определение ранга текущего процесса
+	// п·п©я─п╣п╢п╣п╩п╣п╫п╦п╣ я─п╟п╫пЁп╟ я┌п╣п╨я┐я┴п╣пЁп╬ п©я─п╬я├п╣я│я│п╟
 	int size, rank;
 	MPI_Comm_size(MPI_COMM_WORLD, &size);
 	MPI_Comm_rank(MPI_COMM_WORLD, &rank);
-	// Определение какие шаблоны данному процессу обучать
+	// п·п©я─п╣п╢п╣п╩п╣п╫п╦п╣ п╨п╟п╨п╦п╣ я┬п╟п╠п╩п╬п╫я▀ п╢п╟п╫п╫п╬п╪я┐ п©я─п╬я├п╣я│я│я┐ п╬п╠я┐я┤п╟я┌я▄
 	int from, upTo, forOne; 
 	forOne = (int) ((double) numOfTemplates / (double) size);
 	from = rank * forOne;
@@ -148,14 +148,14 @@ int TemplateManager::run (void) {
 			(templateRecognizers[i]).runWithOutput (resFirst, resSecond, i);
 		else
 			(templateRecognizers[i]).run (resFirst, resSecond);
-		// Сохранение лучшей системы аксиом в файл
+		// п║п╬я┘я─п╟п╫п╣п╫п╦п╣ п╩я┐я┤я┬п╣п╧ я│п╦я│я┌п╣п╪я▀ п╟п╨я│п╦п╬п╪ п╡ я└п╟п╧п╩
 		curAxiomSetName = axiomName;
 		tmss[0]='\0';
 		sprintf(tmss,"%d",i+1);
 		//ss.assign(tmss);
 		curAxiomSetName.append (tmss);
 		(templateRecognizers[i]).axiomSet->saveAxiomSetToFile(whereToSave, curAxiomSetName, resFirst, resSecond);
-		// Сохранение завершено
+		// п║п╬я┘я─п╟п╫п╣п╫п╦п╣ п╥п╟п╡п╣я─я┬п╣п╫п╬
 		std::cout << "\nTemplateRecognizer with index " << i+1 << " has the results: " << resGoals[curI] << " = (" << resFirst << ", " << resSecond << ")\n";
 		std::cout.flush();
 		curI++;
@@ -178,11 +178,11 @@ int TemplateManager::run (void) {
 /****************************************************************************
 *					TemplateManager::runExecuteOnly
 *
-*	Description:	Функция для прогонки заданных распознавателей на заданных 
-*					наборах данных
+*	Description:	п╓я┐п╫п╨я├п╦я▐ п╢п╩я▐ п©я─п╬пЁп╬п╫п╨п╦ п╥п╟п╢п╟п╫п╫я▀я┘ я─п╟я│п©п╬п╥п╫п╟п╡п╟я┌п╣п╩п╣п╧ п╫п╟ п╥п╟п╢п╟п╫п╫я▀я┘ 
+*					п╫п╟п╠п╬я─п╟я┘ п╢п╟п╫п╫я▀я┘
 *	Parameters:		void
 *	Returns:		0
-*	Throws:			AxiomLibException - если в одном из алгоритмов возникла ошибка
+*	Throws:			AxiomLibException - п╣я│п╩п╦ п╡ п╬п╢п╫п╬п╪ п╦п╥ п╟п╩пЁп╬я─п╦я┌п╪п╬п╡ п╡п╬п╥п╫п╦п╨п╩п╟ п╬я┬п╦п╠п╨п╟
 *	Author:			dk
 *	History:
 *
@@ -191,11 +191,11 @@ int TemplateManager::runExecuteOnly (void) {
 	if ((numOfTemplates != templateRecognizers.size()) || (numOfTemplates != templateGenetics.size()))
 		throw AxiomLibException("TemplateManager::run : unable to run templateManager because of wrong number of numOfTemplates.");
 
-	// Определение ранга текущего процесса
+	// п·п©я─п╣п╢п╣п╩п╣п╫п╦п╣ я─п╟п╫пЁп╟ я┌п╣п╨я┐я┴п╣пЁп╬ п©я─п╬я├п╣я│я│п╟
 	int size, rank;
 	MPI_Comm_size(MPI_COMM_WORLD, &size);
 	MPI_Comm_rank(MPI_COMM_WORLD, &rank);
-	// Определение какие шаблоны данному процессу обучать
+	// п·п©я─п╣п╢п╣п╩п╣п╫п╦п╣ п╨п╟п╨п╦п╣ я┬п╟п╠п╩п╬п╫я▀ п╢п╟п╫п╫п╬п╪я┐ п©я─п╬я├п╣я│я│я┐ п╬п╠я┐я┤п╟я┌я▄
 	int from, upTo, forOne; 
 	from = 0;
 	upTo = numOfTemplates;
@@ -215,7 +215,7 @@ int TemplateManager::runExecuteOnly (void) {
 			(templateRecognizers[i]).runWithOutput (resFirst, resSecond, i);
 		else
 			(templateRecognizers[i]).run (resFirst, resSecond);
-		// Вывод информации о результатах распознавания
+		// п▓я▀п╡п╬п╢ п╦п╫я└п╬я─п╪п╟я├п╦п╦ п╬ я─п╣п╥я┐п╩я▄я┌п╟я┌п╟я┘ я─п╟я│п©п╬п╥п╫п╟п╡п╟п╫п╦я▐
 		std::cout << "\nTemplateRecognizer with index " << i+1 << " has the results: " << resGoals[curI] << " = (" << resFirst << ", " << resSecond << ")\n";
 		std::cout.flush();
 		curI++;
@@ -228,84 +228,84 @@ int TemplateManager::runExecuteOnly (void) {
 /****************************************************************************
 *					TemplateManager::generateTemplates
 *
-*	Description:	Функция создает различные шаблоны распознавателей
+*	Description:	п╓я┐п╫п╨я├п╦я▐ я│п╬п╥п╢п╟п╣я┌ я─п╟п╥п╩п╦я┤п╫я▀п╣ я┬п╟п╠п╩п╬п╫я▀ я─п╟я│п©п╬п╥п╫п╟п╡п╟я┌п╣п╩п╣п╧
 *	Parameters:		void
 *	Returns:		0
-*	Throws:			AxiomLibException - если возникла ошибка при создании шаблона
+*	Throws:			AxiomLibException - п╣я│п╩п╦ п╡п╬п╥п╫п╦п╨п╩п╟ п╬я┬п╦п╠п╨п╟ п©я─п╦ я│п╬п╥п╢п╟п╫п╦п╦ я┬п╟п╠п╩п╬п╫п╟
 *	Author:			dk
 *	History:
 *
 ****************************************************************************/
 int TemplateManager::generateTemplates (const Environment& env) {
 
-	// Первое приближение данной функции создания различных шаблонов: 
-	/*	Генерируются всевозможные шаблоны: 
-	*		1. Определяется общее число алгоритмов предобработки 
-	*		2. Определяется число различных систем аксиом, перечисленных в конфигурационном файле
-	*			и число систем аксиом, которые создаются случайным образом
-	*		3. Определяется общее число алгоритмов поиска разметок 
-	*		4. Строятся распознаватели всевозможных шаблонов, без повторений с учетом пунктов 1-3
+	// п÷п╣я─п╡п╬п╣ п©я─п╦п╠п╩п╦п╤п╣п╫п╦п╣ п╢п╟п╫п╫п╬п╧ я└я┐п╫п╨я├п╦п╦ я│п╬п╥п╢п╟п╫п╦я▐ я─п╟п╥п╩п╦я┤п╫я▀я┘ я┬п╟п╠п╩п╬п╫п╬п╡: 
+	/*	п⌠п╣п╫п╣я─п╦я─я┐я▌я┌я│я▐ п╡я│п╣п╡п╬п╥п╪п╬п╤п╫я▀п╣ я┬п╟п╠п╩п╬п╫я▀: 
+	*		1. п·п©я─п╣п╢п╣п╩я▐п╣я┌я│я▐ п╬п╠я┴п╣п╣ я┤п╦я│п╩п╬ п╟п╩пЁп╬я─п╦я┌п╪п╬п╡ п©я─п╣п╢п╬п╠я─п╟п╠п╬я┌п╨п╦ 
+	*		2. п·п©я─п╣п╢п╣п╩я▐п╣я┌я│я▐ я┤п╦я│п╩п╬ я─п╟п╥п╩п╦я┤п╫я▀я┘ я│п╦я│я┌п╣п╪ п╟п╨я│п╦п╬п╪, п©п╣я─п╣я┤п╦я│п╩п╣п╫п╫я▀я┘ п╡ п╨п╬п╫я└п╦пЁя┐я─п╟я├п╦п╬п╫п╫п╬п╪ я└п╟п╧п╩п╣
+	*			п╦ я┤п╦я│п╩п╬ я│п╦я│я┌п╣п╪ п╟п╨я│п╦п╬п╪, п╨п╬я┌п╬я─я▀п╣ я│п╬п╥п╢п╟я▌я┌я│я▐ я│п╩я┐я┤п╟п╧п╫я▀п╪ п╬п╠я─п╟п╥п╬п╪
+	*		3. п·п©я─п╣п╢п╣п╩я▐п╣я┌я│я▐ п╬п╠я┴п╣п╣ я┤п╦я│п╩п╬ п╟п╩пЁп╬я─п╦я┌п╪п╬п╡ п©п╬п╦я│п╨п╟ я─п╟п╥п╪п╣я┌п╬п╨ 
+	*		4. п║я┌я─п╬я▐я┌я│я▐ я─п╟я│п©п╬п╥п╫п╟п╡п╟я┌п╣п╩п╦ п╡я│п╣п╡п╬п╥п╪п╬п╤п╫я▀я┘ я┬п╟п╠п╩п╬п╫п╬п╡, п╠п╣п╥ п©п╬п╡я┌п╬я─п╣п╫п╦п╧ я│ я┐я┤п╣я┌п╬п╪ п©я┐п╫п╨я┌п╬п╡ 1-3
 	*/	
 
-	// 1. Определение числа различных классов предобработки
+	// 1. п·п©я─п╣п╢п╣п╩п╣п╫п╦п╣ я┤п╦я│п╩п╟ я─п╟п╥п╩п╦я┤п╫я▀я┘ п╨п╩п╟я│я│п╬п╡ п©я─п╣п╢п╬п╠я─п╟п╠п╬я┌п╨п╦
 	int numOfPreprocessors;
-	/* // Определение числа предобработчиков всего по фабрике классов
+	/* // п·п©я─п╣п╢п╣п╩п╣п╫п╦п╣ я┤п╦я│п╩п╟ п©я─п╣п╢п╬п╠я─п╟п╠п╬я┌я┤п╦п╨п╬п╡ п╡я│п╣пЁп╬ п©п╬ я└п╟п╠я─п╦п╨п╣ п╨п╩п╟я│я│п╬п╡
 	PreprocessFactory preprocessFactory;
 	numOfPreprocessors = preprocessFactory.getSize();*/
-	// Определение числа предобработчиков по конфигурационному файлу
+	// п·п©я─п╣п╢п╣п╩п╣п╫п╦п╣ я┤п╦я│п╩п╟ п©я─п╣п╢п╬п╠я─п╟п╠п╬я┌я┤п╦п╨п╬п╡ п©п╬ п╨п╬п╫я└п╦пЁя┐я─п╟я├п╦п╬п╫п╫п╬п╪я┐ я└п╟п╧п╩я┐
 	std::set <std::string> preprocNames;
 	if (env.getStringSetParamValue (preprocNames, "Preprocessor") < 0)
 		throw AxiomLibException("TemplateManager::generateTemplates : no preprocessor is set.");
 	numOfPreprocessors = preprocNames.size();
-	// Проверка корректности числа классов предобработки
+	// п÷я─п╬п╡п╣я─п╨п╟ п╨п╬я─я─п╣п╨я┌п╫п╬я│я┌п╦ я┤п╦я│п╩п╟ п╨п╩п╟я│я│п╬п╡ п©я─п╣п╢п╬п╠я─п╟п╠п╬я┌п╨п╦
 	if (numOfPreprocessors < 1)
 		throw AxiomLibException("TemplateManager::generateTemplates : no preprocessor is present.");
 
-	// 2. Определение числа систем аксиом, которые будут использоваться при построении шаблонов распознавателей
+	// 2. п·п©я─п╣п╢п╣п╩п╣п╫п╦п╣ я┤п╦я│п╩п╟ я│п╦я│я┌п╣п╪ п╟п╨я│п╦п╬п╪, п╨п╬я┌п╬я─я▀п╣ п╠я┐п╢я┐я┌ п╦я│п©п╬п╩я▄п╥п╬п╡п╟я┌я▄я│я▐ п©я─п╦ п©п╬я│я┌я─п╬п╣п╫п╦п╦ я┬п╟п╠п╩п╬п╫п╬п╡ я─п╟я│п©п╬п╥п╫п╟п╡п╟я┌п╣п╩п╣п╧
 	int numOfAxiomSets;
     if (env.getIntParamValue(numOfAxiomSets, "popSize") < 0)
 		throw AxiomLibException("TemplateManager::generateTemplates : popSize is not set.");
 	double presetAxiomSets;
 	if (env.getDoubleParamValue(presetAxiomSets, "popPreset") < 0)
 		throw AxiomLibException("TemplateManager::generateTemplates : popPreset is not set.");
-	// Проверка корректности числа систем аксиом
+	// п÷я─п╬п╡п╣я─п╨п╟ п╨п╬я─я─п╣п╨я┌п╫п╬я│я┌п╦ я┤п╦я│п╩п╟ я│п╦я│я┌п╣п╪ п╟п╨я│п╦п╬п╪
 	if ((numOfAxiomSets < 1) || (presetAxiomSets < 0) || (presetAxiomSets > 1))
 		throw AxiomLibException("TemplateManager::generateTemplates : incorrect number of AxiomSets is present.");
 
-	// 3. Определение числа различных алгоритмов поиска разметок
+	// 3. п·п©я─п╣п╢п╣п╩п╣п╫п╦п╣ я┤п╦я│п╩п╟ я─п╟п╥п╩п╦я┤п╫я▀я┘ п╟п╩пЁп╬я─п╦я┌п╪п╬п╡ п©п╬п╦я│п╨п╟ я─п╟п╥п╪п╣я┌п╬п╨
 	int numOfRecognizers;
-	// Определение числа распознавателей по конфигурационному файлу
+	// п·п©я─п╣п╢п╣п╩п╣п╫п╦п╣ я┤п╦я│п╩п╟ я─п╟я│п©п╬п╥п╫п╟п╡п╟я┌п╣п╩п╣п╧ п©п╬ п╨п╬п╫я└п╦пЁя┐я─п╟я├п╦п╬п╫п╫п╬п╪я┐ я└п╟п╧п╩я┐
 	std::set <std::string> recogNames;
 	if (env.getStringSetParamValue (recogNames, "Recognizer") < 0)
 		throw AxiomLibException("TemplateManager::generateTemplates : no recognizer is set.");
 	numOfRecognizers = recogNames.size();
-	// Проверка корректности числа классов распознавания
+	// п÷я─п╬п╡п╣я─п╨п╟ п╨п╬я─я─п╣п╨я┌п╫п╬я│я┌п╦ я┤п╦я│п╩п╟ п╨п╩п╟я│я│п╬п╡ я─п╟я│п©п╬п╥п╫п╟п╡п╟п╫п╦я▐
 	if (numOfRecognizers < 1)
 		throw AxiomLibException("TemplateManager::generateTemplates : no recognizer is present.");
 
-	// 4. Определение общего числа шаблонов и создание самих всевозможных шаблонов
-	// 4.1. Общее число шаблонов
+	// 4. п·п©я─п╣п╢п╣п╩п╣п╫п╦п╣ п╬п╠я┴п╣пЁп╬ я┤п╦я│п╩п╟ я┬п╟п╠п╩п╬п╫п╬п╡ п╦ я│п╬п╥п╢п╟п╫п╦п╣ я│п╟п╪п╦я┘ п╡я│п╣п╡п╬п╥п╪п╬п╤п╫я▀я┘ я┬п╟п╠п╩п╬п╫п╬п╡
+	// 4.1. п·п╠я┴п╣п╣ я┤п╦я│п╩п╬ я┬п╟п╠п╩п╬п╫п╬п╡
 	numOfTemplates = numOfPreprocessors * numOfAxiomSets * numOfRecognizers;
 	if (numOfTemplates < 1)
 		throw AxiomLibException("TemplateManager::generateTemplates : Overall number of templates is below then one.");
 
-	// 4.2 Создаем требуемое число шаблонов распознавателей
+	// 4.2 п║п╬п╥п╢п╟п╣п╪ я┌я─п╣п╠я┐п╣п╪п╬п╣ я┤п╦я│п╩п╬ я┬п╟п╠п╩п╬п╫п╬п╡ я─п╟я│п©п╬п╥п╫п╟п╡п╟я┌п╣п╩п╣п╧
 	templateRecognizers.resize (numOfTemplates);
-	// Проверяем что создание шаблонов завершено корректно 
+	// п÷я─п╬п╡п╣я─я▐п╣п╪ я┤я┌п╬ я│п╬п╥п╢п╟п╫п╦п╣ я┬п╟п╠п╩п╬п╫п╬п╡ п╥п╟п╡п╣я─я┬п╣п╫п╬ п╨п╬я─я─п╣п╨я┌п╫п╬ 
 	if (templateRecognizers.size() != numOfTemplates)
 		throw AxiomLibException("TemplateManager::generateTemplates : problems with creating recognizer-templates.");
 
-	// 4.3 Теперь задаем уникальные параметры каждому из шаблонов распознавателей
+	// 4.3 п╒п╣п©п╣я─я▄ п╥п╟п╢п╟п╣п╪ я┐п╫п╦п╨п╟п╩я▄п╫я▀п╣ п©п╟я─п╟п╪п╣я┌я─я▀ п╨п╟п╤п╢п╬п╪я┐ п╦п╥ я┬п╟п╠п╩п╬п╫п╬п╡ я─п╟я│п©п╬п╥п╫п╟п╡п╟я┌п╣п╩п╣п╧
 	int curTemplate = 0;
-	// 4.3.1 Подготовка для алгоритма предобработки
+	// 4.3.1 п÷п╬п╢пЁп╬я┌п╬п╡п╨п╟ п╢п╩я▐ п╟п╩пЁп╬я─п╦я┌п╪п╟ п©я─п╣п╢п╬п╠я─п╟п╠п╬я┌п╨п╦
 	PreprocessFactory preprocessFactory;
 	std::set <std::string> :: const_iterator prep;
 	
-	// 4.3.2 Подготовка для установки системы аксиом
+	// 4.3.2 п÷п╬п╢пЁп╬я┌п╬п╡п╨п╟ п╢п╩я▐ я┐я│я┌п╟п╫п╬п╡п╨п╦ я│п╦я│я┌п╣п╪я▀ п╟п╨я│п╦п╬п╪
 	int knownAxioms;
 	knownAxioms = round (((double) numOfAxiomSets) * presetAxiomSets);
 
-	// *.1. Ищем AxiomBase - она должна быть задана, читаем ее
+	// *.1. п≤я┴п╣п╪ AxiomBase - п╬п╫п╟ п╢п╬п╩п╤п╫п╟ п╠я▀я┌я▄ п╥п╟п╢п╟п╫п╟, я┤п╦я┌п╟п╣п╪ п╣п╣
     std::string axiomBaseDir;
     if (env.getStringParamValue(axiomBaseDir, "AxiomBaseDir") < 0)
 		throw AxiomLibException("TemplateManager::generateTemplates : popPreset > 0 but axiom base dir is not set.");
@@ -314,20 +314,20 @@ int TemplateManager::generateTemplates (const Environment& env) {
     axiomBase.readAxioms(axiomBaseDir.c_str());
 	Logger::getInstance()->writeDebug("Finished reading axioms");
 
-    // *.2. ищем базовую директорию с наборами систем аксиом
+    // *.2. п╦я┴п╣п╪ п╠п╟п╥п╬п╡я┐я▌ п╢п╦я─п╣п╨я┌п╬я─п╦я▌ я│ п╫п╟п╠п╬я─п╟п╪п╦ я│п╦я│я┌п╣п╪ п╟п╨я│п╦п╬п╪
     std::string axiomSetDir;
     if (knownAxioms > 0 && env.getStringParamValue(axiomSetDir, "AxiomSetBaseDir") < 0)
       throw AxiomLibException("TemplateManager::generateTemplates : popPreset > 0 but axiom set base dir is not set.");
 
-    // *.3. получаем множество наборов аксиом
+    // *.3. п©п╬п╩я┐я┤п╟п╣п╪ п╪п╫п╬п╤п╣я│я┌п╡п╬ п╫п╟п╠п╬я─п╬п╡ п╟п╨я│п╦п╬п╪
     std::set<std::string> axiomSetNames;
     if (knownAxioms > 0 && env.getStringSetParamValue(axiomSetNames, "AxiomSet") < 0)
       throw AxiomLibException("TemplateManager::generateTemplates : popPreset > 0 but no axiom set is given.");
 
-    // *.4. Определяем итератор для хождения по набору названий систем аксиом
+    // *.4. п·п©я─п╣п╢п╣п╩я▐п╣п╪ п╦я┌п╣я─п╟я┌п╬я─ п╢п╩я▐ я┘п╬п╤п╢п╣п╫п╦я▐ п©п╬ п╫п╟п╠п╬я─я┐ п╫п╟п╥п╡п╟п╫п╦п╧ я│п╦я│я┌п╣п╪ п╟п╨я│п╦п╬п╪
     std::set<std::string>::const_iterator curAx = axiomSetNames.begin();
 
-	// *.5. Определяем параметры для систем аксиом, подбираемых случайным образом
+	// *.5. п·п©я─п╣п╢п╣п╩я▐п╣п╪ п©п╟я─п╟п╪п╣я┌я─я▀ п╢п╩я▐ я│п╦я│я┌п╣п╪ п╟п╨я│п╦п╬п╪, п©п╬п╢п╠п╦я─п╟п╣п╪я▀я┘ я│п╩я┐я┤п╟п╧п╫я▀п╪ п╬п╠я─п╟п╥п╬п╪
 	int numOfAxioms;
 	int maxECinAxiom;
 	if (presetAxiomSets < 1) {
@@ -337,41 +337,41 @@ int TemplateManager::generateTemplates (const Environment& env) {
 			throw AxiomLibException("TemplateManager::generateTemplates : maxECinAxiom is not set.");
 	}
 
-	// 4.3.3 Подготовка к установке алгоритма распознавания
+	// 4.3.3 п÷п╬п╢пЁп╬я┌п╬п╡п╨п╟ п╨ я┐я│я┌п╟п╫п╬п╡п╨п╣ п╟п╩пЁп╬я─п╦я┌п╪п╟ я─п╟я│п©п╬п╥п╫п╟п╡п╟п╫п╦я▐
 	RecognizerFactory recognizerFactory;
 	std::set <std::string> :: const_iterator rec;
 
 	Logger::getInstance()->writeDebug("Filling initial population...");
-	// 4.3.4 Заполнение шаблонов распознавателей
+	// 4.3.4 п≈п╟п©п╬п╩п╫п╣п╫п╦п╣ я┬п╟п╠п╩п╬п╫п╬п╡ я─п╟я│п©п╬п╥п╫п╟п╡п╟я┌п╣п╩п╣п╧
 	for (prep = preprocNames.begin(); prep != preprocNames.end(); ++prep) {
 		for (int axi = 0; axi < numOfAxiomSets; axi++) {
 			for (rec = recogNames.begin(); rec != recogNames.end(); ++rec) {
-				// a. Устанавливаем алгоритм предобработки
+				// a. пёя│я┌п╟п╫п╟п╡п╩п╦п╡п╟п╣п╪ п╟п╩пЁп╬я─п╦я┌п╪ п©я─п╣п╢п╬п╠я─п╟п╠п╬я┌п╨п╦
 				templateRecognizers[curTemplate].preprocess = preprocessFactory.create (*prep);
 				templateRecognizers[curTemplate].preprocess->initFromEnv (env);
 
-				// b. Устанавливаем систему аксиом
-				// Определяем какую систему аксиом устанавливать [заданную / случайную]
+				// b. пёя│я┌п╟п╫п╟п╡п╩п╦п╡п╟п╣п╪ я│п╦я│я┌п╣п╪я┐ п╟п╨я│п╦п╬п╪
+				// п·п©я─п╣п╢п╣п╩я▐п╣п╪ п╨п╟п╨я┐я▌ я│п╦я│я┌п╣п╪я┐ п╟п╨я│п╦п╬п╪ я┐я│я┌п╟п╫п╟п╡п╩п╦п╡п╟я┌я▄ [п╥п╟п╢п╟п╫п╫я┐я▌ / я│п╩я┐я┤п╟п╧п╫я┐я▌]
 				if (axi < knownAxioms) {
-					// Значит используем одну из систем аксиом перечисленных в конфигурационном файле
+					// п≈п╫п╟я┤п╦я┌ п╦я│п©п╬п╩я▄п╥я┐п╣п╪ п╬п╢п╫я┐ п╦п╥ я│п╦я│я┌п╣п╪ п╟п╨я│п╦п╬п╪ п©п╣я─п╣я┤п╦я│п╩п╣п╫п╫я▀я┘ п╡ п╨п╬п╫я└п╦пЁя┐я─п╟я├п╦п╬п╫п╫п╬п╪ я└п╟п╧п╩п╣
 					//std::cout << "TemplateManager::generateTemplates. Filling slot axiomSet with axiomSet '" << *curAx << "'\n";
 					templateRecognizers[curTemplate].axiomSet = new AxiomSet;
 					templateRecognizers[curTemplate].axiomSet->initAxiomSetFromFile(axiomSetDir, *curAx, axiomBase);
-					// Сдвигаем итератор по используемым системам аксиом
+					// п║п╢п╡п╦пЁп╟п╣п╪ п╦я┌п╣я─п╟я┌п╬я─ п©п╬ п╦я│п©п╬п╩я▄п╥я┐п╣п╪я▀п╪ я│п╦я│я┌п╣п╪п╟п╪ п╟п╨я│п╦п╬п╪
 					++curAx;
 					if (curAx == axiomSetNames.end())
 						curAx = axiomSetNames.begin();
 				} else {
-					// Значит используем систему аксиом, сгенерированную случайно
+					// п≈п╫п╟я┤п╦я┌ п╦я│п©п╬п╩я▄п╥я┐п╣п╪ я│п╦я│я┌п╣п╪я┐ п╟п╨я│п╦п╬п╪, я│пЁп╣п╫п╣я─п╦я─п╬п╡п╟п╫п╫я┐я▌ я│п╩я┐я┤п╟п╧п╫п╬
 					templateRecognizers[curTemplate].axiomSet = new AxiomSet;
 					templateRecognizers[curTemplate].axiomSet->initAxiomSetByRand (numOfAxioms, maxECinAxiom);
 				}
 
-				// c. Устанавливаем алгоритм поиска разметок
+				// c. пёя│я┌п╟п╫п╟п╡п╩п╦п╡п╟п╣п╪ п╟п╩пЁп╬я─п╦я┌п╪ п©п╬п╦я│п╨п╟ я─п╟п╥п╪п╣я┌п╬п╨
 				templateRecognizers[curTemplate].recognizer = recognizerFactory.create (*rec);
 				templateRecognizers[curTemplate].recognizer->setParamsFromEnv(env);
 
-				// d. Сдвигаем счетчик шаблонов для перехода к заполнению следующего шаблона
+				// d. п║п╢п╡п╦пЁп╟п╣п╪ я│я┤п╣я┌я┤п╦п╨ я┬п╟п╠п╩п╬п╫п╬п╡ п╢п╩я▐ п©п╣я─п╣я┘п╬п╢п╟ п╨ п╥п╟п©п╬п╩п╫п╣п╫п╦я▌ я│п╩п╣п╢я┐я▌я┴п╣пЁп╬ я┬п╟п╠п╩п╬п╫п╟
 				curTemplate++;
 			}
 		}

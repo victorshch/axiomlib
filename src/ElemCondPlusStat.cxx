@@ -1,7 +1,7 @@
 /****************************************************************************
-*					Функции класса ElemCondPlusStat
+*					п╓я┐п╫п╨я├п╦п╦ п╨п╩п╟я│я│п╟ ElemCondPlusStat
 *
-*	Description:	Элементарное условие со статистикой - Реализация
+*	Description:	п╜п╩п╣п╪п╣п╫я┌п╟я─п╫п╬п╣ я┐я│п╩п╬п╡п╦п╣ я│п╬ я│я┌п╟я┌п╦я│я┌п╦п╨п╬п╧ - п═п╣п╟п╩п╦п╥п╟я├п╦я▐
 *	Author:			dk
 *	History:	
 *
@@ -16,7 +16,7 @@ using namespace AxiomLib;
 
 
 
-// Конструктор с заданием значений статистики по умолчанию
+// п п╬п╫я│я┌я─я┐п╨я┌п╬я─ я│ п╥п╟п╢п╟п╫п╦п╣п╪ п╥п╫п╟я┤п╣п╫п╦п╧ я│я┌п╟я┌п╦я│я┌п╦п╨п╦ п©п╬ я┐п╪п╬п╩я┤п╟п╫п╦я▌
 ElemCondPlusStat::ElemCondPlusStat () {
 	setDefaultStatistics();
 }
@@ -25,7 +25,7 @@ ElemCondPlusStat::ElemCondPlusStat(const ElemCondPlus &ecPlus) : ElemCondPlus(ec
 	setDefaultStatistics();
 }
 
-// Пустой деструктор
+// п÷я┐я│я┌п╬п╧ п╢п╣я│я┌я─я┐п╨я┌п╬я─
 ElemCondPlusStat::~ElemCondPlusStat(void) {
 	
 }
@@ -37,7 +37,7 @@ void ElemCondPlusStat::setDefaultStatistics() {
 	statOccurence = -1.0;
 }
 
-// Функция обнуляет значения всех внунтренних переменных
+// п╓я┐п╫п╨я├п╦я▐ п╬п╠п╫я┐п╩я▐п╣я┌ п╥п╫п╟я┤п╣п╫п╦я▐ п╡я│п╣я┘ п╡п╫я┐п╫я┌я─п╣п╫п╫п╦я┘ п©п╣я─п╣п╪п╣п╫п╫я▀я┘
 void ElemCondPlusStat::clear(void) {
 	ElemCondPlus::clear();
 	setDefaultStatistics();
@@ -47,8 +47,8 @@ void ElemCondPlusStat::clear(void) {
 /****************************************************************************
 *					ElemCondPlusStat::operator=
 *
-*	Description:	Оператор присваивания элементарного условия со статистикой
-*	Parameters:		second - присваиваемое условие
+*	Description:	п·п©п╣я─п╟я┌п╬я─ п©я─п╦я│п╡п╟п╦п╡п╟п╫п╦я▐ я█п╩п╣п╪п╣п╫я┌п╟я─п╫п╬пЁп╬ я┐я│п╩п╬п╡п╦я▐ я│п╬ я│я┌п╟я┌п╦я│я┌п╦п╨п╬п╧
+*	Parameters:		second - п©я─п╦я│п╡п╟п╦п╡п╟п╣п╪п╬п╣ я┐я│п╩п╬п╡п╦п╣
 *	Returns:		*this
 *	Throws:			-
 *	Author:			dk
@@ -56,18 +56,18 @@ void ElemCondPlusStat::clear(void) {
 *
 ****************************************************************************/
 //ElemCondPlusStat& ElemCondPlusStat::operator= (const ElemCondPlusStat &second) {
-//	// Очищаем содержимое переменных данного класса
+//	// п·я┤п╦я┴п╟п╣п╪ я│п╬п╢п╣я─п╤п╦п╪п╬п╣ п©п╣я─п╣п╪п╣п╫п╫я▀я┘ п╢п╟п╫п╫п╬пЁп╬ п╨п╩п╟я│я│п╟
 //	this->clear();
-//	// Копируем содержимое переменных класса
+//	// п п╬п©п╦я─я┐п╣п╪ я│п╬п╢п╣я─п╤п╦п╪п╬п╣ п©п╣я─п╣п╪п╣п╫п╫я▀я┘ п╨п╩п╟я│я│п╟
 //	this->statAbnorm = second.statAbnorm;
 //	this->statNormal = second.statNormal;
 //	this->goal = second.goal;
 //	this->statOccurence = second.statOccurence;
-//	// Копиурем содержимое переменных нерасширенного класса
+//	// п п╬п©п╦я┐я─п╣п╪ я│п╬п╢п╣я─п╤п╦п╪п╬п╣ п©п╣я─п╣п╪п╣п╫п╫я▀я┘ п╫п╣я─п╟я│я┬п╦я─п╣п╫п╫п╬пЁп╬ п╨п╩п╟я│я│п╟
 //	ElemCondPlus::operator =(second);
 ////	this->dimension = second.dimension;
 ////	this->sign = second.sign;
-////	// Копируем элементарное условие
+////	// п п╬п©п╦я─я┐п╣п╪ я█п╩п╣п╪п╣п╫я┌п╟я─п╫п╬п╣ я┐я│п╩п╬п╡п╦п╣
 ////	if (second.elemCondition != NULL) {
 ////		ElemConditionsFactory ecf;
 ////		this->elemCondition = ecf.createAxiomByName (second.elemCondition->name().c_str());
@@ -81,7 +81,7 @@ void ElemCondPlusStat::clear(void) {
 /****************************************************************************
 *					ElemCondPlusStat::saveECToFile
 *
-*	Description:	Сохранение в файл
+*	Description:	п║п╬я┘я─п╟п╫п╣п╫п╦п╣ п╡ я└п╟п╧п╩
 *	Parameters:		
 *	Returns:		void
 *	Throws:			-
@@ -102,7 +102,7 @@ signed int ElemCondPlusStat::saveECToFile(std::string baseDir, std::string ecNam
 /****************************************************************************
 *					ElemCondPlusStat::initFromFile
 *
-*	Description:	Загрузка из файла
+*	Description:	п≈п╟пЁя─я┐п╥п╨п╟ п╦п╥ я└п╟п╧п╩п╟
 *	Parameters:		
 *	Returns:		int
 *	Throws:			-

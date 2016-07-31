@@ -1,7 +1,7 @@
 /****************************************************************************
 *			SimpleCrossoverStrategy
 *
-*	Description:	Функции класса SimpleCrossoverStrategy - Реализация
+*	Description:	п╓я┐п╫п╨я├п╦п╦ п╨п╩п╟я│я│п╟ SimpleCrossoverStrategy - п═п╣п╟п╩п╦п╥п╟я├п╦я▐
 *	Author:		gevor
 *	History:		
 *
@@ -16,10 +16,10 @@ using namespace std;
 /****************************************************************************
 *			SimpleCrossoverStrategy::setParamsFromEnv
 *
-*	Description:	Установка параметров мутации из среды
-*	Parameters:	const Environment& env - откуда ставить
+*	Description:	пёя│я┌п╟п╫п╬п╡п╨п╟ п©п╟я─п╟п╪п╣я┌я─п╬п╡ п╪я┐я┌п╟я├п╦п╦ п╦п╥ я│я─п╣п╢я▀
+*	Parameters:	const Environment& env - п╬я┌п╨я┐п╢п╟ я│я┌п╟п╡п╦я┌я▄
 *	Returns:	0
-*	Throws:		AxiomLibException - если параметра нет
+*	Throws:		AxiomLibException - п╣я│п╩п╦ п©п╟я─п╟п╪п╣я┌я─п╟ п╫п╣я┌
 *	Author:		gevor
 *	History:
 *
@@ -38,24 +38,24 @@ int SimpleCrossoverStrategy::setParamsFromEnv (const Environment& env)
 /****************************************************************************
 *				SimpleCrossoverStrategy::setParams
 *
-*	Description:	Функция задания значений параметров 
-*	Parameters:	новые параметры скрещивания:
-*				newElemCondCrossLevel - велечина скрещивания на уровне элементарных условий 
-*				newAxiomCrossLevel - велечина скрещивания на уровне аксиом
-*				newAxiomSetCrossLevel - велечина скрещивания на уровне систем аксиом
+*	Description:	п╓я┐п╫п╨я├п╦я▐ п╥п╟п╢п╟п╫п╦я▐ п╥п╫п╟я┤п╣п╫п╦п╧ п©п╟я─п╟п╪п╣я┌я─п╬п╡ 
+*	Parameters:	п╫п╬п╡я▀п╣ п©п╟я─п╟п╪п╣я┌я─я▀ я│п╨я─п╣я┴п╦п╡п╟п╫п╦я▐:
+*				newElemCondCrossLevel - п╡п╣п╩п╣я┤п╦п╫п╟ я│п╨я─п╣я┴п╦п╡п╟п╫п╦я▐ п╫п╟ я┐я─п╬п╡п╫п╣ я█п╩п╣п╪п╣п╫я┌п╟я─п╫я▀я┘ я┐я│п╩п╬п╡п╦п╧ 
+*				newAxiomCrossLevel - п╡п╣п╩п╣я┤п╦п╫п╟ я│п╨я─п╣я┴п╦п╡п╟п╫п╦я▐ п╫п╟ я┐я─п╬п╡п╫п╣ п╟п╨я│п╦п╬п╪
+*				newAxiomSetCrossLevel - п╡п╣п╩п╣я┤п╦п╫п╟ я│п╨я─п╣я┴п╦п╡п╟п╫п╦я▐ п╫п╟ я┐я─п╬п╡п╫п╣ я│п╦я│я┌п╣п╪ п╟п╨я│п╦п╬п╪
 *	Returns:		0
-*	Throws:		AxiomLibException - если входные значения параметров некорректное
+*	Throws:		AxiomLibException - п╣я│п╩п╦ п╡я┘п╬п╢п╫я▀п╣ п╥п╫п╟я┤п╣п╫п╦я▐ п©п╟я─п╟п╪п╣я┌я─п╬п╡ п╫п╣п╨п╬я─я─п╣п╨я┌п╫п╬п╣
 *	Author:		dk
 *	History:
 *
 ****************************************************************************/
 int SimpleCrossoverStrategy::setParams (const double newElemCondCrossLevel, const double newAxiomCrossLevel, const double newAxiomSetCrossLevel) {
-	// Проверка на соответствие граничным значениям параметров
+	// п÷я─п╬п╡п╣я─п╨п╟ п╫п╟ я│п╬п╬я┌п╡п╣я┌я│я┌п╡п╦п╣ пЁя─п╟п╫п╦я┤п╫я▀п╪ п╥п╫п╟я┤п╣п╫п╦я▐п╪ п©п╟я─п╟п╪п╣я┌я─п╬п╡
 	if (	(newElemCondCrossLevel < 0.0) || (newElemCondCrossLevel > 1.0) ||
 				(newAxiomCrossLevel < 0.0) || (newAxiomCrossLevel > 1.0) ||
 				(newAxiomSetCrossLevel < 0.0) || (newAxiomSetCrossLevel > 1.0) 	) 
 		throw AxiomLibException ("Error in SimpleCrossoverStrategy::setParams: some of crossLevel Parameters are out of range.");
-	// Установка новых значений параметров
+	// пёя│я┌п╟п╫п╬п╡п╨п╟ п╫п╬п╡я▀я┘ п╥п╫п╟я┤п╣п╫п╦п╧ п©п╟я─п╟п╪п╣я┌я─п╬п╡
 	pCross = (newElemCondCrossLevel + newAxiomCrossLevel + newAxiomSetCrossLevel) / 3.0;
 	return 0;
 }
@@ -64,20 +64,20 @@ int SimpleCrossoverStrategy::setParams (const double newElemCondCrossLevel, cons
 /****************************************************************************
 *				SimpleCrossoverStrategy::setParams
 *
-*	Description:	Функция задания значений параметров 
-*	Parameters:	новые параметры скрещивания:
-*				newCrossLevel - велечина скрещивания на всех уровнях
+*	Description:	п╓я┐п╫п╨я├п╦я▐ п╥п╟п╢п╟п╫п╦я▐ п╥п╫п╟я┤п╣п╫п╦п╧ п©п╟я─п╟п╪п╣я┌я─п╬п╡ 
+*	Parameters:	п╫п╬п╡я▀п╣ п©п╟я─п╟п╪п╣я┌я─я▀ я│п╨я─п╣я┴п╦п╡п╟п╫п╦я▐:
+*				newCrossLevel - п╡п╣п╩п╣я┤п╦п╫п╟ я│п╨я─п╣я┴п╦п╡п╟п╫п╦я▐ п╫п╟ п╡я│п╣я┘ я┐я─п╬п╡п╫я▐я┘
 *	Returns:		0
-*	Throws:		AxiomLibException - если входные значения параметров некорректное
+*	Throws:		AxiomLibException - п╣я│п╩п╦ п╡я┘п╬п╢п╫я▀п╣ п╥п╫п╟я┤п╣п╫п╦я▐ п©п╟я─п╟п╪п╣я┌я─п╬п╡ п╫п╣п╨п╬я─я─п╣п╨я┌п╫п╬п╣
 *	Author:		dk
 *	History:
 *
 ****************************************************************************/
 int SimpleCrossoverStrategy::setParams (const double newCrossLevel) {
-	// Проверка на соответствие граничным значениям параметров
+	// п÷я─п╬п╡п╣я─п╨п╟ п╫п╟ я│п╬п╬я┌п╡п╣я┌я│я┌п╡п╦п╣ пЁя─п╟п╫п╦я┤п╫я▀п╪ п╥п╫п╟я┤п╣п╫п╦я▐п╪ п©п╟я─п╟п╪п╣я┌я─п╬п╡
 	if ( (newCrossLevel < 0.0) || (newCrossLevel > 1.0) ) 
 		throw AxiomLibException ("Error in SimpleCrossoverStrategy::setParams: given crossLevel is out of range.");
-	// Установка новых значений параметров
+	// пёя│я┌п╟п╫п╬п╡п╨п╟ п╫п╬п╡я▀я┘ п╥п╫п╟я┤п╣п╫п╦п╧ п©п╟я─п╟п╪п╣я┌я─п╬п╡
 	pCross = newCrossLevel;
 	return 0;
 }
@@ -86,9 +86,9 @@ int SimpleCrossoverStrategy::setParams (const double newCrossLevel) {
 /****************************************************************************
 *			SimpleCrossoverStrategy::crossover
 *
-*	Description:	Функция скрещивания для данной популяции - пока только на уровне
-*			параметров элементарных условий
-*	Parameters:	AxiomSetPop - изменяемая популяция
+*	Description:	п╓я┐п╫п╨я├п╦я▐ я│п╨я─п╣я┴п╦п╡п╟п╫п╦я▐ п╢п╩я▐ п╢п╟п╫п╫п╬п╧ п©п╬п©я┐п╩я▐я├п╦п╦ - п©п╬п╨п╟ я┌п╬п╩я▄п╨п╬ п╫п╟ я┐я─п╬п╡п╫п╣
+*			п©п╟я─п╟п╪п╣я┌я─п╬п╡ я█п╩п╣п╪п╣п╫я┌п╟я─п╫я▀я┘ я┐я│п╩п╬п╡п╦п╧
+*	Parameters:	AxiomSetPop - п╦п╥п╪п╣п╫я▐п╣п╪п╟я▐ п©п╬п©я┐п╩я▐я├п╦я▐
 *	Returns:	0
 *	Throws:		-
 *	Author:		gevor
@@ -97,42 +97,42 @@ int SimpleCrossoverStrategy::setParams (const double newCrossLevel) {
 ****************************************************************************/
 int SimpleCrossoverStrategy::crossover (AxiomSetPop& pop) 
 {
-  // Простой, полностью случайный метод - скрещиваем pCross процентов популяции
+  // п÷я─п╬я│я┌п╬п╧, п©п╬п╩п╫п╬я│я┌я▄я▌ я│п╩я┐я┤п╟п╧п╫я▀п╧ п╪п╣я┌п╬п╢ - я│п╨я─п╣я┴п╦п╡п╟п╣п╪ pCross п©я─п╬я├п╣п╫я┌п╬п╡ п©п╬п©я┐п╩я▐я├п╦п╦
   if (pCross < 0)
     throw AxiomLibException ("Error in CrossoverSimple::crossover - pCross unititialized.");
 
-  // получаем вектор систем аксиом
+  // п©п╬п╩я┐я┤п╟п╣п╪ п╡п╣п╨я┌п╬я─ я│п╦я│я┌п╣п╪ п╟п╨я│п╦п╬п╪
   initCrossover (pop);
   
   int popSize = asPop->size();
-  int nCross = (int)(pCross * ((double)popSize)); // сколько участвуют в скрещивании
-  int newSize = nCross;// + popSize; // новый размер популяции
+  int nCross = (int)(pCross * ((double)popSize)); // я│п╨п╬п╩я▄п╨п╬ я┐я┤п╟я│я┌п╡я┐я▌я┌ п╡ я│п╨я─п╣я┴п╦п╡п╟п╫п╦п╦
+  int newSize = nCross;// + popSize; // п╫п╬п╡я▀п╧ я─п╟п╥п╪п╣я─ п©п╬п©я┐п╩я▐я├п╦п╦
   
-  // создаем новый вектор
+  // я│п╬п╥п╢п╟п╣п╪ п╫п╬п╡я▀п╧ п╡п╣п╨я┌п╬я─
   vector<AxiomSetWithStats>* newAsPop = new vector<AxiomSetWithStats>;
   newAsPop->resize(newSize);
   
-  // Пока есть нескрещенные аксиомы - случайным образом выбираем пары и скрещиваем, записывая в новый вектор
+  // п÷п╬п╨п╟ п╣я│я┌я▄ п╫п╣я│п╨я─п╣я┴п╣п╫п╫я▀п╣ п╟п╨я│п╦п╬п╪я▀ - я│п╩я┐я┤п╟п╧п╫я▀п╪ п╬п╠я─п╟п╥п╬п╪ п╡я▀п╠п╦я─п╟п╣п╪ п©п╟я─я▀ п╦ я│п╨я─п╣я┴п╦п╡п╟п╣п╪, п╥п╟п©п╦я│я▀п╡п╟я▐ п╡ п╫п╬п╡я▀п╧ п╡п╣п╨я┌п╬я─
   for (int i = 0; i < newSize; i++) {
-    // выбираем случайным образом 2 системы аксиом
+    // п╡я▀п╠п╦я─п╟п╣п╪ я│п╩я┐я┤п╟п╧п╫я▀п╪ п╬п╠я─п╟п╥п╬п╪ 2 я│п╦я│я┌п╣п╪я▀ п╟п╨я│п╦п╬п╪
     int firstASNum = (int) (( (double) rand() / (double) RAND_MAX) * ((double)popSize  - 1.0));
     int secondASNum = (int) (( (double) rand() / (double) RAND_MAX) * ((double)popSize  - 1.0));
 
-    // проверка алгоритма Димы, убрать, если все будет работать нормально
+    // п©я─п╬п╡п╣я─п╨п╟ п╟п╩пЁп╬я─п╦я┌п╪п╟ п■п╦п╪я▀, я┐п╠я─п╟я┌я▄, п╣я│п╩п╦ п╡я│п╣ п╠я┐п╢п╣я┌ я─п╟п╠п╬я┌п╟я┌я▄ п╫п╬я─п╪п╟п╩я▄п╫п╬
     if (firstASNum >= popSize || secondASNum >= popSize || firstASNum < 0 || secondASNum < 0)
       throw AxiomLibException ("Error in CrossoverSimple::crossover - FATAL INTERNAL ERROR 1.");
     
-    // теперь ходим по этим системам аксиом, попарно скрещивая аксиомы, а в них - элементарные
-    // условия; если структурная идентичность не соблюдается - что-то внизу ругнется
+    // я┌п╣п©п╣я─я▄ я┘п╬п╢п╦п╪ п©п╬ я█я┌п╦п╪ я│п╦я│я┌п╣п╪п╟п╪ п╟п╨я│п╦п╬п╪, п©п╬п©п╟я─п╫п╬ я│п╨я─п╣я┴п╦п╡п╟я▐ п╟п╨я│п╦п╬п╪я▀, п╟ п╡ п╫п╦я┘ - я█п╩п╣п╪п╣п╫я┌п╟я─п╫я▀п╣
+    // я┐я│п╩п╬п╡п╦я▐; п╣я│п╩п╦ я│я┌я─я┐п╨я┌я┐я─п╫п╟я▐ п╦п╢п╣п╫я┌п╦я┤п╫п╬я│я┌я▄ п╫п╣ я│п╬п╠п╩я▌п╢п╟п╣я┌я│я▐ - я┤я┌п╬-я┌п╬ п╡п╫п╦п╥я┐ я─я┐пЁп╫п╣я┌я│я▐
     CrossoverOp_Params((*newAsPop)[i], (*asPop)[firstASNum], (*asPop)[secondASNum]);
 
 //    (*newAsPop)[i] = (*asPop)[0];
 
-    // обнуляем статистику для результата скрещивания
+    // п╬п╠п╫я┐п╩я▐п╣п╪ я│я┌п╟я┌п╦я│я┌п╦п╨я┐ п╢п╩я▐ я─п╣п╥я┐п╩я▄я┌п╟я┌п╟ я│п╨я─п╣я┴п╦п╡п╟п╫п╦я▐
     (*newAsPop)[i].voidStats();
   }
   
-  // добавляем новые элементы в популяцию систем аксиом
+  // п╢п╬п╠п╟п╡п╩я▐п╣п╪ п╫п╬п╡я▀п╣ я█п╩п╣п╪п╣п╫я┌я▀ п╡ п©п╬п©я┐п╩я▐я├п╦я▌ я│п╦я│я┌п╣п╪ п╟п╨я│п╦п╬п╪
   pop.addSets(*newAsPop);
   return nCross;
 }

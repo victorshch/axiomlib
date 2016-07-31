@@ -1,6 +1,6 @@
 /****************************************************************************
 *
-*			Функции класса AxiomSetWithStats
+*			п╓я┐п╫п╨я├п╦п╦ п╨п╩п╟я│я│п╟ AxiomSetWithStats
 *
 ****************************************************************************/
 
@@ -14,10 +14,10 @@ using namespace std;
 /****************************************************************************
 *			AxiomSetWithStats::operator<
 *
-*	Description:	Сравнение двух наборов по целевой функции
+*	Description:	п║я─п╟п╡п╫п╣п╫п╦п╣ п╢п╡я┐я┘ п╫п╟п╠п╬я─п╬п╡ п©п╬ я├п╣п╩п╣п╡п╬п╧ я└я┐п╫п╨я├п╦п╦
 *	Parameters:	const AxiomSetWithStats& second
-*	Returns:	false если first >= second
-*			true если first < second
+*	Returns:	false п╣я│п╩п╦ first >= second
+*			true п╣я│п╩п╦ first < second
 *	Throws:		AxiomLibException
 *	Author:		gevor
 *	History:
@@ -34,10 +34,10 @@ bool AxiomSetWithStats::operator< (const AxiomSetWithStats& second) const
 /****************************************************************************
 *			AxiomSetWithStats::initAxiomSetFromFile
 *
-*	Description:	Инициализирует систему аксиом значениями, записанными в файле
-*	Parameters:	string axiomSetBaseDir - имя базовой директории
-*			string axiomSetName - название файла с набором
-*			AxiomBase& axiomBase - какую базу аксиом использовать
+*	Description:	п≤п╫п╦я├п╦п╟п╩п╦п╥п╦я─я┐п╣я┌ я│п╦я│я┌п╣п╪я┐ п╟п╨я│п╦п╬п╪ п╥п╫п╟я┤п╣п╫п╦я▐п╪п╦, п╥п╟п©п╦я│п╟п╫п╫я▀п╪п╦ п╡ я└п╟п╧п╩п╣
+*	Parameters:	string axiomSetBaseDir - п╦п╪я▐ п╠п╟п╥п╬п╡п╬п╧ п╢п╦я─п╣п╨я┌п╬я─п╦п╦
+*			string axiomSetName - п╫п╟п╥п╡п╟п╫п╦п╣ я└п╟п╧п╩п╟ я│ п╫п╟п╠п╬я─п╬п╪
+*			AxiomBase& axiomBase - п╨п╟п╨я┐я▌ п╠п╟п╥я┐ п╟п╨я│п╦п╬п╪ п╦я│п©п╬п╩я▄п╥п╬п╡п╟я┌я▄
 *	Returns:	0
 *	Throws:		AxiomLibException
 *	Author:		gevor
@@ -60,7 +60,7 @@ signed int AxiomSetWithStats::initAxiomSetFromFile (std::string axiomSetBaseDir,
 /****************************************************************************
 *			AxiomSetWithStats::outputToCout
 *
-*	Description:	Выводит набор аксиом на cout
+*	Description:	п▓я▀п╡п╬п╢п╦я┌ п╫п╟п╠п╬я─ п╟п╨я│п╦п╬п╪ п╫п╟ cout
 *	Parameters:	-
 *	Returns:	0
 *	Throws:		AxiomLibException
@@ -70,7 +70,7 @@ signed int AxiomSetWithStats::initAxiomSetFromFile (std::string axiomSetBaseDir,
 ****************************************************************************/
 int AxiomSetWithStats::outputToCout (void) const
 {
-  // Тестовое - выводим
+  // п╒п╣я│я┌п╬п╡п╬п╣ - п╡я▀п╡п╬п╢п╦п╪
   cout << "    AxiomSet " << name() << " from file.\n";
   for (vector<Axiom*>::const_iterator ax = axioms.begin(); ax != axioms.end(); ax++) {
     cout << "        Axiom " << (*ax)->name() << "\n";
@@ -88,8 +88,8 @@ int AxiomSetWithStats::outputToCout (void) const
 /****************************************************************************
 *			AxiomSetWithStats::operator=
 *
-*	Description:	Копирование second в this
-*	Parameters:	AxiomSetWithStats - что копировать
+*	Description:	п п╬п©п╦я─п╬п╡п╟п╫п╦п╣ second п╡ this
+*	Parameters:	AxiomSetWithStats - я┤я┌п╬ п╨п╬п©п╦я─п╬п╡п╟я┌я▄
 *	Returns:	0
 *	Throws:		AxiomLibException
 *	Author:		gevor
@@ -103,11 +103,11 @@ AxiomSetWithStats & AxiomSetWithStats::operator= (const AxiomSetWithStats &secon
   nFirst = second.nFirst;
   nSecond = second.nSecond;
  
-  // Копируем значение контрольного бита
+  // п п╬п©п╦я─я┐п╣п╪ п╥п╫п╟я┤п╣п╫п╦п╣ п╨п╬п╫я┌я─п╬п╩я▄п╫п╬пЁп╬ п╠п╦я┌п╟
   crossoverControlBit = second.getCrossoverControlBit ();
-  // Копируем имя системы аксиом
+  // п п╬п©п╦я─я┐п╣п╪ п╦п╪я▐ я│п╦я│я┌п╣п╪я▀ п╟п╨я│п╦п╬п╪
   nameOfAxiomSet = second.name ();
-  // Копируем входящие в систему аксиомы
+  // п п╬п©п╦я─я┐п╣п╪ п╡я┘п╬п╢я▐я┴п╦п╣ п╡ я│п╦я│я┌п╣п╪я┐ п╟п╨я│п╦п╬п╪я▀
   for (unsigned int i = 0; i < axioms.size(); i++) {
     (axioms[i])->clear();
     delete (axioms[i]);
@@ -127,11 +127,11 @@ AxiomSetWithStats & AxiomSetWithStats::operator= (const AxiomSetWithStats &secon
 /****************************************************************************
 *				AxiomSetWithStats::exit
 *
-*	Description:	функция проверяет - целевая функциия ниже заданного значения или нет
-*	Parameters:	exitCond - параметр, с которым идет сравнение целевой функции
-*	Returns:		true - если целевая функция оказалась ниже заданного параметра
-*				false - в противном случае
-*	Throws:		AxiomLibException - целевая функция не подсчитана (это может быть важно)
+*	Description:	я└я┐п╫п╨я├п╦я▐ п©я─п╬п╡п╣я─я▐п╣я┌ - я├п╣п╩п╣п╡п╟я▐ я└я┐п╫п╨я├п╦п╦я▐ п╫п╦п╤п╣ п╥п╟п╢п╟п╫п╫п╬пЁп╬ п╥п╫п╟я┤п╣п╫п╦я▐ п╦п╩п╦ п╫п╣я┌
+*	Parameters:	exitCond - п©п╟я─п╟п╪п╣я┌я─, я│ п╨п╬я┌п╬я─я▀п╪ п╦п╢п╣я┌ я│я─п╟п╡п╫п╣п╫п╦п╣ я├п╣п╩п╣п╡п╬п╧ я└я┐п╫п╨я├п╦п╦
+*	Returns:		true - п╣я│п╩п╦ я├п╣п╩п╣п╡п╟я▐ я└я┐п╫п╨я├п╦я▐ п╬п╨п╟п╥п╟п╩п╟я│я▄ п╫п╦п╤п╣ п╥п╟п╢п╟п╫п╫п╬пЁп╬ п©п╟я─п╟п╪п╣я┌я─п╟
+*				false - п╡ п©я─п╬я┌п╦п╡п╫п╬п╪ я│п╩я┐я┤п╟п╣
+*	Throws:		AxiomLibException - я├п╣п╩п╣п╡п╟я▐ я└я┐п╫п╨я├п╦я▐ п╫п╣ п©п╬п╢я│я┤п╦я┌п╟п╫п╟ (я█я┌п╬ п╪п╬п╤п╣я┌ п╠я▀я┌я▄ п╡п╟п╤п╫п╬)
 *	Author:		dk
 *	History:
 *

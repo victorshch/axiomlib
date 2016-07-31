@@ -1,7 +1,7 @@
 /****************************************************************************
 *				AxiomBase
 *
-*	Description:	Класс, отвечающий за чтение базы аксиом
+*	Description:	п п╩п╟я│я│, п╬я┌п╡п╣я┤п╟я▌я┴п╦п╧ п╥п╟ я┤я┌п╣п╫п╦п╣ п╠п╟п╥я▀ п╟п╨я│п╦п╬п╪
 *	Author:		dk
 *	History:	
 *
@@ -34,103 +34,103 @@ class AxiomBase {
 
  private:
 
-	// Набор всех аксиом в базе аксиом
+	// п²п╟п╠п╬я─ п╡я│п╣я┘ п╟п╨я│п╦п╬п╪ п╡ п╠п╟п╥п╣ п╟п╨я│п╦п╬п╪
 	std::map <std::string, std::vector<std::string> > axioms;
 
-	// Имя считанного банка аксиом
+	// п≤п╪я▐ я│я┤п╦я┌п╟п╫п╫п╬пЁп╬ п╠п╟п╫п╨п╟ п╟п╨я│п╦п╬п╪
 	std::string name;
 	
  protected:
 	
-	// Обозначние для лучшего понимания
+	// п·п╠п╬п╥п╫п╟я┤п╫п╦п╣ п╢п╩я▐ п╩я┐я┤я┬п╣пЁп╬ п©п╬п╫п╦п╪п╟п╫п╦я▐
 	typedef boost::tokenizer<boost::char_separator<char> >      token_separator;
 	
-	// Функция чтения данных из ax-файла
+	// п╓я┐п╫п╨я├п╦я▐ я┤я┌п╣п╫п╦я▐ п╢п╟п╫п╫я▀я┘ п╦п╥ ax-я└п╟п╧п╩п╟
 	signed int readFromAX (std::string fileName, std::vector<std::string> &vec);
 	
-	// Функция чтения данных из x-файла
+	// п╓я┐п╫п╨я├п╦я▐ я┤я┌п╣п╫п╦я▐ п╢п╟п╫п╫я▀я┘ п╦п╥ x-я└п╟п╧п╩п╟
 	signed int readFromX (std::string fileName, std::string &strName);
 	
-	// Функция сравнения имен с шаблоном
+	// п╓я┐п╫п╨я├п╦я▐ я│я─п╟п╡п╫п╣п╫п╦я▐ п╦п╪п╣п╫ я│ я┬п╟п╠п╩п╬п╫п╬п╪
 	bool checkName (std::string name1, int from, int upTo, std::string name2) const;
 
-	// Функция сравнения строки с именем  файла и строки с путем файла - сравнение просиходит только названий файлов
+	// п╓я┐п╫п╨я├п╦я▐ я│я─п╟п╡п╫п╣п╫п╦я▐ я│я┌я─п╬п╨п╦ я│ п╦п╪п╣п╫п╣п╪  я└п╟п╧п╩п╟ п╦ я│я┌я─п╬п╨п╦ я│ п©я┐я┌п╣п╪ я└п╟п╧п╩п╟ - я│я─п╟п╡п╫п╣п╫п╦п╣ п©я─п╬я│п╦я┘п╬п╢п╦я┌ я┌п╬п╩я▄п╨п╬ п╫п╟п╥п╡п╟п╫п╦п╧ я└п╟п╧п╩п╬п╡
 	bool compareStringAndPath (std::string a, std::string b, const char* n3) const;
 	
  public:
  
 	
-	// Функция возвращает число  аксиом в считанном множестве
+	// п╓я┐п╫п╨я├п╦я▐ п╡п╬п╥п╡я─п╟я┴п╟п╣я┌ я┤п╦я│п╩п╬  п╟п╨я│п╦п╬п╪ п╡ я│я┤п╦я┌п╟п╫п╫п╬п╪ п╪п╫п╬п╤п╣я│я┌п╡п╣
 	int size (void) const;
 	
-	// Не забыть перенести в private ! ! !
-	// Имя считанного банка аксиом
+	// п²п╣ п╥п╟п╠я▀я┌я▄ п©п╣я─п╣п╫п╣я│я┌п╦ п╡ private ! ! !
+	// п≤п╪я▐ я│я┤п╦я┌п╟п╫п╫п╬пЁп╬ п╠п╟п╫п╨п╟ п╟п╨я│п╦п╬п╪
 	//std::string name;
  
-	// Пустой конструктор
+	// п÷я┐я│я┌п╬п╧ п╨п╬п╫я│я┌я─я┐п╨я┌п╬я─
 	AxiomBase (void);
 	
-	// Функция читает все аксиомы из каталога, путь которго указан в файле конфигураций
+	// п╓я┐п╫п╨я├п╦я▐ я┤п╦я┌п╟п╣я┌ п╡я│п╣ п╟п╨я│п╦п╬п╪я▀ п╦п╥ п╨п╟я┌п╟п╩п╬пЁп╟, п©я┐я┌я▄ п╨п╬я┌п╬я─пЁп╬ я┐п╨п╟п╥п╟п╫ п╡ я└п╟п╧п╩п╣ п╨п╬п╫я└п╦пЁя┐я─п╟я├п╦п╧
 	signed int readAxioms (const char* axiomBaseDir);
 	
-	// Фунция выдает вектор элементарных условий соответсвующих запрошенной аксиоме, либо пустой вектор если не нашлось аксиомы с заданным именем
+	// п╓я┐п╫я├п╦я▐ п╡я▀п╢п╟п╣я┌ п╡п╣п╨я┌п╬я─ я█п╩п╣п╪п╣п╫я┌п╟я─п╫я▀я┘ я┐я│п╩п╬п╡п╦п╧ я│п╬п╬я┌п╡п╣я┌я│п╡я┐я▌я┴п╦я┘ п╥п╟п©я─п╬я┬п╣п╫п╫п╬п╧ п╟п╨я│п╦п╬п╪п╣, п╩п╦п╠п╬ п©я┐я│я┌п╬п╧ п╡п╣п╨я┌п╬я─ п╣я│п╩п╦ п╫п╣ п╫п╟я┬п╩п╬я│я▄ п╟п╨я│п╦п╬п╪я▀ я│ п╥п╟п╢п╟п╫п╫я▀п╪ п╦п╪п╣п╫п╣п╪
 	signed int getVectorOfEC (std::vector<std::string>& toReturn, std::string axiomName);
 
-	// Функция считывания описания аксиомы и ее параметров в структуру AxiomExprStructure
+	// п╓я┐п╫п╨я├п╦я▐ я│я┤п╦я┌я▀п╡п╟п╫п╦я▐ п╬п©п╦я│п╟п╫п╦я▐ п╟п╨я│п╦п╬п╪я▀ п╦ п╣п╣ п©п╟я─п╟п╪п╣я┌я─п╬п╡ п╡ я│я┌я─я┐п╨я┌я┐я─я┐ AxiomExprStructure
 	signed int readFromAX (const std::string& filePath, AxiomExprStructure &aes) const;
 
-	// Функция считывания описания аксиомы и ее параметров в структуру AxiomExprStructure
+	// п╓я┐п╫п╨я├п╦я▐ я│я┤п╦я┌я▀п╡п╟п╫п╦я▐ п╬п©п╦я│п╟п╫п╦я▐ п╟п╨я│п╦п╬п╪я▀ п╦ п╣п╣ п©п╟я─п╟п╪п╣я┌я─п╬п╡ п╡ я│я┌я─я┐п╨я┌я┐я─я┐ AxiomExprStructure
 	signed int readFromAX (const std::string &filePath, AxiomExprStructure &aes, const std::vector<std::string> &paramNames) const;
 
-	// Чтение из уже открытого файла одного описания аксиомы
+	// п╖я┌п╣п╫п╦п╣ п╦п╥ я┐п╤п╣ п╬я┌п╨я─я▀я┌п╬пЁп╬ я└п╟п╧п╩п╟ п╬п╢п╫п╬пЁп╬ п╬п©п╦я│п╟п╫п╦я▐ п╟п╨я│п╦п╬п╪я▀
 	signed int readFromAX (boost::filesystem::ifstream &file, AxiomExprStructure &aes, const std::vector<std::string> &paramNames) const;
 
-	// Функция записи аксиомы в файл
+	// п╓я┐п╫п╨я├п╦я▐ п╥п╟п©п╦я│п╦ п╟п╨я│п╦п╬п╪я▀ п╡ я└п╟п╧п╩
 	signed int saveToAX (const std::string& baseDir, AxiomExprStructure &aes) const;
 
-	// Функция записи аксиомы в файл
+	// п╓я┐п╫п╨я├п╦я▐ п╥п╟п©п╦я│п╦ п╟п╨я│п╦п╬п╪я▀ п╡ я└п╟п╧п╩
 	signed int saveToAX (const std::string& baseDir, AxiomExprStructure &aes, const std::vector<std::string> &paramNames) const;
 
-	// Функция записи аксиомы в уже открытый файл
+	// п╓я┐п╫п╨я├п╦я▐ п╥п╟п©п╦я│п╦ п╟п╨я│п╦п╬п╪я▀ п╡ я┐п╤п╣ п╬я┌п╨я─я▀я┌я▀п╧ я└п╟п╧п╩
 	signed int saveToAX (std::ofstream &file, AxiomExprStructure &aes, const std::vector<std::string> &paramNames) const;
 
-	// Функция считывания параметров элементарного условия из файла
+	// п╓я┐п╫п╨я├п╦я▐ я│я┤п╦я┌я▀п╡п╟п╫п╦я▐ п©п╟я─п╟п╪п╣я┌я─п╬п╡ я█п╩п╣п╪п╣п╫я┌п╟я─п╫п╬пЁп╬ я┐я│п╩п╬п╡п╦я▐ п╦п╥ я└п╟п╧п╩п╟
 	signed int readFromEC (const std::string& filePath, ElemCondPlusStruture &ecps) const;
 
-	// Функция считывания параметров элементарного условия из файла
+	// п╓я┐п╫п╨я├п╦я▐ я│я┤п╦я┌я▀п╡п╟п╫п╦я▐ п©п╟я─п╟п╪п╣я┌я─п╬п╡ я█п╩п╣п╪п╣п╫я┌п╟я─п╫п╬пЁп╬ я┐я│п╩п╬п╡п╦я▐ п╦п╥ я└п╟п╧п╩п╟
 	signed int readFromEC (const std::string &filePath, ElemCondPlusStruture &ecps, const std::vector<std::string> &paramNames) const;
 
-	// Чтение из уже открытого файла одного элементарного условия
+	// п╖я┌п╣п╫п╦п╣ п╦п╥ я┐п╤п╣ п╬я┌п╨я─я▀я┌п╬пЁп╬ я└п╟п╧п╩п╟ п╬п╢п╫п╬пЁп╬ я█п╩п╣п╪п╣п╫я┌п╟я─п╫п╬пЁп╬ я┐я│п╩п╬п╡п╦я▐
 	signed int readFromEC (boost::filesystem::ifstream &file, ElemCondPlusStruture &ecps, const std::vector<std::string> &paramNames) const;
 
-	// Функция записи параметров элементарного условия в файл
+	// п╓я┐п╫п╨я├п╦я▐ п╥п╟п©п╦я│п╦ п©п╟я─п╟п╪п╣я┌я─п╬п╡ я█п╩п╣п╪п╣п╫я┌п╟я─п╫п╬пЁп╬ я┐я│п╩п╬п╡п╦я▐ п╡ я└п╟п╧п╩
 	signed int saveToEC (const std::string &baseDir, const std::string &fileName, ElemCondPlusStruture &ecps) const;
 
-	// Функция записи параметров элементарного условия в файл
+	// п╓я┐п╫п╨я├п╦я▐ п╥п╟п©п╦я│п╦ п©п╟я─п╟п╪п╣я┌я─п╬п╡ я█п╩п╣п╪п╣п╫я┌п╟я─п╫п╬пЁп╬ я┐я│п╩п╬п╡п╦я▐ п╡ я└п╟п╧п╩
 	signed int saveToEC (const std::string &baseDir, const std::string &fileName, ElemCondPlusStruture &ecps, const std::string &paramName) const;
 
-	// Функция записи параметров элементарного условия в файл
+	// п╓я┐п╫п╨я├п╦я▐ п╥п╟п©п╦я│п╦ п©п╟я─п╟п╪п╣я┌я─п╬п╡ я█п╩п╣п╪п╣п╫я┌п╟я─п╫п╬пЁп╬ я┐я│п╩п╬п╡п╦я▐ п╡ я└п╟п╧п╩
 	signed int saveToEC (const std::string &baseDir, const std::string &fileName, ElemCondPlusStruture &ecps, const std::vector <std::string> &paramNames) const;
 
-	// Функция записи параметров элементарного условия в уже открытый файл
+	// п╓я┐п╫п╨я├п╦я▐ п╥п╟п©п╦я│п╦ п©п╟я─п╟п╪п╣я┌я─п╬п╡ я█п╩п╣п╪п╣п╫я┌п╟я─п╫п╬пЁп╬ я┐я│п╩п╬п╡п╦я▐ п╡ я┐п╤п╣ п╬я┌п╨я─я▀я┌я▀п╧ я└п╟п╧п╩
 	signed int saveToEC (std::ofstream &file, ElemCondPlusStruture &ecps, const std::string &paramName) const;
 
-	// Чтение из файла со списком названий файлов
+	// п╖я┌п╣п╫п╦п╣ п╦п╥ я└п╟п╧п╩п╟ я│п╬ я│п©п╦я│п╨п╬п╪ п╫п╟п╥п╡п╟п╫п╦п╧ я└п╟п╧п╩п╬п╡
 	signed int readFromList (const std::string &filePath, std::vector <std::vector <std::vector <std::vector <std::string> > > > &strList) const;
 
-	// Чтение из файла со списком названий файлов
+	// п╖я┌п╣п╫п╦п╣ п╦п╥ я└п╟п╧п╩п╟ я│п╬ я│п©п╦я│п╨п╬п╪ п╫п╟п╥п╡п╟п╫п╦п╧ я└п╟п╧п╩п╬п╡
 	signed int readFromList (const std::string &filePath, std::vector <std::vector <std::string> >  &strList) const;
 
-	// Функция записи в файл списка с названиями файлов
+	// п╓я┐п╫п╨я├п╦я▐ п╥п╟п©п╦я│п╦ п╡ я└п╟п╧п╩ я│п©п╦я│п╨п╟ я│ п╫п╟п╥п╡п╟п╫п╦я▐п╪п╦ я└п╟п╧п╩п╬п╡
 	signed int saveToList (const std::string &baseDir, const std::string &fileName, const std::vector <std::vector <std::vector <std::vector <std::string> > > > &strList) const;
 
-	// Функция записи в файл списка с названиями файлов
+	// п╓я┐п╫п╨я├п╦я▐ п╥п╟п©п╦я│п╦ п╡ я└п╟п╧п╩ я│п©п╦я│п╨п╟ я│ п╫п╟п╥п╡п╟п╫п╦я▐п╪п╦ я└п╟п╧п╩п╬п╡
 	signed int saveToList (const std::string& baseDir, const std::string& fileName, const std::vector <std::vector <std::string> > &strList) const;
 	
-	// Проверяет, имеет ли имя файла заданное расширение
+	// п÷я─п╬п╡п╣я─я▐п╣я┌, п╦п╪п╣п╣я┌ п╩п╦ п╦п╪я▐ я└п╟п╧п╩п╟ п╥п╟п╢п╟п╫п╫п╬п╣ я─п╟я│я┬п╦я─п╣п╫п╦п╣
 	static bool checkExtension(const std::string& fileName, const std::string& extension);
 	
-	// Добавляет имени файла заданное расширение, если оно его уже не имеет
+	// п■п╬п╠п╟п╡п╩я▐п╣я┌ п╦п╪п╣п╫п╦ я└п╟п╧п╩п╟ п╥п╟п╢п╟п╫п╫п╬п╣ я─п╟я│я┬п╦я─п╣п╫п╦п╣, п╣я│п╩п╦ п╬п╫п╬ п╣пЁп╬ я┐п╤п╣ п╫п╣ п╦п╪п╣п╣я┌
 	static void checkedAddExtension(std::string& fileName, const std::string& extension);
 	
 }; // end of class

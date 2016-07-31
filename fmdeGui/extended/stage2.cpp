@@ -33,20 +33,20 @@ Stage2::Stage2(QWidget *parent, ManagedFuzzyDataController *controller)
 		
 	ui.treeWidget_axioms->setColumnCount(6);
 	
-	ui.treeWidget_axioms->headerItem()->setText(0, encode("Имя."));
-	ui.treeWidget_axioms->headerItem()->setText(1, encode("Нештатн."));
-	ui.treeWidget_axioms->headerItem()->setText(2, encode("Нормальн."));
-	ui.treeWidget_axioms->headerItem()->setText(3, encode("Целев."));
-	ui.treeWidget_axioms->headerItem()->setText(4, encode("Отклонение"));
-	ui.treeWidget_axioms->headerItem()->setText(5, encode("Встречаемость"));
+	ui.treeWidget_axioms->headerItem()->setText(0, encode("п≤п╪я▐."));
+	ui.treeWidget_axioms->headerItem()->setText(1, encode("п²п╣я┬я┌п╟я┌п╫."));
+	ui.treeWidget_axioms->headerItem()->setText(2, encode("п²п╬я─п╪п╟п╩я▄п╫."));
+	ui.treeWidget_axioms->headerItem()->setText(3, encode("п╕п╣п╩п╣п╡."));
+	ui.treeWidget_axioms->headerItem()->setText(4, encode("п·я┌п╨п╩п╬п╫п╣п╫п╦п╣"));
+	ui.treeWidget_axioms->headerItem()->setText(5, encode("п▓я│я┌я─п╣я┤п╟п╣п╪п╬я│я┌я▄"));
 	//ui.treeWidget_axioms->headerItem()->setText(4, encode(""));	
 
-	filterGroup = new FilterGroup(0, encode("Частотный фильтр"));
-	filterGroup->addSlider(encode("Нештатн."))->setChecked(true);
-	filterGroup->addSlider(encode("Нормальн."));
-	filterGroup->addSlider(encode("Целев."));
-	filterGroup->addSlider(encode("Отклонение"));
-	filterGroup->addSlider(encode("Встречаемость"));
+	filterGroup = new FilterGroup(0, encode("п╖п╟я│я┌п╬я┌п╫я▀п╧ я└п╦п╩я▄я┌я─"));
+	filterGroup->addSlider(encode("п²п╣я┬я┌п╟я┌п╫."))->setChecked(true);
+	filterGroup->addSlider(encode("п²п╬я─п╪п╟п╩я▄п╫."));
+	filterGroup->addSlider(encode("п╕п╣п╩п╣п╡."));
+	filterGroup->addSlider(encode("п·я┌п╨п╩п╬п╫п╣п╫п╦п╣"));
+	filterGroup->addSlider(encode("п▓я│я┌я─п╣я┤п╟п╣п╪п╬я│я┌я▄"));
 	
 	ui.verticalLayout_axiomFilters->addWidget(filterGroup);
 	
@@ -161,25 +161,25 @@ void Stage2::initFreqFilter() {
 void Stage2::setupParams() {
 	ParamsForm* paramsForm = new ParamsForm();
 	paramsForm->addParam(StrategyParamSpec(0, 1000, 1, 10, "shiftErrIn"),
-	                     encode("Стоимость ошибки, если\n при сдвиге разметок осталась\n область разметки без соответствия\n в другой разметке"));
+	                     encode("п║я┌п╬п╦п╪п╬я│я┌я▄ п╬я┬п╦п╠п╨п╦, п╣я│п╩п╦\n п©я─п╦ я│п╢п╡п╦пЁп╣ я─п╟п╥п╪п╣я┌п╬п╨ п╬я│я┌п╟п╩п╟я│я▄\n п╬п╠п╩п╟я│я┌я▄ я─п╟п╥п╪п╣я┌п╨п╦ п╠п╣п╥ я│п╬п╬я┌п╡п╣я┌я│я┌п╡п╦я▐\n п╡ п╢я─я┐пЁп╬п╧ я─п╟п╥п╪п╣я┌п╨п╣"));
 	paramsForm->addParam(StrategyParamSpec(0.0, 1.0, 0.01, 0.55, "extendMarkUpLensLevel"),
-	                     encode("Степень расширения разметок\n во время их поиска (нечеткость поиска разметок)"));
+	                     encode("п║я┌п╣п©п╣п╫я▄ я─п╟я│я┬п╦я─п╣п╫п╦я▐ я─п╟п╥п╪п╣я┌п╬п╨\n п╡п╬ п╡я─п╣п╪я▐ п╦я┘ п©п╬п╦я│п╨п╟ (п╫п╣я┤п╣я┌п╨п╬я│я┌я▄ п©п╬п╦я│п╨п╟ я─п╟п╥п╪п╣я┌п╬п╨)"));
 	paramsForm->addParam(StrategyParamSpec(1, 10000, 1, 500, "maxAxiomSetPopSize"),
-	                     encode("Максимальное число систем\n аксиом в популяции"));
+	                     encode("п°п╟п╨я│п╦п╪п╟п╩я▄п╫п╬п╣ я┤п╦я│п╩п╬ я│п╦я│я┌п╣п╪\n п╟п╨я│п╦п╬п╪ п╡ п©п╬п©я┐п╩я▐я├п╦п╦"));
 	paramsForm->addParam(StrategyParamSpec(1, 100, 1, 5, "maxNumberOfSteps"),
-	                     encode("Максимальное число итераций\n алгоритма построения систем аксиом"));
+	                     encode("п°п╟п╨я│п╦п╪п╟п╩я▄п╫п╬п╣ я┤п╦я│п╩п╬ п╦я┌п╣я─п╟я├п╦п╧\n п╟п╩пЁп╬я─п╦я┌п╪п╟ п©п╬я│я┌я─п╬п╣п╫п╦я▐ я│п╦я│я┌п╣п╪ п╟п╨я│п╦п╬п╪"));
 	paramsForm->addParam(StrategyParamSpec(0.0, 1000.0, 1.0, 1.0, "bestAxiomSetGoal"),
-	                     encode("Требуемое значение целевой функции"));
+	                     encode("п╒я─п╣п╠я┐п╣п╪п╬п╣ п╥п╫п╟я┤п╣п╫п╦п╣ я├п╣п╩п╣п╡п╬п╧ я└я┐п╫п╨я├п╦п╦"));
 	paramsForm->addParam(StrategyParamSpec(1, 1000, 1, 20, "numberOfBestAxiomSets"),
-	                     encode("Число сохраняемых лучших\n систем аксиом после работы всего алгоритма"));
+	                     encode("п╖п╦я│п╩п╬ я│п╬я┘я─п╟п╫я▐п╣п╪я▀я┘ п╩я┐я┤я┬п╦я┘\n я│п╦я│я┌п╣п╪ п╟п╨я│п╦п╬п╪ п©п╬я│п╩п╣ я─п╟п╠п╬я┌я▀ п╡я│п╣пЁп╬ п╟п╩пЁп╬я─п╦я┌п╪п╟"));
 	paramsForm->addParam(StrategyParamSpec(0.0, 1.0, 0.01, 0.95, "percentBestAxiomSets"),
-	                     encode("Доля сохраняемых лучших систем аксиом\n на каждой итерации"));
+	                     encode("п■п╬п╩я▐ я│п╬я┘я─п╟п╫я▐п╣п╪я▀я┘ п╩я┐я┤я┬п╦я┘ я│п╦я│я┌п╣п╪ п╟п╨я│п╦п╬п╪\n п╫п╟ п╨п╟п╤п╢п╬п╧ п╦я┌п╣я─п╟я├п╦п╦"));
 	
 	ui.verticalLayout_params->addWidget(paramsForm);
 	
 	registerParamsForm(paramsForm);
 	
-	StrategyFrame* strategyFrame_recognizer = new StrategyFrame("ReducedRecognizer", encode("Распознаватель"));
+	StrategyFrame* strategyFrame_recognizer = new StrategyFrame("ReducedRecognizer", encode("п═п╟я│п©п╬п╥п╫п╟п╡п╟я┌п╣п╩я▄"));
 
 	QList<QPair<StrategyParamSpec, QString> > paramsList;
 	paramsList << qMakePair(StrategyParamSpec(0.0, 1.0, 0.001, 0.125, "Precision"), QString("Precision"))
@@ -189,12 +189,12 @@ void Stage2::setupParams() {
 	
 	paramsList.pop_back();
 	
-	strategyFrame_recognizer->addStrategy(paramsList, "ReducedMetric", encode("Метрика"));
+	strategyFrame_recognizer->addStrategy(paramsList, "ReducedMetric", encode("п°п╣я┌я─п╦п╨п╟"));
 	
 	ui.verticalLayout_params->addWidget(strategyFrame_recognizer);
 	registerParamsForm(strategyFrame_recognizer);
 	
-	StrategyFrame* strategyFrame_goal = new StrategyFrame("goalClass", encode("Целевая функция"));
+	StrategyFrame* strategyFrame_goal = new StrategyFrame("goalClass", encode("п╕п╣п╩п╣п╡п╟я▐ я└я┐п╫п╨я├п╦я▐"));
 	
 	paramsList.clear();
 	paramsList << qMakePair(StrategyParamSpec(0.0, 1000.0, 1.0, 1.0, "gcFirst"), QString("gcFirst"))
@@ -210,20 +210,20 @@ void Stage2::setupParams() {
 }
 
 void Stage2::setupHeuristics() {
-	HeuristicsForm* heuristicsForm = new HeuristicsForm("Heuristics", "AXStatClustering", encode("Кластеризация по статистике"));
-	heuristicsForm->addParam(StrategyParamSpec(1, 100, 1, 1, "retain"), encode("Число оставляемых аксиом с одинаковой статистикой"));
+	HeuristicsForm* heuristicsForm = new HeuristicsForm("Heuristics", "AXStatClustering", encode("п п╩п╟я│я┌п╣я─п╦п╥п╟я├п╦я▐ п©п╬ я│я┌п╟я┌п╦я│я┌п╦п╨п╣"));
+	heuristicsForm->addParam(StrategyParamSpec(1, 100, 1, 1, "retain"), encode("п╖п╦я│п╩п╬ п╬я│я┌п╟п╡п╩я▐п╣п╪я▀я┘ п╟п╨я│п╦п╬п╪ я│ п╬п╢п╦п╫п╟п╨п╬п╡п╬п╧ я│я┌п╟я┌п╦я│я┌п╦п╨п╬п╧"));
 	ui.verticalLayout_heuristics->addWidget(heuristicsForm);
 	registerHeuristicsForm(heuristicsForm);
 	
-	heuristicsForm = new HeuristicsForm("Heuristics", "AXOccFilter", encode("Фильтрация по встречаемости"));
-	heuristicsForm->addParam(StrategyParamSpec(0.0, 1.0, 0.01, 1.0, "threshold"), encode("Порог встречаемости"));
+	heuristicsForm = new HeuristicsForm("Heuristics", "AXOccFilter", encode("п╓п╦п╩я▄я┌я─п╟я├п╦я▐ п©п╬ п╡я│я┌я─п╣я┤п╟п╣п╪п╬я│я┌п╦"));
+	heuristicsForm->addParam(StrategyParamSpec(0.0, 1.0, 0.01, 1.0, "threshold"), encode("п÷п╬я─п╬пЁ п╡я│я┌я─п╣я┤п╟п╣п╪п╬я│я┌п╦"));
 	ui.verticalLayout_heuristics->addWidget(heuristicsForm);
 	registerHeuristicsForm(heuristicsForm);
 	
-	heuristicsForm = new HeuristicsForm("Heuristics", "AXOccClustering", encode("Кластеризация по точкам выполнения"));
-	heuristicsForm->addParam(StrategyParamSpec(2, 10000, 1, 2, "minDistance"), encode("Минимальное расстояние между кластерами"));
-	heuristicsForm->addParam(StrategyParamSpec(0, 10000, 1, 3, "maxClusterSize"), encode("Максимальный размер кластера"));
-	heuristicsForm->addParam(StrategyParamSpec(0, 10000, 1, 3, "minMaxClusterSize"), encode("Минимальный максимум размера\n кластера на траектории"));
+	heuristicsForm = new HeuristicsForm("Heuristics", "AXOccClustering", encode("п п╩п╟я│я┌п╣я─п╦п╥п╟я├п╦я▐ п©п╬ я┌п╬я┤п╨п╟п╪ п╡я▀п©п╬п╩п╫п╣п╫п╦я▐"));
+	heuristicsForm->addParam(StrategyParamSpec(2, 10000, 1, 2, "minDistance"), encode("п°п╦п╫п╦п╪п╟п╩я▄п╫п╬п╣ я─п╟я│я│я┌п╬я▐п╫п╦п╣ п╪п╣п╤п╢я┐ п╨п╩п╟я│я┌п╣я─п╟п╪п╦"));
+	heuristicsForm->addParam(StrategyParamSpec(0, 10000, 1, 3, "maxClusterSize"), encode("п°п╟п╨я│п╦п╪п╟п╩я▄п╫я▀п╧ я─п╟п╥п╪п╣я─ п╨п╩п╟я│я┌п╣я─п╟"));
+	heuristicsForm->addParam(StrategyParamSpec(0, 10000, 1, 3, "minMaxClusterSize"), encode("п°п╦п╫п╦п╪п╟п╩я▄п╫я▀п╧ п╪п╟п╨я│п╦п╪я┐п╪ я─п╟п╥п╪п╣я─п╟\n п╨п╩п╟я│я┌п╣я─п╟ п╫п╟ я┌я─п╟п╣п╨я┌п╬я─п╦п╦"));
 	ui.verticalLayout_heuristics->addWidget(heuristicsForm);
 	registerHeuristicsForm(heuristicsForm);
 }

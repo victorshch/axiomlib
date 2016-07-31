@@ -16,7 +16,7 @@
 #include "StringPlus.h"
 
 class ManagedFuzzyDataStage3: public ManagedFuzzyDataStage {
-	//объявления, необходимые для сериализации
+	//п╬п╠я┼я▐п╡п╩п╣п╫п╦я▐, п╫п╣п╬п╠я┘п╬п╢п╦п╪я▀п╣ п╢п╩я▐ я│п╣я─п╦п╟п╩п╦п╥п╟я├п╦п╦
 	friend class boost::serialization::access;
 	template <class Archive>
 	void serialize(Archive &archive, const unsigned int /*version*/)

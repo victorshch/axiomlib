@@ -19,7 +19,7 @@ int ASModelAxioms::columnCount() const {
 
 QVariant ASModelAxioms::data(int column) const {
 	if(column == 0) {
-		return QVariant::fromValue(encode("Аксиомы"));
+		return QVariant::fromValue(encode("п░п╨я│п╦п╬п╪я▀"));
 	} else {
 		return QVariant();
 	}

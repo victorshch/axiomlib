@@ -29,7 +29,7 @@ int main (int argc, char** argv) {
 
 		if (specOutputForGui) { std::cout << str_systemMsg_prog << "1\n"; std::cout.flush(); }
 
-		 // Считываем файл конфигурации из заданного источника
+		 // п║я┤п╦я┌я▀п╡п╟п╣п╪ я└п╟п╧п╩ п╨п╬п╫я└п╦пЁя┐я─п╟я├п╦п╦ п╦п╥ п╥п╟п╢п╟п╫п╫п╬пЁп╬ п╦я│я┌п╬я┤п╫п╦п╨п╟
 		Environment envStart;
 		envStart.readConfigParams (argc, argv);
 
@@ -48,14 +48,14 @@ int main (int argc, char** argv) {
 
 		std::cout << "Reading DataSet" << std::endl;
 
-		// Инициализируем dataSet
+		// п≤п╫п╦я├п╦п╟п╩п╦п╥п╦я─я┐п╣п╪ dataSet
 		std::string datasetDir, datasetName;
 		if (env.getStringParamValue(datasetDir, "BaseDataSetDir") < 0)
 			throw AxiomLibException("test_execute: data set directory is undefined.");
 		if (env.getStringParamValue(datasetName, "DataSet") < 0)
 			throw AxiomLibException("test_execute: data set is undefined.");
 
-		// считываем необходимые для данного класса параметры о наборе данных
+		// я│я┤п╦я┌я▀п╡п╟п╣п╪ п╫п╣п╬п╠я┘п╬п╢п╦п╪я▀п╣ п╢п╩я▐ п╢п╟п╫п╫п╬пЁп╬ п╨п╩п╟я│я│п╟ п©п╟я─п╟п╪п╣я┌я─я▀ п╬ п╫п╟п╠п╬я─п╣ п╢п╟п╫п╫я▀я┘
 		EnvDataSet envDataSet;
 		envDataSet.readConfigFile (datasetDir, datasetName);
 
@@ -63,25 +63,25 @@ int main (int argc, char** argv) {
 
 		std::vector<int> params;
 
-		// установка корректного обозначения NullStr - обозначение остутсвия в данной точке ряда какого либо нештатного поведения
+		// я┐я│я┌п╟п╫п╬п╡п╨п╟ п╨п╬я─я─п╣п╨я┌п╫п╬пЁп╬ п╬п╠п╬п╥п╫п╟я┤п╣п╫п╦я▐ NullStr - п╬п╠п╬п╥п╫п╟я┤п╣п╫п╦п╣ п╬я│я┌я┐я┌я│п╡п╦я▐ п╡ п╢п╟п╫п╫п╬п╧ я┌п╬я┤п╨п╣ я─я▐п╢п╟ п╨п╟п╨п╬пЁп╬ п╩п╦п╠п╬ п╫п╣я┬я┌п╟я┌п╫п╬пЁп╬ п©п╬п╡п╣п╢п╣п╫п╦я▐
 		dataSet.setNullStr (envDataSet);
-		// собственно считываем набор данных - заводим его во внутреннее представление
+		// я│п╬п╠я│я┌п╡п╣п╫п╫п╬ я│я┤п╦я┌я▀п╡п╟п╣п╪ п╫п╟п╠п╬я─ п╢п╟п╫п╫я▀я┘ - п╥п╟п╡п╬п╢п╦п╪ п╣пЁп╬ п╡п╬ п╡п╫я┐я┌я─п╣п╫п╫п╣п╣ п©я─п╣п╢я│я┌п╟п╡п╩п╣п╫п╦п╣
 		dataSet.readDataSet(datasetDir, datasetName);
-		// восстанавливаем в данном классе вектор индексов параметров в каноническом представленнии по которым вести поиск нештатых ситуаций
+		// п╡п╬я│я│я┌п╟п╫п╟п╡п╩п╦п╡п╟п╣п╪ п╡ п╢п╟п╫п╫п╬п╪ п╨п╩п╟я│я│п╣ п╡п╣п╨я┌п╬я─ п╦п╫п╢п╣п╨я│п╬п╡ п©п╟я─п╟п╪п╣я┌я─п╬п╡ п╡ п╨п╟п╫п╬п╫п╦я┤п╣я│п╨п╬п╪ п©я─п╣п╢я│я┌п╟п╡п╩п╣п╫п╫п╦п╦ п©п╬ п╨п╬я┌п╬я─я▀п╪ п╡п╣я│я┌п╦ п©п╬п╦я│п╨ п╫п╣я┬я┌п╟я┌я▀я┘ я│п╦я┌я┐п╟я├п╦п╧
 		dataSet.getParamNums(params, env, envDataSet);
 
 		std::cout << "Reading AxiomSetPop" << std::endl;
 
-		// Заполняем набор систем аксиом
+		// п≈п╟п©п╬п╩п╫я▐п╣п╪ п╫п╟п╠п╬я─ я│п╦я│я┌п╣п╪ п╟п╨я│п╦п╬п╪
 		AxiomSetPop axiomSetPop;
-		// инициализируем набор систем аксиом
+		// п╦п╫п╦я├п╦п╟п╩п╦п╥п╦я─я┐п╣п╪ п╫п╟п╠п╬я─ я│п╦я│я┌п╣п╪ п╟п╨я│п╦п╬п╪
 		axiomSetPop.initFromEnv(env);
 
 		if (specOutputForGui) { std::cout << str_systemMsg_prog << "30\n"; std::cout.flush(); }
 
 		std::cout << "Initializing GoalStrategy" << std::endl;
 
-		// Инициализируем стратегию вычисления целевой фуекции
+		// п≤п╫п╦я├п╦п╟п╩п╦п╥п╦я─я┐п╣п╪ я│я┌я─п╟я┌п╣пЁп╦я▌ п╡я▀я┤п╦я│п╩п╣п╫п╦я▐ я├п╣п╩п╣п╡п╬п╧ я└я┐п╣п╨я├п╦п╦
 		string goalStrategyName;
 		GoalStrategyFactory gsf;
 		if (env.getStringParamValue(goalStrategyName, "goalClass") < 0)
@@ -94,7 +94,7 @@ int main (int argc, char** argv) {
 
 		std::cout << "Initializing Recognizer" << std::endl;
 
-		// Класс распознавателя
+		// п п╩п╟я│я│ я─п╟я│п©п╬п╥п╫п╟п╡п╟я┌п╣п╩я▐
 		//RecognizerExtend *recognizer;
 		//recognizer = new RecognizerExtend;
 		//RecognizerMetric recognizer;
@@ -105,17 +105,17 @@ int main (int argc, char** argv) {
 		if (env.getStringParamValue(recognizerStr, "Recognizer") < 0)
 			throw AxiomLibException("Top level: main : Recognizer is undefined.");
 
-		// Создаем распознаватель
+		// п║п╬п╥п╢п╟п╣п╪ я─п╟я│п©п╬п╥п╫п╟п╡п╟я┌п╣п╩я▄
 		recognizer = recognizerFactory.create (recognizerStr);
 
-		// Инифиализируем распознаватель
+		// п≤п╫п╦я└п╦п╟п╩п╦п╥п╦я─я┐п╣п╪ я─п╟я│п©п╬п╥п╫п╟п╡п╟я┌п╣п╩я▄
 		recognizer->setParamsFromEnv(env);
 
 		if (specOutputForGui) { std::cout << str_systemMsg_prog << "50\n"; std::cout.flush(); }
 
 		std::cout << "Running recognizer" << std::endl;
 
-		// 1. Прогоняем на существующей популяции алгоритм разметки и распознавания, получаем число ошибок первого и второго рода, заполняем статистику.
+		// 1. п÷я─п╬пЁп╬п╫я▐п╣п╪ п╫п╟ я│я┐я┴п╣я│я┌п╡я┐я▌я┴п╣п╧ п©п╬п©я┐п╩я▐я├п╦п╦ п╟п╩пЁп╬я─п╦я┌п╪ я─п╟п╥п╪п╣я┌п╨п╦ п╦ я─п╟я│п©п╬п╥п╫п╟п╡п╟п╫п╦я▐, п©п╬п╩я┐я┤п╟п╣п╪ я┤п╦я│п╩п╬ п╬я┬п╦п╠п╬п╨ п©п╣я─п╡п╬пЁп╬ п╦ п╡я┌п╬я─п╬пЁп╬ я─п╬п╢п╟, п╥п╟п©п╬п╩п╫я▐п╣п╪ я│я┌п╟я┌п╦я│я┌п╦п╨я┐.
 		for(int i = 0; i < axiomSetPop.size(); ++i) {
 			int firstKindErrors = 0;
 			int secondKindErrors = 0;
@@ -129,19 +129,19 @@ int main (int argc, char** argv) {
 
 		if (specOutputForGui) { std::cout << str_systemMsg_prog << "80\n"; std::cout.flush(); }
 
-		// Уничтожаем созданный распознаватель
+		// пёп╫п╦я┤я┌п╬п╤п╟п╣п╪ я│п╬п╥п╢п╟п╫п╫я▀п╧ я─п╟я│п©п╬п╥п╫п╟п╡п╟я┌п╣п╩я▄
 		delete recognizer;
 
 		if (specOutputForGui) { std::cout << str_systemMsg_prog << "90\n"; std::cout.flush(); }
 
-		// Сохранение систем аксиом в файлы
+		// п║п╬я┘я─п╟п╫п╣п╫п╦п╣ я│п╦я│я┌п╣п╪ п╟п╨я│п╦п╬п╪ п╡ я└п╟п╧п╩я▀
 		std::string saveFile;
 		if (env.getStringParamValue (saveFile, "PathToSaveResults") >= 0)
 			axiomSetPop.saveAxiomSetPopToFiles (env);
 
 		if (specOutputForGui) { std::cout << str_systemMsg_prog << "100\n"; std::cout.flush(); }
 
-		// Вывод полученных результатов на экран
+		// п▓я▀п╡п╬п╢ п©п╬п╩я┐я┤п╣п╫п╫я▀я┘ я─п╣п╥я┐п╩я▄я┌п╟я┌п╬п╡ п╫п╟ я█п╨я─п╟п╫
 		int tmpFirst, tmpSecond;
 		double goal;
 		std::cout << "\n 	Goals are \n";

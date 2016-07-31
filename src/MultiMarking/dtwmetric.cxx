@@ -1,7 +1,7 @@
 /****************************************************************************
-*			dtwmetric.сxx
+*			dtwmetric.я│xx
 *
-*	Description: Реализация методов класса
+*	Description: п═п╣п╟п╩п╦п╥п╟я├п╦я▐ п╪п╣я┌п╬п╢п╬п╡ п╨п╩п╟я│я│п╟
 *	Author:		armkor
 *	History:
 *
@@ -37,13 +37,13 @@ double calculate(double a,double b,double c) {
 	//return ((a + b)/(c + 1));
 	return ((a + b)*(c + 1));
 }
-// t-рассматриваемая ref - эталонная
+// t-я─п╟я│я│п╪п╟я┌я─п╦п╡п╟п╣п╪п╟я▐ ref - я█я┌п╟п╩п╬п╫п╫п╟я▐
 void DTWMetric::computeDTW (DTWMetric* m, const MultiMark& t,int i,int Nmin,
 							int Nmax, const MultiMark& ref, std::vector<double>& result) {
-	int len_t=Nmax; // Максимальный размер окна = размер матрицы
-	int len_ref=ref.size(); /* Длина эталонной траектории*/
+	int len_t=Nmax; // п°п╟п╨я│п╦п╪п╟п╩я▄п╫я▀п╧ я─п╟п╥п╪п╣я─ п╬п╨п╫п╟ = я─п╟п╥п╪п╣я─ п╪п╟я┌я─п╦я├я▀
+	int len_ref=ref.size(); /* п■п╩п╦п╫п╟ я█я┌п╟п╩п╬п╫п╫п╬п╧ я┌я─п╟п╣п╨я┌п╬я─п╦п╦*/
 
-	// Инициализация матриц
+	// п≤п╫п╦я├п╦п╟п╩п╦п╥п╟я├п╦я▐ п╪п╟я┌я─п╦я├
 	std::vector<std::vector<double> > D(len_ref),R(len_ref),S(len_ref);
 	for (int u=0;u<len_ref;u++){
 		D[u].resize(len_t);
@@ -51,7 +51,7 @@ void DTWMetric::computeDTW (DTWMetric* m, const MultiMark& t,int i,int Nmin,
 		S[u].resize(len_t);
 	}
 
-	// Заполнение матриц.
+	// п≈п╟п©п╬п╩п╫п╣п╫п╦п╣ п╪п╟я┌я─п╦я├.
 	for (int b=0 ; b < len_t ; b++ ){
 		for (int a=0 ; a < len_ref ; a++) {
 			D[a][b]=m->compute ( ref[a],t[i-len_t+b + 1] );
@@ -59,10 +59,10 @@ void DTWMetric::computeDTW (DTWMetric* m, const MultiMark& t,int i,int Nmin,
 			R[a][b]=0;
 		}
 	}
-	// Работа с матрицами R и S
+	// п═п╟п╠п╬я┌п╟ я│ п╪п╟я┌я─п╦я├п╟п╪п╦ R п╦ S
 	S[len_ref-1][len_t-1]=D[len_ref-1][len_t-1];
 	R[len_ref-1][len_t-1]=1;
-	// Заполнение последних строки и столбца
+	// п≈п╟п©п╬п╩п╫п╣п╫п╦п╣ п©п╬я│п╩п╣п╢п╫п╦я┘ я│я┌я─п╬п╨п╦ п╦ я│я┌п╬п╩п╠я├п╟
 	for(int z = len_t - 2;z >= 0;--z) {
 		S[len_ref - 1][z]=D[len_ref - 1][z] + S[len_ref-1][z + 1];
 		R[len_ref - 1][z]=R[len_ref - 1][z + 1] + 1;
@@ -71,7 +71,7 @@ void DTWMetric::computeDTW (DTWMetric* m, const MultiMark& t,int i,int Nmin,
 		S[z][len_t - 1]=D[z][len_t - 1] + S[z + 1][len_t - 1];
 		R[z][len_t - 1]=R[z + 1][len_t] + 1;
 	}
-	// Заполнение матриц
+	// п≈п╟п©п╬п╩п╫п╣п╫п╦п╣ п╪п╟я┌я─п╦я├
 	double diag,right,down;
 	for (int a=(len_ref-2);a>=0;--a) {
 		for (int b=(len_t-2);b>=0;--b) {
@@ -100,7 +100,7 @@ void DTWMetric::computeDTW (DTWMetric* m, const MultiMark& t,int i,int Nmin,
 
 
 DTWMetric* DTWMetric::getMetric(std::string name){
-	// преобразование в строчные буквы
+	// п©я─п╣п╬п╠я─п╟п╥п╬п╡п╟п╫п╦п╣ п╡ я│я┌я─п╬я┤п╫я▀п╣ п╠я┐п╨п╡я▀
 	std::string nameCopy = boost::algorithm::to_lower_copy(name);
 	if(nameCopy == "betweensets1") {
 		BetweenSets1* result;

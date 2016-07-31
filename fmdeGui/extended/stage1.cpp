@@ -31,20 +31,20 @@ Stage1::Stage1(QWidget *parent, ManagedFuzzyDataController *controller)
 
 	ui.treeWidget_ECs->setColumnCount(5);
 	
-	ui.treeWidget_ECs->headerItem()->setText(0, encode("éÍÑ"));
-	ui.treeWidget_ECs->headerItem()->setText(1, encode("îÅÛÔÁÔÎ."));
-	ui.treeWidget_ECs->headerItem()->setText(2, encode("îÏÒÍÁÌØÎ."));
-	ui.treeWidget_ECs->headerItem()->setText(3, encode("ãÅÌÅ×."));
-	ui.treeWidget_ECs->headerItem()->setText(4, encode("÷ÓÔÒÅÞÁÅÍÏÓÔØ"));
+	ui.treeWidget_ECs->headerItem()->setText(0, encode("Ð˜Ð¼Ñ"));
+	ui.treeWidget_ECs->headerItem()->setText(1, encode("ÐÐµÑˆÑ‚Ð°Ñ‚Ð½."));
+	ui.treeWidget_ECs->headerItem()->setText(2, encode("ÐÐ¾Ñ€Ð¼Ð°Ð»ÑŒÐ½."));
+	ui.treeWidget_ECs->headerItem()->setText(3, encode("Ð¦ÐµÐ»ÐµÐ²."));
+	ui.treeWidget_ECs->headerItem()->setText(4, encode("Ð’ÑÑ‚Ñ€ÐµÑ‡Ð°ÐµÐ¼Ð¾ÑÑ‚ÑŒ"));
 	
         //freqFilterGroupBox = new FreqFilterGroupBox();
 	
 	m_filterGroup = new FilterGroup(0, "");
 	
-	m_filterGroup->addSlider(encode("îÅÛÔÁÔÎ."))->setChecked(true);
-	m_filterGroup->addSlider(encode("îÏÒÍÁÌØÎ."));
-	m_filterGroup->addSlider(encode("ãÅÌÅ×."));
-	m_filterGroup->addSlider(encode("÷ÓÔÒÅÞÁÅÍÏÓÔØ"));
+	m_filterGroup->addSlider(encode("ÐÐµÑˆÑ‚Ð°Ñ‚Ð½."))->setChecked(true);
+	m_filterGroup->addSlider(encode("ÐÐ¾Ñ€Ð¼Ð°Ð»ÑŒÐ½."));
+	m_filterGroup->addSlider(encode("Ð¦ÐµÐ»ÐµÐ²."));
+	m_filterGroup->addSlider(encode("Ð’ÑÑ‚Ñ€ÐµÑ‡Ð°ÐµÐ¼Ð¾ÑÑ‚ÑŒ"));
 	
 	ui.verticalLayout_ecFilters->addWidget(m_filterGroup);
 	
@@ -299,15 +299,15 @@ void Stage1::setupParams() {
 	ParamsForm* paramsForm = new ParamsForm();
 	
 	paramsForm->addParam(StrategyParamSpec(1, 10000, 1, 200, "maxAxiomPopSize"), 
-	                     encode("íÁËÓÉÍÁÌØÎÏÅ ÞÉÓÌÏ ÁËÓÉÏÍ × ÐÏÐÕÌÑÃÉÉ"));
+	                     encode("ÐœÐ°ÐºÑÐ¸Ð¼Ð°Ð»ÑŒÐ½Ð¾Ðµ Ñ‡Ð¸ÑÐ»Ð¾ Ð°ÐºÑÐ¸Ð¾Ð¼ Ð² Ð¿Ð¾Ð¿ÑƒÐ»ÑÑ†Ð¸Ð¸"));
 	paramsForm->addParam(StrategyParamSpec(1, 100, 1, 8, "axiomAlgIterNum"), 
-	                     encode("íÁËÓÉÍÁÌØÎÏÅ ÞÉÓÌÏ ÉÔÅÒÁÃÉÊ ÁÌÇÏÒÉÔÍÁ ÐÏÉÓËÁ ÁËÓÉÏÍ"));
+	                     encode("ÐœÐ°ÐºÑÐ¸Ð¼Ð°Ð»ÑŒÐ½Ð¾Ðµ Ñ‡Ð¸ÑÐ»Ð¾ Ð¸Ñ‚ÐµÑ€Ð°Ñ†Ð¸Ð¹ Ð°Ð»Ð³Ð¾Ñ€Ð¸Ñ‚Ð¼Ð° Ð¿Ð¾Ð¸ÑÐºÐ° Ð°ÐºÑÐ¸Ð¾Ð¼"));
 	paramsForm->addParam(StrategyParamSpec(10, 1000000, 1, 100000, "maxCostForAxiom"), 
-	                     encode("íÁËÓÉÍÁÌØÎÏÅ ÚÎÁÞÅÎÉÅ ÃÅÌÅ×ÏÊ ÆÕÎËÃÉÉ ÄÌÑ ÁËÓÉÏÍÙ"));
+	                     encode("ÐœÐ°ÐºÑÐ¸Ð¼Ð°Ð»ÑŒÐ½Ð¾Ðµ Ð·Ð½Ð°Ñ‡ÐµÐ½Ð¸Ðµ Ñ†ÐµÐ»ÐµÐ²Ð¾Ð¹ Ñ„ÑƒÐ½ÐºÑ†Ð¸Ð¸ Ð´Ð»Ñ Ð°ÐºÑÐ¸Ð¾Ð¼Ñ‹"));
 	paramsForm->addParam(StrategyParamSpec(0.01, 1.0, 0.01, 0.85, "percentBestAxioms"), 
-	                     encode("óÏÈÒÁÎÑÅÍÁÑ ÄÏÌÑ ÌÕÞÛÉÈ ÁËÓÉÏÍ"));
+	                     encode("Ð¡Ð¾Ñ…Ñ€Ð°Ð½ÑÐµÐ¼Ð°Ñ Ð´Ð¾Ð»Ñ Ð»ÑƒÑ‡ÑˆÐ¸Ñ… Ð°ÐºÑÐ¸Ð¾Ð¼"));
 	paramsForm->addParam(StrategyParamSpec(0.0, 1e6, 0.01, 0.0, "axiomGoalOccurenceWeight"), 
-	                     encode("÷ÅÓ ×ÓÔÒÅÞÁÅÍÏÓÔÉ × ÃÅÌÅ×ÏÊ ÆÕÎËÃÉÉ"));
+	                     encode("Ð’ÐµÑ Ð²ÑÑ‚Ñ€ÐµÑ‡Ð°ÐµÐ¼Ð¾ÑÑ‚Ð¸ Ð² Ñ†ÐµÐ»ÐµÐ²Ð¾Ð¹ Ñ„ÑƒÐ½ÐºÑ†Ð¸Ð¸"));
 	
 	ui.verticalLayout_params->addWidget(paramsForm);
 	
@@ -317,23 +317,23 @@ void Stage1::setupParams() {
 }
 
 void Stage1::setupHeuristics() {
-	HeuristicsForm* heuristicsForm = new HeuristicsForm("Heuristics", "ECStatClustering", encode("ëÌÁÓÔÅÒÉÚÁÃÉÑ ÐÏ ÓÔÁÔÉÓÔÉËÅ"));
-	heuristicsForm->addParam(StrategyParamSpec(1, 100, 1, 1, "retain"), encode("þÉÓÌÏ ÏÓÔÁ×ÌÑÅÍÙÈ üõ Ó ÏÄÉÎÁËÏ×ÏÊ ÓÔÁÔÉÓÔÉËÏÊ"));
+	HeuristicsForm* heuristicsForm = new HeuristicsForm("Heuristics", "ECStatClustering", encode("ÐšÐ»Ð°ÑÑ‚ÐµÑ€Ð¸Ð·Ð°Ñ†Ð¸Ñ Ð¿Ð¾ ÑÑ‚Ð°Ñ‚Ð¸ÑÑ‚Ð¸ÐºÐµ"));
+	heuristicsForm->addParam(StrategyParamSpec(1, 100, 1, 1, "retain"), encode("Ð§Ð¸ÑÐ»Ð¾ Ð¾ÑÑ‚Ð°Ð²Ð»ÑÐµÐ¼Ñ‹Ñ… Ð­Ð£ Ñ Ð¾Ð´Ð¸Ð½Ð°ÐºÐ¾Ð²Ð¾Ð¹ ÑÑ‚Ð°Ñ‚Ð¸ÑÑ‚Ð¸ÐºÐ¾Ð¹"));
 	ui.verticalLayout_heuristics->addWidget(heuristicsForm);
 	registerHeuristicsForm(heuristicsForm);
 	
-	heuristicsForm = new HeuristicsForm("Heuristics", "ECOccFilter", encode("æÉÌØÔÒÁÃÉÑ ÐÏ ×ÓÔÒÅÞÁÅÍÏÓÔÉ"));
-	heuristicsForm->addParam(StrategyParamSpec(0.01, 1.0, 0.01, 0.2, "offset"), encode("ïÔÓÔÕÐ ÏÔ ÍÁËÓÉÍÁÌØÎÏÊ ×ÓÔÒÅÞÁÅÍÏÓÔÉ"));
-	heuristicsForm->addParam(StrategyParamSpec(0, 10000, 1, 100, "requiredSaturation"), encode("ôÒÅÂÕÅÍÏÅ ÎÁÓÙÝÅÎÉÅ"));
-	heuristicsForm->addParam(StrategyParamSpec(0, 10000, 1, 200, "maxSaturation"), encode("íÁËÓÉÍÁÌØÎÏÅ ÎÁÓÙÝÅÎÉÅ"));
-	heuristicsForm->addParam(StrategyParamSpec(0, 10000, 1, 200, "maxToSelect"), encode("íÁËÓÉÍÁÌØÎÏÅ ÞÉÓÌÏ ×ÙÂÉÒÁÅÍÙÈ üõ"));
+	heuristicsForm = new HeuristicsForm("Heuristics", "ECOccFilter", encode("Ð¤Ð¸Ð»ÑŒÑ‚Ñ€Ð°Ñ†Ð¸Ñ Ð¿Ð¾ Ð²ÑÑ‚Ñ€ÐµÑ‡Ð°ÐµÐ¼Ð¾ÑÑ‚Ð¸"));
+	heuristicsForm->addParam(StrategyParamSpec(0.01, 1.0, 0.01, 0.2, "offset"), encode("ÐžÑ‚ÑÑ‚ÑƒÐ¿ Ð¾Ñ‚ Ð¼Ð°ÐºÑÐ¸Ð¼Ð°Ð»ÑŒÐ½Ð¾Ð¹ Ð²ÑÑ‚Ñ€ÐµÑ‡Ð°ÐµÐ¼Ð¾ÑÑ‚Ð¸"));
+	heuristicsForm->addParam(StrategyParamSpec(0, 10000, 1, 100, "requiredSaturation"), encode("Ð¢Ñ€ÐµÐ±ÑƒÐµÐ¼Ð¾Ðµ Ð½Ð°ÑÑ‹Ñ‰ÐµÐ½Ð¸Ðµ"));
+	heuristicsForm->addParam(StrategyParamSpec(0, 10000, 1, 200, "maxSaturation"), encode("ÐœÐ°ÐºÑÐ¸Ð¼Ð°Ð»ÑŒÐ½Ð¾Ðµ Ð½Ð°ÑÑ‹Ñ‰ÐµÐ½Ð¸Ðµ"));
+	heuristicsForm->addParam(StrategyParamSpec(0, 10000, 1, 200, "maxToSelect"), encode("ÐœÐ°ÐºÑÐ¸Ð¼Ð°Ð»ÑŒÐ½Ð¾Ðµ Ñ‡Ð¸ÑÐ»Ð¾ Ð²Ñ‹Ð±Ð¸Ñ€Ð°ÐµÐ¼Ñ‹Ñ… Ð­Ð£"));
 	ui.verticalLayout_heuristics->addWidget(heuristicsForm);
 	registerHeuristicsForm(heuristicsForm);
 	
-	heuristicsForm = new HeuristicsForm("Heuristics", "ECOccClustering", encode("ëÌÁÓÔÅÒÉÚÁÃÉÑ ÐÏ ÔÏÞËÁÍ ×ÙÐÏÌÎÅÎÉÑ"));
-	heuristicsForm->addParam(StrategyParamSpec(2, 10000, 1, 2, "minDistance"), encode("íÉÎÉÍÁÌØÎÏÅ ÒÁÓÓÔÏÑÎÉÅ ÍÅÖÄÕ ËÌÁÓÔÅÒÁÍÉ"));
-	heuristicsForm->addParam(StrategyParamSpec(0, 10000, 1, 3, "maxClusterSize"), encode("íÁËÓÉÍÁÌØÎÙÊ ÒÁÚÍÅÒ ËÌÁÓÔÅÒÁ"));
-	heuristicsForm->addParam(StrategyParamSpec(0, 10000, 1, 3, "minMaxClusterSize"), encode("íÉÎÉÍÁÌØÎÙÊ ÍÁËÓÉÍÕÍ ÒÁÚÍÅÒÁ\n ËÌÁÓÔÅÒÁ ÎÁ ÔÒÁÅËÔÏÒÉÉ"));
+	heuristicsForm = new HeuristicsForm("Heuristics", "ECOccClustering", encode("ÐšÐ»Ð°ÑÑ‚ÐµÑ€Ð¸Ð·Ð°Ñ†Ð¸Ñ Ð¿Ð¾ Ñ‚Ð¾Ñ‡ÐºÐ°Ð¼ Ð²Ñ‹Ð¿Ð¾Ð»Ð½ÐµÐ½Ð¸Ñ"));
+	heuristicsForm->addParam(StrategyParamSpec(2, 10000, 1, 2, "minDistance"), encode("ÐœÐ¸Ð½Ð¸Ð¼Ð°Ð»ÑŒÐ½Ð¾Ðµ Ñ€Ð°ÑÑÑ‚Ð¾ÑÐ½Ð¸Ðµ Ð¼ÐµÐ¶Ð´Ñƒ ÐºÐ»Ð°ÑÑ‚ÐµÑ€Ð°Ð¼Ð¸"));
+	heuristicsForm->addParam(StrategyParamSpec(0, 10000, 1, 3, "maxClusterSize"), encode("ÐœÐ°ÐºÑÐ¸Ð¼Ð°Ð»ÑŒÐ½Ñ‹Ð¹ Ñ€Ð°Ð·Ð¼ÐµÑ€ ÐºÐ»Ð°ÑÑ‚ÐµÑ€Ð°"));
+	heuristicsForm->addParam(StrategyParamSpec(0, 10000, 1, 3, "minMaxClusterSize"), encode("ÐœÐ¸Ð½Ð¸Ð¼Ð°Ð»ÑŒÐ½Ñ‹Ð¹ Ð¼Ð°ÐºÑÐ¸Ð¼ÑƒÐ¼ Ñ€Ð°Ð·Ð¼ÐµÑ€Ð°\n ÐºÐ»Ð°ÑÑ‚ÐµÑ€Ð° Ð½Ð° Ñ‚Ñ€Ð°ÐµÐºÑ‚Ð¾Ñ€Ð¸Ð¸"));
 	ui.verticalLayout_heuristics->addWidget(heuristicsForm);
 	registerHeuristicsForm(heuristicsForm);
 }
@@ -375,7 +375,7 @@ void Stage1::buildNodeForClass(int classNo, QTreeWidgetItem *abnormalTypeItem) {
 		} else {
 			dimName = QString::number(j);
 		}
-		item2->setText(0, encode("òÁÚÍ. ")+dimName);
+		item2->setText(0, encode("Ð Ð°Ð·Ð¼. ")+dimName);
 		abnormalTypeItem->addChild(item2);
 		for(unsigned int k = 0; k < container[classNo][j].size(); k++) {
 			if(container[classNo][j][k].size()==0) {

@@ -1,7 +1,7 @@
 /****************************************************************************
 *			SimpleTransmuteStrategy
 *
-*	Description:	Функции класса SimpleTransmuteStrategy - Реализация
+*	Description:	п╓я┐п╫п╨я├п╦п╦ п╨п╩п╟я│я│п╟ SimpleTransmuteStrategy - п═п╣п╟п╩п╦п╥п╟я├п╦я▐
 *	Author:		gevor
 *	History:		
 *
@@ -14,10 +14,10 @@ using namespace AxiomLib;
 /****************************************************************************
 *			SimpleTransmuteStrategy::setParamsFromEnv
 *
-*	Description:	Установка параметров мутации из среды
-*	Parameters:	const Environment& env - откуда ставить
+*	Description:	пёя│я┌п╟п╫п╬п╡п╨п╟ п©п╟я─п╟п╪п╣я┌я─п╬п╡ п╪я┐я┌п╟я├п╦п╦ п╦п╥ я│я─п╣п╢я▀
+*	Parameters:	const Environment& env - п╬я┌п╨я┐п╢п╟ я│я┌п╟п╡п╦я┌я▄
 *	Returns:		0
-*	Throws:		AxiomLibException - если параметра нет
+*	Throws:		AxiomLibException - п╣я│п╩п╦ п©п╟я─п╟п╪п╣я┌я─п╟ п╫п╣я┌
 *	Author:		dk
 *	History:
 *
@@ -51,23 +51,23 @@ int SimpleTransmuteStrategy::setParamsFromEnv (const Environment& env) {
 /****************************************************************************
 *				SimpleTransmuteStrategy::transmuteAxiomSet
 *
-*	Description:	Функция мутации системы аксиом
-*	Parameters:	asNum - номер системы аксиом в векторе axiomSets для мутации
-*	Returns:		0 - если все произошло успешно
-*				-1 - если мутация не прошла
-*	Throws:		AxiomLibExeption - если входные параметры не соответствуют области их задания [0, 1]
+*	Description:	п╓я┐п╫п╨я├п╦я▐ п╪я┐я┌п╟я├п╦п╦ я│п╦я│я┌п╣п╪я▀ п╟п╨я│п╦п╬п╪
+*	Parameters:	asNum - п╫п╬п╪п╣я─ я│п╦я│я┌п╣п╪я▀ п╟п╨я│п╦п╬п╪ п╡ п╡п╣п╨я┌п╬я─п╣ axiomSets п╢п╩я▐ п╪я┐я┌п╟я├п╦п╦
+*	Returns:		0 - п╣я│п╩п╦ п╡я│п╣ п©я─п╬п╦п╥п╬я┬п╩п╬ я┐я│п©п╣я┬п╫п╬
+*				-1 - п╣я│п╩п╦ п╪я┐я┌п╟я├п╦я▐ п╫п╣ п©я─п╬я┬п╩п╟
+*	Throws:		AxiomLibExeption - п╣я│п╩п╦ п╡я┘п╬п╢п╫я▀п╣ п©п╟я─п╟п╪п╣я┌я─я▀ п╫п╣ я│п╬п╬я┌п╡п╣я┌я│я┌п╡я┐я▌я┌ п╬п╠п╩п╟я│я┌п╦ п╦я┘ п╥п╟п╢п╟п╫п╦я▐ [0, 1]
 *	Author:		dk
 *	History:
 *
 ****************************************************************************/
 int SimpleTransmuteStrategy::transmuteAxiomSet (unsigned int asNum) {
-	//проверка значений параметров мутации на соответсвие области значений
+	//п©я─п╬п╡п╣я─п╨п╟ п╥п╫п╟я┤п╣п╫п╦п╧ п©п╟я─п╟п╪п╣я┌я─п╬п╡ п╪я┐я┌п╟я├п╦п╦ п╫п╟ я│п╬п╬я┌п╡п╣я┌я│п╡п╦п╣ п╬п╠п╩п╟я│я┌п╦ п╥п╫п╟я┤п╣п╫п╦п╧
 	if ((ectp < 0) || (ectp > 1) || (atp < 0) || (atp > 1) || (stp < 0) || (stp > 1) || (sptp < 0) || (sptp > 1)) {
 		throw AxiomLibException("Error in SimpleTransmuteStrategy::transmuteAxiomSet : one of parameteres is out of range.");
 		return -1;
 	}
 
-	//мутация на уровне аксиом и элементарынх условий
+	//п╪я┐я┌п╟я├п╦я▐ п╫п╟ я┐я─п╬п╡п╫п╣ п╟п╨я│п╦п╬п╪ п╦ я█п╩п╣п╪п╣п╫я┌п╟я─я▀п╫я┘ я┐я│п╩п╬п╡п╦п╧
 	if ((ectp > 0) || (atp > 0)) {
 		int resTransmuteAxiom = 0;
 		for (unsigned int i = 0; i < (axiomSets[asNum])->size(); i++) {
@@ -75,7 +75,7 @@ int SimpleTransmuteStrategy::transmuteAxiomSet (unsigned int asNum) {
 		}
 	}
 
-	//мутация на уровне системы аксиом
+	//п╪я┐я┌п╟я├п╦я▐ п╫п╟ я┐я─п╬п╡п╫п╣ я│п╦я│я┌п╣п╪я▀ п╟п╨я│п╦п╬п╪
 	if (stp > 0) {
 		double probOfTp = 0;
 		int numOfEC = 0;
@@ -90,7 +90,7 @@ int SimpleTransmuteStrategy::transmuteAxiomSet (unsigned int asNum) {
 	}
 
 
-	//мутация на уровне изменения приоритета аксиом в системе
+	//п╪я┐я┌п╟я├п╦я▐ п╫п╟ я┐я─п╬п╡п╫п╣ п╦п╥п╪п╣п╫п╣п╫п╦я▐ п©я─п╦п╬я─п╦я┌п╣я┌п╟ п╟п╨я│п╦п╬п╪ п╡ я│п╦я│я┌п╣п╪п╣
 	if (sptp > 0) {
 		int numOfSteps = 0;
 		double probChange = 0.0;
@@ -112,8 +112,8 @@ int SimpleTransmuteStrategy::transmuteAxiomSet (unsigned int asNum) {
 /****************************************************************************
 *			SimpleTransmuteStrategy::transmute
 *
-*	Description:	Функция мутации для данной популяции - мутация только на уровне элементарных условий (пока)
-*	Parameters:	AxiomSetPop - изменяемая популяция
+*	Description:	п╓я┐п╫п╨я├п╦я▐ п╪я┐я┌п╟я├п╦п╦ п╢п╩я▐ п╢п╟п╫п╫п╬п╧ п©п╬п©я┐п╩я▐я├п╦п╦ - п╪я┐я┌п╟я├п╦я▐ я┌п╬п╩я▄п╨п╬ п╫п╟ я┐я─п╬п╡п╫п╣ я█п╩п╣п╪п╣п╫я┌п╟я─п╫я▀я┘ я┐я│п╩п╬п╡п╦п╧ (п©п╬п╨п╟)
+*	Parameters:	AxiomSetPop - п╦п╥п╪п╣п╫я▐п╣п╪п╟я▐ п©п╬п©я┐п╩я▐я├п╦я▐
 *	Returns:		0
 *	Throws:		-
 *	Author:		gevor
@@ -121,8 +121,8 @@ int SimpleTransmuteStrategy::transmuteAxiomSet (unsigned int asNum) {
 *
 ****************************************************************************/
 int SimpleTransmuteStrategy::transmute (AxiomSetPop& pop) {
-	// проверка соответстивя параметров границам
-	// ходим по популяции, мутируем ее, попутно сбрасывая статистику
+	// п©я─п╬п╡п╣я─п╨п╟ я│п╬п╬я┌п╡п╣я┌я│я┌п╦п╡я▐ п©п╟я─п╟п╪п╣я┌я─п╬п╡ пЁя─п╟п╫п╦я├п╟п╪
+	// я┘п╬п╢п╦п╪ п©п╬ п©п╬п©я┐п╩я▐я├п╦п╦, п╪я┐я┌п╦я─я┐п╣п╪ п╣п╣, п©п╬п©я┐я┌п╫п╬ я│п╠я─п╟я│я▀п╡п╟я▐ я│я┌п╟я┌п╦я│я┌п╦п╨я┐
 	initTransmute (pop);
 	for (unsigned int i = 0; i < axiomSets.size(); i++) {
 		transmuteAxiomSet (i);

@@ -1,7 +1,7 @@
 /****************************************************************************
-*					Функции класса Environment.h
+*					п╓я┐п╫п╨я├п╦п╦ п╨п╩п╟я│я│п╟ Environment.h
 *
-*	Description:	Функции класса, отвечающего за считывание параметров из файла - Реализация
+*	Description:	п╓я┐п╫п╨я├п╦п╦ п╨п╩п╟я│я│п╟, п╬я┌п╡п╣я┤п╟я▌я┴п╣пЁп╬ п╥п╟ я│я┤п╦я┌я▀п╡п╟п╫п╦п╣ п©п╟я─п╟п╪п╣я┌я─п╬п╡ п╦п╥ я└п╟п╧п╩п╟ - п═п╣п╟п╩п╦п╥п╟я├п╦я▐
 *	Author:			dk
 *	History:		
 *
@@ -11,7 +11,7 @@
 /****************************************************************************
 *					Environment::Environment
 *
-*	Description:	Конструктор класса, задание значений переменным класса по умолчанию
+*	Description:	п п╬п╫я│я┌я─я┐п╨я┌п╬я─ п╨п╩п╟я│я│п╟, п╥п╟п╢п╟п╫п╦п╣ п╥п╫п╟я┤п╣п╫п╦п╧ п©п╣я─п╣п╪п╣п╫п╫я▀п╪ п╨п╩п╟я│я│п╟ п©п╬ я┐п╪п╬п╩я┤п╟п╫п╦я▌
 *	Parameters:		-
 *	Returns:		-
 *	Author:			dk
@@ -25,23 +25,23 @@ Environment::Environment (void) {
 /****************************************************************************
 *					Environment::getStringParamValue
 *
-*	Description:	Функция возвращает первое значение параметра по name1 и name2 
-*					в виде строки.
-*	Parameters:		std::string& value - куда писать значение
-*					std::string name1 - имя параметра
-*					std::string name2 - имя параметра
-*	Returns:		0 - если такой параметр нашелся
-*					-1 - если такого параметра не нашлось
+*	Description:	п╓я┐п╫п╨я├п╦я▐ п╡п╬п╥п╡я─п╟я┴п╟п╣я┌ п©п╣я─п╡п╬п╣ п╥п╫п╟я┤п╣п╫п╦п╣ п©п╟я─п╟п╪п╣я┌я─п╟ п©п╬ name1 п╦ name2 
+*					п╡ п╡п╦п╢п╣ я│я┌я─п╬п╨п╦.
+*	Parameters:		std::string& value - п╨я┐п╢п╟ п©п╦я│п╟я┌я▄ п╥п╫п╟я┤п╣п╫п╦п╣
+*					std::string name1 - п╦п╪я▐ п©п╟я─п╟п╪п╣я┌я─п╟
+*					std::string name2 - п╦п╪я▐ п©п╟я─п╟п╪п╣я┌я─п╟
+*	Returns:		0 - п╣я│п╩п╦ я┌п╟п╨п╬п╧ п©п╟я─п╟п╪п╣я┌я─ п╫п╟я┬п╣п╩я│я▐
+*					-1 - п╣я│п╩п╦ я┌п╟п╨п╬пЁп╬ п©п╟я─п╟п╪п╣я┌я─п╟ п╫п╣ п╫п╟я┬п╩п╬я│я▄
 *	Author:			dk
 *	History:
 *
 ****************************************************************************/
 int Environment::getStringParamValue(std::string& value, const std::string& name1, const std::string& name2) const {
 	std::multimap <std::pair <std::string, std::string>, std::string>::const_iterator i = params.find(std::make_pair (name1, name2));
-	// проверка - есть ли такой элемент
+	// п©я─п╬п╡п╣я─п╨п╟ - п╣я│я┌я▄ п╩п╦ я┌п╟п╨п╬п╧ я█п╩п╣п╪п╣п╫я┌
 	if (i == params.end())
 		return -1;
-	// если есть - возвращаем первое вхождение
+	// п╣я│п╩п╦ п╣я│я┌я▄ - п╡п╬п╥п╡я─п╟я┴п╟п╣п╪ п©п╣я─п╡п╬п╣ п╡я┘п╬п╤п╢п╣п╫п╦п╣
 	value = i->second;
 	return 0;
 }
@@ -49,23 +49,23 @@ int Environment::getStringParamValue(std::string& value, const std::string& name
 /****************************************************************************
 *					Environment::getDoubleParamValue
 *
-*	Description:	Функция возвращает первое значение параметра по name1 и name2 
-*					в виде дробного числа.
-*	Parameters:		double& value - куда писать значение
-*					std::string name1 - имя параметра
-*					std::string name2 - имя параметра
-*	Returns:		0 - если такой параметр нашелся
-*					-1 - если такого параметра не нашлось
+*	Description:	п╓я┐п╫п╨я├п╦я▐ п╡п╬п╥п╡я─п╟я┴п╟п╣я┌ п©п╣я─п╡п╬п╣ п╥п╫п╟я┤п╣п╫п╦п╣ п©п╟я─п╟п╪п╣я┌я─п╟ п©п╬ name1 п╦ name2 
+*					п╡ п╡п╦п╢п╣ п╢я─п╬п╠п╫п╬пЁп╬ я┤п╦я│п╩п╟.
+*	Parameters:		double& value - п╨я┐п╢п╟ п©п╦я│п╟я┌я▄ п╥п╫п╟я┤п╣п╫п╦п╣
+*					std::string name1 - п╦п╪я▐ п©п╟я─п╟п╪п╣я┌я─п╟
+*					std::string name2 - п╦п╪я▐ п©п╟я─п╟п╪п╣я┌я─п╟
+*	Returns:		0 - п╣я│п╩п╦ я┌п╟п╨п╬п╧ п©п╟я─п╟п╪п╣я┌я─ п╫п╟я┬п╣п╩я│я▐
+*					-1 - п╣я│п╩п╦ я┌п╟п╨п╬пЁп╬ п©п╟я─п╟п╪п╣я┌я─п╟ п╫п╣ п╫п╟я┬п╩п╬я│я▄
 *	Author:			dk
 *	History:
 *
 ****************************************************************************/
 int Environment::getDoubleParamValue(double& value, const std::string& name1, const std::string& name2) const {
 	std::multimap<std::pair<std::string, std::string>, std::string>::const_iterator i = params.find(std::make_pair (name1, name2));
-	// проверка - есть ли такой элемент
+	// п©я─п╬п╡п╣я─п╨п╟ - п╣я│я┌я▄ п╩п╦ я┌п╟п╨п╬п╧ я█п╩п╣п╪п╣п╫я┌
 	if (i == params.end())
 		return -1;
-	// приводим к double
+	// п©я─п╦п╡п╬п╢п╦п╪ п╨ double
 	value = atof(i->second.c_str());
 	return 0;
 }
@@ -73,23 +73,23 @@ int Environment::getDoubleParamValue(double& value, const std::string& name1, co
 /****************************************************************************
 *					Environment::getIntParamValue
 *
-*	Description:	Функция возвращает первое значение параметра по name1 и name2 
-*					в виде целого числа.
-*	Parameters:		signed int& value - куда писать значение
-*					std::string name1 - имя параметра
-*					std::string name2 - имя параметра
-*	Returns:		0 - если такой параметр нашелся
-*					-1 - если такого параметра не нашлось
+*	Description:	п╓я┐п╫п╨я├п╦я▐ п╡п╬п╥п╡я─п╟я┴п╟п╣я┌ п©п╣я─п╡п╬п╣ п╥п╫п╟я┤п╣п╫п╦п╣ п©п╟я─п╟п╪п╣я┌я─п╟ п©п╬ name1 п╦ name2 
+*					п╡ п╡п╦п╢п╣ я├п╣п╩п╬пЁп╬ я┤п╦я│п╩п╟.
+*	Parameters:		signed int& value - п╨я┐п╢п╟ п©п╦я│п╟я┌я▄ п╥п╫п╟я┤п╣п╫п╦п╣
+*					std::string name1 - п╦п╪я▐ п©п╟я─п╟п╪п╣я┌я─п╟
+*					std::string name2 - п╦п╪я▐ п©п╟я─п╟п╪п╣я┌я─п╟
+*	Returns:		0 - п╣я│п╩п╦ я┌п╟п╨п╬п╧ п©п╟я─п╟п╪п╣я┌я─ п╫п╟я┬п╣п╩я│я▐
+*					-1 - п╣я│п╩п╦ я┌п╟п╨п╬пЁп╬ п©п╟я─п╟п╪п╣я┌я─п╟ п╫п╣ п╫п╟я┬п╩п╬я│я▄
 *	Author:			dk
 *	History:
 *
 ****************************************************************************/
 int Environment::getIntParamValue(int &value, const std::string &name1, const std::string &name2) const {
   	std::multimap<std::pair<std::string, std::string>, std::string>::const_iterator i = params.find(std::make_pair (name1, name2));
-	// проверка - есть ли такой элемент
+	// п©я─п╬п╡п╣я─п╨п╟ - п╣я│я┌я▄ п╩п╦ я┌п╟п╨п╬п╧ я█п╩п╣п╪п╣п╫я┌
 	if (i == params.end())
 		return -1;
-	// приводим к double
+	// п©я─п╦п╡п╬п╢п╦п╪ п╨ double
 	value = atoi(i->second.c_str());
 	return 0;
 }
@@ -97,23 +97,23 @@ int Environment::getIntParamValue(int &value, const std::string &name1, const st
 /****************************************************************************
 *					Environment::getStringSetParamValue
 *
-*	Description:	Функция возвращает первое значение параметра по name1 и name2 
-*					в виде набора строк.
-*	Parameters:		std::set <std::string>& value - куда писать значение
-*					std::string name1 - имя параметра
-*					std::string name2 - имя параметра
-*	Returns:		0 - если такой параметр нашелся
-*					-1 - если такого параметра не нашлось
+*	Description:	п╓я┐п╫п╨я├п╦я▐ п╡п╬п╥п╡я─п╟я┴п╟п╣я┌ п©п╣я─п╡п╬п╣ п╥п╫п╟я┤п╣п╫п╦п╣ п©п╟я─п╟п╪п╣я┌я─п╟ п©п╬ name1 п╦ name2 
+*					п╡ п╡п╦п╢п╣ п╫п╟п╠п╬я─п╟ я│я┌я─п╬п╨.
+*	Parameters:		std::set <std::string>& value - п╨я┐п╢п╟ п©п╦я│п╟я┌я▄ п╥п╫п╟я┤п╣п╫п╦п╣
+*					std::string name1 - п╦п╪я▐ п©п╟я─п╟п╪п╣я┌я─п╟
+*					std::string name2 - п╦п╪я▐ п©п╟я─п╟п╪п╣я┌я─п╟
+*	Returns:		0 - п╣я│п╩п╦ я┌п╟п╨п╬п╧ п©п╟я─п╟п╪п╣я┌я─ п╫п╟я┬п╣п╩я│я▐
+*					-1 - п╣я│п╩п╦ я┌п╟п╨п╬пЁп╬ п©п╟я─п╟п╪п╣я┌я─п╟ п╫п╣ п╫п╟я┬п╩п╬я│я▄
 *	Author:			dk
 *	History:
 *
 ****************************************************************************/
 int Environment::getStringSetParamValue(std::set<std::string> &value, const std::string& name1, const std::string& name2) const {
 	std::multimap<std::pair<std::string, std::string>, std::string>::const_iterator i = params.find(std::make_pair (name1, name2));
-	// проверка - есть ли такой элемент
+	// п©я─п╬п╡п╣я─п╨п╟ - п╣я│я┌я▄ п╩п╦ я┌п╟п╨п╬п╧ я█п╩п╣п╪п╣п╫я┌
 	if (i == params.end())
 		return -1;
-	// если есть - заполняем наше множество
+	// п╣я│п╩п╦ п╣я│я┌я▄ - п╥п╟п©п╬п╩п╫я▐п╣п╪ п╫п╟я┬п╣ п╪п╫п╬п╤п╣я│я┌п╡п╬
 	std::pair<mm_c_iter,mm_c_iter> runner = params.equal_range(std::make_pair (name1, name2));
 	for (mm_c_iter i = runner.first; i != runner.second; ++i)
 		value.insert(i->second);
@@ -123,23 +123,23 @@ int Environment::getStringSetParamValue(std::set<std::string> &value, const std:
 /****************************************************************************
 *					Environment::getDoubleSetParamValue
 *
-*	Description:	Функция возвращает все значения параметра по name1 и name2 
-*					в виде набора чисел.
-*	Parameters:		std::set<double>& value - куда писать значение
-*					std::string name1 - имя параметра
-*					std::string name2 - имя параметра
-*	Returns:		0 - если такой параметр нашелся
-*					-1 - если такого параметра не нашлось
+*	Description:	п╓я┐п╫п╨я├п╦я▐ п╡п╬п╥п╡я─п╟я┴п╟п╣я┌ п╡я│п╣ п╥п╫п╟я┤п╣п╫п╦я▐ п©п╟я─п╟п╪п╣я┌я─п╟ п©п╬ name1 п╦ name2 
+*					п╡ п╡п╦п╢п╣ п╫п╟п╠п╬я─п╟ я┤п╦я│п╣п╩.
+*	Parameters:		std::set<double>& value - п╨я┐п╢п╟ п©п╦я│п╟я┌я▄ п╥п╫п╟я┤п╣п╫п╦п╣
+*					std::string name1 - п╦п╪я▐ п©п╟я─п╟п╪п╣я┌я─п╟
+*					std::string name2 - п╦п╪я▐ п©п╟я─п╟п╪п╣я┌я─п╟
+*	Returns:		0 - п╣я│п╩п╦ я┌п╟п╨п╬п╧ п©п╟я─п╟п╪п╣я┌я─ п╫п╟я┬п╣п╩я│я▐
+*					-1 - п╣я│п╩п╦ я┌п╟п╨п╬пЁп╬ п©п╟я─п╟п╪п╣я┌я─п╟ п╫п╣ п╫п╟я┬п╩п╬я│я▄
 *	Author:			dk
 *	History:
 *
 ****************************************************************************/
 int Environment::getDoubleSetParamValue (std::set<double>& value, const std::string& name1, const std::string& name2) const {
 	std::multimap<std::pair<std::string, std::string>, std::string>::const_iterator i = params.find(std::make_pair (name1, name2));
-	// проверка - есть ли такой элемент
+	// п©я─п╬п╡п╣я─п╨п╟ - п╣я│я┌я▄ п╩п╦ я┌п╟п╨п╬п╧ я█п╩п╣п╪п╣п╫я┌
 	if (i == params.end())
 		return -1;
-	// если есть - заполняем наше множество
+	// п╣я│п╩п╦ п╣я│я┌я▄ - п╥п╟п©п╬п╩п╫я▐п╣п╪ п╫п╟я┬п╣ п╪п╫п╬п╤п╣я│я┌п╡п╬
 	std::pair<mm_c_iter,mm_c_iter> runner = params.equal_range(std::make_pair (name1, name2));
 	for (mm_c_iter i = runner.first; i != runner.second; ++i)
 		value.insert(atof(i->second.c_str()));
@@ -149,28 +149,28 @@ int Environment::getDoubleSetParamValue (std::set<double>& value, const std::str
 /****************************************************************************
 *					Environment::moveSpaces
 *
-*	Description:	Функция преобразует строку - удаляет все пробелы и табуляции в начале и в конце
-*	Parameters:		str - преобразуемая строка
-*	Returns:		int - новый размер строки str
+*	Description:	п╓я┐п╫п╨я├п╦я▐ п©я─п╣п╬п╠я─п╟п╥я┐п╣я┌ я│я┌я─п╬п╨я┐ - я┐п╢п╟п╩я▐п╣я┌ п╡я│п╣ п©я─п╬п╠п╣п╩я▀ п╦ я┌п╟п╠я┐п╩я▐я├п╦п╦ п╡ п╫п╟я┤п╟п╩п╣ п╦ п╡ п╨п╬п╫я├п╣
+*	Parameters:		str - п©я─п╣п╬п╠я─п╟п╥я┐п╣п╪п╟я▐ я│я┌я─п╬п╨п╟
+*	Returns:		int - п╫п╬п╡я▀п╧ я─п╟п╥п╪п╣я─ я│я┌я─п╬п╨п╦ str
 *	Author:			dk
 *	History:
 *
 ****************************************************************************/
 int Environment::moveSpaces (std::string &str) {
-	// проверка - путсая ли строка
+	// п©я─п╬п╡п╣я─п╨п╟ - п©я┐я┌я│п╟я▐ п╩п╦ я│я┌я─п╬п╨п╟
 	if (str.size() == 0) {
 		return 0;
 	}
-	// преобраование
+	// п©я─п╣п╬п╠я─п╟п╬п╡п╟п╫п╦п╣
 	if ((str[0] == '\t') || (str[0] == ' ') || (str[str.size() - 1] == '\t') || (str[str.size() - 1] == ' ')) {
-		// помещаем в j - индекс первого символа отличного от табуляции и пробела
+		// п©п╬п╪п╣я┴п╟п╣п╪ п╡ j - п╦п╫п╢п╣п╨я│ п©п╣я─п╡п╬пЁп╬ я│п╦п╪п╡п╬п╩п╟ п╬я┌п╩п╦я┤п╫п╬пЁп╬ п╬я┌ я┌п╟п╠я┐п╩я▐я├п╦п╦ п╦ п©я─п╬п╠п╣п╩п╟
 		std::string::size_type j = str.find_first_not_of ("\t ");
 		if (j == std::string::npos) {
-			// строка тока из пробелов и табуляции
+			// я│я┌я─п╬п╨п╟ я┌п╬п╨п╟ п╦п╥ п©я─п╬п╠п╣п╩п╬п╡ п╦ я┌п╟п╠я┐п╩я▐я├п╦п╦
 			str.clear();
 			return 0;
 		}
-		// помещаем в l - индекс последнего символа отличного от табуляции и пробела
+		// п©п╬п╪п╣я┴п╟п╣п╪ п╡ l - п╦п╫п╢п╣п╨я│ п©п╬я│п╩п╣п╢п╫п╣пЁп╬ я│п╦п╪п╡п╬п╩п╟ п╬я┌п╩п╦я┤п╫п╬пЁп╬ п╬я┌ я┌п╟п╠я┐п╩я▐я├п╦п╦ п╦ п©я─п╬п╠п╣п╩п╟
 		std::string::size_type l = str.find_last_not_of ("\t ");
 		str = str.substr (j, l - j + 1);
 	}
@@ -181,28 +181,28 @@ int Environment::moveSpaces (std::string &str) {
 /****************************************************************************
 *					Environment::readFile
 *
-*	Description:	Функция чтения файла в память данного класса
-*	Parameters:		fileName - путь к считываемому файлу
-*	Returns:		0 - если читывание произошло
-*					-1 - иначе
+*	Description:	п╓я┐п╫п╨я├п╦я▐ я┤я┌п╣п╫п╦я▐ я└п╟п╧п╩п╟ п╡ п©п╟п╪я▐я┌я▄ п╢п╟п╫п╫п╬пЁп╬ п╨п╩п╟я│я│п╟
+*	Parameters:		fileName - п©я┐я┌я▄ п╨ я│я┤п╦я┌я▀п╡п╟п╣п╪п╬п╪я┐ я└п╟п╧п╩я┐
+*	Returns:		0 - п╣я│п╩п╦ я┤п╦я┌я▀п╡п╟п╫п╦п╣ п©я─п╬п╦п╥п╬я┬п╩п╬
+*					-1 - п╦п╫п╟я┤п╣
 *	Author:			dk
 *	History:
 *
 ****************************************************************************/
 int Environment::readFile(const std::string &fileName) {
-	// Проверяем - существует ли файл
+	// п÷я─п╬п╡п╣я─я▐п╣п╪ - я│я┐я┴п╣я│я┌п╡я┐п╣я┌ п╩п╦ я└п╟п╧п╩
 	boost::filesystem::path fPath (fileName);
 	if ( !boost::filesystem::exists( fPath ) ) {
 		return -1;
 	}
 
-	// Открываем файл
+	// п·я┌п╨я─я▀п╡п╟п╣п╪ я└п╟п╧п╩
 	boost::filesystem::ifstream file( fileName );
-	// задаем сепаратор
+	// п╥п╟п╢п╟п╣п╪ я│п╣п©п╟я─п╟я┌п╬я─
 	boost::char_separator<char> sep("';:\t");
 
-	// Цикл - считывается по одной строке файла и они переходит в вид набора токенов, 
-	// которые после чего посылаются на обработку дополнительной функцие
+	// п╕п╦п╨п╩ - я│я┤п╦я┌я▀п╡п╟п╣я┌я│я▐ п©п╬ п╬п╢п╫п╬п╧ я│я┌я─п╬п╨п╣ я└п╟п╧п╩п╟ п╦ п╬п╫п╦ п©п╣я─п╣я┘п╬п╢п╦я┌ п╡ п╡п╦п╢ п╫п╟п╠п╬я─п╟ я┌п╬п╨п╣п╫п╬п╡, 
+	// п╨п╬я┌п╬я─я▀п╣ п©п╬я│п╩п╣ я┤п╣пЁп╬ п©п╬я│я▀п╩п╟я▌я┌я│я▐ п╫п╟ п╬п╠я─п╟п╠п╬я┌п╨я┐ п╢п╬п©п╬п╩п╫п╦я┌п╣п╩я▄п╫п╬п╧ я└я┐п╫п╨я├п╦п╣
 	std::string str;
 	while ( !file.eof() )  {
 		std::getline(file, str);
@@ -213,7 +213,7 @@ int Environment::readFile(const std::string &fileName) {
 		}
 	} 
 
-	// закрываем файл, все ok
+	// п╥п╟п╨я─я▀п╡п╟п╣п╪ я└п╟п╧п╩, п╡я│п╣ ok
 	file.close();
 	return 0;
 }
@@ -222,8 +222,8 @@ int Environment::readFile(const std::string &fileName) {
 /****************************************************************************
 *					Environment::processTokens
 *
-*	Description:	Парсит строчку токенов, заполняет multimap
-*	Parameters:		tokens - Набор токенов для разбора
+*	Description:	п÷п╟я─я│п╦я┌ я│я┌я─п╬я┤п╨я┐ я┌п╬п╨п╣п╫п╬п╡, п╥п╟п©п╬п╩п╫я▐п╣я┌ multimap
+*	Parameters:		tokens - п²п╟п╠п╬я─ я┌п╬п╨п╣п╫п╬п╡ п╢п╩я▐ я─п╟п╥п╠п╬я─п╟
 *	Returns:		0
 *	Author:			dk
 *	History:
@@ -232,13 +232,13 @@ int Environment::readFile(const std::string &fileName) {
 int Environment::processTokens (token_separator tokens) {
 	for (token_separator::iterator tok_iter = tokens.begin();  tok_iter != tokens.end();  ++tok_iter) {
 		std::string strTemp = *tok_iter;
-		if ( (strTemp.size() < 1) || (strTemp[0] == ' ' ) ) { // либо пустой токен, либо начинается с пробела - а значит это не слово
+		if ( (strTemp.size() < 1) || (strTemp[0] == ' ' ) ) { // п╩п╦п╠п╬ п©я┐я│я┌п╬п╧ я┌п╬п╨п╣п╫, п╩п╦п╠п╬ п╫п╟я┤п╦п╫п╟п╣я┌я│я▐ я│ п©я─п╬п╠п╣п╩п╟ - п╟ п╥п╫п╟я┤п╦я┌ я█я┌п╬ п╫п╣ я│п╩п╬п╡п╬
 			continue;
 		}
 		if (strTemp.size() >= 2 && strTemp[0] == '/' && strTemp[1] == '/')
 			return 0;
 
-		// Разбираем на param и value
+		// п═п╟п╥п╠п╦я─п╟п╣п╪ п╫п╟ param п╦ value
 		std::string name1 = *tok_iter;
 		++tok_iter;
 		if (tok_iter == tokens.end()) {
@@ -251,7 +251,7 @@ int Environment::processTokens (token_separator tokens) {
 		}
 		std::string value = *tok_iter;
 
-		// Заносим в наш multimap
+		// п≈п╟п╫п╬я│п╦п╪ п╡ п╫п╟я┬ multimap
 		params.insert(std::make_pair (std::make_pair (name1, name2), value));
 	}
 	return 0;

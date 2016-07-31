@@ -42,7 +42,7 @@ public:
 				std::cout<<"Match !"<<std::endl;
 #endif
                                 it->template get<0>().push_back(element);
-				// TODO: обновление центра
+				// TODO: п╬п╠п╫п╬п╡п╩п╣п╫п╦п╣ я├п╣п╫я┌я─п╟
 				return;
 			}
 		}

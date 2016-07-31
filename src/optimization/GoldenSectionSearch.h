@@ -1,8 +1,8 @@
 /****************************************************************************
 *					GoldenSectionSearch
 *
-*	Description:	Поиск минимума методом золотого сечения.
-*					Реализация взята отсюда:
+*	Description:	п÷п╬п╦я│п╨ п╪п╦п╫п╦п╪я┐п╪п╟ п╪п╣я┌п╬п╢п╬п╪ п╥п╬п╩п╬я┌п╬пЁп╬ я│п╣я┤п╣п╫п╦я▐.
+*					п═п╣п╟п╩п╦п╥п╟я├п╦я▐ п╡п╥я▐я┌п╟ п╬я┌я│я▌п╢п╟:
 *					http://en.wikipedia.org/wiki/Golden_section_search
 *	Author:			wictor
 *	History:	
@@ -25,10 +25,10 @@ class GoldenSectionSearch : public Minimizer
 public:
 	GoldenSectionSearch();
 	
-    // Инициализация параметров минимизатора из окружения
+    // п≤п╫п╦я├п╦п╟п╩п╦п╥п╟я├п╦я▐ п©п╟я─п╟п╪п╣я┌я─п╬п╡ п╪п╦п╫п╦п╪п╦п╥п╟я┌п╬я─п╟ п╦п╥ п╬п╨я─я┐п╤п╣п╫п╦я▐
 	virtual void initFromEnv(const Environment& env);
 	
-    // Поиск минимума заданной функции в заданных пределах
+    // п÷п╬п╦я│п╨ п╪п╦п╫п╦п╪я┐п╪п╟ п╥п╟п╢п╟п╫п╫п╬п╧ я└я┐п╫п╨я├п╦п╦ п╡ п╥п╟п╢п╟п╫п╫я▀я┘ п©я─п╣п╢п╣п╩п╟я┘
 	virtual void findMinimum(const FunctionOneVariable *function, 
 							 double lowerBound, double upperBound, 
 							 double &bestX, double &bestF);

@@ -17,11 +17,11 @@ void recognizeOnce(const std::string& confName,
 	try {
 		Environment env;
 		std::cout << "Reading config file " << confName << "...\n";
-		// Считываем файл конфигурации
+		// п║я┤п╦я┌я▀п╡п╟п╣п╪ я└п╟п╧п╩ п╨п╬п╫я└п╦пЁя┐я─п╟я├п╦п╦
 		env.readConfigFile(confName.c_str());
 		
 		std::string dir, name;
-		// Проверяем, содержит ли конфиг нужные параметры
+		// п÷я─п╬п╡п╣я─я▐п╣п╪, я│п╬п╢п╣я─п╤п╦я┌ п╩п╦ п╨п╬п╫я└п╦пЁ п╫я┐п╤п╫я▀п╣ п©п╟я─п╟п╪п╣я┌я─я▀
 		if (env.getStringParamValue(dir, "BaseDataSetDir") < 0) {
 			throw AxiomLib::AxiomLibException("main: Config parameter BaseDataSetDir not set");
 		}
@@ -32,19 +32,19 @@ void recognizeOnce(const std::string& confName,
 		std::cout<<"Config file read"<<endl;
 				
 		EnvDataSet envDataSet;
-		// Инициализируем envDataSet из конфига
+		// п≤п╫п╦я├п╦п╟п╩п╦п╥п╦я─я┐п╣п╪ envDataSet п╦п╥ п╨п╬п╫я└п╦пЁп╟
 		envDataSet.readConfigFile(env);
 
 		DataSet dataSet;
 		std::cout<<"Reading data set named '"<<name<<"' from dir '"<<dir<<"'..."<<std::endl;
-		// Считываем dataSet, используя параметры, полученные из конфига
+		// п║я┤п╦я┌я▀п╡п╟п╣п╪ dataSet, п╦я│п©п╬п╩я▄п╥я┐я▐ п©п╟я─п╟п╪п╣я┌я─я▀, п©п╬п╩я┐я┤п╣п╫п╫я▀п╣ п╦п╥ п╨п╬п╫я└п╦пЁп╟
 		dataSet.readDataSet(dir, name);
 		std::cout<<"Data set read"<<endl;
 
-		// Задаем значение названия для нормального поведения
+		// п≈п╟п╢п╟п╣п╪ п╥п╫п╟я┤п╣п╫п╦п╣ п╫п╟п╥п╡п╟п╫п╦я▐ п╢п╩я▐ п╫п╬я─п╪п╟п╩я▄п╫п╬пЁп╬ п©п╬п╡п╣п╢п╣п╫п╦я▐
 		dataSet.setNullStr(envDataSet);
 				
-		// Считываем тип распознавателя из конфига
+		// п║я┤п╦я┌я▀п╡п╟п╣п╪ я┌п╦п© я─п╟я│п©п╬п╥п╫п╟п╡п╟я┌п╣п╩я▐ п╦п╥ п╨п╬п╫я└п╦пЁп╟
 		std::string recognizerTypeStr;
 		if (env.getStringParamValue(recognizerTypeStr, "recognizerType") < 0) {
 			throw AxiomLib::AxiomLibException("main: Config parameter recognizerType not set");
@@ -52,32 +52,32 @@ void recognizeOnce(const std::string& confName,
 		
 		std::cout<<"Using recognizer: "<<recognizerTypeStr<<"\n";
 		
-		// Создаем recognizer с заданным именем
+		// п║п╬п╥п╢п╟п╣п╪ recognizer я│ п╥п╟п╢п╟п╫п╫я▀п╪ п╦п╪п╣п╫п╣п╪
 		RecognizerFactory recognizerFactory;
 		pRecognizer = recognizerFactory.create(recognizerTypeStr);
 		
-		// Устанавливаем параметры
+		// пёя│я┌п╟п╫п╟п╡п╩п╦п╡п╟п╣п╪ п©п╟я─п╟п╪п╣я┌я─я▀
 		pRecognizer->setParamsFromEnv(env);
-		// Устанавливаем датасет
+		// пёя│я┌п╟п╫п╟п╡п╩п╦п╡п╟п╣п╪ п╢п╟я┌п╟я│п╣я┌
 		pRecognizer->setDataSet(dataSet);
 		
-		// Cчитывание params
+		// Cя┤п╦я┌я▀п╡п╟п╫п╦п╣ params
 		std::vector<int> refParams;
 		dataSet.getParamNums(refParams, env, envDataSet);
 		std::vector<int>& testParams = refParams;
 		
-		// Установка params
+		// пёя│я┌п╟п╫п╬п╡п╨п╟ params
 		pRecognizer->setParamsOfDataSet(refParams);
 		
 		TemplateRecognizer t;
-		// Обучение
+		// п·п╠я┐я┤п╣п╫п╦п╣
 		pRecognizer->learn(t);
 		
 		AxiomSet axiomSet;		
 		
 		firstKindErrors = 0;
 		secondKindErrors = 0;
-		// Запуск с подсчетом числа ошибок
+		// п≈п╟п©я┐я│п╨ я│ п©п╬п╢я│я┤п╣я┌п╬п╪ я┤п╦я│п╩п╟ п╬я┬п╦п╠п╬п╨
 		pRecognizer->run(axiomSet, dataSet, testParams, firstKindErrors, secondKindErrors);
 		
 		std::cout<<"Overall statistics:\n";
@@ -87,7 +87,7 @@ void recognizeOnce(const std::string& confName,
 	} catch (AxiomLib::AxiomLibException testex) {
 		delete pRecognizer;
 		pRecognizer = 0;
-		// Пробрасываем дальше
+		// п÷я─п╬п╠я─п╟я│я▀п╡п╟п╣п╪ п╢п╟п╩я▄я┬п╣
 		throw;
 	}	
 }

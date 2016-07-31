@@ -1,8 +1,8 @@
 /****************************************************************************
 *				RecognizerNeuralNet.cxx
 *
-*	Description:	Функции шаблона класса 
-*					RecognizerNeuralNet<NetObject, Settings> - Реализация
+*	Description:	п╓я┐п╫п╨я├п╦п╦ я┬п╟п╠п╩п╬п╫п╟ п╨п╩п╟я│я│п╟ 
+*					RecognizerNeuralNet<NetObject, Settings> - п═п╣п╟п╩п╦п╥п╟я├п╦я▐
 *	Author:		wictor
 *	History:		
 *
@@ -20,9 +20,9 @@ namespace AxiomLib {
 /****************************************************************************
 *                       RecognizerNeuralNet<NetObject, Settings>::countErrors
 *
-*       Description:    Подсчет числа ошибок первого и второго рода
-*       Parameters: const std::vector<int> &res - вектор полученных результатов
-*					const std::vector<int> &ref - вектор "правильных ответов"
+*       Description:    п÷п╬п╢я│я┤п╣я┌ я┤п╦я│п╩п╟ п╬я┬п╦п╠п╬п╨ п©п╣я─п╡п╬пЁп╬ п╦ п╡я┌п╬я─п╬пЁп╬ я─п╬п╢п╟
+*       Parameters: const std::vector<int> &res - п╡п╣п╨я┌п╬я─ п©п╬п╩я┐я┤п╣п╫п╫я▀я┘ я─п╣п╥я┐п╩я▄я┌п╟я┌п╬п╡
+*					const std::vector<int> &ref - п╡п╣п╨я┌п╬я─ "п©я─п╟п╡п╦п╩я▄п╫я▀я┘ п╬я┌п╡п╣я┌п╬п╡"
 *					int &first
 *					int &second
 *       Returns:        -
@@ -34,7 +34,7 @@ namespace AxiomLib {
 template<class NetObject, class Settings>
 void RecognizerNeuralNet<NetObject, Settings>::countErrors(const std::vector<int> &res, const std::vector<int> &ref, 
 	int &first, int &second) {
-	// Проверка на совпадение размеров res и ref
+	// п÷я─п╬п╡п╣я─п╨п╟ п╫п╟ я│п╬п╡п©п╟п╢п╣п╫п╦п╣ я─п╟п╥п╪п╣я─п╬п╡ res п╦ ref
 	if(res.size() != ref.size()) {
 		throw AxiomLibException("countErrors() : res and ref sizes don't match");
 	}
@@ -42,7 +42,7 @@ void RecognizerNeuralNet<NetObject, Settings>::countErrors(const std::vector<int
 	first = 0;
 	second = 0;
 	
-	// Ошибки первого рода
+	// п·я┬п╦п╠п╨п╦ п©п╣я─п╡п╬пЁп╬ я─п╬п╢п╟
 	for(unsigned int i = 0; i < ref.size(); i++) {
 		if(res[i] != 0 && ref[i] == 0) {
 			if(!scanDelta(ref, i, delta, res[i])) {
@@ -51,7 +51,7 @@ void RecognizerNeuralNet<NetObject, Settings>::countErrors(const std::vector<int
 		}
 	}
 	
-	// Ошибки второго рода
+	// п·я┬п╦п╠п╨п╦ п╡я┌п╬я─п╬пЁп╬ я─п╬п╢п╟
 	int curr;
 	int prev = 0;
 	for (unsigned int i = 0; i < ref.size(); i++) {
@@ -69,13 +69,13 @@ void RecognizerNeuralNet<NetObject, Settings>::countErrors(const std::vector<int
 /****************************************************************************
 *                     RecognizerNeuralNet<NetObject, Settings>::run
 *
-*       Description:    Распознавание нештатных ситуаций, затем сравнение с "правильным ответом" и подсчет числа ошибок первого и второго рода
-*						Эта функция вызывает runInternal
-*       Parameters: AxiomSet& axiomSet - игнорируется   
-*					DataSet& dataSet - датасет 
-*					std::vector<int>& params - номера используемых рядов датасета
-*					int& resFirst - число ошибок первого рода
-*					int& resSecond - число ошибок второго рода
+*       Description:    п═п╟я│п©п╬п╥п╫п╟п╡п╟п╫п╦п╣ п╫п╣я┬я┌п╟я┌п╫я▀я┘ я│п╦я┌я┐п╟я├п╦п╧, п╥п╟я┌п╣п╪ я│я─п╟п╡п╫п╣п╫п╦п╣ я│ "п©я─п╟п╡п╦п╩я▄п╫я▀п╪ п╬я┌п╡п╣я┌п╬п╪" п╦ п©п╬п╢я│я┤п╣я┌ я┤п╦я│п╩п╟ п╬я┬п╦п╠п╬п╨ п©п╣я─п╡п╬пЁп╬ п╦ п╡я┌п╬я─п╬пЁп╬ я─п╬п╢п╟
+*						п╜я┌п╟ я└я┐п╫п╨я├п╦я▐ п╡я▀п╥я▀п╡п╟п╣я┌ runInternal
+*       Parameters: AxiomSet& axiomSet - п╦пЁп╫п╬я─п╦я─я┐п╣я┌я│я▐   
+*					DataSet& dataSet - п╢п╟я┌п╟я│п╣я┌ 
+*					std::vector<int>& params - п╫п╬п╪п╣я─п╟ п╦я│п©п╬п╩я▄п╥я┐п╣п╪я▀я┘ я─я▐п╢п╬п╡ п╢п╟я┌п╟я│п╣я┌п╟
+*					int& resFirst - я┤п╦я│п╩п╬ п╬я┬п╦п╠п╬п╨ п©п╣я─п╡п╬пЁп╬ я─п╬п╢п╟
+*					int& resSecond - я┤п╦я│п╩п╬ п╬я┬п╦п╠п╬п╨ п╡я┌п╬я─п╬пЁп╬ я─п╬п╢п╟
 *       Returns:        0
 *       Throws:         -
 *       Author:         wictor
@@ -91,14 +91,14 @@ signed int RecognizerNeuralNet<NetObject, Settings>::run(AxiomSet& axiomSet, Dat
 /****************************************************************************
 *                       RecognizerNeuralNet<NetObject, Settings>::run
 *
-*       Description:    Распознавание нештатных ситуаций, затем сравнение с "правильным ответом" и подсчет числа ошибок первого и второго рода
-*						Эта функция вызывает runInternal
-*       Parameters: AxiomSet& axiomSet - игнорируется   
-*					DataSet& dataSet - датасет 
-*					std::vector<int>& params - номера используемых рядов датасета
-*					int& resFirst - число ошибок первого рода
-*					int& resSecond - число ошибок второго рода
-*					std::vector<double> &stat - игнорируется
+*       Description:    п═п╟я│п©п╬п╥п╫п╟п╡п╟п╫п╦п╣ п╫п╣я┬я┌п╟я┌п╫я▀я┘ я│п╦я┌я┐п╟я├п╦п╧, п╥п╟я┌п╣п╪ я│я─п╟п╡п╫п╣п╫п╦п╣ я│ "п©я─п╟п╡п╦п╩я▄п╫я▀п╪ п╬я┌п╡п╣я┌п╬п╪" п╦ п©п╬п╢я│я┤п╣я┌ я┤п╦я│п╩п╟ п╬я┬п╦п╠п╬п╨ п©п╣я─п╡п╬пЁп╬ п╦ п╡я┌п╬я─п╬пЁп╬ я─п╬п╢п╟
+*						п╜я┌п╟ я└я┐п╫п╨я├п╦я▐ п╡я▀п╥я▀п╡п╟п╣я┌ runInternal
+*       Parameters: AxiomSet& axiomSet - п╦пЁп╫п╬я─п╦я─я┐п╣я┌я│я▐   
+*					DataSet& dataSet - п╢п╟я┌п╟я│п╣я┌ 
+*					std::vector<int>& params - п╫п╬п╪п╣я─п╟ п╦я│п©п╬п╩я▄п╥я┐п╣п╪я▀я┘ я─я▐п╢п╬п╡ п╢п╟я┌п╟я│п╣я┌п╟
+*					int& resFirst - я┤п╦я│п╩п╬ п╬я┬п╦п╠п╬п╨ п©п╣я─п╡п╬пЁп╬ я─п╬п╢п╟
+*					int& resSecond - я┤п╦я│п╩п╬ п╬я┬п╦п╠п╬п╨ п╡я┌п╬я─п╬пЁп╬ я─п╬п╢п╟
+*					std::vector<double> &stat - п╦пЁп╫п╬я─п╦я─я┐п╣я┌я│я▐
 *       Returns:        0
 *       Throws:         -
 *       Author:         wictor
@@ -114,10 +114,10 @@ signed int RecognizerNeuralNet<NetObject, Settings>::run(AxiomSet& axiomSet, Dat
 /****************************************************************************
 *                       RecognizerNeuralNet<NetObject, Settings>::learn
 *
-*       Description:    Обучение сети на датасете, ранее установленом setDataSet()
-*       Parameters:     templateRecognizer - игнорируется
+*       Description:    п·п╠я┐я┤п╣п╫п╦п╣ я│п╣я┌п╦ п╫п╟ п╢п╟я┌п╟я│п╣я┌п╣, я─п╟п╫п╣п╣ я┐я│я┌п╟п╫п╬п╡п╩п╣п╫п╬п╪ setDataSet()
+*       Parameters:     templateRecognizer - п╦пЁп╫п╬я─п╦я─я┐п╣я┌я│я▐
 *       Returns:        0
-*       Throws:         AxiomLibException - если размер dataSetParams равен 0
+*       Throws:         AxiomLibException - п╣я│п╩п╦ я─п╟п╥п╪п╣я─ dataSetParams я─п╟п╡п╣п╫ 0
 *       Author:         wictor
 *       History:
 *
@@ -130,7 +130,7 @@ double RecognizerNeuralNet<NetObject, Settings>::learn(TemplateRecognizer &templ
 
 	classNumbers.clear();
 	
-	// Получение размерности эталонных строк
+	// п÷п╬п╩я┐я┤п╣п╫п╦п╣ я─п╟п╥п╪п╣я─п╫п╬я│я┌п╦ я█я┌п╟п╩п╬п╫п╫я▀я┘ я│я┌я─п╬п╨
 	int numOfClasses;
 	std::vector<int> numOfMultiTS;
 	std::vector<std::vector<int> > numOfTS;
@@ -138,36 +138,36 @@ double RecognizerNeuralNet<NetObject, Settings>::learn(TemplateRecognizer &templ
 	
 	Qstring str;
 	// TODO: reserve some memory for classNumbers
-	// Итерация по номерам параметров
+	// п≤я┌п╣я─п╟я├п╦я▐ п©п╬ п╫п╬п╪п╣я─п╟п╪ п©п╟я─п╟п╪п╣я┌я─п╬п╡
 	for(unsigned int paramNumber = 0; paramNumber < dataSetParams.size(); paramNumber++) {		
-		// Итерация по классам
+		// п≤я┌п╣я─п╟я├п╦я▐ п©п╬ п╨п╩п╟я│я│п╟п╪
 		for(int classNo = 0; classNo < numOfClasses; classNo++) {
-			// Итерация по мультирядам	
+			// п≤я┌п╣я─п╟я├п╦я▐ п©п╬ п╪я┐п╩я▄я┌п╦я─я▐п╢п╟п╪	
 			for(int multiTSNo = 0; multiTSNo < numOfMultiTS[classNo]; multiTSNo++) {							
-				// Получаем разметку эталонной траектории
+				// п÷п╬п╩я┐я┤п╟п╣п╪ я─п╟п╥п╪п╣я┌п╨я┐ я█я┌п╟п╩п╬п╫п╫п╬п╧ я┌я─п╟п╣п╨я┌п╬я─п╦п╦
 				std::vector<double> currTS;
 				dataSet.getTSByIndexFromClass(currTS, classNo, multiTSNo, dataSetParams[paramNumber]);
 				
-				// Переводим из std::vector в Qstring
+				// п÷п╣я─п╣п╡п╬п╢п╦п╪ п╦п╥ std::vector п╡ Qstring
 				copyVector(currTS, str);
-				// Передаем обучающую строку
+				// п÷п╣я─п╣п╢п╟п╣п╪ п╬п╠я┐я┤п╟я▌я┴я┐я▌ я│я┌я─п╬п╨я┐
 				if(multiTSNo == 0 && useCentral) {
 					netObject.supplyCentralString(str);					
 				} else {
 					netObject.supplyTrainingData(str);
 				}
 				
-				// Записываем в classNumbers номер текущего класса плюс один (так, чтобы он считался от 1, т.к. 0 - нормальное поведение)
+				// п≈п╟п©п╦я│я▀п╡п╟п╣п╪ п╡ classNumbers п╫п╬п╪п╣я─ я┌п╣п╨я┐я┴п╣пЁп╬ п╨п╩п╟я│я│п╟ п©п╩я▌я│ п╬п╢п╦п╫ (я┌п╟п╨, я┤я┌п╬п╠я▀ п╬п╫ я│я┤п╦я┌п╟п╩я│я▐ п╬я┌ 1, я┌.п╨. 0 - п╫п╬я─п╪п╟п╩я▄п╫п╬п╣ п©п╬п╡п╣п╢п╣п╫п╦п╣)
 				classNumbers.push_back(classNo+1);
 			}
 		}
 	}	
 	
-	// Вызов construct - строит сеть (для этого ей (в частности) нужно 
-	// знать размер входа, так что мы передавали обучающие данные до вызова этой функции)
+	// п▓я▀п╥п╬п╡ construct - я│я┌я─п╬п╦я┌ я│п╣я┌я▄ (п╢п╩я▐ я█я┌п╬пЁп╬ п╣п╧ (п╡ я┤п╟я│я┌п╫п╬я│я┌п╦) п╫я┐п╤п╫п╬ 
+	// п╥п╫п╟я┌я▄ я─п╟п╥п╪п╣я─ п╡я┘п╬п╢п╟, я┌п╟п╨ я┤я┌п╬ п╪я▀ п©п╣я─п╣п╢п╟п╡п╟п╩п╦ п╬п╠я┐я┤п╟я▌я┴п╦п╣ п╢п╟п╫п╫я▀п╣ п╢п╬ п╡я▀п╥п╬п╡п╟ я█я┌п╬п╧ я└я┐п╫п╨я├п╦п╦)
 	netObject.construct(settings);
 
-	// Вызов train - обучает сеть (на данных, которые уже переданы)
+	// п▓я▀п╥п╬п╡ train - п╬п╠я┐я┤п╟п╣я┌ я│п╣я┌я▄ (п╫п╟ п╢п╟п╫п╫я▀я┘, п╨п╬я┌п╬я─я▀п╣ я┐п╤п╣ п©п╣я─п╣п╢п╟п╫я▀)
 	netObject.train();
 	
 	return 0;
@@ -176,26 +176,26 @@ double RecognizerNeuralNet<NetObject, Settings>::learn(TemplateRecognizer &templ
 /****************************************************************************
 *		RecognizerNeuralNet<NetObject, Settings>::setParamsFromEnv
 *
-*       Description:    Инициализировать параметры данными из env
-*       Parameters:     const Environment& env - среда
+*       Description:    п≤п╫п╦я├п╦п╟п╩п╦п╥п╦я─п╬п╡п╟я┌я▄ п©п╟я─п╟п╪п╣я┌я─я▀ п╢п╟п╫п╫я▀п╪п╦ п╦п╥ env
+*       Parameters:     const Environment& env - я│я─п╣п╢п╟
 *       Returns:        0
-*       Throws:         AxiomLibException - если нет какого-то параметра
+*       Throws:         AxiomLibException - п╣я│п╩п╦ п╫п╣я┌ п╨п╟п╨п╬пЁп╬-я┌п╬ п©п╟я─п╟п╪п╣я┌я─п╟
 *       Author:         wictor
 *       History:
 *
 ****************************************************************************/
 template<class NetObject, class Settings>
 int RecognizerNeuralNet<NetObject, Settings>::setParamsFromEnv(const Environment& env) {
-	// Инициализация настроек нейросетевого объекта
+	// п≤п╫п╦я├п╦п╟п╩п╦п╥п╟я├п╦я▐ п╫п╟я│я┌я─п╬п╣п╨ п╫п╣п╧я─п╬я│п╣я┌п╣п╡п╬пЁп╬ п╬п╠я┼п╣п╨я┌п╟
 	settings.initFromEnv(env);
 	
-	// Инициализация флага коментариев
+	// п≤п╫п╦я├п╦п╟п╩п╦п╥п╟я├п╦я▐ я└п╩п╟пЁп╟ п╨п╬п╪п╣п╫я┌п╟я─п╦п╣п╡
 	comments = settings.commonSettings.comments;
 	
-	// Инициализация флага использования primary-строк
+	// п≤п╫п╦я├п╦п╟п╩п╦п╥п╟я├п╦я▐ я└п╩п╟пЁп╟ п╦я│п©п╬п╩я▄п╥п╬п╡п╟п╫п╦я▐ primary-я│я┌я─п╬п╨
 	useCentral = settings.commonSettings.useCentral;
 	
-	// инициализация delta
+	// п╦п╫п╦я├п╦п╟п╩п╦п╥п╟я├п╦я▐ delta
 	if(env.getIntParamValue(delta ,"delta") < 0) {
 		throw AxiomLibException("setParamsFromEnv(): delta not set");
 	};
@@ -206,15 +206,15 @@ int RecognizerNeuralNet<NetObject, Settings>::setParamsFromEnv(const Environment
 /****************************************************************************
 *                       RecognizerNeuralNet<NetObject, Settings>::runInternal
 *
-*       Description:    Распознавание нештатных ситуаций, затем сравнение с 
-*						"правильным ответом" и подсчет числа ошибок 
-*						первого и второго рода
-*       Parameters:     DataSet& dataSet - датасет 
-*					std::vector<int>& params - номера используемых рядов датасета
-*					int& resFirst - число ошибок первого рода
-*					int& resSecond - число ошибок второго рода
+*       Description:    п═п╟я│п©п╬п╥п╫п╟п╡п╟п╫п╦п╣ п╫п╣я┬я┌п╟я┌п╫я▀я┘ я│п╦я┌я┐п╟я├п╦п╧, п╥п╟я┌п╣п╪ я│я─п╟п╡п╫п╣п╫п╦п╣ я│ 
+*						"п©я─п╟п╡п╦п╩я▄п╫я▀п╪ п╬я┌п╡п╣я┌п╬п╪" п╦ п©п╬п╢я│я┤п╣я┌ я┤п╦я│п╩п╟ п╬я┬п╦п╠п╬п╨ 
+*						п©п╣я─п╡п╬пЁп╬ п╦ п╡я┌п╬я─п╬пЁп╬ я─п╬п╢п╟
+*       Parameters:     DataSet& dataSet - п╢п╟я┌п╟я│п╣я┌ 
+*					std::vector<int>& params - п╫п╬п╪п╣я─п╟ п╦я│п©п╬п╩я▄п╥я┐п╣п╪я▀я┘ я─я▐п╢п╬п╡ п╢п╟я┌п╟я│п╣я┌п╟
+*					int& resFirst - я┤п╦я│п╩п╬ п╬я┬п╦п╠п╬п╨ п©п╣я─п╡п╬пЁп╬ я─п╬п╢п╟
+*					int& resSecond - я┤п╦я│п╩п╬ п╬я┬п╦п╠п╬п╨ п╡я┌п╬я─п╬пЁп╬ я─п╬п╢п╟
 *       Returns:        0
-*       Throws:         AxiomLibException - если размер params равен 0
+*       Throws:         AxiomLibException - п╣я│п╩п╦ я─п╟п╥п╪п╣я─ params я─п╟п╡п╣п╫ 0
 *       Author:         wictor
 *       History:
 *
@@ -227,50 +227,50 @@ int RecognizerNeuralNet<NetObject, Settings>::runInternal(DataSet& dataSet, std:
 		throw AxiomLibException("RecognizerNeuralNet<NetObject, Settings>::runInternal() : no parameters to analyze (params is empty)");
 	}
 
-	//Число ошибок, допущенных при данном значении номера ряда из params (обнуляется на каждой итерации по params)
+	//п╖п╦я│п╩п╬ п╬я┬п╦п╠п╬п╨, п╢п╬п©я┐я┴п╣п╫п╫я▀я┘ п©я─п╦ п╢п╟п╫п╫п╬п╪ п╥п╫п╟я┤п╣п╫п╦п╦ п╫п╬п╪п╣я─п╟ я─я▐п╢п╟ п╦п╥ params (п╬п╠п╫я┐п╩я▐п╣я┌я│я▐ п╫п╟ п╨п╟п╤п╢п╬п╧ п╦я┌п╣я─п╟я├п╦п╦ п©п╬ params)
 	int first=0, second=0;
 	
-	// Получаем размеронсти тестов
+	// п÷п╬п╩я┐я┤п╟п╣п╪ я─п╟п╥п╪п╣я─п╬п╫я│я┌п╦ я┌п╣я│я┌п╬п╡
 	int numOfTests;
 	std::vector<int> numOfTS;
 	dataSet.getTestSize(numOfTests, numOfTS);
 	
-	// Итерация по тестам
+	// п≤я┌п╣я─п╟я├п╦я▐ п©п╬ я┌п╣я│я┌п╟п╪
 	for(int testNo = 0; testNo < numOfTests; testNo++) {			
 		std::vector<int> currTS, currRefTS;
 
 
-		// Получаем "правильный ответ"
+		// п÷п╬п╩я┐я┤п╟п╣п╪ "п©я─п╟п╡п╦п╩я▄п╫я▀п╧ п╬я┌п╡п╣я┌"
 		dataSet.getTSByIndexFromTests(currRefTS, testNo, -1);
-			//Итерация по значениям из params
+			//п≤я┌п╣я─п╟я├п╦я▐ п©п╬ п╥п╫п╟я┤п╣п╫п╦я▐п╪ п╦п╥ params
 		for(unsigned int paramNo=0; paramNo < params.size(); paramNo++) {
-			// Получаем разметку фазовой траектории
+			// п÷п╬п╩я┐я┤п╟п╣п╪ я─п╟п╥п╪п╣я┌п╨я┐ я└п╟п╥п╬п╡п╬п╧ я┌я─п╟п╣п╨я┌п╬я─п╦п╦
 			dataSet.getTSByIndexFromTests(currTS, testNo, params[paramNo]);
 
-			// Разметка, которую получает наш алгоритм
+			// п═п╟п╥п╪п╣я┌п╨п╟, п╨п╬я┌п╬я─я┐я▌ п©п╬п╩я┐я┤п╟п╣я┌ п╫п╟я┬ п╟п╩пЁп╬я─п╦я┌п╪
 			std::vector<int> resTS(currTS.size(), 0);
 						
-			// Значение позиции в фазовой строке, до которой окно будет доходить
+			// п≈п╫п╟я┤п╣п╫п╦п╣ п©п╬п╥п╦я├п╦п╦ п╡ я└п╟п╥п╬п╡п╬п╧ я│я┌я─п╬п╨п╣, п╢п╬ п╨п╬я┌п╬я─п╬п╧ п╬п╨п╫п╬ п╠я┐п╢п╣я┌ п╢п╬я┘п╬п╢п╦я┌я▄
 			int maxI = currTS.size() - netObject.getMinTrainDim();
 			
-			// Итерация по размеченной фазовой траектории
+			// п≤я┌п╣я─п╟я├п╦я▐ п©п╬ я─п╟п╥п╪п╣я┤п╣п╫п╫п╬п╧ я└п╟п╥п╬п╡п╬п╧ я┌я─п╟п╣п╨я┌п╬я─п╦п╦
 			for (int i = 0; i < maxI; i++) {
 				Qstring str;
-				// Берем окно длины, равной максимальной длине строки и копируем его в str
+				// п▒п╣я─п╣п╪ п╬п╨п╫п╬ п╢п╩п╦п╫я▀, я─п╟п╡п╫п╬п╧ п╪п╟п╨я│п╦п╪п╟п╩я▄п╫п╬п╧ п╢п╩п╦п╫п╣ я│я┌я─п╬п╨п╦ п╦ п╨п╬п©п╦я─я┐п╣п╪ п╣пЁп╬ п╡ str
 				copyVector(currTS, str, i, netObject.getMaxTrainDim());
 				double p;
-				// Запускаем нейросетевой алгоритм
+				// п≈п╟п©я┐я│п╨п╟п╣п╪ п╫п╣п╧я─п╬я│п╣я┌п╣п╡п╬п╧ п╟п╩пЁп╬я─п╦я┌п╪
 				int result = netObject.run(str, p);
 				
-				// Анализируем результат
+				// п░п╫п╟п╩п╦п╥п╦я─я┐п╣п╪ я─п╣п╥я┐п╩я▄я┌п╟я┌
 				if(result>=0) {
-					// Если нештатная ситуация, то ставим номер ее класса на позицию i
+					// п∙я│п╩п╦ п╫п╣я┬я┌п╟я┌п╫п╟я▐ я│п╦я┌я┐п╟я├п╦я▐, я┌п╬ я│я┌п╟п╡п╦п╪ п╫п╬п╪п╣я─ п╣п╣ п╨п╩п╟я│я│п╟ п╫п╟ п©п╬п╥п╦я├п╦я▌ i
 					resTS[i] = classNumbers[result];
-					// и прибавляем размер найденной строки к позиции
+					// п╦ п©я─п╦п╠п╟п╡п╩я▐п╣п╪ я─п╟п╥п╪п╣я─ п╫п╟п╧п╢п╣п╫п╫п╬п╧ я│я┌я─п╬п╨п╦ п╨ п©п╬п╥п╦я├п╦п╦
 					i+=netObject.getTrainString(result).size();
-				} // Иначе - 0 уже стоит
+				} // п≤п╫п╟я┤п╣ - 0 я┐п╤п╣ я│я┌п╬п╦я┌
 			}
-			// Анализируем полученный ответ и правильный ответ, делаем выводы о количестве ошибок
+			// п░п╫п╟п╩п╦п╥п╦я─я┐п╣п╪ п©п╬п╩я┐я┤п╣п╫п╫я▀п╧ п╬я┌п╡п╣я┌ п╦ п©я─п╟п╡п╦п╩я▄п╫я▀п╧ п╬я┌п╡п╣я┌, п╢п╣п╩п╟п╣п╪ п╡я▀п╡п╬п╢я▀ п╬ п╨п╬п╩п╦я┤п╣я│я┌п╡п╣ п╬я┬п╦п╠п╬п╨
 			countErrors(resTS, currRefTS, first, second);
 			if(comments) {
 				std::cout<<"Test number: "<<testNo<<"\tTS number: "<<
@@ -278,7 +278,7 @@ int RecognizerNeuralNet<NetObject, Settings>::runInternal(DataSet& dataSet, std:
 				first<<"\nsecond kind errors: "<<second<<"\n";
 			}
 			
-			// Увеличиваем общее число ошибок
+			// пёп╡п╣п╩п╦я┤п╦п╡п╟п╣п╪ п╬п╠я┴п╣п╣ я┤п╦я│п╩п╬ п╬я┬п╦п╠п╬п╨
 			resFirst += first;
 			resSecond += second;
 		}

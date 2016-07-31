@@ -254,7 +254,7 @@ ElemCondPlus AXStageTree::chooseEC(const BootstrappedDataSet &dataSet, double &b
 	double bestSplitLevel = 1;
 	int bestECIndex = 0;
 
-	//TODO завершаемость!
+	//TODO п╥п╟п╡п╣я─я┬п╟п╣п╪п╬я│я┌я▄!
 	while(ecCount < m) {
 		int currentIndex = rand() % totalECCount;
 
@@ -268,7 +268,7 @@ ElemCondPlus AXStageTree::chooseEC(const BootstrappedDataSet &dataSet, double &b
 		++ecCount;
 
 		if(splitLevel > threshSplitLevel) {
-			// В этом случае оптимизируем сначала splitLevel, потом ig
+			// п▓ я█я┌п╬п╪ я│п╩я┐я┤п╟п╣ п╬п©я┌п╦п╪п╦п╥п╦я─я┐п╣п╪ я│п╫п╟я┤п╟п╩п╟ splitLevel, п©п╬я┌п╬п╪ ig
 			if(splitLevel <= bestSplitLevel + eps) {
 				if(splitLevel < bestSplitLevel - eps) {
 					bestSplitLevel = splitLevel;
@@ -282,7 +282,7 @@ ElemCondPlus AXStageTree::chooseEC(const BootstrappedDataSet &dataSet, double &b
 				}
 			}
 		} else {
-			// В этом случае оптимизируем только ig
+			// п▓ я█я┌п╬п╪ я│п╩я┐я┤п╟п╣ п╬п©я┌п╦п╪п╦п╥п╦я─я┐п╣п╪ я┌п╬п╩я▄п╨п╬ ig
 			if(currentIG > bestIG) {
 				bestIG = currentIG;
 				bestECIndex = currentIndex;

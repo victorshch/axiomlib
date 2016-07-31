@@ -1,7 +1,7 @@
 /****************************************************************************
 *			NeuralCoderGeneric.cxx
 *
-*	Description:	Реализация того, что описано в NeuralCoderGeneric.h
+*	Description:	п═п╣п╟п╩п╦п╥п╟я├п╦я▐ я┌п╬пЁп╬, я┤я┌п╬ п╬п©п╦я│п╟п╫п╬ п╡ NeuralCoderGeneric.h
 *	Author:		wictor
 *	History:	
 *
@@ -15,11 +15,11 @@ namespace AxiomLib {
 /****************************************************************************
 *					NeuralCoderGeneric::translateWay1
 *
-*	Description:	Кодирование по способу 1
-*	Parameters:	const Qstring &src - исходная строка
-*				Qstring &dst - конечная строка
+*	Description:	п п╬п╢п╦я─п╬п╡п╟п╫п╦п╣ п©п╬ я│п©п╬я│п╬п╠я┐ 1
+*	Parameters:	const Qstring &src - п╦я│я┘п╬п╢п╫п╟я▐ я│я┌я─п╬п╨п╟
+*				Qstring &dst - п╨п╬п╫п╣я┤п╫п╟я▐ я│я┌я─п╬п╨п╟
 *	Returns:	-
-*	Throws:		AxiomLibException, если исходная строка пустая
+*	Throws:		AxiomLibException, п╣я│п╩п╦ п╦я│я┘п╬п╢п╫п╟я▐ я│я┌я─п╬п╨п╟ п©я┐я│я┌п╟я▐
 *	Author:		wictor
 *	History:
 *
@@ -57,11 +57,11 @@ int NeuralCoderGeneric::getDstLen(int srcLen) const {
 /****************************************************************************
 *					NeuralCoderGeneric::translateWay2
 *
-*	Description:	Кодирование по способу 2
-*	Parameters:	const Qstring &src - исходная строка
-*				Qstring &dst - конечная строка
+*	Description:	п п╬п╢п╦я─п╬п╡п╟п╫п╦п╣ п©п╬ я│п©п╬я│п╬п╠я┐ 2
+*	Parameters:	const Qstring &src - п╦я│я┘п╬п╢п╫п╟я▐ я│я┌я─п╬п╨п╟
+*				Qstring &dst - п╨п╬п╫п╣я┤п╫п╟я▐ я│я┌я─п╬п╨п╟
 *	Returns:	-
-*	Throws:		AxiomLibException, если исходная строка пустая
+*	Throws:		AxiomLibException, п╣я│п╩п╦ п╦я│я┘п╬п╢п╫п╟я▐ я│я┌я─п╬п╨п╟ п©я┐я│я┌п╟я▐
 *	Author:		wictor
 *	History:
 *
@@ -77,11 +77,11 @@ void NeuralCoderGeneric::translateWay2(const Qstring &src, Qstring &dst) const
 /****************************************************************************
 *					NeuralCoderGeneric::translate
 *
-*	Description:	Кодирование
-*	Parameters:	const Qstring &src - исходная строка
-*				Qstring &dst - конечная строка
+*	Description:	п п╬п╢п╦я─п╬п╡п╟п╫п╦п╣
+*	Parameters:	const Qstring &src - п╦я│я┘п╬п╢п╫п╟я▐ я│я┌я─п╬п╨п╟
+*				Qstring &dst - п╨п╬п╫п╣я┤п╫п╟я▐ я│я┌я─п╬п╨п╟
 *	Returns:	-
-*	Throws:		AxiomLibException, если исходная строка пустая, либо не было произведено construct()
+*	Throws:		AxiomLibException, п╣я│п╩п╦ п╦я│я┘п╬п╢п╫п╟я▐ я│я┌я─п╬п╨п╟ п©я┐я│я┌п╟я▐, п╩п╦п╠п╬ п╫п╣ п╠я▀п╩п╬ п©я─п╬п╦п╥п╡п╣п╢п╣п╫п╬ construct()
 *	Author:		wictor
 *	History:
 *
@@ -92,7 +92,7 @@ void NeuralCoderGeneric::translate(const Qstring &src, Qstring &dst) const
 		throw AxiomLibException("NeuralCoderWay2::translate() : source string is empty");
 	}
 	
-	// Случай, когда нет кодировки
+	// п║п╩я┐я┤п╟п╧, п╨п╬пЁп╢п╟ п╫п╣я┌ п╨п╬п╢п╦я─п╬п╡п╨п╦
 	if(dstQ == srcQ && numVar == 1) {
 		dst.resize(src.size());
 		dst = src;

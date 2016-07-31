@@ -80,7 +80,7 @@ int TrajSelectGroupBox::numDimensions(int classNo, int tsNo) {
 void TrajSelectGroupBox::fillClassComboBox() {
 	//unWire();
 	ui->comboBox_class->clear();
-	ui->comboBox_class->addItem(encode("Нормальн."), QVariant::fromValue<int>(-1));
+	ui->comboBox_class->addItem(encode("п²п╬я─п╪п╟п╩я▄п╫."), QVariant::fromValue<int>(-1));
 	for(int i = 0; i < numClasses(); i++) {
 		ui->comboBox_class->addItem(QString::number(i+1), QVariant::fromValue(i));
 	}

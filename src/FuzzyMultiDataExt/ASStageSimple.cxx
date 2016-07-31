@@ -14,14 +14,14 @@
 
 #include "ASStage.h"
 
-// Параметр показывает максимальный размер вектора с лучшими системами аксилом, который хранить для всех процессов
-//  (должен быть достаточно большой, так как из сохраненных все равно потом выбиарются лучшие)
+// п÷п╟я─п╟п╪п╣я┌я─ п©п╬п╨п╟п╥я▀п╡п╟п╣я┌ п╪п╟п╨я│п╦п╪п╟п╩я▄п╫я▀п╧ я─п╟п╥п╪п╣я─ п╡п╣п╨я┌п╬я─п╟ я│ п╩я┐я┤я┬п╦п╪п╦ я│п╦я│я┌п╣п╪п╟п╪п╦ п╟п╨я│п╦п╩п╬п╪, п╨п╬я┌п╬я─я▀п╧ я┘я─п╟п╫п╦я┌я▄ п╢п╩я▐ п╡я│п╣я┘ п©я─п╬я├п╣я│я│п╬п╡
+//  (п╢п╬п╩п╤п╣п╫ п╠я▀я┌я▄ п╢п╬я│я┌п╟я┌п╬я┤п╫п╬ п╠п╬п╩я▄я┬п╬п╧, я┌п╟п╨ п╨п╟п╨ п╦п╥ я│п╬я┘я─п╟п╫п╣п╫п╫я▀я┘ п╡я│п╣ я─п╟п╡п╫п╬ п©п╬я┌п╬п╪ п╡я▀п╠п╦п╟я─я▌я┌я│я▐ п╩я┐я┤я┬п╦п╣)
 #define int_max_size_of_vector_axiomExprSet		100
 
-// Максимальное число систем аксиом, которое может быть внесено на каждом шаге алгоритма для одной исходной системы аксиом
+// п°п╟п╨я│п╦п╪п╟п╩я▄п╫п╬п╣ я┤п╦я│п╩п╬ я│п╦я│я┌п╣п╪ п╟п╨я│п╦п╬п╪, п╨п╬я┌п╬я─п╬п╣ п╪п╬п╤п╣я┌ п╠я▀я┌я▄ п╡п╫п╣я│п╣п╫п╬ п╫п╟ п╨п╟п╤п╢п╬п╪ я┬п╟пЁп╣ п╟п╩пЁп╬я─п╦я┌п╪п╟ п╢п╩я▐ п╬п╢п╫п╬п╧ п╦я│я┘п╬п╢п╫п╬п╧ я│п╦я│я┌п╣п╪я▀ п╟п╨я│п╦п╬п╪
 #define int_max_number_of_renew_axiom_set		10
 
-// Малая величина чтобы работать с действительными числами
+// п°п╟п╩п╟я▐ п╡п╣п╩п╦я┤п╦п╫п╟ я┤я┌п╬п╠я▀ я─п╟п╠п╬я┌п╟я┌я▄ я│ п╢п╣п╧я│я┌п╡п╦я┌п╣п╩я▄п╫я▀п╪п╦ я┤п╦я│п╩п╟п╪п╦
 #define eps			0.0000000001
 
 using namespace AxiomLib;
@@ -43,7 +43,7 @@ void ASStageSimple::initFromEnv(const Environment &env) {
 	
 	env.getParamValue(singleAxiomMarkupPenalty, "singleAxiomMarkupPenalty", 0.0);
 
-	// создание класса распознавания участков разметки в ряду разметки
+	// я│п╬п╥п╢п╟п╫п╦п╣ п╨п╩п╟я│я│п╟ я─п╟я│п©п╬п╥п╫п╟п╡п╟п╫п╦я▐ я┐я┤п╟я│я┌п╨п╬п╡ я─п╟п╥п╪п╣я┌п╨п╦ п╡ я─я▐п╢я┐ я─п╟п╥п╪п╣я┌п╨п╦
 	std::string recogClassName;
 	ReducedRecognizerFactory rrf;
 	if (env.getStringParamValue(recogClassName, "ReducedRecognizer") < 0)
@@ -51,7 +51,7 @@ void ASStageSimple::initFromEnv(const Environment &env) {
 	recognizer = PReducedRecognizer(rrf.create(recogClassName));
 	recognizer->setParamsFromEnv (env);
 
-	// Инициализируем стратегию вычисления целевой функции
+	// п≤п╫п╦я├п╦п╟п╩п╦п╥п╦я─я┐п╣п╪ я│я┌я─п╟я┌п╣пЁп╦я▌ п╡я▀я┤п╦я│п╩п╣п╫п╦я▐ я├п╣п╩п╣п╡п╬п╧ я└я┐п╫п╨я├п╦п╦
 	std::string goalStrategyName;
 	GoalStrategyFactory gsf;
 	if (env.getStringParamValue(goalStrategyName, "goalClass") < 0) 
@@ -59,10 +59,10 @@ void ASStageSimple::initFromEnv(const Environment &env) {
 	goalStrategy = PGoalStrategy(gsf.create(goalStrategyName));
 	goalStrategy->setParamsFromEnv(env);
 
-	// Стоимость ошибки, если при сдвиге разметок осталась область разметки без соответствия в другой разметке
+	// п║я┌п╬п╦п╪п╬я│я┌я▄ п╬я┬п╦п╠п╨п╦, п╣я│п╩п╦ п©я─п╦ я│п╢п╡п╦пЁп╣ я─п╟п╥п╪п╣я┌п╬п╨ п╬я│я┌п╟п╩п╟я│я▄ п╬п╠п╩п╟я│я┌я▄ я─п╟п╥п╪п╣я┌п╨п╦ п╠п╣п╥ я│п╬п╬я┌п╡п╣я┌я│я┌п╡п╦я▐ п╡ п╢я─я┐пЁп╬п╧ я─п╟п╥п╪п╣я┌п╨п╣
 	if (env.getDoubleParamValue (shiftErrIn, "shiftErrIn") < 0)
 		throw AxiomLibException("FuzzyMultiDataExt_AS::setParamsFromEnv : shiftErrIn is undefined.");
-	// Степень расширения длины вхождения разметки (при поиске разметок во время их подбора)
+	// п║я┌п╣п©п╣п╫я▄ я─п╟я│я┬п╦я─п╣п╫п╦я▐ п╢п╩п╦п╫я▀ п╡я┘п╬п╤п╢п╣п╫п╦я▐ я─п╟п╥п╪п╣я┌п╨п╦ (п©я─п╦ п©п╬п╦я│п╨п╣ я─п╟п╥п╪п╣я┌п╬п╨ п╡п╬ п╡я─п╣п╪я▐ п╦я┘ п©п╬п╢п╠п╬я─п╟)
 	if (env.getDoubleParamValue (extendMarkUpLensLevel, "extendMarkUpLensLevel") < 0)
 		throw AxiomLibException("FuzzyMultiDataExt_AS::setParamsFromEnv : extendMarkUpLensLevel is undefined.");
 	if (env.getIntParamValue (maxAxiomSetPopSize, "maxAxiomSetPopSize") < 0)
@@ -99,10 +99,10 @@ void ASStageSimple::recalculateMatterASFunc(AxiomExprSetPlus &as) {
 	}
 	
 	if(as.markUps.size() == 0) {
-		// Если разметок нет -- надо их подобрать
+		// п∙я│п╩п╦ я─п╟п╥п╪п╣я┌п╬п╨ п╫п╣я┌ -- п╫п╟п╢п╬ п╦я┘ п©п╬п╢п╬п╠я─п╟я┌я▄
 		matterAxiomSetFunc(as);
 	} else {
-		// Иначе -- пересчитываем для имеющихся разметок
+		// п≤п╫п╟я┤п╣ -- п©п╣я─п╣я│я┤п╦я┌я▀п╡п╟п╣п╪ п╢п╩я▐ п╦п╪п╣я▌я┴п╦я┘я│я▐ я─п╟п╥п╪п╣я┌п╬п╨
 		matterAxiomSetFunc(as, as.markUps);
 	}
 }
@@ -115,7 +115,7 @@ void ASStageSimple::run() {
 	std::vector<int> sizeVector;
 	stage2->getAXSize(sizeVector);
 	
-	//  Создаем вектор всех аксиом - чтобы его можно было использовать при составленнии систем аксиом
+	//  п║п╬п╥п╢п╟п╣п╪ п╡п╣п╨я┌п╬я─ п╡я│п╣я┘ п╟п╨я│п╦п╬п╪ - я┤я┌п╬п╠я▀ п╣пЁп╬ п╪п╬п╤п╫п╬ п╠я▀п╩п╬ п╦я│п©п╬п╩я▄п╥п╬п╡п╟я┌я▄ п©я─п╦ я│п╬я│я┌п╟п╡п╩п╣п╫п╫п╦п╦ я│п╦я│я┌п╣п╪ п╟п╨я│п╦п╬п╪
 	int numOfAxioms = 0;
 	for (unsigned int i = 0; i < sizeVector.size(); i++) {
 		for(int j = 0; j < sizeVector[i]; j++) {
@@ -125,7 +125,7 @@ void ASStageSimple::run() {
 		}
 	}
 	
-	// Вектор аксиом, создаваемый по мере формирования аксиом из элементраных условий
+	// п▓п╣п╨я┌п╬я─ п╟п╨я│п╦п╬п╪, я│п╬п╥п╢п╟п╡п╟п╣п╪я▀п╧ п©п╬ п╪п╣я─п╣ я└п╬я─п╪п╦я─п╬п╡п╟п╫п╦я▐ п╟п╨я│п╦п╬п╪ п╦п╥ я█п╩п╣п╪п╣п╫я┌я─п╟п╫я▀я┘ я┐я│п╩п╬п╡п╦п╧
 	std::vector <AxiomExpr> bestAxioms;
 	bestAxioms.reserve(numOfAxioms);
 	setSatPointsSize(numOfAxioms);
@@ -140,24 +140,24 @@ void ASStageSimple::run() {
 		}
 	}
 	
-	// Очищаем содержимое переменной для хранения набора лучших систем аксиом
+	// п·я┤п╦я┴п╟п╣п╪ я│п╬п╢п╣я─п╤п╦п╪п╬п╣ п©п╣я─п╣п╪п╣п╫п╫п╬п╧ п╢п╩я▐ я┘я─п╟п╫п╣п╫п╦я▐ п╫п╟п╠п╬я─п╟ п╩я┐я┤я┬п╦я┘ я│п╦я│я┌п╣п╪ п╟п╨я│п╦п╬п╪
 	bestAxiomSets.clear();
-	{ // Обучение производим таким образом, чтобы не дублировать вычисления в различных процессах
-		// Создание начальной популяции - создаем системы аксиом только для выбранного диапазона аксиом
-		// Создаем набор систем аксиом, каждая из которых будет содержать только одну аксиому
+	{ // п·п╠я┐я┤п╣п╫п╦п╣ п©я─п╬п╦п╥п╡п╬п╢п╦п╪ я┌п╟п╨п╦п╪ п╬п╠я─п╟п╥п╬п╪, я┤я┌п╬п╠я▀ п╫п╣ п╢я┐п╠п╩п╦я─п╬п╡п╟я┌я▄ п╡я▀я┤п╦я│п╩п╣п╫п╦я▐ п╡ я─п╟п╥п╩п╦я┤п╫я▀я┘ п©я─п╬я├п╣я│я│п╟я┘
+		// п║п╬п╥п╢п╟п╫п╦п╣ п╫п╟я┤п╟п╩я▄п╫п╬п╧ п©п╬п©я┐п╩я▐я├п╦п╦ - я│п╬п╥п╢п╟п╣п╪ я│п╦я│я┌п╣п╪я▀ п╟п╨я│п╦п╬п╪ я┌п╬п╩я▄п╨п╬ п╢п╩я▐ п╡я▀п╠я─п╟п╫п╫п╬пЁп╬ п╢п╦п╟п©п╟п╥п╬п╫п╟ п╟п╨я│п╦п╬п╪
+		// п║п╬п╥п╢п╟п╣п╪ п╫п╟п╠п╬я─ я│п╦я│я┌п╣п╪ п╟п╨я│п╦п╬п╪, п╨п╟п╤п╢п╟я▐ п╦п╥ п╨п╬я┌п╬я─я▀я┘ п╠я┐п╢п╣я┌ я│п╬п╢п╣я─п╤п╟я┌я▄ я┌п╬п╩я▄п╨п╬ п╬п╢п╫я┐ п╟п╨я│п╦п╬п╪я┐
 		std::vector <AxiomExprSetPlus> axiomSets, newAxiomSets;
 		std::vector < std::vector <AxiomExprSetPlus> > nextStepAxiomSets;
 		axiomSets.resize(numOfAxioms);
 		int as = 0;
 		#pragma omp parallel for schedule(dynamic, 1)
 		for (int i = 0; i < numOfAxioms; i++) {
-			// Формируем систему аксиом из одной аксиомы
+			// п╓п╬я─п╪п╦я─я┐п╣п╪ я│п╦я│я┌п╣п╪я┐ п╟п╨я│п╦п╬п╪ п╦п╥ п╬п╢п╫п╬п╧ п╟п╨я│п╦п╬п╪я▀
 			axiomSets[i].addAxiom (bestAxioms[i]);
-			// Устанавливаем статистику
+			// пёя│я┌п╟п╫п╟п╡п╩п╦п╡п╟п╣п╪ я│я┌п╟я┌п╦я│я┌п╦п╨я┐
 			axiomSets[i].axiomsIndex.push_back(i);
-			// Вычисляем значение целевой функции для такой системы аксиом
+			// п▓я▀я┤п╦я│п╩я▐п╣п╪ п╥п╫п╟я┤п╣п╫п╦п╣ я├п╣п╩п╣п╡п╬п╧ я└я┐п╫п╨я├п╦п╦ п╢п╩я▐ я┌п╟п╨п╬п╧ я│п╦я│я┌п╣п╪я▀ п╟п╨я│п╦п╬п╪
 			matterAxiomSetFunc (axiomSets[i]);
-			// Вывод текущей информации, если это необходимо
+			// п▓я▀п╡п╬п╢ я┌п╣п╨я┐я┴п╣п╧ п╦п╫я└п╬я─п╪п╟я├п╦п╦, п╣я│п╩п╦ я█я┌п╬ п╫п╣п╬п╠я┘п╬п╢п╦п╪п╬
 			{
 				char buf[128];
 				sprintf (buf, "\r\tCurrent axiomSet: %d out of %d. Goal value is %.2f (%d, %d).\tThread %d.\t", i + 1, numOfAxioms, axiomSets[i].goal, axiomSets[i].errFirst, axiomSets[i].errSecond, omp_get_thread_num());
@@ -166,50 +166,50 @@ void ASStageSimple::run() {
 			}
 		}
 
-		// Итерационный алгоритм построения системы аксиом
+		// п≤я┌п╣я─п╟я├п╦п╬п╫п╫я▀п╧ п╟п╩пЁп╬я─п╦я┌п╪ п©п╬я│я┌я─п╬п╣п╫п╦я▐ я│п╦я│я┌п╣п╪я▀ п╟п╨я│п╦п╬п╪
 		bool condition = true;
 		std::vector <int> indicesOfBestSets;
 		nextStepAxiomSets.clear();
 		int iterNum = 0;
 		double defMaxGoal;
-		defMaxGoal = -1.0; // (axiomSets[axSet].goal + 1)*2.0; // Делаем defMaxGoal достаточно большим (заведомо больше axiomSets[axSet].goal - даже с учетом вычислительной погрешности)
-		// Устанавливаем размер вектора по числу аксиом
+		defMaxGoal = -1.0; // (axiomSets[axSet].goal + 1)*2.0; // п■п╣п╩п╟п╣п╪ defMaxGoal п╢п╬я│я┌п╟я┌п╬я┤п╫п╬ п╠п╬п╩я▄я┬п╦п╪ (п╥п╟п╡п╣п╢п╬п╪п╬ п╠п╬п╩я▄я┬п╣ axiomSets[axSet].goal - п╢п╟п╤п╣ я│ я┐я┤п╣я┌п╬п╪ п╡я▀я┤п╦я│п╩п╦я┌п╣п╩я▄п╫п╬п╧ п©п╬пЁя─п╣я┬п╫п╬я│я┌п╦)
+		// пёя│я┌п╟п╫п╟п╡п╩п╦п╡п╟п╣п╪ я─п╟п╥п╪п╣я─ п╡п╣п╨я┌п╬я─п╟ п©п╬ я┤п╦я│п╩я┐ п╟п╨я│п╦п╬п╪
 		unsigned int wholeNum = 0;
 		newAxiomSets.resize (bestAxioms.size());
 		while (condition) {
-			// Подготавливаем переменную для вектора будущих систем аксиом
+			// п÷п╬п╢пЁп╬я┌п╟п╡п╩п╦п╡п╟п╣п╪ п©п╣я─п╣п╪п╣п╫п╫я┐я▌ п╢п╩я▐ п╡п╣п╨я┌п╬я─п╟ п╠я┐п╢я┐я┴п╦я┘ я│п╦я│я┌п╣п╪ п╟п╨я│п╦п╬п╪
 			wholeNum = 0;
 			nextStepAxiomSets.resize (axiomSets.size());
 			for (unsigned int axSet = 0; axSet < axiomSets.size(); axSet++) {
-				// Отображаем на экран стадию процесса
+				// п·я┌п╬п╠я─п╟п╤п╟п╣п╪ п╫п╟ я█п╨я─п╟п╫ я│я┌п╟п╢п╦я▌ п©я─п╬я├п╣я│я│п╟
 				{
 					char buf[128];
 					sprintf (buf, "\r\tProc start point: %d - %d\tIteration: %d\tCurrent axiomSet: %d out of %d.\t Thread %d.\t", 1, 1, iterNum+1, axSet+1, axiomSets.size(), omp_get_thread_num());
 					logger->writeComment(buf);
 				}
-				// Очищаем содержимое вектора с промежуточными результатами
+				// п·я┤п╦я┴п╟п╣п╪ я│п╬п╢п╣я─п╤п╦п╪п╬п╣ п╡п╣п╨я┌п╬я─п╟ я│ п©я─п╬п╪п╣п╤я┐я┌п╬я┤п╫я▀п╪п╦ я─п╣п╥я┐п╩я▄я┌п╟я┌п╟п╪п╦
 				for (unsigned int u = 0; u < newAxiomSets.size(); u++)
 					newAxiomSets[u].clear();
-				// Для каждой аксиомы - создаем новую систему на основе данной аксиомы и системы axiomSets[axSet]
+				// п■п╩я▐ п╨п╟п╤п╢п╬п╧ п╟п╨я│п╦п╬п╪я▀ - я│п╬п╥п╢п╟п╣п╪ п╫п╬п╡я┐я▌ я│п╦я│я┌п╣п╪я┐ п╫п╟ п╬я│п╫п╬п╡п╣ п╢п╟п╫п╫п╬п╧ п╟п╨я│п╦п╬п╪я▀ п╦ я│п╦я│я┌п╣п╪я▀ axiomSets[axSet]
 				#pragma omp parallel for schedule(dynamic, 1)
 				for (int ax = 0; ax < (int) bestAxioms.size(); ax++) {
-					// Для всех аксиом, еще не входящих в рассматриваемую систему аксиом создаем новую систему
+					// п■п╩я▐ п╡я│п╣я┘ п╟п╨я│п╦п╬п╪, п╣я┴п╣ п╫п╣ п╡я┘п╬п╢я▐я┴п╦я┘ п╡ я─п╟я│я│п╪п╟я┌я─п╦п╡п╟п╣п╪я┐я▌ я│п╦я│я┌п╣п╪я┐ п╟п╨я│п╦п╬п╪ я│п╬п╥п╢п╟п╣п╪ п╫п╬п╡я┐я▌ я│п╦я│я┌п╣п╪я┐
 					if (isIn ((unsigned int) ax, axiomSets[axSet].axiomsIndex) < 0) {
-						// создаем новую систему аксиом на основе выбранной - добавляя в нее еще невходивщую аксиому
+						// я│п╬п╥п╢п╟п╣п╪ п╫п╬п╡я┐я▌ я│п╦я│я┌п╣п╪я┐ п╟п╨я│п╦п╬п╪ п╫п╟ п╬я│п╫п╬п╡п╣ п╡я▀п╠я─п╟п╫п╫п╬п╧ - п╢п╬п╠п╟п╡п╩я▐я▐ п╡ п╫п╣п╣ п╣я┴п╣ п╫п╣п╡я┘п╬п╢п╦п╡я┴я┐я▌ п╟п╨я│п╦п╬п╪я┐
 						newAxiomSets[ax] = axiomSets[axSet];
 						
 						tryAddAxiom(newAxiomSets[ax], bestAxioms[ax], ax);
 						
 //						newAxiomSets[ax].addAxiom (bestAxioms[ax]);
 //						newAxiomSets[ax].axiomsIndex.push_back(ax);
-//						// считаем значение целевой функции для полученной системы аксиом и сохраняем его
+//						// я│я┤п╦я┌п╟п╣п╪ п╥п╫п╟я┤п╣п╫п╦п╣ я├п╣п╩п╣п╡п╬п╧ я└я┐п╫п╨я├п╦п╦ п╢п╩я▐ п©п╬п╩я┐я┤п╣п╫п╫п╬п╧ я│п╦я│я┌п╣п╪я▀ п╟п╨я│п╦п╬п╪ п╦ я│п╬я┘я─п╟п╫я▐п╣п╪ п╣пЁп╬
 //						matterAxiomSetFunc (newAxiomSets[ax]);
 					} else {
-						// Если аксиома уже входит в систему - то не создаем новой системы. Заполняем значение целевой функции по умолчанию значением значительно больше axiomSets[axSet].goal .
+						// п∙я│п╩п╦ п╟п╨я│п╦п╬п╪п╟ я┐п╤п╣ п╡я┘п╬п╢п╦я┌ п╡ я│п╦я│я┌п╣п╪я┐ - я┌п╬ п╫п╣ я│п╬п╥п╢п╟п╣п╪ п╫п╬п╡п╬п╧ я│п╦я│я┌п╣п╪я▀. п≈п╟п©п╬п╩п╫я▐п╣п╪ п╥п╫п╟я┤п╣п╫п╦п╣ я├п╣п╩п╣п╡п╬п╧ я└я┐п╫п╨я├п╦п╦ п©п╬ я┐п╪п╬п╩я┤п╟п╫п╦я▌ п╥п╫п╟я┤п╣п╫п╦п╣п╪ п╥п╫п╟я┤п╦я┌п╣п╩я▄п╫п╬ п╠п╬п╩я▄я┬п╣ axiomSets[axSet].goal .
 						newAxiomSets[ax].goal = defMaxGoal;
 					}
 				}
-				// выбираем заданное число лучших систем аксиом и добавляем их в популяцию на следующем шаге алгоритма
+				// п╡я▀п╠п╦я─п╟п╣п╪ п╥п╟п╢п╟п╫п╫п╬п╣ я┤п╦я│п╩п╬ п╩я┐я┤я┬п╦я┘ я│п╦я│я┌п╣п╪ п╟п╨я│п╦п╬п╪ п╦ п╢п╬п╠п╟п╡п╩я▐п╣п╪ п╦я┘ п╡ п©п╬п©я┐п╩я▐я├п╦я▌ п╫п╟ я│п╩п╣п╢я┐я▌я┴п╣п╪ я┬п╟пЁп╣ п╟п╩пЁп╬я─п╦я┌п╪п╟
 				indicesOfBestSets.clear();
 				chooseIndicesOfBestAxiomSets (newAxiomSets, indicesOfBestSets, axiomSets[axSet].goal);				
 
@@ -229,9 +229,9 @@ void ASStageSimple::run() {
 				wholeNum += indicesOfBestSets.size();
 				addAxiomSets(nextStepAxiomSets[axSet], newAxiomSets, indicesOfBestSets);
 			}
-			// Переносим исходные системы аксиом в специальный вектор результатов и по ходу дела очищаем их содержимое
+			// п÷п╣я─п╣п╫п╬я│п╦п╪ п╦я│я┘п╬п╢п╫я▀п╣ я│п╦я│я┌п╣п╪я▀ п╟п╨я│п╦п╬п╪ п╡ я│п©п╣я├п╦п╟п╩я▄п╫я▀п╧ п╡п╣п╨я┌п╬я─ я─п╣п╥я┐п╩я▄я┌п╟я┌п╬п╡ п╦ п©п╬ я┘п╬п╢я┐ п╢п╣п╩п╟ п╬я┤п╦я┴п╟п╣п╪ п╦я┘ я│п╬п╢п╣я─п╤п╦п╪п╬п╣
 			addToBestAxiomSets (axiomSets);
-			// Переносим системы аксиом для следующего шага в axiomSets
+			// п÷п╣я─п╣п╫п╬я│п╦п╪ я│п╦я│я┌п╣п╪я▀ п╟п╨я│п╦п╬п╪ п╢п╩я▐ я│п╩п╣п╢я┐я▌я┴п╣пЁп╬ я┬п╟пЁп╟ п╡ axiomSets
 			axiomSets.resize(wholeNum);
 			unsigned int cur = 0;
 			double curBestVal = -1.0;
@@ -246,35 +246,35 @@ void ASStageSimple::run() {
 			}
 			nextStepAxiomSets.clear();
 			
-			// - Убрано, так как рост числа систем аксиом уже ограничивается в функции chooseIndicesOfBestAxiomSets
-			// Ограничиваем число систем аксиом, чтобы оно не могло разрастаться со скоростью геометрической прогрессии
+			// - пёп╠я─п╟п╫п╬, я┌п╟п╨ п╨п╟п╨ я─п╬я│я┌ я┤п╦я│п╩п╟ я│п╦я│я┌п╣п╪ п╟п╨я│п╦п╬п╪ я┐п╤п╣ п╬пЁя─п╟п╫п╦я┤п╦п╡п╟п╣я┌я│я▐ п╡ я└я┐п╫п╨я├п╦п╦ chooseIndicesOfBestAxiomSets
+			// п·пЁя─п╟п╫п╦я┤п╦п╡п╟п╣п╪ я┤п╦я│п╩п╬ я│п╦я│я┌п╣п╪ п╟п╨я│п╦п╬п╪, я┤я┌п╬п╠я▀ п╬п╫п╬ п╫п╣ п╪п╬пЁп╩п╬ я─п╟п╥я─п╟я│я┌п╟я┌я▄я│я▐ я│п╬ я│п╨п╬я─п╬я│я┌я▄я▌ пЁп╣п╬п╪п╣я┌я─п╦я┤п╣я│п╨п╬п╧ п©я─п╬пЁя─п╣я│я│п╦п╦
 			cutDownAxiomSets (axiomSets);
 
-			// Увеличиваем число итераций, проделанных алгоритмом
+			// пёп╡п╣п╩п╦я┤п╦п╡п╟п╣п╪ я┤п╦я│п╩п╬ п╦я┌п╣я─п╟я├п╦п╧, п©я─п╬п╢п╣п╩п╟п╫п╫я▀я┘ п╟п╩пЁп╬я─п╦я┌п╪п╬п╪
 			iterNum++;
 
-			// Проверяем критерии останова:
-			// - выходим, если не было создано ни одной новой системы аксиом с лучшим значением целевой функции
+			// п÷я─п╬п╡п╣я─я▐п╣п╪ п╨я─п╦я┌п╣я─п╦п╦ п╬я│я┌п╟п╫п╬п╡п╟:
+			// - п╡я▀я┘п╬п╢п╦п╪, п╣я│п╩п╦ п╫п╣ п╠я▀п╩п╬ я│п╬п╥п╢п╟п╫п╬ п╫п╦ п╬п╢п╫п╬п╧ п╫п╬п╡п╬п╧ я│п╦я│я┌п╣п╪я▀ п╟п╨я│п╦п╬п╪ я│ п╩я┐я┤я┬п╦п╪ п╥п╫п╟я┤п╣п╫п╦п╣п╪ я├п╣п╩п╣п╡п╬п╧ я└я┐п╫п╨я├п╦п╦
 			if (axiomSets.size() < 1) {
 				logger->writeComment("Stopping because no new axiom sets created");
 				condition = false; 
 				break;
 			}
-			// - выходим, если число итераций больше заданного предела
+			// - п╡я▀я┘п╬п╢п╦п╪, п╣я│п╩п╦ я┤п╦я│п╩п╬ п╦я┌п╣я─п╟я├п╦п╧ п╠п╬п╩я▄я┬п╣ п╥п╟п╢п╟п╫п╫п╬пЁп╬ п©я─п╣п╢п╣п╩п╟
 			if ((iterNum >= maxNumberOfSteps) || ((curBestVal - bestAxiomSetGoal) < eps)) {
 				if(iterNum >= maxNumberOfSteps) {
 					logger->writeComment("Stopping because maximum number of iterations reached");
 				} else {
 					logger->writeComment("Stopping because best axiom set goal value reached");
 				}
-				// Переносим исходные системы аксиом в специальный вектор результатов и по ходу дела очищаем их содержимое
+				// п÷п╣я─п╣п╫п╬я│п╦п╪ п╦я│я┘п╬п╢п╫я▀п╣ я│п╦я│я┌п╣п╪я▀ п╟п╨я│п╦п╬п╪ п╡ я│п©п╣я├п╦п╟п╩я▄п╫я▀п╧ п╡п╣п╨я┌п╬я─ я─п╣п╥я┐п╩я▄я┌п╟я┌п╬п╡ п╦ п©п╬ я┘п╬п╢я┐ п╢п╣п╩п╟ п╬я┤п╦я┴п╟п╣п╪ п╦я┘ я│п╬п╢п╣я─п╤п╦п╪п╬п╣
 				addToBestAxiomSets (axiomSets);
 				condition = false;
 				break;
 			}
 		}
 
-		// Сортировка лучших систем аксиом до заданного числа элементов
+		// п║п╬я─я┌п╦я─п╬п╡п╨п╟ п╩я┐я┤я┬п╦я┘ я│п╦я│я┌п╣п╪ п╟п╨я│п╦п╬п╪ п╢п╬ п╥п╟п╢п╟п╫п╫п╬пЁп╬ я┤п╦я│п╩п╟ я█п╩п╣п╪п╣п╫я┌п╬п╡
 		sortBestAxiomSets ();
 	}
 
@@ -292,7 +292,7 @@ int ASStageSimple::tryAddAxiom(AxiomExprSetPlus &as, const AxiomExpr &ax, int ax
 	//matterAxiomSetFunc(as);
 	
 	return -1;
-//	// Пересчитываем целевую функцию только если новая аксиома учавствует в разметках
+//	// п÷п╣я─п╣я│я┤п╦я┌я▀п╡п╟п╣п╪ я├п╣п╩п╣п╡я┐я▌ я└я┐п╫п╨я├п╦я▌ я┌п╬п╩я▄п╨п╬ п╣я│п╩п╦ п╫п╬п╡п╟я▐ п╟п╨я│п╦п╬п╪п╟ я┐я┤п╟п╡я│я┌п╡я┐п╣я┌ п╡ я─п╟п╥п╪п╣я┌п╨п╟я┘
 //	if(markupsContain(markUpVariants, as.axioms.size())) {
 		
 //		return -1;
@@ -306,9 +306,9 @@ void ASStageSimple::createAllMarkUpVariants(const AxiomExprSetPlus &as, std::vec
 	int numOfClasses;
 	std::vector <int> numOfMultiTS;
 	std::vector < std::vector <int> > numOfTS;
-	// Получение информации об обучающем наборе данных
+	// п÷п╬п╩я┐я┤п╣п╫п╦п╣ п╦п╫я└п╬я─п╪п╟я├п╦п╦ п╬п╠ п╬п╠я┐я┤п╟я▌я┴п╣п╪ п╫п╟п╠п╬я─п╣ п╢п╟п╫п╫я▀я┘
 	fuzzyDataSet->getClassSize (numOfClasses, numOfMultiTS, numOfTS);
-	// для каждого класса нештатного поведения формируем расширенные обобщенные разметки
+	// п╢п╩я▐ п╨п╟п╤п╢п╬пЁп╬ п╨п╩п╟я│я│п╟ п╫п╣я┬я┌п╟я┌п╫п╬пЁп╬ п©п╬п╡п╣п╢п╣п╫п╦я▐ я└п╬я─п╪п╦я─я┐п╣п╪ я─п╟я│я┬п╦я─п╣п╫п╫я▀п╣ п╬п╠п╬п╠я┴п╣п╫п╫я▀п╣ я─п╟п╥п╪п╣я┌п╨п╦
 	std::vector < std::vector <int> > resMarkUps;
 	markUpVariants.resize(numOfClasses);
 	for (int abType = 0; abType < numOfClasses; abType++) {
@@ -317,13 +317,13 @@ void ASStageSimple::createAllMarkUpVariants(const AxiomExprSetPlus &as, std::vec
 		for (int multiTS = 0; multiTS < numOfMultiTS[abType]; multiTS++) {
 			createRefMarkUp (resMarkUps[multiTS], as, abType, multiTS, numOfTS);
 		}
-		// Упрощаем разметки - удаляем 0 в начале и в конце векторов - чтобы общую часть было искать проще
+		// пёп©я─п╬я┴п╟п╣п╪ я─п╟п╥п╪п╣я┌п╨п╦ - я┐п╢п╟п╩я▐п╣п╪ 0 п╡ п╫п╟я┤п╟п╩п╣ п╦ п╡ п╨п╬п╫я├п╣ п╡п╣п╨я┌п╬я─п╬п╡ - я┤я┌п╬п╠я▀ п╬п╠я┴я┐я▌ я┤п╟я│я┌я▄ п╠я▀п╩п╬ п╦я│п╨п╟я┌я▄ п©я─п╬я┴п╣
 		simplifyMarkUps (resMarkUps);
-		// На основании полученных разметок траекторий аномального поведения - производим их сдвиг и формируем варианты обобщенных разметок
+		// п²п╟ п╬я│п╫п╬п╡п╟п╫п╦п╦ п©п╬п╩я┐я┤п╣п╫п╫я▀я┘ я─п╟п╥п╪п╣я┌п╬п╨ я┌я─п╟п╣п╨я┌п╬я─п╦п╧ п╟п╫п╬п╪п╟п╩я▄п╫п╬пЁп╬ п©п╬п╡п╣п╢п╣п╫п╦я▐ - п©я─п╬п╦п╥п╡п╬п╢п╦п╪ п╦я┘ я│п╢п╡п╦пЁ п╦ я└п╬я─п╪п╦я─я┐п╣п╪ п╡п╟я─п╦п╟п╫я┌я▀ п╬п╠п╬п╠я┴п╣п╫п╫я▀я┘ я─п╟п╥п╪п╣я┌п╬п╨
 		createMarkUpVariants (markUpVariants[abType], resMarkUps);
-		// Упрощаем вектора разметок - удаляем 0 в начале и в конце. Плюс возможно внесение некоторых изменений в саму разметку
+		// пёп©я─п╬я┴п╟п╣п╪ п╡п╣п╨я┌п╬я─п╟ я─п╟п╥п╪п╣я┌п╬п╨ - я┐п╢п╟п╩я▐п╣п╪ 0 п╡ п╫п╟я┤п╟п╩п╣ п╦ п╡ п╨п╬п╫я├п╣. п÷п╩я▌я│ п╡п╬п╥п╪п╬п╤п╫п╬ п╡п╫п╣я│п╣п╫п╦п╣ п╫п╣п╨п╬я┌п╬я─я▀я┘ п╦п╥п╪п╣п╫п╣п╫п╦п╧ п╡ я│п╟п╪я┐ я─п╟п╥п╪п╣я┌п╨я┐
 		simplifyMarkUps (markUpVariants[abType]);
-		// Добавляем минимальные варианты разметок - если общую часть выделить не удалось
+		// п■п╬п╠п╟п╡п╩я▐п╣п╪ п╪п╦п╫п╦п╪п╟п╩я▄п╫я▀п╣ п╡п╟я─п╦п╟п╫я┌я▀ я─п╟п╥п╪п╣я┌п╬п╨ - п╣я│п╩п╦ п╬п╠я┴я┐я▌ я┤п╟я│я┌я▄ п╡я▀п╢п╣п╩п╦я┌я▄ п╫п╣ я┐п╢п╟п╩п╬я│я▄
 		if (markUpVariants[abType].size() < 1) {
 			//logger->writeDebug("Warning: couldn't find common subsequence, creating simple markup");
 			createSimpleMarkUpVariants (markUpVariants[abType], (int) as.axioms.size());
@@ -348,10 +348,10 @@ bool ASStageSimple::markupsContain(const std::vector<std::vector<std::vector<int
 /****************************************************************************
 *					FuzzyMultiDataExt_AS::cutDownAxiomSets
 *
-*	Description:	Функция сокращает число систем аксиом во входном векторе до 
-*					заданного в параметрах класса значения.
-*	Parameters:		axiomSets - вектор систем аксиом, который подлежит сокращению 
-*					до заданного размера
+*	Description:	п╓я┐п╫п╨я├п╦я▐ я│п╬п╨я─п╟я┴п╟п╣я┌ я┤п╦я│п╩п╬ я│п╦я│я┌п╣п╪ п╟п╨я│п╦п╬п╪ п╡п╬ п╡я┘п╬п╢п╫п╬п╪ п╡п╣п╨я┌п╬я─п╣ п╢п╬ 
+*					п╥п╟п╢п╟п╫п╫п╬пЁп╬ п╡ п©п╟я─п╟п╪п╣я┌я─п╟я┘ п╨п╩п╟я│я│п╟ п╥п╫п╟я┤п╣п╫п╦я▐.
+*	Parameters:		axiomSets - п╡п╣п╨я┌п╬я─ я│п╦я│я┌п╣п╪ п╟п╨я│п╦п╬п╪, п╨п╬я┌п╬я─я▀п╧ п©п╬п╢п╩п╣п╤п╦я┌ я│п╬п╨я─п╟я┴п╣п╫п╦я▌ 
+*					п╢п╬ п╥п╟п╢п╟п╫п╫п╬пЁп╬ я─п╟п╥п╪п╣я─п╟
 *	Returns:		0
 *	Throws:			-
 *	Author:			dk
@@ -359,15 +359,15 @@ bool ASStageSimple::markupsContain(const std::vector<std::vector<std::vector<int
 *
 ****************************************************************************/
 int ASStageSimple::cutDownAxiomSets (std::vector <AxiomExprSetPlus> &axiomSets) const {
-	// Проверка входных параметров
+	// п÷я─п╬п╡п╣я─п╨п╟ п╡я┘п╬п╢п╫я▀я┘ п©п╟я─п╟п╪п╣я┌я─п╬п╡
 	if ((maxAxiomSetPopSize < 1) || ( (int) axiomSets.size() <= maxAxiomSetPopSize))
 		return 0;
 	
-	// Сортировка аксиом по значению целевой функции
+	// п║п╬я─я┌п╦я─п╬п╡п╨п╟ п╟п╨я│п╦п╬п╪ п©п╬ п╥п╫п╟я┤п╣п╫п╦я▌ я├п╣п╩п╣п╡п╬п╧ я└я┐п╫п╨я├п╦п╦
 	std::vector <int> indecies;
 	sortAxiomSets (axiomSets, indecies);
 	
-	// Определение числа лучших аксиом, сохраняемых в популяции
+	// п·п©я─п╣п╢п╣п╩п╣п╫п╦п╣ я┤п╦я│п╩п╟ п╩я┐я┤я┬п╦я┘ п╟п╨я│п╦п╬п╪, я│п╬я┘я─п╟п╫я▐п╣п╪я▀я┘ п╡ п©п╬п©я┐п╩я▐я├п╦п╦
 	unsigned int numBestToSave, numToChoose, numFrom;
 	numBestToSave = (unsigned int) round (percentBestAxiomSets*maxAxiomSetPopSize);
 	numToChoose = (unsigned int) maxAxiomSetPopSize - numBestToSave;
@@ -378,11 +378,11 @@ int ASStageSimple::cutDownAxiomSets (std::vector <AxiomExprSetPlus> &axiomSets) 
 	int curChoice;
 	std::vector <int> toSave;
 	toSave.resize (maxAxiomSetPopSize);
-	// Заносим в вектор сохраняемых элементов - заданное число лучших
+	// п≈п╟п╫п╬я│п╦п╪ п╡ п╡п╣п╨я┌п╬я─ я│п╬я┘я─п╟п╫я▐п╣п╪я▀я┘ я█п╩п╣п╪п╣п╫я┌п╬п╡ - п╥п╟п╢п╟п╫п╫п╬п╣ я┤п╦я│п╩п╬ п╩я┐я┤я┬п╦я┘
 	for (unsigned int i = 0; i < numBestToSave; i++) {
 		toSave[i] = indecies[i];
 	}
-	// Случайный выбор оставшихся
+	// п║п╩я┐я┤п╟п╧п╫я▀п╧ п╡я▀п╠п╬я─ п╬я│я┌п╟п╡я┬п╦я┘я│я▐
 	for (unsigned int i = 0; i < numToChoose; i++) {
 		curChoice = round (((double) rand() / (double) RAND_MAX) * (double) (numFrom - i - 1));
 		for (unsigned int t = (unsigned int) curChoice; t < numFrom; t++)
@@ -393,7 +393,7 @@ int ASStageSimple::cutDownAxiomSets (std::vector <AxiomExprSetPlus> &axiomSets) 
 			}
 	}
 
-	// Сортировка массива выбранных для сохранения элементов по убыванию
+	// п║п╬я─я┌п╦я─п╬п╡п╨п╟ п╪п╟я│я│п╦п╡п╟ п╡я▀п╠я─п╟п╫п╫я▀я┘ п╢п╩я▐ я│п╬я┘я─п╟п╫п╣п╫п╦я▐ я█п╩п╣п╪п╣п╫я┌п╬п╡ п©п╬ я┐п╠я▀п╡п╟п╫п╦я▌
 	unsigned int tmpInt;
 	for (unsigned int i = maxAxiomSetPopSize - 1; i > 0; i--) {
 		for (unsigned int j = 0; j < i; j++) {
@@ -405,8 +405,8 @@ int ASStageSimple::cutDownAxiomSets (std::vector <AxiomExprSetPlus> &axiomSets) 
 		}
 	}
 	
-	// Удаление невыбранных систем аксиом
-	// Очищаем содержимое элементов вектора аксиом
+	// пёп╢п╟п╩п╣п╫п╦п╣ п╫п╣п╡я▀п╠я─п╟п╫п╫я▀я┘ я│п╦я│я┌п╣п╪ п╟п╨я│п╦п╬п╪
+	// п·я┤п╦я┴п╟п╣п╪ я│п╬п╢п╣я─п╤п╦п╪п╬п╣ я█п╩п╣п╪п╣п╫я┌п╬п╡ п╡п╣п╨я┌п╬я─п╟ п╟п╨я│п╦п╬п╪
 	if ((toSave[0] + 1) < (int) axiomSets.size()) {
 		for (unsigned int j = toSave[0] + 1; j < axiomSets.size(); j++)
 			axiomSets[j].clear();
@@ -414,14 +414,14 @@ int ASStageSimple::cutDownAxiomSets (std::vector <AxiomExprSetPlus> &axiomSets) 
 	}
 	for (int i = 1; i < maxAxiomSetPopSize; i++) {
 		if ((toSave[i] + 1) < toSave[i-1]) {
-			// Очищаем содержимое элементов вектора аксиом
+			// п·я┤п╦я┴п╟п╣п╪ я│п╬п╢п╣я─п╤п╦п╪п╬п╣ я█п╩п╣п╪п╣п╫я┌п╬п╡ п╡п╣п╨я┌п╬я─п╟ п╟п╨я│п╦п╬п╪
 			for (int j = toSave[i] + 1; j < toSave[i-1]; j++)
 				axiomSets[j].clear();
-			// Удаляем элементы векторов
+			// пёп╢п╟п╩я▐п╣п╪ я█п╩п╣п╪п╣п╫я┌я▀ п╡п╣п╨я┌п╬я─п╬п╡
 			axiomSets.erase (axiomSets.begin() + toSave[i] + 1, axiomSets.begin() + toSave[i-1]);
 		}
 	}
-	// Очищаем содержимое элементов вектора аксиом
+	// п·я┤п╦я┴п╟п╣п╪ я│п╬п╢п╣я─п╤п╦п╪п╬п╣ я█п╩п╣п╪п╣п╫я┌п╬п╡ п╡п╣п╨я┌п╬я─п╟ п╟п╨я│п╦п╬п╪
 	if (toSave[maxAxiomSetPopSize-1] > 0) {
 		for (int j = 0; j < toSave[maxAxiomSetPopSize-1]; j++) {
 			axiomSets[j].clear();
@@ -435,12 +435,12 @@ int ASStageSimple::cutDownAxiomSets (std::vector <AxiomExprSetPlus> &axiomSets) 
 /****************************************************************************
 *					FuzzyMultiDataLearnAlgorithm::createSimpleMarkUpVariants
 *
-*	Description:	Функция создает самый простой вариант разметок траекторий нештатного поведения
-*					путем создания их, состоящи ищ одной акиомы.
-*	Parameters:		genMarkUps - заполняемый вектор возможных вариантов эталонной разметки 
-*						для некоторого типа нештатного поведения
-*					numOfAxioms - число аксиом в системе аксиом, для которой создаются варианты разметки
-*	Returns:		int - число созданных разметок
+*	Description:	п╓я┐п╫п╨я├п╦я▐ я│п╬п╥п╢п╟п╣я┌ я│п╟п╪я▀п╧ п©я─п╬я│я┌п╬п╧ п╡п╟я─п╦п╟п╫я┌ я─п╟п╥п╪п╣я┌п╬п╨ я┌я─п╟п╣п╨я┌п╬я─п╦п╧ п╫п╣я┬я┌п╟я┌п╫п╬пЁп╬ п©п╬п╡п╣п╢п╣п╫п╦я▐
+*					п©я┐я┌п╣п╪ я│п╬п╥п╢п╟п╫п╦я▐ п╦я┘, я│п╬я│я┌п╬я▐я┴п╦ п╦я┴ п╬п╢п╫п╬п╧ п╟п╨п╦п╬п╪я▀.
+*	Parameters:		genMarkUps - п╥п╟п©п╬п╩п╫я▐п╣п╪я▀п╧ п╡п╣п╨я┌п╬я─ п╡п╬п╥п╪п╬п╤п╫я▀я┘ п╡п╟я─п╦п╟п╫я┌п╬п╡ я█я┌п╟п╩п╬п╫п╫п╬п╧ я─п╟п╥п╪п╣я┌п╨п╦ 
+*						п╢п╩я▐ п╫п╣п╨п╬я┌п╬я─п╬пЁп╬ я┌п╦п©п╟ п╫п╣я┬я┌п╟я┌п╫п╬пЁп╬ п©п╬п╡п╣п╢п╣п╫п╦я▐
+*					numOfAxioms - я┤п╦я│п╩п╬ п╟п╨я│п╦п╬п╪ п╡ я│п╦я│я┌п╣п╪п╣ п╟п╨я│п╦п╬п╪, п╢п╩я▐ п╨п╬я┌п╬я─п╬п╧ я│п╬п╥п╢п╟я▌я┌я│я▐ п╡п╟я─п╦п╟п╫я┌я▀ я─п╟п╥п╪п╣я┌п╨п╦
+*	Returns:		int - я┤п╦я│п╩п╬ я│п╬п╥п╢п╟п╫п╫я▀я┘ я─п╟п╥п╪п╣я┌п╬п╨
 *	Throws:			-
 *	Author:			dk
 *	History:
@@ -458,12 +458,12 @@ inline int ASStageSimple::createSimpleMarkUpVariants (std::vector < std::vector 
 /****************************************************************************
 *					FuzzyMultiDataExt_AS::chooseIndicesOfBestAxiomSets
 *
-*	Description:	Функция выбирает из вектора систем аксиом заданное число
-*					лучших, причем их значение целевой функции должно быть
-*					меньше заданного значения.
-*	Parameters:		newAxiomSets - вектор систем аксиом, из которых выбриаются лучшие
-*					indicesOfBestSets - заполняемый вектор индексов лучших систем аксиом
-*					goal - значение целевой функции, для критерия выбора лучших систем
+*	Description:	п╓я┐п╫п╨я├п╦я▐ п╡я▀п╠п╦я─п╟п╣я┌ п╦п╥ п╡п╣п╨я┌п╬я─п╟ я│п╦я│я┌п╣п╪ п╟п╨я│п╦п╬п╪ п╥п╟п╢п╟п╫п╫п╬п╣ я┤п╦я│п╩п╬
+*					п╩я┐я┤я┬п╦я┘, п©я─п╦я┤п╣п╪ п╦я┘ п╥п╫п╟я┤п╣п╫п╦п╣ я├п╣п╩п╣п╡п╬п╧ я└я┐п╫п╨я├п╦п╦ п╢п╬п╩п╤п╫п╬ п╠я▀я┌я▄
+*					п╪п╣п╫я▄я┬п╣ п╥п╟п╢п╟п╫п╫п╬пЁп╬ п╥п╫п╟я┤п╣п╫п╦я▐.
+*	Parameters:		newAxiomSets - п╡п╣п╨я┌п╬я─ я│п╦я│я┌п╣п╪ п╟п╨я│п╦п╬п╪, п╦п╥ п╨п╬я┌п╬я─я▀я┘ п╡я▀п╠я─п╦п╟я▌я┌я│я▐ п╩я┐я┤я┬п╦п╣
+*					indicesOfBestSets - п╥п╟п©п╬п╩п╫я▐п╣п╪я▀п╧ п╡п╣п╨я┌п╬я─ п╦п╫п╢п╣п╨я│п╬п╡ п╩я┐я┤я┬п╦я┘ я│п╦я│я┌п╣п╪ п╟п╨я│п╦п╬п╪
+*					goal - п╥п╫п╟я┤п╣п╫п╦п╣ я├п╣п╩п╣п╡п╬п╧ я└я┐п╫п╨я├п╦п╦, п╢п╩я▐ п╨я─п╦я┌п╣я─п╦я▐ п╡я▀п╠п╬я─п╟ п╩я┐я┤я┬п╦я┘ я│п╦я│я┌п╣п╪
 *	Returns:		0
 *	Throws:			-
 *	Author:			dk
@@ -471,31 +471,31 @@ inline int ASStageSimple::createSimpleMarkUpVariants (std::vector < std::vector 
 *
 ****************************************************************************/
 int ASStageSimple::chooseIndicesOfBestAxiomSets (std::vector <AxiomExprSetPlus> &newAxiomSets, std::vector <int> &indicesOfBestSets, double &goal) const {
-	// Сортируем вектор систем аксиом по значению целевой функции
+	// п║п╬я─я┌п╦я─я┐п╣п╪ п╡п╣п╨я┌п╬я─ я│п╦я│я┌п╣п╪ п╟п╨я│п╦п╬п╪ п©п╬ п╥п╫п╟я┤п╣п╫п╦я▌ я├п╣п╩п╣п╡п╬п╧ я└я┐п╫п╨я├п╦п╦
 	std::vector <int> indecies;
 	sortAxiomSets (newAxiomSets, indecies);
-	// Ищем первую содержательную систему аксиом
+	// п≤я┴п╣п╪ п©п╣я─п╡я┐я▌ я│п╬п╢п╣я─п╤п╟я┌п╣п╩я▄п╫я┐я▌ я│п╦я│я┌п╣п╪я┐ п╟п╨я│п╦п╬п╪
 	int first = 0; 
 	while (first < (int) indecies.size()) {
 		if (newAxiomSets[indecies[first]].goal > -eps)
 			break;
 		first++;
 	}
-	// Ищем крайний индекс, начиная с которого все системы аксиом имеют значение целевой функции больше заданного goal
+	// п≤я┴п╣п╪ п╨я─п╟п╧п╫п╦п╧ п╦п╫п╢п╣п╨я│, п╫п╟я┤п╦п╫п╟я▐ я│ п╨п╬я┌п╬я─п╬пЁп╬ п╡я│п╣ я│п╦я│я┌п╣п╪я▀ п╟п╨я│п╦п╬п╪ п╦п╪п╣я▌я┌ п╥п╫п╟я┤п╣п╫п╦п╣ я├п╣п╩п╣п╡п╬п╧ я└я┐п╫п╨я├п╦п╦ п╠п╬п╩я▄я┬п╣ п╥п╟п╢п╟п╫п╫п╬пЁп╬ goal
 	int last = first;
 	while (last < (int) indecies.size()) {
 		if ((newAxiomSets[indecies[last]].goal - goal) > eps)
 			break;
 		last++;
 	}
-	// Если таких не нашлось - то выходим
+	// п∙я│п╩п╦ я┌п╟п╨п╦я┘ п╫п╣ п╫п╟я┬п╩п╬я│я▄ - я┌п╬ п╡я▀я┘п╬п╢п╦п╪
 	if ((first == (int) indecies.size()) || (first == last)) {
 		indicesOfBestSets.clear();
 		return 0;
 	}
 	
-	// Определяем максимальное число элементов в результирующем векторе
-	//  Выбираем число лучших систем аксиом и случайно выбранных
+	// п·п©я─п╣п╢п╣п╩я▐п╣п╪ п╪п╟п╨я│п╦п╪п╟п╩я▄п╫п╬п╣ я┤п╦я│п╩п╬ я█п╩п╣п╪п╣п╫я┌п╬п╡ п╡ я─п╣п╥я┐п╩я▄я┌п╦я─я┐я▌я┴п╣п╪ п╡п╣п╨я┌п╬я─п╣
+	//  п▓я▀п╠п╦я─п╟п╣п╪ я┤п╦я│п╩п╬ п╩я┐я┤я┬п╦я┘ я│п╦я│я┌п╣п╪ п╟п╨я│п╦п╬п╪ п╦ я│п╩я┐я┤п╟п╧п╫п╬ п╡я▀п╠я─п╟п╫п╫я▀я┘
 	int numBest, numRand, num;
 	numBest = round ((double) int_max_number_of_renew_axiom_set * percentBestAxiomSets);
 	if (numBest > (last - first)) {
@@ -507,7 +507,7 @@ int ASStageSimple::chooseIndicesOfBestAxiomSets (std::vector <AxiomExprSetPlus> 
 		num = int_max_number_of_renew_axiom_set;
 	}
 
-	// Если доступно меньшее число систем аксиом
+	// п∙я│п╩п╦ п╢п╬я│я┌я┐п©п╫п╬ п╪п╣п╫я▄я┬п╣п╣ я┤п╦я│п╩п╬ я│п╦я│я┌п╣п╪ п╟п╨я│п╦п╬п╪
 	if (((int) newAxiomSets.size() - first) <= num) {
 		num = (int) newAxiomSets.size() - first;
 		indicesOfBestSets.resize (num);
@@ -516,7 +516,7 @@ int ASStageSimple::chooseIndicesOfBestAxiomSets (std::vector <AxiomExprSetPlus> 
 		return 0;
 	}
 
-	// Отбираем случайные системы аксиом
+	// п·я┌п╠п╦я─п╟п╣п╪ я│п╩я┐я┤п╟п╧п╫я▀п╣ я│п╦я│я┌п╣п╪я▀ п╟п╨я│п╦п╬п╪
 	int chooseDelta;
 	chooseDelta = indecies.size() - first - numBest;
 	std::vector <int> jRand;
@@ -524,9 +524,9 @@ int ASStageSimple::chooseIndicesOfBestAxiomSets (std::vector <AxiomExprSetPlus> 
 	int cur;
 	int condition;
 	for (int t = 0; t < numRand; t++) {
-		// Случайно выбираем число из отрезка [0, chooseDelta-1]
+		// п║п╩я┐я┤п╟п╧п╫п╬ п╡я▀п╠п╦я─п╟п╣п╪ я┤п╦я│п╩п╬ п╦п╥ п╬я┌я─п╣п╥п╨п╟ [0, chooseDelta-1]
 		cur = first + numBest + (int) (((double) rand () / ((double) RAND_MAX + 1.0)) * (double) chooseDelta);
-		// проверяем - не выбирали ли его раньше - если выбирали, то сдвигаем
+		// п©я─п╬п╡п╣я─я▐п╣п╪ - п╫п╣ п╡я▀п╠п╦я─п╟п╩п╦ п╩п╦ п╣пЁп╬ я─п╟п╫я▄я┬п╣ - п╣я│п╩п╦ п╡я▀п╠п╦я─п╟п╩п╦, я┌п╬ я│п╢п╡п╦пЁп╟п╣п╪
 		do {
 			condition = false;
 			for (int s = 0; s < t; s++) {
@@ -537,12 +537,12 @@ int ASStageSimple::chooseIndicesOfBestAxiomSets (std::vector <AxiomExprSetPlus> 
 				}
 			}
 		} while (condition);
-		// Сохраняем сделанный выбор
+		// п║п╬я┘я─п╟п╫я▐п╣п╪ я│п╢п╣п╩п╟п╫п╫я▀п╧ п╡я▀п╠п╬я─
 		jRand[t] = cur;
-		// Уменьшаем диапазон выбора
+		// пёп╪п╣п╫я▄я┬п╟п╣п╪ п╢п╦п╟п©п╟п╥п╬п╫ п╡я▀п╠п╬я─п╟
 		chooseDelta--;
 	}
-	// Сохраняем все выбранные индексы
+	// п║п╬я┘я─п╟п╫я▐п╣п╪ п╡я│п╣ п╡я▀п╠я─п╟п╫п╫я▀п╣ п╦п╫п╢п╣п╨я│я▀
 	indicesOfBestSets.resize (num);
 	cur = first;
 	for (int i = 0; i < numBest; i++, cur++)
@@ -557,13 +557,13 @@ int ASStageSimple::chooseIndicesOfBestAxiomSets (std::vector <AxiomExprSetPlus> 
 /****************************************************************************
 *					FuzzyMultiDataExt_AS::addAxiomSets
 *
-*	Description:	Функция добавляет системы аксиом из одного вектора, индексы 
-*					которых перечислены во входном векторе, в другой вектор.
-*	Parameters:		nextStepAxiomSets - вектор систем аксиом, в который добавляются новые системы
-*					newAxiomSets - вектор систем, из которого переносятся системы аксиом
-*					indicesOfBestSets - вектор индексов переносимых систем аксиом
+*	Description:	п╓я┐п╫п╨я├п╦я▐ п╢п╬п╠п╟п╡п╩я▐п╣я┌ я│п╦я│я┌п╣п╪я▀ п╟п╨я│п╦п╬п╪ п╦п╥ п╬п╢п╫п╬пЁп╬ п╡п╣п╨я┌п╬я─п╟, п╦п╫п╢п╣п╨я│я▀ 
+*					п╨п╬я┌п╬я─я▀я┘ п©п╣я─п╣я┤п╦я│п╩п╣п╫я▀ п╡п╬ п╡я┘п╬п╢п╫п╬п╪ п╡п╣п╨я┌п╬я─п╣, п╡ п╢я─я┐пЁп╬п╧ п╡п╣п╨я┌п╬я─.
+*	Parameters:		nextStepAxiomSets - п╡п╣п╨я┌п╬я─ я│п╦я│я┌п╣п╪ п╟п╨я│п╦п╬п╪, п╡ п╨п╬я┌п╬я─я▀п╧ п╢п╬п╠п╟п╡п╩я▐я▌я┌я│я▐ п╫п╬п╡я▀п╣ я│п╦я│я┌п╣п╪я▀
+*					newAxiomSets - п╡п╣п╨я┌п╬я─ я│п╦я│я┌п╣п╪, п╦п╥ п╨п╬я┌п╬я─п╬пЁп╬ п©п╣я─п╣п╫п╬я│я▐я┌я│я▐ я│п╦я│я┌п╣п╪я▀ п╟п╨я│п╦п╬п╪
+*					indicesOfBestSets - п╡п╣п╨я┌п╬я─ п╦п╫п╢п╣п╨я│п╬п╡ п©п╣я─п╣п╫п╬я│п╦п╪я▀я┘ я│п╦я│я┌п╣п╪ п╟п╨я│п╦п╬п╪
 *	Returns:		0
-*	Throws:			AxiomLibException - если вектор, в который сохранять системы аксиом не пуст
+*	Throws:			AxiomLibException - п╣я│п╩п╦ п╡п╣п╨я┌п╬я─, п╡ п╨п╬я┌п╬я─я▀п╧ я│п╬я┘я─п╟п╫я▐я┌я▄ я│п╦я│я┌п╣п╪я▀ п╟п╨я│п╦п╬п╪ п╫п╣ п©я┐я│я┌
 *	Author:			dk
 *	History:
 *
@@ -571,13 +571,13 @@ int ASStageSimple::chooseIndicesOfBestAxiomSets (std::vector <AxiomExprSetPlus> 
 int ASStageSimple::addAxiomSets(std::vector <AxiomExprSetPlus> &nextStepAxiomSets, std::vector <AxiomExprSetPlus> &newAxiomSets, std::vector <int> &indicesOfBestSets) const {
 	if (nextStepAxiomSets.size() > 0)
 		throw AxiomLibException("Error in FuzzyMultiDataExt_AS::addAxiomSets: input arguments out of consistency.");
-	// Определяем сколько систем аксиом добавлять
+	// п·п©я─п╣п╢п╣п╩я▐п╣п╪ я│п╨п╬п╩я▄п╨п╬ я│п╦я│я┌п╣п╪ п╟п╨я│п╦п╬п╪ п╢п╬п╠п╟п╡п╩я▐я┌я▄
 	unsigned int toAdd = 0;
 	for (unsigned int i = 0; i < indicesOfBestSets.size(); i++) {
 		if ((indicesOfBestSets[i] >= 0 ) && (indicesOfBestSets[i] < (int) newAxiomSets.size()))
 			toAdd++;
 	}
-	// Заносим все новые системы аксиом в вектор всех систем в соответствии с указанным индексом
+	// п≈п╟п╫п╬я│п╦п╪ п╡я│п╣ п╫п╬п╡я▀п╣ я│п╦я│я┌п╣п╪я▀ п╟п╨я│п╦п╬п╪ п╡ п╡п╣п╨я┌п╬я─ п╡я│п╣я┘ я│п╦я│я┌п╣п╪ п╡ я│п╬п╬я┌п╡п╣я┌я│я┌п╡п╦п╦ я│ я┐п╨п╟п╥п╟п╫п╫я▀п╪ п╦п╫п╢п╣п╨я│п╬п╪
 	unsigned int curSize = 0; // nextStepAxiomSets.size();
 	nextStepAxiomSets.resize (toAdd);
 	for (unsigned int i = 0; i < indicesOfBestSets.size(); i++) {
@@ -593,8 +593,8 @@ int ASStageSimple::addAxiomSets(std::vector <AxiomExprSetPlus> &nextStepAxiomSet
 /****************************************************************************
 *					FuzzyMultiDataExt_AS::sortBestAxiomSets
 *
-*	Description:	Функция сокращает число элементов вектора лучших систем аксиом
-*					до заданного по умолчанию или в конфигурационном файле значения
+*	Description:	п╓я┐п╫п╨я├п╦я▐ я│п╬п╨я─п╟я┴п╟п╣я┌ я┤п╦я│п╩п╬ я█п╩п╣п╪п╣п╫я┌п╬п╡ п╡п╣п╨я┌п╬я─п╟ п╩я┐я┤я┬п╦я┘ я│п╦я│я┌п╣п╪ п╟п╨я│п╦п╬п╪
+*					п╢п╬ п╥п╟п╢п╟п╫п╫п╬пЁп╬ п©п╬ я┐п╪п╬п╩я┤п╟п╫п╦я▌ п╦п╩п╦ п╡ п╨п╬п╫я└п╦пЁя┐я─п╟я├п╦п╬п╫п╫п╬п╪ я└п╟п╧п╩п╣ п╥п╫п╟я┤п╣п╫п╦я▐
 *	Parameters:		-
 *	Returns:		0
 *	Throws:			-
@@ -603,17 +603,17 @@ int ASStageSimple::addAxiomSets(std::vector <AxiomExprSetPlus> &nextStepAxiomSet
 *
 ****************************************************************************/
 int ASStageSimple::sortBestAxiomSets (void) {
-	// Если число элементов в векторе лучших систем аксиом меньше заданного параметра - то просто выходим
+	// п∙я│п╩п╦ я┤п╦я│п╩п╬ я█п╩п╣п╪п╣п╫я┌п╬п╡ п╡ п╡п╣п╨я┌п╬я─п╣ п╩я┐я┤я┬п╦я┘ я│п╦я│я┌п╣п╪ п╟п╨я│п╦п╬п╪ п╪п╣п╫я▄я┬п╣ п╥п╟п╢п╟п╫п╫п╬пЁп╬ п©п╟я─п╟п╪п╣я┌я─п╟ - я┌п╬ п©я─п╬я│я┌п╬ п╡я▀я┘п╬п╢п╦п╪
 	if ((int) bestAxiomSets.size() <= numberOfBestAxiomSets)
 		return 0;
-	// Если число тех, которые должны выжить - меньше 1, то просто удаляем все элементы
+	// п∙я│п╩п╦ я┤п╦я│п╩п╬ я┌п╣я┘, п╨п╬я┌п╬я─я▀п╣ п╢п╬п╩п╤п╫я▀ п╡я▀п╤п╦я┌я▄ - п╪п╣п╫я▄я┬п╣ 1, я┌п╬ п©я─п╬я│я┌п╬ я┐п╢п╟п╩я▐п╣п╪ п╡я│п╣ я█п╩п╣п╪п╣п╫я┌я▀
 	if (numberOfBestAxiomSets < 1) {
 		for (unsigned int i = 0; i < bestAxiomSets.size(); i++) 
 			bestAxiomSets[i].clear();
 		bestAxiomSets.clear();
 		return 0;
 	}
-	// Выбираем из вектора заданный набор худших систем аксиом и удаляем их
+	// п▓я▀п╠п╦я─п╟п╣п╪ п╦п╥ п╡п╣п╨я┌п╬я─п╟ п╥п╟п╢п╟п╫п╫я▀п╧ п╫п╟п╠п╬я─ я┘я┐п╢я┬п╦я┘ я│п╦я│я┌п╣п╪ п╟п╨я│п╦п╬п╪ п╦ я┐п╢п╟п╩я▐п╣п╪ п╦я┘
 	int numToDel;
 	numToDel = (int) bestAxiomSets.size() - numberOfBestAxiomSets;
 	std::vector <int> indeciesToDel;
@@ -636,7 +636,7 @@ int ASStageSimple::sortBestAxiomSets (void) {
 			indeciesToDel[curIndex] = i;
 		}
 	}
-	// Вектор индексов составлен - Сортируем его по убыванию
+	// п▓п╣п╨я┌п╬я─ п╦п╫п╢п╣п╨я│п╬п╡ я│п╬я│я┌п╟п╡п╩п╣п╫ - п║п╬я─я┌п╦я─я┐п╣п╪ п╣пЁп╬ п©п╬ я┐п╠я▀п╡п╟п╫п╦я▌
 	for (int i = numToDel - 1; i > 0; i--) {
 		for (int j = 0; j < i; j++) {
 			if (indeciesToDel[j] < indeciesToDel[j+1]) {
@@ -646,7 +646,7 @@ int ASStageSimple::sortBestAxiomSets (void) {
 			}
 		}
 	}
-	// Удаляем системы аксиом в соответствии с выбранным вектором индексов
+	// пёп╢п╟п╩я▐п╣п╪ я│п╦я│я┌п╣п╪я▀ п╟п╨я│п╦п╬п╪ п╡ я│п╬п╬я┌п╡п╣я┌я│я┌п╡п╦п╦ я│ п╡я▀п╠я─п╟п╫п╫я▀п╪ п╡п╣п╨я┌п╬я─п╬п╪ п╦п╫п╢п╣п╨я│п╬п╡
 	for (int i = 0; i < numToDel; i++) {
 		bestAxiomSets[indeciesToDel[i]].clear();
 		bestAxiomSets.erase (bestAxiomSets.begin() + indeciesToDel[i]);
@@ -657,32 +657,32 @@ int ASStageSimple::sortBestAxiomSets (void) {
 /****************************************************************************
 *					FuzzyMultiDataExt_AS::addToBestAxiomSets
 *
-*	Description:	Функция сохраняет поданную набор систем аксиом в векторе лучших систем, 
-*					если там есть еще место или заменяет систему аксиом из вектора на данную
-*					систему.
-*	Parameters:		axiomExprSetPlus - сохраняемая система аксиом
-*	Returns:		-1 - если в ходе выполнения возникла ошибка
-*					0  - если система аксиом была сохранена
-*					1  - если целевая функция у данной системы аксиом больше, чем у системе 
-*						 в векторе лучших систем, поэтому данная система не была сохранена
+*	Description:	п╓я┐п╫п╨я├п╦я▐ я│п╬я┘я─п╟п╫я▐п╣я┌ п©п╬п╢п╟п╫п╫я┐я▌ п╫п╟п╠п╬я─ я│п╦я│я┌п╣п╪ п╟п╨я│п╦п╬п╪ п╡ п╡п╣п╨я┌п╬я─п╣ п╩я┐я┤я┬п╦я┘ я│п╦я│я┌п╣п╪, 
+*					п╣я│п╩п╦ я┌п╟п╪ п╣я│я┌я▄ п╣я┴п╣ п╪п╣я│я┌п╬ п╦п╩п╦ п╥п╟п╪п╣п╫я▐п╣я┌ я│п╦я│я┌п╣п╪я┐ п╟п╨я│п╦п╬п╪ п╦п╥ п╡п╣п╨я┌п╬я─п╟ п╫п╟ п╢п╟п╫п╫я┐я▌
+*					я│п╦я│я┌п╣п╪я┐.
+*	Parameters:		axiomExprSetPlus - я│п╬я┘я─п╟п╫я▐п╣п╪п╟я▐ я│п╦я│я┌п╣п╪п╟ п╟п╨я│п╦п╬п╪
+*	Returns:		-1 - п╣я│п╩п╦ п╡ я┘п╬п╢п╣ п╡я▀п©п╬п╩п╫п╣п╫п╦я▐ п╡п╬п╥п╫п╦п╨п╩п╟ п╬я┬п╦п╠п╨п╟
+*					0  - п╣я│п╩п╦ я│п╦я│я┌п╣п╪п╟ п╟п╨я│п╦п╬п╪ п╠я▀п╩п╟ я│п╬я┘я─п╟п╫п╣п╫п╟
+*					1  - п╣я│п╩п╦ я├п╣п╩п╣п╡п╟я▐ я└я┐п╫п╨я├п╦я▐ я┐ п╢п╟п╫п╫п╬п╧ я│п╦я│я┌п╣п╪я▀ п╟п╨я│п╦п╬п╪ п╠п╬п╩я▄я┬п╣, я┤п╣п╪ я┐ я│п╦я│я┌п╣п╪п╣ 
+*						 п╡ п╡п╣п╨я┌п╬я─п╣ п╩я┐я┤я┬п╦я┘ я│п╦я│я┌п╣п╪, п©п╬я█я┌п╬п╪я┐ п╢п╟п╫п╫п╟я▐ я│п╦я│я┌п╣п╪п╟ п╫п╣ п╠я▀п╩п╟ я│п╬я┘я─п╟п╫п╣п╫п╟
 *	Throws:			-
 *	Author:			dk
 *	History:
 *
 ****************************************************************************/
 int ASStageSimple::addToBestAxiomSets (std::vector <AxiomExprSetPlus> &axiomSets) {
-	// Копируем содержимое вектора bestAxiomSets во временную переменную
+	// п п╬п©п╦я─я┐п╣п╪ я│п╬п╢п╣я─п╤п╦п╪п╬п╣ п╡п╣п╨я┌п╬я─п╟ bestAxiomSets п╡п╬ п╡я─п╣п╪п╣п╫п╫я┐я▌ п©п╣я─п╣п╪п╣п╫п╫я┐я▌
 	std::vector <AxiomExprSetPlus> tmpBest;
 	tmpBest.resize (bestAxiomSets.size());
 	for (unsigned int i = 0; i < bestAxiomSets.size(); i++) {
 		tmpBest[i] = bestAxiomSets[i];
 		bestAxiomSets[i].clear();
 	}
-	// Выстраиваем вектора tmpBest и axiomSets по возрастанию
+	// п▓я▀я│я┌я─п╟п╦п╡п╟п╣п╪ п╡п╣п╨я┌п╬я─п╟ tmpBest п╦ axiomSets п©п╬ п╡п╬п╥я─п╟я│я┌п╟п╫п╦я▌
 	std::vector <int> indeciesSets, indeciesBest;
 	sortAxiomSets (axiomSets, indeciesSets);
 	sortAxiomSets (tmpBest, indeciesBest);
-	// Выбираем какие системы аксиом сохранять
+	// п▓я▀п╠п╦я─п╟п╣п╪ п╨п╟п╨п╦п╣ я│п╦я│я┌п╣п╪я▀ п╟п╨я│п╦п╬п╪ я│п╬я┘я─п╟п╫я▐я┌я▄
 	unsigned int s = 0;
 	unsigned int b = 0;
 	unsigned int sMax = axiomSets.size();
@@ -708,14 +708,14 @@ int ASStageSimple::addToBestAxiomSets (std::vector <AxiomExprSetPlus> &axiomSets
 			s++;
 	}
 
-	// Переносим выбранные системы аксиом в вектор лучших
+	// п÷п╣я─п╣п╫п╬я│п╦п╪ п╡я▀п╠я─п╟п╫п╫я▀п╣ я│п╦я│я┌п╣п╪я▀ п╟п╨я│п╦п╬п╪ п╡ п╡п╣п╨я┌п╬я─ п╩я┐я┤я┬п╦я┘
 	bestAxiomSets.resize (upTo);
 	for (unsigned int i = 0; i < b; i++)
 		bestAxiomSets[i] = tmpBest[i];
 	for (unsigned int i = 0; i < s; i++, b++)
 		bestAxiomSets[b] = axiomSets[i];
 
-	// Очищаем использованные вектора
+	// п·я┤п╦я┴п╟п╣п╪ п╦я│п©п╬п╩я▄п╥п╬п╡п╟п╫п╫я▀п╣ п╡п╣п╨я┌п╬я─п╟
 	for (unsigned int i = 0; i < axiomSets.size(); i++)
 		axiomSets[i].clear();
 	axiomSets.clear();
@@ -730,9 +730,9 @@ int ASStageSimple::addToBestAxiomSets (std::vector <AxiomExprSetPlus> &axiomSets
 /****************************************************************************
 *					FuzzyMultiDataExt_AS::sortAxiomSets
 *
-*	Description:	Функция сортирует вектор систем аксиом по неубыванию целевой фунекции
-*	Parameters:		axiomSets - вектор сортируемых систем аксиом
-*					indecies - вектор индексов систем аксиом в порядке неубывания значения целевой функции
+*	Description:	п╓я┐п╫п╨я├п╦я▐ я│п╬я─я┌п╦я─я┐п╣я┌ п╡п╣п╨я┌п╬я─ я│п╦я│я┌п╣п╪ п╟п╨я│п╦п╬п╪ п©п╬ п╫п╣я┐п╠я▀п╡п╟п╫п╦я▌ я├п╣п╩п╣п╡п╬п╧ я└я┐п╫п╣п╨я├п╦п╦
+*	Parameters:		axiomSets - п╡п╣п╨я┌п╬я─ я│п╬я─я┌п╦я─я┐п╣п╪я▀я┘ я│п╦я│я┌п╣п╪ п╟п╨я│п╦п╬п╪
+*					indecies - п╡п╣п╨я┌п╬я─ п╦п╫п╢п╣п╨я│п╬п╡ я│п╦я│я┌п╣п╪ п╟п╨я│п╦п╬п╪ п╡ п©п╬я─я▐п╢п╨п╣ п╫п╣я┐п╠я▀п╡п╟п╫п╦я▐ п╥п╫п╟я┤п╣п╫п╦я▐ я├п╣п╩п╣п╡п╬п╧ я└я┐п╫п╨я├п╦п╦
 *	Returns:		0
 *	Throws:			-
 *	Author:			dk
@@ -760,13 +760,13 @@ int ASStageSimple::sortAxiomSets (const std::vector <AxiomExprSetPlus> &axiomSet
 /****************************************************************************
 *					FuzzyMultiDataExt_AS::matterAxiomSetFunc
 *
-*	Description:	Подсчет целевой функции для системы аксиом:
-*					1. разметка траекторий обучающей выборки и формирование
-*					   расщиренных обобщенных разметок
-*					2. разметка траекторий контрольной выборки и подсчет 
-*					   значения целевой функции
-*	Parameters:		as - система аксиом, для которой считается значение целевой функции
-*	Returns:		double - значение целевой функции
+*	Description:	п÷п╬п╢я│я┤п╣я┌ я├п╣п╩п╣п╡п╬п╧ я└я┐п╫п╨я├п╦п╦ п╢п╩я▐ я│п╦я│я┌п╣п╪я▀ п╟п╨я│п╦п╬п╪:
+*					1. я─п╟п╥п╪п╣я┌п╨п╟ я┌я─п╟п╣п╨я┌п╬я─п╦п╧ п╬п╠я┐я┤п╟я▌я┴п╣п╧ п╡я▀п╠п╬я─п╨п╦ п╦ я└п╬я─п╪п╦я─п╬п╡п╟п╫п╦п╣
+*					   я─п╟я│я┴п╦я─п╣п╫п╫я▀я┘ п╬п╠п╬п╠я┴п╣п╫п╫я▀я┘ я─п╟п╥п╪п╣я┌п╬п╨
+*					2. я─п╟п╥п╪п╣я┌п╨п╟ я┌я─п╟п╣п╨я┌п╬я─п╦п╧ п╨п╬п╫я┌я─п╬п╩я▄п╫п╬п╧ п╡я▀п╠п╬я─п╨п╦ п╦ п©п╬п╢я│я┤п╣я┌ 
+*					   п╥п╫п╟я┤п╣п╫п╦я▐ я├п╣п╩п╣п╡п╬п╧ я└я┐п╫п╨я├п╦п╦
+*	Parameters:		as - я│п╦я│я┌п╣п╪п╟ п╟п╨я│п╦п╬п╪, п╢п╩я▐ п╨п╬я┌п╬я─п╬п╧ я│я┤п╦я┌п╟п╣я┌я│я▐ п╥п╫п╟я┤п╣п╫п╦п╣ я├п╣п╩п╣п╡п╬п╧ я└я┐п╫п╨я├п╦п╦
+*	Returns:		double - п╥п╫п╟я┤п╣п╫п╦п╣ я├п╣п╩п╣п╡п╬п╧ я└я┐п╫п╨я├п╦п╦
 *	Throws:			-
 *	Author:			dk
 *	History:
@@ -778,9 +778,9 @@ double ASStageSimple::matterAxiomSetFunc (AxiomExprSetPlus &as) const {
 	std::vector < std::vector <int> > numOfTS;
 //	std::vector <double> curTS;
 //	std::vector <int> tempLen, corrMarkUp, curMarkUp, result;
-	// Получение информации об обучающем наборе данных
+	// п÷п╬п╩я┐я┤п╣п╫п╦п╣ п╦п╫я└п╬я─п╪п╟я├п╦п╦ п╬п╠ п╬п╠я┐я┤п╟я▌я┴п╣п╪ п╫п╟п╠п╬я─п╣ п╢п╟п╫п╫я▀я┘
 	fuzzyDataSet->getClassSize (numOfClasses, numOfMultiTS, numOfTS);
-	// для каждого класса нештатного поведения формируем расширенные обобщенные разметки
+	// п╢п╩я▐ п╨п╟п╤п╢п╬пЁп╬ п╨п╩п╟я│я│п╟ п╫п╣я┬я┌п╟я┌п╫п╬пЁп╬ п©п╬п╡п╣п╢п╣п╫п╦я▐ я└п╬я─п╪п╦я─я┐п╣п╪ я─п╟я│я┬п╦я─п╣п╫п╫я▀п╣ п╬п╠п╬п╠я┴п╣п╫п╫я▀п╣ я─п╟п╥п╪п╣я┌п╨п╦
 	std::vector < std::vector <int> > resMarkUps, genMarkUps;
 	int errFirstVal, errSecondVal;
 	as.errFirst = 0;
@@ -793,18 +793,18 @@ double ASStageSimple::matterAxiomSetFunc (AxiomExprSetPlus &as) const {
 		for (int multiTS = 0; multiTS < numOfMultiTS[abType]; multiTS++) {
 			createRefMarkUp (resMarkUps[multiTS], as, abType, multiTS, numOfTS);
 		}
-		// Упрощаем разметки - удаляем 0 в начале и в конце векторов - чтобы общую часть было искать проще
+		// пёп©я─п╬я┴п╟п╣п╪ я─п╟п╥п╪п╣я┌п╨п╦ - я┐п╢п╟п╩я▐п╣п╪ 0 п╡ п╫п╟я┤п╟п╩п╣ п╦ п╡ п╨п╬п╫я├п╣ п╡п╣п╨я┌п╬я─п╬п╡ - я┤я┌п╬п╠я▀ п╬п╠я┴я┐я▌ я┤п╟я│я┌я▄ п╠я▀п╩п╬ п╦я│п╨п╟я┌я▄ п©я─п╬я┴п╣
 		simplifyMarkUps (resMarkUps);
-		// На основании полученных разметок траекторий аномального поведения - производим их сдвиг и формируем варианты обобщенных разметок
+		// п²п╟ п╬я│п╫п╬п╡п╟п╫п╦п╦ п©п╬п╩я┐я┤п╣п╫п╫я▀я┘ я─п╟п╥п╪п╣я┌п╬п╨ я┌я─п╟п╣п╨я┌п╬я─п╦п╧ п╟п╫п╬п╪п╟п╩я▄п╫п╬пЁп╬ п©п╬п╡п╣п╢п╣п╫п╦я▐ - п©я─п╬п╦п╥п╡п╬п╢п╦п╪ п╦я┘ я│п╢п╡п╦пЁ п╦ я└п╬я─п╪п╦я─я┐п╣п╪ п╡п╟я─п╦п╟п╫я┌я▀ п╬п╠п╬п╠я┴п╣п╫п╫я▀я┘ я─п╟п╥п╪п╣я┌п╬п╨
 		createMarkUpVariants (genMarkUps, resMarkUps);
-		// Упрощаем вектора разметок - удаляем 0 в начале и в конце. Плюс возможно внесение некоторых изменений в саму разметку
+		// пёп©я─п╬я┴п╟п╣п╪ п╡п╣п╨я┌п╬я─п╟ я─п╟п╥п╪п╣я┌п╬п╨ - я┐п╢п╟п╩я▐п╣п╪ 0 п╡ п╫п╟я┤п╟п╩п╣ п╦ п╡ п╨п╬п╫я├п╣. п÷п╩я▌я│ п╡п╬п╥п╪п╬п╤п╫п╬ п╡п╫п╣я│п╣п╫п╦п╣ п╫п╣п╨п╬я┌п╬я─я▀я┘ п╦п╥п╪п╣п╫п╣п╫п╦п╧ п╡ я│п╟п╪я┐ я─п╟п╥п╪п╣я┌п╨я┐
 		simplifyMarkUps (genMarkUps);
-		// Добавляем минимальные варианты разметок - если общую часть выделить не удалось
+		// п■п╬п╠п╟п╡п╩я▐п╣п╪ п╪п╦п╫п╦п╪п╟п╩я▄п╫я▀п╣ п╡п╟я─п╦п╟п╫я┌я▀ я─п╟п╥п╪п╣я┌п╬п╨ - п╣я│п╩п╦ п╬п╠я┴я┐я▌ я┤п╟я│я┌я▄ п╡я▀п╢п╣п╩п╦я┌я▄ п╫п╣ я┐п╢п╟п╩п╬я│я▄
 		if (genMarkUps.size() < 1) {
 			logger->writeComment("Warinig: couldn't find common subsequence, creating simple markup");
 			createSimpleMarkUpVariants (genMarkUps, (int) as.axioms.size());
 		}
-		// Выбираем из всех разметок лучшую для данного класса нештатного поведения и сохраняем ее
+		// п▓я▀п╠п╦я─п╟п╣п╪ п╦п╥ п╡я│п╣я┘ я─п╟п╥п╪п╣я┌п╬п╨ п╩я┐я┤я┬я┐я▌ п╢п╩я▐ п╢п╟п╫п╫п╬пЁп╬ п╨п╩п╟я│я│п╟ п╫п╣я┬я┌п╟я┌п╫п╬пЁп╬ п©п╬п╡п╣п╢п╣п╫п╦я▐ п╦ я│п╬я┘я─п╟п╫я▐п╣п╪ п╣п╣
 		chooseBestMarkUp (as, abType, as.markUps[abType], genMarkUps, errFirstVal, errSecondVal);
 		
 		as.errors[abType].first = errFirstVal;
@@ -813,7 +813,7 @@ double ASStageSimple::matterAxiomSetFunc (AxiomExprSetPlus &as) const {
 		as.errFirst += errFirstVal;
 		as.errSecond += errSecondVal;
 	}
-	// Вычисление общего значения целевой фунекции для данной системы аксиом с учетом выбранных разметок эталонных траекторий
+	// п▓я▀я┤п╦я│п╩п╣п╫п╦п╣ п╬п╠я┴п╣пЁп╬ п╥п╫п╟я┤п╣п╫п╦я▐ я├п╣п╩п╣п╡п╬п╧ я└я┐п╫п╣п╨я├п╦п╦ п╢п╩я▐ п╢п╟п╫п╫п╬п╧ я│п╦я│я┌п╣п╪я▀ п╟п╨я│п╦п╬п╪ я│ я┐я┤п╣я┌п╬п╪ п╡я▀п╠я─п╟п╫п╫я▀я┘ я─п╟п╥п╪п╣я┌п╬п╨ я█я┌п╟п╩п╬п╫п╫я▀я┘ я┌я─п╟п╣п╨я┌п╬я─п╦п╧
 	//matterAxiomSetFunc (as, as.markUps);
 	as.goal = goalStrategy->compute(as.errFirst, as.errSecond);
 
@@ -828,7 +828,7 @@ double ASStageSimple::matterAxiomSetFunc(AxiomExprSetPlus &as, const std::vector
 	as.markUps.resize(numOfClasses);
 	as.errors.resize(numOfClasses);
 	for (int abType = 0; abType < numOfClasses; abType++) {
-		// Выбираем из всех разметок лучшую для данного класса нештатного поведения и сохраняем ее
+		// п▓я▀п╠п╦я─п╟п╣п╪ п╦п╥ п╡я│п╣я┘ я─п╟п╥п╪п╣я┌п╬п╨ п╩я┐я┤я┬я┐я▌ п╢п╩я▐ п╢п╟п╫п╫п╬пЁп╬ п╨п╩п╟я│я│п╟ п╫п╣я┬я┌п╟я┌п╫п╬пЁп╬ п©п╬п╡п╣п╢п╣п╫п╦я▐ п╦ я│п╬я┘я─п╟п╫я▐п╣п╪ п╣п╣
 		chooseBestMarkUp (as, abType, as.markUps[abType], markupVariants[abType], errFirstVal, errSecondVal);
 		
 		as.errors[abType].first = errFirstVal;
@@ -837,7 +837,7 @@ double ASStageSimple::matterAxiomSetFunc(AxiomExprSetPlus &as, const std::vector
 		as.errFirst += errFirstVal;
 		as.errSecond += errSecondVal;
 	}
-	// Вычисление общего значения целевой фунекции для данной системы аксиом с учетом выбранных разметок эталонных траекторий
+	// п▓я▀я┤п╦я│п╩п╣п╫п╦п╣ п╬п╠я┴п╣пЁп╬ п╥п╫п╟я┤п╣п╫п╦я▐ я├п╣п╩п╣п╡п╬п╧ я└я┐п╫п╣п╨я├п╦п╦ п╢п╩я▐ п╢п╟п╫п╫п╬п╧ я│п╦я│я┌п╣п╪я▀ п╟п╨я│п╦п╬п╪ я│ я┐я┤п╣я┌п╬п╪ п╡я▀п╠я─п╟п╫п╫я▀я┘ я─п╟п╥п╪п╣я┌п╬п╨ я█я┌п╟п╩п╬п╫п╫я▀я┘ я┌я─п╟п╣п╨я┌п╬я─п╦п╧
 	//matterAxiomSetFunc (as, as.markUps);
 	as.goal = goalStrategy->compute(as.errFirst, as.errSecond);
 
@@ -856,11 +856,11 @@ double ASStageSimple::matterAxiomSetFunc(AxiomExprSetPlus &as, const std::vector
 /****************************************************************************
 *					FuzzyMultiDataExt_AS::matterAxiomSetFunc
 *
-*	Description:	Подсчет целевой функции для системы аксиом с заданным вариантом 
-*					разметок эталонных траекторий
-*	Parameters:		as - система аксиом, для которой считается значение целевой функции
-*					markUps - разметки эталонных траекторий
-*	Returns:		double - значение целевой функции
+*	Description:	п÷п╬п╢я│я┤п╣я┌ я├п╣п╩п╣п╡п╬п╧ я└я┐п╫п╨я├п╦п╦ п╢п╩я▐ я│п╦я│я┌п╣п╪я▀ п╟п╨я│п╦п╬п╪ я│ п╥п╟п╢п╟п╫п╫я▀п╪ п╡п╟я─п╦п╟п╫я┌п╬п╪ 
+*					я─п╟п╥п╪п╣я┌п╬п╨ я█я┌п╟п╩п╬п╫п╫я▀я┘ я┌я─п╟п╣п╨я┌п╬я─п╦п╧
+*	Parameters:		as - я│п╦я│я┌п╣п╪п╟ п╟п╨я│п╦п╬п╪, п╢п╩я▐ п╨п╬я┌п╬я─п╬п╧ я│я┤п╦я┌п╟п╣я┌я│я▐ п╥п╫п╟я┤п╣п╫п╦п╣ я├п╣п╩п╣п╡п╬п╧ я└я┐п╫п╨я├п╦п╦
+*					markUps - я─п╟п╥п╪п╣я┌п╨п╦ я█я┌п╟п╩п╬п╫п╫я▀я┘ я┌я─п╟п╣п╨я┌п╬я─п╦п╧
+*	Returns:		double - п╥п╫п╟я┤п╣п╫п╦п╣ я├п╣п╩п╣п╡п╬п╧ я└я┐п╫п╨я├п╦п╦
 *	Throws:			-
 *	Author:			dk
 *	History:
@@ -878,7 +878,7 @@ double ASStageSimple::matterAxiomSetFunc (AxiomExprSetPlus &as, std::vector <std
 		as.errFirst += tmpFirst;
 		as.errSecond += tmpSecond;
 	}
-	// Вычисление значения целевой функции для полученного числа ошибок I и II рода
+	// п▓я▀я┤п╦я│п╩п╣п╫п╦п╣ п╥п╫п╟я┤п╣п╫п╦я▐ я├п╣п╩п╣п╡п╬п╧ я└я┐п╫п╨я├п╦п╦ п╢п╩я▐ п©п╬п╩я┐я┤п╣п╫п╫п╬пЁп╬ я┤п╦я│п╩п╟ п╬я┬п╦п╠п╬п╨ I п╦ II я─п╬п╢п╟
 	as.goal = goalStrategy->compute(as.errFirst, as.errSecond);
 
 	// penalize axiom sets with single axiom markup
@@ -897,16 +897,16 @@ double ASStageSimple::matterAxiomSetFunc (AxiomExprSetPlus &as, std::vector <std
 /****************************************************************************
 *					FuzzyMultiDataExt_AS::matterAxiomSetFunc
 *
-*	Description:	Подсчет целевой функции для системы аксиом для заданного 
-*					типа нештатного поведения и заданного варианта разметки 
-*					эталонной траектории этого типа
-*	Parameters:		as - система аксиом, для которой считается значение целевой функции
-*					abType - тип нештатного поведения, для которого считается значение целевой функции
-*					genMarkUp - вариант разметки эталонной траектории заданного типа нештатного поведения
-*					goalVal - заполняемое значение целевой функции
-*					errFirstVal - заполняемое значение число ошибок I рода
-*					errSecondVal - заполняемое значение число ошибок II рода
-*	Returns:		double - значение целевой функции
+*	Description:	п÷п╬п╢я│я┤п╣я┌ я├п╣п╩п╣п╡п╬п╧ я└я┐п╫п╨я├п╦п╦ п╢п╩я▐ я│п╦я│я┌п╣п╪я▀ п╟п╨я│п╦п╬п╪ п╢п╩я▐ п╥п╟п╢п╟п╫п╫п╬пЁп╬ 
+*					я┌п╦п©п╟ п╫п╣я┬я┌п╟я┌п╫п╬пЁп╬ п©п╬п╡п╣п╢п╣п╫п╦я▐ п╦ п╥п╟п╢п╟п╫п╫п╬пЁп╬ п╡п╟я─п╦п╟п╫я┌п╟ я─п╟п╥п╪п╣я┌п╨п╦ 
+*					я█я┌п╟п╩п╬п╫п╫п╬п╧ я┌я─п╟п╣п╨я┌п╬я─п╦п╦ я█я┌п╬пЁп╬ я┌п╦п©п╟
+*	Parameters:		as - я│п╦я│я┌п╣п╪п╟ п╟п╨я│п╦п╬п╪, п╢п╩я▐ п╨п╬я┌п╬я─п╬п╧ я│я┤п╦я┌п╟п╣я┌я│я▐ п╥п╫п╟я┤п╣п╫п╦п╣ я├п╣п╩п╣п╡п╬п╧ я└я┐п╫п╨я├п╦п╦
+*					abType - я┌п╦п© п╫п╣я┬я┌п╟я┌п╫п╬пЁп╬ п©п╬п╡п╣п╢п╣п╫п╦я▐, п╢п╩я▐ п╨п╬я┌п╬я─п╬пЁп╬ я│я┤п╦я┌п╟п╣я┌я│я▐ п╥п╫п╟я┤п╣п╫п╦п╣ я├п╣п╩п╣п╡п╬п╧ я└я┐п╫п╨я├п╦п╦
+*					genMarkUp - п╡п╟я─п╦п╟п╫я┌ я─п╟п╥п╪п╣я┌п╨п╦ я█я┌п╟п╩п╬п╫п╫п╬п╧ я┌я─п╟п╣п╨я┌п╬я─п╦п╦ п╥п╟п╢п╟п╫п╫п╬пЁп╬ я┌п╦п©п╟ п╫п╣я┬я┌п╟я┌п╫п╬пЁп╬ п©п╬п╡п╣п╢п╣п╫п╦я▐
+*					goalVal - п╥п╟п©п╬п╩п╫я▐п╣п╪п╬п╣ п╥п╫п╟я┤п╣п╫п╦п╣ я├п╣п╩п╣п╡п╬п╧ я└я┐п╫п╨я├п╦п╦
+*					errFirstVal - п╥п╟п©п╬п╩п╫я▐п╣п╪п╬п╣ п╥п╫п╟я┤п╣п╫п╦п╣ я┤п╦я│п╩п╬ п╬я┬п╦п╠п╬п╨ I я─п╬п╢п╟
+*					errSecondVal - п╥п╟п©п╬п╩п╫я▐п╣п╪п╬п╣ п╥п╫п╟я┤п╣п╫п╦п╣ я┤п╦я│п╩п╬ п╬я┬п╦п╠п╬п╨ II я─п╬п╢п╟
+*	Returns:		double - п╥п╫п╟я┤п╣п╫п╦п╣ я├п╣п╩п╣п╡п╬п╧ я└я┐п╫п╨я├п╦п╦
 *	Throws:			-
 *	Author:			dk
 *	History:
@@ -916,11 +916,11 @@ double ASStageSimple::matterAxiomSetFunc (AxiomExprSetPlus &as, int abType, cons
 	int numOfClasses;
 	std::vector <int> numOfMultiTS;
 	std::vector < std::vector <int> > numOfTS;
-	// получаем информацию о числе траекторий контрольной выборки
+	// п©п╬п╩я┐я┤п╟п╣п╪ п╦п╫я└п╬я─п╪п╟я├п╦я▌ п╬ я┤п╦я│п╩п╣ я┌я─п╟п╣п╨я┌п╬я─п╦п╧ п╨п╬п╫я┌я─п╬п╩я▄п╫п╬п╧ п╡я▀п╠п╬я─п╨п╦
 	fuzzyDataSet->getTestSize (numOfClasses, numOfMultiTS, numOfTS);
 	if ((abType < 0) || (abType >= numOfClasses))
 		throw AxiomLibException("FuzzyMultiDataExt_AS::matterAxiomSetFunc: incorrect input number of abnormal type.");
-	// Подготавливаем данные - какие измерения рядов задействованы системой аксиом
+	// п÷п╬п╢пЁп╬я┌п╟п╡п╩п╦п╡п╟п╣п╪ п╢п╟п╫п╫я▀п╣ - п╨п╟п╨п╦п╣ п╦п╥п╪п╣я─п╣п╫п╦я▐ я─я▐п╢п╬п╡ п╥п╟п╢п╣п╧я│я┌п╡п╬п╡п╟п╫я▀ я│п╦я│я┌п╣п╪п╬п╧ п╟п╨я│п╦п╬п╪
 	std::vector <bool> dims;
 	dims.resize (fuzzyDataSet->paramNamesSize(), false);
 	for (unsigned int axNum = 0; axNum < as.axioms.size(); axNum++) {
@@ -932,25 +932,25 @@ double ASStageSimple::matterAxiomSetFunc (AxiomExprSetPlus &as, int abType, cons
 			}
 		}
 	}
-	// подготавливаем перменные для хранения числа ошибок
+	// п©п╬п╢пЁп╬я┌п╟п╡п╩п╦п╡п╟п╣п╪ п©п╣я─п╪п╣п╫п╫я▀п╣ п╢п╩я▐ я┘я─п╟п╫п╣п╫п╦я▐ я┤п╦я│п╩п╟ п╬я┬п╦п╠п╬п╨
 	errFirstVal = 0;
 	errSecondVal = 0;
-	// Выбираем очередную траекторию для заданного типа нештатного поведения и запускаем распознаватель
+	// п▓я▀п╠п╦я─п╟п╣п╪ п╬я┤п╣я─п╣п╢п╫я┐я▌ я┌я─п╟п╣п╨я┌п╬я─п╦я▌ п╢п╩я▐ п╥п╟п╢п╟п╫п╫п╬пЁп╬ я┌п╦п©п╟ п╫п╣я┬я┌п╟я┌п╫п╬пЁп╬ п©п╬п╡п╣п╢п╣п╫п╦я▐ п╦ п╥п╟п©я┐я│п╨п╟п╣п╪ я─п╟я│п©п╬п╥п╫п╟п╡п╟я┌п╣п╩я▄
 	std::vector <int> curMarkUp, curLabeling;
 	int num;
 	for (int t = 0; t < (int) numOfTS[abType].size(); t++) {
 		int currentFirstKindErrors = 0;
 		int currentSecondKindErrors = 0;
-		// разметка траектории контрольной выборки системой аксиом as
+		// я─п╟п╥п╪п╣я┌п╨п╟ я┌я─п╟п╣п╨я┌п╬я─п╦п╦ п╨п╬п╫я┌я─п╬п╩я▄п╫п╬п╧ п╡я▀п╠п╬я─п╨п╦ я│п╦я│я┌п╣п╪п╬п╧ п╟п╨я│п╦п╬п╪ as
 		createTestMarkUp (curMarkUp, as, dims, abType, t, numOfTS[abType][t]);
 
-		// Распознавание нештатного поведения в разметке ряда
+		// п═п╟я│п©п╬п╥п╫п╟п╡п╟п╫п╦п╣ п╫п╣я┬я┌п╟я┌п╫п╬пЁп╬ п©п╬п╡п╣п╢п╣п╫п╦я▐ п╡ я─п╟п╥п╪п╣я┌п╨п╣ я─я▐п╢п╟
 		recognizer->run (curMarkUp, genMarkUp, curLabeling);
 		
-		// Вычисление числа ошибок первого и второго рода
+		// п▓я▀я┤п╦я│п╩п╣п╫п╦п╣ я┤п╦я│п╩п╟ п╬я┬п╦п╠п╬п╨ п©п╣я─п╡п╬пЁп╬ п╦ п╡я┌п╬я─п╬пЁп╬ я─п╬п╢п╟
 		num = getStatistic (curLabeling);
 		
-		// Суммирование числа ошибок
+		// п║я┐п╪п╪п╦я─п╬п╡п╟п╫п╦п╣ я┤п╦я│п╩п╟ п╬я┬п╦п╠п╬п╨
 		if (num == 0) {
 			currentSecondKindErrors = 1;
 		}
@@ -963,21 +963,21 @@ double ASStageSimple::matterAxiomSetFunc (AxiomExprSetPlus &as, int abType, cons
 		errSecondVal+= currentSecondKindErrors;
 		errFirstVal += currentFirstKindErrors;
 	}
-	// Пробегаем по всем рядам нормального поведения
+	// п÷я─п╬п╠п╣пЁп╟п╣п╪ п©п╬ п╡я│п╣п╪ я─я▐п╢п╟п╪ п╫п╬я─п╪п╟п╩я▄п╫п╬пЁп╬ п©п╬п╡п╣п╢п╣п╫п╦я▐
 	int numNormalMultiTS;
 	std::vector <int> numNormalTS;
 	fuzzyDataSet->getNormalTestSize (numNormalMultiTS, numNormalTS);
 	for (int t = 0; t < (int) numNormalTS.size(); t++) {
-		// размечаем траекторию нормального поведения
+		// я─п╟п╥п╪п╣я┤п╟п╣п╪ я┌я─п╟п╣п╨я┌п╬я─п╦я▌ п╫п╬я─п╪п╟п╩я▄п╫п╬пЁп╬ п©п╬п╡п╣п╢п╣п╫п╦я▐
 		createTestMarkUp (curMarkUp, as, dims, t, numNormalTS[t]);
 
-		// Распознавание нештатного поведения в разметке ряда
+		// п═п╟я│п©п╬п╥п╫п╟п╡п╟п╫п╦п╣ п╫п╣я┬я┌п╟я┌п╫п╬пЁп╬ п©п╬п╡п╣п╢п╣п╫п╦я▐ п╡ я─п╟п╥п╪п╣я┌п╨п╣ я─я▐п╢п╟
 		recognizer->run (curMarkUp, genMarkUp, curLabeling);
 		
-		// Вычисление числа ошибок первого и второго рода
+		// п▓я▀я┤п╦я│п╩п╣п╫п╦п╣ я┤п╦я│п╩п╟ п╬я┬п╦п╠п╬п╨ п©п╣я─п╡п╬пЁп╬ п╦ п╡я┌п╬я─п╬пЁп╬ я─п╬п╢п╟
 		num = getStatistic (curLabeling);
 		
-		// Суммирование числа ошибок
+		// п║я┐п╪п╪п╦я─п╬п╡п╟п╫п╦п╣ я┤п╦я│п╩п╟ п╬я┬п╦п╠п╬п╨
 		errFirstVal += num;
 
 		int oldTypeIErrors = as.getErrorsForTraj(-1, t).first;
@@ -986,7 +986,7 @@ double ASStageSimple::matterAxiomSetFunc (AxiomExprSetPlus &as, int abType, cons
 		as.setErrorsForTraj(-1, t, num + oldTypeIErrors, 0);
 	}
 
-	// Вычисление значения целевой функции для полученного числа ошибок I и II рода
+	// п▓я▀я┤п╦я│п╩п╣п╫п╦п╣ п╥п╫п╟я┤п╣п╫п╦я▐ я├п╣п╩п╣п╡п╬п╧ я└я┐п╫п╨я├п╦п╦ п╢п╩я▐ п©п╬п╩я┐я┤п╣п╫п╫п╬пЁп╬ я┤п╦я│п╩п╟ п╬я┬п╦п╠п╬п╨ I п╦ II я─п╬п╢п╟
 	goalVal = goalStrategy->compute(errFirstVal, errSecondVal);
 
 	return goalVal;
@@ -996,33 +996,33 @@ double ASStageSimple::matterAxiomSetFunc (AxiomExprSetPlus &as, int abType, cons
 /****************************************************************************
 *					FuzzyMultiDataExt_AS::matterAxiomSetFunc
 *
-*	Description:	Подсчет целевой функции для системы аксиом описанной в файле
-*	Parameters:		baseDir - название каталога, где лежит требуемое описание системы аксиом
-*					fileName - файл с описанием системы аксиом, для которой считается значение целевой функции
-*					errFirst - число ошибок I рода
-*					errSecond - число ошибок II рода
-*	Returns:		double - значение целевой функции
+*	Description:	п÷п╬п╢я│я┤п╣я┌ я├п╣п╩п╣п╡п╬п╧ я└я┐п╫п╨я├п╦п╦ п╢п╩я▐ я│п╦я│я┌п╣п╪я▀ п╟п╨я│п╦п╬п╪ п╬п©п╦я│п╟п╫п╫п╬п╧ п╡ я└п╟п╧п╩п╣
+*	Parameters:		baseDir - п╫п╟п╥п╡п╟п╫п╦п╣ п╨п╟я┌п╟п╩п╬пЁп╟, пЁп╢п╣ п╩п╣п╤п╦я┌ я┌я─п╣п╠я┐п╣п╪п╬п╣ п╬п©п╦я│п╟п╫п╦п╣ я│п╦я│я┌п╣п╪я▀ п╟п╨я│п╦п╬п╪
+*					fileName - я└п╟п╧п╩ я│ п╬п©п╦я│п╟п╫п╦п╣п╪ я│п╦я│я┌п╣п╪я▀ п╟п╨я│п╦п╬п╪, п╢п╩я▐ п╨п╬я┌п╬я─п╬п╧ я│я┤п╦я┌п╟п╣я┌я│я▐ п╥п╫п╟я┤п╣п╫п╦п╣ я├п╣п╩п╣п╡п╬п╧ я└я┐п╫п╨я├п╦п╦
+*					errFirst - я┤п╦я│п╩п╬ п╬я┬п╦п╠п╬п╨ I я─п╬п╢п╟
+*					errSecond - я┤п╦я│п╩п╬ п╬я┬п╦п╠п╬п╨ II я─п╬п╢п╟
+*	Returns:		double - п╥п╫п╟я┤п╣п╫п╦п╣ я├п╣п╩п╣п╡п╬п╧ я└я┐п╫п╨я├п╦п╦
 *	Throws:			-
 *	Author:			dk
 *	History:
 *
 ****************************************************************************/
 double ASStageSimple::matterAxiomSetFunc (const std::string baseDir, const std::string fileName, int &errFirst, int &errSecond) const {
-	// Инициализация системы аксиом из указанного файла
+	// п≤п╫п╦я├п╦п╟п╩п╦п╥п╟я├п╦я▐ я│п╦я│я┌п╣п╪я▀ п╟п╨я│п╦п╬п╪ п╦п╥ я┐п╨п╟п╥п╟п╫п╫п╬пЁп╬ я└п╟п╧п╩п╟
 	AxiomExprSetPlus aesp;
 	AxiomSetBase axiomSetBase;
 	AxiomExprSetStructure aess;
 	std::string axiomSetPath = baseDir;
 	axiomSetPath.append("/");
 	axiomSetPath.append(fileName);
-	// Считываем информацию о системе аксиом в aess
+	// п║я┤п╦я┌я▀п╡п╟п╣п╪ п╦п╫я└п╬я─п╪п╟я├п╦я▌ п╬ я│п╦я│я┌п╣п╪п╣ п╟п╨я│п╦п╬п╪ п╡ aess
 	std::vector <std::string> dataSetParams;
 	dataSetParams = fuzzyDataSet->getParamNames();
 	axiomSetBase.readFromAS (axiomSetPath, aess, dataSetParams);
 	aesp.initAxiomSetFromStructure (aess);
-	// Вычисление значения целевой фукнции
+	// п▓я▀я┤п╦я│п╩п╣п╫п╦п╣ п╥п╫п╟я┤п╣п╫п╦я▐ я├п╣п╩п╣п╡п╬п╧ я└я┐п╨п╫я├п╦п╦
 	matterAxiomSetFunc (aesp);
-	// Заполнение результатов и выход из функции
+	// п≈п╟п©п╬п╩п╫п╣п╫п╦п╣ я─п╣п╥я┐п╩я▄я┌п╟я┌п╬п╡ п╦ п╡я▀я┘п╬п╢ п╦п╥ я└я┐п╫п╨я├п╦п╦
 	errFirst = aesp.errFirst;
 	errSecond = aesp.errSecond;
 	double toReturn = aesp.goal;
@@ -1034,9 +1034,9 @@ double ASStageSimple::matterAxiomSetFunc (const std::string baseDir, const std::
 /****************************************************************************
 *					FuzzyMultiDataExt_AS::getStatistic
 *
-*	Description:	Функция считает число вхождейни ненулевых областей
-*	Parameters:		row - ряд, в котором ищутся ненулевые образы
-*	Returns:		int - число ненулевых областей
+*	Description:	п╓я┐п╫п╨я├п╦я▐ я│я┤п╦я┌п╟п╣я┌ я┤п╦я│п╩п╬ п╡я┘п╬п╤п╢п╣п╧п╫п╦ п╫п╣п╫я┐п╩п╣п╡я▀я┘ п╬п╠п╩п╟я│я┌п╣п╧
+*	Parameters:		row - я─я▐п╢, п╡ п╨п╬я┌п╬я─п╬п╪ п╦я┴я┐я┌я│я▐ п╫п╣п╫я┐п╩п╣п╡я▀п╣ п╬п╠я─п╟п╥я▀
+*	Returns:		int - я┤п╦я│п╩п╬ п╫п╣п╫я┐п╩п╣п╡я▀я┘ п╬п╠п╩п╟я│я┌п╣п╧
 *	Throws:			-
 *	Author:			dk
 *	History:
@@ -1069,13 +1069,13 @@ inline int ASStageSimple::getStatistic (std::vector <int> &row) const {
 /****************************************************************************
 *					FuzzyMultiDataExt_AS::chooseBestMarkUp
 *
-*	Description:	Функция выбирает из всех вариантов для разметок лучшую
-*	Parameters:		as - система аксиом, для которой выбирается разметка траектории нештатного типа 
-*					abType - тип нештатного поведения, для которого выбирается разметка 
-*					markUp - результат работы функции, т.е. выбранный вариант разметки эталонной траектории данного типа
-*					genMarkUps - сформированные ранее кандидаты в разметки траекторий нештатного поведения
-*					errFirstVal - заполняемое число ошибок I рода для лучшей по значению целевой функции эталонной разметки
-*					errSecondVal - заполняемое число ошибок II рода для лучшей по значению целевой функции эталонной разметки
+*	Description:	п╓я┐п╫п╨я├п╦я▐ п╡я▀п╠п╦я─п╟п╣я┌ п╦п╥ п╡я│п╣я┘ п╡п╟я─п╦п╟п╫я┌п╬п╡ п╢п╩я▐ я─п╟п╥п╪п╣я┌п╬п╨ п╩я┐я┤я┬я┐я▌
+*	Parameters:		as - я│п╦я│я┌п╣п╪п╟ п╟п╨я│п╦п╬п╪, п╢п╩я▐ п╨п╬я┌п╬я─п╬п╧ п╡я▀п╠п╦я─п╟п╣я┌я│я▐ я─п╟п╥п╪п╣я┌п╨п╟ я┌я─п╟п╣п╨я┌п╬я─п╦п╦ п╫п╣я┬я┌п╟я┌п╫п╬пЁп╬ я┌п╦п©п╟ 
+*					abType - я┌п╦п© п╫п╣я┬я┌п╟я┌п╫п╬пЁп╬ п©п╬п╡п╣п╢п╣п╫п╦я▐, п╢п╩я▐ п╨п╬я┌п╬я─п╬пЁп╬ п╡я▀п╠п╦я─п╟п╣я┌я│я▐ я─п╟п╥п╪п╣я┌п╨п╟ 
+*					markUp - я─п╣п╥я┐п╩я▄я┌п╟я┌ я─п╟п╠п╬я┌я▀ я└я┐п╫п╨я├п╦п╦, я┌.п╣. п╡я▀п╠я─п╟п╫п╫я▀п╧ п╡п╟я─п╦п╟п╫я┌ я─п╟п╥п╪п╣я┌п╨п╦ я█я┌п╟п╩п╬п╫п╫п╬п╧ я┌я─п╟п╣п╨я┌п╬я─п╦п╦ п╢п╟п╫п╫п╬пЁп╬ я┌п╦п©п╟
+*					genMarkUps - я│я└п╬я─п╪п╦я─п╬п╡п╟п╫п╫я▀п╣ я─п╟п╫п╣п╣ п╨п╟п╫п╢п╦п╢п╟я┌я▀ п╡ я─п╟п╥п╪п╣я┌п╨п╦ я┌я─п╟п╣п╨я┌п╬я─п╦п╧ п╫п╣я┬я┌п╟я┌п╫п╬пЁп╬ п©п╬п╡п╣п╢п╣п╫п╦я▐
+*					errFirstVal - п╥п╟п©п╬п╩п╫я▐п╣п╪п╬п╣ я┤п╦я│п╩п╬ п╬я┬п╦п╠п╬п╨ I я─п╬п╢п╟ п╢п╩я▐ п╩я┐я┤я┬п╣п╧ п©п╬ п╥п╫п╟я┤п╣п╫п╦я▌ я├п╣п╩п╣п╡п╬п╧ я└я┐п╫п╨я├п╦п╦ я█я┌п╟п╩п╬п╫п╫п╬п╧ я─п╟п╥п╪п╣я┌п╨п╦
+*					errSecondVal - п╥п╟п©п╬п╩п╫я▐п╣п╪п╬п╣ я┤п╦я│п╩п╬ п╬я┬п╦п╠п╬п╨ II я─п╬п╢п╟ п╢п╩я▐ п╩я┐я┤я┬п╣п╧ п©п╬ п╥п╫п╟я┤п╣п╫п╦я▌ я├п╣п╩п╣п╡п╬п╧ я└я┐п╫п╨я├п╦п╦ я█я┌п╟п╩п╬п╫п╫п╬п╧ я─п╟п╥п╪п╣я┌п╨п╦
 *	Returns:		0
 *	Throws:			-
 *	Author:			dk
@@ -1083,7 +1083,7 @@ inline int ASStageSimple::getStatistic (std::vector <int> &row) const {
 *
 ****************************************************************************/
 int ASStageSimple::chooseBestMarkUp (AxiomExprSetPlus &as, int abType, std::vector <int> &markUp, const std::vector <std::vector <int> > &genMarkUps, int &errFirstVal, int &errSecondVal) const {
-	// Проверяем размер вектора кандидатов в разметки эталонной траектории заданного типа
+	// п÷я─п╬п╡п╣я─я▐п╣п╪ я─п╟п╥п╪п╣я─ п╡п╣п╨я┌п╬я─п╟ п╨п╟п╫п╢п╦п╢п╟я┌п╬п╡ п╡ я─п╟п╥п╪п╣я┌п╨п╦ я█я┌п╟п╩п╬п╫п╫п╬п╧ я┌я─п╟п╣п╨я┌п╬я─п╦п╦ п╥п╟п╢п╟п╫п╫п╬пЁп╬ я┌п╦п©п╟
 	if (genMarkUps.size() < 1) { 
 		markUp.clear();
 		errFirstVal = 0;
@@ -1096,11 +1096,11 @@ int ASStageSimple::chooseBestMarkUp (AxiomExprSetPlus &as, int abType, std::vect
 		matterAxiomSetFunc (as, abType, genMarkUps[0], tmpGoalVal, errFirstVal, errSecondVal);
 		return 0;
 	}
-	// Подготавливаем необходимые перменные
+	// п÷п╬п╢пЁп╬я┌п╟п╡п╩п╦п╡п╟п╣п╪ п╫п╣п╬п╠я┘п╬п╢п╦п╪я▀п╣ п©п╣я─п╪п╣п╫п╫я▀п╣
 	double goalVal, goalTmp;
 	int errFirstTmp, errSecondTmp;
 	int curBestIndex = 0;
-	// Вычисляем число ошибок I и II рода для заданного варианта разметки эталонной траектории заданного типа и Выбираем лучшее значение целевой функции
+	// п▓я▀я┤п╦я│п╩я▐п╣п╪ я┤п╦я│п╩п╬ п╬я┬п╦п╠п╬п╨ I п╦ II я─п╬п╢п╟ п╢п╩я▐ п╥п╟п╢п╟п╫п╫п╬пЁп╬ п╡п╟я─п╦п╟п╫я┌п╟ я─п╟п╥п╪п╣я┌п╨п╦ я█я┌п╟п╩п╬п╫п╫п╬п╧ я┌я─п╟п╣п╨я┌п╬я─п╦п╦ п╥п╟п╢п╟п╫п╫п╬пЁп╬ я┌п╦п©п╟ п╦ п▓я▀п╠п╦я─п╟п╣п╪ п╩я┐я┤я┬п╣п╣ п╥п╫п╟я┤п╣п╫п╦п╣ я├п╣п╩п╣п╡п╬п╧ я└я┐п╫п╨я├п╦п╦
 	matterAxiomSetFunc (as, abType, genMarkUps[0], goalVal, errFirstVal, errSecondVal);
 	for (unsigned int i = 1; i < genMarkUps.size(); i++) {
 		matterAxiomSetFunc (as, abType, genMarkUps[i], goalTmp, errFirstTmp, errSecondTmp);
@@ -1111,7 +1111,7 @@ int ASStageSimple::chooseBestMarkUp (AxiomExprSetPlus &as, int abType, std::vect
 			curBestIndex = i;
 		}
 	}
-	// Сохраняем соотвествующую лучшую разметку
+	// п║п╬я┘я─п╟п╫я▐п╣п╪ я│п╬п╬я┌п╡п╣я│я┌п╡я┐я▌я┴я┐я▌ п╩я┐я┤я┬я┐я▌ я─п╟п╥п╪п╣я┌п╨я┐
 	markUp = genMarkUps[curBestIndex];
 	return 0;
 }
@@ -1119,12 +1119,12 @@ int ASStageSimple::chooseBestMarkUp (AxiomExprSetPlus &as, int abType, std::vect
 /****************************************************************************
 *					FuzzyMultiDataExt_AS::createMarkUpVariants
 *
-*	Description:	Функция создает вариант разметок траекторий нештатного поведения
-*					по разметкам траекторий, содержащих участки нештатного поведения.
-*	Parameters:		genMarkUps - заполняемый вектор возможных вариантов эталонной разметки 
-*						для некоторого типа нештатного поведения
-*					resMarkUps - можество разметок траекторий, содержащих участки 
-*						нештатного поведения.
+*	Description:	п╓я┐п╫п╨я├п╦я▐ я│п╬п╥п╢п╟п╣я┌ п╡п╟я─п╦п╟п╫я┌ я─п╟п╥п╪п╣я┌п╬п╨ я┌я─п╟п╣п╨я┌п╬я─п╦п╧ п╫п╣я┬я┌п╟я┌п╫п╬пЁп╬ п©п╬п╡п╣п╢п╣п╫п╦я▐
+*					п©п╬ я─п╟п╥п╪п╣я┌п╨п╟п╪ я┌я─п╟п╣п╨я┌п╬я─п╦п╧, я│п╬п╢п╣я─п╤п╟я┴п╦я┘ я┐я┤п╟я│я┌п╨п╦ п╫п╣я┬я┌п╟я┌п╫п╬пЁп╬ п©п╬п╡п╣п╢п╣п╫п╦я▐.
+*	Parameters:		genMarkUps - п╥п╟п©п╬п╩п╫я▐п╣п╪я▀п╧ п╡п╣п╨я┌п╬я─ п╡п╬п╥п╪п╬п╤п╫я▀я┘ п╡п╟я─п╦п╟п╫я┌п╬п╡ я█я┌п╟п╩п╬п╫п╫п╬п╧ я─п╟п╥п╪п╣я┌п╨п╦ 
+*						п╢п╩я▐ п╫п╣п╨п╬я┌п╬я─п╬пЁп╬ я┌п╦п©п╟ п╫п╣я┬я┌п╟я┌п╫п╬пЁп╬ п©п╬п╡п╣п╢п╣п╫п╦я▐
+*					resMarkUps - п╪п╬п╤п╣я│я┌п╡п╬ я─п╟п╥п╪п╣я┌п╬п╨ я┌я─п╟п╣п╨я┌п╬я─п╦п╧, я│п╬п╢п╣я─п╤п╟я┴п╦я┘ я┐я┤п╟я│я┌п╨п╦ 
+*						п╫п╣я┬я┌п╟я┌п╫п╬пЁп╬ п©п╬п╡п╣п╢п╣п╫п╦я▐.
 *	Returns:		0
 *	Throws:			-
 *	Author:			dk
@@ -1132,16 +1132,16 @@ int ASStageSimple::chooseBestMarkUp (AxiomExprSetPlus &as, int abType, std::vect
 *
 ****************************************************************************/
 inline int ASStageSimple::createMarkUpVariants (std::vector < std::vector <int> > &genMarkUps, std::vector < std::vector <int> > &resMarkUps) const {
-	// Если число траекторий меньше 2, то объединять нечего - выходим из функции
+	// п∙я│п╩п╦ я┤п╦я│п╩п╬ я┌я─п╟п╣п╨я┌п╬я─п╦п╧ п╪п╣п╫я▄я┬п╣ 2, я┌п╬ п╬п╠я┼п╣п╢п╦п╫я▐я┌я▄ п╫п╣я┤п╣пЁп╬ - п╡я▀я┘п╬п╢п╦п╪ п╦п╥ я└я┐п╫п╨я├п╦п╦
 	if (resMarkUps.size() < 2) {
 		genMarkUps = resMarkUps;
 		return 0;
 	}
-	// Если число траекторий хотя бы 2, то выделяем из них наибольшую общую подпоследовательность
+	// п∙я│п╩п╦ я┤п╦я│п╩п╬ я┌я─п╟п╣п╨я┌п╬я─п╦п╧ я┘п╬я┌я▐ п╠я▀ 2, я┌п╬ п╡я▀п╢п╣п╩я▐п╣п╪ п╦п╥ п╫п╦я┘ п╫п╟п╦п╠п╬п╩я▄я┬я┐я▌ п╬п╠я┴я┐я▌ п©п╬п╢п©п╬я│п╩п╣п╢п╬п╡п╟я┌п╣п╩я▄п╫п╬я│я┌я▄
 	std::vector < std::vector <int> > square;
 	getSquare (resMarkUps[0], resMarkUps[1], square);
 	getSubsequences (resMarkUps[0], resMarkUps[1], resMarkUps[0].size() - 1, resMarkUps[1].size() - 1, square, genMarkUps);
-	// Для всех остальных траекторий - также выделяем общую подпоследовательность с уже выделенной последовательностью
+	// п■п╩я▐ п╡я│п╣я┘ п╬я│я┌п╟п╩я▄п╫я▀я┘ я┌я─п╟п╣п╨я┌п╬я─п╦п╧ - я┌п╟п╨п╤п╣ п╡я▀п╢п╣п╩я▐п╣п╪ п╬п╠я┴я┐я▌ п©п╬п╢п©п╬я│п╩п╣п╢п╬п╡п╟я┌п╣п╩я▄п╫п╬я│я┌я▄ я│ я┐п╤п╣ п╡я▀п╢п╣п╩п╣п╫п╫п╬п╧ п©п╬я│п╩п╣п╢п╬п╡п╟я┌п╣п╩я▄п╫п╬я│я┌я▄я▌
 	std::vector <bool> toSave;
 	std::vector <std::vector <int> > curRes, toAdd;
 	unsigned int cRes;
@@ -1149,25 +1149,25 @@ inline int ASStageSimple::createMarkUpVariants (std::vector < std::vector <int> 
 		toAdd.clear();
 		toSave.resize (genMarkUps.size(), true);
 		for (unsigned int j = 0; j < genMarkUps.size(); j++) {
-			// Очищаем используемые перменные
+			// п·я┤п╦я┴п╟п╣п╪ п╦я│п©п╬п╩я▄п╥я┐п╣п╪я▀п╣ п©п╣я─п╪п╣п╫п╫я▀п╣
 			curRes.clear();
 			square.clear();
-			// Запускаем вычисление общих подстрок
+			// п≈п╟п©я┐я│п╨п╟п╣п╪ п╡я▀я┤п╦я│п╩п╣п╫п╦п╣ п╬п╠я┴п╦я┘ п©п╬п╢я│я┌я─п╬п╨
 			getSquare (genMarkUps[j], resMarkUps[i], square);
 			getSubsequences (genMarkUps[j], resMarkUps[i], genMarkUps[j].size() - 1, resMarkUps[i].size() - 1, square, curRes);
-			// Анализируем полученные значения
+			// п░п╫п╟п╩п╦п╥п╦я─я┐п╣п╪ п©п╬п╩я┐я┤п╣п╫п╫я▀п╣ п╥п╫п╟я┤п╣п╫п╦я▐
 			cRes = curRes.size();
 			if (cRes == 1) {
-				// Значит просто заменяем данную строку общей подстрокой 
+				// п≈п╫п╟я┤п╦я┌ п©я─п╬я│я┌п╬ п╥п╟п╪п╣п╫я▐п╣п╪ п╢п╟п╫п╫я┐я▌ я│я┌я─п╬п╨я┐ п╬п╠я┴п╣п╧ п©п╬п╢я│я┌я─п╬п╨п╬п╧ 
 				genMarkUps[j].clear();
 				genMarkUps[j] = curRes[0];
 			} else {
-				// Если число наибольших подстрок не 1, то сохраняем их в отедельную переменную toAdd
+				// п∙я│п╩п╦ я┤п╦я│п╩п╬ п╫п╟п╦п╠п╬п╩я▄я┬п╦я┘ п©п╬п╢я│я┌я─п╬п╨ п╫п╣ 1, я┌п╬ я│п╬я┘я─п╟п╫я▐п╣п╪ п╦я┘ п╡ п╬я┌п╣п╢п╣п╩я▄п╫я┐я▌ п©п╣я─п╣п╪п╣п╫п╫я┐я▌ toAdd
 				toSave[j] = false;
 				toAdd.insert (toAdd.begin(), curRes.begin(), curRes.end());
 			}
 		}
-		// Вносим изменения, полученные после поиска общих подпоследовательностей с уже выделенными подстроками
+		// п▓п╫п╬я│п╦п╪ п╦п╥п╪п╣п╫п╣п╫п╦я▐, п©п╬п╩я┐я┤п╣п╫п╫я▀п╣ п©п╬я│п╩п╣ п©п╬п╦я│п╨п╟ п╬п╠я┴п╦я┘ п©п╬п╢п©п╬я│п╩п╣п╢п╬п╡п╟я┌п╣п╩я▄п╫п╬я│я┌п╣п╧ я│ я┐п╤п╣ п╡я▀п╢п╣п╩п╣п╫п╫я▀п╪п╦ п©п╬п╢я│я┌я─п╬п╨п╟п╪п╦
 		for (int m = (int) toSave.size() - 1; m >= 0; m--) {
 			if (!toSave[m]) {
 				genMarkUps.erase (genMarkUps.begin() + m);
@@ -1183,13 +1183,13 @@ inline int ASStageSimple::createMarkUpVariants (std::vector < std::vector <int> 
 /****************************************************************************
 *					FuzzyMultiDataExt_AS::createRefMarkUp
 *
-*	Description:	Разметка многомерного ряда multiTSNumber системой 
-*					аксиом as с записью результата в markUp.
-*	Parameters:		resMarkUp - разметка траектории
-*					as - система аксиом, которой происходит разметка
-*					abType - номер класса нештатного поведения
-*					multiTSNumber - номер многомерного ряда для данного 
-*					класса нештатного поведения, разметка которого происходит
+*	Description:	п═п╟п╥п╪п╣я┌п╨п╟ п╪п╫п╬пЁп╬п╪п╣я─п╫п╬пЁп╬ я─я▐п╢п╟ multiTSNumber я│п╦я│я┌п╣п╪п╬п╧ 
+*					п╟п╨я│п╦п╬п╪ as я│ п╥п╟п©п╦я│я▄я▌ я─п╣п╥я┐п╩я▄я┌п╟я┌п╟ п╡ markUp.
+*	Parameters:		resMarkUp - я─п╟п╥п╪п╣я┌п╨п╟ я┌я─п╟п╣п╨я┌п╬я─п╦п╦
+*					as - я│п╦я│я┌п╣п╪п╟ п╟п╨я│п╦п╬п╪, п╨п╬я┌п╬я─п╬п╧ п©я─п╬п╦я│я┘п╬п╢п╦я┌ я─п╟п╥п╪п╣я┌п╨п╟
+*					abType - п╫п╬п╪п╣я─ п╨п╩п╟я│я│п╟ п╫п╣я┬я┌п╟я┌п╫п╬пЁп╬ п©п╬п╡п╣п╢п╣п╫п╦я▐
+*					multiTSNumber - п╫п╬п╪п╣я─ п╪п╫п╬пЁп╬п╪п╣я─п╫п╬пЁп╬ я─я▐п╢п╟ п╢п╩я▐ п╢п╟п╫п╫п╬пЁп╬ 
+*					п╨п╩п╟я│я│п╟ п╫п╣я┬я┌п╟я┌п╫п╬пЁп╬ п©п╬п╡п╣п╢п╣п╫п╦я▐, я─п╟п╥п╪п╣я┌п╨п╟ п╨п╬я┌п╬я─п╬пЁп╬ п©я─п╬п╦я│я┘п╬п╢п╦я┌
 *	Returns:		0
 *	Throws:			-
 *	Author:			dk
@@ -1205,14 +1205,14 @@ inline int ASStageSimple::createRefMarkUp (std::vector <int> &markUp, const Axio
 /****************************************************************************
 *					FuzzyMultiDataExt_AS::createTestMarkUp
 *
-*	Description:	Разметка многомерного ряда из контрольной выборки системой 
-*					аксиом as с записью результата в markUp.
-*	Parameters:		markUp - разметка траектории
-*					as - система аксиом, которой происходит разметка
-*					dims - данные о системе аксиом: какие размерности рядов зайдествованы
-*					abType - тип нештатного поведения для которого выбирается ряд для анализа
-*					indexTest - номер ряда для некоторого класса нештатного поведения
-*					numOfTestTS - номер индекса данного многомерного ряда
+*	Description:	п═п╟п╥п╪п╣я┌п╨п╟ п╪п╫п╬пЁп╬п╪п╣я─п╫п╬пЁп╬ я─я▐п╢п╟ п╦п╥ п╨п╬п╫я┌я─п╬п╩я▄п╫п╬п╧ п╡я▀п╠п╬я─п╨п╦ я│п╦я│я┌п╣п╪п╬п╧ 
+*					п╟п╨я│п╦п╬п╪ as я│ п╥п╟п©п╦я│я▄я▌ я─п╣п╥я┐п╩я▄я┌п╟я┌п╟ п╡ markUp.
+*	Parameters:		markUp - я─п╟п╥п╪п╣я┌п╨п╟ я┌я─п╟п╣п╨я┌п╬я─п╦п╦
+*					as - я│п╦я│я┌п╣п╪п╟ п╟п╨я│п╦п╬п╪, п╨п╬я┌п╬я─п╬п╧ п©я─п╬п╦я│я┘п╬п╢п╦я┌ я─п╟п╥п╪п╣я┌п╨п╟
+*					dims - п╢п╟п╫п╫я▀п╣ п╬ я│п╦я│я┌п╣п╪п╣ п╟п╨я│п╦п╬п╪: п╨п╟п╨п╦п╣ я─п╟п╥п╪п╣я─п╫п╬я│я┌п╦ я─я▐п╢п╬п╡ п╥п╟п╧п╢п╣я│я┌п╡п╬п╡п╟п╫я▀
+*					abType - я┌п╦п© п╫п╣я┬я┌п╟я┌п╫п╬пЁп╬ п©п╬п╡п╣п╢п╣п╫п╦я▐ п╢п╩я▐ п╨п╬я┌п╬я─п╬пЁп╬ п╡я▀п╠п╦я─п╟п╣я┌я│я▐ я─я▐п╢ п╢п╩я▐ п╟п╫п╟п╩п╦п╥п╟
+*					indexTest - п╫п╬п╪п╣я─ я─я▐п╢п╟ п╢п╩я▐ п╫п╣п╨п╬я┌п╬я─п╬пЁп╬ п╨п╩п╟я│я│п╟ п╫п╣я┬я┌п╟я┌п╫п╬пЁп╬ п©п╬п╡п╣п╢п╣п╫п╦я▐
+*					numOfTestTS - п╫п╬п╪п╣я─ п╦п╫п╢п╣п╨я│п╟ п╢п╟п╫п╫п╬пЁп╬ п╪п╫п╬пЁп╬п╪п╣я─п╫п╬пЁп╬ я─я▐п╢п╟
 *	Returns:		0
 *	Throws:			-
 *	Author:			dk
@@ -1228,13 +1228,13 @@ inline int ASStageSimple::createTestMarkUp (std::vector <int> &markUp, AxiomExpr
 /****************************************************************************
 *					FuzzyMultiDataExt_AS::createTestMarkUp
 *
-*	Description:	Разметка многомерного ряда нормального поведения из контрольной 
-*					выборки системой аксиом as с записью результата в markUp.
-*	Parameters:		markUp - разметка траектории
-*					as - система аксиом, которой происходит разметка
-*					dims - данные о системе аксиом: какие размерности рядов зайдествованы
-*					indexTest - номер ряда для некоторого класса нештатного поведения
-*					numOfTestTS - номер индекса данного многомерного ряда
+*	Description:	п═п╟п╥п╪п╣я┌п╨п╟ п╪п╫п╬пЁп╬п╪п╣я─п╫п╬пЁп╬ я─я▐п╢п╟ п╫п╬я─п╪п╟п╩я▄п╫п╬пЁп╬ п©п╬п╡п╣п╢п╣п╫п╦я▐ п╦п╥ п╨п╬п╫я┌я─п╬п╩я▄п╫п╬п╧ 
+*					п╡я▀п╠п╬я─п╨п╦ я│п╦я│я┌п╣п╪п╬п╧ п╟п╨я│п╦п╬п╪ as я│ п╥п╟п©п╦я│я▄я▌ я─п╣п╥я┐п╩я▄я┌п╟я┌п╟ п╡ markUp.
+*	Parameters:		markUp - я─п╟п╥п╪п╣я┌п╨п╟ я┌я─п╟п╣п╨я┌п╬я─п╦п╦
+*					as - я│п╦я│я┌п╣п╪п╟ п╟п╨я│п╦п╬п╪, п╨п╬я┌п╬я─п╬п╧ п©я─п╬п╦я│я┘п╬п╢п╦я┌ я─п╟п╥п╪п╣я┌п╨п╟
+*					dims - п╢п╟п╫п╫я▀п╣ п╬ я│п╦я│я┌п╣п╪п╣ п╟п╨я│п╦п╬п╪: п╨п╟п╨п╦п╣ я─п╟п╥п╪п╣я─п╫п╬я│я┌п╦ я─я▐п╢п╬п╡ п╥п╟п╧п╢п╣я│я┌п╡п╬п╡п╟п╫я▀
+*					indexTest - п╫п╬п╪п╣я─ я─я▐п╢п╟ п╢п╩я▐ п╫п╣п╨п╬я┌п╬я─п╬пЁп╬ п╨п╩п╟я│я│п╟ п╫п╣я┬я┌п╟я┌п╫п╬пЁп╬ п©п╬п╡п╣п╢п╣п╫п╦я▐
+*					numOfTestTS - п╫п╬п╪п╣я─ п╦п╫п╢п╣п╨я│п╟ п╢п╟п╫п╫п╬пЁп╬ п╪п╫п╬пЁп╬п╪п╣я─п╫п╬пЁп╬ я─я▐п╢п╟
 *	Returns:		0
 *	Throws:			-
 *	Author:			dk
@@ -1250,9 +1250,9 @@ inline int ASStageSimple::createTestMarkUp (std::vector <int> &markUp, AxiomExpr
 /****************************************************************************
 *					FuzzyMultiDataExt_AS::simplifyMarkUps
 *
-*	Description:	Упрощение разметки путем удаления 0-ей в начале и в конце
-*					вектора разметки
-*	Parameters:		genMarkUpы - преобразуемые разметки
+*	Description:	пёп©я─п╬я┴п╣п╫п╦п╣ я─п╟п╥п╪п╣я┌п╨п╦ п©я┐я┌п╣п╪ я┐п╢п╟п╩п╣п╫п╦я▐ 0-п╣п╧ п╡ п╫п╟я┤п╟п╩п╣ п╦ п╡ п╨п╬п╫я├п╣
+*					п╡п╣п╨я┌п╬я─п╟ я─п╟п╥п╪п╣я┌п╨п╦
+*	Parameters:		genMarkUpя▀ - п©я─п╣п╬п╠я─п╟п╥я┐п╣п╪я▀п╣ я─п╟п╥п╪п╣я┌п╨п╦
 *	Returns:		0
 *	Throws:			-
 *	Author:			dk
@@ -1262,14 +1262,14 @@ inline int ASStageSimple::createTestMarkUp (std::vector <int> &markUp, AxiomExpr
 inline int ASStageSimple::simplifyMarkUps (std::vector <std::vector <int> > &markUps) const {
 	int k, l; 
 	for (int i = (int) markUps.size() - 1; i >= 0; i--) {
-		// Убираем все 0 в начале вектора - их не учитываем
+		// пёп╠п╦я─п╟п╣п╪ п╡я│п╣ 0 п╡ п╫п╟я┤п╟п╩п╣ п╡п╣п╨я┌п╬я─п╟ - п╦я┘ п╫п╣ я┐я┤п╦я┌я▀п╡п╟п╣п╪
 		k = 0;
 		while (k < (int) markUps[i].size()) {
 			if (markUps[i][k] > 0)
 				break;
 			k++;
 		}
-		// не учитываем все 0 в конце вектора разметки
+		// п╫п╣ я┐я┤п╦я┌я▀п╡п╟п╣п╪ п╡я│п╣ 0 п╡ п╨п╬п╫я├п╣ п╡п╣п╨я┌п╬я─п╟ я─п╟п╥п╪п╣я┌п╨п╦
 		l = (int) markUps[i].size() - 1;
 		while (l >= k) {
 			if (markUps[i][l] > 0)
@@ -1277,10 +1277,10 @@ inline int ASStageSimple::simplifyMarkUps (std::vector <std::vector <int> > &mar
 			l--;
 		}
 		if (l < k) {
-			// Если были только 0 - то удаляем разметку из набора
+			// п∙я│п╩п╦ п╠я▀п╩п╦ я┌п╬п╩я▄п╨п╬ 0 - я┌п╬ я┐п╢п╟п╩я▐п╣п╪ я─п╟п╥п╪п╣я┌п╨я┐ п╦п╥ п╫п╟п╠п╬я─п╟
 			markUps.erase(markUps.begin() + i);
 		} else {
-			// Удаляем 0 в начале и в конце вектора разметки
+			// пёп╢п╟п╩я▐п╣п╪ 0 п╡ п╫п╟я┤п╟п╩п╣ п╦ п╡ п╨п╬п╫я├п╣ п╡п╣п╨я┌п╬я─п╟ я─п╟п╥п╪п╣я┌п╨п╦
 			markUps[i].erase(markUps[i].begin() + l + 1, markUps[i].end());
 			markUps[i].erase(markUps[i].begin(), markUps[i].begin() + k);
 		}
@@ -1291,14 +1291,14 @@ inline int ASStageSimple::simplifyMarkUps (std::vector <std::vector <int> > &mar
 /****************************************************************************
 *					FuzzyMultiDataExt_AS::getSubsequences
 *
-*	Description:	Функция находит все максимальные общие подпоследовательности двух строк. 
-*					(Может быть несколько различных подпоследовательностей максимальной длины)
-*	Parameters:		str1 - первая строка, для которой ищется подпоследовательность
-*					str2 - вторая строка, для которой ищется подпоследовательность
-*					i - индекс элемента в первой строке, на котором заканчивать поиск подпоследовательностей
-*					j - индекс элемента во второй строке, на котором заканчивать поиск подпоследовательностей
-*					square - матрица соответствия элементов строк str1 и str2
-*					res - заполняемый вектор наибольших общих подпоследовательностей
+*	Description:	п╓я┐п╫п╨я├п╦я▐ п╫п╟я┘п╬п╢п╦я┌ п╡я│п╣ п╪п╟п╨я│п╦п╪п╟п╩я▄п╫я▀п╣ п╬п╠я┴п╦п╣ п©п╬п╢п©п╬я│п╩п╣п╢п╬п╡п╟я┌п╣п╩я▄п╫п╬я│я┌п╦ п╢п╡я┐я┘ я│я┌я─п╬п╨. 
+*					(п°п╬п╤п╣я┌ п╠я▀я┌я▄ п╫п╣я│п╨п╬п╩я▄п╨п╬ я─п╟п╥п╩п╦я┤п╫я▀я┘ п©п╬п╢п©п╬я│п╩п╣п╢п╬п╡п╟я┌п╣п╩я▄п╫п╬я│я┌п╣п╧ п╪п╟п╨я│п╦п╪п╟п╩я▄п╫п╬п╧ п╢п╩п╦п╫я▀)
+*	Parameters:		str1 - п©п╣я─п╡п╟я▐ я│я┌я─п╬п╨п╟, п╢п╩я▐ п╨п╬я┌п╬я─п╬п╧ п╦я┴п╣я┌я│я▐ п©п╬п╢п©п╬я│п╩п╣п╢п╬п╡п╟я┌п╣п╩я▄п╫п╬я│я┌я▄
+*					str2 - п╡я┌п╬я─п╟я▐ я│я┌я─п╬п╨п╟, п╢п╩я▐ п╨п╬я┌п╬я─п╬п╧ п╦я┴п╣я┌я│я▐ п©п╬п╢п©п╬я│п╩п╣п╢п╬п╡п╟я┌п╣п╩я▄п╫п╬я│я┌я▄
+*					i - п╦п╫п╢п╣п╨я│ я█п╩п╣п╪п╣п╫я┌п╟ п╡ п©п╣я─п╡п╬п╧ я│я┌я─п╬п╨п╣, п╫п╟ п╨п╬я┌п╬я─п╬п╪ п╥п╟п╨п╟п╫я┤п╦п╡п╟я┌я▄ п©п╬п╦я│п╨ п©п╬п╢п©п╬я│п╩п╣п╢п╬п╡п╟я┌п╣п╩я▄п╫п╬я│я┌п╣п╧
+*					j - п╦п╫п╢п╣п╨я│ я█п╩п╣п╪п╣п╫я┌п╟ п╡п╬ п╡я┌п╬я─п╬п╧ я│я┌я─п╬п╨п╣, п╫п╟ п╨п╬я┌п╬я─п╬п╪ п╥п╟п╨п╟п╫я┤п╦п╡п╟я┌я▄ п©п╬п╦я│п╨ п©п╬п╢п©п╬я│п╩п╣п╢п╬п╡п╟я┌п╣п╩я▄п╫п╬я│я┌п╣п╧
+*					square - п╪п╟я┌я─п╦я├п╟ я│п╬п╬я┌п╡п╣я┌я│я┌п╡п╦я▐ я█п╩п╣п╪п╣п╫я┌п╬п╡ я│я┌я─п╬п╨ str1 п╦ str2
+*					res - п╥п╟п©п╬п╩п╫я▐п╣п╪я▀п╧ п╡п╣п╨я┌п╬я─ п╫п╟п╦п╠п╬п╩я▄я┬п╦я┘ п╬п╠я┴п╦я┘ п©п╬п╢п©п╬я│п╩п╣п╢п╬п╡п╟я┌п╣п╩я▄п╫п╬я│я┌п╣п╧
 *	Returns:		0
 *	Throws:			-
 *	Author:			dk
@@ -1322,7 +1322,7 @@ int ASStageSimple::getSubsequences (const std::vector <int> &str1, const std::ve
 		return 0;
 	}
 
-	// идем по диагонали
+	// п╦п╢п╣п╪ п©п╬ п╢п╦п╟пЁп╬п╫п╟п╩п╦
 	if ((square[i][j] > square[i-1][j]) && (square[i][j] > square[i][j-1])) {
 		if (square[i][j] == 1) {
 			res.resize(1);
@@ -1334,12 +1334,12 @@ int ASStageSimple::getSubsequences (const std::vector <int> &str1, const std::ve
 		}
 		return 0;
 	} else {
-		// идем по диагонали
+		// п╦п╢п╣п╪ п©п╬ п╢п╦п╟пЁп╬п╫п╟п╩п╦
 		if (square[i][j] == square[i-1][j-1]) {
 			getSubsequences (str1, str2, i-1, j-1, square, res);
 		}
 		std::vector < std::vector <int> > resNew;
-		// идем вверх
+		// п╦п╢п╣п╪ п╡п╡п╣я─я┘
 		int i2 = i;
 		while (i2 > 0) {
 			if (square[i2][j] > square[i2-1][j])
@@ -1364,7 +1364,7 @@ int ASStageSimple::getSubsequences (const std::vector <int> &str1, const std::ve
 				res[res.size() - 1].push_back (str1[0]);
 			}
 		}
-		// идем влево
+		// п╦п╢п╣п╪ п╡п╩п╣п╡п╬
 		while (j > 0) {
 			if (square[i][j] > square[i][j-1])
 				break;
@@ -1388,10 +1388,10 @@ int ASStageSimple::getSubsequences (const std::vector <int> &str1, const std::ve
 				res[res.size() - 1].push_back (str2[0]);
 			}
 		}
-		// выходим из функции
+		// п╡я▀я┘п╬п╢п╦п╪ п╦п╥ я└я┐п╫п╨я├п╦п╦
 		return 0;
 	}
-	// По идеи - сюда уже дойти не можем
+	// п÷п╬ п╦п╢п╣п╦ - я│я▌п╢п╟ я┐п╤п╣ п╢п╬п╧я┌п╦ п╫п╣ п╪п╬п╤п╣п╪
 	return -1;
 }
 
@@ -1399,12 +1399,12 @@ int ASStageSimple::getSubsequences (const std::vector <int> &str1, const std::ve
 /****************************************************************************
 *					FuzzyMultiDataExt_AS::getSquare
 *
-*	Description:	Функция вычисляет матрицу соответствия элементов двух строк.
-*					Эта матрица может использоваться для нахождения наибольшей 
-*					общей подпоследовательности двух строк.
-*	Parameters:		str1 - первоя строка, для которой строится матрица
-*					str2 - вторая строка, для которой строится матрица
-*					square - матрица соответствия для строк str1 и str2
+*	Description:	п╓я┐п╫п╨я├п╦я▐ п╡я▀я┤п╦я│п╩я▐п╣я┌ п╪п╟я┌я─п╦я├я┐ я│п╬п╬я┌п╡п╣я┌я│я┌п╡п╦я▐ я█п╩п╣п╪п╣п╫я┌п╬п╡ п╢п╡я┐я┘ я│я┌я─п╬п╨.
+*					п╜я┌п╟ п╪п╟я┌я─п╦я├п╟ п╪п╬п╤п╣я┌ п╦я│п©п╬п╩я▄п╥п╬п╡п╟я┌я▄я│я▐ п╢п╩я▐ п╫п╟я┘п╬п╤п╢п╣п╫п╦я▐ п╫п╟п╦п╠п╬п╩я▄я┬п╣п╧ 
+*					п╬п╠я┴п╣п╧ п©п╬п╢п©п╬я│п╩п╣п╢п╬п╡п╟я┌п╣п╩я▄п╫п╬я│я┌п╦ п╢п╡я┐я┘ я│я┌я─п╬п╨.
+*	Parameters:		str1 - п©п╣я─п╡п╬я▐ я│я┌я─п╬п╨п╟, п╢п╩я▐ п╨п╬я┌п╬я─п╬п╧ я│я┌я─п╬п╦я┌я│я▐ п╪п╟я┌я─п╦я├п╟
+*					str2 - п╡я┌п╬я─п╟я▐ я│я┌я─п╬п╨п╟, п╢п╩я▐ п╨п╬я┌п╬я─п╬п╧ я│я┌я─п╬п╦я┌я│я▐ п╪п╟я┌я─п╦я├п╟
+*					square - п╪п╟я┌я─п╦я├п╟ я│п╬п╬я┌п╡п╣я┌я│я┌п╡п╦я▐ п╢п╩я▐ я│я┌я─п╬п╨ str1 п╦ str2
 *	Returns:		0
 *	Throws:			-
 *	Author:			dk
@@ -1414,21 +1414,21 @@ int ASStageSimple::getSubsequences (const std::vector <int> &str1, const std::ve
 int ASStageSimple::getSquare (const std::vector <int> &str1, const std::vector <int> &str2, std::vector < std::vector <int> > &square) const {
 	int s1 = (int) str1.size();
 	int s2 = (int) str2.size();
-	// Проврека входных данных
+	// п÷я─п╬п╡я─п╣п╨п╟ п╡я┘п╬п╢п╫я▀я┘ п╢п╟п╫п╫я▀я┘
 	if ((s1 < 1) || (s2 < 1)) {
 		square.clear ();
 		return 0;
 	}
 	
 	int preVal = 0;
-	// заполянем первый элемент матрицы
+	// п╥п╟п©п╬п╩я▐п╫п╣п╪ п©п╣я─п╡я▀п╧ я█п╩п╣п╪п╣п╫я┌ п╪п╟я┌я─п╦я├я▀
 	square.resize (s1);
 	square[0].resize(s2, 0);
 	if (str1[0] == str2[0]) {
 		preVal = 1;
 		square[0][0] = 1;
 	}
-	// заполняем левый столбец
+	// п╥п╟п©п╬п╩п╫я▐п╣п╪ п╩п╣п╡я▀п╧ я│я┌п╬п╩п╠п╣я├
 	int i, j;
 	for (i = 1; i < s1; i++) {
 		square[i].resize(s2, 0);
@@ -1440,7 +1440,7 @@ int ASStageSimple::getSquare (const std::vector <int> &str1, const std::vector <
 				square[i][0] = 1;
 			}
 	}
-	// заполняем верхнюю строку матрицы
+	// п╥п╟п©п╬п╩п╫я▐п╣п╪ п╡п╣я─я┘п╫я▌я▌ я│я┌я─п╬п╨я┐ п╪п╟я┌я─п╦я├я▀
 	preVal = square[0][0];
 	for (j = 1; j < s2; j++) {
 		if (preVal > 0)
@@ -1452,7 +1452,7 @@ int ASStageSimple::getSquare (const std::vector <int> &str1, const std::vector <
 			}
 	}
 
-	// Заполняем всю матрицу
+	// п≈п╟п©п╬п╩п╫я▐п╣п╪ п╡я│я▌ п╪п╟я┌я─п╦я├я┐
 	for (i = 1; i < s1; i++) {
 		for (j = 1; j < s2; j++) {
 			if ((square[i-1][j-1] >= square[i][j-1]) && (square[i-1][j-1] >= square[i-1][j])) {

@@ -63,8 +63,8 @@ void MarkupEditor::saveMarkup() {
 
 void MarkupEditor::displayErrorMessage() const {
 	QMessageBox::critical(0,
-						  encode("Ошибка"),
-						  encode("Неверный формат разметки"));
+						  encode("п·я┬п╦п╠п╨п╟"),
+						  encode("п²п╣п╡п╣я─п╫я▀п╧ я└п╬я─п╪п╟я┌ я─п╟п╥п╪п╣я┌п╨п╦"));
 }
 
 void MarkupEditor::changeEvent(QEvent *e)

@@ -1,8 +1,8 @@
 /****************************************************************************
 *			ManagedFuzzyDataStage
 *
-*	Description:	Базовый класс для структур, содержащих информацию
-*					о стадии алгоритма
+*	Description:	п▒п╟п╥п╬п╡я▀п╧ п╨п╩п╟я│я│ п╢п╩я▐ я│я┌я─я┐п╨я┌я┐я─, я│п╬п╢п╣я─п╤п╟я┴п╦я┘ п╦п╫я└п╬я─п╪п╟я├п╦я▌
+*					п╬ я│я┌п╟п╢п╦п╦ п╟п╩пЁп╬я─п╦я┌п╪п╟
 *	Author:		wictor
 *	History:
 *
@@ -30,7 +30,7 @@ typedef boost::shared_ptr<AxiomLib::IntervalSet> PIntervalSet;
 
 class ManagedFuzzyDataStage {
 
-	//объявления, необходимые для сериализации
+	//п╬п╠я┼я▐п╡п╩п╣п╫п╦я▐, п╫п╣п╬п╠я┘п╬п╢п╦п╪я▀п╣ п╢п╩я▐ я│п╣я─п╦п╟п╩п╦п╥п╟я├п╦п╦
 	friend class boost::serialization::access;
 	template <class Archive>
 	void serialize(Archive &archive, const unsigned int /*version*/)
@@ -57,7 +57,7 @@ public:
 			m_algorithm(algorithm), m_env(env), m_calculated(false)
 	{ }
 	
-	// Интервалы отсечения для обучающей выборки
+	// п≤п╫я┌п╣я─п╡п╟п╩я▀ п╬я┌я│п╣я┤п╣п╫п╦я▐ п╢п╩я▐ п╬п╠я┐я┤п╟я▌я┴п╣п╧ п╡я▀п╠п╬я─п╨п╦
 	PIntervalSet clippingIntervals;
 	
 	virtual int getStageNumber() const { return -1; }

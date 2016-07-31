@@ -1,7 +1,7 @@
 /****************************************************************************
 *				PercWrapper.cxx
 *
-*	Description:	Файл, содержащий реализацию того, что описано в PercWrapper.h
+*	Description:	п╓п╟п╧п╩, я│п╬п╢п╣я─п╤п╟я┴п╦п╧ я─п╣п╟п╩п╦п╥п╟я├п╦я▌ я┌п╬пЁп╬, я┤я┌п╬ п╬п©п╦я│п╟п╫п╬ п╡ PercWrapper.h
 *	Author:		wictor
 *	History:	
 *
@@ -14,77 +14,77 @@
 
 namespace AxiomLib {
 
-// Значение входа нейрона, которое ставится в соответствие 0 в обучающей строке
+// п≈п╫п╟я┤п╣п╫п╦п╣ п╡я┘п╬п╢п╟ п╫п╣п╧я─п╬п╫п╟, п╨п╬я┌п╬я─п╬п╣ я│я┌п╟п╡п╦я┌я│я▐ п╡ я│п╬п╬я┌п╡п╣я┌я│я┌п╡п╦п╣ 0 п╡ п╬п╠я┐я┤п╟я▌я┴п╣п╧ я│я┌я─п╬п╨п╣
 const double zeroValue = 0.0;
 
 /****************************************************************************
 *						PercWrapper<Holder>::construct
 *
-*       Description:	Установка параметров и создание сети
-*       Parameters:		const Settings &settings - параметры
-*						тип Settings должен иметь поля 
+*       Description:	пёя│я┌п╟п╫п╬п╡п╨п╟ п©п╟я─п╟п╪п╣я┌я─п╬п╡ п╦ я│п╬п╥п╢п╟п╫п╦п╣ я│п╣я┌п╦
+*       Parameters:		const Settings &settings - п©п╟я─п╟п╪п╣я┌я─я▀
+*						я┌п╦п© Settings п╢п╬п╩п╤п╣п╫ п╦п╪п╣я┌я▄ п©п╬п╩я▐ 
 *							CommonSettings commonSettings,
 *							PercSettings percSettings,
-*						а также удовлетворять требованиям Holder::construct()
+*						п╟ я┌п╟п╨п╤п╣ я┐п╢п╬п╡п╩п╣я┌п╡п╬я─я▐я┌я▄ я┌я─п╣п╠п╬п╡п╟п╫п╦я▐п╪ Holder::construct()
 *       Returns:		-
-*       Throws:			AxiomLibException, если dstQ кодировщика не равно 2
+*       Throws:			AxiomLibException, п╣я│п╩п╦ dstQ п╨п╬п╢п╦я─п╬п╡я┴п╦п╨п╟ п╫п╣ я─п╟п╡п╫п╬ 2
 *       Author:			wictor
 *       History:
 *
 ****************************************************************************/
 template<class Holder>
 template<class Settings>
-//тип Settings должен иметь член PercSettings percSettings
+//я┌п╦п© Settings п╢п╬п╩п╤п╣п╫ п╦п╪п╣я┌я▄ я┤п╩п╣п╫ PercSettings percSettings
 void PercWrapper<Holder>::construct(const Settings & s) {
-	// Инициализация настроек Holder
+	// п≤п╫п╦я├п╦п╟п╩п╦п╥п╟я├п╦я▐ п╫п╟я│я┌я─п╬п╣п╨ Holder
 	Holder::construct(s);
 	
-	// Проверка
+	// п÷я─п╬п╡п╣я─п╨п╟
 	if(Holder::getCoderDstQ()!=2) {
 		throw AxiomLibException("PercWrapper<Holder>::construct(): dstQ value is not 2");
 	}
 	
-	// Алиас для настроек перцептрона (для упрощения записи)
+	// п░п╩п╦п╟я│ п╢п╩я▐ п╫п╟я│я┌я─п╬п╣п╨ п©п╣я─я├п╣п©я┌я─п╬п╫п╟ (п╢п╩я▐ я┐п©я─п╬я┴п╣п╫п╦я▐ п╥п╟п©п╦я│п╦)
 	const PercSettings &settings = s.percSettings;
 	
-	// Вычисление числа входных и выходных нейронов
-	// Число входов - максимальная длина закодированной обучающей строки
+	// п▓я▀я┤п╦я│п╩п╣п╫п╦п╣ я┤п╦я│п╩п╟ п╡я┘п╬п╢п╫я▀я┘ п╦ п╡я▀я┘п╬п╢п╫я▀я┘ п╫п╣п╧я─п╬п╫п╬п╡
+	// п╖п╦я│п╩п╬ п╡я┘п╬п╢п╬п╡ - п╪п╟п╨я│п╦п╪п╟п╩я▄п╫п╟я▐ п╢п╩п╦п╫п╟ п╥п╟п╨п╬п╢п╦я─п╬п╡п╟п╫п╫п╬п╧ п╬п╠я┐я┤п╟я▌я┴п╣п╧ я│я┌я─п╬п╨п╦
 	numInp = Holder::getCoderDstLen(Holder::getMaxTrainDim());
-	// Число выходов - число обучающих строк
+	// п╖п╦я│п╩п╬ п╡я▀я┘п╬п╢п╬п╡ - я┤п╦я│п╩п╬ п╬п╠я┐я┤п╟я▌я┴п╦я┘ я│я┌я─п╬п╨
 	numOutp = Holder::getNumTrain();
 	
-	// Заполнение массива чисел нейронов в слоях
+	// п≈п╟п©п╬п╩п╫п╣п╫п╦п╣ п╪п╟я│я│п╦п╡п╟ я┤п╦я│п╣п╩ п╫п╣п╧я─п╬п╫п╬п╡ п╡ я│п╩п╬я▐я┘
 	unsigned int *layers=new unsigned int[settings.numLay+1];
 	layers[0]=numInp;
 	for(int i=1; i<settings.numLay; i++)
-		// Число нейронов во внутреннем слое - "нормальное" число,
-		// умноженное на множитель numNeuronsF[i-1] из настроек
+		// п╖п╦я│п╩п╬ п╫п╣п╧я─п╬п╫п╬п╡ п╡п╬ п╡п╫я┐я┌я─п╣п╫п╫п╣п╪ я│п╩п╬п╣ - "п╫п╬я─п╪п╟п╩я▄п╫п╬п╣" я┤п╦я│п╩п╬,
+		// я┐п╪п╫п╬п╤п╣п╫п╫п╬п╣ п╫п╟ п╪п╫п╬п╤п╦я┌п╣п╩я▄ numNeuronsF[i-1] п╦п╥ п╫п╟я│я┌я─п╬п╣п╨
 		layers[i]=static_cast<int>(std::floor(settings.numNeuronsF[i-1]*
 		(calcAveNumNeurons(i, settings.numLay, numInp, numOutp))));
 	layers[settings.numLay]=numOutp;
 	
-	// Создание сети
+	// п║п╬п╥п╢п╟п╫п╦п╣ я│п╣я┌п╦
 	net.create_standard_array(settings.numLay+1, layers);
 	
-	// Освобождение динамического массива
+	// п·я│п╡п╬п╠п╬п╤п╢п╣п╫п╦п╣ п╢п╦п╫п╟п╪п╦я┤п╣я│п╨п╬пЁп╬ п╪п╟я│я│п╦п╡п╟
 	delete [] layers;
 
-	// Установка активационной функции и ее параметра для каждого слоя
+	// пёя│я┌п╟п╫п╬п╡п╨п╟ п╟п╨я┌п╦п╡п╟я├п╦п╬п╫п╫п╬п╧ я└я┐п╫п╨я├п╦п╦ п╦ п╣п╣ п©п╟я─п╟п╪п╣я┌я─п╟ п╢п╩я▐ п╨п╟п╤п╢п╬пЁп╬ я│п╩п╬я▐
 	for(int i=1; i<=settings.numLay; i++)
 	{
 		net.set_activation_function_layer(settings.actFuncs[i-1], i);
 		net.set_activation_steepness_layer(settings.actFuncsS[i-1], i);
 	}
 
-	// Установка желаемой ошибки
+	// пёя│я┌п╟п╫п╬п╡п╨п╟ п╤п╣п╩п╟п╣п╪п╬п╧ п╬я┬п╦п╠п╨п╦
 	desiredError=settings.desiredError;
 	
-	// Установка обучающего алгоритма
+	// пёя│я┌п╟п╫п╬п╡п╨п╟ п╬п╠я┐я┤п╟я▌я┴п╣пЁп╬ п╟п╩пЁп╬я─п╦я┌п╪п╟
 	net.set_training_algorithm(settings.trainingAlgorithm);
-	// Мы устанавливаем learningRate и learningMomentum,
-	// только если используется простое обратное распространение ошибки
-	// (иначе алгоритмы сами их определяют, и устанавливать их вручную не
-	// рекомендуется)
+	// п°я▀ я┐я│я┌п╟п╫п╟п╡п╩п╦п╡п╟п╣п╪ learningRate п╦ learningMomentum,
+	// я┌п╬п╩я▄п╨п╬ п╣я│п╩п╦ п╦я│п©п╬п╩я▄п╥я┐п╣я┌я│я▐ п©я─п╬я│я┌п╬п╣ п╬п╠я─п╟я┌п╫п╬п╣ я─п╟я│п©я─п╬я│я┌я─п╟п╫п╣п╫п╦п╣ п╬я┬п╦п╠п╨п╦
+	// (п╦п╫п╟я┤п╣ п╟п╩пЁп╬я─п╦я┌п╪я▀ я│п╟п╪п╦ п╦я┘ п╬п©я─п╣п╢п╣п╩я▐я▌я┌, п╦ я┐я│я┌п╟п╫п╟п╡п╩п╦п╡п╟я┌я▄ п╦я┘ п╡я─я┐я┤п╫я┐я▌ п╫п╣
+	// я─п╣п╨п╬п╪п╣п╫п╢я┐п╣я┌я│я▐)
 	if(settings.trainingAlgorithm==FANN::TRAIN_BATCH || settings.trainingAlgorithm==FANN::TRAIN_INCREMENTAL
 		||settings.trainingAlgorithm==FANN::TRAIN_QUICKPROP)
 	{
@@ -92,27 +92,27 @@ void PercWrapper<Holder>::construct(const Settings & s) {
 		net.set_learning_momentum((float) settings.learningMomentum);
 	}
 	
-	// Установка остальных настроек
+	// пёя│я┌п╟п╫п╬п╡п╨п╟ п╬я│я┌п╟п╩я▄п╫я▀я┘ п╫п╟я│я┌я─п╬п╣п╨
 	maxIters = settings.maxIters;
 	itersBetweenReports = settings.itersBetweenReports;
 	
-	// Если коментарии не нужны, мы ставим пустой defaultCallback
-	// (иначе по умолчанию стоит некоторый callback, выводящий информацию)
+	// п∙я│п╩п╦ п╨п╬п╪п╣п╫я┌п╟я─п╦п╦ п╫п╣ п╫я┐п╤п╫я▀, п╪я▀ я│я┌п╟п╡п╦п╪ п©я┐я│я┌п╬п╧ defaultCallback
+	// (п╦п╫п╟я┤п╣ п©п╬ я┐п╪п╬п╩я┤п╟п╫п╦я▌ я│я┌п╬п╦я┌ п╫п╣п╨п╬я┌п╬я─я▀п╧ callback, п╡я▀п╡п╬п╢я▐я┴п╦п╧ п╦п╫я└п╬я─п╪п╟я├п╦я▌)
 	if(!s.commonSettings.comments) {
 		net.set_callback(&(PercWrapper<Holder>::defaultCallback), 0);
 	}
 	
-	// Формирование data
+	// п╓п╬я─п╪п╦я─п╬п╡п╟п╫п╦п╣ data
 	constructTrainingData();
 	
-	// Установка состояния
+	// пёя│я┌п╟п╫п╬п╡п╨п╟ я│п╬я│я┌п╬я▐п╫п╦я▐
 	stage = 1;
 }
 
 /****************************************************************************
 *						PercWrapper<Holder>::train
 *
-*       Description:	Функция обучает сеть на ранее предоставленных ей обучающих строках
+*       Description:	п╓я┐п╫п╨я├п╦я▐ п╬п╠я┐я┤п╟п╣я┌ я│п╣я┌я▄ п╫п╟ я─п╟п╫п╣п╣ п©я─п╣п╢п╬я│я┌п╟п╡п╩п╣п╫п╫я▀я┘ п╣п╧ п╬п╠я┐я┤п╟я▌я┴п╦я┘ я│я┌я─п╬п╨п╟я┘
 *       Parameters:		-
 *       Returns:		-
 *       Throws:			-
@@ -122,25 +122,25 @@ void PercWrapper<Holder>::construct(const Settings & s) {
 ****************************************************************************/
 template<class Holder>
 void PercWrapper<Holder>::train() {
-	// TODO: выводить больше информации, сделать в Holder поле comments
+	// TODO: п╡я▀п╡п╬п╢п╦я┌я▄ п╠п╬п╩я▄я┬п╣ п╦п╫я└п╬я─п╪п╟я├п╦п╦, я│п╢п╣п╩п╟я┌я▄ п╡ Holder п©п╬п╩п╣ comments
 	
-	// Инициализация весов
+	// п≤п╫п╦я├п╦п╟п╩п╦п╥п╟я├п╦я▐ п╡п╣я│п╬п╡
 	net.init_weights(data);
-	// Обучение
+	// п·п╠я┐я┤п╣п╫п╦п╣
 	net.train_on_data(data, maxIters,
 		  itersBetweenReports, (float) desiredError);
-	// Установка состояния
+	// пёя│я┌п╟п╫п╬п╡п╨п╟ я│п╬я│я┌п╬я▐п╫п╦я▐
 	stage = 2;
 }
 
 /****************************************************************************
 *						PercWrapper<Holder>::constructTrainingData
 *
-*       Description:	Построение обучающей выборки в том виде, в котором ее
-*						принимает FANN
+*       Description:	п÷п╬я│я┌я─п╬п╣п╫п╦п╣ п╬п╠я┐я┤п╟я▌я┴п╣п╧ п╡я▀п╠п╬я─п╨п╦ п╡ я┌п╬п╪ п╡п╦п╢п╣, п╡ п╨п╬я┌п╬я─п╬п╪ п╣п╣
+*						п©я─п╦п╫п╦п╪п╟п╣я┌ FANN
 *       Parameters:		-
 *       Returns:		-
-*       Throws:			AxiomLibException, если обучающая выборка пуста
+*       Throws:			AxiomLibException, п╣я│п╩п╦ п╬п╠я┐я┤п╟я▌я┴п╟я▐ п╡я▀п╠п╬я─п╨п╟ п©я┐я│я┌п╟
 *       Author:			wictor
 *       History:
 *
@@ -155,7 +155,7 @@ void PercWrapper<Holder>::constructTrainingData() {
 	int aux_sz = 0;
 	//int sz2=0;
 
-	// Считаем число дополнительных строк для обучения
+	// п║я┤п╦я┌п╟п╣п╪ я┤п╦я│п╩п╬ п╢п╬п©п╬п╩п╫п╦я┌п╣п╩я▄п╫я▀я┘ я│я┌я─п╬п╨ п╢п╩я▐ п╬п╠я┐я┤п╣п╫п╦я▐
 	for(int i = 0; i<Holder::getNumAuxTrain(); i++)
 	{
 		aux_sz+=Holder::getNumAuxTrain(i);
@@ -164,48 +164,48 @@ void PercWrapper<Holder>::constructTrainingData() {
 
 	//sz2 = sz+aux_sz;
 	
-	// Вычисляем общий размер обучающей выборки (включая доп. строки)
+	// п▓я▀я┤п╦я│п╩я▐п╣п╪ п╬п╠я┴п╦п╧ я─п╟п╥п╪п╣я─ п╬п╠я┐я┤п╟я▌я┴п╣п╧ п╡я▀п╠п╬я─п╨п╦ (п╡п╨п╩я▌я┤п╟я▐ п╢п╬п©. я│я┌я─п╬п╨п╦)
 	sz += aux_sz;
 	
 	//sz += inhibiting_data.size();
 	
-	// Проверка
+	// п÷я─п╬п╡п╣я─п╨п╟
 	if(sz==0) {
 		throw AxiomLibException("PercWrapper<Holder>::constructTrainingData() : no training data supplied");
 	}
 	
-	// Массивы входов и выходов сети (fann_type - это double)
+	// п°п╟я│я│п╦п╡я▀ п╡я┘п╬п╢п╬п╡ п╦ п╡я▀я┘п╬п╢п╬п╡ я│п╣я┌п╦ (fann_type - я█я┌п╬ double)
 	fann_type **input=new fann_type *[sz];
 	fann_type **output=new fann_type *[sz];
 
-	// Сквозной счетчик элементов обучающей выборки
-	// (как основных, так и дополнительных)
+	// п║п╨п╡п╬п╥п╫п╬п╧ я│я┤п╣я┌я┤п╦п╨ я█п╩п╣п╪п╣п╫я┌п╬п╡ п╬п╠я┐я┤п╟я▌я┴п╣п╧ п╡я▀п╠п╬я─п╨п╦
+	// (п╨п╟п╨ п╬я│п╫п╬п╡п╫я▀я┘, я┌п╟п╨ п╦ п╢п╬п©п╬п╩п╫п╦я┌п╣п╩я▄п╫я▀я┘)
 	int i=0;
 	
-	// Цикл по всем основным строкам для обучения
+	// п╕п╦п╨п╩ п©п╬ п╡я│п╣п╪ п╬я│п╫п╬п╡п╫я▀п╪ я│я┌я─п╬п╨п╟п╪ п╢п╩я▐ п╬п╠я┐я┤п╣п╫п╦я▐
 	for (int ii=0; ii<Holder::getNumTrain(); ii++)
 	{
-		// Вход и соответствующий ему выход
+		// п▓я┘п╬п╢ п╦ я│п╬п╬я┌п╡п╣я┌я│я┌п╡я┐я▌я┴п╦п╧ п╣п╪я┐ п╡я▀я┘п╬п╢
 		input[i]=new fann_type[numInp];
 		output[i]=new fann_type[numOutp];
 		
-		// Заполняем вход
+		// п≈п╟п©п╬п╩п╫я▐п╣п╪ п╡я┘п╬п╢
 		for(int j=0; j < numInp; j++) {
 			input[i][j]=transform(Holder::getTranslated(ii), j);
 		}
 		
-		// Заполняем выход
+		// п≈п╟п©п╬п╩п╫я▐п╣п╪ п╡я▀я┘п╬п╢
 		for(int j=0; j < numOutp; j++)
 		{
 			output[i][j]= (ii==j) ? 1.0 : zeroValue;
 		}
 		
-		// Увеличиваем счетчик
+		// пёп╡п╣п╩п╦я┤п╦п╡п╟п╣п╪ я│я┤п╣я┌я┤п╦п╨
 		i++;
 		
-		// Цикл по всем дополнительным строкам для обучения,
-		// соответствующим данной основной строке
-		// тут все аналогично
+		// п╕п╦п╨п╩ п©п╬ п╡я│п╣п╪ п╢п╬п©п╬п╩п╫п╦я┌п╣п╩я▄п╫я▀п╪ я│я┌я─п╬п╨п╟п╪ п╢п╩я▐ п╬п╠я┐я┤п╣п╫п╦я▐,
+		// я│п╬п╬я┌п╡п╣я┌я│я┌п╡я┐я▌я┴п╦п╪ п╢п╟п╫п╫п╬п╧ п╬я│п╫п╬п╡п╫п╬п╧ я│я┌я─п╬п╨п╣
+		// я┌я┐я┌ п╡я│п╣ п╟п╫п╟п╩п╬пЁп╦я┤п╫п╬
 		for(int iii=0; iii<Holder::getNumAuxTrain(ii); iii++)
 		{
 			input[i]=new fann_type[numInp];
@@ -216,8 +216,8 @@ void PercWrapper<Holder>::constructTrainingData() {
 			}
 
 			for (int j = 0; i < numOutp; j++) {
-				// Здесь мы ставим не 1, а чтото меньшее,
-				// т.к. это не основной паттерн, на который нужно реагировать
+				// п≈п╢п╣я│я▄ п╪я▀ я│я┌п╟п╡п╦п╪ п╫п╣ 1, п╟ я┤я┌п╬я┌п╬ п╪п╣п╫я▄я┬п╣п╣,
+				// я┌.п╨. я█я┌п╬ п╫п╣ п╬я│п╫п╬п╡п╫п╬п╧ п©п╟я┌я┌п╣я─п╫, п╫п╟ п╨п╬я┌п╬я─я▀п╧ п╫я┐п╤п╫п╬ я─п╣п╟пЁп╦я─п╬п╡п╟я┌я▄
 				output[i][j]= (ii==j) ? 
 					determineOutput(Holder::getAuxTranslated(ii, iii), Holder::getTranslated(ii)) : 
 					zeroValue;
@@ -238,10 +238,10 @@ void PercWrapper<Holder>::constructTrainingData() {
 	//	}
 	//}
 
-	// Заполняем data
+	// п≈п╟п©п╬п╩п╫я▐п╣п╪ data
 	data.set_train_data(sz, numInp, input, numOutp, output);
 
-	// Освобождаем память
+	// п·я│п╡п╬п╠п╬п╤п╢п╟п╣п╪ п©п╟п╪я▐я┌я▄
 	for(int i=0; i<sz; i++)
 	{
 		delete [] input[i];
@@ -254,12 +254,12 @@ void PercWrapper<Holder>::constructTrainingData() {
 /****************************************************************************
 *						PercWrapper<Holder>::run
 *
-*       Description:	Функция запускает нейросетевой алгоритм
+*       Description:	п╓я┐п╫п╨я├п╦я▐ п╥п╟п©я┐я│п╨п╟п╣я┌ п╫п╣п╧я─п╬я│п╣я┌п╣п╡п╬п╧ п╟п╩пЁп╬я─п╦я┌п╪
 *						
-*       Parameters:		const Qstring &inp - вход сети ()
-*						double &p - число, которое может возвращать сеть при работе (пока не используется)
-*       Returns:		Номер эталонной строки (в том порядке, в котором они были заданы функцией supplyTrainingData()), 
-*						либо -1, если сеть выдала ответ, выходящий за рамки нумерации эталонных строк
+*       Parameters:		const Qstring &inp - п╡я┘п╬п╢ я│п╣я┌п╦ ()
+*						double &p - я┤п╦я│п╩п╬, п╨п╬я┌п╬я─п╬п╣ п╪п╬п╤п╣я┌ п╡п╬п╥п╡я─п╟я┴п╟я┌я▄ я│п╣я┌я▄ п©я─п╦ я─п╟п╠п╬я┌п╣ (п©п╬п╨п╟ п╫п╣ п╦я│п©п╬п╩я▄п╥я┐п╣я┌я│я▐)
+*       Returns:		п²п╬п╪п╣я─ я█я┌п╟п╩п╬п╫п╫п╬п╧ я│я┌я─п╬п╨п╦ (п╡ я┌п╬п╪ п©п╬я─я▐п╢п╨п╣, п╡ п╨п╬я┌п╬я─п╬п╪ п╬п╫п╦ п╠я▀п╩п╦ п╥п╟п╢п╟п╫я▀ я└я┐п╫п╨я├п╦п╣п╧ supplyTrainingData()), 
+*						п╩п╦п╠п╬ -1, п╣я│п╩п╦ я│п╣я┌я▄ п╡я▀п╢п╟п╩п╟ п╬я┌п╡п╣я┌, п╡я▀я┘п╬п╢я▐я┴п╦п╧ п╥п╟ я─п╟п╪п╨п╦ п╫я┐п╪п╣я─п╟я├п╦п╦ я█я┌п╟п╩п╬п╫п╫я▀я┘ я│я┌я─п╬п╨
 *       Throws:			-
 *       Author:			wictor
 *       History:
@@ -267,31 +267,31 @@ void PercWrapper<Holder>::constructTrainingData() {
 ****************************************************************************/
 template<class Holder>
 int PercWrapper<Holder>::run(const Qstring &pattern, double &probability) const {
-	// Вход в том виде, в котором понимает его FANN
+	// п▓я┘п╬п╢ п╡ я┌п╬п╪ п╡п╦п╢п╣, п╡ п╨п╬я┌п╬я─п╬п╪ п©п╬п╫п╦п╪п╟п╣я┌ п╣пЁп╬ FANN
 	fann_type *input=new fann_type[numInp];
 	
-	// Кодирование входной строки
+	// п п╬п╢п╦я─п╬п╡п╟п╫п╦п╣ п╡я┘п╬п╢п╫п╬п╧ я│я┌я─п╬п╨п╦
 	Qstring patternCoded = Holder::coderTranslate(pattern);
 	
-	// Заполнение входной строки в виде массива
+	// п≈п╟п©п╬п╩п╫п╣п╫п╦п╣ п╡я┘п╬п╢п╫п╬п╧ я│я┌я─п╬п╨п╦ п╡ п╡п╦п╢п╣ п╪п╟я│я│п╦п╡п╟
 	for(int i=0; i< numInp; i++)
 	{
 		input[i]=transform(patternCoded,i);
 	}
 
-	// Запуск сети
+	// п≈п╟п©я┐я│п╨ я│п╣я┌п╦
 	fann_type *res=net.run(input);
 
-	// Освобождение памяти
+	// п·я│п╡п╬п╠п╬п╤п╢п╣п╫п╦п╣ п©п╟п╪я▐я┌п╦
 	delete [] input;
 	
-	// Определение максимального индекса в выходе сети
+	// п·п©я─п╣п╢п╣п╩п╣п╫п╦п╣ п╪п╟п╨я│п╦п╪п╟п╩я▄п╫п╬пЁп╬ п╦п╫п╢п╣п╨я│п╟ п╡ п╡я▀я┘п╬п╢п╣ я│п╣я┌п╦
 	int max_index=0;
 	for(int i=1; i<numOutp; i++) {
 		if(res[i]>res[max_index]) max_index=i;
 	}
 	
-	// Параметру присваиваем значение максимального выхода нейрона
+	// п÷п╟я─п╟п╪п╣я┌я─я┐ п©я─п╦я│п╡п╟п╦п╡п╟п╣п╪ п╥п╫п╟я┤п╣п╫п╦п╣ п╪п╟п╨я│п╦п╪п╟п╩я▄п╫п╬пЁп╬ п╡я▀я┘п╬п╢п╟ п╫п╣п╧я─п╬п╫п╟
 	probability=res[max_index];
 	
 	return max_index;
@@ -300,10 +300,10 @@ int PercWrapper<Holder>::run(const Qstring &pattern, double &probability) const 
 /****************************************************************************
 *						PercWrapper<Holder>::PercWrapper
 *
-*       Description:	Конструктор копирования - он нетривиален, т.к.
-*						тип FANN::training_data не copy-constructible
-*						В данном конструкторе data не копируется,
-*						а создается заново, если нужно
+*       Description:	п п╬п╫я│я┌я─я┐п╨я┌п╬я─ п╨п╬п©п╦я─п╬п╡п╟п╫п╦я▐ - п╬п╫ п╫п╣я┌я─п╦п╡п╦п╟п╩п╣п╫, я┌.п╨.
+*						я┌п╦п© FANN::training_data п╫п╣ copy-constructible
+*						п▓ п╢п╟п╫п╫п╬п╪ п╨п╬п╫я│я┌я─я┐п╨я┌п╬я─п╣ data п╫п╣ п╨п╬п©п╦я─я┐п╣я┌я│я▐,
+*						п╟ я│п╬п╥п╢п╟п╣я┌я│я▐ п╥п╟п╫п╬п╡п╬, п╣я│п╩п╦ п╫я┐п╤п╫п╬
 *       Parameters:		const PercWrapper<Holder> &other
 *       Returns:		-
 *       Throws:			-

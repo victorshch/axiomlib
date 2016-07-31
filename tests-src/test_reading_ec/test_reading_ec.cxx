@@ -2,13 +2,13 @@
 *			File name: test_reading_ec.cxx
 *			File type: C++ program file
 *
-*			Тестовая площадка для отработки класса ElemConditions
+*			п╒п╣я│я┌п╬п╡п╟я▐ п©п╩п╬я┴п╟п╢п╨п╟ п╢п╩я▐ п╬я┌я─п╟п╠п╬я┌п╨п╦ п╨п╩п╟я│я│п╟ ElemConditions
 *
 *	Copyright (C) dk, 2000 - 2009. All rights reserved
 *
 *	Version:	0.1
 *
-*	File history:	29 сентября 2009
+*	File history:	29 я│п╣п╫я┌я▐п╠я─я▐ 2009
 *
 ****************************************************************************/
 
@@ -52,17 +52,17 @@ int main(int argc, char** argv) {
 		env.readConfigFile(pathToConfigFile.c_str());
 		env += envStart;
 		
-		// 1. ищем базовую директорию с наборами аксиом
+		// 1. п╦я┴п╣п╪ п╠п╟п╥п╬п╡я┐я▌ п╢п╦я─п╣п╨я┌п╬я─п╦я▌ я│ п╫п╟п╠п╬я─п╟п╪п╦ п╟п╨я│п╦п╬п╪
 		std::string axiomBaseDir;
 		if (env.getStringParamValue(axiomBaseDir, "AxiomBaseDir") < 0)
 			throw AxiomLibException("AxiomSetPop::initFromEnv : popPreset > 0 but axiom base dir is not set.");
 
-		// 2. ищем базовую директорию с наборами систем аксиом
+		// 2. п╦я┴п╣п╪ п╠п╟п╥п╬п╡я┐я▌ п╢п╦я─п╣п╨я┌п╬я─п╦я▌ я│ п╫п╟п╠п╬я─п╟п╪п╦ я│п╦я│я┌п╣п╪ п╟п╨я│п╦п╬п╪
 		std::string axiomSetDir;
 		if (env.getStringParamValue(axiomSetDir, "AxiomSetBaseDir") < 0)
 			throw AxiomLibException("AxiomSetPop::initFromEnv : popPreset > 0 but axiom set base dir is not set.");
 
-		// 3. получаем множество наборов аксиом
+		// 3. п©п╬п╩я┐я┤п╟п╣п╪ п╪п╫п╬п╤п╣я│я┌п╡п╬ п╫п╟п╠п╬я─п╬п╡ п╟п╨я│п╦п╬п╪
 		std::string axiomSetName;
 		if (env.getStringParamValue(axiomSetName, "AxiomSet") < 0)
 			throw AxiomLibException("AxiomSetPop::initFromEnv : popPreset > 0 but no axiom set is given.");
@@ -73,8 +73,8 @@ int main(int argc, char** argv) {
 		paramNames[1].assign ("row");
 		paramNames[2].assign ("data");
 
-		// Тест на чтение и запись в файл описания системы аксиомы
-		// Тест на чтение из файла
+		// п╒п╣я│я┌ п╫п╟ я┤я┌п╣п╫п╦п╣ п╦ п╥п╟п©п╦я│я▄ п╡ я└п╟п╧п╩ п╬п©п╦я│п╟п╫п╦я▐ я│п╦я│я┌п╣п╪я▀ п╟п╨я│п╦п╬п╪я▀
+		// п╒п╣я│я┌ п╫п╟ я┤я┌п╣п╫п╦п╣ п╦п╥ я└п╟п╧п╩п╟
 		AxiomSetBase axiomSetBase;
 		std::string fName;
 		fName = axiomSetDir;
@@ -88,12 +88,12 @@ int main(int argc, char** argv) {
 		if (env.getStringParamValue(whereToSave, "saveTo") < 0)
 			throw AxiomLibException("Top level: main : saveTo is undefined.");
 
-		// Тест на определение структуры аксиомы и на запись в файлы
+		// п╒п╣я│я┌ п╫п╟ п╬п©я─п╣п╢п╣п╩п╣п╫п╦п╣ я│я┌я─я┐п╨я┌я┐я─я▀ п╟п╨я│п╦п╬п╪я▀ п╦ п╫п╟ п╥п╟п©п╦я│я▄ п╡ я└п╟п╧п╩я▀
 		AxiomExprSet axiomExprSet;
 		axiomExprSet.initAxiomSetFromFile (axiomSetDir, axiomSetName);
 		axiomExprSet.saveAxiomSetToFile (axiomSetDir, whereToSave);
 
-		// Тест на случайное определение системы аксиом
+		// п╒п╣я│я┌ п╫п╟ я│п╩я┐я┤п╟п╧п╫п╬п╣ п╬п©я─п╣п╢п╣п╩п╣п╫п╦п╣ я│п╦я│я┌п╣п╪я▀ п╟п╨я│п╦п╬п╪
 		AxiomExprSet axiomExprSet2;
 		axiomExprSet2.initAxiomSetByRand (5, 5);
 		whereToSave.append ("a");
@@ -112,13 +112,13 @@ int main(int argc, char** argv) {
 		std::cout<< "\nTest 1 done.\n";
 
 
-		// Тест на чтение и запись в файл описания аксиомы
-		// Получаем множество наборов аксиом
+		// п╒п╣я│я┌ п╫п╟ я┤я┌п╣п╫п╦п╣ п╦ п╥п╟п©п╦я│я▄ п╡ я└п╟п╧п╩ п╬п©п╦я│п╟п╫п╦я▐ п╟п╨я│п╦п╬п╪я▀
+		// п÷п╬п╩я┐я┤п╟п╣п╪ п╪п╫п╬п╤п╣я│я┌п╡п╬ п╫п╟п╠п╬я─п╬п╡ п╟п╨я│п╦п╬п╪
 		std::string axiomName;
 		if (env.getStringParamValue(axiomName, "Axiom") < 0)
 			throw AxiomLibException("AxiomSetPop::initFromEnv : no axiom is given.");
 		
-		// Тест на чтение из файла
+		// п╒п╣я│я┌ п╫п╟ я┤я┌п╣п╫п╦п╣ п╦п╥ я└п╟п╧п╩п╟
 		AxiomBase axiomBase;
 		std::string fName2;
 		fName2 = axiomBaseDir;
@@ -137,7 +137,7 @@ int main(int argc, char** argv) {
 		if (env.getStringParamValue(whereToSaveAxiom, "saveTo") < 0)
 			throw AxiomLibException("Top level: main : saveTo is undefined.");
 
-		// Тест на определение структуры аксиомы и на запись в файлы
+		// п╒п╣я│я┌ п╫п╟ п╬п©я─п╣п╢п╣п╩п╣п╫п╦п╣ я│я┌я─я┐п╨я┌я┐я─я▀ п╟п╨я│п╦п╬п╪я▀ п╦ п╫п╟ п╥п╟п©п╦я│я▄ п╡ я└п╟п╧п╩я▀
 		AxiomExpr axiomExpr;
 		axiomExpr.initAxiomFromStructure (aes);
 		axiomExpr.saveAxiomToFile (axiomBaseDir, whereToSaveAxiom);
@@ -147,7 +147,7 @@ int main(int argc, char** argv) {
 		whereToSaveAxiom.append ("2");
 		axiomExpr1.saveAxiomToFile (axiomBaseDir, whereToSaveAxiom, paramNames);
 
-		// Тест на случайное определение системы аксиом
+		// п╒п╣я│я┌ п╫п╟ я│п╩я┐я┤п╟п╧п╫п╬п╣ п╬п©я─п╣п╢п╣п╩п╣п╫п╦п╣ я│п╦я│я┌п╣п╪я▀ п╟п╨я│п╦п╬п╪
 		AxiomExpr axiomExpr2;
 		axiomExpr2.initAxiomByRand (5);
 		whereToSaveAxiom.append ("a");
@@ -161,13 +161,13 @@ int main(int argc, char** argv) {
 		std::cout<< "\nTest 2 done.\n";
 
 
-		// Тест на чтение и запись в файл описания элементарного условия
-		// Получаем множество наборов условий
+		// п╒п╣я│я┌ п╫п╟ я┤я┌п╣п╫п╦п╣ п╦ п╥п╟п©п╦я│я▄ п╡ я└п╟п╧п╩ п╬п©п╦я│п╟п╫п╦я▐ я█п╩п╣п╪п╣п╫я┌п╟я─п╫п╬пЁп╬ я┐я│п╩п╬п╡п╦я▐
+		// п÷п╬п╩я┐я┤п╟п╣п╪ п╪п╫п╬п╤п╣я│я┌п╡п╬ п╫п╟п╠п╬я─п╬п╡ я┐я│п╩п╬п╡п╦п╧
 		std::string ecName;
 		if (env.getStringParamValue(ecName, "ElemCond") < 0)
 			throw AxiomLibException("AxiomSetPop::initFromEnv : no ElemCond is given.");
 		
-		// Тест на чтение из файла
+		// п╒п╣я│я┌ п╫п╟ я┤я┌п╣п╫п╦п╣ п╦п╥ я└п╟п╧п╩п╟
 		AxiomBase axiomBaseEC;
 		std::string fName3;
 		fName3 = axiomBaseDir;
@@ -182,17 +182,17 @@ int main(int argc, char** argv) {
 		if (env.getStringParamValue(whereToSaveEC, "saveTo") < 0)
 			throw AxiomLibException("Top level: main : saveTo is undefined.");
 
-		// Тест на определение структуры аксиомы и на запись в файлы
+		// п╒п╣я│я┌ п╫п╟ п╬п©я─п╣п╢п╣п╩п╣п╫п╦п╣ я│я┌я─я┐п╨я┌я┐я─я▀ п╟п╨я│п╦п╬п╪я▀ п╦ п╫п╟ п╥п╟п©п╦я│я▄ п╡ я└п╟п╧п╩я▀
 		ElemCondPlus elemCondPlus;
 		elemCondPlus.initFromStructure(ecps);
 		elemCondPlus.saveECToFile (axiomBaseDir, whereToSaveEC);
 
-		// Тест второго варианта записи 
+		// п╒п╣я│я┌ п╡я┌п╬я─п╬пЁп╬ п╡п╟я─п╦п╟п╫я┌п╟ п╥п╟п©п╦я│п╦ 
 		whereToSaveEC.append ("plus");
 		elemCondPlus.dimension = 1;
 		elemCondPlus.saveECToFile (axiomBaseDir, whereToSaveEC, paramNames);
 
-		// тест второго варианта чтения
+		// я┌п╣я│я┌ п╡я┌п╬я─п╬пЁп╬ п╡п╟я─п╦п╟п╫я┌п╟ я┤я┌п╣п╫п╦я▐
 		std::string fName4;
 		fName4 = axiomBaseDir;
 		fName4.append ("/");

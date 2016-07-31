@@ -1,8 +1,8 @@
 /****************************************************************************
 *			SatPointSet.h
 *
-*	Description: Описание класса, предназначенного для хранения набора точек 
-*				выполнения ЭУ или аксиомы
+*	Description: п·п©п╦я│п╟п╫п╦п╣ п╨п╩п╟я│я│п╟, п©я─п╣п╢п╫п╟п╥п╫п╟я┤п╣п╫п╫п╬пЁп╬ п╢п╩я▐ я┘я─п╟п╫п╣п╫п╦я▐ п╫п╟п╠п╬я─п╟ я┌п╬я┤п╣п╨ 
+*				п╡я▀п©п╬п╩п╫п╣п╫п╦я▐ п╜пё п╦п╩п╦ п╟п╨я│п╦п╬п╪я▀
 *	Author:		wictor
 *	History:	
 *
@@ -20,7 +20,7 @@
 
 namespace AxiomLib {
 
-// Набор точек выполнимости для некоторого класса (набора траекторий)
+// п²п╟п╠п╬я─ я┌п╬я┤п╣п╨ п╡я▀п©п╬п╩п╫п╦п╪п╬я│я┌п╦ п╢п╩я▐ п╫п╣п╨п╬я┌п╬я─п╬пЁп╬ п╨п╩п╟я│я│п╟ (п╫п╟п╠п╬я─п╟ я┌я─п╟п╣п╨я┌п╬я─п╦п╧)
 class SatPointSet
 {
 public:
@@ -34,24 +34,24 @@ public:
 	SatPointSet(const Axiom &axiom, const FuzzyDataSet &dataSet, FuzzyDataSet::DataSetDivisionType division,
 				int classNo, SatPointSetType satPointSetType = ClassSatPoints);
 		
-	// Число траекторий
+	// п╖п╦я│п╩п╬ я┌я─п╟п╣п╨я┌п╬я─п╦п╧
 	int size() const { return m_satPoints.size(); }
 	
-	// Число точек (длина) траектории
+	// п╖п╦я│п╩п╬ я┌п╬я┤п╣п╨ (п╢п╩п╦п╫п╟) я┌я─п╟п╣п╨я┌п╬я─п╦п╦
 	int size(int multiTSNo) const { return m_satPoints[multiTSNo].size(); }
 
-	// Выполнена ли аксиома в точке траектории
+	// п▓я▀п©п╬п╩п╫п╣п╫п╟ п╩п╦ п╟п╨я│п╦п╬п╪п╟ п╡ я┌п╬я┤п╨п╣ я┌я─п╟п╣п╨я┌п╬я─п╦п╦
 	bool isSat(int multiTSNo, int i) const { return (bool)m_satPoints[multiTSNo][i]; }
 	
-	// Оператор слияния по &
+	// п·п©п╣я─п╟я┌п╬я─ я│п╩п╦я▐п╫п╦я▐ п©п╬ &
 	SatPointSet &operator&=(const SatPointSet& other);
 	
-	// Оператор слияния по |
+	// п·п©п╣я─п╟я┌п╬я─ я│п╩п╦я▐п╫п╦я▐ п©п╬ |
 	SatPointSet &operator|=(const SatPointSet& other);
 	
 	bool operator == (const SatPointSet& other) const;
 	
-	// Число точек, на которых аксиома выполняется
+	// п╖п╦я│п╩п╬ я┌п╬я┤п╣п╨, п╫п╟ п╨п╬я┌п╬я─я▀я┘ п╟п╨я│п╦п╬п╪п╟ п╡я▀п©п╬п╩п╫я▐п╣я┌я│я▐
 	int numSat(int multiTSNo) const;
 	
 private:
@@ -112,7 +112,7 @@ SatPointSet::SatPointSet(const Axiom &axiom, const FuzzyDataSet &dataSet, FuzzyD
 
 	axiom.getDimensions(dimensions);
 
-	// Сквозной индекс траекторий
+	// п║п╨п╡п╬п╥п╫п╬п╧ п╦п╫п╢п╣п╨я│ я┌я─п╟п╣п╨я┌п╬я─п╦п╧
 	size_t currentMultiTS = 0;
 
 	for(size_t i = 0; i < classes.size(); ++i) {

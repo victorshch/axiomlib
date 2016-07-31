@@ -41,7 +41,7 @@ public:
 //		return identifier()->compare(other.identifier());
 //	}
 	
-	//TODO: убрать markUp из ElemCondPlus
+	//TODO: я┐п╠я─п╟я┌я▄ markUp п╦п╥ ElemCondPlus
 	unsigned long markUp(const std::vector<std::vector<double> > &ts, std::vector<int> &markup) const;
 };
 

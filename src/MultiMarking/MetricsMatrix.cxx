@@ -1,7 +1,7 @@
 /****************************************************************************
-*			MetricsMatrix.сxx
+*			MetricsMatrix.я│xx
 *
-*	Description: Реализация метода класса
+*	Description: п═п╣п╟п╩п╦п╥п╟я├п╦я▐ п╪п╣я┌п╬п╢п╟ п╨п╩п╟я│я│п╟
 *	Author:		armkor
 *	History:
 *
@@ -15,7 +15,7 @@ namespace AxiomLib {
 
 namespace MultiMarking {
 
-    double Matrix::compute(const std::vector<bool>& v1, const std::vector<bool>& v2) { // Передаем столбцы матрицы
+    double Matrix::compute(const std::vector<bool>& v1, const std::vector<bool>& v2) { // п÷п╣я─п╣п╢п╟п╣п╪ я│я┌п╬п╩п╠я├я▀ п╪п╟я┌я─п╦я├я▀
         if ( v1[currentAxiomNumber] == v2[currentAxiomNumber] )
             return 0;
         return 1;

@@ -18,10 +18,10 @@ int main (int argc, char** argv) {
 	try {
 		srand((unsigned int) time(0));
 		if (comments) {
-			std::cout << "\n" << "AxiomLib 0.6 / Test_precision.\nþÉÔÁÅÍ ËÏÎÆÉÇÕÒÁÃÉÏÎÎÙÊ ÆÁÊÌ." << "\n";
+			std::cout << "\n" << "AxiomLib 0.6 / Test_precision.\nÐ§Ð¸Ñ‚Ð°ÐµÐ¼ ÐºÐ¾Ð½Ñ„Ð¸Ð³ÑƒÑ€Ð°Ñ†Ð¸Ð¾Ð½Ð½Ñ‹Ð¹ Ñ„Ð°Ð¹Ð»." << "\n";
 			std::cout.flush();
 		}
-		 // óÞÉÔÙ×ÁÅÍ ÆÁÊÌ ËÏÎÆÉÇÕÒÁÃÉÉ ÉÚ ÚÁÄÁÎÎÏÇÏ ÉÓÔÏÞÎÉËÁ
+		 // Ð¡Ñ‡Ð¸Ñ‚Ñ‹Ð²Ð°ÐµÐ¼ Ñ„Ð°Ð¹Ð» ÐºÐ¾Ð½Ñ„Ð¸Ð³ÑƒÑ€Ð°Ñ†Ð¸Ð¸ Ð¸Ð· Ð·Ð°Ð´Ð°Ð½Ð½Ð¾Ð³Ð¾ Ð¸ÑÑ‚Ð¾Ñ‡Ð½Ð¸ÐºÐ°
 		Environment envStart;
 		envStart.readConfigParams (argc, argv);
 
@@ -34,7 +34,7 @@ int main (int argc, char** argv) {
 		env += envStart;
 		
 		if (comments) {
-			std::cout << "\néÎÉÃÉÁÌÉÚÉÒÕÅÍ ÐÅÒÍÅÎÎÙÅ.\n";
+			std::cout << "\nÐ˜Ð½Ð¸Ñ†Ð¸Ð°Ð»Ð¸Ð·Ð¸Ñ€ÑƒÐµÐ¼ Ð¿ÐµÑ€Ð¼ÐµÐ½Ð½Ñ‹Ðµ.\n";
 			std::cout.flush();
 		}
 		double start, finish, delta;
@@ -73,10 +73,10 @@ int main (int argc, char** argv) {
 		}
 
 		if (comments) {
-			std::cout << "\néÎÉÃÉÁÌÉÚÉÒÕÅÍ ÓÔÒÁÔÅÇÉÀ ×ÙÞÉÓÌÅÎÉÑ ÃÅÌÅ×ÏÊ ÆÕÎËÃÉÉ.\n";
+			std::cout << "\nÐ˜Ð½Ð¸Ñ†Ð¸Ð°Ð»Ð¸Ð·Ð¸Ñ€ÑƒÐµÐ¼ ÑÑ‚Ñ€Ð°Ñ‚ÐµÐ³Ð¸ÑŽ Ð²Ñ‹Ñ‡Ð¸ÑÐ»ÐµÐ½Ð¸Ñ Ñ†ÐµÐ»ÐµÐ²Ð¾Ð¹ Ñ„ÑƒÐ½ÐºÑ†Ð¸Ð¸.\n";
 			std::cout.flush();
 		}
-		// éÎÉÃÉÁÌÉÚÉÒÕÅÍ ÓÔÒÁÔÅÇÉÀ ×ÙÞÉÓÌÅÎÉÑ ÃÅÌÅ×ÏÊ ÆÕÅËÃÉÉ
+		// Ð˜Ð½Ð¸Ñ†Ð¸Ð°Ð»Ð¸Ð·Ð¸Ñ€ÑƒÐµÐ¼ ÑÑ‚Ñ€Ð°Ñ‚ÐµÐ³Ð¸ÑŽ Ð²Ñ‹Ñ‡Ð¸ÑÐ»ÐµÐ½Ð¸Ñ Ñ†ÐµÐ»ÐµÐ²Ð¾Ð¹ Ñ„ÑƒÐµÐºÑ†Ð¸Ð¸
 		string goalStrategyName;
 		GoalStrategyFactory gsf;
 		if (env.getStringParamValue(goalStrategyName, "goalClass") < 0)
@@ -86,17 +86,17 @@ int main (int argc, char** argv) {
 		goalStrategy->setParamsFromEnv(env);
 		
 		if (comments) {
-			std::cout << "\néÎÉÆÉÁÌÉÚÉÒÕÅÍ ÒÁÓÐÏÚÎÁ×ÁÔÅÌØ.\n";
+			std::cout << "\nÐ˜Ð½Ð¸Ñ„Ð¸Ð°Ð»Ð¸Ð·Ð¸Ñ€ÑƒÐµÐ¼ Ñ€Ð°ÑÐ¿Ð¾Ð·Ð½Ð°Ð²Ð°Ñ‚ÐµÐ»ÑŒ.\n";
 			std::cout.flush();
 		}
-		// ëÌÁÓÓ ÒÁÓÐÏÚÎÁ×ÁÔÅÌÑ
+		// ÐšÐ»Ð°ÑÑ Ñ€Ð°ÑÐ¿Ð¾Ð·Ð½Ð°Ð²Ð°Ñ‚ÐµÐ»Ñ
 		RecognizerExtend recognizer;
 		//RecognizerMetric recognizer;
-		// éÎÉÆÉÁÌÉÚÉÒÕÅÍ ÒÁÓÐÏÚÎÁ×ÁÔÅÌØ
+		// Ð˜Ð½Ð¸Ñ„Ð¸Ð°Ð»Ð¸Ð·Ð¸Ñ€ÑƒÐµÐ¼ Ñ€Ð°ÑÐ¿Ð¾Ð·Ð½Ð°Ð²Ð°Ñ‚ÐµÐ»ÑŒ
 		recognizer.setParamsFromEnv(env);
 		
 		if (comments) {
-			std::cout << "\núÁÐÕÓË ÔÅÓÔÉÒÏ×ÁÎÉÑ.\n";
+			std::cout << "\nÐ—Ð°Ð¿ÑƒÑÐº Ñ‚ÐµÑÑ‚Ð¸Ñ€Ð¾Ð²Ð°Ð½Ð¸Ñ.\n";
 			std::cout.flush();
 		}
 
@@ -108,10 +108,10 @@ int main (int argc, char** argv) {
 		precBest =  - 1.0;
 		for (int i = 0; i < (int) axiomSetPopVector.size(); i++) {
 				
-			// 1. ðÒÏÇÏÎÑÅÍ ÎÁ ÓÕÝÅÓÔ×ÕÀÝÅÊ ÐÏÐÕÌÑÃÉÉ ÁÌÇÏÒÉÔÍ ÒÁÚÍÅÔËÉ É ÒÁÓÐÏÚÎÁ×ÁÎÉÑ, ÐÏÌÕÞÁÅÍ ÞÉÓÌÏ ÏÛÉÂÏË ÐÅÒ×ÏÇÏ É ×ÔÏÒÏÇÏ ÒÏÄÁ, ÚÁÐÏÌÎÑÅÍ ÓÔÁÔÉÓÔÉËÕ.
+			// 1. ÐŸÑ€Ð¾Ð³Ð¾Ð½ÑÐµÐ¼ Ð½Ð° ÑÑƒÑ‰ÐµÑÑ‚Ð²ÑƒÑŽÑ‰ÐµÐ¹ Ð¿Ð¾Ð¿ÑƒÐ»ÑÑ†Ð¸Ð¸ Ð°Ð»Ð³Ð¾Ñ€Ð¸Ñ‚Ð¼ Ñ€Ð°Ð·Ð¼ÐµÑ‚ÐºÐ¸ Ð¸ Ñ€Ð°ÑÐ¿Ð¾Ð·Ð½Ð°Ð²Ð°Ð½Ð¸Ñ, Ð¿Ð¾Ð»ÑƒÑ‡Ð°ÐµÐ¼ Ñ‡Ð¸ÑÐ»Ð¾ Ð¾ÑˆÐ¸Ð±Ð¾Ðº Ð¿ÐµÑ€Ð²Ð¾Ð³Ð¾ Ð¸ Ð²Ñ‚Ð¾Ñ€Ð¾Ð³Ð¾ Ñ€Ð¾Ð´Ð°, Ð·Ð°Ð¿Ð¾Ð»Ð½ÑÐµÐ¼ ÑÑ‚Ð°Ñ‚Ð¸ÑÑ‚Ð¸ÐºÑƒ.
 			recognizer.run(axiomSetPopVector[i], precMatrix[i]);
 			
-			// 2. ðÒÏÇÏÎÑÅÍ ×ÙÞÉÓÌÅÎÉÅ H(first, second)
+			// 2. ÐŸÑ€Ð¾Ð³Ð¾Ð½ÑÐµÐ¼ Ð²Ñ‹Ñ‡Ð¸ÑÐ»ÐµÐ½Ð¸Ðµ H(first, second)
 			goalStrategy->compute(axiomSetPopVector[i]);
 			
 			int tmpFirst, tmpSecond;
@@ -139,7 +139,7 @@ int main (int argc, char** argv) {
 			} 
 		}
 		
-		if (comments) std::cout << "\nòÅÚÕÌØÔÁÔÙ:";
+		if (comments) std::cout << "\nÐ ÐµÐ·ÑƒÐ»ÑŒÑ‚Ð°Ñ‚Ñ‹:";
 		std::cout << "\n	goal is " << goalBest << " ( " << tmpFirstBest << ", " << tmpSecondBest << " )";
 		std::cout << "\n	prec is " << precBest << " \n";
 		std::cout.flush();

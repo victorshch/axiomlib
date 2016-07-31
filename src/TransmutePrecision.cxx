@@ -1,7 +1,7 @@
 /****************************************************************************
 *			TransmutePrecision
 *
-*	Description:	Функции класса TransmutePrecision - Реализация
+*	Description:	п╓я┐п╫п╨я├п╦п╦ п╨п╩п╟я│я│п╟ TransmutePrecision - п═п╣п╟п╩п╦п╥п╟я├п╦я▐
 *	Author:		gevor
 *	History:		
 *
@@ -14,10 +14,10 @@ using namespace AxiomLib;
 /****************************************************************************
 *			TransmutePrecision::setParamsFromEnv
 *
-*	Description:	Установка параметров мутации из среды
-*	Parameters:	const Environment& env - откуда ставить
+*	Description:	пёя│я┌п╟п╫п╬п╡п╨п╟ п©п╟я─п╟п╪п╣я┌я─п╬п╡ п╪я┐я┌п╟я├п╦п╦ п╦п╥ я│я─п╣п╢я▀
+*	Parameters:	const Environment& env - п╬я┌п╨я┐п╢п╟ я│я┌п╟п╡п╦я┌я▄
 *	Returns:		0
-*	Throws:		AxiomLibException - если параметра нет
+*	Throws:		AxiomLibException - п╣я│п╩п╦ п©п╟я─п╟п╪п╣я┌я─п╟ п╫п╣я┌
 *	Author:		gevor
 *	History:
 *
@@ -35,8 +35,8 @@ int TransmutePrecision::setParamsFromEnv (const Environment& env)
 /****************************************************************************
 *			TransmutePrecision::select
 *
-*	Description:	Функция мутации для данной популяции - мутация только на уровне элементарных условий (пока)
-*	Parameters:	AxiomSetPop - изменяемая популяция
+*	Description:	п╓я┐п╫п╨я├п╦я▐ п╪я┐я┌п╟я├п╦п╦ п╢п╩я▐ п╢п╟п╫п╫п╬п╧ п©п╬п©я┐п╩я▐я├п╦п╦ - п╪я┐я┌п╟я├п╦я▐ я┌п╬п╩я▄п╨п╬ п╫п╟ я┐я─п╬п╡п╫п╣ я█п╩п╣п╪п╣п╫я┌п╟я─п╫я▀я┘ я┐я│п╩п╬п╡п╦п╧ (п©п╬п╨п╟)
+*	Parameters:	AxiomSetPop - п╦п╥п╪п╣п╫я▐п╣п╪п╟я▐ п©п╬п©я┐п╩я▐я├п╦я▐
 *	Returns:		0
 *	Throws:		-
 *	Author:		dk
@@ -44,20 +44,20 @@ int TransmutePrecision::setParamsFromEnv (const Environment& env)
 *
 ****************************************************************************/
 int TransmutePrecision::transmute (AxiomSetPop& pop) {
-	// проверка соответстивя параметров границам
+	// п©я─п╬п╡п╣я─п╨п╟ я│п╬п╬я┌п╡п╣я┌я│я┌п╦п╡я▐ п©п╟я─п╟п╪п╣я┌я─п╬п╡ пЁя─п╟п╫п╦я├п╟п╪
 	if (ecTransLevel < 0 || ecTransLevel > 1)
 		throw AxiomLibException ("Error in TransmutePrecision::transmute.");
-	// ходим по популяции, мутируем ее, попутно сбрасывая статистику
-	// мутация на уровне параметров элементарных условий
+	// я┘п╬п╢п╦п╪ п©п╬ п©п╬п©я┐п╩я▐я├п╦п╦, п╪я┐я┌п╦я─я┐п╣п╪ п╣п╣, п©п╬п©я┐я┌п╫п╬ я│п╠я─п╟я│я▀п╡п╟я▐ я│я┌п╟я┌п╦я│я┌п╦п╨я┐
+	// п╪я┐я┌п╟я├п╦я▐ п╫п╟ я┐я─п╬п╡п╫п╣ п©п╟я─п╟п╪п╣я┌я─п╬п╡ я█п╩п╣п╪п╣п╫я┌п╟я─п╫я▀я┘ я┐я│п╩п╬п╡п╦п╧
 	if (ecTransLevel > 0) {
-		// получаем вектор
+		// п©п╬п╩я┐я┤п╟п╣п╪ п╡п╣п╨я┌п╬я─
 		initTransmute (pop);
 		int curPopSize = (int) axiomSets.size();
-		// ходим по всем наборам аксиом
+		// я┘п╬п╢п╦п╪ п©п╬ п╡я│п╣п╪ п╫п╟п╠п╬я─п╟п╪ п╟п╨я│п╦п╬п╪
 		for (int i = 0; i < curPopSize; i++) {
 			int nOfAxioms = (int) (axiomSets[i])->size();
 			int resTransmuteAxiom = 0;
-			// ходим по всем аксиомам в системе
+			// я┘п╬п╢п╦п╪ п©п╬ п╡я│п╣п╪ п╟п╨я│п╦п╬п╪п╟п╪ п╡ я│п╦я│я┌п╣п╪п╣
 			for (int j = 0; j < nOfAxioms; j++) {
 				resTransmuteAxiom = (*(axiomSets[i]))[j]->transmute(ecTransLevel, 0.0);
 			}

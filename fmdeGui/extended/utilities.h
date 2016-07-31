@@ -10,7 +10,7 @@
 #ifndef UTILITIES_H_
 #define UTILITIES_H_
 
-//TODO: разбить на несколько модулей
+//TODO: я─п╟п╥п╠п╦я┌я▄ п╫п╟ п╫п╣я│п╨п╬п╩я▄п╨п╬ п╪п╬п╢я┐п╩п╣п╧
 
 #include "AxiomLibException.h"
 #include <boost/shared_ptr.hpp>
@@ -88,7 +88,7 @@ void displayException(const AxiomLib::AxiomLibException &exception);
 
 void displayException(const std::exception &exception);
 
-//Функция для кодировки из Koi8-r в unicode
+//п╓я┐п╫п╨я├п╦я▐ п╢п╩я▐ п╨п╬п╢п╦я─п╬п╡п╨п╦ п╦п╥ Koi8-r п╡ unicode
 QString encode(const QByteArray &array);
 
 void clearLayout(QLayout *layout);

@@ -19,7 +19,7 @@ int ASModelMarkUps::columnCount() const {
 
 QVariant ASModelMarkUps::data(int column) const {
 	if(column == 0) {
-		return QVariant::fromValue(encode("Разметки"));
+		return QVariant::fromValue(encode("п═п╟п╥п╪п╣я┌п╨п╦"));
 	} else {
 		return QVariant();
 	}

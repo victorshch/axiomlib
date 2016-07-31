@@ -1,7 +1,7 @@
 /****************************************************************************
 *			NeuralActFuncStr.cxx
 *
-*	Description: Реализация функций, объявленных в NeuralActFuncStr.h
+*	Description: п═п╣п╟п╩п╦п╥п╟я├п╦я▐ я└я┐п╫п╨я├п╦п╧, п╬п╠я┼я▐п╡п╩п╣п╫п╫я▀я┘ п╡ NeuralActFuncStr.h
 *	Author:		wictor
 *	History:	
 *
@@ -14,14 +14,14 @@
 
 namespace AxiomLib {
 
-// Класс, содержащий отображение enum <-> string
+// п п╩п╟я│я│, я│п╬п╢п╣я─п╤п╟я┴п╦п╧ п╬я┌п╬п╠я─п╟п╤п╣п╫п╦п╣ enum <-> string
 class EnumStr {
 	typedef boost::bimap<int, std::string> map_t;
 	map_t name_map, train_name_map;
 	
 	std::string empty;
 public:
-	// Конструктор умолчания - заполняет нужными значениями bimap
+	// п п╬п╫я│я┌я─я┐п╨я┌п╬я─ я┐п╪п╬п╩я┤п╟п╫п╦я▐ - п╥п╟п©п╬п╩п╫я▐п╣я┌ п╫я┐п╤п╫я▀п╪п╦ п╥п╫п╟я┤п╣п╫п╦я▐п╪п╦ bimap
 	EnumStr():empty("") {
 
 #define MY_ENUM_STR_INSERT(m, a) m.insert(map_t::value_type(a, #a))
@@ -50,28 +50,28 @@ public:
 		MY_ENUM_STR_INSERT(train_name_map, TRAIN_RPROP);
 	}
 
-	// Активационная функция по строке
+	// п░п╨я┌п╦п╡п╟я├п╦п╬п╫п╫п╟я▐ я└я┐п╫п╨я├п╦я▐ п©п╬ я│я┌я─п╬п╨п╣
 	int act_func_from_str (const std::string &val)
 	{
 		map_t::right_map::const_iterator it=name_map.right.find(val);
 		return it==name_map.right.end() ? -1 : it->second;
 	}
 
-	// Строка по активационной функции
+	// п║я┌я─п╬п╨п╟ п©п╬ п╟п╨я┌п╦п╡п╟я├п╦п╬п╫п╫п╬п╧ я└я┐п╫п╨я├п╦п╦
 	const std::string &str_from_act_func (int val)
 	{
 		map_t::left_map::const_iterator it=name_map.left.find(val);
 		return it==name_map.left.end() ? empty : it->second;
 	}
 
-	// Обучающий алгоритм по строке
+	// п·п╠я┐я┤п╟я▌я┴п╦п╧ п╟п╩пЁп╬я─п╦я┌п╪ п©п╬ я│я┌я─п╬п╨п╣
 	int train_from_str (const std::string &val)
 	{
 		map_t::right_map::const_iterator it=train_name_map.right.find(val);
 		return it==train_name_map.right.end() ? -1 : it->second;
 	}
 
-	// Строка по обучающему алгоритму
+	// п║я┌я─п╬п╨п╟ п©п╬ п╬п╠я┐я┤п╟я▌я┴п╣п╪я┐ п╟п╩пЁп╬я─п╦я┌п╪я┐
 	const std::string &str_from_train (int val)
 	{
 		map_t::left_map::const_iterator it=train_name_map.left.find(val);
@@ -79,28 +79,28 @@ public:
 	}
 };
 
-// Экземпляр класса
+// п╜п╨п╥п╣п╪п©п╩я▐я─ п╨п╩п╟я│я│п╟
 EnumStr act_func_map;
 
-// Активационная функция по строке (возвращает -1 в случае некорректного параметра, иначе можно кастануть в FANN:activation_function_enum)
+// п░п╨я┌п╦п╡п╟я├п╦п╬п╫п╫п╟я▐ я└я┐п╫п╨я├п╦я▐ п©п╬ я│я┌я─п╬п╨п╣ (п╡п╬п╥п╡я─п╟я┴п╟п╣я┌ -1 п╡ я│п╩я┐я┤п╟п╣ п╫п╣п╨п╬я─я─п╣п╨я┌п╫п╬пЁп╬ п©п╟я─п╟п╪п╣я┌я─п╟, п╦п╫п╟я┤п╣ п╪п╬п╤п╫п╬ п╨п╟я│я┌п╟п╫я┐я┌я▄ п╡ FANN:activation_function_enum)
 int actFuncFromStr(const std::string &val)
 {
 	return act_func_map.act_func_from_str(val);
 }
 
-// Строка по активационной функции (возвращает "" в случае некорректного параметра)
+// п║я┌я─п╬п╨п╟ п©п╬ п╟п╨я┌п╦п╡п╟я├п╦п╬п╫п╫п╬п╧ я└я┐п╫п╨я├п╦п╦ (п╡п╬п╥п╡я─п╟я┴п╟п╣я┌ "" п╡ я│п╩я┐я┤п╟п╣ п╫п╣п╨п╬я─я─п╣п╨я┌п╫п╬пЁп╬ п©п╟я─п╟п╪п╣я┌я─п╟)
 const std::string &strFromActFunc(int val)
 {
 	return act_func_map.str_from_act_func(val);
 }
 
-// Обучающий алгоритм по строке (возвращает -1 в случае некорректного параметра, иначе можно кастануть в FANN:training_algorithm_enum)
+// п·п╠я┐я┤п╟я▌я┴п╦п╧ п╟п╩пЁп╬я─п╦я┌п╪ п©п╬ я│я┌я─п╬п╨п╣ (п╡п╬п╥п╡я─п╟я┴п╟п╣я┌ -1 п╡ я│п╩я┐я┤п╟п╣ п╫п╣п╨п╬я─я─п╣п╨я┌п╫п╬пЁп╬ п©п╟я─п╟п╪п╣я┌я─п╟, п╦п╫п╟я┤п╣ п╪п╬п╤п╫п╬ п╨п╟я│я┌п╟п╫я┐я┌я▄ п╡ FANN:training_algorithm_enum)
 int trainFromStr(const std::string &val)
 {
 	return act_func_map.train_from_str(val);
 }
 
-// Строка по обучающему алгоритму (возвращает "" в случае некорректного параметра)
+// п║я┌я─п╬п╨п╟ п©п╬ п╬п╠я┐я┤п╟я▌я┴п╣п╪я┐ п╟п╩пЁп╬я─п╦я┌п╪я┐ (п╡п╬п╥п╡я─п╟я┴п╟п╣я┌ "" п╡ я│п╩я┐я┤п╟п╣ п╫п╣п╨п╬я─я─п╣п╨я┌п╫п╬пЁп╬ п©п╟я─п╟п╪п╣я┌я─п╟)
 const std::string &strFromTrain(int val)
 {
 	return act_func_map.str_from_train(val);

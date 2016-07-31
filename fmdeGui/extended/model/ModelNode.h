@@ -39,7 +39,7 @@ signals:
 	void finishedRemovingChildren();
 	
 	void modified(ModelNode* item);
-	// Обновление всех детей
+	// п·п╠п╫п╬п╡п╩п╣п╫п╦п╣ п╡я│п╣я┘ п╢п╣я┌п╣п╧
 	void childrenModified(ModelNode* item);
 protected:
 	

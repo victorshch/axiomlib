@@ -5,7 +5,7 @@
 using namespace AxiomLib;
 
 SatPointSet& SatPointSet::operator &=(const SatPointSet& other) {
-	// TODO: вставить проверку размеров при дебаге
+	// TODO: п╡я│я┌п╟п╡п╦я┌я▄ п©я─п╬п╡п╣я─п╨я┐ я─п╟п╥п╪п╣я─п╬п╡ п©я─п╦ п╢п╣п╠п╟пЁп╣
 	
 	for(int i = 0; i < m_satPoints.size(); i++) {
 		SatVector &current = m_satPoints[i];
@@ -19,7 +19,7 @@ SatPointSet& SatPointSet::operator &=(const SatPointSet& other) {
 }
 
 SatPointSet& SatPointSet::operator |=(const SatPointSet& other) {
-	// TODO: вставить проверку размеров при дебаге
+	// TODO: п╡я│я┌п╟п╡п╦я┌я▄ п©я─п╬п╡п╣я─п╨я┐ я─п╟п╥п╪п╣я─п╬п╡ п©я─п╦ п╢п╣п╠п╟пЁп╣
 	
 	for(int i = 0; i < m_satPoints.size(); i++) {
 		SatVector &current = m_satPoints[i];

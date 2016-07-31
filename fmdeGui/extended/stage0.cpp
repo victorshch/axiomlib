@@ -29,15 +29,15 @@ Stage0::Stage0(QWidget *parent, ManagedFuzzyDataController * controller): StageB
 
 	paramsForm = new ParamsForm();
 	
-	paramsForm->addParam(StrategyParamSpec(1, 100, 1, 3, "leftLimit"), encode("ìÅ×ÁÑ ÇÒÁÎÉÃÁ ÏËÒÅÓÔÎÏÓÔÉ"));
-	paramsForm->addParam(StrategyParamSpec(1, 100, 1, 3, "rightLimit"), encode("ðÒÁ×ÁÑ ÇÒÁÎÉÃÁ ÏËÒÅÓÔÎÏÓÔÉ"));
-	paramsForm->addParam(StrategyParamSpec(0.1, 100.0, 0.1, 1.5, "reserve"), encode("æÁËÔÏÒ ÒÁÓÛÉÒÅÎÉÑ ÐÒÏÓÔÒÁÎÓÔ×Á ÐÁÒÁÍÅÔÒÏ×"));
-	paramsForm->addParam(StrategyParamSpec(2, 1000, 1, 150, "numOfLevels"), encode("þÉÓÌÏ ÒÁÚÂÉÅÎÉÊ ÓÅÔËÉ"));
+	paramsForm->addParam(StrategyParamSpec(1, 100, 1, 3, "leftLimit"), encode("Ð›ÐµÐ²Ð°Ñ Ð³Ñ€Ð°Ð½Ð¸Ñ†Ð° Ð¾ÐºÑ€ÐµÑÑ‚Ð½Ð¾ÑÑ‚Ð¸"));
+	paramsForm->addParam(StrategyParamSpec(1, 100, 1, 3, "rightLimit"), encode("ÐŸÑ€Ð°Ð²Ð°Ñ Ð³Ñ€Ð°Ð½Ð¸Ñ†Ð° Ð¾ÐºÑ€ÐµÑÑ‚Ð½Ð¾ÑÑ‚Ð¸"));
+	paramsForm->addParam(StrategyParamSpec(0.1, 100.0, 0.1, 1.5, "reserve"), encode("Ð¤Ð°ÐºÑ‚Ð¾Ñ€ Ñ€Ð°ÑÑˆÐ¸Ñ€ÐµÐ½Ð¸Ñ Ð¿Ñ€Ð¾ÑÑ‚Ñ€Ð°Ð½ÑÑ‚Ð²Ð° Ð¿Ð°Ñ€Ð°Ð¼ÐµÑ‚Ñ€Ð¾Ð²"));
+	paramsForm->addParam(StrategyParamSpec(2, 1000, 1, 150, "numOfLevels"), encode("Ð§Ð¸ÑÐ»Ð¾ Ñ€Ð°Ð·Ð±Ð¸ÐµÐ½Ð¸Ð¹ ÑÐµÑ‚ÐºÐ¸"));
 	paramsForm->addParam(StrategyParamSpec(1, 200, 1, 10, "numBestECs"), 
-	                     encode("íÉÎÉÍÁÌØÎÏÅ ÓÏÈÒÁÎÑÅÍÏÅ ÞÉÓÌÏ üõ ÄÌÑ ËÁÖÄÏÇÏ ÔÉÐÁ üõ, ÒÁÚÍÅÒÎÏÓÔÉ É ÔÉÐÁ ÎÅÛÔÁÔÎÏÇÏ ÐÏ×ÅÄÅÎÉÑ"));
-	paramsForm->addParam(StrategyParamSpec(0.0, 100000.0, 1.0, 0.0, "ECGoalOccurenceWeight"), encode("÷ÅÓ ×ÓÔÒÅÞÁÅÍÏÓÔÉ × ÃÅÌÅ×ÏÊ ÆÕÎËÃÉÉ"));
+	                     encode("ÐœÐ¸Ð½Ð¸Ð¼Ð°Ð»ÑŒÐ½Ð¾Ðµ ÑÐ¾Ñ…Ñ€Ð°Ð½ÑÐµÐ¼Ð¾Ðµ Ñ‡Ð¸ÑÐ»Ð¾ Ð­Ð£ Ð´Ð»Ñ ÐºÐ°Ð¶Ð´Ð¾Ð³Ð¾ Ñ‚Ð¸Ð¿Ð° Ð­Ð£, Ñ€Ð°Ð·Ð¼ÐµÑ€Ð½Ð¾ÑÑ‚Ð¸ Ð¸ Ñ‚Ð¸Ð¿Ð° Ð½ÐµÑˆÑ‚Ð°Ñ‚Ð½Ð¾Ð³Ð¾ Ð¿Ð¾Ð²ÐµÐ´ÐµÐ½Ð¸Ñ"));
+	paramsForm->addParam(StrategyParamSpec(0.0, 100000.0, 1.0, 0.0, "ECGoalOccurenceWeight"), encode("Ð’ÐµÑ Ð²ÑÑ‚Ñ€ÐµÑ‡Ð°ÐµÐ¼Ð¾ÑÑ‚Ð¸ Ð² Ñ†ÐµÐ»ÐµÐ²Ð¾Ð¹ Ñ„ÑƒÐ½ÐºÑ†Ð¸Ð¸"));
 //	paramsForm->addParam(StrategyParamSpec(QString(), QString(""), QString(), QString(), "ECNameTemplate"),
-//	                     encode("ûÁÂÌÏÎ ÉÍÅÎ ÆÁÊÌÏ× üõ"));
+//	                     encode("Ð¨Ð°Ð±Ð»Ð¾Ð½ Ð¸Ð¼ÐµÐ½ Ñ„Ð°Ð¹Ð»Ð¾Ð² Ð­Ð£"));
 	
 	ui.verticalLayout_params->addWidget(paramsForm);
 	

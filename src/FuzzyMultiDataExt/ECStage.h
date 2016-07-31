@@ -1,8 +1,8 @@
 /****************************************************************************
 *				ECStage
 *
-*	Description: Класс, соответствующий стадии построения ЭУ
-*				алгоритма FuzzyMultiDataExt
+*	Description: п п╩п╟я│я│, я│п╬п╬я┌п╡п╣я┌я│я┌п╡я┐я▌я┴п╦п╧ я│я┌п╟п╢п╦п╦ п©п╬я│я┌я─п╬п╣п╫п╦я▐ п╜пё
+*				п╟п╩пЁп╬я─п╦я┌п╪п╟ FuzzyMultiDataExt
 *	Author:		wictor
 *	History:	
 *
@@ -37,7 +37,7 @@ public:
 	
 	virtual void run() = 0;
 	
-	// Функции доступа к набору ЭУ
+	// п╓я┐п╫п╨я├п╦п╦ п╢п╬я│я┌я┐п©п╟ п╨ п╫п╟п╠п╬я─я┐ п╜пё
 	virtual const ElemCondPlusStat & getEC(int aType, int dimension, int type, int n) const;
 
 	virtual int getECSize() const ;

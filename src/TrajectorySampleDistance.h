@@ -1,8 +1,8 @@
 /****************************************************************************
 *					TrajectorySampleDistance
 *
-*	Description:	Структура для хранения расстояний от участков траектории
-*					до эталонных траекторий
+*	Description:	п║я┌я─я┐п╨я┌я┐я─п╟ п╢п╩я▐ я┘я─п╟п╫п╣п╫п╦я▐ я─п╟я│я│я┌п╬я▐п╫п╦п╧ п╬я┌ я┐я┤п╟я│я┌п╨п╬п╡ я┌я─п╟п╣п╨я┌п╬я─п╦п╦
+*					п╢п╬ я█я┌п╟п╩п╬п╫п╫я▀я┘ я┌я─п╟п╣п╨я┌п╬я─п╦п╧
 *	Author:			wictor
 *	History:	
 *
@@ -17,26 +17,26 @@ namespace AxiomLib {
 class TrajectorySampleDistance
 {
 public:
-	// Конструктор, в котором задается число классов нештатного поведения
-	// и длина траектории
+	// п п╬п╫я│я┌я─я┐п╨я┌п╬я─, п╡ п╨п╬я┌п╬я─п╬п╪ п╥п╟п╢п╟п╣я┌я│я▐ я┤п╦я│п╩п╬ п╨п╩п╟я│я│п╬п╡ п╫п╣я┬я┌п╟я┌п╫п╬пЁп╬ п©п╬п╡п╣п╢п╣п╫п╦я▐
+	// п╦ п╢п╩п╦п╫п╟ я┌я─п╟п╣п╨я┌п╬я─п╦п╦
 	explicit TrajectorySampleDistance(int numClasses, int length = 0);
 	
-	// Длина траектории
+	// п■п╩п╦п╫п╟ я┌я─п╟п╣п╨я┌п╬я─п╦п╦
 	int length() const;
 	
 	void setLength(int newValue);
 	
-	// Число классов нештатного поведения
+	// п╖п╦я│п╩п╬ п╨п╩п╟я│я│п╬п╡ п╫п╣я┬я┌п╟я┌п╫п╬пЁп╬ п©п╬п╡п╣п╢п╣п╫п╦я▐
 	int numClasses() const;
 	
-	// Запись расстояния от участка траектории с концом в endPoint до эталонной траектории класса classNo
+	// п≈п╟п©п╦я│я▄ я─п╟я│я│я┌п╬я▐п╫п╦я▐ п╬я┌ я┐я┤п╟я│я┌п╨п╟ я┌я─п╟п╣п╨я┌п╬я─п╦п╦ я│ п╨п╬п╫я├п╬п╪ п╡ endPoint п╢п╬ я█я┌п╟п╩п╬п╫п╫п╬п╧ я┌я─п╟п╣п╨я┌п╬я─п╦п╦ п╨п╩п╟я│я│п╟ classNo
 	void setDistance(int classNo, int endPoint, double distance);
 	
 	void setDistancesForClass(int classNo, const std::vector<double>& distances);
 	
 	//void setDistancesForClass(int classNo, const std::vector<double>& distances);
 	
-	// Расстояние от участка траектории с концом в endPoint до эталонной траектории класса classNo
+	// п═п╟я│я│я┌п╬я▐п╫п╦п╣ п╬я┌ я┐я┤п╟я│я┌п╨п╟ я┌я─п╟п╣п╨я┌п╬я─п╦п╦ я│ п╨п╬п╫я├п╬п╪ п╡ endPoint п╢п╬ я█я┌п╟п╩п╬п╫п╫п╬п╧ я┌я─п╟п╣п╨я┌п╬я─п╦п╦ п╨п╩п╟я│я│п╟ classNo
 	double distance(int classNo, int endPoint) const;
 	
 private:

@@ -20,16 +20,16 @@ int main (int argv, char** argc) {
 		srand(time(0));
 		if (comments)
 		std::cout << "\n" << "AxiomLib 0.6 / Test_Execute.\nReading config-file." << "\n";
-		 // óÞÉÔÙ×ÁÅÍ ÆÁÊÌ ËÏÎÆÉÇÕÒÁÃÉÉ ÉÚ ÚÁÄÁÎÎÏÇÏ ÉÓÔÏÞÎÉËÁ
+		 // Ð¡Ñ‡Ð¸Ñ‚Ñ‹Ð²Ð°ÐµÐ¼ Ñ„Ð°Ð¹Ð» ÐºÐ¾Ð½Ñ„Ð¸Ð³ÑƒÑ€Ð°Ñ†Ð¸Ð¸ Ð¸Ð· Ð·Ð°Ð´Ð°Ð½Ð½Ð¾Ð³Ð¾ Ð¸ÑÑ‚Ð¾Ñ‡Ð½Ð¸ÐºÐ°
 		Environment env;
 		env.readConfigFile("./axiomlib_bg.conf");
 		
-		// úÁÐÏÌÎÑÅÍ ÎÁÂÏÒ ÓÉÓÔÅÍ ÁËÓÉÏÍ
+		// Ð—Ð°Ð¿Ð¾Ð»Ð½ÑÐµÐ¼ Ð½Ð°Ð±Ð¾Ñ€ ÑÐ¸ÑÑ‚ÐµÐ¼ Ð°ÐºÑÐ¸Ð¾Ð¼
 		AxiomSetPop axiomSetPop;
-		// ÉÎÉÃÉÁÌÉÚÉÒÕÅÍ ÎÁÂÏÒ ÓÉÓÔÅÍ ÁËÓÉÏÍ
+		// Ð¸Ð½Ð¸Ñ†Ð¸Ð°Ð»Ð¸Ð·Ð¸Ñ€ÑƒÐµÐ¼ Ð½Ð°Ð±Ð¾Ñ€ ÑÐ¸ÑÑ‚ÐµÐ¼ Ð°ÐºÑÐ¸Ð¾Ð¼
 		axiomSetPop.initFromEnv(env);
 
-		// éÎÉÃÉÁÌÉÚÉÒÕÅÍ ÓÔÒÁÔÅÇÉÀ ×ÙÞÉÓÌÅÎÉÑ ÃÅÌÅ×ÏÊ ÆÕÅËÃÉÉ
+		// Ð˜Ð½Ð¸Ñ†Ð¸Ð°Ð»Ð¸Ð·Ð¸Ñ€ÑƒÐµÐ¼ ÑÑ‚Ñ€Ð°Ñ‚ÐµÐ³Ð¸ÑŽ Ð²Ñ‹Ñ‡Ð¸ÑÐ»ÐµÐ½Ð¸Ñ Ñ†ÐµÐ»ÐµÐ²Ð¾Ð¹ Ñ„ÑƒÐµÐºÑ†Ð¸Ð¸
 		string goalStrategyName;
 		GoalStrategyFactory gsf;
 		if (env.getStringParamValue(goalStrategyName, "goalClass") < 0)
@@ -38,16 +38,16 @@ int main (int argv, char** argc) {
 		goalStrategy = gsf.create(goalStrategyName);
 		goalStrategy->setParamsFromEnv(env);
 		
-		// ëÌÁÓÓ ÒÁÓÐÏÚÎÁ×ÁÔÅÌÑ
+		// ÐšÐ»Ð°ÑÑ Ñ€Ð°ÑÐ¿Ð¾Ð·Ð½Ð°Ð²Ð°Ñ‚ÐµÐ»Ñ
 		RecognizerExtend recognizer;
 		//RecognizerMetric recognizer;
-		// éÎÉÆÉÁÌÉÚÉÒÕÅÍ ÒÁÓÐÏÚÎÁ×ÁÔÅÌØ
+		// Ð˜Ð½Ð¸Ñ„Ð¸Ð°Ð»Ð¸Ð·Ð¸Ñ€ÑƒÐµÐ¼ Ñ€Ð°ÑÐ¿Ð¾Ð·Ð½Ð°Ð²Ð°Ñ‚ÐµÐ»ÑŒ
 		recognizer.setParamsFromEnv(env);
 		
-		// 1. ðÒÏÇÏÎÑÅÍ ÎÁ ÓÕÝÅÓÔ×ÕÀÝÅÊ ÐÏÐÕÌÑÃÉÉ ÁÌÇÏÒÉÔÍ ÒÁÚÍÅÔËÉ É ÒÁÓÐÏÚÎÁ×ÁÎÉÑ, ÐÏÌÕÞÁÅÍ ÞÉÓÌÏ ÏÛÉÂÏË ÐÅÒ×ÏÇÏ É ×ÔÏÒÏÇÏ ÒÏÄÁ, ÚÁÐÏÌÎÑÅÍ ÓÔÁÔÉÓÔÉËÕ.
+		// 1. ÐŸÑ€Ð¾Ð³Ð¾Ð½ÑÐµÐ¼ Ð½Ð° ÑÑƒÑ‰ÐµÑÑ‚Ð²ÑƒÑŽÑ‰ÐµÐ¹ Ð¿Ð¾Ð¿ÑƒÐ»ÑÑ†Ð¸Ð¸ Ð°Ð»Ð³Ð¾Ñ€Ð¸Ñ‚Ð¼ Ñ€Ð°Ð·Ð¼ÐµÑ‚ÐºÐ¸ Ð¸ Ñ€Ð°ÑÐ¿Ð¾Ð·Ð½Ð°Ð²Ð°Ð½Ð¸Ñ, Ð¿Ð¾Ð»ÑƒÑ‡Ð°ÐµÐ¼ Ñ‡Ð¸ÑÐ»Ð¾ Ð¾ÑˆÐ¸Ð±Ð¾Ðº Ð¿ÐµÑ€Ð²Ð¾Ð³Ð¾ Ð¸ Ð²Ñ‚Ð¾Ñ€Ð¾Ð³Ð¾ Ñ€Ð¾Ð´Ð°, Ð·Ð°Ð¿Ð¾Ð»Ð½ÑÐµÐ¼ ÑÑ‚Ð°Ñ‚Ð¸ÑÑ‚Ð¸ÐºÑƒ.
 		recognizer.run(axiomSetPop);
 		
-		// 2. ðÒÏÇÏÎÑÅÍ ×ÙÞÉÓÌÅÎÉÅ H(first, second)
+		// 2. ÐŸÑ€Ð¾Ð³Ð¾Ð½ÑÐµÐ¼ Ð²Ñ‹Ñ‡Ð¸ÑÐ»ÐµÐ½Ð¸Ðµ H(first, second)
 		goalStrategy->compute(axiomSetPop);
 		
 		int tmpFirst, tmpSecond;

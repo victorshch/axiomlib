@@ -6,7 +6,7 @@
 #include <vector>
 
 namespace AxiomLib {
-// Функция возвращает индекс первого вхождения элемента whatToFind или -1, если элемент не найден
+// п╓я┐п╫п╨я├п╦я▐ п╡п╬п╥п╡я─п╟я┴п╟п╣я┌ п╦п╫п╢п╣п╨я│ п©п╣я─п╡п╬пЁп╬ п╡я┘п╬п╤п╢п╣п╫п╦я▐ я█п╩п╣п╪п╣п╫я┌п╟ whatToFind п╦п╩п╦ -1, п╣я│п╩п╦ я█п╩п╣п╪п╣п╫я┌ п╫п╣ п╫п╟п╧п╢п╣п╫
 template<class T> 
 int isIn(const T& whatToFind, const std::vector<T>& whereToFind)
 {

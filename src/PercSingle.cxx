@@ -1,7 +1,7 @@
 /****************************************************************************
 *						PercSingle.cxx
 *
-*       Description:	Определение функций-членов структуры PercSingle
+*       Description:	п·п©я─п╣п╢п╣п╩п╣п╫п╦п╣ я└я┐п╫п╨я├п╦п╧-я┤п╩п╣п╫п╬п╡ я│я┌я─я┐п╨я┌я┐я─я▀ PercSingle
 *       Author:			wictor
 *       History:
 *
@@ -14,13 +14,13 @@ namespace AxiomLib {
 /****************************************************************************
 *					PercSingleSettings::initFromEnv()
 *
-*	Description:	Инициализация из окружения. Имя параметров окружения
-*					 совпадают с именами полей структуры (для полей, не являющихся структурами).
-*					Для numAux умолчание 0,
-*					для auxDiff 0.1
-*	Parameters:	Environment& env - окружение
+*	Description:	п≤п╫п╦я├п╦п╟п╩п╦п╥п╟я├п╦я▐ п╦п╥ п╬п╨я─я┐п╤п╣п╫п╦я▐. п≤п╪я▐ п©п╟я─п╟п╪п╣я┌я─п╬п╡ п╬п╨я─я┐п╤п╣п╫п╦я▐
+*					 я│п╬п╡п©п╟п╢п╟я▌я┌ я│ п╦п╪п╣п╫п╟п╪п╦ п©п╬п╩п╣п╧ я│я┌я─я┐п╨я┌я┐я─я▀ (п╢п╩я▐ п©п╬п╩п╣п╧, п╫п╣ я▐п╡п╩я▐я▌я┴п╦я┘я│я▐ я│я┌я─я┐п╨я┌я┐я─п╟п╪п╦).
+*					п■п╩я▐ numAux я┐п╪п╬п╩я┤п╟п╫п╦п╣ 0,
+*					п╢п╩я▐ auxDiff 0.1
+*	Parameters:	Environment& env - п╬п╨я─я┐п╤п╣п╫п╦п╣
 *	Returns:	-
-*	Throws:		AxiomLibException, если параметр, для которого нет умолчания, не установлен
+*	Throws:		AxiomLibException, п╣я│п╩п╦ п©п╟я─п╟п╪п╣я┌я─, п╢п╩я▐ п╨п╬я┌п╬я─п╬пЁп╬ п╫п╣я┌ я┐п╪п╬п╩я┤п╟п╫п╦я▐, п╫п╣ я┐я│я┌п╟п╫п╬п╡п╩п╣п╫
 *	Author:		wictor
 *	History:
 *
@@ -30,12 +30,12 @@ void PercSingleSettings::initFromEnv(const Environment &env) {
 	coderSettings.initFromEnv(env);
 	percSettings.initFromEnv(env);	
 
-	// Считываем numAux, по умолчанию - 0
+	// п║я┤п╦я┌я▀п╡п╟п╣п╪ numAux, п©п╬ я┐п╪п╬п╩я┤п╟п╫п╦я▌ - 0
 	if(env.getIntParamValue(numAux ,"numAux") < 0) {
 		numAux = 0;
 	}
 
-	// Считываем auxDiff, по умолчанию - 0.1
+	// п║я┤п╦я┌я▀п╡п╟п╣п╪ auxDiff, п©п╬ я┐п╪п╬п╩я┤п╟п╫п╦я▌ - 0.1
 	if(env.getDoubleParamValue(auxDiff ,"auxDiff") < 0) {
 		auxDiff = 0.1;
 	};

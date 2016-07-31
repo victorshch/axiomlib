@@ -103,7 +103,7 @@ void VectorPlot::addDotPlot(const MarkupQwtAdapter&adapter,
 		return;
 	}
 
-    // äÏÂÁ×ÌÑÅÍ ËÒÉ×ÕÀ × ÌÅÇÅÎÄÕ
+    // Ð”Ð¾Ð±Ð°Ð²Ð»ÑÐµÐ¼ ÐºÑ€Ð¸Ð²ÑƒÑŽ Ð² Ð»ÐµÐ³ÐµÐ½Ð´Ñƒ
 	QwtLegendItem *item = new QwtLegendItem(0);
 	item->setText(curve->title());
 	item->setSymbol(sym);

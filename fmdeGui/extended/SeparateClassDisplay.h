@@ -14,7 +14,7 @@
 
 #include "algorithm_controller/forwarddecls.h"
 
-// Forward-декларации для уменьшения include dependencies
+// Forward-п╢п╣п╨п╩п╟я─п╟я├п╦п╦ п╢п╩я▐ я┐п╪п╣п╫я▄я┬п╣п╫п╦я▐ include dependencies
 class ClassSelectForm;
 class SelectionManager;
 class ClusteringForm;
@@ -104,8 +104,8 @@ private:
 	
 	void clearChildren(QTreeWidgetItem* item) const;
 	
-	// Функция обхода дерева. Получает на вход вершину и глубину.
-	// Возвращает true, если нужно обходить детей. Иначе false.
+	// п╓я┐п╫п╨я├п╦я▐ п╬п╠я┘п╬п╢п╟ п╢п╣я─п╣п╡п╟. п÷п╬п╩я┐я┤п╟п╣я┌ п╫п╟ п╡я┘п╬п╢ п╡п╣я─я┬п╦п╫я┐ п╦ пЁп╩я┐п╠п╦п╫я┐.
+	// п▓п╬п╥п╡я─п╟я┴п╟п╣я┌ true, п╣я│п╩п╦ п╫я┐п╤п╫п╬ п╬п╠я┘п╬п╢п╦я┌я▄ п╢п╣я┌п╣п╧. п≤п╫п╟я┤п╣ false.
 	typedef boost::function2<bool, QTreeWidgetItem*, int> TraverseFunction;
 	typedef boost::function1<void, QTreeWidgetItem*> ReducedTraverseFunction;
 	

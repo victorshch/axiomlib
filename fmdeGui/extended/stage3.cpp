@@ -113,10 +113,10 @@ AxiomLib::AxiomExprSetPlus Stage3::loadAS(const QString &fileName) {
 
 void Stage3::loadAS() {
 	QStringList asFiles = QFileDialog::getOpenFileNames(this,
-		encode("Выберите файлы с системами аксиом"),
+		encode("п▓я▀п╠п╣я─п╦я┌п╣ я└п╟п╧п╩я▀ я│ я│п╦я│я┌п╣п╪п╟п╪п╦ п╟п╨я│п╦п╬п╪"),
 		QString::fromStdString(controller->getWorkDir()),
-		encode("Сериализованные системы аксиом в xml ")+"(*.xml);;"
-		+ encode("Системы аксиом в старом формате ")+"(*.as)");
+		encode("п║п╣я─п╦п╟п╩п╦п╥п╬п╡п╟п╫п╫я▀п╣ я│п╦я│я┌п╣п╪я▀ п╟п╨я│п╦п╬п╪ п╡ xml ")+"(*.xml);;"
+		+ encode("п║п╦я│я┌п╣п╪я▀ п╟п╨я│п╦п╬п╪ п╡ я│я┌п╟я─п╬п╪ я└п╬я─п╪п╟я┌п╣ ")+"(*.as)");
 	if(asFiles.empty()) {
 		return;
 	}
@@ -134,7 +134,7 @@ void Stage3::loadAS() {
 		}
 	} catch (AxiomLib::AxiomLibException e) {
 		axiomSets.resize(oldSize);
-		QMessageBox::warning(0, encode("Ошибка загрузки системы аксиом"), QString::fromStdString(e.error()));
+		QMessageBox::warning(0, encode("п·я┬п╦п╠п╨п╟ п╥п╟пЁя─я┐п╥п╨п╦ я│п╦я│я┌п╣п╪я▀ п╟п╨я│п╦п╬п╪"), QString::fromStdString(e.error()));
 		return;
 	} catch (...) {
 		axiomSets.resize(oldSize);

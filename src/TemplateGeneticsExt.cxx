@@ -1,6 +1,6 @@
 /****************************************************************************
 *
-*				Функции класса TemplateGeneticsExt
+*				п╓я┐п╫п╨я├п╦п╦ п╨п╩п╟я│я│п╟ TemplateGeneticsExt
 *
 ****************************************************************************/
 
@@ -13,10 +13,10 @@
 using namespace AxiomLib;
 
 #define debug true
-#define bestGoals 1.5 // Особи, со значением целевой функции не более чем во столько раз привосходящим минимальное значение целевой функции, считаются лучшими 
-#define epsilon 0.01 // Это параметр для работы с дробными числами
+#define bestGoals 1.5 // п·я│п╬п╠п╦, я│п╬ п╥п╫п╟я┤п╣п╫п╦п╣п╪ я├п╣п╩п╣п╡п╬п╧ я└я┐п╫п╨я├п╦п╦ п╫п╣ п╠п╬п╩п╣п╣ я┤п╣п╪ п╡п╬ я│я┌п╬п╩я▄п╨п╬ я─п╟п╥ п©я─п╦п╡п╬я│я┘п╬п╢я▐я┴п╦п╪ п╪п╦п╫п╦п╪п╟п╩я▄п╫п╬п╣ п╥п╫п╟я┤п╣п╫п╦п╣ я├п╣п╩п╣п╡п╬п╧ я└я┐п╫п╨я├п╦п╦, я│я┤п╦я┌п╟я▌я┌я│я▐ п╩я┐я┤я┬п╦п╪п╦ 
+#define epsilon 0.01 // п╜я┌п╬ п©п╟я─п╟п╪п╣я┌я─ п╢п╩я▐ я─п╟п╠п╬я┌я▀ я│ п╢я─п╬п╠п╫я▀п╪п╦ я┤п╦я│п╩п╟п╪п╦
 
-// Коструктор класса с заданием начальных параметров по умолчанию
+// п п╬я│я┌я─я┐п╨я┌п╬я─ п╨п╩п╟я│я│п╟ я│ п╥п╟п╢п╟п╫п╦п╣п╪ п╫п╟я┤п╟п╩я▄п╫я▀я┘ п©п╟я─п╟п╪п╣я┌я─п╬п╡ п©п╬ я┐п╪п╬п╩я┤п╟п╫п╦я▌
 TemplateGeneticsExt::TemplateGeneticsExt (void) {
 	numOfIter = -1; 
 	numOfBadIter = -1;
@@ -29,14 +29,14 @@ TemplateGeneticsExt::TemplateGeneticsExt (void) {
 	population->clear();
 	goalStrategy = NULL;
 	percentBest = 0.75;
-	// Параметры алгоритма скрещивания
+	// п÷п╟я─п╟п╪п╣я┌я─я▀ п╟п╩пЁп╬я─п╦я┌п╪п╟ я│п╨я─п╣я┴п╦п╡п╟п╫п╦я▐
 	asCrossProbMin = 0.0;
 	asCrossProbMax = 0.0;
 	axCrossProbMin = 0.0;
 	axCrossProbMax = 0.0;
 	ecCrossProbMin = 0.0;
 	ecCrossProbMax = 0.0;
-	// Параметры алгоритма мутации
+	// п÷п╟я─п╟п╪п╣я┌я─я▀ п╟п╩пЁп╬я─п╦я┌п╪п╟ п╪я┐я┌п╟я├п╦п╦
 	prTransProbMin = 0.0;
 	prTransProbMax = 0.0;
 	asTransProbMin = 0.0;
@@ -48,7 +48,7 @@ TemplateGeneticsExt::TemplateGeneticsExt (void) {
 } 
 
 
-// Деструктор класса - удаляюся все созданные в рамках класса динамические объекты
+// п■п╣я│я┌я─я┐п╨я┌п╬я─ п╨п╩п╟я│я│п╟ - я┐п╢п╟п╩я▐я▌я│я▐ п╡я│п╣ я│п╬п╥п╢п╟п╫п╫я▀п╣ п╡ я─п╟п╪п╨п╟я┘ п╨п╩п╟я│я│п╟ п╢п╦п╫п╟п╪п╦я┤п╣я│п╨п╦п╣ п╬п╠я┼п╣п╨я┌я▀
 TemplateGeneticsExt::~TemplateGeneticsExt (void) {
 	if (goalStrategy != NULL) delete goalStrategy;
 	for (unsigned int i = 0; i < population->size(); i++)
@@ -61,63 +61,63 @@ TemplateGeneticsExt::~TemplateGeneticsExt (void) {
 /****************************************************************************
 *			TemplateGeneticsExt::initFromEnv
 *
-*	Description:	Инициализация параметров с данными из env
-*	Parameters:	const Environment& env - структура с параметрами конфигурации
+*	Description:	п≤п╫п╦я├п╦п╟п╩п╦п╥п╟я├п╦я▐ п©п╟я─п╟п╪п╣я┌я─п╬п╡ я│ п╢п╟п╫п╫я▀п╪п╦ п╦п╥ env
+*	Parameters:	const Environment& env - я│я┌я─я┐п╨я┌я┐я─п╟ я│ п©п╟я─п╟п╪п╣я┌я─п╟п╪п╦ п╨п╬п╫я└п╦пЁя┐я─п╟я├п╦п╦
 *	Returns:	0
-*	Throws:		AxiomLibException - если конфигурация некорректна
+*	Throws:		AxiomLibException - п╣я│п╩п╦ п╨п╬п╫я└п╦пЁя┐я─п╟я├п╦я▐ п╫п╣п╨п╬я─я─п╣п╨я┌п╫п╟
 *	Author:		gevor
 *	History:
 *
 ****************************************************************************/
 int TemplateGeneticsExt::initFromEnv(const Environment& env) {
-	// 1. Устанавливаем значение максимального числа операций генетики и алгоритма обучения шаблонов
+	// 1. пёя│я┌п╟п╫п╟п╡п╩п╦п╡п╟п╣п╪ п╥п╫п╟я┤п╣п╫п╦п╣ п╪п╟п╨я│п╦п╪п╟п╩я▄п╫п╬пЁп╬ я┤п╦я│п╩п╟ п╬п©п╣я─п╟я├п╦п╧ пЁп╣п╫п╣я┌п╦п╨п╦ п╦ п╟п╩пЁп╬я─п╦я┌п╪п╟ п╬п╠я┐я┤п╣п╫п╦я▐ я┬п╟п╠п╩п╬п╫п╬п╡
 	if (env.getIntParamValue(numOfIter, "numOfIter") < 0)
 		throw AxiomLibException("TemplateGeneticsExt::initFromEnv : number of iterations has not been set.");
 	if (env.getIntParamValue(numOfGenIter, "numOfGenIter") < 0)
 		throw AxiomLibException("TemplateGeneticsExt::initFromEnv : number of genetic iterations has not been set.");
 
-	// 2. Устанавливаем число операций без улучшения для алгоритма обучения шаблонов и ГА
+	// 2. пёя│я┌п╟п╫п╟п╡п╩п╦п╡п╟п╣п╪ я┤п╦я│п╩п╬ п╬п©п╣я─п╟я├п╦п╧ п╠п╣п╥ я┐п╩я┐я┤я┬п╣п╫п╦я▐ п╢п╩я▐ п╟п╩пЁп╬я─п╦я┌п╪п╟ п╬п╠я┐я┤п╣п╫п╦я▐ я┬п╟п╠п╩п╬п╫п╬п╡ п╦ п⌠п░
 	if (env.getIntParamValue(numOfBadIter, "numOfBadIter") < 0)
 		throw AxiomLibException("TemplateGeneticsExt::initFromEnv : number of iterations without improvement has not been set.");
 	if (env.getIntParamValue(numOfBadGenIter, "numOfBadGenIter") < 0)
 		throw AxiomLibException("TemplateGeneticsExt::initFromEnv : number of genetic iterations without improvement has not been set.");
 
-	// 3. Инициализируем начальную популяцию
+	// 3. п≤п╫п╦я├п╦п╟п╩п╦п╥п╦я─я┐п╣п╪ п╫п╟я┤п╟п╩я▄п╫я┐я▌ п©п╬п©я┐п╩я▐я├п╦я▌
 	if (env.getIntParamValue (popSize, "genPopSize") < 0)
 		throw AxiomLibException("TemplateGeneticsExt::initFromEnv : genPopSize is undefined.");
 	double presetAxiomSets;
 	if (env.getDoubleParamValue(presetAxiomSets, "popPreset") < 0)
 		throw AxiomLibException("TemplateGeneticsExt::initFromEnv : popPreset is not set.");
-	// Проверка корректности числа систем аксиом
+	// п÷я─п╬п╡п╣я─п╨п╟ п╨п╬я─я─п╣п╨я┌п╫п╬я│я┌п╦ я┤п╦я│п╩п╟ я│п╦я│я┌п╣п╪ п╟п╨я│п╦п╬п╪
 	if ((popSize < 1) || (presetAxiomSets < 0) || (presetAxiomSets > 1))
 		throw AxiomLibException("TemplateGeneticsExt::initFromEnv : incorrect number of AxiomSets is present.");
 
-	// *.0 Подготовка для установки популяции систем аксиом
+	// *.0 п÷п╬п╢пЁп╬я┌п╬п╡п╨п╟ п╢п╩я▐ я┐я│я┌п╟п╫п╬п╡п╨п╦ п©п╬п©я┐п╩я▐я├п╦п╦ я│п╦я│я┌п╣п╪ п╟п╨я│п╦п╬п╪
 	int knownAxioms;
 	knownAxioms = round (((double) popSize) * presetAxiomSets);
 	//Logger::getInstance()->writeDebug("knownAxioms : " + boost::lexical_cast<std::string>(knownAxioms));
 	
-	// *.1. Ищем AxiomBase - она должна быть задана, читаем ее
+	// *.1. п≤я┴п╣п╪ AxiomBase - п╬п╫п╟ п╢п╬п╩п╤п╫п╟ п╠я▀я┌я▄ п╥п╟п╢п╟п╫п╟, я┤п╦я┌п╟п╣п╪ п╣п╣
 	std::string axiomBaseDir;
 	if (env.getStringParamValue(axiomBaseDir, "AxiomBaseDir") < 0)
 		throw AxiomLibException("TemplateGeneticsExt::initFromEnv : popPreset > 0 but axiom base dir is not set.");
 	AxiomBase axiomBase;
 	axiomBase.readAxioms(axiomBaseDir.c_str());
 	
-	// *.2. ищем базовую директорию с наборами систем аксиом
+	// *.2. п╦я┴п╣п╪ п╠п╟п╥п╬п╡я┐я▌ п╢п╦я─п╣п╨я┌п╬я─п╦я▌ я│ п╫п╟п╠п╬я─п╟п╪п╦ я│п╦я│я┌п╣п╪ п╟п╨я│п╦п╬п╪
 	std::string axiomSetDir;
 	if (env.getStringParamValue(axiomSetDir, "AxiomSetBaseDir") < 0)
 	  throw AxiomLibException("TemplateGeneticsExt::initFromEnv : popPreset > 0 but axiom set base dir is not set.");
 
-	// *.3. получаем множество наборов аксиом
+	// *.3. п©п╬п╩я┐я┤п╟п╣п╪ п╪п╫п╬п╤п╣я│я┌п╡п╬ п╫п╟п╠п╬я─п╬п╡ п╟п╨я│п╦п╬п╪
 	std::set<std::string> axiomSetNames;
 	if (env.getStringSetParamValue(axiomSetNames, "AxiomSet") < 0 && knownAxioms > 0) 
 	  throw AxiomLibException("TemplateGeneticsExt::initFromEnv : popPreset > 0 but no axiom set is given.");
 	
-	// *.4. Определяем итератор для хождения по набору названий систем аксиом
+	// *.4. п·п©я─п╣п╢п╣п╩я▐п╣п╪ п╦я┌п╣я─п╟я┌п╬я─ п╢п╩я▐ я┘п╬п╤п╢п╣п╫п╦я▐ п©п╬ п╫п╟п╠п╬я─я┐ п╫п╟п╥п╡п╟п╫п╦п╧ я│п╦я│я┌п╣п╪ п╟п╨я│п╦п╬п╪
 	std::set<std::string>::const_iterator curAx = axiomSetNames.begin();
 	  
-	// *.5. Определяем параметры для систем аксиом, подбираемых случайным образом
+	// *.5. п·п©я─п╣п╢п╣п╩я▐п╣п╪ п©п╟я─п╟п╪п╣я┌я─я▀ п╢п╩я▐ я│п╦я│я┌п╣п╪ п╟п╨я│п╦п╬п╪, п©п╬п╢п╠п╦я─п╟п╣п╪я▀я┘ я│п╩я┐я┤п╟п╧п╫я▀п╪ п╬п╠я─п╟п╥п╬п╪
 	int numOfAxioms;
 	int maxECinAxiom;
 	if (presetAxiomSets < 1) {
@@ -127,7 +127,7 @@ int TemplateGeneticsExt::initFromEnv(const Environment& env) {
 			throw AxiomLibException("TemplateGeneticsExt::initFromEnv : maxECinAxiom is not set.");
 	}
 
-	// *.6 Создаем и определяем системы аксиом по прочитанным ранее параметрам
+	// *.6 п║п╬п╥п╢п╟п╣п╪ п╦ п╬п©я─п╣п╢п╣п╩я▐п╣п╪ я│п╦я│я┌п╣п╪я▀ п╟п╨я│п╦п╬п╪ п©п╬ п©я─п╬я┤п╦я┌п╟п╫п╫я▀п╪ я─п╟п╫п╣п╣ п©п╟я─п╟п╪п╣я┌я─п╟п╪
 	if (population == NULL)
 		throw AxiomLibException("TemplateGeneticsExt::initFromEnv : population has not been initialized.");
 	for (unsigned int i = 0; i < population->size(); i++)
@@ -135,25 +135,25 @@ int TemplateGeneticsExt::initFromEnv(const Environment& env) {
 	population->resize (popSize);
 	if (debug) std::cout << "\n	Generated elems of axiomSet population:\n";
 	for (int i = 0; i < popSize; i++) {
-		// Определяем какую систему аксиом устанавливать [заданную / случайную]
+		// п·п©я─п╣п╢п╣п╩я▐п╣п╪ п╨п╟п╨я┐я▌ я│п╦я│я┌п╣п╪я┐ п╟п╨я│п╦п╬п╪ я┐я│я┌п╟п╫п╟п╡п╩п╦п╡п╟я┌я▄ [п╥п╟п╢п╟п╫п╫я┐я▌ / я│п╩я┐я┤п╟п╧п╫я┐я▌]
 		if (i < knownAxioms) {
-			// Значит используем одну из систем аксиом перечисленных в конфигурационном файле
+			// п≈п╫п╟я┤п╦я┌ п╦я│п©п╬п╩я▄п╥я┐п╣п╪ п╬п╢п╫я┐ п╦п╥ я│п╦я│я┌п╣п╪ п╟п╨я│п╦п╬п╪ п©п╣я─п╣я┤п╦я│п╩п╣п╫п╫я▀я┘ п╡ п╨п╬п╫я└п╦пЁя┐я─п╟я├п╦п╬п╫п╫п╬п╪ я└п╟п╧п╩п╣
 			((*population)[i]).axiomSet = new AxiomSet;
 			((*population)[i]).axiomSet->initAxiomSetFromFile(axiomSetDir, *curAx, axiomBase);
 			if (debug) std::cout << "	" << i+1 << ". " << (*population)[i].axiomSet->name() << "\n";
-			// Сдвигаем итератор по используемым системам аксиом
+			// п║п╢п╡п╦пЁп╟п╣п╪ п╦я┌п╣я─п╟я┌п╬я─ п©п╬ п╦я│п©п╬п╩я▄п╥я┐п╣п╪я▀п╪ я│п╦я│я┌п╣п╪п╟п╪ п╟п╨я│п╦п╬п╪
 			++curAx;
 			if (curAx == axiomSetNames.end())
 				curAx = axiomSetNames.begin();
 		} else {
-			// Значит используем систему аксиом, сгенерированную случайно
+			// п≈п╫п╟я┤п╦я┌ п╦я│п©п╬п╩я▄п╥я┐п╣п╪ я│п╦я│я┌п╣п╪я┐ п╟п╨я│п╦п╬п╪, я│пЁп╣п╫п╣я─п╦я─п╬п╡п╟п╫п╫я┐я▌ я│п╩я┐я┤п╟п╧п╫п╬
 			((*population)[i]).axiomSet = new AxiomSet;
 			((*population)[i]).axiomSet->initAxiomSetByRand (numOfAxioms, maxECinAxiom);
 			if (debug) std::cout << "	" << i+1 << ". Random Axiom Set\n";
 		}
 	}
 	
-	// 4. Устанавливаем параметры операции мутации
+	// 4. пёя│я┌п╟п╫п╟п╡п╩п╦п╡п╟п╣п╪ п©п╟я─п╟п╪п╣я┌я─я▀ п╬п©п╣я─п╟я├п╦п╦ п╪я┐я┌п╟я├п╦п╦
 	transmuteTpl.setParamsFromEnv (env);
 	if (env.getDoubleParamValue(prTransProbMin, "prTransProbMin") < 0)
 		throw AxiomLibException("TemplateGeneticsExt::initFromEnv : prTransProbMin is not set.");
@@ -172,7 +172,7 @@ int TemplateGeneticsExt::initFromEnv(const Environment& env) {
 	if (env.getDoubleParamValue(ecTransProbMax, "ecTransProbMax") < 0)
 		throw AxiomLibException("TemplateGeneticsExt::initFromEnv : ecTransProbMax is not set.");
 
-	// 5. Инициализируем операцию скрещивания
+	// 5. п≤п╫п╦я├п╦п╟п╩п╦п╥п╦я─я┐п╣п╪ п╬п©п╣я─п╟я├п╦я▌ я│п╨я─п╣я┴п╦п╡п╟п╫п╦я▐
 	crossoverTpl.setParamsFromEnv (env);
 	if (env.getDoubleParamValue(asCrossProbMin, "asCrossProbMin") < 0)
 		throw AxiomLibException("TemplateGeneticsExt::initFromEnv : asCrossProbMin is not set.");
@@ -187,13 +187,13 @@ int TemplateGeneticsExt::initFromEnv(const Environment& env) {
 	if (env.getDoubleParamValue(ecCrossProbMax, "ecCrossProbMax") < 0)
 		throw AxiomLibException("TemplateGeneticsExt::initFromEnv : ecCrossProbMax is not set.");
 
-	// 6. Операция селекции - вытаскиваем необходимые параметры
+	// 6. п·п©п╣я─п╟я├п╦я▐ я│п╣п╩п╣п╨я├п╦п╦ - п╡я▀я┌п╟я│п╨п╦п╡п╟п╣п╪ п╫п╣п╬п╠я┘п╬п╢п╦п╪я▀п╣ п©п╟я─п╟п╪п╣я┌я─я▀
 	if (env.getDoubleParamValue (percentBest, "percentBest") < 0)
 		throw AxiomLibException("TemplateGeneticsExt::initFromEnv : param 'percentBest' for selection in GA is not set.");
 	if ( (percentBest > 1.0) || (percentBest < 0.0) )
 		throw AxiomLibException("TemplateGeneticsExt::initFromEnv : param 'percentBest' has a wrong value.");
 
-	// 7. Инициализируем стратегию вычисления целевой функции
+	// 7. п≤п╫п╦я├п╦п╟п╩п╦п╥п╦я─я┐п╣п╪ я│я┌я─п╟я┌п╣пЁп╦я▌ п╡я▀я┤п╦я│п╩п╣п╫п╦я▐ я├п╣п╩п╣п╡п╬п╧ я└я┐п╫п╨я├п╦п╦
 	std::string goalStrategyName;
 	GoalStrategyFactory gsf;
 	if (env.getStringParamValue(goalStrategyName, "goalClass") < 0)
@@ -201,7 +201,7 @@ int TemplateGeneticsExt::initFromEnv(const Environment& env) {
 	goalStrategy = gsf.create(goalStrategyName);
 	goalStrategy->setParamsFromEnv(env);
 
-	// 8. Инициализация условия досрочного выхода из цикла генетического алгоритма и условия выхода из алгоритма обучения шаблонов
+	// 8. п≤п╫п╦я├п╦п╟п╩п╦п╥п╟я├п╦я▐ я┐я│п╩п╬п╡п╦я▐ п╢п╬я│я─п╬я┤п╫п╬пЁп╬ п╡я▀я┘п╬п╢п╟ п╦п╥ я├п╦п╨п╩п╟ пЁп╣п╫п╣я┌п╦я┤п╣я│п╨п╬пЁп╬ п╟п╩пЁп╬я─п╦я┌п╪п╟ п╦ я┐я│п╩п╬п╡п╦я▐ п╡я▀я┘п╬п╢п╟ п╦п╥ п╟п╩пЁп╬я─п╦я┌п╪п╟ п╬п╠я┐я┤п╣п╫п╦я▐ я┬п╟п╠п╩п╬п╫п╬п╡
 	if (env.getDoubleParamValue (exitCond, "exitCond") < 0)
 		throw AxiomLibException("TemplateGeneticsExt::initFromEnv : exit condition for GA is undefined.");
 	if (env.getDoubleParamValue (exitCondGen, "exitCondGen") < 0)
@@ -214,34 +214,34 @@ int TemplateGeneticsExt::initFromEnv(const Environment& env) {
 /****************************************************************************
 *					TemplateGeneticsExt::run
 *
-*	Description:	Запуск алгоритма обучения шаблона
-*	Parameters:		templateRecognizer - шаблон, обучение в рамках которого производится
+*	Description:	п≈п╟п©я┐я│п╨ п╟п╩пЁп╬я─п╦я┌п╪п╟ п╬п╠я┐я┤п╣п╫п╦я▐ я┬п╟п╠п╩п╬п╫п╟
+*	Parameters:		templateRecognizer - я┬п╟п╠п╩п╬п╫, п╬п╠я┐я┤п╣п╫п╦п╣ п╡ я─п╟п╪п╨п╟я┘ п╨п╬я┌п╬я─п╬пЁп╬ п©я─п╬п╦п╥п╡п╬п╢п╦я┌я│я▐
 *	Returns:		0
-*	Throws:			AxiomLibException - если произошла ошибка в обучении или ГА не
-*					был инициализирован
+*	Throws:			AxiomLibException - п╣я│п╩п╦ п©я─п╬п╦п╥п╬я┬п╩п╟ п╬я┬п╦п╠п╨п╟ п╡ п╬п╠я┐я┤п╣п╫п╦п╦ п╦п╩п╦ п⌠п░ п╫п╣
+*					п╠я▀п╩ п╦п╫п╦я├п╦п╟п╩п╦п╥п╦я─п╬п╡п╟п╫
 *	Author:			dk
 *	History:
 *
 ****************************************************************************/
 double TemplateGeneticsExt::run(TemplateRecognizer& templateRecognizer) {
-	// Алгоритм обучения шаблонов:
-	// 0. проверяем, установлены ли все необходимые параметры
-	// В цикле:
-	// 1. Осуществляем с помощью ГА подбор системы аксиом
-	// 2. Производим поиск настроек предобработчика
-	// 3. Производим поиск настроек распознавателя
-	// 4. Проверяем условия выхода из цикла (по общему числу итераций, по числу итераций без улучшений, по значению целевой функции)
-	// После цикла:
-	// 5. Присваиваем входному шаблону лучшее за всю истрию обучения значение
+	// п░п╩пЁп╬я─п╦я┌п╪ п╬п╠я┐я┤п╣п╫п╦я▐ я┬п╟п╠п╩п╬п╫п╬п╡:
+	// 0. п©я─п╬п╡п╣я─я▐п╣п╪, я┐я│я┌п╟п╫п╬п╡п╩п╣п╫я▀ п╩п╦ п╡я│п╣ п╫п╣п╬п╠я┘п╬п╢п╦п╪я▀п╣ п©п╟я─п╟п╪п╣я┌я─я▀
+	// п▓ я├п╦п╨п╩п╣:
+	// 1. п·я│я┐я┴п╣я│я┌п╡п╩я▐п╣п╪ я│ п©п╬п╪п╬я┴я▄я▌ п⌠п░ п©п╬п╢п╠п╬я─ я│п╦я│я┌п╣п╪я▀ п╟п╨я│п╦п╬п╪
+	// 2. п÷я─п╬п╦п╥п╡п╬п╢п╦п╪ п©п╬п╦я│п╨ п╫п╟я│я┌я─п╬п╣п╨ п©я─п╣п╢п╬п╠я─п╟п╠п╬я┌я┤п╦п╨п╟
+	// 3. п÷я─п╬п╦п╥п╡п╬п╢п╦п╪ п©п╬п╦я│п╨ п╫п╟я│я┌я─п╬п╣п╨ я─п╟я│п©п╬п╥п╫п╟п╡п╟я┌п╣п╩я▐
+	// 4. п÷я─п╬п╡п╣я─я▐п╣п╪ я┐я│п╩п╬п╡п╦я▐ п╡я▀я┘п╬п╢п╟ п╦п╥ я├п╦п╨п╩п╟ (п©п╬ п╬п╠я┴п╣п╪я┐ я┤п╦я│п╩я┐ п╦я┌п╣я─п╟я├п╦п╧, п©п╬ я┤п╦я│п╩я┐ п╦я┌п╣я─п╟я├п╦п╧ п╠п╣п╥ я┐п╩я┐я┤я┬п╣п╫п╦п╧, п©п╬ п╥п╫п╟я┤п╣п╫п╦я▌ я├п╣п╩п╣п╡п╬п╧ я└я┐п╫п╨я├п╦п╦)
+	// п÷п╬я│п╩п╣ я├п╦п╨п╩п╟:
+	// 5. п÷я─п╦я│п╡п╟п╦п╡п╟п╣п╪ п╡я┘п╬п╢п╫п╬п╪я┐ я┬п╟п╠п╩п╬п╫я┐ п╩я┐я┤я┬п╣п╣ п╥п╟ п╡я│я▌ п╦я│я┌я─п╦я▌ п╬п╠я┐я┤п╣п╫п╦я▐ п╥п╫п╟я┤п╣п╫п╦п╣
 
 
-	// Проверяем корректность начальных параметров
+	// п÷я─п╬п╡п╣я─я▐п╣п╪ п╨п╬я─я─п╣п╨я┌п╫п╬я│я┌я▄ п╫п╟я┤п╟п╩я▄п╫я▀я┘ п©п╟я─п╟п╪п╣я┌я─п╬п╡
 	if (population == NULL)
 		throw AxiomLibException("TemplateGeneticsExt::run : population has not been initialized.");
 	if (population->size() < 1)
 		throw AxiomLibException("TemplateGeneticsExt::run : population has not been set.");
 
-	// Так как система аксиом будет подбираться в данной функции, удаляем старую систему аксиом
+	// п╒п╟п╨ п╨п╟п╨ я│п╦я│я┌п╣п╪п╟ п╟п╨я│п╦п╬п╪ п╠я┐п╢п╣я┌ п©п╬п╢п╠п╦я─п╟я┌я▄я│я▐ п╡ п╢п╟п╫п╫п╬п╧ я└я┐п╫п╨я├п╦п╦, я┐п╢п╟п╩я▐п╣п╪ я│я┌п╟я─я┐я▌ я│п╦я│я┌п╣п╪я┐ п╟п╨я│п╦п╬п╪
 	/*if (templateRecognizer.axiomSet != NULL) {
 		templateRecognizer.axiomSet->clear();
 		delete templateRecognizer.axiomSet;
@@ -249,11 +249,11 @@ double TemplateGeneticsExt::run(TemplateRecognizer& templateRecognizer) {
 	}
 	*/
 
-	// Заводим переменную для хранения лучшей системы аксиом за историю
+	// п≈п╟п╡п╬п╢п╦п╪ п©п╣я─п╣п╪п╣п╫п╫я┐я▌ п╢п╩я▐ я┘я─п╟п╫п╣п╫п╦я▐ п╩я┐я┤я┬п╣п╧ я│п╦я│я┌п╣п╪я▀ п╟п╨я│п╦п╬п╪ п╥п╟ п╦я│я┌п╬я─п╦я▌
 	AxiomSetPlus bestElem;
 	TemplateRecognizer bestTemplate;
 	
-	// Подготовка внутренних переменных для алгоритма обучения и ГА
+	// п÷п╬п╢пЁп╬я┌п╬п╡п╨п╟ п╡п╫я┐я┌я─п╣п╫п╫п╦я┘ п©п╣я─п╣п╪п╣п╫п╫я▀я┘ п╢п╩я▐ п╟п╩пЁп╬я─п╦я┌п╪п╟ п╬п╠я┐я┤п╣п╫п╦я▐ п╦ п⌠п░
 	int numOfBadIterCount = 0;
 	double bestResult = -1.0;
 	int numOfBadGenIterCount = 0;
@@ -263,40 +263,40 @@ double TemplateGeneticsExt::run(TemplateRecognizer& templateRecognizer) {
 	double tmpGoal = -1;
 	double tmpGoalRec = -1;
 
-	// Основной цикл алгоритма обучения шаблона
+	// п·я│п╫п╬п╡п╫п╬п╧ я├п╦п╨п╩ п╟п╩пЁп╬я─п╦я┌п╪п╟ п╬п╠я┐я┤п╣п╫п╦я▐ я┬п╟п╠п╩п╬п╫п╟
 	for (int baseIter = 0; baseIter < numOfIter; baseIter++) {
 		if (debug) cout << "	TemplateGeneticsExt: BA iteration " << baseIter+1 << " out of " << numOfIter << "\n";
 
-		// 1. ГА подбора системы аксиом
+		// 1. п⌠п░ п©п╬п╢п╠п╬я─п╟ я│п╦я│я┌п╣п╪я▀ п╟п╨я│п╦п╬п╪
 		for (int gaIter=0; gaIter < numOfGenIter; gaIter++) {
 			if (debug) cout << "		TemplateGeneticsExt: GA iteration " << gaIter+1 << " out of " << numOfGenIter;
 			
-			// *.1. Проводим Селекцию
+			// *.1. п÷я─п╬п╡п╬п╢п╦п╪ п║п╣п╩п╣п╨я├п╦я▌
 			if (gaIter > 0)	
 				select (mask);
 
-			// *.2. Скрещиваем
+			// *.2. п║п╨я─п╣я┴п╦п╡п╟п╣п╪
 			if (gaIter > 0)
 				crossover ();
 
-			// *.3. Мутируем
+			// *.3. п°я┐я┌п╦я─я┐п╣п╪
 			if (gaIter > 0)
 				transmute ();
 
 			if (debug) cout << ", pop size = " << population->size() << "\n";
-			// *.4. Проверяем системы аксиом на тестовой выборке
+			// *.4. п÷я─п╬п╡п╣я─я▐п╣п╪ я│п╦я│я┌п╣п╪я▀ п╟п╨я│п╦п╬п╪ п╫п╟ я┌п╣я│я┌п╬п╡п╬п╧ п╡я▀п╠п╬я─п╨п╣
 			recognize (templateRecognizer);
 			
-			// *.5. Прогоняем вычисление целевой функции H(first, second)
+			// *.5. п÷я─п╬пЁп╬п╫я▐п╣п╪ п╡я▀я┤п╦я│п╩п╣п╫п╦п╣ я├п╣п╩п╣п╡п╬п╧ я└я┐п╫п╨я├п╦п╦ H(first, second)
 			compute ();
 
-			// *.6. Сортируем системы аксиом по значению целевой функции, результаты записываем в вектор маски
+			// *.6. п║п╬я─я┌п╦я─я┐п╣п╪ я│п╦я│я┌п╣п╪я▀ п╟п╨я│п╦п╬п╪ п©п╬ п╥п╫п╟я┤п╣п╫п╦я▌ я├п╣п╩п╣п╡п╬п╧ я└я┐п╫п╨я├п╦п╦, я─п╣п╥я┐п╩я▄я┌п╟я┌я▀ п╥п╟п©п╦я│я▀п╡п╟п╣п╪ п╡ п╡п╣п╨я┌п╬я─ п╪п╟я│п╨п╦
 			sort (mask);
 
-			// *.7. Заполняем статистику по элементам популяции на основе данных полученных при распознавании
+			// *.7. п≈п╟п©п╬п╩п╫я▐п╣п╪ я│я┌п╟я┌п╦я│я┌п╦п╨я┐ п©п╬ я█п╩п╣п╪п╣п╫я┌п╟п╪ п©п╬п©я┐п╩я▐я├п╦п╦ п╫п╟ п╬я│п╫п╬п╡п╣ п╢п╟п╫п╫я▀я┘ п©п╬п╩я┐я┤п╣п╫п╫я▀я┘ п©я─п╦ я─п╟я│п©п╬п╥п╫п╟п╡п╟п╫п╦п╦
 			fillStatistic(mask);
 			
-			// *.8. Сохряняем лучший элемент популяции
+			// *.8. п║п╬я┘я─я▐п╫я▐п╣п╪ п╩я┐я┤я┬п╦п╧ я█п╩п╣п╪п╣п╫я┌ п©п╬п©я┐п╩я▐я├п╦п╦
 			if ((gaIter == 0) || ((*population)[mask[0]].goal < bestElem.goal)) {
 				bestElem = (*population)[mask[0]];
 				numOfBadGenIterCount = 0;
@@ -307,24 +307,24 @@ double TemplateGeneticsExt::run(TemplateRecognizer& templateRecognizer) {
 			if (debug) cout << "		TemplateGeneticsExt: best goal = "<<bestElem.goal
 							<<"=("<<bestElem.nFirst<<","<<bestElem.nSecond<<")"<<std::endl;
 
-			// *.9. Проверяем условия выхода из цикла
+			// *.9. п÷я─п╬п╡п╣я─я▐п╣п╪ я┐я│п╩п╬п╡п╦я▐ п╡я▀я┘п╬п╢п╟ п╦п╥ я├п╦п╨п╩п╟
 			if ((numOfBadGenIterCount > numOfBadGenIter) || (bestElem.goal < exitCondGen))
 				break;
 		}
 
-		// 2. Устанавливаем лучшую систему аксиом в шаблон распознавателя
+		// 2. пёя│я┌п╟п╫п╟п╡п╩п╦п╡п╟п╣п╪ п╩я┐я┤я┬я┐я▌ я│п╦я│я┌п╣п╪я┐ п╟п╨я│п╦п╬п╪ п╡ я┬п╟п╠п╩п╬п╫ я─п╟я│п©п╬п╥п╫п╟п╡п╟я┌п╣п╩я▐
 		if (templateRecognizer.axiomSet == NULL)
 			templateRecognizer.axiomSet = new AxiomSet;
 		//*(templateRecognizer.axiomSet) = *((*population)[mask[0]].axiomSet);
 		*(templateRecognizer.axiomSet) = *(bestElem.axiomSet);
 
-		// 3. Вызываем алгоритм обучения распознавателя
+		// 3. п▓я▀п╥я▀п╡п╟п╣п╪ п╟п╩пЁп╬я─п╦я┌п╪ п╬п╠я┐я┤п╣п╫п╦я▐ я─п╟я│п©п╬п╥п╫п╟п╡п╟я┌п╣п╩я▐
 		tmpGoalRec = templateRecognizer.recognizer->learn (templateRecognizer);
 
-		// 4. Вызываем алгоритм обучения предобработчика
+		// 4. п▓я▀п╥я▀п╡п╟п╣п╪ п╟п╩пЁп╬я─п╦я┌п╪ п╬п╠я┐я┤п╣п╫п╦я▐ п©я─п╣п╢п╬п╠я─п╟п╠п╬я┌я┤п╦п╨п╟
 		tmpGoal = templateRecognizer.preprocess->learn (templateRecognizer);
 
-		// Если < 0, значит предобработка не настраивалась
+		// п∙я│п╩п╦ < 0, п╥п╫п╟я┤п╦я┌ п©я─п╣п╢п╬п╠я─п╟п╠п╬я┌п╨п╟ п╫п╣ п╫п╟я│я┌я─п╟п╦п╡п╟п╩п╟я│я▄
 		if (tmpGoal < 0) {
 			tmpGoal = tmpGoalRec;
 		}
@@ -338,7 +338,7 @@ double TemplateGeneticsExt::run(TemplateRecognizer& templateRecognizer) {
 		
 		if (debug) cout << "	This iteration best goal value is " << tmpGoal << std::endl;
 
-		// 5. Обновляем лучшее решение
+		// 5. п·п╠п╫п╬п╡п╩я▐п╣п╪ п╩я┐я┤я┬п╣п╣ я─п╣я┬п╣п╫п╦п╣
 		if ((baseIter == 0) || (tmpGoal < resGoal)) {
 			bestTemplate = templateRecognizer;
 			resGoal = tmpGoal;
@@ -347,12 +347,12 @@ double TemplateGeneticsExt::run(TemplateRecognizer& templateRecognizer) {
 			numOfBadIterCount++;
 		}
 
-		// 6. Проверяем условия выхода из цикла
+		// 6. п÷я─п╬п╡п╣я─я▐п╣п╪ я┐я│п╩п╬п╡п╦я▐ п╡я▀я┘п╬п╢п╟ п╦п╥ я├п╦п╨п╩п╟
 		if ((numOfBadIterCount > numOfBadIter) || (resGoal < exitCond))
 			break;
 	}
 
-	// Устанавливаем как результат - лучше значение за историю обучения
+	// пёя│я┌п╟п╫п╟п╡п╩п╦п╡п╟п╣п╪ п╨п╟п╨ я─п╣п╥я┐п╩я▄я┌п╟я┌ - п╩я┐я┤я┬п╣ п╥п╫п╟я┤п╣п╫п╦п╣ п╥п╟ п╦я│я┌п╬я─п╦я▌ п╬п╠я┐я┤п╣п╫п╦я▐
 	templateRecognizer = bestTemplate;
 
 	return resGoal;
@@ -360,23 +360,23 @@ double TemplateGeneticsExt::run(TemplateRecognizer& templateRecognizer) {
 
 
 int TemplateGeneticsExt::select (const std::vector<unsigned int> &mask) {
-	// Проверка входных параметров
+	// п÷я─п╬п╡п╣я─п╨п╟ п╡я┘п╬п╢п╫я▀я┘ п©п╟я─п╟п╪п╣я┌я─п╬п╡
 	if (population == NULL)
 		throw AxiomLibException("TemplateGeneticsExt::select : population has not been initialized.");
 	if (mask.size() != population->size())
 		throw AxiomLibException("TemplateGeneticsExt::select : vector of masks is unset.");
-	// Определяем число лучших элементов популяции, которые точно выживут
+	// п·п©я─п╣п╢п╣п╩я▐п╣п╪ я┤п╦я│п╩п╬ п╩я┐я┤я┬п╦я┘ я█п╩п╣п╪п╣п╫я┌п╬п╡ п©п╬п©я┐п╩я▐я├п╦п╦, п╨п╬я┌п╬я─я▀п╣ я┌п╬я┤п╫п╬ п╡я▀п╤п╦п╡я┐я┌
 	int numBest;
 	numBest = round (percentBest * popSize);
-	// Если размер популяции меньше требуемого, то удалять нечего, выходим из функции
+	// п∙я│п╩п╦ я─п╟п╥п╪п╣я─ п©п╬п©я┐п╩я▐я├п╦п╦ п╪п╣п╫я▄я┬п╣ я┌я─п╣п╠я┐п╣п╪п╬пЁп╬, я┌п╬ я┐п╢п╟п╩я▐я┌я▄ п╫п╣я┤п╣пЁп╬, п╡я▀я┘п╬п╢п╦п╪ п╦п╥ я└я┐п╫п╨я├п╦п╦
 	int numToDel;
 	numToDel = population->size() - popSize;
 	if (numToDel <= 0)
 		return 1;
-	// Определение элементов популяции, которые будут удалены
+	// п·п©я─п╣п╢п╣п╩п╣п╫п╦п╣ я█п╩п╣п╪п╣п╫я┌п╬п╡ п©п╬п©я┐п╩я▐я├п╦п╦, п╨п╬я┌п╬я─я▀п╣ п╠я┐п╢я┐я┌ я┐п╢п╟п╩п╣п╫я▀
 	int numToChoose;
 	numToChoose = population->size() - numBest;
-	// Теперь нужно выбрать из numToChoose число numToDel элементов, которые будут удалены
+	// п╒п╣п©п╣я─я▄ п╫я┐п╤п╫п╬ п╡я▀п╠я─п╟я┌я▄ п╦п╥ numToChoose я┤п╦я│п╩п╬ numToDel я█п╩п╣п╪п╣п╫я┌п╬п╡, п╨п╬я┌п╬я─я▀п╣ п╠я┐п╢я┐я┌ я┐п╢п╟п╩п╣п╫я▀
 	std::vector <bool> toDel;
 	toDel.resize (numToChoose);
 	for (unsigned int i = 0; i < (unsigned int) numToChoose; i++) 
@@ -397,14 +397,14 @@ int TemplateGeneticsExt::select (const std::vector<unsigned int> &mask) {
 		indexToStore[j] = mask[maskSize - tempInt - 1];
 	}
 	
-	// Удаление выбранных элементов популяции
+	// пёп╢п╟п╩п╣п╫п╦п╣ п╡я▀п╠я─п╟п╫п╫я▀я┘ я█п╩п╣п╪п╣п╫я┌п╬п╡ п©п╬п©я┐п╩я▐я├п╦п╦
 	std::vector <AxiomSetPlus> *newPop;
 	newPop = new std::vector <AxiomSetPlus>;
 	newPop->resize(popSize);
-	// Копируем лучшие элементы популяции
+	// п п╬п©п╦я─я┐п╣п╪ п╩я┐я┤я┬п╦п╣ я█п╩п╣п╪п╣п╫я┌я▀ п©п╬п©я┐п╩я▐я├п╦п╦
 	for (unsigned int i = 0; i < (unsigned int) numBest; i++)
 		(*newPop)[i] = (*population)[mask[i]];
-	// Копируем случайные особи из оставшихся
+	// п п╬п©п╦я─я┐п╣п╪ я│п╩я┐я┤п╟п╧п╫я▀п╣ п╬я│п╬п╠п╦ п╦п╥ п╬я│я┌п╟п╡я┬п╦я┘я│я▐
 	for (unsigned int i = 0; i < (unsigned int) numToStore; i++) {
 		(*newPop)[numBest + i] = (*population)[indexToStore[i]];
 	}
@@ -421,7 +421,7 @@ int TemplateGeneticsExt::select (const std::vector<unsigned int> &mask) {
 
 
 int TemplateGeneticsExt::transmute () {
-	// Проверка начальных параметров
+	// п÷я─п╬п╡п╣я─п╨п╟ п╫п╟я┤п╟п╩я▄п╫я▀я┘ п©п╟я─п╟п╪п╣я┌я─п╬п╡
 	if (population == NULL)
 		throw AxiomLibException("TemplateGeneticsExt::transmute : population has not been initialized.");
 	if (population->size() < 1) {
@@ -433,7 +433,7 @@ int TemplateGeneticsExt::transmute () {
 
 
 int TemplateGeneticsExt::crossover () {
-	// Проверка начальных параметров
+	// п÷я─п╬п╡п╣я─п╨п╟ п╫п╟я┤п╟п╩я▄п╫я▀я┘ п©п╟я─п╟п╪п╣я┌я─п╬п╡
 	if (population == NULL)
 		throw AxiomLibException("TemplateGeneticsExt::crossover : population has not been initialized.");
 	if (population->size() < 2) {
@@ -457,11 +457,11 @@ int TemplateGeneticsExt::crossover () {
 /****************************************************************************
 *					TemplateGeneticsExt::recognize
 *
-*	Description:	Функция вычисляет число ошибок I и II рода для всех элементов
-*					популяции и записывает результат в соответствующие переменные 
-*					элементов популяции.
-*	Parameters:		templateRecognizer - шаблон, с помощью которого произоводить 
-*					оценку числа ошибок
+*	Description:	п╓я┐п╫п╨я├п╦я▐ п╡я▀я┤п╦я│п╩я▐п╣я┌ я┤п╦я│п╩п╬ п╬я┬п╦п╠п╬п╨ I п╦ II я─п╬п╢п╟ п╢п╩я▐ п╡я│п╣я┘ я█п╩п╣п╪п╣п╫я┌п╬п╡
+*					п©п╬п©я┐п╩я▐я├п╦п╦ п╦ п╥п╟п©п╦я│я▀п╡п╟п╣я┌ я─п╣п╥я┐п╩я▄я┌п╟я┌ п╡ я│п╬п╬я┌п╡п╣я┌я│я┌п╡я┐я▌я┴п╦п╣ п©п╣я─п╣п╪п╣п╫п╫я▀п╣ 
+*					я█п╩п╣п╪п╣п╫я┌п╬п╡ п©п╬п©я┐п╩я▐я├п╦п╦.
+*	Parameters:		templateRecognizer - я┬п╟п╠п╩п╬п╫, я│ п©п╬п╪п╬я┴я▄я▌ п╨п╬я┌п╬я─п╬пЁп╬ п©я─п╬п╦п╥п╬п╡п╬п╢п╦я┌я▄ 
+*					п╬я├п╣п╫п╨я┐ я┤п╦я│п╩п╟ п╬я┬п╦п╠п╬п╨
 *	Returns:		0
 *	Throws:			-
 *	Author:			dk
@@ -471,12 +471,12 @@ int TemplateGeneticsExt::crossover () {
 inline int TemplateGeneticsExt::recognize (TemplateRecognizer& templateRecognizer) {
 	if (population == NULL)
 		throw AxiomLibException("TemplateGeneticsExt::recognize : population has not been initialized.");
-	// Подготовка шаблона распознавателя
+	// п÷п╬п╢пЁп╬я┌п╬п╡п╨п╟ я┬п╟п╠п╩п╬п╫п╟ я─п╟я│п©п╬п╥п╫п╟п╡п╟я┌п╣п╩я▐
 	if (templateRecognizer.axiomSet == NULL)
 		templateRecognizer.axiomSet = new AxiomSet;
-	// Запуск алгоритма предобработки исходных данных
+	// п≈п╟п©я┐я│п╨ п╟п╩пЁп╬я─п╦я┌п╪п╟ п©я─п╣п╢п╬п╠я─п╟п╠п╬я┌п╨п╦ п╦я│я┘п╬п╢п╫я▀я┘ п╢п╟п╫п╫я▀я┘
 	templateRecognizer.runPreprocessor();
-	// В цикле происходит тестировние всех элементов популяции используя данный шаблон
+	// п▓ я├п╦п╨п╩п╣ п©я─п╬п╦я│я┘п╬п╢п╦я┌ я┌п╣я│я┌п╦я─п╬п╡п╫п╦п╣ п╡я│п╣я┘ я█п╩п╣п╪п╣п╫я┌п╬п╡ п©п╬п©я┐п╩я▐я├п╦п╦ п╦я│п©п╬п╩я▄п╥я┐я▐ п╢п╟п╫п╫я▀п╧ я┬п╟п╠п╩п╬п╫
 	#pragma omp parallel for schedule(dynamic, 1)
 	for (int i = 0; i < (int) population->size(); i++) {
 		int resFirst, resSecond;
@@ -491,11 +491,11 @@ inline int TemplateGeneticsExt::recognize (TemplateRecognizer& templateRecognize
 /****************************************************************************
 *					TemplateGeneticsExt::compute
 *
-*	Description:	Функция вычисляет целевую функцию для элементов популяции по 
-*					числу ошибок первого и второго рода
+*	Description:	п╓я┐п╫п╨я├п╦я▐ п╡я▀я┤п╦я│п╩я▐п╣я┌ я├п╣п╩п╣п╡я┐я▌ я└я┐п╫п╨я├п╦я▌ п╢п╩я▐ я█п╩п╣п╪п╣п╫я┌п╬п╡ п©п╬п©я┐п╩я▐я├п╦п╦ п©п╬ 
+*					я┤п╦я│п╩я┐ п╬я┬п╦п╠п╬п╨ п©п╣я─п╡п╬пЁп╬ п╦ п╡я┌п╬я─п╬пЁп╬ я─п╬п╢п╟
 *	Parameters:		-
 *	Returns:		0
-*	Throws:			AxiomLibException - если не установлен класс подсчета целевой функции
+*	Throws:			AxiomLibException - п╣я│п╩п╦ п╫п╣ я┐я│я┌п╟п╫п╬п╡п╩п╣п╫ п╨п╩п╟я│я│ п©п╬п╢я│я┤п╣я┌п╟ я├п╣п╩п╣п╡п╬п╧ я└я┐п╫п╨я├п╦п╦
 *	Author:			dk
 *	History:
 *
@@ -503,10 +503,10 @@ inline int TemplateGeneticsExt::recognize (TemplateRecognizer& templateRecognize
 inline int TemplateGeneticsExt::compute () {
 	if (population == NULL)
 		throw AxiomLibException("TemplateGeneticsExt::compute : population has not been initialized.");
-	// Проврека наличия класса подсчета целевой функции по числу ошибок I и II рода
+	// п÷я─п╬п╡я─п╣п╨п╟ п╫п╟п╩п╦я┤п╦я▐ п╨п╩п╟я│я│п╟ п©п╬п╢я│я┤п╣я┌п╟ я├п╣п╩п╣п╡п╬п╧ я└я┐п╫п╨я├п╦п╦ п©п╬ я┤п╦я│п╩я┐ п╬я┬п╦п╠п╬п╨ I п╦ II я─п╬п╢п╟
 	if (goalStrategy == NULL)
 		throw AxiomLibException("TemplateGeneticsExt::compute : goal class is not set.");
-	// Вычисление целевой функции для элементов популции
+	// п▓я▀я┤п╦я│п╩п╣п╫п╦п╣ я├п╣п╩п╣п╡п╬п╧ я└я┐п╫п╨я├п╦п╦ п╢п╩я▐ я█п╩п╣п╪п╣п╫я┌п╬п╡ п©п╬п©я┐п╩я├п╦п╦
 	#pragma omp parallel for schedule(dynamic, 1)
 	for (int i = 0; i < (int) population->size(); i++) {		
 		(*population)[i].goal = goalStrategy->compute ((*population)[i].nFirst, (*population)[i].nSecond);
@@ -518,8 +518,8 @@ inline int TemplateGeneticsExt::compute () {
 /****************************************************************************
 *					TemplateGeneticsExt::fillStatistic
 *
-*	Description:	Заполняем статистику по элементам популяции на основе данных 
-*					полученных при распознавании.
+*	Description:	п≈п╟п©п╬п╩п╫я▐п╣п╪ я│я┌п╟я┌п╦я│я┌п╦п╨я┐ п©п╬ я█п╩п╣п╪п╣п╫я┌п╟п╪ п©п╬п©я┐п╩я▐я├п╦п╦ п╫п╟ п╬я│п╫п╬п╡п╣ п╢п╟п╫п╫я▀я┘ 
+*					п©п╬п╩я┐я┤п╣п╫п╫я▀я┘ п©я─п╦ я─п╟я│п©п╬п╥п╫п╟п╡п╟п╫п╦п╦.
 *	Parameters:		-
 *	Returns:		0
 *	Throws:			-
@@ -528,7 +528,7 @@ inline int TemplateGeneticsExt::compute () {
 *
 ****************************************************************************/
 inline int TemplateGeneticsExt::fillStatistic (std::vector<unsigned int> &mask) {
-	// Проверка входного параметра
+	// п÷я─п╬п╡п╣я─п╨п╟ п╡я┘п╬п╢п╫п╬пЁп╬ п©п╟я─п╟п╪п╣я┌я─п╟
 	if (population == NULL)
 		throw AxiomLibException("TemplateGeneticsExt::fillStatistic : population has not been initialized.");
 	if (population->size() < 1)
@@ -539,21 +539,21 @@ inline int TemplateGeneticsExt::fillStatistic (std::vector<unsigned int> &mask) 
 	for (int i = 0; i < (int) population->size(); i++) {
 		(*population)[i].goalRatio = (double) (epsilon + (*population)[i].goal) / (double) (epsilon + (*population)[mask[0]].goal);
 		if ((*population)[i].goalRatio <= bestGoals) {
-			// Установка параметров скрещивания
+			// пёя│я┌п╟п╫п╬п╡п╨п╟ п©п╟я─п╟п╪п╣я┌я─п╬п╡ я│п╨я─п╣я┴п╦п╡п╟п╫п╦я▐
 			(*population)[i].asCrossProb = asCrossProbMax;
 			(*population)[i].axCrossProb = axCrossProbMax;
 			(*population)[i].ecCrossProb = ecCrossProbMax;
-			// Установка параметров мутации
+			// пёя│я┌п╟п╫п╬п╡п╨п╟ п©п╟я─п╟п╪п╣я┌я─п╬п╡ п╪я┐я┌п╟я├п╦п╦
 			(*population)[i].prTransProb = prTransProbMin;
 			(*population)[i].asTransProb = asTransProbMin;
 			(*population)[i].axTransProb = axTransProbMin;
 			(*population)[i].ecTransProb = ecTransProbMin;
 		} else {
-			// Установка параметров скрещивания
+			// пёя│я┌п╟п╫п╬п╡п╨п╟ п©п╟я─п╟п╪п╣я┌я─п╬п╡ я│п╨я─п╣я┴п╦п╡п╟п╫п╦я▐
 			(*population)[i].asCrossProb = asCrossProbMin;
 			(*population)[i].axCrossProb = axCrossProbMin;
 			(*population)[i].ecCrossProb = ecCrossProbMin;
-			// Установка параметров мутации
+			// пёя│я┌п╟п╫п╬п╡п╨п╟ п©п╟я─п╟п╪п╣я┌я─п╬п╡ п╪я┐я┌п╟я├п╦п╦
 			(*population)[i].prTransProb = prTransProbMax;
 			(*population)[i].asTransProb = asTransProbMax;
 			(*population)[i].axTransProb = axTransProbMax;
@@ -568,11 +568,11 @@ inline int TemplateGeneticsExt::fillStatistic (std::vector<unsigned int> &mask) 
 /****************************************************************************
 *					TemplateGeneticsExt::sort
 *
-*	Description:	Функция сортировки элементов популяции по неубыванию значений 
-*					целевой функции. При этом сами элементы не меняют своего положения,
-*					а результат сортировки записывается в вектор mask, идущий в параметрах.
-*	Parameters:		mask - заполняемый вектор, элементы которго указывают индексы элементов 
-*					популяции в порядке возрастания целевой функции
+*	Description:	п╓я┐п╫п╨я├п╦я▐ я│п╬я─я┌п╦я─п╬п╡п╨п╦ я█п╩п╣п╪п╣п╫я┌п╬п╡ п©п╬п©я┐п╩я▐я├п╦п╦ п©п╬ п╫п╣я┐п╠я▀п╡п╟п╫п╦я▌ п╥п╫п╟я┤п╣п╫п╦п╧ 
+*					я├п╣п╩п╣п╡п╬п╧ я└я┐п╫п╨я├п╦п╦. п÷я─п╦ я█я┌п╬п╪ я│п╟п╪п╦ я█п╩п╣п╪п╣п╫я┌я▀ п╫п╣ п╪п╣п╫я▐я▌я┌ я│п╡п╬п╣пЁп╬ п©п╬п╩п╬п╤п╣п╫п╦я▐,
+*					п╟ я─п╣п╥я┐п╩я▄я┌п╟я┌ я│п╬я─я┌п╦я─п╬п╡п╨п╦ п╥п╟п©п╦я│я▀п╡п╟п╣я┌я│я▐ п╡ п╡п╣п╨я┌п╬я─ mask, п╦п╢я┐я┴п╦п╧ п╡ п©п╟я─п╟п╪п╣я┌я─п╟я┘.
+*	Parameters:		mask - п╥п╟п©п╬п╩п╫я▐п╣п╪я▀п╧ п╡п╣п╨я┌п╬я─, я█п╩п╣п╪п╣п╫я┌я▀ п╨п╬я┌п╬я─пЁп╬ я┐п╨п╟п╥я▀п╡п╟я▌я┌ п╦п╫п╢п╣п╨я│я▀ я█п╩п╣п╪п╣п╫я┌п╬п╡ 
+*					п©п╬п©я┐п╩я▐я├п╦п╦ п╡ п©п╬я─я▐п╢п╨п╣ п╡п╬п╥я─п╟я│я┌п╟п╫п╦я▐ я├п╣п╩п╣п╡п╬п╧ я└я┐п╫п╨я├п╦п╦
 *	Returns:		0
 *	Throws:			-
 *	Author:			dk
@@ -582,31 +582,31 @@ inline int TemplateGeneticsExt::fillStatistic (std::vector<unsigned int> &mask) 
 inline int TemplateGeneticsExt::sort (std::vector<unsigned int> &mask) const {
 	if (population == NULL)
 		throw AxiomLibException("TemplateGeneticsExt::sort : population has not been initialized.");
-	// Подготовка вектора маски
+	// п÷п╬п╢пЁп╬я┌п╬п╡п╨п╟ п╡п╣п╨я┌п╬я─п╟ п╪п╟я│п╨п╦
 	mask.resize (population->size());
-	// собственно сортировка по принципу - размещения в порядке неубывания по goals индексов в mask
+	// я│п╬п╠я│я┌п╡п╣п╫п╫п╬ я│п╬я─я┌п╦я─п╬п╡п╨п╟ п©п╬ п©я─п╦п╫я├п╦п©я┐ - я─п╟п╥п╪п╣я┴п╣п╫п╦я▐ п╡ п©п╬я─я▐п╢п╨п╣ п╫п╣я┐п╠я▀п╡п╟п╫п╦я▐ п©п╬ goals п╦п╫п╢п╣п╨я│п╬п╡ п╡ mask
 	unsigned int j = 0;
 	for (unsigned int i = 0; i < population->size(); i++){
 		j = 0;
-		// поиск размешения
+		// п©п╬п╦я│п╨ я─п╟п╥п╪п╣я┬п╣п╫п╦я▐
 		while ( j < i ) {
 			if ((*population)[i].goal < (*population)[mask[j]].goal) {
 				break;
 			}
 			j++;
 		}
-		// смещение всех, у кого goal меньше
+		// я│п╪п╣я┴п╣п╫п╦п╣ п╡я│п╣я┘, я┐ п╨п╬пЁп╬ goal п╪п╣п╫я▄я┬п╣
 		for (unsigned int k = i; k > j; k--) {
 			mask[k] = mask[k-1];
 		}
-		// собственно размещение индекса
+		// я│п╬п╠я│я┌п╡п╣п╫п╫п╬ я─п╟п╥п╪п╣я┴п╣п╫п╦п╣ п╦п╫п╢п╣п╨я│п╟
 		mask[j] = i;
 	}	
 	return 0;
 }
 
 
-// Сортировка вектора целых чисел с помощью меторда пузырька
+// п║п╬я─я┌п╦я─п╬п╡п╨п╟ п╡п╣п╨я┌п╬я─п╟ я├п╣п╩я▀я┘ я┤п╦я│п╣п╩ я│ п©п╬п╪п╬я┴я▄я▌ п╪п╣я┌п╬я─п╢п╟ п©я┐п╥я▀я─я▄п╨п╟
 inline void TemplateGeneticsExt::sortVector (std::vector<unsigned int> &vec) const {
 	if (vec.size() < 2)
 		return;

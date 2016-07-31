@@ -96,7 +96,7 @@ public:
 protected:
     virtual int_type overflow(int_type v)
     {
-		// Запираем данный блок mutex-ом
+		// п≈п╟п©п╦я─п╟п╣п╪ п╢п╟п╫п╫я▀п╧ п╠п╩п╬п╨ mutex-п╬п╪
 		//QMutexLocker locker(&mutex);
 
 		if (v == '\n')
@@ -112,7 +112,7 @@ protected:
 
     virtual std::streamsize xsputn(const char *p, std::streamsize n)
     {
-		// Запираем данный блок mutex-ом
+		// п≈п╟п©п╦я─п╟п╣п╪ п╢п╟п╫п╫я▀п╧ п╠п╩п╬п╨ mutex-п╬п╪
 		//QMutexLocker locker(&mutex);
 
 		m_string.append(p, p + n);

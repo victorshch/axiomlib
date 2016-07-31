@@ -20,7 +20,7 @@ public:
 	
 	std::map<std::string, std::map<std::string, std::string> > axiomParameters;
 	
-	// функция записи в toReturn всех названий элементарных условий в axiomParameters
+	// я└я┐п╫п╨я├п╦я▐ п╥п╟п©п╦я│п╦ п╡ toReturn п╡я│п╣я┘ п╫п╟п╥п╡п╟п╫п╦п╧ я█п╩п╣п╪п╣п╫я┌п╟я─п╫я▀я┘ я┐я│п╩п╬п╡п╦п╧ п╡ axiomParameters
 	int getVectorOfEC (std::vector<std::string>& toReturn) {
 		toReturn.resize( axiomParameters.size() );
 		std::map<std::string, std::map<std::string, std::string> >::iterator mIter;

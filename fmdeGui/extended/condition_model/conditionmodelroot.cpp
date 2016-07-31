@@ -11,11 +11,11 @@ int ConditionModelRoot::columnCount() const {
 
 QVariant ConditionModelRoot::data(int column) const {
 	switch(column) {
-	case 0: return encode("ÈÕ—");
-	case 1: return encode("ÎÃ. Œ¡ ‘“.");
-	case 2: return encode("Ì¡À”. ÀÃ¡”‘≈“");
-	case 3: return encode("„Ê1");
-	case 4: return encode("„Ê2");
+	case 0: return encode("–ò–º—è");
+	case 1: return encode("–ö–ª. –Ω–∞ —Ç—Ä.");
+	case 2: return encode("–ú–∞–∫—Å. –∫–ª–∞—Å—Ç–µ—Ä");
+	case 3: return encode("–¶–§1");
+	case 4: return encode("–¶–§2");
 	default: return QVariant();
 	}
 }

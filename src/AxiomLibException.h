@@ -1,7 +1,7 @@
 /****************************************************************************
 *			AxiomLibException
 *
-*	Description:	Класс исключений для библиотеки AxiomLib
+*	Description:	п п╩п╟я│я│ п╦я│п╨п╩я▌я┤п╣п╫п╦п╧ п╢п╩я▐ п╠п╦п╠п╩п╦п╬я┌п╣п╨п╦ AxiomLib
 *	Author:		Eugene A. Vasin
 *	History:	
 *
@@ -24,13 +24,13 @@ class AxiomLibException : std::logic_error {
   public:
 	AxiomLibException() : logic_error("unspecified AxiomLibException") {}
 
-    // Стандартный конструктор
+    // п║я┌п╟п╫п╢п╟я─я┌п╫я▀п╧ п╨п╬п╫я│я┌я─я┐п╨я┌п╬я─
 	AxiomLibException(const std::string& errorText): logic_error(errorText), errText(errorText) {}
     
-    // Стандартный деструктор
+    // п║я┌п╟п╫п╢п╟я─я┌п╫я▀п╧ п╢п╣я│я┌я─я┐п╨я┌п╬я─
 	~AxiomLibException() throw() {}
 
-    // Возвращает текст ошибки
+    // п▓п╬п╥п╡я─п╟я┴п╟п╣я┌ я┌п╣п╨я│я┌ п╬я┬п╦п╠п╨п╦
 	std::string error (void) const { return errText; }
 
 };

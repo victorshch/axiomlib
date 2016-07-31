@@ -1,8 +1,8 @@
 #ifndef RELAXED_TRANSFORM_H
 #define RELAXED_TRANSFORM_H
 
-// своя версия std::transform для того, чтобы гарантировать порядок обработки
-// последовательности (в стандарте C++ порядок не специфицирован)
+// я│п╡п╬я▐ п╡п╣я─я│п╦я▐ std::transform п╢п╩я▐ я┌п╬пЁп╬, я┤я┌п╬п╠я▀ пЁп╟я─п╟п╫я┌п╦я─п╬п╡п╟я┌я▄ п©п╬я─я▐п╢п╬п╨ п╬п╠я─п╟п╠п╬я┌п╨п╦
+// п©п╬я│п╩п╣п╢п╬п╡п╟я┌п╣п╩я▄п╫п╬я│я┌п╦ (п╡ я│я┌п╟п╫п╢п╟я─я┌п╣ C++ п©п╬я─я▐п╢п╬п╨ п╫п╣ я│п©п╣я├п╦я└п╦я├п╦я─п╬п╡п╟п╫)
 template <class InputIterator, class OutputIterator, class Transformator>
 OutputIterator relaxed_transform(InputIterator first, InputIterator last,
                          OutputIterator result, Transformator trans) {

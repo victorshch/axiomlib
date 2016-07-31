@@ -50,11 +50,11 @@ void IntervalSet::apply(FuzzyDataSet &dataSet, FuzzyDataSet::DataSetDivisionType
 /****************************************************************************
 *				 getClippingInterval
 *
-*	Description: Возвращает интервал отсечения для заданной траектории
-*	Parameters:	 classNo, multiTSNo - индексы класса и траектории
-*				(classNo < 0 означает нормальное поведение)
-*	Returns:	 const IntInterval & - интервал отсечения
-*	Throws:		 std::range_error, если индексы некорректны
+*	Description: п▓п╬п╥п╡я─п╟я┴п╟п╣я┌ п╦п╫я┌п╣я─п╡п╟п╩ п╬я┌я│п╣я┤п╣п╫п╦я▐ п╢п╩я▐ п╥п╟п╢п╟п╫п╫п╬п╧ я┌я─п╟п╣п╨я┌п╬я─п╦п╦
+*	Parameters:	 classNo, multiTSNo - п╦п╫п╢п╣п╨я│я▀ п╨п╩п╟я│я│п╟ п╦ я┌я─п╟п╣п╨я┌п╬я─п╦п╦
+*				(classNo < 0 п╬п╥п╫п╟я┤п╟п╣я┌ п╫п╬я─п╪п╟п╩я▄п╫п╬п╣ п©п╬п╡п╣п╢п╣п╫п╦п╣)
+*	Returns:	 const IntInterval & - п╦п╫я┌п╣я─п╡п╟п╩ п╬я┌я│п╣я┤п╣п╫п╦я▐
+*	Throws:		 std::range_error, п╣я│п╩п╦ п╦п╫п╢п╣п╨я│я▀ п╫п╣п╨п╬я─я─п╣п╨я┌п╫я▀
 *	Author:		wictor
 *	History:	-
 *
@@ -67,12 +67,12 @@ const IntInterval &IntervalSet::getClippingInterval(int classNo, int multiTSNo) 
 /****************************************************************************
 *				 setClippingInterval
 *
-*	Description: Устанавливает интервал отсечения для заданной траектории
-*	Parameters:	 interval - новый интервал отсечения
-*				classNo, multiTSNo - индексы класса и траектории
-*				(classNo < 0 означает нормальное поведение)
+*	Description: пёя│я┌п╟п╫п╟п╡п╩п╦п╡п╟п╣я┌ п╦п╫я┌п╣я─п╡п╟п╩ п╬я┌я│п╣я┤п╣п╫п╦я▐ п╢п╩я▐ п╥п╟п╢п╟п╫п╫п╬п╧ я┌я─п╟п╣п╨я┌п╬я─п╦п╦
+*	Parameters:	 interval - п╫п╬п╡я▀п╧ п╦п╫я┌п╣я─п╡п╟п╩ п╬я┌я│п╣я┤п╣п╫п╦я▐
+*				classNo, multiTSNo - п╦п╫п╢п╣п╨я│я▀ п╨п╩п╟я│я│п╟ п╦ я┌я─п╟п╣п╨я┌п╬я─п╦п╦
+*				(classNo < 0 п╬п╥п╫п╟я┤п╟п╣я┌ п╫п╬я─п╪п╟п╩я▄п╫п╬п╣ п©п╬п╡п╣п╢п╣п╫п╦п╣)
 *	Returns:	 -
-*	Throws:		 std::range_error, если индексы некорректны
+*	Throws:		 std::range_error, п╣я│п╩п╦ п╦п╫п╢п╣п╨я│я▀ п╫п╣п╨п╬я─я─п╣п╨я┌п╫я▀
 *	Author:		wictor
 *	History:	-
 *
@@ -85,11 +85,11 @@ void IntervalSet::setClippingInterval(const IntInterval &interval, int classNo, 
 /****************************************************************************
 *				 getMultiTSCount
 *
-*	Description: Возвращает число траекторий заданного класса
-*	Parameters:	 classNo - индекс класса
-*				(classNo < 0 означает нормальное поведение)
-*	Returns:	 const IntInterval & - интервал отсечения
-*	Throws:		 std::range_error, если индекс некорректен
+*	Description: п▓п╬п╥п╡я─п╟я┴п╟п╣я┌ я┤п╦я│п╩п╬ я┌я─п╟п╣п╨я┌п╬я─п╦п╧ п╥п╟п╢п╟п╫п╫п╬пЁп╬ п╨п╩п╟я│я│п╟
+*	Parameters:	 classNo - п╦п╫п╢п╣п╨я│ п╨п╩п╟я│я│п╟
+*				(classNo < 0 п╬п╥п╫п╟я┤п╟п╣я┌ п╫п╬я─п╪п╟п╩я▄п╫п╬п╣ п©п╬п╡п╣п╢п╣п╫п╦п╣)
+*	Returns:	 const IntInterval & - п╦п╫я┌п╣я─п╡п╟п╩ п╬я┌я│п╣я┤п╣п╫п╦я▐
+*	Throws:		 std::range_error, п╣я│п╩п╦ п╦п╫п╢п╣п╨я│ п╫п╣п╨п╬я─я─п╣п╨я┌п╣п╫
 *	Author:		wictor
 *	History:	-
 *

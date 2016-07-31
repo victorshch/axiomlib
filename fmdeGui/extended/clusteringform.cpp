@@ -14,14 +14,14 @@ ClusteringForm::ClusteringForm(ManagedFuzzyDataController *controller, QWidget *
 {
     ui->setupUi(this);
 	
-	filterGroup = new FilterGroup(0, encode("æÉÌØÔÒÙ"));
+	filterGroup = new FilterGroup(0, encode("Ð¤Ð¸Ð»ÑŒÑ‚Ñ€Ñ‹"));
 	
 	ui->verticalLayout_filters->addWidget(filterGroup);
 	
-	filterGroup->addSlider(encode("ëÌ. ÎÁ ÔÒ."));
-	filterGroup->addSlider(encode("íÁËÓ. ÒÁÚÍÅÒ ËÌ."));
-//	filterGroup->addSlider(encode("ãæ1"));
-//	filterGroup->addSlider(encode("ãæ2"));
+	filterGroup->addSlider(encode("ÐšÐ». Ð½Ð° Ñ‚Ñ€."));
+	filterGroup->addSlider(encode("ÐœÐ°ÐºÑ. Ñ€Ð°Ð·Ð¼ÐµÑ€ ÐºÐ»."));
+//	filterGroup->addSlider(encode("Ð¦Ð¤1"));
+//	filterGroup->addSlider(encode("Ð¦Ð¤2"));
 	
 	conditionModel = new ConditionModel(controller, this);
 	

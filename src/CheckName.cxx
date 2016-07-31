@@ -1,7 +1,7 @@
 /****************************************************************************
 *					CheckName.cxx
 *
-*	Description:	Функции из хедера CheckName - Реализация
+*	Description:	п╓я┐п╫п╨я├п╦п╦ п╦п╥ я┘п╣п╢п╣я─п╟ CheckName - п═п╣п╟п╩п╦п╥п╟я├п╦я▐
 *	Author:			dk
 *	History:		
 *
@@ -14,16 +14,16 @@ using namespace AxiomLib;
 /****************************************************************************
 *					checkName
 *
-*	Description:	Функция сравнения строк.
-*				Кроме того отдельно указывается с какого символа в каждой 
-*				строке начинать сравнение и до какого символа его вести.
-*				Используется для сравнения с шаблоном имен файлов.
-*	Parameters:	name1 - строка для сравнения
-*				from -номер символа в строке name1 с которого начинать сравнение
-*				upTo - номер символа в строке name1 до которого вести сравнение
-*				name2 - строка для сравнения
-*	Returns:	true  - если первый файл подходит под второй как под шаблон
-*				false - в противном случае
+*	Description:	п╓я┐п╫п╨я├п╦я▐ я│я─п╟п╡п╫п╣п╫п╦я▐ я│я┌я─п╬п╨.
+*				п я─п╬п╪п╣ я┌п╬пЁп╬ п╬я┌п╢п╣п╩я▄п╫п╬ я┐п╨п╟п╥я▀п╡п╟п╣я┌я│я▐ я│ п╨п╟п╨п╬пЁп╬ я│п╦п╪п╡п╬п╩п╟ п╡ п╨п╟п╤п╢п╬п╧ 
+*				я│я┌я─п╬п╨п╣ п╫п╟я┤п╦п╫п╟я┌я▄ я│я─п╟п╡п╫п╣п╫п╦п╣ п╦ п╢п╬ п╨п╟п╨п╬пЁп╬ я│п╦п╪п╡п╬п╩п╟ п╣пЁп╬ п╡п╣я│я┌п╦.
+*				п≤я│п©п╬п╩я▄п╥я┐п╣я┌я│я▐ п╢п╩я▐ я│я─п╟п╡п╫п╣п╫п╦я▐ я│ я┬п╟п╠п╩п╬п╫п╬п╪ п╦п╪п╣п╫ я└п╟п╧п╩п╬п╡.
+*	Parameters:	name1 - я│я┌я─п╬п╨п╟ п╢п╩я▐ я│я─п╟п╡п╫п╣п╫п╦я▐
+*				from -п╫п╬п╪п╣я─ я│п╦п╪п╡п╬п╩п╟ п╡ я│я┌я─п╬п╨п╣ name1 я│ п╨п╬я┌п╬я─п╬пЁп╬ п╫п╟я┤п╦п╫п╟я┌я▄ я│я─п╟п╡п╫п╣п╫п╦п╣
+*				upTo - п╫п╬п╪п╣я─ я│п╦п╪п╡п╬п╩п╟ п╡ я│я┌я─п╬п╨п╣ name1 п╢п╬ п╨п╬я┌п╬я─п╬пЁп╬ п╡п╣я│я┌п╦ я│я─п╟п╡п╫п╣п╫п╦п╣
+*				name2 - я│я┌я─п╬п╨п╟ п╢п╩я▐ я│я─п╟п╡п╫п╣п╫п╦я▐
+*	Returns:	true  - п╣я│п╩п╦ п©п╣я─п╡я▀п╧ я└п╟п╧п╩ п©п╬п╢я┘п╬п╢п╦я┌ п©п╬п╢ п╡я┌п╬я─п╬п╧ п╨п╟п╨ п©п╬п╢ я┬п╟п╠п╩п╬п╫
+*				false - п╡ п©я─п╬я┌п╦п╡п╫п╬п╪ я│п╩я┐я┤п╟п╣
 *	Throws:		-
 *	Author:		dk
 *	History:
@@ -50,7 +50,7 @@ bool checkName (std::string name1, signed int from, signed int upTo, std::string
 		indexCh2 = name1.rfind ( name2 , from );
 	}
 	if ((indexCh1 != npos) && (indexCh2 == npos)) {
-		// все верно - есть до upTo и нет до from
+		// п╡я│п╣ п╡п╣я─п╫п╬ - п╣я│я┌я▄ п╢п╬ upTo п╦ п╫п╣я┌ п╢п╬ from
 		return true;
 	}
 	return false;
@@ -76,7 +76,7 @@ bool checkName (std::string name1, signed int from, signed int upTo, std::string
 		indexCh2 = name1.rfind ( name2 , from );
 	}
 	if ((indexCh1 != npos) && (indexCh2 == npos)) {
-		// все верно - есть до upTo и нет до from
+		// п╡я│п╣ п╡п╣я─п╫п╬ - п╣я│я┌я▄ п╢п╬ upTo п╦ п╫п╣я┌ п╢п╬ from
 		return true;
 	}
 	return false;
@@ -102,7 +102,7 @@ bool checkName (std::string name1, signed int from, signed int upTo, std::string
 		indexCh2 = name1.rfind ( name2 , from );
 	}
 	if ((indexCh1 != npos) && (indexCh2 == npos)) {
-		// все верно - есть до upTo и нет до from
+		// п╡я│п╣ п╡п╣я─п╫п╬ - п╣я│я┌я▄ п╢п╬ upTo п╦ п╫п╣я┌ п╢п╬ from
 		return true;
 	}
 	return false;
@@ -128,7 +128,7 @@ bool checkName (std::string name1, signed int from, signed int upTo, std::string
 		indexCh2 = name1.rfind ( name2 , from );
 	}
 	if ((indexCh1 != npos) && (indexCh2 == npos)) {
-		// все верно - есть до upTo и нет до from
+		// п╡я│п╣ п╡п╣я─п╫п╬ - п╣я│я┌я▄ п╢п╬ upTo п╦ п╫п╣я┌ п╢п╬ from
 		return true;
 	}
 	return false;
@@ -155,7 +155,7 @@ bool checkName (std::string name1, signed int from, signed int upTo, std::string
 		indexCh2 = name1.rfind ( name2 , from );
 	}
 	if ((indexCh1 < npos) && (indexCh1 >= 0) && ((indexCh2 >= npos) || (indexCh2 < 0))) {
-		// все верно - есть до upTo и нет до from
+		// п╡я│п╣ п╡п╣я─п╫п╬ - п╣я│я┌я▄ п╢п╬ upTo п╦ п╫п╣я┌ п╢п╬ from
 		return true;
 	}
 	return false;

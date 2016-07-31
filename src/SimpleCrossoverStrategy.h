@@ -1,8 +1,8 @@
 /****************************************************************************
 *			SimpleCrossoverStrategy
 *
-*	Description:	Простая стратегия скрещивания: только на уровне параметров
-*			элементарных условий
+*	Description:	п÷я─п╬я│я┌п╟я▐ я│я┌я─п╟я┌п╣пЁп╦я▐ я│п╨я─п╣я┴п╦п╡п╟п╫п╦я▐: я┌п╬п╩я▄п╨п╬ п╫п╟ я┐я─п╬п╡п╫п╣ п©п╟я─п╟п╪п╣я┌я─п╬п╡
+*			я█п╩п╣п╪п╣п╫я┌п╟я─п╫я▀я┘ я┐я│п╩п╬п╡п╦п╧
 *	Author:		gevor
 *	History:	
 *
@@ -23,25 +23,25 @@ class SimpleCrossoverStrategy : public CrossoverStrategy{
 
  protected:
 
-  double pCross; // процент участвующих
+  double pCross; // п©я─п╬я├п╣п╫я┌ я┐я┤п╟я│я┌п╡я┐я▌я┴п╦я┘
 
  public:
 
-  // Стандартный конструктор - пустой
+  // п║я┌п╟п╫п╢п╟я─я┌п╫я▀п╧ п╨п╬п╫я│я┌я─я┐п╨я┌п╬я─ - п©я┐я│я┌п╬п╧
   SimpleCrossoverStrategy (void) {pCross = -1;};
 
-  // Стандартный деструктор - пустой
+  // п║я┌п╟п╫п╢п╟я─я┌п╫я▀п╧ п╢п╣я│я┌я─я┐п╨я┌п╬я─ - п©я┐я│я┌п╬п╧
   ~SimpleCrossoverStrategy () {};
 
-  // Возвращает имя данного класса селекции
+  // п▓п╬п╥п╡я─п╟я┴п╟п╣я┌ п╦п╪я▐ п╢п╟п╫п╫п╬пЁп╬ п╨п╩п╟я│я│п╟ я│п╣п╩п╣п╨я├п╦п╦
   std::string name (void) const {return (std::string)"CrossoverSimple";};
 
-  // Функция задания значений параметров класса
+  // п╓я┐п╫п╨я├п╦я▐ п╥п╟п╢п╟п╫п╦я▐ п╥п╫п╟я┤п╣п╫п╦п╧ п©п╟я─п╟п╪п╣я┌я─п╬п╡ п╨п╩п╟я│я│п╟
   int setParamsFromEnv (const Environment& env);
   int setParams (const double newCrossLevel);
   int setParams (const double newElemCondCrossLevel, const double newAxiomCrossLevel, const double newAxiomSetCrossLevel);
 
-  // Провести операцию селекции над данной популяцией
+  // п÷я─п╬п╡п╣я│я┌п╦ п╬п©п╣я─п╟я├п╦я▌ я│п╣п╩п╣п╨я├п╦п╦ п╫п╟п╢ п╢п╟п╫п╫п╬п╧ п©п╬п©я┐п╩я▐я├п╦п╣п╧
   int crossover (AxiomSetPop& pop);
 }; // end of class
 

@@ -26,11 +26,11 @@ public:
 	
 	void addStrategy(const QList<QPair<StrategyParamSpec, QString> >& paramSpecs, const std::string& strategyName, const QString& strategyTitle);
 
-	// Выбранная стратегия
+	// п▓я▀п╠я─п╟п╫п╫п╟я▐ я│я┌я─п╟я┌п╣пЁп╦я▐
 	std::string currentStrategy() const;
 	//void setCurrentStrategy(const std::string& name);
 	
-	// Выбранное значение параметра для выбранной стратегии
+	// п▓я▀п╠я─п╟п╫п╫п╬п╣ п╥п╫п╟я┤п╣п╫п╦п╣ п©п╟я─п╟п╪п╣я┌я─п╟ п╢п╩я▐ п╡я▀п╠я─п╟п╫п╫п╬п╧ я│я┌я─п╟я┌п╣пЁп╦п╦
 	std::string strValue(const std::string &paramName) const;
 	
 	void setStrValue(const std::string &paramName, const std::string &newValue);

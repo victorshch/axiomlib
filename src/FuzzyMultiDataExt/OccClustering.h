@@ -1,7 +1,7 @@
 /****************************************************************************
 *				OccClustering.h
 *
-*	Description: Базовый класс для эвристик кластеризации по точкам выполнения
+*	Description: п▒п╟п╥п╬п╡я▀п╧ п╨п╩п╟я│я│ п╢п╩я▐ я█п╡я─п╦я│я┌п╦п╨ п╨п╩п╟я│я┌п╣я─п╦п╥п╟я├п╦п╦ п©п╬ я┌п╬я┤п╨п╟п╪ п╡я▀п©п╬п╩п╫п╣п╫п╦я▐
 *	Author:		wictor
 *	History:	
 *
@@ -22,8 +22,8 @@ namespace FuzzyMultiDataExt {
 //	int minMaxClusterSize;
 //};
 
-// Базовый класс для эвристик, реализующих кластеризацию
-// по точкам выполнения
+// п▒п╟п╥п╬п╡я▀п╧ п╨п╩п╟я│я│ п╢п╩я▐ я█п╡я─п╦я│я┌п╦п╨, я─п╣п╟п╩п╦п╥я┐я▌я┴п╦я┘ п╨п╩п╟я│я┌п╣я─п╦п╥п╟я├п╦я▌
+// п©п╬ я┌п╬я┤п╨п╟п╪ п╡я▀п©п╬п╩п╫п╣п╫п╦я▐
 class OccClustering : public Heuristics
 {
 public:
@@ -32,9 +32,9 @@ public:
 protected:
 	void initFromEnvImpl(const Environment &env);
 	
-	// Проводит кластеризацию ЭУ или аксиомы,
-	// возвращает результат -- удовлетворяет
-	// аксиома условию или нет
+	// п÷я─п╬п╡п╬п╢п╦я┌ п╨п╩п╟я│я┌п╣я─п╦п╥п╟я├п╦я▌ п╜пё п╦п╩п╦ п╟п╨я│п╦п╬п╪я▀,
+	// п╡п╬п╥п╡я─п╟я┴п╟п╣я┌ я─п╣п╥я┐п╩я▄я┌п╟я┌ -- я┐п╢п╬п╡п╩п╣я┌п╡п╬я─я▐п╣я┌
+	// п╟п╨я│п╦п╬п╪п╟ я┐я│п╩п╬п╡п╦я▌ п╦п╩п╦ п╫п╣я┌
 	template<class Axiom>
 	bool clusterize(const Axiom& axiom, int abType, const FuzzyDataSet& dataSet) const;	
 	
@@ -50,8 +50,8 @@ template<class Axiom>
 bool OccClustering::clusterize(const Axiom& axiom, int abType, const FuzzyDataSet& dataSet) const {
 	SatPointSet satPointSet = SatPointSet(axiom, dataSet, FuzzyDataSet::Reference, abType);
 	
-	// Вычисление максимума размера кластера
-	// и минимального максимума размера кластера на траектории
+	// п▓я▀я┤п╦я│п╩п╣п╫п╦п╣ п╪п╟п╨я│п╦п╪я┐п╪п╟ я─п╟п╥п╪п╣я─п╟ п╨п╩п╟я│я┌п╣я─п╟
+	// п╦ п╪п╦п╫п╦п╪п╟п╩я▄п╫п╬пЁп╬ п╪п╟п╨я│п╦п╪я┐п╪п╟ я─п╟п╥п╪п╣я─п╟ п╨п╩п╟я│я┌п╣я─п╟ п╫п╟ я┌я─п╟п╣п╨я┌п╬я─п╦п╦
 	int maxClusterSize = 0;
 	int minMaxClusterSize = -1;
 	for(int multiTS = 0; multiTS < satPointSet.size(); ++multiTS) {
@@ -76,7 +76,7 @@ bool OccClustering::clusterize(const Axiom& axiom, int abType, const FuzzyDataSe
 		}
 	}
 	
-	// Вычисление критерия
+	// п▓я▀я┤п╦я│п╩п╣п╫п╦п╣ п╨я─п╦я┌п╣я─п╦я▐
 	return maxClusterSize >= m_maxClusterSize && minMaxClusterSize >= m_minMaxClusterSize;
 }
 

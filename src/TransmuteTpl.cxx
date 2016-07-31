@@ -1,7 +1,7 @@
 /****************************************************************************
 *					TransmuteTpl
 *
-*	Description:	Функции класса TransmuteTpl - Реализация
+*	Description:	п╓я┐п╫п╨я├п╦п╦ п╨п╩п╟я│я│п╟ TransmuteTpl - п═п╣п╟п╩п╦п╥п╟я├п╦я▐
 *	Author:			dk
 *	History:		
 *
@@ -11,12 +11,12 @@
 
 using namespace AxiomLib;
 
-#define minProfit 0.5 // среднее значение для параметра profit некоторой аксиомы
-#define epsilon 0.001 // чтобы избежать проблем при сравнении double'ов
-#define cutOffCrit 0.8 // Критерий для величины вероятности мутации аксиомы
-#define cutOffVal 0.5 // Во сколько согласно критерию уменьшать вероятность мутаци на уровне аксиом
+#define minProfit 0.5 // я│я─п╣п╢п╫п╣п╣ п╥п╫п╟я┤п╣п╫п╦п╣ п╢п╩я▐ п©п╟я─п╟п╪п╣я┌я─п╟ profit п╫п╣п╨п╬я┌п╬я─п╬п╧ п╟п╨я│п╦п╬п╪я▀
+#define epsilon 0.001 // я┤я┌п╬п╠я▀ п╦п╥п╠п╣п╤п╟я┌я▄ п©я─п╬п╠п╩п╣п╪ п©я─п╦ я│я─п╟п╡п╫п╣п╫п╦п╦ double'п╬п╡
+#define cutOffCrit 0.8 // п я─п╦я┌п╣я─п╦п╧ п╢п╩я▐ п╡п╣п╩п╦я┤п╦п╫я▀ п╡п╣я─п╬я▐я┌п╫п╬я│я┌п╦ п╪я┐я┌п╟я├п╦п╦ п╟п╨я│п╦п╬п╪я▀
+#define cutOffVal 0.5 // п▓п╬ я│п╨п╬п╩я▄п╨п╬ я│п╬пЁп╩п╟я│п╫п╬ п╨я─п╦я┌п╣я─п╦я▌ я┐п╪п╣п╫я▄я┬п╟я┌я▄ п╡п╣я─п╬я▐я┌п╫п╬я│я┌я▄ п╪я┐я┌п╟я├п╦ п╫п╟ я┐я─п╬п╡п╫п╣ п╟п╨я│п╦п╬п╪
 
-// Конструктор класса
+// п п╬п╫я│я┌я─я┐п╨я┌п╬я─ п╨п╩п╟я│я│п╟
 TransmuteTpl::TransmuteTpl () {
 	/*
 	axioms.clear();
@@ -28,7 +28,7 @@ TransmuteTpl::TransmuteTpl () {
 	canMutateOrder = true;
 }
 
-// Деструктор класса - пустой
+// п■п╣я│я┌я─я┐п╨я┌п╬я─ п╨п╩п╟я│я│п╟ - п©я┐я│я┌п╬п╧
 TransmuteTpl::~TransmuteTpl () {
 		
 }
@@ -36,9 +36,9 @@ TransmuteTpl::~TransmuteTpl () {
 /****************************************************************************
 *					TransmuteTpl::name
 *
-*	Description:	Возвращает имя данного класса мутации
+*	Description:	п▓п╬п╥п╡я─п╟я┴п╟п╣я┌ п╦п╪я▐ п╢п╟п╫п╫п╬пЁп╬ п╨п╩п╟я│я│п╟ п╪я┐я┌п╟я├п╦п╦
 *	Parameters:		-
-*	Returns:		string - имя класса мутации
+*	Returns:		string - п╦п╪я▐ п╨п╩п╟я│я│п╟ п╪я┐я┌п╟я├п╦п╦
 *	Throws:			-
 *	Author:			dk
 *	History:
@@ -52,10 +52,10 @@ std::string TransmuteTpl::name (void) const {
 /****************************************************************************
 *					TransmuteTpl::setParamsFromEnv
 *
-*	Description:	Установка параметров мутации из среды
-*	Parameters:		const Environment& env - окружение, откуда выбирать параметры
+*	Description:	пёя│я┌п╟п╫п╬п╡п╨п╟ п©п╟я─п╟п╪п╣я┌я─п╬п╡ п╪я┐я┌п╟я├п╦п╦ п╦п╥ я│я─п╣п╢я▀
+*	Parameters:		const Environment& env - п╬п╨я─я┐п╤п╣п╫п╦п╣, п╬я┌п╨я┐п╢п╟ п╡я▀п╠п╦я─п╟я┌я▄ п©п╟я─п╟п╪п╣я┌я─я▀
 *	Returns:		0
-*	Throws:			AxiomLibException - если требуемых параметров нет
+*	Throws:			AxiomLibException - п╣я│п╩п╦ я┌я─п╣п╠я┐п╣п╪я▀я┘ п©п╟я─п╟п╪п╣я┌я─п╬п╡ п╫п╣я┌
 *	Author:			dk
 *	History:
 *
@@ -74,10 +74,10 @@ int TransmuteTpl::setParamsFromEnv (const Environment& env) {
 /****************************************************************************
 *					TransmuteTpl::sort
 *
-*	Description:	Сортирует элементы вектора vec и заносит отсортированную 
-*					последовательность индексов в mask
-*	Parameters:		vec - сортируемый вектор
-*					mask - последовательности индексов
+*	Description:	п║п╬я─я┌п╦я─я┐п╣я┌ я█п╩п╣п╪п╣п╫я┌я▀ п╡п╣п╨я┌п╬я─п╟ vec п╦ п╥п╟п╫п╬я│п╦я┌ п╬я┌я│п╬я─я┌п╦я─п╬п╡п╟п╫п╫я┐я▌ 
+*					п©п╬я│п╩п╣п╢п╬п╡п╟я┌п╣п╩я▄п╫п╬я│я┌я▄ п╦п╫п╢п╣п╨я│п╬п╡ п╡ mask
+*	Parameters:		vec - я│п╬я─я┌п╦я─я┐п╣п╪я▀п╧ п╡п╣п╨я┌п╬я─
+*					mask - п©п╬я│п╩п╣п╢п╬п╡п╟я┌п╣п╩я▄п╫п╬я│я┌п╦ п╦п╫п╢п╣п╨я│п╬п╡
 *	Returns:		-
 *	Throws:			-
 *	Author:			dk
@@ -104,19 +104,19 @@ inline void TransmuteTpl::sort (std::vector <double> &vec, std::vector <unsigned
 /****************************************************************************
 *					TransmuteTpl::transmute
 *
-*	Description:	Функция мутации системы аксиом, заданной с параметрами
-*	Parameters:		axiomSetPlus - особь для мутации
-*	Returns:		0 - если все произошло успешно
-*					-1 - если мутация не прошла
-*					1 - если согласно параметрам мутации и не должно было происходить
-*	Throws:			AxiomLibExeption - если параметры мутации выходят за границы 
-*					области определения
+*	Description:	п╓я┐п╫п╨я├п╦я▐ п╪я┐я┌п╟я├п╦п╦ я│п╦я│я┌п╣п╪я▀ п╟п╨я│п╦п╬п╪, п╥п╟п╢п╟п╫п╫п╬п╧ я│ п©п╟я─п╟п╪п╣я┌я─п╟п╪п╦
+*	Parameters:		axiomSetPlus - п╬я│п╬п╠я▄ п╢п╩я▐ п╪я┐я┌п╟я├п╦п╦
+*	Returns:		0 - п╣я│п╩п╦ п╡я│п╣ п©я─п╬п╦п╥п╬я┬п╩п╬ я┐я│п©п╣я┬п╫п╬
+*					-1 - п╣я│п╩п╦ п╪я┐я┌п╟я├п╦я▐ п╫п╣ п©я─п╬я┬п╩п╟
+*					1 - п╣я│п╩п╦ я│п╬пЁп╩п╟я│п╫п╬ п©п╟я─п╟п╪п╣я┌я─п╟п╪ п╪я┐я┌п╟я├п╦п╦ п╦ п╫п╣ п╢п╬п╩п╤п╫п╬ п╠я▀п╩п╬ п©я─п╬п╦я│я┘п╬п╢п╦я┌я▄
+*	Throws:			AxiomLibExeption - п╣я│п╩п╦ п©п╟я─п╟п╪п╣я┌я─я▀ п╪я┐я┌п╟я├п╦п╦ п╡я▀я┘п╬п╢я▐я┌ п╥п╟ пЁя─п╟п╫п╦я├я▀ 
+*					п╬п╠п╩п╟я│я┌п╦ п╬п©я─п╣п╢п╣п╩п╣п╫п╦я▐
 *	Author:			dk
 *	History:
 *
 ****************************************************************************/
 int TransmuteTpl::transmute (AxiomSetPlus &axiomSetPlus) const {
-	// Проверка значений параметров мутации на соответсвие области значений
+	// п÷я─п╬п╡п╣я─п╨п╟ п╥п╫п╟я┤п╣п╫п╦п╧ п©п╟я─п╟п╪п╣я┌я─п╬п╡ п╪я┐я┌п╟я├п╦п╦ п╫п╟ я│п╬п╬я┌п╡п╣я┌я│п╡п╦п╣ п╬п╠п╩п╟я│я┌п╦ п╥п╫п╟я┤п╣п╫п╦п╧
 	if ((axiomSetPlus.ecTransProb < 0) || (axiomSetPlus.ecTransProb > 1) || 
 		(axiomSetPlus.axTransProb < 0) || (axiomSetPlus.axTransProb > 1) || 
 		(axiomSetPlus.asTransProb < 0) || (axiomSetPlus.asTransProb > 1) || 
@@ -125,7 +125,7 @@ int TransmuteTpl::transmute (AxiomSetPlus &axiomSetPlus) const {
 		return -1;
 	}
 
-	// Проверка значений параметров мутации - необходима ли мутация
+	// п÷я─п╬п╡п╣я─п╨п╟ п╥п╫п╟я┤п╣п╫п╦п╧ п©п╟я─п╟п╪п╣я┌я─п╬п╡ п╪я┐я┌п╟я├п╦п╦ - п╫п╣п╬п╠я┘п╬п╢п╦п╪п╟ п╩п╦ п╪я┐я┌п╟я├п╦я▐
 	if ((axiomSetPlus.ecTransProb < epsilon) &&
 		(axiomSetPlus.axTransProb < epsilon) &&
 		(axiomSetPlus.asTransProb < epsilon) &&
@@ -133,21 +133,21 @@ int TransmuteTpl::transmute (AxiomSetPlus &axiomSetPlus) const {
 			return 1;
 	}
 
-	// Подготовка внутренних переменных 
+	// п÷п╬п╢пЁп╬я┌п╬п╡п╨п╟ п╡п╫я┐я┌я─п╣п╫п╫п╦я┘ п©п╣я─п╣п╪п╣п╫п╫я▀я┘ 
 	std::vector <Axiom *> * axioms;
 	axioms = &(axiomSetPlus.axiomSet->axioms);
 	std::vector <unsigned short> axiomsMask;
 	if (axioms->size() != axiomSetPlus.axiomProfit.size())
 		throw AxiomLibException("TransmuteTpl::transmute : axioms profit is not set.");
-	// Устанавливаем значение маски, которая содержит номера аксиом в векторе в порядке уменьшения функции значимости
+	// пёя│я┌п╟п╫п╟п╡п╩п╦п╡п╟п╣п╪ п╥п╫п╟я┤п╣п╫п╦п╣ п╪п╟я│п╨п╦, п╨п╬я┌п╬я─п╟я▐ я│п╬п╢п╣я─п╤п╦я┌ п╫п╬п╪п╣я─п╟ п╟п╨я│п╦п╬п╪ п╡ п╡п╣п╨я┌п╬я─п╣ п╡ п©п╬я─я▐п╢п╨п╣ я┐п╪п╣п╫я▄я┬п╣п╫п╦я▐ я└я┐п╫п╨я├п╦п╦ п╥п╫п╟я┤п╦п╪п╬я│я┌п╦
 	sort (axiomSetPlus.axiomProfit, axiomsMask);
-	// Критерий выбора какие аксиомы мутировать сильнее, какие слабее - это 80% от максимальной полезности аксиомы (80 - параметр)
+	// п я─п╦я┌п╣я─п╦п╧ п╡я▀п╠п╬я─п╟ п╨п╟п╨п╦п╣ п╟п╨я│п╦п╬п╪я▀ п╪я┐я┌п╦я─п╬п╡п╟я┌я▄ я│п╦п╩я▄п╫п╣п╣, п╨п╟п╨п╦п╣ я│п╩п╟п╠п╣п╣ - я█я┌п╬ 80% п╬я┌ п╪п╟п╨я│п╦п╪п╟п╩я▄п╫п╬п╧ п©п╬п╩п╣п╥п╫п╬я│я┌п╦ п╟п╨я│п╦п╬п╪я▀ (80 - п©п╟я─п╟п╪п╣я┌я─)
 	double cutOff;
 	cutOff = axiomSetPlus.axiomProfit[axiomsMask[0]] * cutOffCrit;
 	double axTransProbMin;
 	axTransProbMin = axiomSetPlus.axTransProb * cutOffVal;
 
-	// Мутация на уровне аксиом и элементарных условий
+	// п°я┐я┌п╟я├п╦я▐ п╫п╟ я┐я─п╬п╡п╫п╣ п╟п╨я│п╦п╬п╪ п╦ я█п╩п╣п╪п╣п╫я┌п╟я─п╫я▀я┘ я┐я│п╩п╬п╡п╦п╧
 	if ((axiomSetPlus.ecTransProb > 0) || (axiomSetPlus.axTransProb > 0)) {
 		for (unsigned int i = 0; i < axioms->size(); i++) {
 			if (axiomSetPlus.axiomProfit[i] > cutOff)
@@ -157,7 +157,7 @@ int TransmuteTpl::transmute (AxiomSetPlus &axiomSetPlus) const {
 		}
 	}
 
-	// Мутация на уровне системы аксиом
+	// п°я┐я┌п╟я├п╦я▐ п╫п╟ я┐я─п╬п╡п╫п╣ я│п╦я│я┌п╣п╪я▀ п╟п╨я│п╦п╬п╪
 	if (axiomSetPlus.asTransProb > 0) {
 		double probOfTp = 0;
 		int numOfEC = 0;
@@ -171,9 +171,9 @@ int TransmuteTpl::transmute (AxiomSetPlus &axiomSetPlus) const {
 		}
 	}
 
-	// Мутация на уровне изменения приоритета аксиом в системе
-	// TODO: сделать настройку алгоритма, отключающую эту мутацию (для
-	// случая разметки подмножествами системы аксиом)
+	// п°я┐я┌п╟я├п╦я▐ п╫п╟ я┐я─п╬п╡п╫п╣ п╦п╥п╪п╣п╫п╣п╫п╦я▐ п©я─п╦п╬я─п╦я┌п╣я┌п╟ п╟п╨я│п╦п╬п╪ п╡ я│п╦я│я┌п╣п╪п╣
+	// TODO: я│п╢п╣п╩п╟я┌я▄ п╫п╟я│я┌я─п╬п╧п╨я┐ п╟п╩пЁп╬я─п╦я┌п╪п╟, п╬я┌п╨п╩я▌я┤п╟я▌я┴я┐я▌ я█я┌я┐ п╪я┐я┌п╟я├п╦я▌ (п╢п╩я▐
+	// я│п╩я┐я┤п╟я▐ я─п╟п╥п╪п╣я┌п╨п╦ п©п╬п╢п╪п╫п╬п╤п╣я│я┌п╡п╟п╪п╦ я│п╦я│я┌п╣п╪я▀ п╟п╨я│п╦п╬п╪)
 	if (axiomSetPlus.prTransProb > 0 && canMutateOrder) {
 		int numOfSteps = 0;
 		double probChange = 0.0;
@@ -195,8 +195,8 @@ int TransmuteTpl::transmute (AxiomSetPlus &axiomSetPlus) const {
 /****************************************************************************
 *					TransmuteTpl::transmute
 *
-*	Description:	Функция мутации для популяции
-*	Parameters:		population - изменяемая популяция
+*	Description:	п╓я┐п╫п╨я├п╦я▐ п╪я┐я┌п╟я├п╦п╦ п╢п╩я▐ п©п╬п©я┐п╩я▐я├п╦п╦
+*	Parameters:		population - п╦п╥п╪п╣п╫я▐п╣п╪п╟я▐ п©п╬п©я┐п╩я▐я├п╦я▐
 *	Returns:		0
 *	Throws:			-
 *	Author:			dk
@@ -204,7 +204,7 @@ int TransmuteTpl::transmute (AxiomSetPlus &axiomSetPlus) const {
 *
 ****************************************************************************/
 int TransmuteTpl::transmute (std::vector <AxiomSetPlus> &population) const {
-	// Ходим по популяции, мутируем составляющие ее особи. При этом сбрасываем устаревшую статистику
+	// п╔п╬п╢п╦п╪ п©п╬ п©п╬п©я┐п╩я▐я├п╦п╦, п╪я┐я┌п╦я─я┐п╣п╪ я│п╬я│я┌п╟п╡п╩я▐я▌я┴п╦п╣ п╣п╣ п╬я│п╬п╠п╦. п÷я─п╦ я█я┌п╬п╪ я│п╠я─п╟я│я▀п╡п╟п╣п╪ я┐я│я┌п╟я─п╣п╡я┬я┐я▌ я│я┌п╟я┌п╦я│я┌п╦п╨я┐
 	for (unsigned int i = 0; i < population.size(); i++) {
 		transmute (population[i]);
 		population[i].clearStat();

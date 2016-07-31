@@ -1,6 +1,6 @@
 /****************************************************************************
 *
-*				Функции класса FuzzyMultiDataLearnAlgorithm
+*				п╓я┐п╫п╨я├п╦п╦ п╨п╩п╟я│я│п╟ FuzzyMultiDataLearnAlgorithm
 *
 ****************************************************************************/
 
@@ -14,17 +14,17 @@
 
 using namespace AxiomLib;
 
-// Набор определений, специфичных для данного класса
-// Шаблоны для имен файлов с описаниями лучших элементарных условий и аксиом
-#define str_defaultECName		"stageOneFuzzyData_"  // имя по умолчанию для элементарных условий, полученных на первом этапе
-#define str_defaultAxiomName	"stageTwoFuzzyData_"  // имя по умолчанию для аксиом, полученных на втором этапе
-// Имена файлов по умолчанию для сохранения списков имен файлов с описаниями аксиом и элементарных условий
+// п²п╟п╠п╬я─ п╬п©я─п╣п╢п╣п╩п╣п╫п╦п╧, я│п©п╣я├п╦я└п╦я┤п╫я▀я┘ п╢п╩я▐ п╢п╟п╫п╫п╬пЁп╬ п╨п╩п╟я│я│п╟
+// п╗п╟п╠п╩п╬п╫я▀ п╢п╩я▐ п╦п╪п╣п╫ я└п╟п╧п╩п╬п╡ я│ п╬п©п╦я│п╟п╫п╦я▐п╪п╦ п╩я┐я┤я┬п╦я┘ я█п╩п╣п╪п╣п╫я┌п╟я─п╫я▀я┘ я┐я│п╩п╬п╡п╦п╧ п╦ п╟п╨я│п╦п╬п╪
+#define str_defaultECName		"stageOneFuzzyData_"  // п╦п╪я▐ п©п╬ я┐п╪п╬п╩я┤п╟п╫п╦я▌ п╢п╩я▐ я█п╩п╣п╪п╣п╫я┌п╟я─п╫я▀я┘ я┐я│п╩п╬п╡п╦п╧, п©п╬п╩я┐я┤п╣п╫п╫я▀я┘ п╫п╟ п©п╣я─п╡п╬п╪ я█я┌п╟п©п╣
+#define str_defaultAxiomName	"stageTwoFuzzyData_"  // п╦п╪я▐ п©п╬ я┐п╪п╬п╩я┤п╟п╫п╦я▌ п╢п╩я▐ п╟п╨я│п╦п╬п╪, п©п╬п╩я┐я┤п╣п╫п╫я▀я┘ п╫п╟ п╡я┌п╬я─п╬п╪ я█я┌п╟п©п╣
+// п≤п╪п╣п╫п╟ я└п╟п╧п╩п╬п╡ п©п╬ я┐п╪п╬п╩я┤п╟п╫п╦я▌ п╢п╩я▐ я│п╬я┘я─п╟п╫п╣п╫п╦я▐ я│п©п╦я│п╨п╬п╡ п╦п╪п╣п╫ я└п╟п╧п╩п╬п╡ я│ п╬п©п╦я│п╟п╫п╦я▐п╪п╦ п╟п╨я│п╦п╬п╪ п╦ я█п╩п╣п╪п╣п╫я┌п╟я─п╫я▀я┘ я┐я│п╩п╬п╡п╦п╧
 #define str_default_ECList_fileName		"bestECList"
 #define str_default_AxiomList_fileName	"bestAxiomList"
 
-// Коструктор класса
+// п п╬я│я┌я─я┐п╨я┌п╬я─ п╨п╩п╟я│я│п╟
 FuzzyMultiDataLearnAlgorithm::FuzzyMultiDataLearnAlgorithm (void) {
-	// Определяем по умолчанию не выводить никаких комментариев
+	// п·п©я─п╣п╢п╣п╩я▐п╣п╪ п©п╬ я┐п╪п╬п╩я┤п╟п╫п╦я▌ п╫п╣ п╡я▀п╡п╬п╢п╦я┌я▄ п╫п╦п╨п╟п╨п╦я┘ п╨п╬п╪п╪п╣п╫я┌п╟я─п╦п╣п╡
 	comments = false;
 	recognizer = NULL;
 	//compareStatistic = NULL;
@@ -65,7 +65,7 @@ FuzzyMultiDataLearnAlgorithm::FuzzyMultiDataLearnAlgorithm (void) {
 
 	numberOfUsedClassTraj = 0;
 
-	//Заполнение вектора типов ЭУ - по умолчанию используются все типы ЭУ
+	//п≈п╟п©п╬п╩п╫п╣п╫п╦п╣ п╡п╣п╨я┌п╬я─п╟ я┌п╦п©п╬п╡ п╜пё - п©п╬ я┐п╪п╬п╩я┤п╟п╫п╦я▌ п╦я│п©п╬п╩я▄п╥я┐я▌я┌я│я▐ п╡я│п╣ я┌п╦п©я▀ п╜пё
 	ElemConditionsFactory ecf;
 	initialECTypes.resize (2*N_EL_AXIOMS);
 	for (unsigned int i = 0; i < N_EL_AXIOMS; i++) {
@@ -79,7 +79,7 @@ FuzzyMultiDataLearnAlgorithm::FuzzyMultiDataLearnAlgorithm (void) {
 } 
 
 
-// Деструктор класса - удаляюся все созданные в рамках класса динамические объекты
+// п■п╣я│я┌я─я┐п╨я┌п╬я─ п╨п╩п╟я│я│п╟ - я┐п╢п╟п╩я▐я▌я│я▐ п╡я│п╣ я│п╬п╥п╢п╟п╫п╫я▀п╣ п╡ я─п╟п╪п╨п╟я┘ п╨п╩п╟я│я│п╟ п╢п╦п╫п╟п╪п╦я┤п╣я│п╨п╦п╣ п╬п╠я┼п╣п╨я┌я▀
 FuzzyMultiDataLearnAlgorithm::~FuzzyMultiDataLearnAlgorithm (void) {
 	if (recognizer != NULL) delete recognizer;
 	//if (compareStatistic != NULL) delete compareStatistic;
@@ -97,34 +97,34 @@ FuzzyMultiDataLearnAlgorithm::~FuzzyMultiDataLearnAlgorithm (void) {
 /****************************************************************************
 *				FuzzyMultiDataLearnAlgorithm::initFromEnv
 *
-*	Description:	Функция устанавливает параметры объекта по данным из
-*					окружения, которое подается как параметр функции
-*	Parameters:	env - объект класса окружения, откуда берутся параметры данного класса
+*	Description:	п╓я┐п╫п╨я├п╦я▐ я┐я│я┌п╟п╫п╟п╡п╩п╦п╡п╟п╣я┌ п©п╟я─п╟п╪п╣я┌я─я▀ п╬п╠я┼п╣п╨я┌п╟ п©п╬ п╢п╟п╫п╫я▀п╪ п╦п╥
+*					п╬п╨я─я┐п╤п╣п╫п╦я▐, п╨п╬я┌п╬я─п╬п╣ п©п╬п╢п╟п╣я┌я│я▐ п╨п╟п╨ п©п╟я─п╟п╪п╣я┌я─ я└я┐п╫п╨я├п╦п╦
+*	Parameters:	env - п╬п╠я┼п╣п╨я┌ п╨п╩п╟я│я│п╟ п╬п╨я─я┐п╤п╣п╫п╦я▐, п╬я┌п╨я┐п╢п╟ п╠п╣я─я┐я┌я│я▐ п©п╟я─п╟п╪п╣я┌я─я▀ п╢п╟п╫п╫п╬пЁп╬ п╨п╩п╟я│я│п╟
 *	Returns:	0
-*	Throws:		AxiomLibException - если в одном из алгоритмов возникла ошибка
+*	Throws:		AxiomLibException - п╣я│п╩п╦ п╡ п╬п╢п╫п╬п╪ п╦п╥ п╟п╩пЁп╬я─п╦я┌п╪п╬п╡ п╡п╬п╥п╫п╦п╨п╩п╟ п╬я┬п╦п╠п╨п╟
 *	Author:		dk
 *	History:
 *
 ****************************************************************************/
 int FuzzyMultiDataLearnAlgorithm::initFromEnv (const Environment& env) {
-	// Инициализируем dataSet
+	// п≤п╫п╦я├п╦п╟п╩п╦п╥п╦я─я┐п╣п╪ dataSet
 	std::string datasetDir, datasetName;
 	if (env.getStringParamValue(datasetDir, "BaseDataSetDir") < 0)
 		throw AxiomLibException("FuzzyMultiDataLearnAlgorithm::setParamsFromEnv : data set directory is undefined.");
 	if (env.getStringParamValue(datasetName, "DataSet") < 0)
 		throw AxiomLibException("FuzzyMultiDataLearnAlgorithm::setParamsFromEnv : data set is undefined.");
-	// считываем необходимые для данного класса параметры о наборе данных
+	// я│я┤п╦я┌я▀п╡п╟п╣п╪ п╫п╣п╬п╠я┘п╬п╢п╦п╪я▀п╣ п╢п╩я▐ п╢п╟п╫п╫п╬пЁп╬ п╨п╩п╟я│я│п╟ п©п╟я─п╟п╪п╣я┌я─я▀ п╬ п╫п╟п╠п╬я─п╣ п╢п╟п╫п╫я▀я┘
 	EnvDataSet envDataSet;
 	envDataSet.readConfigFile (datasetDir, datasetName);
-	// установка корректного обозначения NullStr - обозначение остутсвия в данной точке ряда какого либо нештатного поведения
+	// я┐я│я┌п╟п╫п╬п╡п╨п╟ п╨п╬я─я─п╣п╨я┌п╫п╬пЁп╬ п╬п╠п╬п╥п╫п╟я┤п╣п╫п╦я▐ NullStr - п╬п╠п╬п╥п╫п╟я┤п╣п╫п╦п╣ п╬я│я┌я┐я┌я│п╡п╦я▐ п╡ п╢п╟п╫п╫п╬п╧ я┌п╬я┤п╨п╣ я─я▐п╢п╟ п╨п╟п╨п╬пЁп╬ п╩п╦п╠п╬ п╫п╣я┬я┌п╟я┌п╫п╬пЁп╬ п©п╬п╡п╣п╢п╣п╫п╦я▐
 	fuzzyDataSet.setNullStr (envDataSet);
 	fuzzyDataSet.setNormalStr (envDataSet);
-	// собственно считываем набор данных - заводим его во внутреннее представление
+	// я│п╬п╠я│я┌п╡п╣п╫п╫п╬ я│я┤п╦я┌я▀п╡п╟п╣п╪ п╫п╟п╠п╬я─ п╢п╟п╫п╫я▀я┘ - п╥п╟п╡п╬п╢п╦п╪ п╣пЁп╬ п╡п╬ п╡п╫я┐я┌я─п╣п╫п╫п╣п╣ п©я─п╣п╢я│я┌п╟п╡п╩п╣п╫п╦п╣
 	fuzzyDataSet.readDataSet(datasetDir, datasetName);
-	// восстанавливаем в данном классе вектор индексов параметров в каноническом представленнии по которым вести поиск нештатых ситуаций
+	// п╡п╬я│я│я┌п╟п╫п╟п╡п╩п╦п╡п╟п╣п╪ п╡ п╢п╟п╫п╫п╬п╪ п╨п╩п╟я│я│п╣ п╡п╣п╨я┌п╬я─ п╦п╫п╢п╣п╨я│п╬п╡ п©п╟я─п╟п╪п╣я┌я─п╬п╡ п╡ п╨п╟п╫п╬п╫п╦я┤п╣я│п╨п╬п╪ п©я─п╣п╢я│я┌п╟п╡п╩п╣п╫п╫п╦п╦ п©п╬ п╨п╬я┌п╬я─я▀п╪ п╡п╣я│я┌п╦ п©п╬п╦я│п╨ п╫п╣я┬я┌п╟я┌я▀я┘ я│п╦я┌я┐п╟я├п╦п╧
 	fuzzyDataSet.getParamNums(dataSetParams, env, envDataSet);
 
-	// Определяем базовую директорию с наборами аксиом
+	// п·п©я─п╣п╢п╣п╩я▐п╣п╪ п╠п╟п╥п╬п╡я┐я▌ п╢п╦я─п╣п╨я┌п╬я─п╦я▌ я│ п╫п╟п╠п╬я─п╟п╪п╦ п╟п╨я│п╦п╬п╪
 	if (env.getStringParamValue(axiomBaseDir, "AxiomBaseDir") < 0)
 		throw AxiomLibException("FuzzyMultiDataLearnAlgorithm::setParamsFromEnv : popPreset > 0 but axiom base dir is not set.");
 	std::string curAxiomName;
@@ -137,19 +137,19 @@ int FuzzyMultiDataLearnAlgorithm::initFromEnv (const Environment& env) {
 	if (env.getStringParamValue(curAxiomName, "AxiomListFileName") >= 0) 
 		fileNameAxiomList.assign (curAxiomName);
 
-	// Сохранение файлов с описанием элементарных условий во внутрнеей переменной для последующего своевременного включения этого набора в рассмотрение
+	// п║п╬я┘я─п╟п╫п╣п╫п╦п╣ я└п╟п╧п╩п╬п╡ я│ п╬п©п╦я│п╟п╫п╦п╣п╪ я█п╩п╣п╪п╣п╫я┌п╟я─п╫я▀я┘ я┐я│п╩п╬п╡п╦п╧ п╡п╬ п╡п╫я┐я┌я─п╫п╣п╣п╧ п©п╣я─п╣п╪п╣п╫п╫п╬п╧ п╢п╩я▐ п©п╬я│п╩п╣п╢я┐я▌я┴п╣пЁп╬ я│п╡п╬п╣п╡я─п╣п╪п╣п╫п╫п╬пЁп╬ п╡п╨п╩я▌я┤п╣п╫п╦я▐ я█я┌п╬пЁп╬ п╫п╟п╠п╬я─п╟ п╡ я─п╟я│я│п╪п╬я┌я─п╣п╫п╦п╣
 	env.getStringSetParamValue(predefinedECFileName, "ECFileName");
 
-	// Сохранение файлов с описанием аксиом во внутрнеей переменной для последующего своевременного включения этого набора в рассмотрение
+	// п║п╬я┘я─п╟п╫п╣п╫п╦п╣ я└п╟п╧п╩п╬п╡ я│ п╬п©п╦я│п╟п╫п╦п╣п╪ п╟п╨я│п╦п╬п╪ п╡п╬ п╡п╫я┐я┌я─п╫п╣п╣п╧ п©п╣я─п╣п╪п╣п╫п╫п╬п╧ п╢п╩я▐ п©п╬я│п╩п╣п╢я┐я▌я┴п╣пЁп╬ я│п╡п╬п╣п╡я─п╣п╪п╣п╫п╫п╬пЁп╬ п╡п╨п╩я▌я┤п╣п╫п╦я▐ я█я┌п╬пЁп╬ п╫п╟п╠п╬я─п╟ п╡ я─п╟я│я│п╪п╬я┌я─п╣п╫п╦п╣
 	env.getStringSetParamValue(predefinedAxiomsFileName, "AxiomFileName");
 
-	// Параметры, по которым сохранять лучщие решения
+	// п÷п╟я─п╟п╪п╣я┌я─я▀, п©п╬ п╨п╬я┌п╬я─я▀п╪ я│п╬я┘я─п╟п╫я▐я┌я▄ п╩я┐я┤я┴п╦п╣ я─п╣я┬п╣п╫п╦я▐
 	if (env.getStringParamValue(axiomSetBaseDir, "AxiomSetBaseDir") < 0)
 		throw AxiomLibException("FuzzyMultiDataLearnAlgorithm::setParamsFromEnv : axiomSetBaseDir directory is undefined.");
 	if (env.getStringParamValue(axiomSetName, "AxiomSetNameTemplate") < 0)
 		throw AxiomLibException("FuzzyMultiDataLearnAlgorithm::setParamsFromEnv : axiomName to save is undefined.");
 
-	// создание класса распознавания участков разметки в ряду разметки
+	// я│п╬п╥п╢п╟п╫п╦п╣ п╨п╩п╟я│я│п╟ я─п╟я│п©п╬п╥п╫п╟п╡п╟п╫п╦я▐ я┐я┤п╟я│я┌п╨п╬п╡ я─п╟п╥п╪п╣я┌п╨п╦ п╡ я─я▐п╢я┐ я─п╟п╥п╪п╣я┌п╨п╦
 	std::string recogClassName;
 	ReducedRecognizerFactory rrf;
 	if (env.getStringParamValue(recogClassName, "ReducedRecognizer") < 0)
@@ -157,7 +157,7 @@ int FuzzyMultiDataLearnAlgorithm::initFromEnv (const Environment& env) {
 	recognizer = rrf.create(recogClassName);
 	recognizer->setParamsFromEnv (env);
 
-	// создание класса подсчета статистики
+	// я│п╬п╥п╢п╟п╫п╦п╣ п╨п╩п╟я│я│п╟ п©п╬п╢я│я┤п╣я┌п╟ я│я┌п╟я┌п╦я│я┌п╦п╨п╦
 	/*std::string compClassName;
 	CompareClassFactory ccf;
 	if (env.getStringParamValue(compClassName, "compareClass") < 0)
@@ -167,7 +167,7 @@ int FuzzyMultiDataLearnAlgorithm::initFromEnv (const Environment& env) {
 	if (env.getIntParamValue (ccNumPoints, "ccNumPoints") < 0)
 		throw AxiomLibException("FuzzyMultiDataLearnAlgorithm::setParamsFromEnv : ccNumPoints is undefined.");
 
-	// Инициализируем стратегию вычисления целевой функции
+	// п≤п╫п╦я├п╦п╟п╩п╦п╥п╦я─я┐п╣п╪ я│я┌я─п╟я┌п╣пЁп╦я▌ п╡я▀я┤п╦я│п╩п╣п╫п╦я▐ я├п╣п╩п╣п╡п╬п╧ я└я┐п╫п╨я├п╦п╦
 	std::string goalStrategyName;
 	GoalStrategyFactory gsf;
 	if (env.getStringParamValue(goalStrategyName, "goalClass") < 0) 
@@ -175,7 +175,7 @@ int FuzzyMultiDataLearnAlgorithm::initFromEnv (const Environment& env) {
 	goalStrategy = gsf.create(goalStrategyName);
 	goalStrategy->setParamsFromEnv(env);
 
-	// Параметры алгоритма настройки элементарных условий
+	// п÷п╟я─п╟п╪п╣я┌я─я▀ п╟п╩пЁп╬я─п╦я┌п╪п╟ п╫п╟я│я┌я─п╬п╧п╨п╦ я█п╩п╣п╪п╣п╫я┌п╟я─п╫я▀я┘ я┐я│п╩п╬п╡п╦п╧
 	if (env.getIntParamValue (leftLimit, "leftLimit") < 0)
 		throw AxiomLibException("FuzzyMultiDataLearnAlgorithm::setParamsFromEnv : leftLimit is undefined.");
 	if (env.getIntParamValue (rightLimit, "rightLimit") < 0)
@@ -189,7 +189,7 @@ int FuzzyMultiDataLearnAlgorithm::initFromEnv (const Environment& env) {
 	if (env.getIntParamValue (numBestECsMax, "numBestECsMax") < 0)
 		throw AxiomLibException("FuzzyMultiDataLearnAlgorithm::setParamsFromEnv : numBestECsMax is undefined.");
 
-	// Параметры поиска аксиом
+	// п÷п╟я─п╟п╪п╣я┌я─я▀ п©п╬п╦я│п╨п╟ п╟п╨я│п╦п╬п╪
 	if (env.getIntParamValue (maxAxiomPopSize, "maxAxiomPopSize") < 0)
 		throw AxiomLibException("FuzzyMultiDataLearnAlgorithm::setParamsFromEnv : maxAxiomPopSize is undefined.");
 	if (env.getIntParamValue (maxIterNum, "axiomAlgIterNum") < 0)
@@ -199,10 +199,10 @@ int FuzzyMultiDataLearnAlgorithm::initFromEnv (const Environment& env) {
 	if (env.getDoubleParamValue (percentBestAxioms, "percentBestAxioms") < 0)
 		throw AxiomLibException("FuzzyMultiDataLearnAlgorithm::setParamsFromEnv : percentBestAxioms is undefined.");
 
-	// Стоимость ошибки, если при сдвиге разметок осталась область разметки без соответствия в другой разметке
+	// п║я┌п╬п╦п╪п╬я│я┌я▄ п╬я┬п╦п╠п╨п╦, п╣я│п╩п╦ п©я─п╦ я│п╢п╡п╦пЁп╣ я─п╟п╥п╪п╣я┌п╬п╨ п╬я│я┌п╟п╩п╟я│я▄ п╬п╠п╩п╟я│я┌я▄ я─п╟п╥п╪п╣я┌п╨п╦ п╠п╣п╥ я│п╬п╬я┌п╡п╣я┌я│я┌п╡п╦я▐ п╡ п╢я─я┐пЁп╬п╧ я─п╟п╥п╪п╣я┌п╨п╣
 	if (env.getDoubleParamValue (shiftErrIn, "shiftErrIn") < 0)
 		throw AxiomLibException("FuzzyMultiDataLearnAlgorithm::setParamsFromEnv : shiftErrIn is undefined.");
-	// Степень расширения длины вхождения разметки (при поиске разметок во время их подбора)
+	// п║я┌п╣п©п╣п╫я▄ я─п╟я│я┬п╦я─п╣п╫п╦я▐ п╢п╩п╦п╫я▀ п╡я┘п╬п╤п╢п╣п╫п╦я▐ я─п╟п╥п╪п╣я┌п╨п╦ (п©я─п╦ п©п╬п╦я│п╨п╣ я─п╟п╥п╪п╣я┌п╬п╨ п╡п╬ п╡я─п╣п╪я▐ п╦я┘ п©п╬п╢п╠п╬я─п╟)
 	if (env.getDoubleParamValue (extendMarkUpLensLevel, "extendMarkUpLensLevel") < 0)
 		throw AxiomLibException("FuzzyMultiDataLearnAlgorithm::setParamsFromEnv : extendMarkUpLensLevel is undefined.");
 	if (env.getIntParamValue (maxAxiomSetPopSize, "maxAxiomSetPopSize") < 0)
@@ -228,35 +228,35 @@ int FuzzyMultiDataLearnAlgorithm::initFromEnv (const Environment& env) {
 /****************************************************************************
 *				FuzzyMultiDataLearnAlgorithm::initFromEnvRecognitionOnly
 *
-*	Description:	Функция устанавливает параметры объекта по данным из 
-*					окружения - необходимые только для расопзнавания и 
-*					подсчета целевой функции для системы аксиом
-*	Parameters:		env - объект класса окружения, откуда берутся параметры данного класса
+*	Description:	п╓я┐п╫п╨я├п╦я▐ я┐я│я┌п╟п╫п╟п╡п╩п╦п╡п╟п╣я┌ п©п╟я─п╟п╪п╣я┌я─я▀ п╬п╠я┼п╣п╨я┌п╟ п©п╬ п╢п╟п╫п╫я▀п╪ п╦п╥ 
+*					п╬п╨я─я┐п╤п╣п╫п╦я▐ - п╫п╣п╬п╠я┘п╬п╢п╦п╪я▀п╣ я┌п╬п╩я▄п╨п╬ п╢п╩я▐ я─п╟я│п╬п©п╥п╫п╟п╡п╟п╫п╦я▐ п╦ 
+*					п©п╬п╢я│я┤п╣я┌п╟ я├п╣п╩п╣п╡п╬п╧ я└я┐п╫п╨я├п╦п╦ п╢п╩я▐ я│п╦я│я┌п╣п╪я▀ п╟п╨я│п╦п╬п╪
+*	Parameters:		env - п╬п╠я┼п╣п╨я┌ п╨п╩п╟я│я│п╟ п╬п╨я─я┐п╤п╣п╫п╦я▐, п╬я┌п╨я┐п╢п╟ п╠п╣я─я┐я┌я│я▐ п©п╟я─п╟п╪п╣я┌я─я▀ п╢п╟п╫п╫п╬пЁп╬ п╨п╩п╟я│я│п╟
 *	Returns:		0
-*	Throws:			AxiomLibException - если в одном из алгоритмов возникла ошибка
+*	Throws:			AxiomLibException - п╣я│п╩п╦ п╡ п╬п╢п╫п╬п╪ п╦п╥ п╟п╩пЁп╬я─п╦я┌п╪п╬п╡ п╡п╬п╥п╫п╦п╨п╩п╟ п╬я┬п╦п╠п╨п╟
 *	Author:			dk
 *	History:
 *
 ****************************************************************************/
 int FuzzyMultiDataLearnAlgorithm::initFromEnvRecognitionOnly (const Environment& env) {
-	// Инициализируем dataSet
+	// п≤п╫п╦я├п╦п╟п╩п╦п╥п╦я─я┐п╣п╪ dataSet
 	std::string datasetDir, datasetName;
 	if (env.getStringParamValue(datasetDir, "BaseDataSetDir") < 0)
 		throw AxiomLibException("FuzzyMultiDataLearnAlgorithm::setParamsFromEnv : data set directory is undefined.");
 	if (env.getStringParamValue(datasetName, "DataSet") < 0)
 		throw AxiomLibException("FuzzyMultiDataLearnAlgorithm::setParamsFromEnv : data set is undefined.");
-	// считываем необходимые для данного класса параметры о наборе данных
+	// я│я┤п╦я┌я▀п╡п╟п╣п╪ п╫п╣п╬п╠я┘п╬п╢п╦п╪я▀п╣ п╢п╩я▐ п╢п╟п╫п╫п╬пЁп╬ п╨п╩п╟я│я│п╟ п©п╟я─п╟п╪п╣я┌я─я▀ п╬ п╫п╟п╠п╬я─п╣ п╢п╟п╫п╫я▀я┘
 	EnvDataSet envDataSet;
 	envDataSet.readConfigFile (datasetDir, datasetName);
-	// установка корректного обозначения NullStr - обозначение остутсвия в данной точке ряда какого либо нештатного поведения
+	// я┐я│я┌п╟п╫п╬п╡п╨п╟ п╨п╬я─я─п╣п╨я┌п╫п╬пЁп╬ п╬п╠п╬п╥п╫п╟я┤п╣п╫п╦я▐ NullStr - п╬п╠п╬п╥п╫п╟я┤п╣п╫п╦п╣ п╬я│я┌я┐я┌я│п╡п╦я▐ п╡ п╢п╟п╫п╫п╬п╧ я┌п╬я┤п╨п╣ я─я▐п╢п╟ п╨п╟п╨п╬пЁп╬ п╩п╦п╠п╬ п╫п╣я┬я┌п╟я┌п╫п╬пЁп╬ п©п╬п╡п╣п╢п╣п╫п╦я▐
 	fuzzyDataSet.setNullStr (envDataSet);
 	fuzzyDataSet.setNormalStr (envDataSet);
-	// собственно считываем набор данных - заводим его во внутреннее представление
+	// я│п╬п╠я│я┌п╡п╣п╫п╫п╬ я│я┤п╦я┌я▀п╡п╟п╣п╪ п╫п╟п╠п╬я─ п╢п╟п╫п╫я▀я┘ - п╥п╟п╡п╬п╢п╦п╪ п╣пЁп╬ п╡п╬ п╡п╫я┐я┌я─п╣п╫п╫п╣п╣ п©я─п╣п╢я│я┌п╟п╡п╩п╣п╫п╦п╣
 	fuzzyDataSet.readDataSet(datasetDir, datasetName);
-	// восстанавливаем в данном классе вектор индексов параметров в каноническом представленнии по которым вести поиск нештатых ситуаций
+	// п╡п╬я│я│я┌п╟п╫п╟п╡п╩п╦п╡п╟п╣п╪ п╡ п╢п╟п╫п╫п╬п╪ п╨п╩п╟я│я│п╣ п╡п╣п╨я┌п╬я─ п╦п╫п╢п╣п╨я│п╬п╡ п©п╟я─п╟п╪п╣я┌я─п╬п╡ п╡ п╨п╟п╫п╬п╫п╦я┤п╣я│п╨п╬п╪ п©я─п╣п╢я│я┌п╟п╡п╩п╣п╫п╫п╦п╦ п©п╬ п╨п╬я┌п╬я─я▀п╪ п╡п╣я│я┌п╦ п©п╬п╦я│п╨ п╫п╣я┬я┌п╟я┌я▀я┘ я│п╦я┌я┐п╟я├п╦п╧
 	fuzzyDataSet.getParamNums(dataSetParams, env, envDataSet);
 
-	// создание класса распознавания участков разметки в ряду разметки
+	// я│п╬п╥п╢п╟п╫п╦п╣ п╨п╩п╟я│я│п╟ я─п╟я│п©п╬п╥п╫п╟п╡п╟п╫п╦я▐ я┐я┤п╟я│я┌п╨п╬п╡ я─п╟п╥п╪п╣я┌п╨п╦ п╡ я─я▐п╢я┐ я─п╟п╥п╪п╣я┌п╨п╦
 	std::string recogClassName;
 	ReducedRecognizerFactory rrf;
 	if (env.getStringParamValue(recogClassName, "ReducedRecognizer") < 0)
@@ -267,7 +267,7 @@ int FuzzyMultiDataLearnAlgorithm::initFromEnvRecognitionOnly (const Environment&
 	if (env.getIntParamValue (ccNumPoints, "ccNumPoints") < 0)
 		throw AxiomLibException("FuzzyMultiDataLearnAlgorithm::setParamsFromEnv : ccNumPoints is undefined.");
 
-	// Инициализируем стратегию вычисления целевой функции
+	// п≤п╫п╦я├п╦п╟п╩п╦п╥п╦я─я┐п╣п╪ я│я┌я─п╟я┌п╣пЁп╦я▌ п╡я▀я┤п╦я│п╩п╣п╫п╦я▐ я├п╣п╩п╣п╡п╬п╧ я└я┐п╫п╨я├п╦п╦
 	std::string goalStrategyName;
 	GoalStrategyFactory gsf;
 	if (env.getStringParamValue(goalStrategyName, "goalClass") < 0) 
@@ -275,7 +275,7 @@ int FuzzyMultiDataLearnAlgorithm::initFromEnvRecognitionOnly (const Environment&
 	goalStrategy = gsf.create(goalStrategyName);
 	goalStrategy->setParamsFromEnv(env);
 
-	// Число траекторий, используемых для построения разметок эталонных траекторий
+	// п╖п╦я│п╩п╬ я┌я─п╟п╣п╨я┌п╬я─п╦п╧, п╦я│п©п╬п╩я▄п╥я┐п╣п╪я▀я┘ п╢п╩я▐ п©п╬я│я┌я─п╬п╣п╫п╦я▐ я─п╟п╥п╪п╣я┌п╬п╨ я█я┌п╟п╩п╬п╫п╫я▀я┘ я┌я─п╟п╣п╨я┌п╬я─п╦п╧
 	if (env.getIntParamValue (numberOfUsedClassTraj, "numberOfUsedClassTraj") < 0)
 		throw AxiomLibException("FuzzyMultiDataLearnAlgorithm::setParamsFromEnv : numberOfUsedClassTraj is undefined.");
 
@@ -286,8 +286,8 @@ int FuzzyMultiDataLearnAlgorithm::initFromEnvRecognitionOnly (const Environment&
 /****************************************************************************
 *					FuzzyMultiDataLearnAlgorithm::setComments
 *
-*	Description:	Устанавливает новое значение переменной класса comments
-*	Parameters:		newVal - новое значение переменной comments
+*	Description:	пёя│я┌п╟п╫п╟п╡п╩п╦п╡п╟п╣я┌ п╫п╬п╡п╬п╣ п╥п╫п╟я┤п╣п╫п╦п╣ п©п╣я─п╣п╪п╣п╫п╫п╬п╧ п╨п╩п╟я│я│п╟ comments
+*	Parameters:		newVal - п╫п╬п╡п╬п╣ п╥п╫п╟я┤п╣п╫п╦п╣ п©п╣я─п╣п╪п╣п╫п╫п╬п╧ comments
 *	Returns:		0
 *	Throws:			-
 *	Author:			dk
@@ -303,26 +303,26 @@ int FuzzyMultiDataLearnAlgorithm::setComments (const bool newVal) {
 /****************************************************************************
 *					FuzzyMultiDataLearnAlgorithm::run
 *
-*	Description:	Основная функция в классе - реализует алгоритм поиска
-*					системы аксиом и разметки траекторий аномального поведения.
+*	Description:	п·я│п╫п╬п╡п╫п╟я▐ я└я┐п╫п╨я├п╦я▐ п╡ п╨п╩п╟я│я│п╣ - я─п╣п╟п╩п╦п╥я┐п╣я┌ п╟п╩пЁп╬я─п╦я┌п╪ п©п╬п╦я│п╨п╟
+*					я│п╦я│я┌п╣п╪я▀ п╟п╨я│п╦п╬п╪ п╦ я─п╟п╥п╪п╣я┌п╨п╦ я┌я─п╟п╣п╨я┌п╬я─п╦п╧ п╟п╫п╬п╪п╟п╩я▄п╫п╬пЁп╬ п©п╬п╡п╣п╢п╣п╫п╦я▐.
 *	Parameters:		void
 *	Returns:		0
-*	Throws:			AxiomLibException - если в одном из алгоритмов возникла ошибка
+*	Throws:			AxiomLibException - п╣я│п╩п╦ п╡ п╬п╢п╫п╬п╪ п╦п╥ п╟п╩пЁп╬я─п╦я┌п╪п╬п╡ п╡п╬п╥п╫п╦п╨п╩п╟ п╬я┬п╦п╠п╨п╟
 *	Author:			dk
 *	History:
 *
 ****************************************************************************/
 int FuzzyMultiDataLearnAlgorithm::run (void) {
-	// Получение информации о ранге текущего процесса
+	// п÷п╬п╩я┐я┤п╣п╫п╦п╣ п╦п╫я└п╬я─п╪п╟я├п╦п╦ п╬ я─п╟п╫пЁп╣ я┌п╣п╨я┐я┴п╣пЁп╬ п©я─п╬я├п╣я│я│п╟
 	int rank, size;
 	MPI_Comm_rank(MPI_COMM_WORLD, &rank);
 	MPI_Comm_size(MPI_COMM_WORLD, &size);
-	// Начальная стадия процесса построения системы аксиом и поиска разметок
+	// п²п╟я┤п╟п╩я▄п╫п╟я▐ я│я┌п╟п╢п╦я▐ п©я─п╬я├п╣я│я│п╟ п©п╬я│я┌я─п╬п╣п╫п╦я▐ я│п╦я│я┌п╣п╪я▀ п╟п╨я│п╦п╬п╪ п╦ п©п╬п╦я│п╨п╟ я─п╟п╥п╪п╣я┌п╬п╨
 	stage = 0;
 
-	// ЭТАП 1. подбор параметров элементарных условий
+	// п╜п╒п░п÷ 1. п©п╬п╢п╠п╬я─ п©п╟я─п╟п╪п╣я┌я─п╬п╡ я█п╩п╣п╪п╣п╫я┌п╟я─п╫я▀я┘ я┐я│п╩п╬п╡п╦п╧
 	selectElemCond();
-	// Сохранение списка файлов в отдельный файл - отчет
+	// п║п╬я┘я─п╟п╫п╣п╫п╦п╣ я│п©п╦я│п╨п╟ я└п╟п╧п╩п╬п╡ п╡ п╬я┌п╢п╣п╩я▄п╫я▀п╧ я└п╟п╧п╩ - п╬я┌я┤п╣я┌
 	std::string fileName;
 	if (this->comments) {
 		std::cout << "\n\tProcess " << rank+1 << " from " << size << ": saving results of 1st stage'\n";
@@ -330,44 +330,44 @@ int FuzzyMultiDataLearnAlgorithm::run (void) {
 	fileName = saveBestECFileNames (rank);
 	if (this->comments)
 		std::cout << "\n\tProcess " << rank+1 << " from " << size << ": results saved to: '" << fileName << "'\n";
-	// Этап завершен.
+	// п╜я┌п╟п© п╥п╟п╡п╣я─я┬п╣п╫.
 	stage = 1;
 	if ((rank == 0) && (this->comments)) {
 		std::cout << "\n\tForming of Elementary Conditions is done. First stage is over.\n";
 		std::cout.flush(); }
 
-	// ЭТАП 2. Формирование аксиом из подобранных ранее элементарных условий
-	// Вывод на экран стадии процесса
+	// п╜п╒п░п÷ 2. п╓п╬я─п╪п╦я─п╬п╡п╟п╫п╦п╣ п╟п╨я│п╦п╬п╪ п╦п╥ п©п╬п╢п╬п╠я─п╟п╫п╫я▀я┘ я─п╟п╫п╣п╣ я█п╩п╣п╪п╣п╫я┌п╟я─п╫я▀я┘ я┐я│п╩п╬п╡п╦п╧
+	// п▓я▀п╡п╬п╢ п╫п╟ я█п╨я─п╟п╫ я│я┌п╟п╢п╦п╦ п©я─п╬я├п╣я│я│п╟
 	if ((rank == 0) && (this->comments)) {
 		std::cout << "\n\tCreating of axioms from elementary conditions has began. Second stage has began.\n";
 		std::cout.flush(); }
-	// Поиск аксиом
+	// п÷п╬п╦я│п╨ п╟п╨я│п╦п╬п╪
 	formAxioms ();
-	// Сохранение списка файлов в отдельный файл - отчет
+	// п║п╬я┘я─п╟п╫п╣п╫п╦п╣ я│п©п╦я│п╨п╟ я└п╟п╧п╩п╬п╡ п╡ п╬я┌п╢п╣п╩я▄п╫я▀п╧ я└п╟п╧п╩ - п╬я┌я┤п╣я┌
 	if (rank == 0) {
 		fileName = saveBestAxiomFileNames ();
 		if (this->comments)
 			std::cout << "\n\tResults saved to: '" << fileName << "'\n";
 	}
-	// Завершен поиск аксиом
+	// п≈п╟п╡п╣я─я┬п╣п╫ п©п╬п╦я│п╨ п╟п╨я│п╦п╬п╪
 	stage = 2;
 	if ((rank == 0) && (this->comments)) {
 		std::cout << "\n\tForming of axioms is done. Second stage is over.\n";
 		std::cout.flush(); }
 
-	// ЭТАП 3. формирование системы аксиом из построенных аксиом
-	// Вывод на экран стадии процесса
+	// п╜п╒п░п÷ 3. я└п╬я─п╪п╦я─п╬п╡п╟п╫п╦п╣ я│п╦я│я┌п╣п╪я▀ п╟п╨я│п╦п╬п╪ п╦п╥ п©п╬я│я┌я─п╬п╣п╫п╫я▀я┘ п╟п╨я│п╦п╬п╪
+	// п▓я▀п╡п╬п╢ п╫п╟ я█п╨я─п╟п╫ я│я┌п╟п╢п╦п╦ п©я─п╬я├п╣я│я│п╟
 	if ((rank == 0) && (this->comments)) {
 		std::cout << "\n\tCreating of axiomSets from axioms has began. Third stage has began.\n";
 		std::cout.flush(); }
-	// Построение систем аксиом
+	// п÷п╬я│я┌я─п╬п╣п╫п╦п╣ я│п╦я│я┌п╣п╪ п╟п╨я│п╦п╬п╪
 	createAxiomSet ();
-	// Завершено построение системы аксиом
+	// п≈п╟п╡п╣я─я┬п╣п╫п╬ п©п╬я│я┌я─п╬п╣п╫п╦п╣ я│п╦я│я┌п╣п╪я▀ п╟п╨я│п╦п╬п╪
 	stage = 3;
 	if ((rank == 0) && (this->comments)) {
 		std::cout << "\n\tCreating of AxiomSets is done. Third stage is over.\n";
 		std::cout.flush(); }
-	// Вывод на экран лучших значений целевой функции среди всех полученных результатов
+	// п▓я▀п╡п╬п╢ п╫п╟ я█п╨я─п╟п╫ п╩я┐я┤я┬п╦я┘ п╥п╫п╟я┤п╣п╫п╦п╧ я├п╣п╩п╣п╡п╬п╧ я└я┐п╫п╨я├п╦п╦ я│я─п╣п╢п╦ п╡я│п╣я┘ п©п╬п╩я┐я┤п╣п╫п╫я▀я┘ я─п╣п╥я┐п╩я▄я┌п╟я┌п╬п╡
 	if (rank == 0)
 		displayBestResult();
 
@@ -378,7 +378,7 @@ int FuzzyMultiDataLearnAlgorithm::run (void) {
 /****************************************************************************
 *					FuzzyMultiDataLearnAlgorithm::runFirstLevel
 *
-*	Description:	Функция реализует подбор параметров элементарных условий
+*	Description:	п╓я┐п╫п╨я├п╦я▐ я─п╣п╟п╩п╦п╥я┐п╣я┌ п©п╬п╢п╠п╬я─ п©п╟я─п╟п╪п╣я┌я─п╬п╡ я█п╩п╣п╪п╣п╫я┌п╟я─п╫я▀я┘ я┐я│п╩п╬п╡п╦п╧
 *	Parameters:		void
 *	Returns:		0
 *	Throws:			-
@@ -387,21 +387,21 @@ int FuzzyMultiDataLearnAlgorithm::run (void) {
 *
 ****************************************************************************/
 std::string FuzzyMultiDataLearnAlgorithm::runFirstLevel (void) {
-	// Получение информации о ранге текущего процесса
+	// п÷п╬п╩я┐я┤п╣п╫п╦п╣ п╦п╫я└п╬я─п╪п╟я├п╦п╦ п╬ я─п╟п╫пЁп╣ я┌п╣п╨я┐я┴п╣пЁп╬ п©я─п╬я├п╣я│я│п╟
 	int rank;
 	MPI_Comm_rank(MPI_COMM_WORLD, &rank);
-	// Начальная стадия процесса построения системы аксиом и поиска разметок
+	// п²п╟я┤п╟п╩я▄п╫п╟я▐ я│я┌п╟п╢п╦я▐ п©я─п╬я├п╣я│я│п╟ п©п╬я│я┌я─п╬п╣п╫п╦я▐ я│п╦я│я┌п╣п╪я▀ п╟п╨я│п╦п╬п╪ п╦ п©п╬п╦я│п╨п╟ я─п╟п╥п╪п╣я┌п╬п╨
 	stage = 0;
 	if ((!rank) && (this->comments)) {
 		std::cout << "\n	Forming of Elementary Conditions has began. First stage has began.\n";
 		std::cout.flush();
 	}
-	// ЭТАП 1. подбор параметров элементарных условий
+	// п╜п╒п░п÷ 1. п©п╬п╢п╠п╬я─ п©п╟я─п╟п╪п╣я┌я─п╬п╡ я█п╩п╣п╪п╣п╫я┌п╟я─п╫я▀я┘ я┐я│п╩п╬п╡п╦п╧
 	selectElemCond();
-	// Сохранение списка файлов в отдельный файл - отчет
+	// п║п╬я┘я─п╟п╫п╣п╫п╦п╣ я│п©п╦я│п╨п╟ я└п╟п╧п╩п╬п╡ п╡ п╬я┌п╢п╣п╩я▄п╫я▀п╧ я└п╟п╧п╩ - п╬я┌я┤п╣я┌
 	std::string toRet;
 	toRet = saveBestECFileNames (rank);
-	// Этап завершен.
+	// п╜я┌п╟п© п╥п╟п╡п╣я─я┬п╣п╫.
 	stage = 1;
 	if ((!rank) && (this->comments)) {
 		std::cout << "\n	Forming of Elementary Conditions is done. First stage is over.\n";
@@ -414,7 +414,7 @@ std::string FuzzyMultiDataLearnAlgorithm::runFirstLevel (void) {
 /****************************************************************************
 *					FuzzyMultiDataLearnAlgorithm::runSecondLevel
 *
-*	Description:	Функция реализует формирование аксиом из подобранных ранее элементарных условий
+*	Description:	п╓я┐п╫п╨я├п╦я▐ я─п╣п╟п╩п╦п╥я┐п╣я┌ я└п╬я─п╪п╦я─п╬п╡п╟п╫п╦п╣ п╟п╨я│п╦п╬п╪ п╦п╥ п©п╬п╢п╬п╠я─п╟п╫п╫я▀я┘ я─п╟п╫п╣п╣ я█п╩п╣п╪п╣п╫я┌п╟я─п╫я▀я┘ я┐я│п╩п╬п╡п╦п╧
 *	Parameters:		void
 *	Returns:		0
 *	Throws:			-
@@ -423,7 +423,7 @@ std::string FuzzyMultiDataLearnAlgorithm::runFirstLevel (void) {
 *
 ****************************************************************************/
 std::string FuzzyMultiDataLearnAlgorithm::runSecondLevel (std::vector <std::string> &ecListFileVecs) {
-	// Получение информации о ранге текущего процесса
+	// п÷п╬п╩я┐я┤п╣п╫п╦п╣ п╦п╫я└п╬я─п╪п╟я├п╦п╦ п╬ я─п╟п╫пЁп╣ я┌п╣п╨я┐я┴п╣пЁп╬ п©я─п╬я├п╣я│я│п╟
 	int rank;
 	MPI_Comm_rank(MPI_COMM_WORLD, &rank);
 	if ((rank < 0) || (rank >= (int) ecListFileVecs.size())) {
@@ -439,7 +439,7 @@ std::string FuzzyMultiDataLearnAlgorithm::runSecondLevel (std::vector <std::stri
 /****************************************************************************
 *					FuzzyMultiDataLearnAlgorithm::runSecondLevel
 *
-*	Description:	Функция реализует формирование аксиом из подобранных ранее элементарных условий
+*	Description:	п╓я┐п╫п╨я├п╦я▐ я─п╣п╟п╩п╦п╥я┐п╣я┌ я└п╬я─п╪п╦я─п╬п╡п╟п╫п╦п╣ п╟п╨я│п╦п╬п╪ п╦п╥ п©п╬п╢п╬п╠я─п╟п╫п╫я▀я┘ я─п╟п╫п╣п╣ я█п╩п╣п╪п╣п╫я┌п╟я─п╫я▀я┘ я┐я│п╩п╬п╡п╦п╧
 *	Parameters:		void
 *	Returns:		0
 *	Throws:			-
@@ -448,25 +448,25 @@ std::string FuzzyMultiDataLearnAlgorithm::runSecondLevel (std::vector <std::stri
 *
 ****************************************************************************/
 std::string FuzzyMultiDataLearnAlgorithm::runSecondLevel (const std::string ecListFilePath) {
-	// Считываем имена файлов во внтуреннюю перменную
+	// п║я┤п╦я┌я▀п╡п╟п╣п╪ п╦п╪п╣п╫п╟ я└п╟п╧п╩п╬п╡ п╡п╬ п╡п╫я┌я┐я─п╣п╫п╫я▌я▌ п©п╣я─п╪п╣п╫п╫я┐я▌
 	restoreBestECFileNames (ecListFilePath);
-	// Получение информации о ранге текущего процесса
+	// п÷п╬п╩я┐я┤п╣п╫п╦п╣ п╦п╫я└п╬я─п╪п╟я├п╦п╦ п╬ я─п╟п╫пЁп╣ я┌п╣п╨я┐я┴п╣пЁп╬ п©я─п╬я├п╣я│я│п╟
 	int rank;
 	MPI_Comm_rank(MPI_COMM_WORLD, &rank);
-	// ЭТАП 2. Формирование аксиом из подобранных ранее элементарных условий
-	// Вывод на экран стадии процесса
+	// п╜п╒п░п÷ 2. п╓п╬я─п╪п╦я─п╬п╡п╟п╫п╦п╣ п╟п╨я│п╦п╬п╪ п╦п╥ п©п╬п╢п╬п╠я─п╟п╫п╫я▀я┘ я─п╟п╫п╣п╣ я█п╩п╣п╪п╣п╫я┌п╟я─п╫я▀я┘ я┐я│п╩п╬п╡п╦п╧
+	// п▓я▀п╡п╬п╢ п╫п╟ я█п╨я─п╟п╫ я│я┌п╟п╢п╦п╦ п©я─п╬я├п╣я│я│п╟
 	if ((rank == 0) && (this->comments)) {
 		std::cout << "\n\tCreating of axioms from elementary conditions has began. Second stage has began.\n";
 		std::cout.flush();
 	}
-	// Поиск аксиом
+	// п÷п╬п╦я│п╨ п╟п╨я│п╦п╬п╪
 	formAxioms ();	
-	// Завершен поиск аксиом - сохраняем именя файлов с описаниями аксиом в файлыs
+	// п≈п╟п╡п╣я─я┬п╣п╫ п©п╬п╦я│п╨ п╟п╨я│п╦п╬п╪ - я│п╬я┘я─п╟п╫я▐п╣п╪ п╦п╪п╣п╫я▐ я└п╟п╧п╩п╬п╡ я│ п╬п©п╦я│п╟п╫п╦я▐п╪п╦ п╟п╨я│п╦п╬п╪ п╡ я└п╟п╧п╩я▀s
 	std::string toRet;
 	toRet.clear();
 	if (rank == 0)
 		toRet = saveBestAxiomFileNames ();
-	// Вывод информации о стадии процесса
+	// п▓я▀п╡п╬п╢ п╦п╫я└п╬я─п╪п╟я├п╦п╦ п╬ я│я┌п╟п╢п╦п╦ п©я─п╬я├п╣я│я│п╟
 	stage = 2;
 	if ((rank == 0) && (this->comments)) {
 		std::cout << "\n	Forming of axioms is done. Second stage is over.\n";
@@ -479,7 +479,7 @@ std::string FuzzyMultiDataLearnAlgorithm::runSecondLevel (const std::string ecLi
 /****************************************************************************
 *					FuzzyMultiDataLearnAlgorithm::runThirdLevel
 *
-*	Description:	Функция реализует подбор параметров элементарных условий
+*	Description:	п╓я┐п╫п╨я├п╦я▐ я─п╣п╟п╩п╦п╥я┐п╣я┌ п©п╬п╢п╠п╬я─ п©п╟я─п╟п╪п╣я┌я─п╬п╡ я█п╩п╣п╪п╣п╫я┌п╟я─п╫я▀я┘ я┐я│п╩п╬п╡п╦п╧
 *	Parameters:		void
 *	Returns:		0
 *	Throws:			-
@@ -488,30 +488,30 @@ std::string FuzzyMultiDataLearnAlgorithm::runSecondLevel (const std::string ecLi
 *
 ****************************************************************************/
 std::string FuzzyMultiDataLearnAlgorithm::runThirdLevel (const std::string axiomListFilePath) {
-	// Считываем имена файлов во внтуреннюю перменную
+	// п║я┤п╦я┌я▀п╡п╟п╣п╪ п╦п╪п╣п╫п╟ я└п╟п╧п╩п╬п╡ п╡п╬ п╡п╫я┌я┐я─п╣п╫п╫я▌я▌ п©п╣я─п╪п╣п╫п╫я┐я▌
 	restoreBestAxiomFileNames (axiomListFilePath);
-	// Получение информации о ранге текущего процесса
+	// п÷п╬п╩я┐я┤п╣п╫п╦п╣ п╦п╫я└п╬я─п╪п╟я├п╦п╦ п╬ я─п╟п╫пЁп╣ я┌п╣п╨я┐я┴п╣пЁп╬ п©я─п╬я├п╣я│я│п╟
 	int rank;
 	MPI_Comm_rank(MPI_COMM_WORLD, &rank);
-	// ЭТАП 3. формирование системы аксиом из построенных аксиом
-	// Вывод на экран стадии процесса
+	// п╜п╒п░п÷ 3. я└п╬я─п╪п╦я─п╬п╡п╟п╫п╦п╣ я│п╦я│я┌п╣п╪я▀ п╟п╨я│п╦п╬п╪ п╦п╥ п©п╬я│я┌я─п╬п╣п╫п╫я▀я┘ п╟п╨я│п╦п╬п╪
+	// п▓я▀п╡п╬п╢ п╫п╟ я█п╨я─п╟п╫ я│я┌п╟п╢п╦п╦ п©я─п╬я├п╣я│я│п╟
 	if ((rank == 0) && (this->comments)) {
 		std::cout << "\n\tCreating of axiomSets from axioms has began. Third stage has began.\n";
 		std::cout.flush();
 	}
-	// Построение систем аксиом
+	// п÷п╬я│я┌я─п╬п╣п╫п╦п╣ я│п╦я│я┌п╣п╪ п╟п╨я│п╦п╬п╪
 	createAxiomSet ();
-	// Завершено построение системы аксиом
+	// п≈п╟п╡п╣я─я┬п╣п╫п╬ п©п╬я│я┌я─п╬п╣п╫п╦п╣ я│п╦я│я┌п╣п╪я▀ п╟п╨я│п╦п╬п╪
 	stage = 3;
 	if ((rank == 0) && (this->comments)) {
 		std::cout << "\n	Creating of AxiomSets is done. Third stage is over.\n";
 		std::cout.flush();
 	}
-	// Вывод на экран лучших значений целевой функции среди всех полученных результатов
+	// п▓я▀п╡п╬п╢ п╫п╟ я█п╨я─п╟п╫ п╩я┐я┤я┬п╦я┘ п╥п╫п╟я┤п╣п╫п╦п╧ я├п╣п╩п╣п╡п╬п╧ я└я┐п╫п╨я├п╦п╦ я│я─п╣п╢п╦ п╡я│п╣я┘ п©п╬п╩я┐я┤п╣п╫п╫я▀я┘ я─п╣п╥я┐п╩я▄я┌п╟я┌п╬п╡
 	if (rank == 0)
 		displayBestResult();
 
-	// На будущее - здесь можно будет сохранять имена лучших систем аксиом с из характеристиками в файл - и выдавать в качестве отчета
+	// п²п╟ п╠я┐п╢я┐я┴п╣п╣ - п╥п╢п╣я│я▄ п╪п╬п╤п╫п╬ п╠я┐п╢п╣я┌ я│п╬я┘я─п╟п╫я▐я┌я▄ п╦п╪п╣п╫п╟ п╩я┐я┤я┬п╦я┘ я│п╦я│я┌п╣п╪ п╟п╨я│п╦п╬п╪ я│ п╦п╥ я┘п╟я─п╟п╨я┌п╣я─п╦я│я┌п╦п╨п╟п╪п╦ п╡ я└п╟п╧п╩ - п╦ п╡я▀п╢п╟п╡п╟я┌я▄ п╡ п╨п╟я┤п╣я│я┌п╡п╣ п╬я┌я┤п╣я┌п╟
 	std::string toRet;
 	toRet.clear();
 
@@ -522,8 +522,8 @@ std::string FuzzyMultiDataLearnAlgorithm::runThirdLevel (const std::string axiom
 /****************************************************************************
 *					FuzzyMultiDataLearnAlgorithm::saveBestECFileNames
 *
-*	Description:	Функция реализует сохранение всех имен файлов с описаниями
-*					элементарных условий в файл.
+*	Description:	п╓я┐п╫п╨я├п╦я▐ я─п╣п╟п╩п╦п╥я┐п╣я┌ я│п╬я┘я─п╟п╫п╣п╫п╦п╣ п╡я│п╣я┘ п╦п╪п╣п╫ я└п╟п╧п╩п╬п╡ я│ п╬п©п╦я│п╟п╫п╦я▐п╪п╦
+*					я█п╩п╣п╪п╣п╫я┌п╟я─п╫я▀я┘ я┐я│п╩п╬п╡п╦п╧ п╡ я└п╟п╧п╩.
 *	Parameters:		void
 *	Returns:		0
 *	Throws:			-
@@ -552,8 +552,8 @@ std::string FuzzyMultiDataLearnAlgorithm::saveBestECFileNames (const int rank) c
 /****************************************************************************
 *					FuzzyMultiDataLearnAlgorithm::restoreBestECFileNames
 *
-*	Description:	Функция реализует считывание имен файлов с описаниями
-*					элементарных условий из файла.
+*	Description:	п╓я┐п╫п╨я├п╦я▐ я─п╣п╟п╩п╦п╥я┐п╣я┌ я│я┤п╦я┌я▀п╡п╟п╫п╦п╣ п╦п╪п╣п╫ я└п╟п╧п╩п╬п╡ я│ п╬п©п╦я│п╟п╫п╦я▐п╪п╦
+*					я█п╩п╣п╪п╣п╫я┌п╟я─п╫я▀я┘ я┐я│п╩п╬п╡п╦п╧ п╦п╥ я└п╟п╧п╩п╟.
 *	Parameters:		void
 *	Returns:		0
 *	Throws:			-
@@ -573,9 +573,9 @@ int FuzzyMultiDataLearnAlgorithm::restoreBestECFileNames (void) {
 /****************************************************************************
 *					FuzzyMultiDataLearnAlgorithm::restoreBestECFileNames
 *
-*	Description:	Функция реализует считывание имен файлов с описаниями
-*					элементарных условий из файла.
-*	Parameters:		fileName - имя файла, из которого читать названия файлов
+*	Description:	п╓я┐п╫п╨я├п╦я▐ я─п╣п╟п╩п╦п╥я┐п╣я┌ я│я┤п╦я┌я▀п╡п╟п╫п╦п╣ п╦п╪п╣п╫ я└п╟п╧п╩п╬п╡ я│ п╬п©п╦я│п╟п╫п╦я▐п╪п╦
+*					я█п╩п╣п╪п╣п╫я┌п╟я─п╫я▀я┘ я┐я│п╩п╬п╡п╦п╧ п╦п╥ я└п╟п╧п╩п╟.
+*	Parameters:		fileName - п╦п╪я▐ я└п╟п╧п╩п╟, п╦п╥ п╨п╬я┌п╬я─п╬пЁп╬ я┤п╦я┌п╟я┌я▄ п╫п╟п╥п╡п╟п╫п╦я▐ я└п╟п╧п╩п╬п╡
 *	Returns:		0
 *	Throws:			-
 *	Author:			dk
@@ -593,8 +593,8 @@ int FuzzyMultiDataLearnAlgorithm::restoreBestECFileNames (const std::string file
 /****************************************************************************
 *					FuzzyMultiDataLearnAlgorithm::saveBestAxiomFileNames
 *
-*	Description:	Функция реализует сохранение всех имен файлов с описаниями
-*					лучших аксиом в файл
+*	Description:	п╓я┐п╫п╨я├п╦я▐ я─п╣п╟п╩п╦п╥я┐п╣я┌ я│п╬я┘я─п╟п╫п╣п╫п╦п╣ п╡я│п╣я┘ п╦п╪п╣п╫ я└п╟п╧п╩п╬п╡ я│ п╬п©п╦я│п╟п╫п╦я▐п╪п╦
+*					п╩я┐я┤я┬п╦я┘ п╟п╨я│п╦п╬п╪ п╡ я└п╟п╧п╩
 *	Parameters:		void
 *	Returns:		0
 *	Throws:			-
@@ -616,8 +616,8 @@ std::string FuzzyMultiDataLearnAlgorithm::saveBestAxiomFileNames (void) const {
 /****************************************************************************
 *					FuzzyMultiDataLearnAlgorithm::restoreBestAxiomFileNames
 *
-*	Description:	Функция реализует считывание имен файлов с описаниями
-*					аксиом из файла.
+*	Description:	п╓я┐п╫п╨я├п╦я▐ я─п╣п╟п╩п╦п╥я┐п╣я┌ я│я┤п╦я┌я▀п╡п╟п╫п╦п╣ п╦п╪п╣п╫ я└п╟п╧п╩п╬п╡ я│ п╬п©п╦я│п╟п╫п╦я▐п╪п╦
+*					п╟п╨я│п╦п╬п╪ п╦п╥ я└п╟п╧п╩п╟.
 *	Parameters:		void
 *	Returns:		0
 *	Throws:			-
@@ -637,9 +637,9 @@ int FuzzyMultiDataLearnAlgorithm::restoreBestAxiomFileNames (void) {
 /****************************************************************************
 *					FuzzyMultiDataLearnAlgorithm::restoreBestAxiomFileNames
 *
-*	Description:	Функция реализует считывание имен файлов с описаниями
-*					аксиом из файла.
-*	Parameters:		fileName - имя файла, из которого читать названия файлов
+*	Description:	п╓я┐п╫п╨я├п╦я▐ я─п╣п╟п╩п╦п╥я┐п╣я┌ я│я┤п╦я┌я▀п╡п╟п╫п╦п╣ п╦п╪п╣п╫ я└п╟п╧п╩п╬п╡ я│ п╬п©п╦я│п╟п╫п╦я▐п╪п╦
+*					п╟п╨я│п╦п╬п╪ п╦п╥ я└п╟п╧п╩п╟.
+*	Parameters:		fileName - п╦п╪я▐ я└п╟п╧п╩п╟, п╦п╥ п╨п╬я┌п╬я─п╬пЁп╬ я┤п╦я┌п╟я┌я▄ п╫п╟п╥п╡п╟п╫п╦я▐ я└п╟п╧п╩п╬п╡
 *	Returns:		0
 *	Throws:			-
 *	Author:			dk
@@ -657,17 +657,17 @@ int FuzzyMultiDataLearnAlgorithm::restoreBestAxiomFileNames (const std::string f
 /****************************************************************************
 *					FuzzyMultiDataLearnAlgorithm::splitRange
 *
-*	Description:	Функция определяет границы разбиения области поиска для данного процесса
-*	Parameters:		rank - ранг текущего процесса
-*					size - общее число процессов, учавствующих в работе алгоритма
-*					rangeMin - ранг текущего процесса
-*					rangeMax - общее число процессов, учавствующих в работе алгоритма
-*					from - заполняемое значение, левая граница назначенного интервала для данного процесса
-*					upTo - заполняемое значение, правая граница назначенного интервала для данного процесса
-*					rankFrom - заполняемое значение, левая граница назначенного интервала для данного процесса
-*					rankUpTo - заполняемое значение, правая граница назначенного интервала для данного процесса
+*	Description:	п╓я┐п╫п╨я├п╦я▐ п╬п©я─п╣п╢п╣п╩я▐п╣я┌ пЁя─п╟п╫п╦я├я▀ я─п╟п╥п╠п╦п╣п╫п╦я▐ п╬п╠п╩п╟я│я┌п╦ п©п╬п╦я│п╨п╟ п╢п╩я▐ п╢п╟п╫п╫п╬пЁп╬ п©я─п╬я├п╣я│я│п╟
+*	Parameters:		rank - я─п╟п╫пЁ я┌п╣п╨я┐я┴п╣пЁп╬ п©я─п╬я├п╣я│я│п╟
+*					size - п╬п╠я┴п╣п╣ я┤п╦я│п╩п╬ п©я─п╬я├п╣я│я│п╬п╡, я┐я┤п╟п╡я│я┌п╡я┐я▌я┴п╦я┘ п╡ я─п╟п╠п╬я┌п╣ п╟п╩пЁп╬я─п╦я┌п╪п╟
+*					rangeMin - я─п╟п╫пЁ я┌п╣п╨я┐я┴п╣пЁп╬ п©я─п╬я├п╣я│я│п╟
+*					rangeMax - п╬п╠я┴п╣п╣ я┤п╦я│п╩п╬ п©я─п╬я├п╣я│я│п╬п╡, я┐я┤п╟п╡я│я┌п╡я┐я▌я┴п╦я┘ п╡ я─п╟п╠п╬я┌п╣ п╟п╩пЁп╬я─п╦я┌п╪п╟
+*					from - п╥п╟п©п╬п╩п╫я▐п╣п╪п╬п╣ п╥п╫п╟я┤п╣п╫п╦п╣, п╩п╣п╡п╟я▐ пЁя─п╟п╫п╦я├п╟ п╫п╟п╥п╫п╟я┤п╣п╫п╫п╬пЁп╬ п╦п╫я┌п╣я─п╡п╟п╩п╟ п╢п╩я▐ п╢п╟п╫п╫п╬пЁп╬ п©я─п╬я├п╣я│я│п╟
+*					upTo - п╥п╟п©п╬п╩п╫я▐п╣п╪п╬п╣ п╥п╫п╟я┤п╣п╫п╦п╣, п©я─п╟п╡п╟я▐ пЁя─п╟п╫п╦я├п╟ п╫п╟п╥п╫п╟я┤п╣п╫п╫п╬пЁп╬ п╦п╫я┌п╣я─п╡п╟п╩п╟ п╢п╩я▐ п╢п╟п╫п╫п╬пЁп╬ п©я─п╬я├п╣я│я│п╟
+*					rankFrom - п╥п╟п©п╬п╩п╫я▐п╣п╪п╬п╣ п╥п╫п╟я┤п╣п╫п╦п╣, п╩п╣п╡п╟я▐ пЁя─п╟п╫п╦я├п╟ п╫п╟п╥п╫п╟я┤п╣п╫п╫п╬пЁп╬ п╦п╫я┌п╣я─п╡п╟п╩п╟ п╢п╩я▐ п╢п╟п╫п╫п╬пЁп╬ п©я─п╬я├п╣я│я│п╟
+*					rankUpTo - п╥п╟п©п╬п╩п╫я▐п╣п╪п╬п╣ п╥п╫п╟я┤п╣п╫п╦п╣, п©я─п╟п╡п╟я▐ пЁя─п╟п╫п╦я├п╟ п╫п╟п╥п╫п╟я┤п╣п╫п╫п╬пЁп╬ п╦п╫я┌п╣я─п╡п╟п╩п╟ п╢п╩я▐ п╢п╟п╫п╫п╬пЁп╬ п©я─п╬я├п╣я│я│п╟
 *	Returns:		0
-*	Throws:			AxiomLibException - если входные параметры не согласованны
+*	Throws:			AxiomLibException - п╣я│п╩п╦ п╡я┘п╬п╢п╫я▀п╣ п©п╟я─п╟п╪п╣я┌я─я▀ п╫п╣ я│п╬пЁп╩п╟я│п╬п╡п╟п╫п╫я▀
 *	Author:			dk
 *	History:
 *
@@ -676,11 +676,11 @@ int FuzzyMultiDataLearnAlgorithm::splitRange (const int rank, const int size, co
 	int groupNum;
 	double classesPerGroup;
 	int numOfClasses;
-	// Число элементов в разбиваемой области
+	// п╖п╦я│п╩п╬ я█п╩п╣п╪п╣п╫я┌п╬п╡ п╡ я─п╟п╥п╠п╦п╡п╟п╣п╪п╬п╧ п╬п╠п╩п╟я│я┌п╦
 	numOfClasses = rangeMax - rangeMin;
 	if ((numOfClasses < 1) || (size < 1) || (rank < 0) || (rank >= size))
 		throw AxiomLibException("FuzzyMultiDataLearnAlgorithm::splitRange : incorrect input parameters.");
-	// Число групп, на которое разбивается область
+	// п╖п╦я│п╩п╬ пЁя─я┐п©п©, п╫п╟ п╨п╬я┌п╬я─п╬п╣ я─п╟п╥п╠п╦п╡п╟п╣я┌я│я▐ п╬п╠п╩п╟я│я┌я▄
 	groupNum = min (size, numOfClasses);
 	std::vector <int> groupDiv, rankDiv;
 	rankDiv.resize ((int) groupNum + 1, 0);
@@ -706,8 +706,8 @@ int FuzzyMultiDataLearnAlgorithm::splitRange (const int rank, const int size, co
 /****************************************************************************
 *					FuzzyMultiDataLearnAlgorithm::displayBestResult
 *
-*	Description:	Функция выводит на экран значения целевой функции для 
-*					лучших систем аксиом, хранящихся в локальной переменной класса.
+*	Description:	п╓я┐п╫п╨я├п╦я▐ п╡я▀п╡п╬п╢п╦я┌ п╫п╟ я█п╨я─п╟п╫ п╥п╫п╟я┤п╣п╫п╦я▐ я├п╣п╩п╣п╡п╬п╧ я└я┐п╫п╨я├п╦п╦ п╢п╩я▐ 
+*					п╩я┐я┤я┬п╦я┘ я│п╦я│я┌п╣п╪ п╟п╨я│п╦п╬п╪, я┘я─п╟п╫я▐я┴п╦я┘я│я▐ п╡ п╩п╬п╨п╟п╩я▄п╫п╬п╧ п©п╣я─п╣п╪п╣п╫п╫п╬п╧ п╨п╩п╟я│я│п╟.
 *	Parameters:		-
 *	Returns:		0
 *	Throws:			-
@@ -716,7 +716,7 @@ int FuzzyMultiDataLearnAlgorithm::splitRange (const int rank, const int size, co
 *
 ****************************************************************************/
 int FuzzyMultiDataLearnAlgorithm::displayBestResult(void) const {
-	// Сортируем вектор маски - для вывода на экран отсортированных значений
+	// п║п╬я─я┌п╦я─я┐п╣п╪ п╡п╣п╨я┌п╬я─ п╪п╟я│п╨п╦ - п╢п╩я▐ п╡я▀п╡п╬п╢п╟ п╫п╟ я█п╨я─п╟п╫ п╬я┌я│п╬я─я┌п╦я─п╬п╡п╟п╫п╫я▀я┘ п╥п╫п╟я┤п╣п╫п╦п╧
 	std::vector <unsigned int> mask;
 	mask.resize(bestAxiomSetsNamesPlus.size()); 
 	for (unsigned int i = 0; i < mask.size(); i++) 
@@ -731,7 +731,7 @@ int FuzzyMultiDataLearnAlgorithm::displayBestResult(void) const {
 			}
 		}
 	}
-	// При выводе на экран - назавния систем аксиом будем выводить такие же, какие они были при сохранении в файлы
+	// п÷я─п╦ п╡я▀п╡п╬п╢п╣ п╫п╟ я█п╨я─п╟п╫ - п╫п╟п╥п╟п╡п╫п╦я▐ я│п╦я│я┌п╣п╪ п╟п╨я│п╦п╬п╪ п╠я┐п╢п╣п╪ п╡я▀п╡п╬п╢п╦я┌я▄ я┌п╟п╨п╦п╣ п╤п╣, п╨п╟п╨п╦п╣ п╬п╫п╦ п╠я▀п╩п╦ п©я─п╦ я│п╬я┘я─п╟п╫п╣п╫п╦п╦ п╡ я└п╟п╧п╩я▀
 	std::cout << "\n\tBest results are:";
 	for (unsigned int asNum = 0; asNum < mask.size(); asNum++) {
 		AxiomExprSetPlus axiomSet;

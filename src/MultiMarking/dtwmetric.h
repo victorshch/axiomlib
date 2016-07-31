@@ -1,8 +1,8 @@
 /****************************************************************************
 *			DTWMetric.h
 *
-*	Description:	DTWMetric - класс-родитель всех метрик. Содержит
-*                       методы - инициализация метрики, вычисление DTW.
+*	Description:	DTWMetric - п╨п╩п╟я│я│-я─п╬п╢п╦я┌п╣п╩я▄ п╡я│п╣я┘ п╪п╣я┌я─п╦п╨. п║п╬п╢п╣я─п╤п╦я┌
+*                       п╪п╣я┌п╬п╢я▀ - п╦п╫п╦я├п╦п╟п╩п╦п╥п╟я├п╦я▐ п╪п╣я┌я─п╦п╨п╦, п╡я▀я┤п╦я│п╩п╣п╫п╦п╣ DTW.
 *
 *	Author:		armkor
 *	History:
@@ -35,14 +35,14 @@ class DTWMetric {
     //
     ~DTWMetric() { }
 
-   // Инициализация метрики
+   // п≤п╫п╦я├п╦п╟п╩п╦п╥п╟я├п╦я▐ п╪п╣я┌я─п╦п╨п╦
    static DTWMetric* getMetric(std::string name);
    //
    virtual double compute(const std::vector<bool>& v1, const std::vector<bool>& v2)=0;
 
    virtual void computeDTWForMetric (const MultiMark& t, int i,int Nmin,int Nmax, const MultiMark& ref, std::vector<double>& result);
 
-   // Вычисление DTW
+   // п▓я▀я┤п╦я│п╩п╣п╫п╦п╣ DTW
    static void computeDTW (DTWMetric* m, const MultiMark& t, int i,int Nmin,int Nmax, const MultiMark& ref, std::vector<double>& result);
 
 };// end of class

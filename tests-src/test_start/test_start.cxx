@@ -14,11 +14,11 @@ int main (int argv, char** argc) {
 		srand(time(0));
 		if (comments)
 			std::cout << "\n" << "AxiomLib Start_test .\nReading config-file." << "\n";
-		// ÓÏÚÄÁÅÍ ÓÔÒÁÔÅÇÉÀ
+		// ÑĞ¾Ğ·Ğ´Ğ°ĞµĞ¼ ÑÑ‚Ñ€Ğ°Ñ‚ĞµĞ³Ğ¸Ñ
 		StartStrategy ss;
-		// ÉÎÉÃÉÁÌÉÚÉÒÅÍ ÅÅ
+		// Ğ¸Ğ½Ğ¸Ñ†Ğ¸Ğ°Ğ»Ğ¸Ğ·Ğ¸Ñ€ĞµĞ¼ ĞµĞµ
 		ss.init();
-		// ÚÁĞÕÓËÁÅÍ
+		// Ğ·Ğ°Ğ¿ÑƒÑĞºĞ°ĞµĞ¼
 		ss.start();
 	}
 	catch ( AxiomLibException testex ) {

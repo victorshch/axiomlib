@@ -46,19 +46,19 @@ MainWindowContent::MainWindowContent(QWidget *parent, const QStringList &argumen
 	
 	ui.tabWidget_stages->addTab(
 			stage0 = new Stage0(this, controller),
-			encode("Параметры 1-го этапа")
+			encode("п÷п╟я─п╟п╪п╣я┌я─я▀ 1-пЁп╬ я█я┌п╟п©п╟")
 			);
 	ui.tabWidget_stages->addTab(
 			stage1 = new Stage1(this, controller),
-			encode("Результаты 1-го этапа")
+			encode("п═п╣п╥я┐п╩я▄я┌п╟я┌я▀ 1-пЁп╬ я█я┌п╟п©п╟")
 			);
 	ui.tabWidget_stages->addTab(
 			stage2 = new Stage2(this, controller),
-			encode("Результаты 2-го этапа")
+			encode("п═п╣п╥я┐п╩я▄я┌п╟я┌я▀ 2-пЁп╬ я█я┌п╟п©п╟")
 			);
 	ui.tabWidget_stages->addTab(
 			stage3 = new Stage3(this, controller),
-			encode("Результаты 3-го этапа")
+			encode("п═п╣п╥я┐п╩я▄я┌п╟я┌я▀ 3-пЁп╬ я█я┌п╟п©п╟")
 			);
 	
 	connect(stage0, SIGNAL(stageCalculated(int)), this, SLOT(initStage(int)));

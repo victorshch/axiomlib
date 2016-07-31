@@ -1,6 +1,6 @@
 /****************************************************************************
 *
-*			Функции класса RecognizerFactory
+*			п╓я┐п╫п╨я├п╦п╦ п╨п╩п╟я│я│п╟ RecognizerFactory
 *
 ****************************************************************************/
 
@@ -13,10 +13,10 @@ using namespace AxiomLib;
 /****************************************************************************
 *			RecognizerFactory::create
 *
-*	Description:	Создает класс распознавания
-*	Parameters:	name - имя класса, экземпляр которого создаем
-*	Returns:		Recognizer* - указатель на созданный класс
-*	Throws:		AxiomLibException - если класса нет
+*	Description:	п║п╬п╥п╢п╟п╣я┌ п╨п╩п╟я│я│ я─п╟я│п©п╬п╥п╫п╟п╡п╟п╫п╦я▐
+*	Parameters:	name - п╦п╪я▐ п╨п╩п╟я│я│п╟, я█п╨п╥п╣п╪п©п╩я▐я─ п╨п╬я┌п╬я─п╬пЁп╬ я│п╬п╥п╢п╟п╣п╪
+*	Returns:		Recognizer* - я┐п╨п╟п╥п╟я┌п╣п╩я▄ п╫п╟ я│п╬п╥п╢п╟п╫п╫я▀п╧ п╨п╩п╟я│я│
+*	Throws:		AxiomLibException - п╣я│п╩п╦ п╨п╩п╟я│я│п╟ п╫п╣я┌
 *	Author:		dk
 *	History:
 *
@@ -42,7 +42,7 @@ Recognizer* RecognizerFactory::create (const std::string &name) {
     toReturn = new RecognizerMultiMarkup;
     return toReturn;
   }
-  // преобразование в строчные буквы
+  // п©я─п╣п╬п╠я─п╟п╥п╬п╡п╟п╫п╦п╣ п╡ я│я┌я─п╬я┤п╫я▀п╣ п╠я┐п╨п╡я▀
   std::string nameCopy = boost::algorithm::to_lower_copy(name);
   if(nameCopy == "neuralpercsingle") {
 	RecognizerPercSingle* toReturn;

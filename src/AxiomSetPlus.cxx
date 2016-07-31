@@ -1,6 +1,6 @@
 /****************************************************************************
 *
-*				æÕÎËÃÉÉ ÓÔÒÕËÔÕÒÙ AxiomSetPlus
+*				Ð¤ÑƒÐ½ÐºÑ†Ð¸Ð¸ ÑÑ‚Ñ€ÑƒÐºÑ‚ÑƒÑ€Ñ‹ AxiomSetPlus
 *
 ****************************************************************************/
 
@@ -10,7 +10,7 @@
 
 using namespace AxiomLib;
 
-// ëÏÎÓÔÒÕËÔÏÒ ÓÔÒÕËÔÕÒÙ
+// ÐšÐ¾Ð½ÑÑ‚Ñ€ÑƒÐºÑ‚Ð¾Ñ€ ÑÑ‚Ñ€ÑƒÐºÑ‚ÑƒÑ€Ñ‹
 AxiomSetPlus::AxiomSetPlus (void) {
 	axiomSet = NULL;
 	goal = -1.0;
@@ -27,7 +27,7 @@ AxiomSetPlus::AxiomSetPlus (void) {
 	ecTransProb = 0.0;
 }
 
-// äÅÓÔÒÕËÔÏÒ ÓÔÒÕËÔÕÒÙ
+// Ð”ÐµÑÑ‚Ñ€ÑƒÐºÑ‚Ð¾Ñ€ ÑÑ‚Ñ€ÑƒÐºÑ‚ÑƒÑ€Ñ‹
 AxiomSetPlus::~AxiomSetPlus (void) {
 	if (axiomSet != NULL) {
 		axiomSet->clear ();
@@ -36,7 +36,7 @@ AxiomSetPlus::~AxiomSetPlus (void) {
 	}
 }
 
-// ïÐÅÒÁÔÏÒ ÐÒÉÓ×ÁÉ×ÁÎÉÑ ÓÉÓÔÅÍÙ ÁËÓÉÏÍ
+// ÐžÐ¿ÐµÑ€Ð°Ñ‚Ð¾Ñ€ Ð¿Ñ€Ð¸ÑÐ²Ð°Ð¸Ð²Ð°Ð½Ð¸Ñ ÑÐ¸ÑÑ‚ÐµÐ¼Ñ‹ Ð°ÐºÑÐ¸Ð¾Ð¼
 AxiomSetPlus & AxiomSetPlus::operator= (const AxiomSetPlus &second) {
 	//Logger::getInstance()->writeDebug("Entering AxiomSetPlus::operator= ");
 	if(this == &second) {
@@ -58,13 +58,13 @@ AxiomSetPlus & AxiomSetPlus::operator= (const AxiomSetPlus &second) {
 	nFirst = second.nFirst;
 	nSecond = second.nSecond;
 	axiomProfit = second.axiomProfit;
-	// ïÔÎÏÛÅÎÉÅ ÚÎÁÞÅÎÉÊ ÃÅÌÅ×ÏÊ ÆÕÎËÃÉÉ
+	// ÐžÑ‚Ð½Ð¾ÑˆÐµÐ½Ð¸Ðµ Ð·Ð½Ð°Ñ‡ÐµÐ½Ð¸Ð¹ Ñ†ÐµÐ»ÐµÐ²Ð¾Ð¹ Ñ„ÑƒÐ½ÐºÑ†Ð¸Ð¸
 	goalRatio = second.goalRatio;
-	// ðÁÒÁÍÅÔÒÙ ÐÒÏÃÅÄÕÒÙ ÓËÒÅÝÉ×ÁÎÉÑ
+	// ÐŸÐ°Ñ€Ð°Ð¼ÐµÑ‚Ñ€Ñ‹ Ð¿Ñ€Ð¾Ñ†ÐµÐ´ÑƒÑ€Ñ‹ ÑÐºÑ€ÐµÑ‰Ð¸Ð²Ð°Ð½Ð¸Ñ
 	asCrossProb = second.asCrossProb;
 	axCrossProb = second.asCrossProb;
 	ecCrossProb = second.ecCrossProb;
-	// ðÁÒÁÍÅÔÒÙ ÐÒÏÃÅÄÕÒÙ ÍÕÔÁÃÉÉ
+	// ÐŸÐ°Ñ€Ð°Ð¼ÐµÑ‚Ñ€Ñ‹ Ð¿Ñ€Ð¾Ñ†ÐµÐ´ÑƒÑ€Ñ‹ Ð¼ÑƒÑ‚Ð°Ñ†Ð¸Ð¸
 	prTransProb = second.prTransProb;
 	asTransProb = second.asTransProb;
 	axTransProb = second.axTransProb;
@@ -73,7 +73,7 @@ AxiomSetPlus & AxiomSetPlus::operator= (const AxiomSetPlus &second) {
 	return *this;
 }
 
-// æÕÎËÃÉÑ ÏÞÉÓÔËÉ ÓÔÁÔÉÓÔÉËÉ ÐÏ ÓÉÓÔÅÍÅ ÁËÓÉÏÍ
+// Ð¤ÑƒÐ½ÐºÑ†Ð¸Ñ Ð¾Ñ‡Ð¸ÑÑ‚ÐºÐ¸ ÑÑ‚Ð°Ñ‚Ð¸ÑÑ‚Ð¸ÐºÐ¸ Ð¿Ð¾ ÑÐ¸ÑÑ‚ÐµÐ¼Ðµ Ð°ÐºÑÐ¸Ð¾Ð¼
 int AxiomSetPlus::clearStat (void) {
 	goal = -1.0;
 	nFirst = -1;
@@ -98,7 +98,7 @@ AxiomSetPlus::AxiomSetPlus(const AxiomSetPlus &second)
 	//Logger::getInstance()->writeDebug("Finished copying AxiomSetPlus");
 }
 
-// æÕÎËÃÉÑ ÏÞÉÓÔËÉ ÓÏÄÅÒÖÉÍÏÇÏ ÏÂßÅËÔÁ ÓÔÒÕËÔÕÒÙ
+// Ð¤ÑƒÐ½ÐºÑ†Ð¸Ñ Ð¾Ñ‡Ð¸ÑÑ‚ÐºÐ¸ ÑÐ¾Ð´ÐµÑ€Ð¶Ð¸Ð¼Ð¾Ð³Ð¾ Ð¾Ð±ÑŠÐµÐºÑ‚Ð° ÑÑ‚Ñ€ÑƒÐºÑ‚ÑƒÑ€Ñ‹
 int AxiomSetPlus::clear (void) {
 	if (axiomSet != NULL) {
 		axiomSet->clear();

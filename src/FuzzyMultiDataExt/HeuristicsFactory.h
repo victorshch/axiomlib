@@ -1,7 +1,7 @@
 /****************************************************************************
 *				HeuristicsFactory.h
 *
-*	Description: Фабрика эвристик
+*	Description: п╓п╟п╠я─п╦п╨п╟ я█п╡я─п╦я│я┌п╦п╨
 *	Author:		wictor
 *	History:	
 *
@@ -32,7 +32,7 @@ private:
 	
 	typedef std::map<std::string, Heuristics*> HeuristicsMap;
 	
-	// Прототипы эвристик
+	// п÷я─п╬я┌п╬я┌п╦п©я▀ я█п╡я─п╦я│я┌п╦п╨
 	HeuristicsMap m_prototypes;
 	
 	void addPrototype(Heuristics* heuristics);

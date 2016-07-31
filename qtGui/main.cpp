@@ -3,8 +3,8 @@
 #include <QMessageBox>
 #include "QtGui.h"
 
-// Наследник класса QApplication, в котором реализована поимка
-// и отображение исключений при обработке событий
+// п²п╟я│п╩п╣п╢п╫п╦п╨ п╨п╩п╟я│я│п╟ QApplication, п╡ п╨п╬я┌п╬я─п╬п╪ я─п╣п╟п╩п╦п╥п╬п╡п╟п╫п╟ п©п╬п╦п╪п╨п╟
+// п╦ п╬я┌п╬п╠я─п╟п╤п╣п╫п╦п╣ п╦я│п╨п╩я▌я┤п╣п╫п╦п╧ п©я─п╦ п╬п╠я─п╟п╠п╬я┌п╨п╣ я│п╬п╠я▀я┌п╦п╧
 class AxiomLibGuiApplication : public QApplication {
 public:
 	AxiomLibGuiApplication(int &c, char **v): QApplication(c, v) {}

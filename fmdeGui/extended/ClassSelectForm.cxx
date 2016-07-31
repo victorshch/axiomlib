@@ -14,7 +14,7 @@ ClassSelectForm::ClassSelectForm(const std::vector<std::string> &classNames, con
 {	
     ui->setupUi(this);
 	
-	ui->comboBox_abnormalType->addItem(encode("˜”≈"), QVariant::fromValue(-1));
+	ui->comboBox_abnormalType->addItem(encode("–í—Å–µ"), QVariant::fromValue(-1));
 	for(int i = 0; i < classNames.size(); ++i) {
 		ui->comboBox_abnormalType->addItem(QString::fromStdString(classNames[i]), QVariant::fromValue(i));
 	}

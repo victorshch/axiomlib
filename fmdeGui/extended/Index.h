@@ -27,7 +27,7 @@
 
 const int maxIndexSize = 4;
 
-// Индекс, идентифицирующий ЭУ или аксиому в наборе
+// п≤п╫п╢п╣п╨я│, п╦п╢п╣п╫я┌п╦я└п╦я├п╦я─я┐я▌я┴п╦п╧ п╜пё п╦п╩п╦ п╟п╨я│п╦п╬п╪я┐ п╡ п╫п╟п╠п╬я─п╣
 typedef boost::array<int, maxIndexSize> Index;
 
 Q_DECLARE_METATYPE(Index);

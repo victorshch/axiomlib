@@ -63,7 +63,7 @@ void ParamsForm::setStrValue(const std::string &paramName, const std::string &ne
 	QVariant newValue;
 	
 	if(newValueStr.empty()) {
-		// Если строка пустая, ставим по дефолту
+		// п∙я│п╩п╦ я│я┌я─п╬п╨п╟ п©я┐я│я┌п╟я▐, я│я┌п╟п╡п╦п╪ п©п╬ п╢п╣я└п╬п╩я┌я┐
 		newValue = it.value().second.value;
 	} else {	
 		newValue = QString::fromStdString(newValueStr);

@@ -55,24 +55,24 @@ int FuzzyMultiDataExtAlgorithm::setComments(const bool newVal) {
 }
 
 int FuzzyMultiDataExtAlgorithm::initFromEnv(const Environment &env) {
-	// Инициализируем dataSet
+	// п≤п╫п╦я├п╦п╟п╩п╦п╥п╦я─я┐п╣п╪ dataSet
 	std::string datasetDir, datasetName;
 	if (env.getStringParamValue(datasetDir, "BaseDataSetDir") < 0)
 		throw AxiomLibException("FuzzyMultiDataExtAlgorithm::setParamsFromEnv : data set directory is undefined.");
 	if (env.getStringParamValue(datasetName, "DataSet") < 0)
 		throw AxiomLibException("FuzzyMultiDataExtAlgorithm::setParamsFromEnv : data set is undefined.");
-	// считываем необходимые для данного класса параметры о наборе данных
+	// я│я┤п╦я┌я▀п╡п╟п╣п╪ п╫п╣п╬п╠я┘п╬п╢п╦п╪я▀п╣ п╢п╩я▐ п╢п╟п╫п╫п╬пЁп╬ п╨п╩п╟я│я│п╟ п©п╟я─п╟п╪п╣я┌я─я▀ п╬ п╫п╟п╠п╬я─п╣ п╢п╟п╫п╫я▀я┘
 	EnvDataSet envDataSet;
 	envDataSet.readConfigFile (datasetDir, datasetName);
-	// установка корректного обозначения NullStr - обозначение остутсвия в данной точке ряда какого либо нештатного поведения
+	// я┐я│я┌п╟п╫п╬п╡п╨п╟ п╨п╬я─я─п╣п╨я┌п╫п╬пЁп╬ п╬п╠п╬п╥п╫п╟я┤п╣п╫п╦я▐ NullStr - п╬п╠п╬п╥п╫п╟я┤п╣п╫п╦п╣ п╬я│я┌я┐я┌я│п╡п╦я▐ п╡ п╢п╟п╫п╫п╬п╧ я┌п╬я┤п╨п╣ я─я▐п╢п╟ п╨п╟п╨п╬пЁп╬ п╩п╦п╠п╬ п╫п╣я┬я┌п╟я┌п╫п╬пЁп╬ п©п╬п╡п╣п╢п╣п╫п╦я▐
 	fuzzyDataSet.setNullStr (envDataSet);
 	fuzzyDataSet.setNormalStr (envDataSet);
-	// собственно считываем набор данных - заводим его во внутреннее представление
+	// я│п╬п╠я│я┌п╡п╣п╫п╫п╬ я│я┤п╦я┌я▀п╡п╟п╣п╪ п╫п╟п╠п╬я─ п╢п╟п╫п╫я▀я┘ - п╥п╟п╡п╬п╢п╦п╪ п╣пЁп╬ п╡п╬ п╡п╫я┐я┌я─п╣п╫п╫п╣п╣ п©я─п╣п╢я│я┌п╟п╡п╩п╣п╫п╦п╣
 	fuzzyDataSet.readDataSet(datasetDir, datasetName);
-	// восстанавливаем в данном классе вектор индексов параметров в каноническом представленнии по которым вести поиск нештатых ситуаций
+	// п╡п╬я│я│я┌п╟п╫п╟п╡п╩п╦п╡п╟п╣п╪ п╡ п╢п╟п╫п╫п╬п╪ п╨п╩п╟я│я│п╣ п╡п╣п╨я┌п╬я─ п╦п╫п╢п╣п╨я│п╬п╡ п©п╟я─п╟п╪п╣я┌я─п╬п╡ п╡ п╨п╟п╫п╬п╫п╦я┤п╣я│п╨п╬п╪ п©я─п╣п╢я│я┌п╟п╡п╩п╣п╫п╫п╦п╦ п©п╬ п╨п╬я┌п╬я─я▀п╪ п╡п╣я│я┌п╦ п©п╬п╦я│п╨ п╫п╣я┬я┌п╟я┌я▀я┘ я│п╦я┌я┐п╟я├п╦п╧
 	fuzzyDataSet.getParamNums(dataSetParams, env, envDataSet);
 
-	// Определяем базовую директорию с наборами аксиом
+	// п·п©я─п╣п╢п╣п╩я▐п╣п╪ п╠п╟п╥п╬п╡я┐я▌ п╢п╦я─п╣п╨я┌п╬я─п╦я▌ я│ п╫п╟п╠п╬я─п╟п╪п╦ п╟п╨я│п╦п╬п╪
 	std::string curAxiomName;
 	if (env.getStringParamValue(axiomBaseDir, "AxiomBaseDir") < 0)
 		throw AxiomLibException("FuzzyMultiDataExtAlgorithm::setParamsFromEnv : popPreset > 0 but axiom base dir is not set.");
@@ -81,20 +81,20 @@ int FuzzyMultiDataExtAlgorithm::initFromEnv(const Environment &env) {
 	if (env.getStringParamValue(curAxiomName, "AxiomListFileName") >= 0) 
 		fileNameAxiomList.assign (curAxiomName);
 
-	// Сохранение файлов с описанием элементарных условий во внутрнеей переменной для последующего своевременного включения этого набора в рассмотрение
+	// п║п╬я┘я─п╟п╫п╣п╫п╦п╣ я└п╟п╧п╩п╬п╡ я│ п╬п©п╦я│п╟п╫п╦п╣п╪ я█п╩п╣п╪п╣п╫я┌п╟я─п╫я▀я┘ я┐я│п╩п╬п╡п╦п╧ п╡п╬ п╡п╫я┐я┌я─п╫п╣п╣п╧ п©п╣я─п╣п╪п╣п╫п╫п╬п╧ п╢п╩я▐ п©п╬я│п╩п╣п╢я┐я▌я┴п╣пЁп╬ я│п╡п╬п╣п╡я─п╣п╪п╣п╫п╫п╬пЁп╬ п╡п╨п╩я▌я┤п╣п╫п╦я▐ я█я┌п╬пЁп╬ п╫п╟п╠п╬я─п╟ п╡ я─п╟я│я│п╪п╬я┌я─п╣п╫п╦п╣
 	env.getStringSetParamValue(predefinedECFileName, "ECFileName");
 
-	// Сохранение файлов с описанием аксиом во внутрнеей переменной для последующего своевременного включения этого набора в рассмотрение
+	// п║п╬я┘я─п╟п╫п╣п╫п╦п╣ я└п╟п╧п╩п╬п╡ я│ п╬п©п╦я│п╟п╫п╦п╣п╪ п╟п╨я│п╦п╬п╪ п╡п╬ п╡п╫я┐я┌я─п╫п╣п╣п╧ п©п╣я─п╣п╪п╣п╫п╫п╬п╧ п╢п╩я▐ п©п╬я│п╩п╣п╢я┐я▌я┴п╣пЁп╬ я│п╡п╬п╣п╡я─п╣п╪п╣п╫п╫п╬пЁп╬ п╡п╨п╩я▌я┤п╣п╫п╦я▐ я█я┌п╬пЁп╬ п╫п╟п╠п╬я─п╟ п╡ я─п╟я│я│п╪п╬я┌я─п╣п╫п╦п╣
 	env.getStringSetParamValue(predefinedAxiomsFileName, "AxiomFileName");
 
-	// Параметры, по которым сохранять лучщие решения
+	// п÷п╟я─п╟п╪п╣я┌я─я▀, п©п╬ п╨п╬я┌п╬я─я▀п╪ я│п╬я┘я─п╟п╫я▐я┌я▄ п╩я┐я┤я┴п╦п╣ я─п╣я┬п╣п╫п╦я▐
 	if (env.getStringParamValue(axiomSetBaseDir, "AxiomSetBaseDir") < 0)
 		throw AxiomLibException("FuzzyMultiDataExtAlgorithm::setParamsFromEnv : axiomSetBaseDir directory is undefined.");
 	if (env.getStringParamValue(axiomSetName, "AxiomSetNameTemplate") < 0)
 		throw AxiomLibException("FuzzyMultiDataExtAlgorithm::setParamsFromEnv : axiomName to save is undefined.");
 
 	if (env.getBoolParamValue(mOneVsAllMode, "oneVsAllMode") < 0) {
-		// По умолчанию режим "один против всех" отключен
+		// п÷п╬ я┐п╪п╬п╩я┤п╟п╫п╦я▌ я─п╣п╤п╦п╪ "п╬п╢п╦п╫ п©я─п╬я┌п╦п╡ п╡я│п╣я┘" п╬я┌п╨п╩я▌я┤п╣п╫
 		mOneVsAllMode = false;
 	}
 
@@ -135,21 +135,21 @@ int FuzzyMultiDataExtAlgorithm::initFromEnv(const Environment &env) {
 }
 
 int FuzzyMultiDataExtAlgorithm::initFromEnvRecognitionOnly(const Environment &env) {
-	// Инициализируем dataSet
+	// п≤п╫п╦я├п╦п╟п╩п╦п╥п╦я─я┐п╣п╪ dataSet
 	std::string datasetDir, datasetName;
 	if (env.getStringParamValue(datasetDir, "BaseDataSetDir") < 0)
 		throw AxiomLibException("FuzzyMultiDataExtAlgorithm::setParamsFromEnv : data set directory is undefined.");
 	if (env.getStringParamValue(datasetName, "DataSet") < 0)
 		throw AxiomLibException("FuzzyMultiDataExtAlgorithm::setParamsFromEnv : data set is undefined.");
-	// считываем необходимые для данного класса параметры о наборе данных
+	// я│я┤п╦я┌я▀п╡п╟п╣п╪ п╫п╣п╬п╠я┘п╬п╢п╦п╪я▀п╣ п╢п╩я▐ п╢п╟п╫п╫п╬пЁп╬ п╨п╩п╟я│я│п╟ п©п╟я─п╟п╪п╣я┌я─я▀ п╬ п╫п╟п╠п╬я─п╣ п╢п╟п╫п╫я▀я┘
 	EnvDataSet envDataSet;
 	envDataSet.readConfigFile (datasetDir, datasetName);
-	// установка корректного обозначения NullStr - обозначение остутсвия в данной точке ряда какого либо нештатного поведения
+	// я┐я│я┌п╟п╫п╬п╡п╨п╟ п╨п╬я─я─п╣п╨я┌п╫п╬пЁп╬ п╬п╠п╬п╥п╫п╟я┤п╣п╫п╦я▐ NullStr - п╬п╠п╬п╥п╫п╟я┤п╣п╫п╦п╣ п╬я│я┌я┐я┌я│п╡п╦я▐ п╡ п╢п╟п╫п╫п╬п╧ я┌п╬я┤п╨п╣ я─я▐п╢п╟ п╨п╟п╨п╬пЁп╬ п╩п╦п╠п╬ п╫п╣я┬я┌п╟я┌п╫п╬пЁп╬ п©п╬п╡п╣п╢п╣п╫п╦я▐
 	fuzzyDataSet.setNullStr (envDataSet);
 	fuzzyDataSet.setNormalStr (envDataSet);
-	// собственно считываем набор данных - заводим его во внутреннее представление
+	// я│п╬п╠я│я┌п╡п╣п╫п╫п╬ я│я┤п╦я┌я▀п╡п╟п╣п╪ п╫п╟п╠п╬я─ п╢п╟п╫п╫я▀я┘ - п╥п╟п╡п╬п╢п╦п╪ п╣пЁп╬ п╡п╬ п╡п╫я┐я┌я─п╣п╫п╫п╣п╣ п©я─п╣п╢я│я┌п╟п╡п╩п╣п╫п╦п╣
 	fuzzyDataSet.readDataSet(datasetDir, datasetName);
-	// восстанавливаем в данном классе вектор индексов параметров в каноническом представленнии по которым вести поиск нештатых ситуаций
+	// п╡п╬я│я│я┌п╟п╫п╟п╡п╩п╦п╡п╟п╣п╪ п╡ п╢п╟п╫п╫п╬п╪ п╨п╩п╟я│я│п╣ п╡п╣п╨я┌п╬я─ п╦п╫п╢п╣п╨я│п╬п╡ п©п╟я─п╟п╪п╣я┌я─п╬п╡ п╡ п╨п╟п╫п╬п╫п╦я┤п╣я│п╨п╬п╪ п©я─п╣п╢я│я┌п╟п╡п╩п╣п╫п╫п╦п╦ п©п╬ п╨п╬я┌п╬я─я▀п╪ п╡п╣я│я┌п╦ п©п╬п╦я│п╨ п╫п╣я┬я┌п╟я┌я▀я┘ я│п╦я┌я┐п╟я├п╦п╧
 	fuzzyDataSet.getParamNums(dataSetParams, env, envDataSet);
 
 	std::string asStageName;
@@ -160,7 +160,7 @@ int FuzzyMultiDataExtAlgorithm::initFromEnvRecognitionOnly(const Environment &en
 		throw AxiomLibException("FuzzyMultiDataExtAlgorithm::setParamsFromEnv : invalid name of axiom set stage : '" + asStageName + "'");
 	}
 
-	// Параметры, по которым сохранять лучщие решения
+	// п÷п╟я─п╟п╪п╣я┌я─я▀, п©п╬ п╨п╬я┌п╬я─я▀п╪ я│п╬я┘я─п╟п╫я▐я┌я▄ п╩я┐я┤я┴п╦п╣ я─п╣я┬п╣п╫п╦я▐
 	if (env.getStringParamValue(axiomSetBaseDir, "AxiomSetBaseDir") < 0)
 	{}
 //		throw AxiomLibException("FuzzyMultiDataExtAlgorithm::setParamsFromEnv : axiomSetBaseDir directory is undefined.");

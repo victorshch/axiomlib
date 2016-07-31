@@ -1,7 +1,7 @@
 /****************************************************************************
 *				Common
 *
-*	Description: Функции, используемые в других классах в данной папке
+*	Description: п╓я┐п╫п╨я├п╦п╦, п╦я│п©п╬п╩я▄п╥я┐п╣п╪я▀п╣ п╡ п╢я─я┐пЁп╦я┘ п╨п╩п╟я│я│п╟я┘ п╡ п╢п╟п╫п╫п╬п╧ п©п╟п©п╨п╣
 *	Author:		wictor
 *	History:	
 *
@@ -51,8 +51,8 @@ private:
 //	}
 };
 
-// своя версия std::transform для того, чтобы гарантировать порядок обработки
-// последовательности (в стандарте C++ порядок не специфицирован)
+// я│п╡п╬я▐ п╡п╣я─я│п╦я▐ std::transform п╢п╩я▐ я┌п╬пЁп╬, я┤я┌п╬п╠я▀ пЁп╟я─п╟п╫я┌п╦я─п╬п╡п╟я┌я▄ п©п╬я─я▐п╢п╬п╨ п╬п╠я─п╟п╠п╬я┌п╨п╦
+// п©п╬я│п╩п╣п╢п╬п╡п╟я┌п╣п╩я▄п╫п╬я│я┌п╦ (п╡ я│я┌п╟п╫п╢п╟я─я┌п╣ C++ п©п╬я─я▐п╢п╬п╨ п╫п╣ я│п©п╣я├п╦я└п╦я├п╦я─п╬п╡п╟п╫)
 template <class InputIterator, class OutputIterator, class Transformator>
 OutputIterator relaxed_transform(InputIterator first, InputIterator last,
                          OutputIterator result, Transformator trans) {
@@ -71,7 +71,7 @@ template <class InputIterator1, class InputIterator2,
   return result;
 }
 
-// Класс, предоставляющий функции для обработки многомерных векторов
+// п п╩п╟я│я│, п©я─п╣п╢п╬я│я┌п╟п╡п╩я▐я▌я┴п╦п╧ я└я┐п╫п╨я├п╦п╦ п╢п╩я▐ п╬п╠я─п╟п╠п╬я┌п╨п╦ п╪п╫п╬пЁп╬п╪п╣я─п╫я▀я┘ п╡п╣п╨я┌п╬я─п╬п╡
 template<unsigned int depth>
 struct TransformMultiVectorHelper {
 	template<class MultiVector1, class MultiVector2, class Transform>
@@ -122,7 +122,7 @@ struct TransformMultiVectorHelper {
 	}
 };
 
-//Специализация шаблона TransformMultiVectorHelper, соответствующая случаю одномерного вектора
+//п║п©п╣я├п╦п╟п╩п╦п╥п╟я├п╦я▐ я┬п╟п╠п╩п╬п╫п╟ TransformMultiVectorHelper, я│п╬п╬я┌п╡п╣я┌я│я┌п╡я┐я▌я┴п╟я▐ я│п╩я┐я┤п╟я▌ п╬п╢п╫п╬п╪п╣я─п╫п╬пЁп╬ п╡п╣п╨я┌п╬я─п╟
 template<>
 struct TransformMultiVectorHelper<1> {
 	template<class MultiVector1, class MultiVector2, class Transform>

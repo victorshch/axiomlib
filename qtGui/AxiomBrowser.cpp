@@ -1,7 +1,7 @@
 /****************************************************************************
-*					Функции класса AxiomBrowser.h
+*					п╓я┐п╫п╨я├п╦п╦ п╨п╩п╟я│я│п╟ AxiomBrowser.h
 *
-*	Description:	Функции окна с описанием аксиом - реализация
+*	Description:	п╓я┐п╫п╨я├п╦п╦ п╬п╨п╫п╟ я│ п╬п©п╦я│п╟п╫п╦п╣п╪ п╟п╨я│п╦п╬п╪ - я─п╣п╟п╩п╦п╥п╟я├п╦я▐
 *	Author:			dk
 *	History:	
 *
@@ -11,9 +11,9 @@
 /****************************************************************************
 *					AxiomBrowser::AxiomBrowser
 *
-*	Description:	Конструктор класса, задает необходимые начальные параметры
-*					и настраивает внешний вид
-*	Parameters:		as - структура аксиомы, которую отображать в данном окне
+*	Description:	п п╬п╫я│я┌я─я┐п╨я┌п╬я─ п╨п╩п╟я│я│п╟, п╥п╟п╢п╟п╣я┌ п╫п╣п╬п╠я┘п╬п╢п╦п╪я▀п╣ п╫п╟я┤п╟п╩я▄п╫я▀п╣ п©п╟я─п╟п╪п╣я┌я─я▀
+*					п╦ п╫п╟я│я┌я─п╟п╦п╡п╟п╣я┌ п╡п╫п╣я┬п╫п╦п╧ п╡п╦п╢
+*	Parameters:		as - я│я┌я─я┐п╨я┌я┐я─п╟ п╟п╨я│п╦п╬п╪я▀, п╨п╬я┌п╬я─я┐я▌ п╬я┌п╬п╠я─п╟п╤п╟я┌я▄ п╡ п╢п╟п╫п╫п╬п╪ п╬п╨п╫п╣
 *	Returns:		-
 *	Author:			dk
 *	History:		
@@ -23,13 +23,13 @@ AxiomBrowser::AxiomBrowser(AxiomStructure &as) {
 
 	setupUi(this);
 	
-	// Устанавливаем назавание аксиомы
+	// пёя│я┌п╟п╫п╟п╡п╩п╦п╡п╟п╣п╪ п╫п╟п╥п╟п╡п╟п╫п╦п╣ п╟п╨я│п╦п╬п╪я▀
 	QString str;
 	str = "Axiom: ";
 	str.append (as.axiomName.c_str());
 	label_axiom->setText(str);
 	
-	// Заполняем структуру аксиомы
+	// п≈п╟п©п╬п╩п╫я▐п╣п╪ я│я┌я─я┐п╨я┌я┐я─я┐ п╟п╨я│п╦п╬п╪я▀
 	str.clear();
 	for (unsigned int ecNum = 0; ecNum < as.ecNames.size(); ecNum++) {
 		if (ecNum > 0)
@@ -39,7 +39,7 @@ AxiomBrowser::AxiomBrowser(AxiomStructure &as) {
 	str.append (".");
 	textEdit_axiom->setText (str);
 	
-	// Добавляем параметры аксиомы
+	// п■п╬п╠п╟п╡п╩я▐п╣п╪ п©п╟я─п╟п╪п╣я┌я─я▀ п╟п╨я│п╦п╬п╪я▀
 	for (unsigned int ecNum = 0; ecNum < as.ecNames.size(); ecNum++) {
 		str.clear();
 		QTextStream (&str) << ecNum + 1 << ". " << as.ecNames[ecNum].c_str() << " ";
@@ -73,7 +73,7 @@ AxiomBrowser::AxiomBrowser(AxiomStructure &as) {
 /****************************************************************************
 *					AxiomBrowser::~AxiomBrowser
 *
-*	Description:	Пустой деструктор класса
+*	Description:	п÷я┐я│я┌п╬п╧ п╢п╣я│я┌я─я┐п╨я┌п╬я─ п╨п╩п╟я│я│п╟
 *	Parameters:		-
 *	Returns:		-
 *	Author:			dk

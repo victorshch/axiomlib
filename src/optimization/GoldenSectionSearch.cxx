@@ -13,7 +13,7 @@ double GoldenSectionSearch::goldenSectionSearch(const FunctionOneVariable *funct
     else
       x = b - resphi * (b - a);
     //if (std::abs(c - a) < tau * (std::abs(b) + std::abs(x))) 
-	// ÷ ÏÒÉÇÉÎÁÌÅ ÓÔÒÁÎÎÙÊ ËÒÉÔÅÒÉÊ ÚÁ×ÅÒÛÅÎÉÑ, ÓÄÅÌÁÌ ÂÏÌÅÅ ÐÒÏÓÔÏÊ
+	// Ð’ Ð¾Ñ€Ð¸Ð³Ð¸Ð½Ð°Ð»Ðµ ÑÑ‚Ñ€Ð°Ð½Ð½Ñ‹Ð¹ ÐºÑ€Ð¸Ñ‚ÐµÑ€Ð¸Ð¹ Ð·Ð°Ð²ÐµÑ€ÑˆÐµÐ½Ð¸Ñ, ÑÐ´ÐµÐ»Ð°Ð» Ð±Ð¾Ð»ÐµÐµ Ð¿Ñ€Ð¾ÑÑ‚Ð¾Ð¹
 	if (std::abs(c - a) < tau)
       return (c + a) / 2;
 	double fx = function->f(x);

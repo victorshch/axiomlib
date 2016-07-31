@@ -1,7 +1,7 @@
 /****************************************************************************
 *					ReducedRecognizerDTW.cxx
 *
-*	Description:	Функции класса ReducedRecognizerDTW - Реализация
+*	Description:	п╓я┐п╫п╨я├п╦п╦ п╨п╩п╟я│я│п╟ ReducedRecognizerDTW - п═п╣п╟п╩п╦п╥п╟я├п╦я▐
 *	Author:			dk
 *	History:		
 *
@@ -16,13 +16,13 @@ using namespace AxiomLib;
 
 #define QUESTION_MARK_LOCAL_INDEX -1
 
-// Стандартный конструктор - задание значений внутренних переменных по умолчанию
+// п║я┌п╟п╫п╢п╟я─я┌п╫я▀п╧ п╨п╬п╫я│я┌я─я┐п╨я┌п╬я─ - п╥п╟п╢п╟п╫п╦п╣ п╥п╫п╟я┤п╣п╫п╦п╧ п╡п╫я┐я┌я─п╣п╫п╫п╦я┘ п©п╣я─п╣п╪п╣п╫п╫я▀я┘ п©п╬ я┐п╪п╬п╩я┤п╟п╫п╦я▌
 ReducedRecognizerDTW::ReducedRecognizerDTW (void) { 
     //precision = 0.0;
 	stretch = 1.0;
 }
 
-// Стандартный деструктор - удаление всех динамических объектов класса
+// п║я┌п╟п╫п╢п╟я─я┌п╫я▀п╧ п╢п╣я│я┌я─я┐п╨я┌п╬я─ - я┐п╢п╟п╩п╣п╫п╦п╣ п╡я│п╣я┘ п╢п╦п╫п╟п╪п╦я┤п╣я│п╨п╦я┘ п╬п╠я┼п╣п╨я┌п╬п╡ п╨п╩п╟я│я│п╟
 ReducedRecognizerDTW::~ReducedRecognizerDTW (void) { 
 	
 }
@@ -31,16 +31,16 @@ ReducedRecognizerDTW::~ReducedRecognizerDTW (void) {
 /****************************************************************************
 *                       ReducedRecognizerDTW::setParamsFromEnv
 *
-*       Description:    Инициализировать параметры данными из env
-*       Parameters:     const Environment& env - среда
+*       Description:    п≤п╫п╦я├п╦п╟п╩п╦п╥п╦я─п╬п╡п╟я┌я▄ п©п╟я─п╟п╪п╣я┌я─я▀ п╢п╟п╫п╫я▀п╪п╦ п╦п╥ env
+*       Parameters:     const Environment& env - я│я─п╣п╢п╟
 *       Returns:        0
-*       Throws:         AxiomLibException - если нет какого-топараметра
+*       Throws:         AxiomLibException - п╣я│п╩п╦ п╫п╣я┌ п╨п╟п╨п╬пЁп╬-я┌п╬п©п╟я─п╟п╪п╣я┌я─п╟
 *       Author:         wictor
 *       History:
 *
 ****************************************************************************/
 int ReducedRecognizerDTW::setParamsFromEnv (const Environment& env) {
-	// precision устанавливается в родителе
+	// precision я┐я│я┌п╟п╫п╟п╡п╩п╦п╡п╟п╣я┌я│я▐ п╡ я─п╬п╢п╦я┌п╣п╩п╣
 	ReducedRecognizerDistance::setParamsFromEnv(env);
 	
 	if (env.getDoubleParamValue(stretch, "Stretch") < 0) {
@@ -53,7 +53,7 @@ int ReducedRecognizerDTW::setParamsFromEnv (const Environment& env) {
 }
 
 
-// Редирект на функцию типа const
+// п═п╣п╢п╦я─п╣п╨я┌ п╫п╟ я└я┐п╫п╨я├п╦я▌ я┌п╦п©п╟ const
 int ReducedRecognizerDTW::run (const std::vector <int> &markUp, const std::vector<int> &etalon, std::vector <double> &result) {
 	return countDTWDist (markUp, etalon, result);
 }
@@ -62,27 +62,27 @@ int ReducedRecognizerDTW::run (const std::vector <int> &markUp, const std::vecto
 /****************************************************************************
 *                       ReducedRecognizerDTW::run
 *
-*       Description:    Функция поиска разметки ethalon в markUp и запись результатов поиска в result
-*       Parameters:     markUp - данный для анализа ряд разметки
-*						etalon - разметка траектории нештатного поведения, т.е. искомый участок ряда
-*						result - вектор с результатами распознавания
+*       Description:    п╓я┐п╫п╨я├п╦я▐ п©п╬п╦я│п╨п╟ я─п╟п╥п╪п╣я┌п╨п╦ ethalon п╡ markUp п╦ п╥п╟п©п╦я│я▄ я─п╣п╥я┐п╩я▄я┌п╟я┌п╬п╡ п©п╬п╦я│п╨п╟ п╡ result
+*       Parameters:     markUp - п╢п╟п╫п╫я▀п╧ п╢п╩я▐ п╟п╫п╟п╩п╦п╥п╟ я─я▐п╢ я─п╟п╥п╪п╣я┌п╨п╦
+*						etalon - я─п╟п╥п╪п╣я┌п╨п╟ я┌я─п╟п╣п╨я┌п╬я─п╦п╦ п╫п╣я┬я┌п╟я┌п╫п╬пЁп╬ п©п╬п╡п╣п╢п╣п╫п╦я▐, я┌.п╣. п╦я│п╨п╬п╪я▀п╧ я┐я┤п╟я│я┌п╬п╨ я─я▐п╢п╟
+*						result - п╡п╣п╨я┌п╬я─ я│ я─п╣п╥я┐п╩я▄я┌п╟я┌п╟п╪п╦ я─п╟я│п©п╬п╥п╫п╟п╡п╟п╫п╦я▐
 *       Returns:        0
 *       Throws:         -
-*       Author:         dk, wictor (запись в result именно расстояний)
+*       Author:         dk, wictor (п╥п╟п©п╦я│я▄ п╡ result п╦п╪п╣п╫п╫п╬ я─п╟я│я│я┌п╬я▐п╫п╦п╧)
 *       History:
 *
 ****************************************************************************/
 int ReducedRecognizerDTW::countDTWDist (const std::vector <int> &markup, const std::vector<int> &etalon, std::vector <double> &result) const {
-	// Вычисление границ для поиска соответствия для ряда etalon
+	// п▓я▀я┤п╦я│п╩п╣п╫п╦п╣ пЁя─п╟п╫п╦я├ п╢п╩я▐ п©п╬п╦я│п╨п╟ я│п╬п╬я┌п╡п╣я┌я│я┌п╡п╦я▐ п╢п╩я▐ я─я▐п╢п╟ etalon
 	int minLen, maxLen;
 	maxLen = round (stretch * (double) etalon.size());
 	minLen = round (((double) etalon.size()) / stretch);
 	if (minLen < 1)
 		minLen = 1;
-	// Сохраняем длину ряда, чтобы каждый раз к функции не обращаться
+	// п║п╬я┘я─п╟п╫я▐п╣п╪ п╢п╩п╦п╫я┐ я─я▐п╢п╟, я┤я┌п╬п╠я▀ п╨п╟п╤п╢я▀п╧ я─п╟п╥ п╨ я└я┐п╫п╨я├п╦п╦ п╫п╣ п╬п╠я─п╟я┴п╟я┌я▄я│я▐
 	int len = (int) markup.size();
 	result.assign(len, -1);
-	// Подготавливаем матрицы для ошибок и длины пути
+	// п÷п╬п╢пЁп╬я┌п╟п╡п╩п╦п╡п╟п╣п╪ п╪п╟я┌я─п╦я├я▀ п╢п╩я▐ п╬я┬п╦п╠п╬п╨ п╦ п╢п╩п╦п╫я▀ п©я┐я┌п╦
 	std::vector <std::vector <int> > matrixLen, matrixErr;
 	int etLen = etalon.size();
 	if (etLen < 1)
@@ -90,25 +90,25 @@ int ReducedRecognizerDTW::countDTWDist (const std::vector <int> &markup, const s
 	int etLenMinusOne = etLen - 1;
 	matrixLen.resize (etLen);
 	matrixErr.resize (etLen);
-	// Сначала отдельно обрабатываем область от 0 до maxLen в ряду markUp
+	// п║п╫п╟я┤п╟п╩п╟ п╬я┌п╢п╣п╩я▄п╫п╬ п╬п╠я─п╟п╠п╟я┌я▀п╡п╟п╣п╪ п╬п╠п╩п╟я│я┌я▄ п╬я┌ 0 п╢п╬ maxLen п╡ я─я▐п╢я┐ markUp
 	int upTo, j, l, curVal;
 	double minDist, curDist;
 	int rightDist, diagDist, downDist;
 	upTo = min (len, maxLen);
 	for (int i = minLen-1; i < upTo; i++) {
-		// составляем матрицы для длины и ошибки в пути
+		// я│п╬я│я┌п╟п╡п╩я▐п╣п╪ п╪п╟я┌я─п╦я├я▀ п╢п╩я▐ п╢п╩п╦п╫я▀ п╦ п╬я┬п╦п╠п╨п╦ п╡ п©я┐я┌п╦
 		for (j = 0; j < etLen; j++) {
 			matrixErr[j].resize(i+1);
 			matrixLen[j].resize(i+1);
 		}
-		// Вычисляем значение в крайнем элементе матрицы
+		// п▓я▀я┤п╦я│п╩я▐п╣п╪ п╥п╫п╟я┤п╣п╫п╦п╣ п╡ п╨я─п╟п╧п╫п╣п╪ я█п╩п╣п╪п╣п╫я┌п╣ п╪п╟я┌я─п╦я├я▀
         if (markup[i] == etalon[etLenMinusOne] || etalon[etLenMinusOne] == QUESTION_MARK_LOCAL_INDEX)
 			curVal = 0;
 		else
 			curVal = 1;
 		matrixErr[etLenMinusOne][i] = curVal;
 		matrixLen[etLenMinusOne][i] = 1;
-		// Вычисляем значение в крайних элементах матрицы
+		// п▓я▀я┤п╦я│п╩я▐п╣п╪ п╥п╫п╟я┤п╣п╫п╦п╣ п╡ п╨я─п╟п╧п╫п╦я┘ я█п╩п╣п╪п╣п╫я┌п╟я┘ п╪п╟я┌я─п╦я├я▀
 		for (int k = etLen - 2; k >= 0; k--) {
             if (markup[i] != etalon[k] && etalon[k] != QUESTION_MARK_LOCAL_INDEX)
 				curVal++;
@@ -122,20 +122,20 @@ int ReducedRecognizerDTW::countDTWDist (const std::vector <int> &markup, const s
 			matrixErr[etLenMinusOne][k] = curVal;
 			matrixLen[etLenMinusOne][k] = i - k + 1;
 		}
-		// Вычисляем значение в элементах матрицы
+		// п▓я▀я┤п╦я│п╩я▐п╣п╪ п╥п╫п╟я┤п╣п╫п╦п╣ п╡ я█п╩п╣п╪п╣п╫я┌п╟я┘ п╪п╟я┌я─п╦я├я▀
 		for (int k = 1; k <= min(etLenMinusOne, i); k++) {
-			// идем по горизонтали
+			// п╦п╢п╣п╪ п©п╬ пЁп╬я─п╦п╥п╬п╫я┌п╟п╩п╦
 			j = etLenMinusOne - k;
 			for (l = i - k; l >= 0; l--) {
                 if (markup[l] == etalon[j] || etalon[j] == QUESTION_MARK_LOCAL_INDEX)
 					curVal = 0;
 				else
 					curVal = 1;
-				// вычисляем значение для всех возможных путей
+				// п╡я▀я┤п╦я│п╩я▐п╣п╪ п╥п╫п╟я┤п╣п╫п╦п╣ п╢п╩я▐ п╡я│п╣я┘ п╡п╬п╥п╪п╬п╤п╫я▀я┘ п©я┐я┌п╣п╧
 				rightDist = (matrixErr[j][l+1] + curVal)*(matrixLen[j+1][l+1] + 1);
 				diagDist  = (matrixErr[j+1][l+1] + curVal)*(matrixLen[j][l+1] + 1);
 				if (diagDist <= rightDist) {
-					// тогда диагональный элемент сравниваем с нижним
+					// я┌п╬пЁп╢п╟ п╢п╦п╟пЁп╬п╫п╟п╩я▄п╫я▀п╧ я█п╩п╣п╪п╣п╫я┌ я│я─п╟п╡п╫п╦п╡п╟п╣п╪ я│ п╫п╦п╤п╫п╦п╪
 					diagDist  = (matrixErr[j+1][l+1] + curVal)*(matrixLen[j+1][l] + 1);
 					downDist = (matrixErr[j+1][l] + curVal)*(matrixLen[j+1][l+1] + 1);
 					if (diagDist <= downDist) {
@@ -146,7 +146,7 @@ int ReducedRecognizerDTW::countDTWDist (const std::vector <int> &markup, const s
 						matrixLen[j][l] = matrixLen[j+1][l] + 1;
 					}
 				} else {
-					// тогда правый элемент сравниваем с нижним
+					// я┌п╬пЁп╢п╟ п©я─п╟п╡я▀п╧ я█п╩п╣п╪п╣п╫я┌ я│я─п╟п╡п╫п╦п╡п╟п╣п╪ я│ п╫п╦п╤п╫п╦п╪
 					rightDist  = (matrixErr[j][l+1] + curVal)*(matrixLen[j+1][l] + 1);
 					downDist = (matrixErr[j+1][l] + curVal)*(matrixLen[j][l+1] + 1);
 					if (rightDist <= downDist) {
@@ -175,18 +175,18 @@ int ReducedRecognizerDTW::countDTWDist (const std::vector <int> &markup, const s
 				}
 				*/
 			}
-			// идем по вертикали
+			// п╦п╢п╣п╪ п©п╬ п╡п╣я─я┌п╦п╨п╟п╩п╦
 			l = i - k;
 			for (j = etLenMinusOne - k - 1; j >= 0; j--) {
                 if (markup[l] == etalon[j] || etalon[j] == QUESTION_MARK_LOCAL_INDEX)
 					curVal = 0;
 				else
 					curVal = 1;
-				// вычисляем значение для всех возможных путей
+				// п╡я▀я┤п╦я│п╩я▐п╣п╪ п╥п╫п╟я┤п╣п╫п╦п╣ п╢п╩я▐ п╡я│п╣я┘ п╡п╬п╥п╪п╬п╤п╫я▀я┘ п©я┐я┌п╣п╧
 				rightDist = (matrixErr[j][l+1] + curVal)*(matrixLen[j+1][l+1] + 1);
 				diagDist  = (matrixErr[j+1][l+1] + curVal)*(matrixLen[j][l+1] + 1);
 				if (diagDist <= rightDist) {
-					// тогда диагональный элемент сравниваем с нижним
+					// я┌п╬пЁп╢п╟ п╢п╦п╟пЁп╬п╫п╟п╩я▄п╫я▀п╧ я█п╩п╣п╪п╣п╫я┌ я│я─п╟п╡п╫п╦п╡п╟п╣п╪ я│ п╫п╦п╤п╫п╦п╪
 					diagDist  = (matrixErr[j+1][l+1] + curVal)*(matrixLen[j+1][l] + 1);
 					downDist = (matrixErr[j+1][l] + curVal)*(matrixLen[j+1][l+1] + 1);
 					if (diagDist <= downDist) {
@@ -197,7 +197,7 @@ int ReducedRecognizerDTW::countDTWDist (const std::vector <int> &markup, const s
 						matrixLen[j][l] = matrixLen[j+1][l] + 1;
 					}
 				} else {
-					// тогда правый элемент сравниваем с нижним
+					// я┌п╬пЁп╢п╟ п©я─п╟п╡я▀п╧ я█п╩п╣п╪п╣п╫я┌ я│я─п╟п╡п╫п╦п╡п╟п╣п╪ я│ п╫п╦п╤п╫п╦п╪
 					rightDist  = (matrixErr[j][l+1] + curVal)*(matrixLen[j+1][l] + 1);
 					downDist = (matrixErr[j+1][l] + curVal)*(matrixLen[j][l+1] + 1);
 					if (rightDist <= downDist) {
@@ -210,7 +210,7 @@ int ReducedRecognizerDTW::countDTWDist (const std::vector <int> &markup, const s
 				}
 			}
 		}
-		// Выбираем наименьшее значение среди возможных соответствий
+		// п▓я▀п╠п╦я─п╟п╣п╪ п╫п╟п╦п╪п╣п╫я▄я┬п╣п╣ п╥п╫п╟я┤п╣п╫п╦п╣ я│я─п╣п╢п╦ п╡п╬п╥п╪п╬п╤п╫я▀я┘ я│п╬п╬я┌п╡п╣я┌я│я┌п╡п╦п╧
 		minDist = ((double) matrixErr[0][0]) / ((double) matrixLen[0][0]);
 		for (int k = 1; k <= (i - minLen + 1); k++) {
 			curDist = ((double) matrixErr[0][k]) / ((double) matrixLen[0][k]);
@@ -218,52 +218,52 @@ int ReducedRecognizerDTW::countDTWDist (const std::vector <int> &markup, const s
 				minDist = curDist;
 		}
 		result[i] = minDist;
-		// Определяем было ли совпадение
+		// п·п©я─п╣п╢п╣п╩я▐п╣п╪ п╠я▀п╩п╬ п╩п╦ я│п╬п╡п©п╟п╢п╣п╫п╦п╣
 //		if (minDist <= precision) {
 //			result[i] = 1;
 //		} else {
 //			result[i] = 0;
 //		}
 	}
-	// Продолжаем идти по ряду - только теперь его длина заведомо больше maxLen
+	// п÷я─п╬п╢п╬п╩п╤п╟п╣п╪ п╦п╢я┌п╦ п©п╬ я─я▐п╢я┐ - я┌п╬п╩я▄п╨п╬ я┌п╣п©п╣я─я▄ п╣пЁп╬ п╢п╩п╦п╫п╟ п╥п╟п╡п╣п╢п╬п╪п╬ п╠п╬п╩я▄я┬п╣ maxLen
 	int maxLenMinusOne = maxLen - 1;
 	upTo = min(etLenMinusOne, maxLenMinusOne);
 	for (int i = maxLen; i < len; i++) {
-		// Вычисляем значение в крайнем элементе матрицы
+		// п▓я▀я┤п╦я│п╩я▐п╣п╪ п╥п╫п╟я┤п╣п╫п╦п╣ п╡ п╨я─п╟п╧п╫п╣п╪ я█п╩п╣п╪п╣п╫я┌п╣ п╪п╟я┌я─п╦я├я▀
         if (markup[i] == etalon[etLenMinusOne] || etalon[etLenMinusOne] == QUESTION_MARK_LOCAL_INDEX)
 			curVal = 0;
 		else
 			curVal = 1;
 		matrixErr[etLenMinusOne][maxLenMinusOne] = curVal;
-		//matrixLen[etLenMinusOne][maxLenMinusOne] = 1; // Это присваивание уже и так было сделано
-		// Вычисляем значение в крайних элементах матрицы
+		//matrixLen[etLenMinusOne][maxLenMinusOne] = 1; // п╜я┌п╬ п©я─п╦я│п╡п╟п╦п╡п╟п╫п╦п╣ я┐п╤п╣ п╦ я┌п╟п╨ п╠я▀п╩п╬ я│п╢п╣п╩п╟п╫п╬
+		// п▓я▀я┤п╦я│п╩я▐п╣п╪ п╥п╫п╟я┤п╣п╫п╦п╣ п╡ п╨я─п╟п╧п╫п╦я┘ я█п╩п╣п╪п╣п╫я┌п╟я┘ п╪п╟я┌я─п╦я├я▀
 		for (int k = etLen - 2; k >= 0; k--) {
             if (markup[i] != etalon[k] && etalon[k] != QUESTION_MARK_LOCAL_INDEX)
 				curVal++;
 			matrixErr[k][maxLenMinusOne] = curVal;
-			//matrixLen[k][maxLenMinusOne] = etLen - k; // Это присваивание уже и так было сделано
+			//matrixLen[k][maxLenMinusOne] = etLen - k; // п╜я┌п╬ п©я─п╦я│п╡п╟п╦п╡п╟п╫п╦п╣ я┐п╤п╣ п╦ я┌п╟п╨ п╠я▀п╩п╬ я│п╢п╣п╩п╟п╫п╬
 		}
 		curVal = matrixErr[etLenMinusOne][maxLenMinusOne];
 		for (int k = maxLen - 2; k >= 0; k--) {
             if (markup[i - maxLenMinusOne + k] != etalon[etLenMinusOne] && etalon[etLenMinusOne] != QUESTION_MARK_LOCAL_INDEX)
 				curVal++;
 			matrixErr[etLenMinusOne][k] = curVal;
-			//matrixLen[etLenMinusOne][k] = maxLen - k; // Это присваивание уже и так было сделано
+			//matrixLen[etLenMinusOne][k] = maxLen - k; // п╜я┌п╬ п©я─п╦я│п╡п╟п╦п╡п╟п╫п╦п╣ я┐п╤п╣ п╦ я┌п╟п╨ п╠я▀п╩п╬ я│п╢п╣п╩п╟п╫п╬
 		}
-		// Вычисляем значение в элементах матрицы
+		// п▓я▀я┤п╦я│п╩я▐п╣п╪ п╥п╫п╟я┤п╣п╫п╦п╣ п╡ я█п╩п╣п╪п╣п╫я┌п╟я┘ п╪п╟я┌я─п╦я├я▀
 		for (int k = 1; k <= upTo; k++) {
-			// идем по горизонтали
+			// п╦п╢п╣п╪ п©п╬ пЁп╬я─п╦п╥п╬п╫я┌п╟п╩п╦
 			j = etLenMinusOne - k;
 			for (l = maxLenMinusOne - k; l >= 0; l--) {
                 if (markup[i - maxLenMinusOne + l] == etalon[j] || etalon[j] == QUESTION_MARK_LOCAL_INDEX)
 					curVal = 0;
 				else
 					curVal = 1;
-				// вычисляем значение для всех возможных путей
+				// п╡я▀я┤п╦я│п╩я▐п╣п╪ п╥п╫п╟я┤п╣п╫п╦п╣ п╢п╩я▐ п╡я│п╣я┘ п╡п╬п╥п╪п╬п╤п╫я▀я┘ п©я┐я┌п╣п╧
 				rightDist = (matrixErr[j][l+1] + curVal)*(matrixLen[j+1][l+1] + 1);
 				diagDist  = (matrixErr[j+1][l+1] + curVal)*(matrixLen[j][l+1] + 1);
 				if (diagDist <= rightDist) {
-					// тогда диагональный элемент сравниваем с нижним
+					// я┌п╬пЁп╢п╟ п╢п╦п╟пЁп╬п╫п╟п╩я▄п╫я▀п╧ я█п╩п╣п╪п╣п╫я┌ я│я─п╟п╡п╫п╦п╡п╟п╣п╪ я│ п╫п╦п╤п╫п╦п╪
 					diagDist  = (matrixErr[j+1][l+1] + curVal)*(matrixLen[j+1][l] + 1);
 					downDist = (matrixErr[j+1][l] + curVal)*(matrixLen[j+1][l+1] + 1);
 					if (diagDist <= downDist) {
@@ -274,7 +274,7 @@ int ReducedRecognizerDTW::countDTWDist (const std::vector <int> &markup, const s
 						matrixLen[j][l] = matrixLen[j+1][l] + 1;
 					}
 				} else {
-					// тогда правый элемент сравниваем с нижним
+					// я┌п╬пЁп╢п╟ п©я─п╟п╡я▀п╧ я█п╩п╣п╪п╣п╫я┌ я│я─п╟п╡п╫п╦п╡п╟п╣п╪ я│ п╫п╦п╤п╫п╦п╪
 					rightDist  = (matrixErr[j][l+1] + curVal)*(matrixLen[j+1][l] + 1);
 					downDist = (matrixErr[j+1][l] + curVal)*(matrixLen[j][l+1] + 1);
 					if (rightDist <= downDist) {
@@ -286,18 +286,18 @@ int ReducedRecognizerDTW::countDTWDist (const std::vector <int> &markup, const s
 					}
 				}
 			}
-			// идем по вертикали
+			// п╦п╢п╣п╪ п©п╬ п╡п╣я─я┌п╦п╨п╟п╩п╦
 			l = maxLenMinusOne - k;
 			for (j = etLenMinusOne - k - 1; j >= 0; j--) {
                 if (markup[i - k] == etalon[j] || etalon[j] == QUESTION_MARK_LOCAL_INDEX)
 					curVal = 0;
 				else
 					curVal = 1;
-				// вычисляем значение для всех возможных путей
+				// п╡я▀я┤п╦я│п╩я▐п╣п╪ п╥п╫п╟я┤п╣п╫п╦п╣ п╢п╩я▐ п╡я│п╣я┘ п╡п╬п╥п╪п╬п╤п╫я▀я┘ п©я┐я┌п╣п╧
 				rightDist = (matrixErr[j][l+1] + curVal)*(matrixLen[j+1][l+1] + 1);
 				diagDist  = (matrixErr[j+1][l+1] + curVal)*(matrixLen[j][l+1] + 1);
 				if (diagDist <= rightDist) {
-					// тогда диагональный элемент сравниваем с нижним
+					// я┌п╬пЁп╢п╟ п╢п╦п╟пЁп╬п╫п╟п╩я▄п╫я▀п╧ я█п╩п╣п╪п╣п╫я┌ я│я─п╟п╡п╫п╦п╡п╟п╣п╪ я│ п╫п╦п╤п╫п╦п╪
 					diagDist  = (matrixErr[j+1][l+1] + curVal)*(matrixLen[j+1][l] + 1);
 					downDist = (matrixErr[j+1][l] + curVal)*(matrixLen[j+1][l+1] + 1);
 					if (diagDist <= downDist) {
@@ -308,7 +308,7 @@ int ReducedRecognizerDTW::countDTWDist (const std::vector <int> &markup, const s
 						matrixLen[j][l] = matrixLen[j+1][l] + 1;
 					}
 				} else {
-					// тогда правый элемент сравниваем с нижним
+					// я┌п╬пЁп╢п╟ п©я─п╟п╡я▀п╧ я█п╩п╣п╪п╣п╫я┌ я│я─п╟п╡п╫п╦п╡п╟п╣п╪ я│ п╫п╦п╤п╫п╦п╪
 					rightDist  = (matrixErr[j][l+1] + curVal)*(matrixLen[j+1][l] + 1);
 					downDist = (matrixErr[j+1][l] + curVal)*(matrixLen[j][l+1] + 1);
 					if (rightDist <= downDist) {
@@ -321,7 +321,7 @@ int ReducedRecognizerDTW::countDTWDist (const std::vector <int> &markup, const s
 				}
 			}
 		}
-		// Выбираем наименьшее значение среди возможных соответствий
+		// п▓я▀п╠п╦я─п╟п╣п╪ п╫п╟п╦п╪п╣п╫я▄я┬п╣п╣ п╥п╫п╟я┤п╣п╫п╦п╣ я│я─п╣п╢п╦ п╡п╬п╥п╪п╬п╤п╫я▀я┘ я│п╬п╬я┌п╡п╣я┌я│я┌п╡п╦п╧
 		minDist = ((double) matrixErr[0][0]) / ((double) matrixLen[0][0]);
 		for (int k = 1; k <= (maxLen - minLen); k++) {
 			curDist = ((double) matrixErr[0][k]) / ((double) matrixLen[0][k]);
@@ -329,7 +329,7 @@ int ReducedRecognizerDTW::countDTWDist (const std::vector <int> &markup, const s
 				minDist = curDist;
 		}
 		result[i] = minDist;
-		// Определяем было ли совпадение
+		// п·п©я─п╣п╢п╣п╩я▐п╣п╪ п╠я▀п╩п╬ п╩п╦ я│п╬п╡п©п╟п╢п╣п╫п╦п╣
 //		if (minDist <= precision) {
 //			result[i] = 1;
 //		}  else {

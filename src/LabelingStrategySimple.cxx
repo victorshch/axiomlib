@@ -106,7 +106,7 @@ double LabelingStrategySimple::train(const std::vector<TrajectorySampleDistance>
 		func.setCurrentClass(i);
 		
 		double bestX;
-		//todo ×ÙÎÅÓÔÉ ÚÎÁÞÅÎÉÑ ×ÅÒÈÎÅÊ É ÎÉÖÎÅÊ ÇÒÁÎÉÃÙ × ËÏÎÆÉÇ
+		//todo Ð²Ñ‹Ð½ÐµÑÑ‚Ð¸ Ð·Ð½Ð°Ñ‡ÐµÐ½Ð¸Ñ Ð²ÐµÑ€Ñ…Ð½ÐµÐ¹ Ð¸ Ð½Ð¸Ð¶Ð½ÐµÐ¹ Ð³Ñ€Ð°Ð½Ð¸Ñ†Ñ‹ Ð² ÐºÐ¾Ð½Ñ„Ð¸Ð³
 		m_minimizer->findMinimum(&func, 0.0, 1.0, bestX, bestF);
 		
 		if(bestF < lastBestF) {

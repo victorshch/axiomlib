@@ -34,8 +34,8 @@ ECTypeSelection* ECTypeSelection::clone() const {
 
 
 void ECTypeSelection::run(FuzzyMultiDataExtAlgorithm &algorithm) const {
-	//TODO сделать возможность указания типов ЭУ
-	//отдельно для каждого класса
+	//TODO я│п╢п╣п╩п╟я┌я▄ п╡п╬п╥п╪п╬п╤п╫п╬я│я┌я▄ я┐п╨п╟п╥п╟п╫п╦я▐ я┌п╦п©п╬п╡ п╜пё
+	//п╬я┌п╢п╣п╩я▄п╫п╬ п╢п╩я▐ п╨п╟п╤п╢п╬пЁп╬ п╨п╩п╟я│я│п╟
 	Logger::getInstance()->writeComment("Starting ECTypeSelection heuristics");
 	Logger::getInstance()->writeDebug("Policy: " + boost::lexical_cast<std::string>(m_selectionPolicy));
 	Logger::getInstance()->writeDebug("Selected EC types count: "+boost::lexical_cast<std::string>(m_ecTypes.size()));
@@ -44,7 +44,7 @@ void ECTypeSelection::run(FuzzyMultiDataExtAlgorithm &algorithm) const {
 		            algorithm.getECType(i).sign,
 		            boost::algorithm::to_lower_copy(algorithm.getECType(i).elemCondition->name())
 		            );
-		//todo подумать, надо ли делать эту проверку
+		//todo п©п╬п╢я┐п╪п╟я┌я▄, п╫п╟п╢п╬ п╩п╦ п╢п╣п╩п╟я┌я▄ я█я┌я┐ п©я─п╬п╡п╣я─п╨я┐
 		//if(algorithm.isECTypeSelected(i))
 		{
 

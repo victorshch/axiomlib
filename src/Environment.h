@@ -1,8 +1,8 @@
 /****************************************************************************
 *			Environment
 *
-*	Description:	Класс, отвечающий за работу с конфигурацией и параметрами окружения,
-*				в том числе с библиотеками аксиом и систем аксиом
+*	Description:	п п╩п╟я│я│, п╬я┌п╡п╣я┤п╟я▌я┴п╦п╧ п╥п╟ я─п╟п╠п╬я┌я┐ я│ п╨п╬п╫я└п╦пЁя┐я─п╟я├п╦п╣п╧ п╦ п©п╟я─п╟п╪п╣я┌я─п╟п╪п╦ п╬п╨я─я┐п╤п╣п╫п╦я▐,
+*				п╡ я┌п╬п╪ я┤п╦я│п╩п╣ я│ п╠п╦п╠п╩п╦п╬я┌п╣п╨п╟п╪п╦ п╟п╨я│п╦п╬п╪ п╦ я│п╦я│я┌п╣п╪ п╟п╨я│п╦п╬п╪
 *	Author:		gevor
 *	History:
 *
@@ -34,7 +34,7 @@ class Environment {
 
  private:
 
-	// взято отсюда: http://stackoverflow.com/questions/1801892/making-mapfind-operation-case-insensitive
+	// п╡п╥я▐я┌п╬ п╬я┌я│я▌п╢п╟: http://stackoverflow.com/questions/1801892/making-mapfind-operation-case-insensitive
 	/************************************************************************/
 	/* Comparator for case-insensitive comparison in STL assos. containers  */
 	/************************************************************************/
@@ -56,44 +56,44 @@ class Environment {
 	};
 	
 	typedef std::multimap<std::string, std::string, ci_less> MapType;
-  std::multimap<std::string, std::string, ci_less> configFileParams; // параметры из конфигурационного файла
+  std::multimap<std::string, std::string, ci_less> configFileParams; // п©п╟я─п╟п╪п╣я┌я─я▀ п╦п╥ п╨п╬п╫я└п╦пЁя┐я─п╟я├п╦п╬п╫п╫п╬пЁп╬ я└п╟п╧п╩п╟
 
  protected:
   
-  // определение типа - введено для сокращения и понимания кода
+  // п╬п©я─п╣п╢п╣п╩п╣п╫п╦п╣ я┌п╦п©п╟ - п╡п╡п╣п╢п╣п╫п╬ п╢п╩я▐ я│п╬п╨я─п╟я┴п╣п╫п╦я▐ п╦ п©п╬п╫п╦п╪п╟п╫п╦я▐ п╨п╬п╢п╟
   typedef boost::tokenizer<boost::char_separator<char> >      		token_separator;
   typedef MapType::const_iterator		mm_c_iter;
   
-  // внутренняя вспомогательная функция - получает набор токенов для одной строки конфигурационного файла
-  // и в соответствие с внутренней структурой этого файла записывает внутренние переменные класса
+  // п╡п╫я┐я┌я─п╣п╫п╫я▐я▐ п╡я│п©п╬п╪п╬пЁп╟я┌п╣п╩я▄п╫п╟я▐ я└я┐п╫п╨я├п╦я▐ - п©п╬п╩я┐я┤п╟п╣я┌ п╫п╟п╠п╬я─ я┌п╬п╨п╣п╫п╬п╡ п╢п╩я▐ п╬п╢п╫п╬п╧ я│я┌я─п╬п╨п╦ п╨п╬п╫я└п╦пЁя┐я─п╟я├п╦п╬п╫п╫п╬пЁп╬ я└п╟п╧п╩п╟
+  // п╦ п╡ я│п╬п╬я┌п╡п╣я┌я│я┌п╡п╦п╣ я│ п╡п╫я┐я┌я─п╣п╫п╫п╣п╧ я│я┌я─я┐п╨я┌я┐я─п╬п╧ я█я┌п╬пЁп╬ я└п╟п╧п╩п╟ п╥п╟п©п╦я│я▀п╡п╟п╣я┌ п╡п╫я┐я┌я─п╣п╫п╫п╦п╣ п©п╣я─п╣п╪п╣п╫п╫я▀п╣ п╨п╩п╟я│я│п╟
   signed int processTokens (token_separator tokens);
-  // Тестовый вывод считанных параметров в стандартный поток вывода
+  // п╒п╣я│я┌п╬п╡я▀п╧ п╡я▀п╡п╬п╢ я│я┤п╦я┌п╟п╫п╫я▀я┘ п©п╟я─п╟п╪п╣я┌я─п╬п╡ п╡ я│я┌п╟п╫п╢п╟я─я┌п╫я▀п╧ п©п╬я┌п╬п╨ п╡я▀п╡п╬п╢п╟
   int testOut (void);
-  // Функция преобразует строку - удаляет все пробелы и табуляции в начале и в конце файла
+  // п╓я┐п╫п╨я├п╦я▐ п©я─п╣п╬п╠я─п╟п╥я┐п╣я┌ я│я┌я─п╬п╨я┐ - я┐п╢п╟п╩я▐п╣я┌ п╡я│п╣ п©я─п╬п╠п╣п╩я▀ п╦ я┌п╟п╠я┐п╩я▐я├п╦п╦ п╡ п╫п╟я┤п╟п╩п╣ п╦ п╡ п╨п╬п╫я├п╣ я└п╟п╧п╩п╟
   int moveSpaces (std::string &str);
-  // Создает директорию с указанным адресом
+  // п║п╬п╥п╢п╟п╣я┌ п╢п╦я─п╣п╨я┌п╬я─п╦я▌ я│ я┐п╨п╟п╥п╟п╫п╫я▀п╪ п╟п╢я─п╣я│п╬п╪
   int createDir (std::string dir);
  public:
 	
-  // Конструктор с заданием некоторых параметров по умолчанию
+  // п п╬п╫я│я┌я─я┐п╨я┌п╬я─ я│ п╥п╟п╢п╟п╫п╦п╣п╪ п╫п╣п╨п╬я┌п╬я─я▀я┘ п©п╟я─п╟п╪п╣я┌я─п╬п╡ п©п╬ я┐п╪п╬п╩я┤п╟п╫п╦я▌
   Environment (void) {};	
 
-  // Читает дефолтный конфигурационный файл
+  // п╖п╦я┌п╟п╣я┌ п╢п╣я└п╬п╩я┌п╫я▀п╧ п╨п╬п╫я└п╦пЁя┐я─п╟я├п╦п╬п╫п╫я▀п╧ я└п╟п╧п╩
   signed int readConfigFile(void);
-  // Читает конфигурационный файл с заданным именем
+  // п╖п╦я┌п╟п╣я┌ п╨п╬п╫я└п╦пЁя┐я─п╟я├п╦п╬п╫п╫я▀п╧ я└п╟п╧п╩ я│ п╥п╟п╢п╟п╫п╫я▀п╪ п╦п╪п╣п╫п╣п╪
   signed int readConfigFile(const char* filename);
 
-  // Читает параметры поданные на вход при запуске программы
+  // п╖п╦я┌п╟п╣я┌ п©п╟я─п╟п╪п╣я┌я─я▀ п©п╬п╢п╟п╫п╫я▀п╣ п╫п╟ п╡я┘п╬п╢ п©я─п╦ п╥п╟п©я┐я│п╨п╣ п©я─п╬пЁя─п╟п╪п╪я▀
   signed int readConfigParams (int argc, char** argv);
 
-  // Читает параметры из списка
+  // п╖п╦я┌п╟п╣я┌ п©п╟я─п╟п╪п╣я┌я─я▀ п╦п╥ я│п©п╦я│п╨п╟
   signed int readConfigParams(std::list<const char*>);
 
-  // Читает параметры
+  // п╖п╦я┌п╟п╣я┌ п©п╟я─п╟п╪п╣я┌я─я▀
   template<class ForwardIterator, class ConvertFunctor>
   int readConfigParams(ForwardIterator begin, ForwardIterator end, ConvertFunctor convert);
 
-  // Сохраняет указанный файл в результаты (копирует файл с указанным именем в результаты)
+  // п║п╬я┘я─п╟п╫я▐п╣я┌ я┐п╨п╟п╥п╟п╫п╫я▀п╧ я└п╟п╧п╩ п╡ я─п╣п╥я┐п╩я▄я┌п╟я┌я▀ (п╨п╬п©п╦я─я┐п╣я┌ я└п╟п╧п╩ я│ я┐п╨п╟п╥п╟п╫п╫я▀п╪ п╦п╪п╣п╫п╣п╪ п╡ я─п╣п╥я┐п╩я▄я┌п╟я┌я▀)
   signed int saveFile (const std::string fileName);
   
   void writeToStream(std::ostream& ostream) const;
@@ -101,7 +101,7 @@ class Environment {
   
   void getParamNames(std::vector<std::string>& result) const;
   
-  // Получить параметр с именем name
+  // п÷п╬п╩я┐я┤п╦я┌я▄ п©п╟я─п╟п╪п╣я┌я─ я│ п╦п╪п╣п╫п╣п╪ name
   int getStringParamValue(std::string& value, const std::string& name) const;
   int getDoubleParamValue(double& value, const std::string& name) const;
   int getIntParamValue(signed int& value, const std::string& name) const;
@@ -110,34 +110,34 @@ class Environment {
   int getDoubleSetParamValue(std::set<double>& value, const std::string& name) const;
   int getIntSetParamValue(std::set<int>& value, const std::string& name) const;
   
-  // Общая функция взятия значения параметра
+  // п·п╠я┴п╟я▐ я└я┐п╫п╨я├п╦я▐ п╡п╥я▐я┌п╦я▐ п╥п╫п╟я┤п╣п╫п╦я▐ п©п╟я─п╟п╪п╣я┌я─п╟
   template<class T>
   int getParamValue(T& value, const std::string& name) const;
   
-  // Установка (перезапись) параметра
+  // пёя│я┌п╟п╫п╬п╡п╨п╟ (п©п╣я─п╣п╥п╟п©п╦я│я▄) п©п╟я─п╟п╪п╣я┌я─п╟
   template<class T>
   void setParamValue(const T& value, const std::string& name);
   void setParamValues(const std::set<std::string>& value, const std::string& name);
   
-  // В случае отсутствия значения бросает исключение
+  // п▓ я│п╩я┐я┤п╟п╣ п╬я┌я│я┐я┌я│я┌п╡п╦я▐ п╥п╫п╟я┤п╣п╫п╦я▐ п╠я─п╬я│п╟п╣я┌ п╦я│п╨п╩я▌я┤п╣п╫п╦п╣
   template<class T>
   void getMandatoryParamValue(T& value, const std::string& name) const;
 
   template<class T>
   void getParamValue(T& value, const std::string& name, const T& defaultValue) const;
 
-  // Удаляет параметр из окружения
+  // пёп╢п╟п╩я▐п╣я┌ п©п╟я─п╟п╪п╣я┌я─ п╦п╥ п╬п╨я─я┐п╤п╣п╫п╦я▐
   int undefineParam(const std::string& name);
   
   bool paramDefined(const std::string& paramName) const;
   
   void clear();
 
-  // Оператор объединения содержимого классов окружения
+  // п·п©п╣я─п╟я┌п╬я─ п╬п╠я┼п╣п╢п╦п╫п╣п╫п╦я▐ я│п╬п╢п╣я─п╤п╦п╪п╬пЁп╬ п╨п╩п╟я│я│п╬п╡ п╬п╨я─я┐п╤п╣п╫п╦я▐
   Environment& operator += (const Environment& second);
   
-  // Выставляет все параметры, содержащиеся в обоих окружениях,
-  // в значения из other
+  // п▓я▀я│я┌п╟п╡п╩я▐п╣я┌ п╡я│п╣ п©п╟я─п╟п╪п╣я┌я─я▀, я│п╬п╢п╣я─п╤п╟я┴п╦п╣я│я▐ п╡ п╬п╠п╬п╦я┘ п╬п╨я─я┐п╤п╣п╫п╦я▐я┘,
+  // п╡ п╥п╫п╟я┤п╣п╫п╦я▐ п╦п╥ other
   Environment& operator %= (const Environment& other);
 
 }; // end of class
@@ -145,8 +145,8 @@ class Environment {
 /****************************************************************************
 *					Environment::readConfigParams
 *
-*	Description:	Читает параметры, поданные в виде последовательности, заданной
-*					начальным и конечным итератором
+*	Description:	п╖п╦я┌п╟п╣я┌ п©п╟я─п╟п╪п╣я┌я─я▀, п©п╬п╢п╟п╫п╫я▀п╣ п╡ п╡п╦п╢п╣ п©п╬я│п╩п╣п╢п╬п╡п╟я┌п╣п╩я▄п╫п╬я│я┌п╦, п╥п╟п╢п╟п╫п╫п╬п╧
+*					п╫п╟я┤п╟п╩я▄п╫я▀п╪ п╦ п╨п╬п╫п╣я┤п╫я▀п╪ п╦я┌п╣я─п╟я┌п╬я─п╬п╪
 *	Parameters:	-
 *	Returns:		0
 *	Throws:		-
@@ -203,10 +203,10 @@ void Environment::getMandatoryParamValue(T &value, const std::string &name) cons
 /****************************************************************************
 *				Environment::setParamValue
 *
-*	Description:	Функция устанавливает новое значение параметра
-*					и удаляет все его старые вхождения
-*	Parameters:	T& value - значение
-*				const std::string& name - имя параметра
+*	Description:	п╓я┐п╫п╨я├п╦я▐ я┐я│я┌п╟п╫п╟п╡п╩п╦п╡п╟п╣я┌ п╫п╬п╡п╬п╣ п╥п╫п╟я┤п╣п╫п╦п╣ п©п╟я─п╟п╪п╣я┌я─п╟
+*					п╦ я┐п╢п╟п╩я▐п╣я┌ п╡я│п╣ п╣пЁп╬ я│я┌п╟я─я▀п╣ п╡я┘п╬п╤п╢п╣п╫п╦я▐
+*	Parameters:	T& value - п╥п╫п╟я┤п╣п╫п╦п╣
+*				const std::string& name - п╦п╪я▐ п©п╟я─п╟п╪п╣я┌я─п╟
 *	Returns:	-
 *	Throws:		-
 *	Author:		wictor

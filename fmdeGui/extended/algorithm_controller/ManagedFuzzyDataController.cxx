@@ -1,7 +1,7 @@
 /****************************************************************************
  *			ManagedFuzzyDataController
  *
- *	Description:	реализация функций-членов
+ *	Description:	я─п╣п╟п╩п╦п╥п╟я├п╦я▐ я└я┐п╫п╨я├п╦п╧-я┤п╩п╣п╫п╬п╡
  *	Author:		wictor
  *	History:	
  *
@@ -80,7 +80,7 @@ void ManagedFuzzyDataController::applyWorkDir(const std::string &workDir, std::s
 }
 
 void ManagedFuzzyDataController::init(const std::string &workDir) {
-	// Добавляем рабочую директорию к BaseDataSetDir
+	// п■п╬п╠п╟п╡п╩я▐п╣п╪ я─п╟п╠п╬я┤я┐я▌ п╢п╦я─п╣п╨я┌п╬я─п╦я▌ п╨ BaseDataSetDir
 	
 	applyWorkDir(workDir, "BaseDataSetDir");
 
@@ -134,7 +134,7 @@ ManagedFuzzyDataStage &ManagedFuzzyDataController::getStage(int stageNumber) {
 	}
 }
 
-//Создание дефолтных значений в ManagedFuzzyDataStage0
+//п║п╬п╥п╢п╟п╫п╦п╣ п╢п╣я└п╬п╩я┌п╫я▀я┘ п╥п╫п╟я┤п╣п╫п╦п╧ п╡ ManagedFuzzyDataStage0
 void ManagedFuzzyDataController::createStage0() {
 	stage0.init();
 	stage0.initClipping();

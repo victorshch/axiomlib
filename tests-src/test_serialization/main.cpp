@@ -17,10 +17,10 @@ using namespace shark;
 
 int main(int argc, char *argv[])
 {
-	// Инициализируем генератор случайных чисел
+	// п≤п╫п╦я├п╦п╟п╩п╦п╥п╦я─я┐п╣п╪ пЁп╣п╫п╣я─п╟я┌п╬я─ я│п╩я┐я┤п╟п╧п╫я▀я┘ я┤п╦я│п╣п╩
 	shark::Rng::seed(time(0));
 
-	// Генерируем случайный набор данных
+	// п⌠п╣п╫п╣я─п╦я─я┐п╣п╪ я│п╩я┐я┤п╟п╧п╫я▀п╧ п╫п╟п╠п╬я─ п╢п╟п╫п╫я▀я┘
 	std::vector<size_t> batchSizes = shark::detail::optimalBatchSizes(500, shark::Data<RealVector>::DefaultBatchSize);
 	shark::Data<RealVector> inputVectorsData = shark::Data<RealVector>(batchSizes.size());
 
@@ -39,11 +39,11 @@ int main(int argc, char *argv[])
 		}
 	}
 
-	// Проводим кластеризацию
+	// п÷я─п╬п╡п╬п╢п╦п╪ п╨п╩п╟я│я┌п╣я─п╦п╥п╟я├п╦я▌
 	shark::Centroids centroids;
 	kMeans(inputVectorsData, 10, centroids);
 
-	// Загоняем центроиды в std::vector<std::vector<double> >
+	// п≈п╟пЁп╬п╫я▐п╣п╪ я├п╣п╫я┌я─п╬п╦п╢я▀ п╡ std::vector<std::vector<double> >
 	shark::Data<shark::RealVector> centroidsData = centroids.centroids();
 	std::cout << "Centroids: " << centroidsData << std::endl;
 
@@ -61,7 +61,7 @@ int main(int argc, char *argv[])
 
 	std::cout << "Centroids in std::vector form: " << serializable << std::endl;
 
-	// Теперь достаем центроиды из serializable и загоняем их в Centroids
+	// п╒п╣п©п╣я─я▄ п╢п╬я│я┌п╟п╣п╪ я├п╣п╫я┌я─п╬п╦п╢я▀ п╦п╥ serializable п╦ п╥п╟пЁп╬п╫я▐п╣п╪ п╦я┘ п╡ Centroids
 	batchSizes = shark::detail::optimalBatchSizes(serializable.size(), shark::Data<RealVector>::DefaultBatchSize);
 	shark::Data<RealVector> restoredCentroidsData = shark::Data<RealVector>(batchSizes.size());
 
@@ -79,9 +79,9 @@ int main(int argc, char *argv[])
 		}
 	}
 
-	// Если здесь использовать не конструктор, а метод Centroids::initFromData(),
-	// то центроиды будут случайно переупорядочены, что не очень хорошо.
-	// Поэтому нужно использовать именно конструктор.
+	// п∙я│п╩п╦ п╥п╢п╣я│я▄ п╦я│п©п╬п╩я▄п╥п╬п╡п╟я┌я▄ п╫п╣ п╨п╬п╫я│я┌я─я┐п╨я┌п╬я─, п╟ п╪п╣я┌п╬п╢ Centroids::initFromData(),
+	// я┌п╬ я├п╣п╫я┌я─п╬п╦п╢я▀ п╠я┐п╢я┐я┌ я│п╩я┐я┤п╟п╧п╫п╬ п©п╣я─п╣я┐п©п╬я─я▐п╢п╬я┤п╣п╫я▀, я┤я┌п╬ п╫п╣ п╬я┤п╣п╫я▄ я┘п╬я─п╬я┬п╬.
+	// п÷п╬я█я┌п╬п╪я┐ п╫я┐п╤п╫п╬ п╦я│п©п╬п╩я▄п╥п╬п╡п╟я┌я▄ п╦п╪п╣п╫п╫п╬ п╨п╬п╫я│я┌я─я┐п╨я┌п╬я─.
 	Centroids restoredCentroids(restoredCentroidsData);
 
 	std::cout << "Restored centroids: " << restoredCentroids.centroids() << std::endl;

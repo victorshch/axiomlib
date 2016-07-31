@@ -22,7 +22,7 @@ unix {
 }
 
 win32 {
-#нужно для vc++10
+#РњРЎР¤РњРќ Р”РљРЄ vc++10
 QMAKE_LFLAGS += /entry:mainCRTStartup
 }
 

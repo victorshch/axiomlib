@@ -1,7 +1,7 @@
 /****************************************************************************
 *				AXOccFilter.h
 *
-*	Description: Эвристика кластеризации по встречаемости для аксиом
+*	Description: п╜п╡я─п╦я│я┌п╦п╨п╟ п╨п╩п╟я│я┌п╣я─п╦п╥п╟я├п╦п╦ п©п╬ п╡я│я┌я─п╣я┤п╟п╣п╪п╬я│я┌п╦ п╢п╩я▐ п╟п╨я│п╦п╬п╪
 *	Author:		wictor
 *	History:	
 *
@@ -20,13 +20,13 @@ class AXOccFilter : public Heuristics
 public:
     AXOccFilter();
 	
-	// Имя эвристики
+	// п≤п╪я▐ я█п╡я─п╦я│я┌п╦п╨п╦
 	virtual std::string name() const;
 	
-	// Стадия, на которой применяется эвристика
+	// п║я┌п╟п╢п╦я▐, п╫п╟ п╨п╬я┌п╬я─п╬п╧ п©я─п╦п╪п╣п╫я▐п╣я┌я│я▐ я█п╡я─п╦я│я┌п╦п╨п╟
 	virtual int stage() const;
 	
-	// Виртуальный конструктор копирования
+	// п▓п╦я─я┌я┐п╟п╩я▄п╫я▀п╧ п╨п╬п╫я│я┌я─я┐п╨я┌п╬я─ п╨п╬п©п╦я─п╬п╡п╟п╫п╦я▐
 	virtual Heuristics* clone() const;
 	
 private:
@@ -34,7 +34,7 @@ private:
 protected:
 	virtual void initFromEnvImpl(const Environment &env);
 	
-	// Запуск эвристики на алгоритме
+	// п≈п╟п©я┐я│п╨ я█п╡я─п╦я│я┌п╦п╨п╦ п╫п╟ п╟п╩пЁп╬я─п╦я┌п╪п╣
 	virtual void run(FuzzyMultiDataExtAlgorithm& algorithm, int aType) const;	
 };
 

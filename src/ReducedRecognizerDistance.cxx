@@ -12,10 +12,10 @@ ReducedRecognizerDistance::ReducedRecognizerDistance()
 /****************************************************************************
 *                       ReducedRecognizerDistance::setParamsFromEnv
 *
-*       Description:    Инициализировать параметры данными из env
-*       Parameters:     const Environment& env - среда
+*       Description:    п≤п╫п╦я├п╦п╟п╩п╦п╥п╦я─п╬п╡п╟я┌я▄ п©п╟я─п╟п╪п╣я┌я─я▀ п╢п╟п╫п╫я▀п╪п╦ п╦п╥ env
+*       Parameters:     const Environment& env - я│я─п╣п╢п╟
 *       Returns:        0
-*       Throws:         AxiomLibException - если нет какого-то из параметров
+*       Throws:         AxiomLibException - п╣я│п╩п╦ п╫п╣я┌ п╨п╟п╨п╬пЁп╬-я┌п╬ п╦п╥ п©п╟я─п╟п╪п╣я┌я─п╬п╡
 *       Author:         wictor
 *       History:
 *
@@ -36,10 +36,10 @@ int ReducedRecognizerDistance::setParamsFromEnv(const Environment &env) {
 /****************************************************************************
 *                       ReducedRecognizerDistance::run
 *
-*       Description:    Функция поиска разметки ethalon в markUp и запись получившейся маркировки в result
-*       Parameters:     markUp - данный для анализа ряд разметки
-*						etalon - разметка траектории нештатного поведения, т.е. искомый участок ряда
-*						result - вектор с результатами распознавания
+*       Description:    п╓я┐п╫п╨я├п╦я▐ п©п╬п╦я│п╨п╟ я─п╟п╥п╪п╣я┌п╨п╦ ethalon п╡ markUp п╦ п╥п╟п©п╦я│я▄ п©п╬п╩я┐я┤п╦п╡я┬п╣п╧я│я▐ п╪п╟я─п╨п╦я─п╬п╡п╨п╦ п╡ result
+*       Parameters:     markUp - п╢п╟п╫п╫я▀п╧ п╢п╩я▐ п╟п╫п╟п╩п╦п╥п╟ я─я▐п╢ я─п╟п╥п╪п╣я┌п╨п╦
+*						etalon - я─п╟п╥п╪п╣я┌п╨п╟ я┌я─п╟п╣п╨я┌п╬я─п╦п╦ п╫п╣я┬я┌п╟я┌п╫п╬пЁп╬ п©п╬п╡п╣п╢п╣п╫п╦я▐, я┌.п╣. п╦я│п╨п╬п╪я▀п╧ я┐я┤п╟я│я┌п╬п╨ я─я▐п╢п╟
+*						result - п╡п╣п╨я┌п╬я─ я│ я─п╣п╥я┐п╩я▄я┌п╟я┌п╟п╪п╦ я─п╟я│п©п╬п╥п╫п╟п╡п╟п╫п╦я▐
 *       Returns:        0
 *       Throws:         -
 *       Author:         wictor

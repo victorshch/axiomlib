@@ -16,7 +16,7 @@ RecognizerImplBase::RecognizerImplBase()
 /****************************************************************************
 *                       ReducedRecognizerDistance::run
 *
-*       Description:    Конструктор копирования -- клонирует labelingStrategy
+*       Description:    п п╬п╫я│я┌я─я┐п╨я┌п╬я─ п╨п╬п©п╦я─п╬п╡п╟п╫п╦я▐ -- п╨п╩п╬п╫п╦я─я┐п╣я┌ labelingStrategy
 *       Parameters:     other
 *       Returns:        -
 *       Throws:         -
@@ -94,25 +94,25 @@ int AxiomLib::RecognizerImplBase::setNominalParamsFromEnv(const AxiomLib::Enviro
 
 int AxiomLib::RecognizerImplBase::setDataSet(const AxiomLib::DataSet &/*newDataSet*/)
 {
-	//заглушка
+	//п╥п╟пЁп╩я┐я┬п╨п╟
 	return -1;
 }
 
 int AxiomLib::RecognizerImplBase::setParamsOfDataSet(std::vector<int> &/*newParams*/)
 {
-	//заглушка
+	//п╥п╟пЁп╩я┐я┬п╨п╟
 	return -1;
 }
 
 signed int AxiomLib::RecognizerImplBase::run(AxiomLib::AxiomSetPop &/*pop*/)
 {
-	//заглушка
+	//п╥п╟пЁп╩я┐я┬п╨п╟
 	return -1;
 }
 
 signed int AxiomLib::RecognizerImplBase::run(AxiomLib::AxiomSetPop &/*pop*/, std::vector<double> &/*precs*/)
 {
-	//заглушка
+	//п╥п╟пЁп╩я┐я┬п╨п╟
 	return -1;
 }
 
@@ -129,8 +129,8 @@ signed int AxiomLib::RecognizerImplBase::run(AxiomSet& axiomSet, DataSet& extDat
 											 std::vector<double> &stat, const int /*asIndex*/)
 {
 	/*
-	  1. Получить маркировки тестовых траекторий и статистику использования аксиом
-	  2. Посчитать число ошибок и статистику
+	  1. п÷п╬п╩я┐я┤п╦я┌я▄ п╪п╟я─п╨п╦я─п╬п╡п╨п╦ я┌п╣я│я┌п╬п╡я▀я┘ я┌я─п╟п╣п╨я┌п╬я─п╦п╧ п╦ я│я┌п╟я┌п╦я│я┌п╦п╨я┐ п╦я│п©п╬п╩я▄п╥п╬п╡п╟п╫п╦я▐ п╟п╨я│п╦п╬п╪
+	  2. п÷п╬я│я┤п╦я┌п╟я┌я▄ я┤п╦я│п╩п╬ п╬я┬п╦п╠п╬п╨ п╦ я│я┌п╟я┌п╦я│я┌п╦п╨я┐
 	*/
 	//Logger::getInstance()->writeDebug("Entering RecognizerImplBase::run()");
 	
@@ -158,7 +158,7 @@ signed int AxiomLib::RecognizerImplBase::run(AxiomSet& axiomSet, DataSet& extDat
 	
 	int resShouldBe = 0;
 	
-	// 2. Считаем число ошибок
+	// 2. п║я┤п╦я┌п╟п╣п╪ я┤п╦я│п╩п╬ п╬я┬п╦п╠п╬п╨
 	
 	for (int i = 0; i < nTests; ++i) {
 		int tmpShouldBe = 0;
@@ -172,7 +172,7 @@ signed int AxiomLib::RecognizerImplBase::run(AxiomSet& axiomSet, DataSet& extDat
 	
 	//Logger::getInstance()->writeDebug("RecognizerImplBase::run() : counting stat");
 	
-	// Подсчет статистики
+	// п÷п╬п╢я│я┤п╣я┌ я│я┌п╟я┌п╦я│я┌п╦п╨п╦
 	countStat(stat, resFirst, resSecond, resShouldBe, refStat, testStat);
 			
 	//Logger::getInstance()->writeDebug("Leaving RecognizerImplBase::run()");
@@ -184,12 +184,12 @@ double RecognizerImplBase::countErrors(std::vector<TrajectorySampleDistance> dis
 	resFirst = 0;
 	resSecond = 0;
 	
-	std::vector <int> labeling; // Полученная маркировка текущего ряда
-	// 2. Считаем число ошибок
+	std::vector <int> labeling; // п÷п╬п╩я┐я┤п╣п╫п╫п╟я▐ п╪п╟я─п╨п╦я─п╬п╡п╨п╟ я┌п╣п╨я┐я┴п╣пЁп╬ я─я▐п╢п╟
+	// 2. п║я┤п╦я┌п╟п╣п╪ я┤п╦я│п╩п╬ п╬я┬п╦п╠п╬п╨
 	//Logger::getInstance()->writeDebug("RecognizerImplBase::run(): counting errors");
 	int nTests = correctLabelings.size(); 
 	for (int i = 0; i < nTests; ++i) {
-		double tmpFirst = 0, tmpSecond = 0; // Переменные для суммирования статистики
+		double tmpFirst = 0, tmpSecond = 0; // п÷п╣я─п╣п╪п╣п╫п╫я▀п╣ п╢п╩я▐ я│я┐п╪п╪п╦я─п╬п╡п╟п╫п╦я▐ я│я┌п╟я┌п╦я│я┌п╦п╨п╦
 		
 		labelingStrategy->performLabeling(distances[i], labeling);
 		compareStatistic->getStatistic(labeling, correctLabelings[i], tmpFirst, tmpSecond, comments());
@@ -260,9 +260,9 @@ double RecognizerImplBase::learn(TemplateRecognizer &templateRecognizer)
 /****************************************************************************
 *				RecognizerImplBase::coutAbnormalSegments
 *
-*	Description:	Анализ одного теста - возвращает общее число траекторий нештатного поведения в данном тесте
-*	Parameters:		labeling - корректная разметка теста
-*					abnormalSegmentsNum - число участков нештатного поведения
+*	Description:	п░п╫п╟п╩п╦п╥ п╬п╢п╫п╬пЁп╬ я┌п╣я│я┌п╟ - п╡п╬п╥п╡я─п╟я┴п╟п╣я┌ п╬п╠я┴п╣п╣ я┤п╦я│п╩п╬ я┌я─п╟п╣п╨я┌п╬я─п╦п╧ п╫п╣я┬я┌п╟я┌п╫п╬пЁп╬ п©п╬п╡п╣п╢п╣п╫п╦я▐ п╡ п╢п╟п╫п╫п╬п╪ я┌п╣я│я┌п╣
+*	Parameters:		labeling - п╨п╬я─я─п╣п╨я┌п╫п╟я▐ я─п╟п╥п╪п╣я┌п╨п╟ я┌п╣я│я┌п╟
+*					abnormalSegmentsNum - я┤п╦я│п╩п╬ я┐я┤п╟я│я┌п╨п╬п╡ п╫п╣я┬я┌п╟я┌п╫п╬пЁп╬ п©п╬п╡п╣п╢п╣п╫п╦я▐
 *	Returns:		0
 *	Throws:			-
 *	Author:			dk
@@ -294,15 +294,15 @@ int RecognizerImplBase::coutAbnormalSegments(const std::vector<int>& labeling, i
 /****************************************************************************
 *					RecognizerImplBase::countStat
 *
-*	Description:	Вспомогательная процедура для подсчета статистики по результатам распознавания
-*	Parameters:		stat - заполняемый вектор статистики
-*					resFisrt - число ошибок первого рода
-*					resSecond - число ошибок второго рода
-*					abnormalSegmentsNum - общее число нештатных ситуаций, которые есть в тестовых данных
-*					refStat - статистика по использованию аксиом для разметки эталонных траекторий
-*					testStat - статистика по использованию аксиом для разметки тестовых рядов
+*	Description:	п▓я│п©п╬п╪п╬пЁп╟я┌п╣п╩я▄п╫п╟я▐ п©я─п╬я├п╣п╢я┐я─п╟ п╢п╩я▐ п©п╬п╢я│я┤п╣я┌п╟ я│я┌п╟я┌п╦я│я┌п╦п╨п╦ п©п╬ я─п╣п╥я┐п╩я▄я┌п╟я┌п╟п╪ я─п╟я│п©п╬п╥п╫п╟п╡п╟п╫п╦я▐
+*	Parameters:		stat - п╥п╟п©п╬п╩п╫я▐п╣п╪я▀п╧ п╡п╣п╨я┌п╬я─ я│я┌п╟я┌п╦я│я┌п╦п╨п╦
+*					resFisrt - я┤п╦я│п╩п╬ п╬я┬п╦п╠п╬п╨ п©п╣я─п╡п╬пЁп╬ я─п╬п╢п╟
+*					resSecond - я┤п╦я│п╩п╬ п╬я┬п╦п╠п╬п╨ п╡я┌п╬я─п╬пЁп╬ я─п╬п╢п╟
+*					abnormalSegmentsNum - п╬п╠я┴п╣п╣ я┤п╦я│п╩п╬ п╫п╣я┬я┌п╟я┌п╫я▀я┘ я│п╦я┌я┐п╟я├п╦п╧, п╨п╬я┌п╬я─я▀п╣ п╣я│я┌я▄ п╡ я┌п╣я│я┌п╬п╡я▀я┘ п╢п╟п╫п╫я▀я┘
+*					refStat - я│я┌п╟я┌п╦я│я┌п╦п╨п╟ п©п╬ п╦я│п©п╬п╩я▄п╥п╬п╡п╟п╫п╦я▌ п╟п╨я│п╦п╬п╪ п╢п╩я▐ я─п╟п╥п╪п╣я┌п╨п╦ я█я┌п╟п╩п╬п╫п╫я▀я┘ я┌я─п╟п╣п╨я┌п╬я─п╦п╧
+*					testStat - я│я┌п╟я┌п╦я│я┌п╦п╨п╟ п©п╬ п╦я│п©п╬п╩я▄п╥п╬п╡п╟п╫п╦я▌ п╟п╨я│п╦п╬п╪ п╢п╩я▐ я─п╟п╥п╪п╣я┌п╨п╦ я┌п╣я│я┌п╬п╡я▀я┘ я─я▐п╢п╬п╡
 *	Returns:		-
-*	Throws:			AxiomLibException - если не входные параметры не согласованы
+*	Throws:			AxiomLibException - п╣я│п╩п╦ п╫п╣ п╡я┘п╬п╢п╫я▀п╣ п©п╟я─п╟п╪п╣я┌я─я▀ п╫п╣ я│п╬пЁп╩п╟я│п╬п╡п╟п╫я▀
 *	Author:			dk
 *	History:
 *
@@ -317,7 +317,7 @@ void RecognizerImplBase::countStat(std::vector<double> &stat, int resFirst, int 
 	stat.resize (refStat.size());
 	int temp;
 	double multiplier;
-	multiplier = 0.5 * (double) (abnormalSegmentsNum - resSecond) / (double) (abnormalSegmentsNum + resFirst); // resFisrt и resSecond изначально перепутаны во всей программе, поэтому и здесь формула с такими подстановками
+	multiplier = 0.5 * (double) (abnormalSegmentsNum - resSecond) / (double) (abnormalSegmentsNum + resFirst); // resFisrt п╦ resSecond п╦п╥п╫п╟я┤п╟п╩я▄п╫п╬ п©п╣я─п╣п©я┐я┌п╟п╫я▀ п╡п╬ п╡я│п╣п╧ п©я─п╬пЁя─п╟п╪п╪п╣, п©п╬я█я┌п╬п╪я┐ п╦ п╥п╢п╣я│я▄ я└п╬я─п╪я┐п╩п╟ я│ я┌п╟п╨п╦п╪п╦ п©п╬п╢я│я┌п╟п╫п╬п╡п╨п╟п╪п╦
 	for (unsigned int i = 0; i < refStat.size(); i++) {
 		temp = 0;
 		if (refStat[i]) temp++;

@@ -1,10 +1,10 @@
 /****************************************************************************
 *					LabelingStrategy
 *
-*	Description:	Алгоритм построения маркировки 
-*					по данным о расстояниях
-*					от участков траектории до эталонных траекторий.
-*					Интерфейс.
+*	Description:	п░п╩пЁп╬я─п╦я┌п╪ п©п╬я│я┌я─п╬п╣п╫п╦я▐ п╪п╟я─п╨п╦я─п╬п╡п╨п╦ 
+*					п©п╬ п╢п╟п╫п╫я▀п╪ п╬ я─п╟я│я│я┌п╬я▐п╫п╦я▐я┘
+*					п╬я┌ я┐я┤п╟я│я┌п╨п╬п╡ я┌я─п╟п╣п╨я┌п╬я─п╦п╦ п╢п╬ я█я┌п╟п╩п╬п╫п╫я▀я┘ я┌я─п╟п╣п╨я┌п╬я─п╦п╧.
+*					п≤п╫я┌п╣я─я└п╣п╧я│.
 *	Author:			wictor
 *	History:	
 *
@@ -26,13 +26,13 @@ public:
 	
 	virtual ~LabelingStrategy() {}
 	
-	// Задание параметров из окружения
+	// п≈п╟п╢п╟п╫п╦п╣ п©п╟я─п╟п╪п╣я┌я─п╬п╡ п╦п╥ п╬п╨я─я┐п╤п╣п╫п╦я▐
 	virtual void initFromEnv(const Environment& env) = 0;
 	
-	// Построение маркировки траектории
+	// п÷п╬я│я┌я─п╬п╣п╫п╦п╣ п╪п╟я─п╨п╦я─п╬п╡п╨п╦ я┌я─п╟п╣п╨я┌п╬я─п╦п╦
 	virtual void performLabeling(const TrajectorySampleDistance& trajectorySampleDistance, std::vector<int>& labeling) const = 0;
 	
-	// Обучение алгоритма маркировки
+	// п·п╠я┐я┤п╣п╫п╦п╣ п╟п╩пЁп╬я─п╦я┌п╪п╟ п╪п╟я─п╨п╦я─п╬п╡п╨п╦
 	virtual double train(const std::vector<TrajectorySampleDistance>& trainTrajectorySampleDistance, 
 				 const std::vector<std::vector<int> >& trainTrajectoryRightLabeling,
 				 Recognizer* recognizer) = 0;

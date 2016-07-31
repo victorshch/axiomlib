@@ -1,7 +1,7 @@
 /****************************************************************************
 *			PrimeGoalStrategy
 *
-*	Description:	Функции класса PrimeGoalStrategy - Реализация
+*	Description:	п╓я┐п╫п╨я├п╦п╦ п╨п╩п╟я│я│п╟ PrimeGoalStrategy - п═п╣п╟п╩п╦п╥п╟я├п╦я▐
 *	Author:		gevor
 *	History:		
 *
@@ -14,10 +14,10 @@ using namespace AxiomLib;
 /****************************************************************************
 *			PrimeGoalStrategy::setParamsFromEnv
 *
-*	Description:	Установка параметров целевой функции из среды
-*	Parameters:	const Environment& env - откуда ставить
+*	Description:	пёя│я┌п╟п╫п╬п╡п╨п╟ п©п╟я─п╟п╪п╣я┌я─п╬п╡ я├п╣п╩п╣п╡п╬п╧ я└я┐п╫п╨я├п╦п╦ п╦п╥ я│я─п╣п╢я▀
+*	Parameters:	const Environment& env - п╬я┌п╨я┐п╢п╟ я│я┌п╟п╡п╦я┌я▄
 *	Returns:	0
-*	Throws:		AxiomLibException - если параметра нет
+*	Throws:		AxiomLibException - п╣я│п╩п╦ п©п╟я─п╟п╪п╣я┌я─п╟ п╫п╣я┌
 *	Author:		gevor
 *	History:
 *
@@ -38,8 +38,8 @@ int PrimeGoalStrategy::setParamsFromEnv (const Environment& env) {
 /****************************************************************************
 *			PrimeGoalStrategy::compute
 *
-*	Description:	считает по количеству ошибок I т II рода в популяции, goal function систем аксиом
-*	Parameters:	AxiomSetPop - изменяемая популяция
+*	Description:	я│я┤п╦я┌п╟п╣я┌ п©п╬ п╨п╬п╩п╦я┤п╣я│я┌п╡я┐ п╬я┬п╦п╠п╬п╨ I я┌ II я─п╬п╢п╟ п╡ п©п╬п©я┐п╩я▐я├п╦п╦, goal function я│п╦я│я┌п╣п╪ п╟п╨я│п╦п╬п╪
+*	Parameters:	AxiomSetPop - п╦п╥п╪п╣п╫я▐п╣п╪п╟я▐ п©п╬п©я┐п╩я▐я├п╦я▐
 *	Returns:		0
 *	Throws:		-
 *	Author:		gevor
@@ -47,13 +47,13 @@ int PrimeGoalStrategy::setParamsFromEnv (const Environment& env) {
 *
 ****************************************************************************/
 int PrimeGoalStrategy::compute (AxiomSetPop& pop) const {
-	// Проверка параметров на соответствие границам
+	// п÷я─п╬п╡п╣я─п╨п╟ п©п╟я─п╟п╪п╣я┌я─п╬п╡ п╫п╟ я│п╬п╬я┌п╡п╣я┌я│я┌п╡п╦п╣ пЁя─п╟п╫п╦я├п╟п╪
 	if ( (gcFirst < 0) || (gcSecond < 0) )
 		throw AxiomLibException ("Error in GoalPrime::compute - params uninitialized.");
 
 	int nFirst, nSecond;
 	double goal;
-	// ходим по ним, вычисляем цель
+	// я┘п╬п╢п╦п╪ п©п╬ п╫п╦п╪, п╡я▀я┤п╦я│п╩я▐п╣п╪ я├п╣п╩я▄
 	for (int i = 0; i < pop.size(); i++) {
 		pop.getStats(i, nFirst, nSecond, goal);
 		if (nFirst < 0 || nSecond < 0) {
@@ -72,10 +72,10 @@ int PrimeGoalStrategy::compute (AxiomSetPop& pop) const {
 /****************************************************************************
 *			PrimeGoalStrategy::compute
 *
-*	Description:	Cчитает значение целевой функции по количеству ошибок I т II рода
-*	Parameters:		nFirst - число ошибок I рода
-*					nSecond - число ошибок II рода
-*	Returns:		double - полученное значение целевой функции
+*	Description:	Cя┤п╦я┌п╟п╣я┌ п╥п╫п╟я┤п╣п╫п╦п╣ я├п╣п╩п╣п╡п╬п╧ я└я┐п╫п╨я├п╦п╦ п©п╬ п╨п╬п╩п╦я┤п╣я│я┌п╡я┐ п╬я┬п╦п╠п╬п╨ I я┌ II я─п╬п╢п╟
+*	Parameters:		nFirst - я┤п╦я│п╩п╬ п╬я┬п╦п╠п╬п╨ I я─п╬п╢п╟
+*					nSecond - я┤п╦я│п╩п╬ п╬я┬п╦п╠п╬п╨ II я─п╬п╢п╟
+*	Returns:		double - п©п╬п╩я┐я┤п╣п╫п╫п╬п╣ п╥п╫п╟я┤п╣п╫п╦п╣ я├п╣п╩п╣п╡п╬п╧ я└я┐п╫п╨я├п╦п╦
 *	Throws:			-
 *	Author:			dk
 *	History:

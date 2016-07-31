@@ -1,7 +1,7 @@
 /****************************************************************************
-*			MetricsBetweenSets2.сxx
+*			MetricsBetweenSets2.я│xx
 *
-*	Description: Реализация метода класса
+*	Description: п═п╣п╟п╩п╦п╥п╟я├п╦я▐ п╪п╣я┌п╬п╢п╟ п╨п╩п╟я│я│п╟
 *	Author:		armkor
 *	History:
 *

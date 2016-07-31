@@ -1,7 +1,7 @@
 /****************************************************************************
-*					Функции класса AxiomExprPlus
+*					п╓я┐п╫п╨я├п╦п╦ п╨п╩п╟я│я│п╟ AxiomExprPlus
 *
-*	Description:	Реализация класса наследования от AxiomExpr с добавлением статистики
+*	Description:	п═п╣п╟п╩п╦п╥п╟я├п╦я▐ п╨п╩п╟я│я│п╟ п╫п╟я│п╩п╣п╢п╬п╡п╟п╫п╦я▐ п╬я┌ AxiomExpr я│ п╢п╬п╠п╟п╡п╩п╣п╫п╦п╣п╪ я│я┌п╟я┌п╦я│я┌п╦п╨п╦
 *	Author:			dk
 *	History:	
 *
@@ -13,12 +13,12 @@ using namespace AxiomLib;
 
 
 
-// Пустой конструктор с заданием имени аксиомы по default'у
+// п÷я┐я│я┌п╬п╧ п╨п╬п╫я│я┌я─я┐п╨я┌п╬я─ я│ п╥п╟п╢п╟п╫п╦п╣п╪ п╦п╪п╣п╫п╦ п╟п╨я│п╦п╬п╪я▀ п©п╬ default'я┐
 AxiomExprPlus::AxiomExprPlus () {
 }
 
 
-// Пустой конструктор с заданием имени аксиомы в параметре
+// п÷я┐я│я┌п╬п╧ п╨п╬п╫я│я┌я─я┐п╨я┌п╬я─ я│ п╥п╟п╢п╟п╫п╦п╣п╪ п╦п╪п╣п╫п╦ п╟п╨я│п╦п╬п╪я▀ п╡ п©п╟я─п╟п╪п╣я┌я─п╣
 AxiomExprPlus::AxiomExprPlus (const std::string sName) : AxiomExpr(sName) {
 	setDefaultStatistics();
 }
@@ -36,7 +36,7 @@ AxiomExprPlus::AxiomExprPlus(const AxiomExpr &ax) : AxiomExpr(ax) {
 }
 
 
-// Деструктор пустой
+// п■п╣я│я┌я─я┐п╨я┌п╬я─ п©я┐я│я┌п╬п╧
 AxiomExprPlus::~AxiomExprPlus(void) {
 	
 }
@@ -50,7 +50,7 @@ void AxiomExprPlus::setDefaultStatistics() {
 }
 
 
-// Функция содержимое всех элементов в объекте
+// п╓я┐п╫п╨я├п╦я▐ я│п╬п╢п╣я─п╤п╦п╪п╬п╣ п╡я│п╣я┘ я█п╩п╣п╪п╣п╫я┌п╬п╡ п╡ п╬п╠я┼п╣п╨я┌п╣
 void AxiomExprPlus::clear(void) {
 	AxiomExpr::clear();
 	setDefaultStatistics();
@@ -60,8 +60,8 @@ void AxiomExprPlus::clear(void) {
 /****************************************************************************
 *					AxiomExprPlus::operator=
 *
-*	Description:	Оператор присваивания аксиомы со статистикой
-*	Parameters:		second - присваиваемая система аксиом
+*	Description:	п·п©п╣я─п╟я┌п╬я─ п©я─п╦я│п╡п╟п╦п╡п╟п╫п╦я▐ п╟п╨я│п╦п╬п╪я▀ я│п╬ я│я┌п╟я┌п╦я│я┌п╦п╨п╬п╧
+*	Parameters:		second - п©я─п╦я│п╡п╟п╦п╡п╟п╣п╪п╟я▐ я│п╦я│я┌п╣п╪п╟ п╟п╨я│п╦п╬п╪
 *	Returns:		*this
 *	Throws:			-
 *	Author:			dk
@@ -69,18 +69,18 @@ void AxiomExprPlus::clear(void) {
 *
 ****************************************************************************/
 //AxiomExprPlus& AxiomExprPlus::operator= (const AxiomExprPlus &second) {
-//	// Очищение содержимого данной аксиомы
+//	// п·я┤п╦я┴п╣п╫п╦п╣ я│п╬п╢п╣я─п╤п╦п╪п╬пЁп╬ п╢п╟п╫п╫п╬п╧ п╟п╨я│п╦п╬п╪я▀
 //	this->clear();
-//	// Копируем статистику по аксиоме
+//	// п п╬п©п╦я─я┐п╣п╪ я│я┌п╟я┌п╦я│я┌п╦п╨я┐ п©п╬ п╟п╨я│п╦п╬п╪п╣
 //	this->goal = second.goal;
 //	this->statAbnorm = second.statAbnorm;
 //	this->statNormal = second.statNormal;
 //	this->statVariation = second.statVariation;
-//	// копирование названия аксиомы и используемого банка элементарных условий
-//	// здесь можно написать просто AxiomExpr::operator=(second);
+//	// п╨п╬п©п╦я─п╬п╡п╟п╫п╦п╣ п╫п╟п╥п╡п╟п╫п╦я▐ п╟п╨я│п╦п╬п╪я▀ п╦ п╦я│п©п╬п╩я▄п╥я┐п╣п╪п╬пЁп╬ п╠п╟п╫п╨п╟ я█п╩п╣п╪п╣п╫я┌п╟я─п╫я▀я┘ я┐я│п╩п╬п╡п╦п╧
+//	// п╥п╢п╣я│я▄ п╪п╬п╤п╫п╬ п╫п╟п©п╦я│п╟я┌я▄ п©я─п╬я│я┌п╬ AxiomExpr::operator=(second);
 //	this->nameOfAxiomExpr = second.name();
 //	this->nameOfECBank = second.nameOfECBank;
-//	// копирвание содержимых элементарных условий
+//	// п╨п╬п©п╦я─п╡п╟п╫п╦п╣ я│п╬п╢п╣я─п╤п╦п╪я▀я┘ я█п╩п╣п╪п╣п╫я┌п╟я─п╫я▀я┘ я┐я│п╩п╬п╡п╦п╧
 //	this->expression.resize (second.expression.size());
 //	for (unsigned int i = 0; i < second.expression.size(); i++) {
 //		this->expression[i].resize (second.expression[i].size());
@@ -93,7 +93,7 @@ void AxiomExprPlus::clear(void) {
 /****************************************************************************
 *					AxiomExprPlus::saveAxiomToFile
 *
-*	Description:	Сохранение аксиомы и статистики
+*	Description:	п║п╬я┘я─п╟п╫п╣п╫п╦п╣ п╟п╨я│п╦п╬п╪я▀ п╦ я│я┌п╟я┌п╦я│я┌п╦п╨п╦
 *	Parameters:		baseDir, axiomName, paramNames
 *	Returns:		0
 *	Throws:			-

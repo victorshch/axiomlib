@@ -34,7 +34,7 @@ IntInterval OccClustering::getNextCluster(const SatPointSet &satPointSet,
 	int left = currentPoint;
 	int right = currentPoint;
 	++currentPoint;
-	// Удаление текущей точки от текущей правой границы кластера
+	// пёп╢п╟п╩п╣п╫п╦п╣ я┌п╣п╨я┐я┴п╣п╧ я┌п╬я┤п╨п╦ п╬я┌ я┌п╣п╨я┐я┴п╣п╧ п©я─п╟п╡п╬п╧ пЁя─п╟п╫п╦я├я▀ п╨п╩п╟я│я┌п╣я─п╟
 	int currentDistance = 1;
 	
 	

@@ -7,7 +7,7 @@
 class Schema
 {
 public:
-	// Число колонок в представлении
+	// п╖п╦я│п╩п╬ п╨п╬п╩п╬п╫п╬п╨ п╡ п©я─п╣п╢я│я┌п╟п╡п╩п╣п╫п╦п╦
 	int columnCount() const;
     const QString& getColumnId(int column, int role) const;
 	QList<int> getRoles(int column) const;

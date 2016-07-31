@@ -1,7 +1,7 @@
 /****************************************************************************
 *				ECTypeSelection.h
 *
-*	Description: Механизм задания используемых типов ЭУ, оформлен как эвристика
+*	Description: п°п╣я┘п╟п╫п╦п╥п╪ п╥п╟п╢п╟п╫п╦я▐ п╦я│п©п╬п╩я▄п╥я┐п╣п╪я▀я┘ я┌п╦п©п╬п╡ п╜пё, п╬я└п╬я─п╪п╩п╣п╫ п╨п╟п╨ я█п╡я─п╦я│я┌п╦п╨п╟
 *	Author:		wictor
 *	History:	
 *
@@ -23,16 +23,16 @@ class ECTypeSelection : public Heuristics
 public:
     ECTypeSelection();
 	
-	// Имя эвристики
+	// п≤п╪я▐ я█п╡я─п╦я│я┌п╦п╨п╦
 	virtual std::string name() const;
 	
-	// Стадия, на которой применяется эвристика
+	// п║я┌п╟п╢п╦я▐, п╫п╟ п╨п╬я┌п╬я─п╬п╧ п©я─п╦п╪п╣п╫я▐п╣я┌я│я▐ я█п╡я─п╦я│я┌п╦п╨п╟
 	virtual int stage() const;
 	
-	// Виртуальный конструктор копирования
+	// п▓п╦я─я┌я┐п╟п╩я▄п╫я▀п╧ п╨п╬п╫я│я┌я─я┐п╨я┌п╬я─ п╨п╬п©п╦я─п╬п╡п╟п╫п╦я▐
 	virtual ECTypeSelection* clone() const;
 	
-	// Запуск эвристики на алгоритме
+	// п≈п╟п©я┐я│п╨ я█п╡я─п╦я│я┌п╦п╨п╦ п╫п╟ п╟п╩пЁп╬я─п╦я┌п╪п╣
 	virtual void run(FuzzyMultiDataExtAlgorithm& algorithm) const;
 	
 protected:	
@@ -40,8 +40,8 @@ protected:
 	void initFromEnvImpl(const Environment &env);
 
 private:
-	enum SelectionPolicy { Exclusive = 0, /* Используем все кроме указанных в конфиге */ 
-		                   Inclusive = 1 /* Используем только указанные в конфиге */ };
+	enum SelectionPolicy { Exclusive = 0, /* п≤я│п©п╬п╩я▄п╥я┐п╣п╪ п╡я│п╣ п╨я─п╬п╪п╣ я┐п╨п╟п╥п╟п╫п╫я▀я┘ п╡ п╨п╬п╫я└п╦пЁп╣ */ 
+		                   Inclusive = 1 /* п≤я│п©п╬п╩я▄п╥я┐п╣п╪ я┌п╬п╩я▄п╨п╬ я┐п╨п╟п╥п╟п╫п╫я▀п╣ п╡ п╨п╬п╫я└п╦пЁп╣ */ };
 	
 	struct compare {
 		bool operator()(const std::pair<bool, std::string>& p1, const std::pair<bool, std::string>& p2) const;

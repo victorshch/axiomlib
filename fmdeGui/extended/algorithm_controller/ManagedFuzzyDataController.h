@@ -1,7 +1,7 @@
 /****************************************************************************
  *			ManagedFuzzyDataController
  *
- *	Description:	класс, содержащий логику обмена информацией с GUI
+ *	Description:	п╨п╩п╟я│я│, я│п╬п╢п╣я─п╤п╟я┴п╦п╧ п╩п╬пЁп╦п╨я┐ п╬п╠п╪п╣п╫п╟ п╦п╫я└п╬я─п╪п╟я├п╦п╣п╧ я│ GUI
  *	Author:		wictor
  *	History:	
  *
@@ -77,7 +77,7 @@ public:
 		return self;
 	}
 	
-	//Стадии алгоритма
+	//п║я┌п╟п╢п╦п╦ п╟п╩пЁп╬я─п╦я┌п╪п╟
 	ManagedFuzzyDataStage0 stage0;
 	ManagedFuzzyDataStage1 stage1;
 	ManagedFuzzyDataStage2 stage2;

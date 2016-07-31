@@ -31,7 +31,7 @@ SeparateClassDisplay::SeparateClassDisplay(ManagedFuzzyDataController *controlle
 	
 	for(int i = 0; i < classSelectForm->classCount(); ++i) {
 		QTreeWidgetItem* currentItem = new QTreeWidgetItem();
-		currentItem->setText(0, encode("Класс ") + classSelectForm->className(i));
+		currentItem->setText(0, encode("п п╩п╟я│я│ ") + classSelectForm->className(i));
 		currentItem->setData(0, Qt::UserRole, QVariant::fromValue(i));
 		m_items.append(currentItem);
 	}
@@ -206,8 +206,8 @@ void SeparateClassDisplay::traverseCurrentDepth(ReducedTraverseFunction function
 //	};
 	
 //	traverseWithDepth(pair.first, TraverseFunction(traverseFunction));
-        // предыдущий код не компилится в icc (вылетает с internal error, видимо, из-за замыкания function),
-        // поэтому пришлось написать дополнительную функцию
+        // п©я─п╣п╢я▀п╢я┐я┴п╦п╧ п╨п╬п╢ п╫п╣ п╨п╬п╪п©п╦п╩п╦я┌я│я▐ п╡ icc (п╡я▀п╩п╣я┌п╟п╣я┌ я│ internal error, п╡п╦п╢п╦п╪п╬, п╦п╥-п╥п╟ п╥п╟п╪я▀п╨п╟п╫п╦я▐ function),
+        // п©п╬я█я┌п╬п╪я┐ п©я─п╦я┬п╩п╬я│я▄ п╫п╟п©п╦я│п╟я┌я▄ п╢п╬п©п╬п╩п╫п╦я┌п╣п╩я▄п╫я┐я▌ я└я┐п╫п╨я├п╦я▌
         traverseDepth(pair.first, function, depth);
 }
 
@@ -399,7 +399,7 @@ void SeparateClassDisplay::applyExpansion(QTreeWidgetItem *item) {
 			return false;
 		}
 	};
-	//todo сдедать через disconnect
+	//todo я│п╢п╣п╢п╟я┌я▄ я┤п╣я─п╣п╥ disconnect
 	m_canSaveItemExpanded = false;
 	traverseWithDepth(item, TraverseFunction(function));
 	m_canSaveItemExpanded = true;
@@ -412,7 +412,7 @@ void SeparateClassDisplay::setItemExpanded(QTreeWidgetItem *item, bool expanded)
 bool SeparateClassDisplay::isItemExpanded(QTreeWidgetItem *item) {
 	QVariant value = item->data(0, ExpandedRole);
 	if(value.isNull()) {
-		// По умолчанию вершина раскрыта
+		// п÷п╬ я┐п╪п╬п╩я┤п╟п╫п╦я▌ п╡п╣я─я┬п╦п╫п╟ я─п╟я│п╨я─я▀я┌п╟
 		setItemExpanded(item, true);
 		return true;
 	} else {

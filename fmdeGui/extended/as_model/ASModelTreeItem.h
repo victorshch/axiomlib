@@ -27,7 +27,7 @@ public:
 	
 	virtual ASModelTreeItem *child(int row) const = 0;
 	virtual int childCount() const = 0;	
-	//TODO: перенести в protected
+	//TODO: п©п╣я─п╣п╫п╣я│я┌п╦ п╡ protected
 	virtual int rowOfChild(const ASModelTreeItem *child) const = 0;
 	
 	ASModelTreeItem *parent() const;

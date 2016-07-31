@@ -29,7 +29,7 @@ public:
 	bool isSat(int axiomClassNo, int axiomNo, int division, int classNumber, int trajectoryNumber, int point) const;
 	bool isSat(int globalAxiomIndex, int division, int classNumber, int trajectoryNumber, int point) const;
 
-	// Функция разметки заданной траектории датасета
+	// п╓я┐п╫п╨я├п╦я▐ я─п╟п╥п╪п╣я┌п╨п╦ п╥п╟п╢п╟п╫п╫п╬п╧ я┌я─п╟п╣п╨я┌п╬я─п╦п╦ п╢п╟я┌п╟я│п╣я┌п╟
 	void performMarkUp(const AxiomExprSetPlus &asSet, FuzzyDataSet::DataSetDivisionType, int classNo, int multiTSNo, std::vector<int>& result) const;
 
 	int toGlobalIndex(int classNo, int i) const { return axiom(classNo, i).index; }
@@ -157,8 +157,8 @@ struct ASOnePointCrossover {
 	void operator()(const ASIndividual& ind1, const ASIndividual& ind2, ASIndividual& off1, ASIndividual& off2) const;
 
 private:
-	// Переводит разметки, в которых указан номер аксиомы в системе аксиом,
-	// в разметки, в которых указан глобальный индекс аксиомы или -1 для тождественной аксиомы
+	// п÷п╣я─п╣п╡п╬п╢п╦я┌ я─п╟п╥п╪п╣я┌п╨п╦, п╡ п╨п╬я┌п╬я─я▀я┘ я┐п╨п╟п╥п╟п╫ п╫п╬п╪п╣я─ п╟п╨я│п╦п╬п╪я▀ п╡ я│п╦я│я┌п╣п╪п╣ п╟п╨я│п╦п╬п╪,
+	// п╡ я─п╟п╥п╪п╣я┌п╨п╦, п╡ п╨п╬я┌п╬я─я▀я┘ я┐п╨п╟п╥п╟п╫ пЁп╩п╬п╠п╟п╩я▄п╫я▀п╧ п╦п╫п╢п╣п╨я│ п╟п╨я│п╦п╬п╪я▀ п╦п╩п╦ -1 п╢п╩я▐ я┌п╬п╤п╢п╣я│я┌п╡п╣п╫п╫п╬п╧ п╟п╨я│п╦п╬п╪я▀
 	std::vector<int> makeGlobalMarkings(const AxiomExprSetPlus& as, int classNo) const;
 
 	void addLocalMarking(AxiomExprSetPlus& as, int classNo, const std::vector<int>& globalMarking) const;
@@ -170,8 +170,8 @@ private:
 	const AxiomContainer* mAxiomContainer;
 };
 
-/// Стадия построения системы аксиом и разметок эталонных траекторий по готовым аксиомам,
-/// использующая генетический алгоритм, в котором особью является (система аксиом + набор разметок)
+/// п║я┌п╟п╢п╦я▐ п©п╬я│я┌я─п╬п╣п╫п╦я▐ я│п╦я│я┌п╣п╪я▀ п╟п╨я│п╦п╬п╪ п╦ я─п╟п╥п╪п╣я┌п╬п╨ я█я┌п╟п╩п╬п╫п╫я▀я┘ я┌я─п╟п╣п╨я┌п╬я─п╦п╧ п©п╬ пЁп╬я┌п╬п╡я▀п╪ п╟п╨я│п╦п╬п╪п╟п╪,
+/// п╦я│п©п╬п╩я▄п╥я┐я▌я┴п╟я▐ пЁп╣п╫п╣я┌п╦я┤п╣я│п╨п╦п╧ п╟п╩пЁп╬я─п╦я┌п╪, п╡ п╨п╬я┌п╬я─п╬п╪ п╬я│п╬п╠я▄я▌ я▐п╡п╩я▐п╣я┌я│я▐ (я│п╦я│я┌п╣п╪п╟ п╟п╨я│п╦п╬п╪ + п╫п╟п╠п╬я─ я─п╟п╥п╪п╣я┌п╬п╨)
 class ASStageGenetic : public ASStage
 {
 public:
@@ -188,7 +188,7 @@ public:
 	virtual void recalculateMatterASFunc(AxiomExprSetPlus& as);
 	virtual void setAxiomSets(const std::vector<AxiomExprSetPlus>& initialAS);
 private:
-	/// Генерация случайной системы аксиом для начальной популяции
+	/// п⌠п╣п╫п╣я─п╟я├п╦я▐ я│п╩я┐я┤п╟п╧п╫п╬п╧ я│п╦я│я┌п╣п╪я▀ п╟п╨я│п╦п╬п╪ п╢п╩я▐ п╫п╟я┤п╟п╩я▄п╫п╬п╧ п©п╬п©я┐п╩я▐я├п╦п╦
 	AxiomExprSetPlus generateInitialAS(const AxiomContainer* axiomContainer) const;
 
 

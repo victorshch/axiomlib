@@ -1,6 +1,6 @@
 /****************************************************************************
 *
-*				Функции класса FuzzyMultiDataLearnAlgorithm
+*				п╓я┐п╫п╨я├п╦п╦ п╨п╩п╟я│я│п╟ FuzzyMultiDataLearnAlgorithm
 *
 ****************************************************************************/
 
@@ -21,69 +21,69 @@
 
 using namespace AxiomLib;
 
-#define str_AbnormalType_AxiomNaming	"_at_" // Обозначение типа нештатного поведения при создании имен файлов с описаниями систем аксиом
-#define int_Axiom_Name_Max_Size			200 // максимальное число символов в имени файла с описанием аксиомы (лучше чтобы было с запасом!)
-#define eps						0.0000001 // используется в некоторых формулах, чтобы исплючить ошибку машинного округления
-#define max_goal_val			10000 // максимальное значение целевой функции для аксиомы (просто достаточно большое число)
+#define str_AbnormalType_AxiomNaming	"_at_" // п·п╠п╬п╥п╫п╟я┤п╣п╫п╦п╣ я┌п╦п©п╟ п╫п╣я┬я┌п╟я┌п╫п╬пЁп╬ п©п╬п╡п╣п╢п╣п╫п╦я▐ п©я─п╦ я│п╬п╥п╢п╟п╫п╦п╦ п╦п╪п╣п╫ я└п╟п╧п╩п╬п╡ я│ п╬п©п╦я│п╟п╫п╦я▐п╪п╦ я│п╦я│я┌п╣п╪ п╟п╨я│п╦п╬п╪
+#define int_Axiom_Name_Max_Size			200 // п╪п╟п╨я│п╦п╪п╟п╩я▄п╫п╬п╣ я┤п╦я│п╩п╬ я│п╦п╪п╡п╬п╩п╬п╡ п╡ п╦п╪п╣п╫п╦ я└п╟п╧п╩п╟ я│ п╬п©п╦я│п╟п╫п╦п╣п╪ п╟п╨я│п╦п╬п╪я▀ (п╩я┐я┤я┬п╣ я┤я┌п╬п╠я▀ п╠я▀п╩п╬ я│ п╥п╟п©п╟я│п╬п╪!)
+#define eps						0.0000001 // п╦я│п©п╬п╩я▄п╥я┐п╣я┌я│я▐ п╡ п╫п╣п╨п╬я┌п╬я─я▀я┘ я└п╬я─п╪я┐п╩п╟я┘, я┤я┌п╬п╠я▀ п╦я│п©п╩я▌я┤п╦я┌я▄ п╬я┬п╦п╠п╨я┐ п╪п╟я┬п╦п╫п╫п╬пЁп╬ п╬п╨я─я┐пЁп╩п╣п╫п╦я▐
+#define max_goal_val			10000 // п╪п╟п╨я│п╦п╪п╟п╩я▄п╫п╬п╣ п╥п╫п╟я┤п╣п╫п╦п╣ я├п╣п╩п╣п╡п╬п╧ я└я┐п╫п╨я├п╦п╦ п╢п╩я▐ п╟п╨я│п╦п╬п╪я▀ (п©я─п╬я│я┌п╬ п╢п╬я│я┌п╟я┌п╬я┤п╫п╬ п╠п╬п╩я▄я┬п╬п╣ я┤п╦я│п╩п╬)
 
 /****************************************************************************
 *					FuzzyMultiDataLearnAlgorithm::formAxioms
 *
-*	Description:	Функция формирования аксиом из элементарных условий для 
-*					всех типов нештатного поведения
+*	Description:	п╓я┐п╫п╨я├п╦я▐ я└п╬я─п╪п╦я─п╬п╡п╟п╫п╦я▐ п╟п╨я│п╦п╬п╪ п╦п╥ я█п╩п╣п╪п╣п╫я┌п╟я─п╫я▀я┘ я┐я│п╩п╬п╡п╦п╧ п╢п╩я▐ 
+*					п╡я│п╣я┘ я┌п╦п©п╬п╡ п╫п╣я┬я┌п╟я┌п╫п╬пЁп╬ п©п╬п╡п╣п╢п╣п╫п╦я▐
 *	Parameters:		-
 *	Returns:		0
-*	Throws:			AxiomLibException - если в одном из алгоритмов возникла ошибка
+*	Throws:			AxiomLibException - п╣я│п╩п╦ п╡ п╬п╢п╫п╬п╪ п╦п╥ п╟п╩пЁп╬я─п╦я┌п╪п╬п╡ п╡п╬п╥п╫п╦п╨п╩п╟ п╬я┬п╦п╠п╨п╟
 *	Author:			dk
 *	History:
 *
 ****************************************************************************/
 int FuzzyMultiDataLearnAlgorithm::formAxioms (void) {
-	//	Определение ранга текущего процесса
+	//	п·п©я─п╣п╢п╣п╩п╣п╫п╦п╣ я─п╟п╫пЁп╟ я┌п╣п╨я┐я┴п╣пЁп╬ п©я─п╬я├п╣я│я│п╟
 	int size, rank;
 	MPI_Comm_size(MPI_COMM_WORLD, &size);
 	MPI_Comm_rank(MPI_COMM_WORLD, &rank);
-	// MPI-распараллеливание вычислений на первых двух шагах алгоритма
-	// Для этого: Определение для какого типа нештатного поведения данному процессу процессу производить обучение аксиом
+	// MPI-я─п╟я│п©п╟я─п╟п╩п╩п╣п╩п╦п╡п╟п╫п╦п╣ п╡я▀я┤п╦я│п╩п╣п╫п╦п╧ п╫п╟ п©п╣я─п╡я▀я┘ п╢п╡я┐я┘ я┬п╟пЁп╟я┘ п╟п╩пЁп╬я─п╦я┌п╪п╟
+	// п■п╩я▐ я█я┌п╬пЁп╬: п·п©я─п╣п╢п╣п╩п╣п╫п╦п╣ п╢п╩я▐ п╨п╟п╨п╬пЁп╬ я┌п╦п©п╟ п╫п╣я┬я┌п╟я┌п╫п╬пЁп╬ п©п╬п╡п╣п╢п╣п╫п╦я▐ п╢п╟п╫п╫п╬п╪я┐ п©я─п╬я├п╣я│я│я┐ п©я─п╬я├п╣я│я│я┐ п©я─п╬п╦п╥п╡п╬п╢п╦я┌я▄ п╬п╠я┐я┤п╣п╫п╦п╣ п╟п╨я│п╦п╬п╪
 	int from, upTo, rankFrom, rankUpTo;
 	splitAbnormalTypeRange (rank, size, from, upTo, rankFrom, rankUpTo);
-	// Вывод информации о назначенных для данного шаблона типов нештатного поведения - для них алгоритм будет подбирать элементырне условия и строить аксиомы
+	// п▓я▀п╡п╬п╢ п╦п╫я└п╬я─п╪п╟я├п╦п╦ п╬ п╫п╟п╥п╫п╟я┤п╣п╫п╫я▀я┘ п╢п╩я▐ п╢п╟п╫п╫п╬пЁп╬ я┬п╟п╠п╩п╬п╫п╟ я┌п╦п©п╬п╡ п╫п╣я┬я┌п╟я┌п╫п╬пЁп╬ п©п╬п╡п╣п╢п╣п╫п╦я▐ - п╢п╩я▐ п╫п╦я┘ п╟п╩пЁп╬я─п╦я┌п╪ п╠я┐п╢п╣я┌ п©п╬п╢п╠п╦я─п╟я┌я▄ я█п╩п╣п╪п╣п╫я┌я▀я─п╫п╣ я┐я│п╩п╬п╡п╦я▐ п╦ я│я┌я─п╬п╦я┌я▄ п╟п╨я│п╦п╬п╪я▀
 	std::cout << "\n\tProcess: " << rank + 1 << " from " <<  size << " set for abnormal behaviour: " << from + 1 << " - " << upTo << " \n";
 	std::cout.flush();
 
 	if (bestECForAllAbnormalTypes.size() != (upTo - from))
 		throw AxiomLibException("FuzzyMultiDataLearnAlgorithm::matterAxiomFunc : incorrect response from internal function*.");
 
-	if (rank == rankFrom) { // запускаем формирование аксиом без дублирования в разных процессах
+	if (rank == rankFrom) { // п╥п╟п©я┐я│п╨п╟п╣п╪ я└п╬я─п╪п╦я─п╬п╡п╟п╫п╦п╣ п╟п╨я│п╦п╬п╪ п╠п╣п╥ п╢я┐п╠п╩п╦я─п╬п╡п╟п╫п╦я▐ п╡ я─п╟п╥п╫я▀я┘ п©я─п╬я├п╣я│я│п╟я┘
 		std::vector < std::vector <AxiomExprPlus> > axioms;
 		axioms.resize (upTo - from);
 		bestAxiomsFileNames.resize(upTo - from);
-		// подбор параметров условий для типов нештатного поведения с from до upTo
+		// п©п╬п╢п╠п╬я─ п©п╟я─п╟п╪п╣я┌я─п╬п╡ я┐я│п╩п╬п╡п╦п╧ п╢п╩я▐ я┌п╦п©п╬п╡ п╫п╣я┬я┌п╟я┌п╫п╬пЁп╬ п©п╬п╡п╣п╢п╣п╫п╦я▐ я│ from п╢п╬ upTo
 		#pragma omp parallel for schedule(dynamic, 1)
 		for (int abType = 0; abType < (upTo - from); abType++) {
-			// выбор параметров условий
+			// п╡я▀п╠п╬я─ п©п╟я─п╟п╪п╣я┌я─п╬п╡ я┐я│п╩п╬п╡п╦п╧
 			formAxioms (from + abType, bestECForAllAbnormalTypes[abType], axioms[abType], bestAxiomsFileNames[abType]);
-			// Очищение содержимого аксиом 
+			// п·я┤п╦я┴п╣п╫п╦п╣ я│п╬п╢п╣я─п╤п╦п╪п╬пЁп╬ п╟п╨я│п╦п╬п╪ 
 			for (unsigned int u = 0; u < axioms[abType].size(); u++)
 				axioms[abType][u].clear();
 			axioms[abType].clear();
-			// Вывод на экран стадии процесса
+			// п▓я▀п╡п╬п╢ п╫п╟ я█п╨я─п╟п╫ я│я┌п╟п╢п╦п╦ п©я─п╬я├п╣я│я│п╟
 			std::cout << "\n\tProcess: " << rank + 1 << " from " <<  size <<  ":\tAbnormal type\t" << abType+1 << " done.\n";
 			std::cout.flush();
 		}
 	} else { 
-		// Для данного процесса - нет необходимости формировать аксиомы, т.к. другой процесс уже это делает. Это так, потому что:
-		//  функция splitAbnormalTypeRange устроена таким образом, что число классов разбиения равно min (NumOfProcesses, NumOfClasses)
+		// п■п╩я▐ п╢п╟п╫п╫п╬пЁп╬ п©я─п╬я├п╣я│я│п╟ - п╫п╣я┌ п╫п╣п╬п╠я┘п╬п╢п╦п╪п╬я│я┌п╦ я└п╬я─п╪п╦я─п╬п╡п╟я┌я▄ п╟п╨я│п╦п╬п╪я▀, я┌.п╨. п╢я─я┐пЁп╬п╧ п©я─п╬я├п╣я│я│ я┐п╤п╣ я█я┌п╬ п╢п╣п╩п╟п╣я┌. п╜я┌п╬ я┌п╟п╨, п©п╬я┌п╬п╪я┐ я┤я┌п╬:
+		//  я└я┐п╫п╨я├п╦я▐ splitAbnormalTypeRange я┐я│я┌я─п╬п╣п╫п╟ я┌п╟п╨п╦п╪ п╬п╠я─п╟п╥п╬п╪, я┤я┌п╬ я┤п╦я│п╩п╬ п╨п╩п╟я│я│п╬п╡ я─п╟п╥п╠п╦п╣п╫п╦я▐ я─п╟п╡п╫п╬ min (NumOfProcesses, NumOfClasses)
 		bestAxiomsFileNames.clear();
 	}
 
-	// Объединение списков с именами файлов, содержащих описания аксиом, полученных в рамках разных процессов
+	// п·п╠я┼п╣п╢п╦п╫п╣п╫п╦п╣ я│п©п╦я│п╨п╬п╡ я│ п╦п╪п╣п╫п╟п╪п╦ я└п╟п╧п╩п╬п╡, я│п╬п╢п╣я─п╤п╟я┴п╦я┘ п╬п©п╦я│п╟п╫п╦я▐ п╟п╨я│п╦п╬п╪, п©п╬п╩я┐я┤п╣п╫п╫я▀я┘ п╡ я─п╟п╪п╨п╟я┘ я─п╟п╥п╫я▀я┘ п©я─п╬я├п╣я│я│п╬п╡
 	gatherBestAxioms ();
 
-	// Синхронизация процессов
+	// п║п╦п╫я┘я─п╬п╫п╦п╥п╟я├п╦я▐ п©я─п╬я├п╣я│я│п╬п╡
 	MPI_Barrier (MPI_COMM_WORLD);
 
-	// Добавление в набор аксиом, перечисленных в конфигурационном файле
+	// п■п╬п╠п╟п╡п╩п╣п╫п╦п╣ п╡ п╫п╟п╠п╬я─ п╟п╨я│п╦п╬п╪, п©п╣я─п╣я┤п╦я│п╩п╣п╫п╫я▀я┘ п╡ п╨п╬п╫я└п╦пЁя┐я─п╟я├п╦п╬п╫п╫п╬п╪ я└п╟п╧п╩п╣
 	updateBestAxiomsListFromEnv();
 
 	return 0;
@@ -93,11 +93,11 @@ int FuzzyMultiDataLearnAlgorithm::formAxioms (void) {
 /****************************************************************************
 *					FuzzyMultiDataLearnAlgorithm::gatherBestAxioms
 *
-*	Description:	Функция сбора списков с названиями файлов, в которые были 
-*					записаны описания лучших аксиом, с различных 
-*					процессов, учавствующих во втором этапе работы основного алгоритма.
-*	Parameters:		rank - ранг текущего процесса
-*					size - общее число процессов
+*	Description:	п╓я┐п╫п╨я├п╦я▐ я│п╠п╬я─п╟ я│п©п╦я│п╨п╬п╡ я│ п╫п╟п╥п╡п╟п╫п╦я▐п╪п╦ я└п╟п╧п╩п╬п╡, п╡ п╨п╬я┌п╬я─я▀п╣ п╠я▀п╩п╦ 
+*					п╥п╟п©п╦я│п╟п╫я▀ п╬п©п╦я│п╟п╫п╦я▐ п╩я┐я┤я┬п╦я┘ п╟п╨я│п╦п╬п╪, я│ я─п╟п╥п╩п╦я┤п╫я▀я┘ 
+*					п©я─п╬я├п╣я│я│п╬п╡, я┐я┤п╟п╡я│я┌п╡я┐я▌я┴п╦я┘ п╡п╬ п╡я┌п╬я─п╬п╪ я█я┌п╟п©п╣ я─п╟п╠п╬я┌я▀ п╬я│п╫п╬п╡п╫п╬пЁп╬ п╟п╩пЁп╬я─п╦я┌п╪п╟.
+*	Parameters:		rank - я─п╟п╫пЁ я┌п╣п╨я┐я┴п╣пЁп╬ п©я─п╬я├п╣я│я│п╟
+*					size - п╬п╠я┴п╣п╣ я┤п╦я│п╩п╬ п©я─п╬я├п╣я│я│п╬п╡
 *	Returns:		0
 *	Throws:			-
 *	Author:			dk
@@ -108,8 +108,8 @@ int FuzzyMultiDataLearnAlgorithm::gatherBestAxioms (void) {
 	int rank, size;
 	MPI_Comm_size(MPI_COMM_WORLD, &size);
 	MPI_Comm_rank(MPI_COMM_WORLD, &rank);
-	if (size > 1) { // значит параметры условий для разных типов нештатного поведения подбирались независимо - необходимо объединить данные
-		// Для этого - Создание собственного типа MPI для передачи названий файлов не по одному, а целыми массивами
+	if (size > 1) { // п╥п╫п╟я┤п╦я┌ п©п╟я─п╟п╪п╣я┌я─я▀ я┐я│п╩п╬п╡п╦п╧ п╢п╩я▐ я─п╟п╥п╫я▀я┘ я┌п╦п©п╬п╡ п╫п╣я┬я┌п╟я┌п╫п╬пЁп╬ п©п╬п╡п╣п╢п╣п╫п╦я▐ п©п╬п╢п╠п╦я─п╟п╩п╦я│я▄ п╫п╣п╥п╟п╡п╦я│п╦п╪п╬ - п╫п╣п╬п╠я┘п╬п╢п╦п╪п╬ п╬п╠я┼п╣п╢п╦п╫п╦я┌я▄ п╢п╟п╫п╫я▀п╣
+		// п■п╩я▐ я█я┌п╬пЁп╬ - п║п╬п╥п╢п╟п╫п╦п╣ я│п╬п╠я│я┌п╡п╣п╫п╫п╬пЁп╬ я┌п╦п©п╟ MPI п╢п╩я▐ п©п╣я─п╣п╢п╟я┤п╦ п╫п╟п╥п╡п╟п╫п╦п╧ я└п╟п╧п╩п╬п╡ п╫п╣ п©п╬ п╬п╢п╫п╬п╪я┐, п╟ я├п╣п╩я▀п╪п╦ п╪п╟я│я│п╦п╡п╟п╪п╦
 		struct FileDescr {
 			char name[int_Axiom_Name_Max_Size]; /* file name */
 		};
@@ -127,58 +127,58 @@ int FuzzyMultiDataLearnAlgorithm::gatherBestAxioms (void) {
 		for (int i = 0; i < 2; i++) disp[i] -= base;
 		/* build datatype describing structure */
 		MPI_Type_struct( 2, blocklen, disp, type, &FileDescrType);
-		// Регистрация типа в MPI
+		// п═п╣пЁп╦я│я┌я─п╟я├п╦я▐ я┌п╦п©п╟ п╡ MPI
 		MPI_Type_commit(&FileDescrType);
 
-		// Определение необходимых для передачи переменных
+		// п·п©я─п╣п╢п╣п╩п╣п╫п╦п╣ п╫п╣п╬п╠я┘п╬п╢п╦п╪я▀я┘ п╢п╩я▐ п©п╣я─п╣п╢п╟я┤п╦ п©п╣я─п╣п╪п╣п╫п╫я▀я┘
 		int vec[1];
 		int *vecs;
 		vecs = new int[size];
 		int secSize, secMax, wholeLen;
-		// Определение максимального размера вектора передавамого параметра
-		//  Локальное определение максимального размера передавамого параметра
+		// п·п©я─п╣п╢п╣п╩п╣п╫п╦п╣ п╪п╟п╨я│п╦п╪п╟п╩я▄п╫п╬пЁп╬ я─п╟п╥п╪п╣я─п╟ п╡п╣п╨я┌п╬я─п╟ п©п╣я─п╣п╢п╟п╡п╟п╪п╬пЁп╬ п©п╟я─п╟п╪п╣я┌я─п╟
+		//  п⌡п╬п╨п╟п╩я▄п╫п╬п╣ п╬п©я─п╣п╢п╣п╩п╣п╫п╦п╣ п╪п╟п╨я│п╦п╪п╟п╩я▄п╫п╬пЁп╬ я─п╟п╥п╪п╣я─п╟ п©п╣я─п╣п╢п╟п╡п╟п╪п╬пЁп╬ п©п╟я─п╟п╪п╣я┌я─п╟
 		secMax = 0;
 		for (unsigned int i = 0; i < bestAxiomsFileNames.size(); i++) {
 			if (secMax < (int) bestAxiomsFileNames[i].size())
 				secMax = (int) bestAxiomsFileNames[i].size();
 		}
-		//  Глобальное определение максимального размера передавамого параметра
+		//  п⌠п╩п╬п╠п╟п╩я▄п╫п╬п╣ п╬п©я─п╣п╢п╣п╩п╣п╫п╦п╣ п╪п╟п╨я│п╦п╪п╟п╩я▄п╫п╬пЁп╬ я─п╟п╥п╪п╣я─п╟ п©п╣я─п╣п╢п╟п╡п╟п╪п╬пЁп╬ п©п╟я─п╟п╪п╣я┌я─п╟
 		vec[0] = secMax;
 		MPI_Allgather(vec, 1, MPI_INT, vecs, 1, MPI_INT, MPI_COMM_WORLD);
 		for (int u = 0; u < size; u++) {
 			if (secMax < vecs[u])
 				secMax = vecs[u];
 		}		
-		// Создаем буффер, через который будут передаваться вектора переменных
+		// п║п╬п╥п╢п╟п╣п╪ п╠я┐я└я└п╣я─, я┤п╣я─п╣п╥ п╨п╬я┌п╬я─я▀п╧ п╠я┐п╢я┐я┌ п©п╣я─п╣п╢п╟п╡п╟я┌я▄я│я▐ п╡п╣п╨я┌п╬я─п╟ п©п╣я─п╣п╪п╣п╫п╫я▀я┘
 		struct FileDescr *fDescrips;
 		fDescrips = new struct FileDescr[secMax];
-		// Определение первой размерности всех передаваемых переменных и соответственно общей длины получаемого результата
+		// п·п©я─п╣п╢п╣п╩п╣п╫п╦п╣ п©п╣я─п╡п╬п╧ я─п╟п╥п╪п╣я─п╫п╬я│я┌п╦ п╡я│п╣я┘ п©п╣я─п╣п╢п╟п╡п╟п╣п╪я▀я┘ п©п╣я─п╣п╪п╣п╫п╫я▀я┘ п╦ я│п╬п╬я┌п╡п╣я┌я│я┌п╡п╣п╫п╫п╬ п╬п╠я┴п╣п╧ п╢п╩п╦п╫я▀ п©п╬п╩я┐я┤п╟п╣п╪п╬пЁп╬ я─п╣п╥я┐п╩я▄я┌п╟я┌п╟
 		vec[0] = (int) bestAxiomsFileNames.size();
 		MPI_Allgather(vec, 1, MPI_INT, vecs, 1, MPI_INT, MPI_COMM_WORLD);
 		wholeLen = 0;
 		for (int u = 0; u < size; u++) {
 			wholeLen += vecs[u];
 		}
-		// Первый индекс результата
+		// п÷п╣я─п╡я▀п╧ п╦п╫п╢п╣п╨я│ я─п╣п╥я┐п╩я▄я┌п╟я┌п╟
 		int allFirst = 0;
 		std::vector <std::vector <std::string> > allNames;
 		allNames.resize (wholeLen);
-		// Цикл по первой размерности передаваемого вектора
+		// п╕п╦п╨п╩ п©п╬ п©п╣я─п╡п╬п╧ я─п╟п╥п╪п╣я─п╫п╬я│я┌п╦ п©п╣я─п╣п╢п╟п╡п╟п╣п╪п╬пЁп╬ п╡п╣п╨я┌п╬я─п╟
 		for (int proc = 0; proc < size; proc++) {
 			for (int first = 0; first < vecs[proc]; first++) {
-				// Получаем число пересылаемых во второй размерности векторов
+				// п÷п╬п╩я┐я┤п╟п╣п╪ я┤п╦я│п╩п╬ п©п╣я─п╣я│я▀п╩п╟п╣п╪я▀я┘ п╡п╬ п╡я┌п╬я─п╬п╧ я─п╟п╥п╪п╣я─п╫п╬я│я┌п╦ п╡п╣п╨я┌п╬я─п╬п╡
 				if (proc == rank) {
 					for (int sec = 0; sec < (int) bestAxiomsFileNames[first].size(); sec++) {
 						strncpy(fDescrips[sec].name, bestAxiomsFileNames[first][sec].c_str(), int_Axiom_Name_Max_Size - 1);
 					}
 					vec[0] = (int) bestAxiomsFileNames[first].size();
 				}
-				// Посылаем число передаваемых данных
+				// п÷п╬я│я▀п╩п╟п╣п╪ я┤п╦я│п╩п╬ п©п╣я─п╣п╢п╟п╡п╟п╣п╪я▀я┘ п╢п╟п╫п╫я▀я┘
 				MPI_Bcast(vec, 1, MPI_INT, proc, MPI_COMM_WORLD);
 				secSize = vec[0];
-				// Посылаем собственно данные
+				// п÷п╬я│я▀п╩п╟п╣п╪ я│п╬п╠я│я┌п╡п╣п╫п╫п╬ п╢п╟п╫п╫я▀п╣
 				MPI_Bcast(fDescrips, secSize, FileDescrType, proc, MPI_COMM_WORLD);
-				// Обрабатываем полученные данные
+				// п·п╠я─п╟п╠п╟я┌я▀п╡п╟п╣п╪ п©п╬п╩я┐я┤п╣п╫п╫я▀п╣ п╢п╟п╫п╫я▀п╣
 				allNames[allFirst].resize(secSize);
 				for (int sec = 0; sec < secSize; sec++) {
 					allNames[allFirst][sec].assign(fDescrips[sec].name);
@@ -186,22 +186,22 @@ int FuzzyMultiDataLearnAlgorithm::gatherBestAxioms (void) {
 				allFirst++;
 			}
 		}
-		// Очищиение задействованной для передачи динамической памяти
+		// п·я┤п╦я┴п╦п╣п╫п╦п╣ п╥п╟п╢п╣п╧я│я┌п╡п╬п╡п╟п╫п╫п╬п╧ п╢п╩я▐ п©п╣я─п╣п╢п╟я┤п╦ п╢п╦п╫п╟п╪п╦я┤п╣я│п╨п╬п╧ п©п╟п╪я▐я┌п╦
 		delete vecs;
-		// Удаляем созданнй буффер
+		// пёп╢п╟п╩я▐п╣п╪ я│п╬п╥п╢п╟п╫п╫п╧ п╠я┐я└я└п╣я─
 		delete fDescrips;
-		// Копируем собранные со всех процессов данные в локальную переменную класса
+		// п п╬п©п╦я─я┐п╣п╪ я│п╬п╠я─п╟п╫п╫я▀п╣ я│п╬ п╡я│п╣я┘ п©я─п╬я├п╣я│я│п╬п╡ п╢п╟п╫п╫я▀п╣ п╡ п╩п╬п╨п╟п╩я▄п╫я┐я▌ п©п╣я─п╣п╪п╣п╫п╫я┐я▌ п╨п╩п╟я│я│п╟
 		bestAxiomsFileNames = allNames;
 
 		/* // OLD VARIANT
-		// Передача или прием списка с названиями файлов соответственно
+		// п÷п╣я─п╣п╢п╟я┤п╟ п╦п╩п╦ п©я─п╦п╣п╪ я│п©п╦я│п╨п╟ я│ п╫п╟п╥п╡п╟п╫п╦я▐п╪п╦ я└п╟п╧п╩п╬п╡ я│п╬п╬я┌п╡п╣я┌я│я┌п╡п╣п╫п╫п╬
 		unsigned int buffer[1];
-		if (rank == 0) { // этот процесс собирает данные
+		if (rank == 0) { // я█я┌п╬я┌ п©я─п╬я├п╣я│я│ я│п╬п╠п╦я─п╟п╣я┌ п╢п╟п╫п╫я▀п╣
 			struct FileDescr *fDescrips;
 			unsigned int st, vecSize;
 			MPI_Status status;
 			for (int procNum = 1; procNum < size; procNum++) {
-				// получаем число векторов, содержащих вектора со строками - первую размерность всей структуры
+				// п©п╬п╩я┐я┤п╟п╣п╪ я┤п╦я│п╩п╬ п╡п╣п╨я┌п╬я─п╬п╡, я│п╬п╢п╣я─п╤п╟я┴п╦я┘ п╡п╣п╨я┌п╬я─п╟ я│п╬ я│я┌я─п╬п╨п╟п╪п╦ - п©п╣я─п╡я┐я▌ я─п╟п╥п╪п╣я─п╫п╬я│я┌я▄ п╡я│п╣п╧ я│я┌я─я┐п╨я┌я┐я─я▀
 				MPI_Recv( buffer, 1, MPI_UNSIGNED, procNum, 300 + procNum, MPI_COMM_WORLD, &status);
 				vecSize = buffer[0];
 				st = bestAxiomsFileNames.size();
@@ -209,9 +209,9 @@ int FuzzyMultiDataLearnAlgorithm::gatherBestAxioms (void) {
 				for (unsigned int i = 0; i < vecSize; i++, st++) {
 					MPI_Recv( buffer, 1, MPI_UNSIGNED, procNum, 301 + procNum, MPI_COMM_WORLD, &status);
 					fDescrips = new struct FileDescr[buffer[0]];
-					// получаем вектор с именами условий
+					// п©п╬п╩я┐я┤п╟п╣п╪ п╡п╣п╨я┌п╬я─ я│ п╦п╪п╣п╫п╟п╪п╦ я┐я│п╩п╬п╡п╦п╧
 					MPI_Recv( fDescrips, buffer[0], FileDescrType, procNum, 302 + procNum, MPI_COMM_WORLD, &status);
-					// Сохраняем полученные значения - вектор имен файлов с описанием элементарных условий
+					// п║п╬я┘я─п╟п╫я▐п╣п╪ п©п╬п╩я┐я┤п╣п╫п╫я▀п╣ п╥п╫п╟я┤п╣п╫п╦я▐ - п╡п╣п╨я┌п╬я─ п╦п╪п╣п╫ я└п╟п╧п╩п╬п╡ я│ п╬п©п╦я│п╟п╫п╦п╣п╪ я█п╩п╣п╪п╣п╫я┌п╟я─п╫я▀я┘ я┐я│п╩п╬п╡п╦п╧
 					bestAxiomsFileNames[st].resize(buffer[0]);
 					for (unsigned int t = 0; t < buffer[0]; t++) {
 						bestAxiomsFileNames[st][t].assign (fDescrips[t].name);
@@ -219,25 +219,25 @@ int FuzzyMultiDataLearnAlgorithm::gatherBestAxioms (void) {
 					delete fDescrips;
 				}
 			}
-		} else { // этот процесс посылает данные
+		} else { // я█я┌п╬я┌ п©я─п╬я├п╣я│я│ п©п╬я│я▀п╩п╟п╣я┌ п╢п╟п╫п╫я▀п╣
 			struct FileDescr *fDescrips;
 			unsigned int curSize;
-			// посылаем число размерностей, по которым в этом процессе велся поиск параметров элементарных условий
+			// п©п╬я│я▀п╩п╟п╣п╪ я┤п╦я│п╩п╬ я─п╟п╥п╪п╣я─п╫п╬я│я┌п╣п╧, п©п╬ п╨п╬я┌п╬я─я▀п╪ п╡ я█я┌п╬п╪ п©я─п╬я├п╣я│я│п╣ п╡п╣п╩я│я▐ п©п╬п╦я│п╨ п©п╟я─п╟п╪п╣я┌я─п╬п╡ я█п╩п╣п╪п╣п╫я┌п╟я─п╫я▀я┘ я┐я│п╩п╬п╡п╦п╧
 			buffer[0] = bestAxiomsFileNames.size();
 			MPI_Send( buffer, 1, MPI_UNSIGNED, 0, 300 + rank, MPI_COMM_WORLD);
 			for (unsigned int i = 0; i < bestAxiomsFileNames.size(); i++) {
 				curSize = bestAxiomsFileNames[i].size();
-				// Если число строк с именами файлов в выбранной размерности - 0, то пропускаем ее
+				// п∙я│п╩п╦ я┤п╦я│п╩п╬ я│я┌я─п╬п╨ я│ п╦п╪п╣п╫п╟п╪п╦ я└п╟п╧п╩п╬п╡ п╡ п╡я▀п╠я─п╟п╫п╫п╬п╧ я─п╟п╥п╪п╣я─п╫п╬я│я┌п╦ - 0, я┌п╬ п©я─п╬п©я┐я│п╨п╟п╣п╪ п╣п╣
 				if (curSize < 1)
 					continue;
-				// Копируем строки с именами файлов в созданную структуру для передачи средствами MPI
+				// п п╬п©п╦я─я┐п╣п╪ я│я┌я─п╬п╨п╦ я│ п╦п╪п╣п╫п╟п╪п╦ я└п╟п╧п╩п╬п╡ п╡ я│п╬п╥п╢п╟п╫п╫я┐я▌ я│я┌я─я┐п╨я┌я┐я─я┐ п╢п╩я▐ п©п╣я─п╣п╢п╟я┤п╦ я│я─п╣п╢я│я┌п╡п╟п╪п╦ MPI
 				fDescrips = new struct FileDescr[curSize];
 				for (unsigned int t = 0; t < curSize; t++)
 					strncpy(fDescrips[t].name, bestAxiomsFileNames[i][t].c_str(), int_Axiom_Name_Max_Size - 1);
-				// посылаем число строк в векторе
+				// п©п╬я│я▀п╩п╟п╣п╪ я┤п╦я│п╩п╬ я│я┌я─п╬п╨ п╡ п╡п╣п╨я┌п╬я─п╣
 				buffer[0] = curSize;
 				MPI_Send( buffer, 1, MPI_UNSIGNED, 0, 301 + rank, MPI_COMM_WORLD);
-				// посылаем собственно вектор с именами условий
+				// п©п╬я│я▀п╩п╟п╣п╪ я│п╬п╠я│я┌п╡п╣п╫п╫п╬ п╡п╣п╨я┌п╬я─ я│ п╦п╪п╣п╫п╟п╪п╦ я┐я│п╩п╬п╡п╦п╧
 				MPI_Send( fDescrips, curSize, FileDescrType, 0, 302 + rank, MPI_COMM_WORLD);
 				delete fDescrips;
 			}
@@ -251,11 +251,11 @@ int FuzzyMultiDataLearnAlgorithm::gatherBestAxioms (void) {
 /****************************************************************************
 *					FuzzyMultiDataLearnAlgorithm::updateBestAxiomsListFromEnv
 *
-*	Description:	Функция обновляет список имен файлов с описаниями лучших 
-*					аксиом - именами из конфигурационного файла.
+*	Description:	п╓я┐п╫п╨я├п╦я▐ п╬п╠п╫п╬п╡п╩я▐п╣я┌ я│п©п╦я│п╬п╨ п╦п╪п╣п╫ я└п╟п╧п╩п╬п╡ я│ п╬п©п╦я│п╟п╫п╦я▐п╪п╦ п╩я┐я┤я┬п╦я┘ 
+*					п╟п╨я│п╦п╬п╪ - п╦п╪п╣п╫п╟п╪п╦ п╦п╥ п╨п╬п╫я└п╦пЁя┐я─п╟я├п╦п╬п╫п╫п╬пЁп╬ я└п╟п╧п╩п╟.
 *	Parameters:		-
 *	Returns:		0
-*	Throws:			AxiomLibException - если 
+*	Throws:			AxiomLibException - п╣я│п╩п╦ 
 *	Author:			dk
 *	History:
 *
@@ -266,10 +266,10 @@ int FuzzyMultiDataLearnAlgorithm::updateBestAxiomsListFromEnv(void) {
 	for (c_iter = predefinedAxiomsFileName.begin(); c_iter != predefinedAxiomsFileName.end(); ++c_iter) {
 		disintegrateAxiomFileName(*c_iter, at, index);
 		if ((at < (int) bestAxiomsFileNames.size()) && (at >= 0)) {
-			// добавляем имя в массив
+			// п╢п╬п╠п╟п╡п╩я▐п╣п╪ п╦п╪я▐ п╡ п╪п╟я│я│п╦п╡
 			bestAxiomsFileNames[at].push_back (*c_iter);
 		} else {
-			// Вообще говоря - здесь нужно выдавать warning - т.к. файл не относится ни к одному типу нештатного поведения, указанному в используемом наборе данных
+			// п▓п╬п╬п╠я┴п╣ пЁп╬п╡п╬я─я▐ - п╥п╢п╣я│я▄ п╫я┐п╤п╫п╬ п╡я▀п╢п╟п╡п╟я┌я▄ warning - я┌.п╨. я└п╟п╧п╩ п╫п╣ п╬я┌п╫п╬я│п╦я┌я│я▐ п╫п╦ п╨ п╬п╢п╫п╬п╪я┐ я┌п╦п©я┐ п╫п╣я┬я┌п╟я┌п╫п╬пЁп╬ п©п╬п╡п╣п╢п╣п╫п╦я▐, я┐п╨п╟п╥п╟п╫п╫п╬п╪я┐ п╡ п╦я│п©п╬п╩я▄п╥я┐п╣п╪п╬п╪ п╫п╟п╠п╬я─п╣ п╢п╟п╫п╫я▀я┘
 			std::cout << "\n\tAxiom File '" << *c_iter << "' is incompatible with current dataSet properties: wrong number of abnormalType or no such number in file's name.\n";
 		}
 	}
@@ -280,13 +280,13 @@ int FuzzyMultiDataLearnAlgorithm::updateBestAxiomsListFromEnv(void) {
 /****************************************************************************
 *					FuzzyMultiDataLearnAlgorithm::disintegrateAxiomFileName
 *
-*	Description:	функция раскладывает имя файла на составляющие и выдает, 
-*					если находит, два числовых параметра.
-*	Parameters:		fileName - имя файла для анализа
-*					at - номер аномального типа поведения 
-*					index - размерность структуры, из который файл были сохранен.
-*						Этот параметр может быть не задан, в таком случае
-*						его значение определяется как -1. 
+*	Description:	я└я┐п╫п╨я├п╦я▐ я─п╟я│п╨п╩п╟п╢я▀п╡п╟п╣я┌ п╦п╪я▐ я└п╟п╧п╩п╟ п╫п╟ я│п╬я│я┌п╟п╡п╩я▐я▌я┴п╦п╣ п╦ п╡я▀п╢п╟п╣я┌, 
+*					п╣я│п╩п╦ п╫п╟я┘п╬п╢п╦я┌, п╢п╡п╟ я┤п╦я│п╩п╬п╡я▀я┘ п©п╟я─п╟п╪п╣я┌я─п╟.
+*	Parameters:		fileName - п╦п╪я▐ я└п╟п╧п╩п╟ п╢п╩я▐ п╟п╫п╟п╩п╦п╥п╟
+*					at - п╫п╬п╪п╣я─ п╟п╫п╬п╪п╟п╩я▄п╫п╬пЁп╬ я┌п╦п©п╟ п©п╬п╡п╣п╢п╣п╫п╦я▐ 
+*					index - я─п╟п╥п╪п╣я─п╫п╬я│я┌я▄ я│я┌я─я┐п╨я┌я┐я─я▀, п╦п╥ п╨п╬я┌п╬я─я▀п╧ я└п╟п╧п╩ п╠я▀п╩п╦ я│п╬я┘я─п╟п╫п╣п╫.
+*						п╜я┌п╬я┌ п©п╟я─п╟п╪п╣я┌я─ п╪п╬п╤п╣я┌ п╠я▀я┌я▄ п╫п╣ п╥п╟п╢п╟п╫, п╡ я┌п╟п╨п╬п╪ я│п╩я┐я┤п╟п╣
+*						п╣пЁп╬ п╥п╫п╟я┤п╣п╫п╦п╣ п╬п©я─п╣п╢п╣п╩я▐п╣я┌я│я▐ п╨п╟п╨ -1. 
 *	Returns:		0
 *	Throws:			-
 *	Author:			dk
@@ -294,25 +294,25 @@ int FuzzyMultiDataLearnAlgorithm::updateBestAxiomsListFromEnv(void) {
 *
 ****************************************************************************/
 int FuzzyMultiDataLearnAlgorithm::disintegrateAxiomFileName(const std::string fileName, int &at, int &index) const {
-	// Устанавливаем значения по умолчанию: 
+	// пёя│я┌п╟п╫п╟п╡п╩п╦п╡п╟п╣п╪ п╥п╫п╟я┤п╣п╫п╦я▐ п©п╬ я┐п╪п╬п╩я┤п╟п╫п╦я▌: 
 	at = -1;
 	index = -1;
-	// Начинаем поиск
+	// п²п╟я┤п╦п╫п╟п╣п╪ п©п╬п╦я│п╨
 	std::string :: size_type posAT, first;
-	// Пытаемся считать AbnormalType
+	// п÷я▀я┌п╟п╣п╪я│я▐ я│я┤п╦я┌п╟я┌я▄ AbnormalType
 	posAT = fileName.rfind (str_AbnormalType_AxiomNaming);
 	if ( posAT != std::string::npos ) {
-		at = getNearestNumber (fileName, posAT) - 1; // -1 - т.к. при кодировании имени файла ко всем числам прибавляется 1
+		at = getNearestNumber (fileName, posAT) - 1; // -1 - я┌.п╨. п©я─п╦ п╨п╬п╢п╦я─п╬п╡п╟п╫п╦п╦ п╦п╪п╣п╫п╦ я└п╟п╧п╩п╟ п╨п╬ п╡я│п╣п╪ я┤п╦я│п╩п╟п╪ п©я─п╦п╠п╟п╡п╩я▐п╣я┌я│я▐ 1
 	}
-	// Пытаемся считать оставшийся индекс
-	// пропускаем число относящиеся к AT
+	// п÷я▀я┌п╟п╣п╪я│я▐ я│я┤п╦я┌п╟я┌я▄ п╬я│я┌п╟п╡я┬п╦п╧я│я▐ п╦п╫п╢п╣п╨я│
+	// п©я─п╬п©я┐я│п╨п╟п╣п╪ я┤п╦я│п╩п╬ п╬я┌п╫п╬я│я▐я┴п╦п╣я│я▐ п╨ AT
 	first = fileName.find_first_of ("0123456789", posAT);
 	first = fileName.find_first_not_of ("0123456789", first);
-	// ищем первое следующее попавшееся число
+	// п╦я┴п╣п╪ п©п╣я─п╡п╬п╣ я│п╩п╣п╢я┐я▌я┴п╣п╣ п©п╬п©п╟п╡я┬п╣п╣я│я▐ я┤п╦я│п╩п╬
 	first = fileName.find_first_of ("0123456789", first);
-	// если такое число нашли - то сохраняем его
+	// п╣я│п╩п╦ я┌п╟п╨п╬п╣ я┤п╦я│п╩п╬ п╫п╟я┬п╩п╦ - я┌п╬ я│п╬я┘я─п╟п╫я▐п╣п╪ п╣пЁп╬
 	if (first != std::string::npos) {
-		index = getNearestNumber (fileName, first) - 1; // -1 - т.к. при кодировании имени файла ко всем числам прибавляется 1
+		index = getNearestNumber (fileName, first) - 1; // -1 - я┌.п╨. п©я─п╦ п╨п╬п╢п╦я─п╬п╡п╟п╫п╦п╦ п╦п╪п╣п╫п╦ я└п╟п╧п╩п╟ п╨п╬ п╡я│п╣п╪ я┤п╦я│п╩п╟п╪ п©я─п╦п╠п╟п╡п╩я▐п╣я┌я│я▐ 1
 	}
 	return 0;
 }
@@ -321,21 +321,21 @@ int FuzzyMultiDataLearnAlgorithm::disintegrateAxiomFileName(const std::string fi
 /****************************************************************************
 *					FuzzyMultiDataLearnAlgorithm::formAxioms
 *
-*	Description:	Функция формирования аксиом из элементарных условий для 
-*					заданного типа нештатного поведения
-*	Parameters:		abType - тип нештатного поведения, для которого формируются аксиомы
-*					ecFileNames - названия файлов с описаниями элементарных условий, 
-*						которые будут использованы для построения аксиом
-*					axioms - заполняемый вектор лучших аксиом, полученных в данной функции
-*					axiomFileNames - заполняемый вектор с именами файлов с описаниями лучших аксиом
+*	Description:	п╓я┐п╫п╨я├п╦я▐ я└п╬я─п╪п╦я─п╬п╡п╟п╫п╦я▐ п╟п╨я│п╦п╬п╪ п╦п╥ я█п╩п╣п╪п╣п╫я┌п╟я─п╫я▀я┘ я┐я│п╩п╬п╡п╦п╧ п╢п╩я▐ 
+*					п╥п╟п╢п╟п╫п╫п╬пЁп╬ я┌п╦п©п╟ п╫п╣я┬я┌п╟я┌п╫п╬пЁп╬ п©п╬п╡п╣п╢п╣п╫п╦я▐
+*	Parameters:		abType - я┌п╦п© п╫п╣я┬я┌п╟я┌п╫п╬пЁп╬ п©п╬п╡п╣п╢п╣п╫п╦я▐, п╢п╩я▐ п╨п╬я┌п╬я─п╬пЁп╬ я└п╬я─п╪п╦я─я┐я▌я┌я│я▐ п╟п╨я│п╦п╬п╪я▀
+*					ecFileNames - п╫п╟п╥п╡п╟п╫п╦я▐ я└п╟п╧п╩п╬п╡ я│ п╬п©п╦я│п╟п╫п╦я▐п╪п╦ я█п╩п╣п╪п╣п╫я┌п╟я─п╫я▀я┘ я┐я│п╩п╬п╡п╦п╧, 
+*						п╨п╬я┌п╬я─я▀п╣ п╠я┐п╢я┐я┌ п╦я│п©п╬п╩я▄п╥п╬п╡п╟п╫я▀ п╢п╩я▐ п©п╬я│я┌я─п╬п╣п╫п╦я▐ п╟п╨я│п╦п╬п╪
+*					axioms - п╥п╟п©п╬п╩п╫я▐п╣п╪я▀п╧ п╡п╣п╨я┌п╬я─ п╩я┐я┤я┬п╦я┘ п╟п╨я│п╦п╬п╪, п©п╬п╩я┐я┤п╣п╫п╫я▀я┘ п╡ п╢п╟п╫п╫п╬п╧ я└я┐п╫п╨я├п╦п╦
+*					axiomFileNames - п╥п╟п©п╬п╩п╫я▐п╣п╪я▀п╧ п╡п╣п╨я┌п╬я─ я│ п╦п╪п╣п╫п╟п╪п╦ я└п╟п╧п╩п╬п╡ я│ п╬п©п╦я│п╟п╫п╦я▐п╪п╦ п╩я┐я┤я┬п╦я┘ п╟п╨я│п╦п╬п╪
 *	Returns:		0
-*	Throws:			AxiomLibException - если в одном из алгоритмов возникла ошибка
+*	Throws:			AxiomLibException - п╣я│п╩п╦ п╡ п╬п╢п╫п╬п╪ п╦п╥ п╟п╩пЁп╬я─п╦я┌п╪п╬п╡ п╡п╬п╥п╫п╦п╨п╩п╟ п╬я┬п╦п╠п╨п╟
 *	Author:			dk
 *	History:
 *
 ****************************************************************************/
 int FuzzyMultiDataLearnAlgorithm::formAxioms (const int abType, std::vector <std::vector <std::vector <std::string> > > &ecFileNames, std::vector <AxiomExprPlus> &axioms, std::vector <std::string> &axiomFileNames) const {
-	// Подсчет числа различных элементарных условий
+	// п÷п╬п╢я│я┤п╣я┌ я┤п╦я│п╩п╟ я─п╟п╥п╩п╦я┤п╫я▀я┘ я█п╩п╣п╪п╣п╫я┌п╟я─п╫я▀я┘ я┐я│п╩п╬п╡п╦п╧
 	unsigned int totSize = 0;
 	for (unsigned int i = 0; i < ecFileNames.size(); i++)
 		for (unsigned int j = 0; j < ecFileNames[i].size(); j++)
@@ -343,7 +343,7 @@ int FuzzyMultiDataLearnAlgorithm::formAxioms (const int abType, std::vector <std
 	if (totSize < 1)
 		throw AxiomLibException("FuzzyMultiDataLearnAlgorithm::formAxioms : set of prepared elementary conditions is indeed empty.");
 
-	// Создание начальной популяции аксиом, из которых буду строиться аксиомы дальше в итеративном алгоритме
+	// п║п╬п╥п╢п╟п╫п╦п╣ п╫п╟я┤п╟п╩я▄п╫п╬п╧ п©п╬п©я┐п╩я▐я├п╦п╦ п╟п╨я│п╦п╬п╪, п╦п╥ п╨п╬я┌п╬я─я▀я┘ п╠я┐п╢я┐ я│я┌я─п╬п╦я┌я▄я│я▐ п╟п╨я│п╦п╬п╪я▀ п╢п╟п╩я▄я┬п╣ п╡ п╦я┌п╣я─п╟я┌п╦п╡п╫п╬п╪ п╟п╩пЁп╬я─п╦я┌п╪п╣
 	axioms.resize(totSize);
 	unsigned int t = 0;
 	std::vector <std::string> dataSetParamNames;
@@ -353,12 +353,12 @@ int FuzzyMultiDataLearnAlgorithm::formAxioms (const int abType, std::vector <std
 			for (unsigned int k = 0; k < ecFileNames[i][j].size(); k++, t++) {
 				axioms[t].expression.resize(1);
 				axioms[t].expression[0].resize(1);
-				// Создание элементарного условия, по его описанию из файла
+				// п║п╬п╥п╢п╟п╫п╦п╣ я█п╩п╣п╪п╣п╫я┌п╟я─п╫п╬пЁп╬ я┐я│п╩п╬п╡п╦я▐, п©п╬ п╣пЁп╬ п╬п©п╦я│п╟п╫п╦я▌ п╦п╥ я└п╟п╧п╩п╟
 				axioms[t].expression[0][0].initFromFile (axiomBaseDir, ecFileNames[i][j][k], dataSetParamNames);
 			}
 		}
 	}
-	// Заполняем начальную статистику по популяции
+	// п≈п╟п©п╬п╩п╫я▐п╣п╪ п╫п╟я┤п╟п╩я▄п╫я┐я▌ я│я┌п╟я┌п╦я│я┌п╦п╨я┐ п©п╬ п©п╬п©я┐п╩я▐я├п╦п╦
 	if (this->comments)	std::cout << "\n\tCounting initial statistics.\n";
 	#pragma omp parallel for schedule(dynamic, 1)
 	for (int i = 0; i < (int) totSize; i++) {
@@ -370,30 +370,30 @@ int FuzzyMultiDataLearnAlgorithm::formAxioms (const int abType, std::vector <std
 		}
 		matterAxiomFunc (axioms[i], abType);
 	}
-	// Подготовка переменных для поиска аксиом
+	// п÷п╬п╢пЁп╬я┌п╬п╡п╨п╟ п©п╣я─п╣п╪п╣п╫п╫я▀я┘ п╢п╩я▐ п©п╬п╦я│п╨п╟ п╟п╨я│п╦п╬п╪
 	AxiomExprPlus axiomExprPlus;
-	int iterNum = 0; // Счетчик итераций алгоритма построения аксиом
-	bool criteriaToContinue = true; // Флаг продолжения процедуры построения аксиом
+	int iterNum = 0; // п║я┤п╣я┌я┤п╦п╨ п╦я┌п╣я─п╟я├п╦п╧ п╟п╩пЁп╬я─п╦я┌п╪п╟ п©п╬я│я┌я─п╬п╣п╫п╦я▐ п╟п╨я│п╦п╬п╪
+	bool criteriaToContinue = true; // п╓п╩п╟пЁ п©я─п╬п╢п╬п╩п╤п╣п╫п╦я▐ п©я─п╬я├п╣п╢я┐я─я▀ п©п╬я│я┌я─п╬п╣п╫п╦я▐ п╟п╨я│п╦п╬п╪
 	int curSize, curBest;
 	std::vector <AxiomExprPlus> bestAxiomsNew;
-	// Проверка корректности указания максимального размера популяции
+	// п÷я─п╬п╡п╣я─п╨п╟ п╨п╬я─я─п╣п╨я┌п╫п╬я│я┌п╦ я┐п╨п╟п╥п╟п╫п╦я▐ п╪п╟п╨я│п╦п╪п╟п╩я▄п╫п╬пЁп╬ я─п╟п╥п╪п╣я─п╟ п©п╬п©я┐п╩я▐я├п╦п╦
 	if (maxAxiomPopSize < 2) 
 		throw AxiomLibException("FuzzyMultiDataLearnAlgorithm::formAxioms : incorrect value of parameter 'maxAxiomPopValue'.");
-	// Задаем размер множества аксиом, которые могут быть получены на каждом шаге алгоритма - размер задаем достаточным для худшего случая
+	// п≈п╟п╢п╟п╣п╪ я─п╟п╥п╪п╣я─ п╪п╫п╬п╤п╣я│я┌п╡п╟ п╟п╨я│п╦п╬п╪, п╨п╬я┌п╬я─я▀п╣ п╪п╬пЁя┐я┌ п╠я▀я┌я▄ п©п╬п╩я┐я┤п╣п╫я▀ п╫п╟ п╨п╟п╤п╢п╬п╪ я┬п╟пЁп╣ п╟п╩пЁп╬я─п╦я┌п╪п╟ - я─п╟п╥п╪п╣я─ п╥п╟п╢п╟п╣п╪ п╢п╬я│я┌п╟я┌п╬я┤п╫я▀п╪ п╢п╩я▐ я┘я┐п╢я┬п╣пЁп╬ я│п╩я┐я┤п╟я▐
 	bestAxiomsNew.resize(maxAxiomPopSize + round ((double)((maxAxiomPopSize - 1) * maxAxiomPopSize) / 2.0));
-	// Итеративное изменение популяции 
+	// п≤я┌п╣я─п╟я┌п╦п╡п╫п╬п╣ п╦п╥п╪п╣п╫п╣п╫п╦п╣ п©п╬п©я┐п╩я▐я├п╦п╦ 
 	while (criteriaToContinue) {
 		iterNum++;
-		// Отображаем на экран стадию процесса
+		// п·я┌п╬п╠я─п╟п╤п╟п╣п╪ п╫п╟ я█п╨я─п╟п╫ я│я┌п╟п╢п╦я▌ п©я─п╬я├п╣я│я│п╟
 		if (this->comments) {
 			char buf[128];
 			sprintf (buf, "\r\tAbType: %d\tIteration: %d\tNumber of axioms: %d\tby thread %d.\t", abType, iterNum, axioms.size(), omp_get_thread_num());
 			std::cout<<buf<<std::endl;
 			//std::cout.flush();
 		}
-		// Урезаем, если необходимо, вектор аксиом до максимально допустимых размеров
+		// пёя─п╣п╥п╟п╣п╪, п╣я│п╩п╦ п╫п╣п╬п╠я┘п╬п╢п╦п╪п╬, п╡п╣п╨я┌п╬я─ п╟п╨я│п╦п╬п╪ п╢п╬ п╪п╟п╨я│п╦п╪п╟п╩я▄п╫п╬ п╢п╬п©я┐я│я┌п╦п╪я▀я┘ я─п╟п╥п╪п╣я─п╬п╡
 		cutDownBestAxioms (axioms);
-		// Проверяем - достаточное ли число элементов вектора
+		// п÷я─п╬п╡п╣я─я▐п╣п╪ - п╢п╬я│я┌п╟я┌п╬я┤п╫п╬п╣ п╩п╦ я┤п╦я│п╩п╬ я█п╩п╣п╪п╣п╫я┌п╬п╡ п╡п╣п╨я┌п╬я─п╟
 		curSize = axioms.size();
 		if (curSize < 2) {
 			criteriaToContinue = false;
@@ -402,12 +402,12 @@ int FuzzyMultiDataLearnAlgorithm::formAxioms (const int abType, std::vector <std
 			}
 			break;
 		}
-		// Переносим существующие аксиомы в результат на данном шаге		
+		// п÷п╣я─п╣п╫п╬я│п╦п╪ я│я┐я┴п╣я│я┌п╡я┐я▌я┴п╦п╣ п╟п╨я│п╦п╬п╪я▀ п╡ я─п╣п╥я┐п╩я▄я┌п╟я┌ п╫п╟ п╢п╟п╫п╫п╬п╪ я┬п╟пЁп╣		
 		for (int i = 0; i < curSize; i++) {
 			bestAxiomsNew[i] = axioms[i];
 		}
 		curBest = curSize;
-		// Создаем новые элементы и вычисляем их значение целевой функции
+		// п║п╬п╥п╢п╟п╣п╪ п╫п╬п╡я▀п╣ я█п╩п╣п╪п╣п╫я┌я▀ п╦ п╡я▀я┤п╦я│п╩я▐п╣п╪ п╦я┘ п╥п╫п╟я┤п╣п╫п╦п╣ я├п╣п╩п╣п╡п╬п╧ я└я┐п╫п╨я├п╦п╦
 		for (unsigned int i = 0; i < (unsigned int) (curSize - 1); i++) {
 			for (unsigned int j = i+1; j < (unsigned int) curSize; j++) {
 				if (combineAxioms (axioms[i], axioms[j], axiomExprPlus, abType) > 0) {
@@ -419,14 +419,14 @@ int FuzzyMultiDataLearnAlgorithm::formAxioms (const int abType, std::vector <std
 		}
 		axioms[curSize - 1].clear();
 		axioms.clear();
-		// Записываем полученные значения в вектор для следующей итерации
+		// п≈п╟п©п╦я│я▀п╡п╟п╣п╪ п©п╬п╩я┐я┤п╣п╫п╫я▀п╣ п╥п╫п╟я┤п╣п╫п╦я▐ п╡ п╡п╣п╨я┌п╬я─ п╢п╩я▐ я│п╩п╣п╢я┐я▌я┴п╣п╧ п╦я┌п╣я─п╟я├п╦п╦
 		axioms.resize(curBest);
 		for (int i = 0; i < curBest; i++) {
 			axioms[i] = bestAxiomsNew[i];
 			bestAxiomsNew[i].clear();
 		}
 
-		// Проверяем критерии останова
+		// п÷я─п╬п╡п╣я─я▐п╣п╪ п╨я─п╦я┌п╣я─п╦п╦ п╬я│я┌п╟п╫п╬п╡п╟
 		if (curBest == curSize) {
 			criteriaToContinue = false;
 			if(comments) {
@@ -453,13 +453,13 @@ int FuzzyMultiDataLearnAlgorithm::formAxioms (const int abType, std::vector <std
 		}
 	}
 
-	// Очищаем использованные промежуточные вектора
+	// п·я┤п╦я┴п╟п╣п╪ п╦я│п©п╬п╩я▄п╥п╬п╡п╟п╫п╫я▀п╣ п©я─п╬п╪п╣п╤я┐я┌п╬я┤п╫я▀п╣ п╡п╣п╨я┌п╬я─п╟
 	bestAxiomsNew.clear();
 
-	// Уменьшаем размер популяции аксиом
+	// пёп╪п╣п╫я▄я┬п╟п╣п╪ я─п╟п╥п╪п╣я─ п©п╬п©я┐п╩я▐я├п╦п╦ п╟п╨я│п╦п╬п╪
 	cutDownBestAxioms (axioms);
 
-	// Сохраняем лучшие аксиомы в файлах
+	// п║п╬я┘я─п╟п╫я▐п╣п╪ п╩я┐я┤я┬п╦п╣ п╟п╨я│п╦п╬п╪я▀ п╡ я└п╟п╧п╩п╟я┘
 	saveBestAxiomsInFiles (abType, axioms, axiomFileNames);
 	
 	return 0;
@@ -469,41 +469,41 @@ int FuzzyMultiDataLearnAlgorithm::formAxioms (const int abType, std::vector <std
 /****************************************************************************
 *					FuzzyMultiDataLearnAlgorithm::saveBestAxiomsInFiles
 *
-*	Description:	Функция сохраняет в файлы лучшие сформированные на втором этапе файлы
-*	Parameters:		abnormalBehaviourType - тип нештатного поведения для которого подбирались аксиомы
-*					axioms - вектор лучших аксиом
+*	Description:	п╓я┐п╫п╨я├п╦я▐ я│п╬я┘я─п╟п╫я▐п╣я┌ п╡ я└п╟п╧п╩я▀ п╩я┐я┤я┬п╦п╣ я│я└п╬я─п╪п╦я─п╬п╡п╟п╫п╫я▀п╣ п╫п╟ п╡я┌п╬я─п╬п╪ я█я┌п╟п©п╣ я└п╟п╧п╩я▀
+*	Parameters:		abnormalBehaviourType - я┌п╦п© п╫п╣я┬я┌п╟я┌п╫п╬пЁп╬ п©п╬п╡п╣п╢п╣п╫п╦я▐ п╢п╩я▐ п╨п╬я┌п╬я─п╬пЁп╬ п©п╬п╢п╠п╦я─п╟п╩п╦я│я▄ п╟п╨я│п╦п╬п╪я▀
+*					axioms - п╡п╣п╨я┌п╬я─ п╩я┐я┤я┬п╦я┘ п╟п╨я│п╦п╬п╪
 *	Returns:		0
-*	Throws:			AxiomLibException - если функция получает несогласованные параметры от набора данных
+*	Throws:			AxiomLibException - п╣я│п╩п╦ я└я┐п╫п╨я├п╦я▐ п©п╬п╩я┐я┤п╟п╣я┌ п╫п╣я│п╬пЁп╩п╟я│п╬п╡п╟п╫п╫я▀п╣ п©п╟я─п╟п╪п╣я┌я─я▀ п╬я┌ п╫п╟п╠п╬я─п╟ п╢п╟п╫п╫я▀я┘
 *	Author:			dk
 *	History:
 *
 ****************************************************************************/
 int FuzzyMultiDataLearnAlgorithm::saveBestAxiomsInFiles (const int abnormalBehaviourType, std::vector <AxiomExprPlus> &axioms, std::vector <std::string> &axiomFileNames) const {
-	// Формируем название файла с описанием аксиомы
+	// п╓п╬я─п╪п╦я─я┐п╣п╪ п╫п╟п╥п╡п╟п╫п╦п╣ я└п╟п╧п╩п╟ я│ п╬п©п╦я│п╟п╫п╦п╣п╪ п╟п╨я│п╦п╬п╪я▀
 	std::string curAxiomName, tmpAxiomName;
 	char tmss[10];
 	curAxiomName = axiomNameTemplate;
-	// дописываем в название тип нештатного поведения, для которого подбиралась аксиома
+	// п╢п╬п©п╦я│я▀п╡п╟п╣п╪ п╡ п╫п╟п╥п╡п╟п╫п╦п╣ я┌п╦п© п╫п╣я┬я┌п╟я┌п╫п╬пЁп╬ п©п╬п╡п╣п╢п╣п╫п╦я▐, п╢п╩я▐ п╨п╬я┌п╬я─п╬пЁп╬ п©п╬п╢п╠п╦я─п╟п╩п╟я│я▄ п╟п╨я│п╦п╬п╪п╟
 	curAxiomName.append (str_AbnormalType_AxiomNaming);
 	tmss[0]='\0';
 	sprintf(tmss, "%d", abnormalBehaviourType + 1);
 	curAxiomName.append (tmss);
 	curAxiomName.append ("_");
-	// получаем вектор названий измерений набора данных
+	// п©п╬п╩я┐я┤п╟п╣п╪ п╡п╣п╨я┌п╬я─ п╫п╟п╥п╡п╟п╫п╦п╧ п╦п╥п╪п╣я─п╣п╫п╦п╧ п╫п╟п╠п╬я─п╟ п╢п╟п╫п╫я▀я┘
 	std::vector <std::string> dataSetParams;
 	dataSetParams = fuzzyDataSet.getParamNames();
-	// Подготавливаем переменную для хранения имен записанных файлов
+	// п÷п╬п╢пЁп╬я┌п╟п╡п╩п╦п╡п╟п╣п╪ п©п╣я─п╣п╪п╣п╫п╫я┐я▌ п╢п╩я▐ я┘я─п╟п╫п╣п╫п╦я▐ п╦п╪п╣п╫ п╥п╟п©п╦я│п╟п╫п╫я▀я┘ я└п╟п╧п╩п╬п╡
 	axiomFileNames.resize(axioms.size());
-	// Сохраняем все акисомы
+	// п║п╬я┘я─п╟п╫я▐п╣п╪ п╡я│п╣ п╟п╨п╦я│п╬п╪я▀
 	for (unsigned int axNum = 0; axNum < axioms.size(); axNum++) {
-		// Дописываем в название индекс аксиомы во внутреннем представлении - в перемнной класса
+		// п■п╬п©п╦я│я▀п╡п╟п╣п╪ п╡ п╫п╟п╥п╡п╟п╫п╦п╣ п╦п╫п╢п╣п╨я│ п╟п╨я│п╦п╬п╪я▀ п╡п╬ п╡п╫я┐я┌я─п╣п╫п╫п╣п╪ п©я─п╣п╢я│я┌п╟п╡п╩п╣п╫п╦п╦ - п╡ п©п╣я─п╣п╪п╫п╫п╬п╧ п╨п╩п╟я│я│п╟
 		tmpAxiomName = curAxiomName;
 		tmss[0]='\0';
 		sprintf(tmss, "%d", axNum + 1);
 		tmpAxiomName.append (tmss);
-		// Сохраняем описанием аксиомы в файл
+		// п║п╬я┘я─п╟п╫я▐п╣п╪ п╬п©п╦я│п╟п╫п╦п╣п╪ п╟п╨я│п╦п╬п╪я▀ п╡ я└п╟п╧п╩
 		axioms[axNum].saveAxiomToFile(axiomBaseDir, tmpAxiomName, dataSetParams);
-		// Сохраняем имена файлов с описанием аксиомы
+		// п║п╬я┘я─п╟п╫я▐п╣п╪ п╦п╪п╣п╫п╟ я└п╟п╧п╩п╬п╡ я│ п╬п©п╦я│п╟п╫п╦п╣п╪ п╟п╨я│п╦п╬п╪я▀
 		axiomFileNames[axNum].assign (tmpAxiomName);
 	}
 	return 0;
@@ -513,31 +513,31 @@ int FuzzyMultiDataLearnAlgorithm::saveBestAxiomsInFiles (const int abnormalBehav
 /****************************************************************************
 *					FuzzyMultiDataLearnAlgorithm::matterAxiomFunc
 *
-*	Description:	Подсчет целевой функции для аксиомы
-*	Parameters:		ax - аксиома, для которой вычисляется значение целевой функции
-*					param - параметр набора данных, на котором проверяется аксиома
-*	Returns:		double - значение целевой функции
-*	Throws:			AxiomLibException - если функция получает несогласованные параметры от набора данных
+*	Description:	п÷п╬п╢я│я┤п╣я┌ я├п╣п╩п╣п╡п╬п╧ я└я┐п╫п╨я├п╦п╦ п╢п╩я▐ п╟п╨я│п╦п╬п╪я▀
+*	Parameters:		ax - п╟п╨я│п╦п╬п╪п╟, п╢п╩я▐ п╨п╬я┌п╬я─п╬п╧ п╡я▀я┤п╦я│п╩я▐п╣я┌я│я▐ п╥п╫п╟я┤п╣п╫п╦п╣ я├п╣п╩п╣п╡п╬п╧ я└я┐п╫п╨я├п╦п╦
+*					param - п©п╟я─п╟п╪п╣я┌я─ п╫п╟п╠п╬я─п╟ п╢п╟п╫п╫я▀я┘, п╫п╟ п╨п╬я┌п╬я─п╬п╪ п©я─п╬п╡п╣я─я▐п╣я┌я│я▐ п╟п╨я│п╦п╬п╪п╟
+*	Returns:		double - п╥п╫п╟я┤п╣п╫п╦п╣ я├п╣п╩п╣п╡п╬п╧ я└я┐п╫п╨я├п╦п╦
+*	Throws:			AxiomLibException - п╣я│п╩п╦ я└я┐п╫п╨я├п╦я▐ п©п╬п╩я┐я┤п╟п╣я┌ п╫п╣я│п╬пЁп╩п╟я│п╬п╡п╟п╫п╫я▀п╣ п©п╟я─п╟п╪п╣я┌я─я▀ п╬я┌ п╫п╟п╠п╬я─п╟ п╢п╟п╫п╫я▀я┘
 *	Author:			dk
 *	History:
 *
 ****************************************************************************/
 double FuzzyMultiDataLearnAlgorithm::matterAxiomFunc (AxiomExprPlus &ax, const int abType) const {
-	// Объявление необходимых переменных
+	// п·п╠я┼я▐п╡п╩п╣п╫п╦п╣ п╫п╣п╬п╠я┘п╬п╢п╦п╪я▀я┘ п©п╣я─п╣п╪п╣п╫п╫я▀я┘
 	int numOfClasses, numOfNormalMultiTS;
 	std::vector <int> numOfMultiTS, numOfNormalTS;
 	std::vector < std::vector <int> > numOfTS;
 	std::vector < std::vector <double> > curTS;
 	int classCount, classLen, classLenCur;
-	// Получение информации о наборе данных
+	// п÷п╬п╩я┐я┤п╣п╫п╦п╣ п╦п╫я└п╬я─п╪п╟я├п╦п╦ п╬ п╫п╟п╠п╬я─п╣ п╢п╟п╫п╫я▀я┘
 	fuzzyDataSet.getClassSize (numOfClasses, numOfMultiTS, numOfTS);
-	/* // Эти проверки слишком частые, кроме того это проверяется и в других функциях, т.о. они здесь не обязательны
+	/* // п╜я┌п╦ п©я─п╬п╡п╣я─п╨п╦ я│п╩п╦я┬п╨п╬п╪ я┤п╟я│я┌я▀п╣, п╨я─п╬п╪п╣ я┌п╬пЁп╬ я█я┌п╬ п©я─п╬п╡п╣я─я▐п╣я┌я│я▐ п╦ п╡ п╢я─я┐пЁп╦я┘ я└я┐п╫п╨я├п╦я▐я┘, я┌.п╬. п╬п╫п╦ п╥п╢п╣я│я▄ п╫п╣ п╬п╠я▐п╥п╟я┌п╣п╩я▄п╫я▀
 	if ((numOfClasses != numOfMultiTS.size()) || (numOfClasses != numOfTS.size()))
 		throw AxiomLibException("FuzzyMultiDataLearnAlgorithm::matterAxiomFunc : incorrect response from internal function.");
 	if (numOfMultiTS[abType] != numOfTS[abType].size())
 		throw AxiomLibException("FuzzyMultiDataLearnAlgorithm::matterAxiomFunc : incorrect response from internal function*.");
 	*/
-	// перед началом пробегаем по содержимому аксиомы и составляем спосок необходимых размерностей траектории
+	// п©п╣я─п╣п╢ п╫п╟я┤п╟п╩п╬п╪ п©я─п╬п╠п╣пЁп╟п╣п╪ п©п╬ я│п╬п╢п╣я─п╤п╦п╪п╬п╪я┐ п╟п╨я│п╦п╬п╪я▀ п╦ я│п╬я│я┌п╟п╡п╩я▐п╣п╪ я│п©п╬я│п╬п╨ п╫п╣п╬п╠я┘п╬п╢п╦п╪я▀я┘ я─п╟п╥п╪п╣я─п╫п╬я│я┌п╣п╧ я┌я─п╟п╣п╨я┌п╬я─п╦п╦
 	std::vector <bool> dims;
 	dims.resize (fuzzyDataSet.paramNamesSize(), false);
 	for (unsigned int a = 0; a < ax.expression.size(); a++) {
@@ -547,7 +547,7 @@ double FuzzyMultiDataLearnAlgorithm::matterAxiomFunc (AxiomExprPlus &ax, const i
 			dims[ax.expression[a][b].dimension] = true;
 		}
 	}
-	// цикл по всем траекториям из обучающей выборки для данного класса нештатного поведения
+	// я├п╦п╨п╩ п©п╬ п╡я│п╣п╪ я┌я─п╟п╣п╨я┌п╬я─п╦я▐п╪ п╦п╥ п╬п╠я┐я┤п╟я▌я┴п╣п╧ п╡я▀п╠п╬я─п╨п╦ п╢п╩я▐ п╢п╟п╫п╫п╬пЁп╬ п╨п╩п╟я│я│п╟ п╫п╣я┬я┌п╟я┌п╫п╬пЁп╬ п©п╬п╡п╣п╢п╣п╫п╦я▐
 	classCount = 0;
 	classLen = 0;
 	curTS.resize (fuzzyDataSet.paramNamesSize());
@@ -555,18 +555,18 @@ double FuzzyMultiDataLearnAlgorithm::matterAxiomFunc (AxiomExprPlus &ax, const i
 	boost::accumulators::accumulator_set<double, 
 		boost::accumulators::features<boost::accumulators::tag::variance> > varianceAccumulator;
 	
-	// Число траекторий, соответствующих нештатному поведению, на которых аксиома сработалаы
+	// п╖п╦я│п╩п╬ я┌я─п╟п╣п╨я┌п╬я─п╦п╧, я│п╬п╬я┌п╡п╣я┌я│я┌п╡я┐я▌я┴п╦я┘ п╫п╣я┬я┌п╟я┌п╫п╬п╪я┐ п©п╬п╡п╣п╢п╣п╫п╦я▌, п╫п╟ п╨п╬я┌п╬я─я▀я┘ п╟п╨я│п╦п╬п╪п╟ я│я─п╟п╠п╬я┌п╟п╩п╟я▀
 	int numOccured = 0;
 	
-	// Общее число траекторий, соответствующих нештатному поведению
+	// п·п╠я┴п╣п╣ я┤п╦я│п╩п╬ я┌я─п╟п╣п╨я┌п╬я─п╦п╧, я│п╬п╬я┌п╡п╣я┌я│я┌п╡я┐я▌я┴п╦я┘ п╫п╣я┬я┌п╟я┌п╫п╬п╪я┐ п©п╬п╡п╣п╢п╣п╫п╦я▌
 	int numTraj = (int) numOfTS[abType].size();
 	
 	for (int j = 0; j < numTraj; j++) {
-		/* // Эта проверка происходит не один раз - здесь возможно исключить
+		/* // п╜я┌п╟ п©я─п╬п╡п╣я─п╨п╟ п©я─п╬п╦я│я┘п╬п╢п╦я┌ п╫п╣ п╬п╢п╦п╫ я─п╟п╥ - п╥п╢п╣я│я▄ п╡п╬п╥п╪п╬п╤п╫п╬ п╦я│п╨п╩я▌я┤п╦я┌я▄
 		if (numOfTS[abType][j] != fuzzyDataSet.paramNamesSize())
 			throw AxiomLibException("FuzzyMultiDataLearnAlgorithm::matterAxiomFunc : dataSet is not full - some time series contains not enought dimensions.");
 		*/
-		// вытаскиваем траекторию из обучающей выборки для данного класса нештатного поведения (вытаскиваем только нужные размерности)
+		// п╡я▀я┌п╟я│п╨п╦п╡п╟п╣п╪ я┌я─п╟п╣п╨я┌п╬я─п╦я▌ п╦п╥ п╬п╠я┐я┤п╟я▌я┴п╣п╧ п╡я▀п╠п╬я─п╨п╦ п╢п╩я▐ п╢п╟п╫п╫п╬пЁп╬ п╨п╩п╟я│я│п╟ п╫п╣я┬я┌п╟я┌п╫п╬пЁп╬ п©п╬п╡п╣п╢п╣п╫п╦я▐ (п╡я▀я┌п╟я│п╨п╦п╡п╟п╣п╪ я┌п╬п╩я▄п╨п╬ п╫я┐п╤п╫я▀п╣ я─п╟п╥п╪п╣я─п╫п╬я│я┌п╦)
 		classLenCur = 0;
 		for (int t = 0; t < numOfTS[abType][j]; t++) {
 			if (dims[t]) {
@@ -577,23 +577,23 @@ double FuzzyMultiDataLearnAlgorithm::matterAxiomFunc (AxiomExprPlus &ax, const i
 				curTS[t].clear();
 			}
 		}
-		// проверяем как срабатывает аксиома на выбранных размерностях выбранной траектории и считаем статистику для подсчета значения целевой функции
+		// п©я─п╬п╡п╣я─я▐п╣п╪ п╨п╟п╨ я│я─п╟п╠п╟я┌я▀п╡п╟п╣я┌ п╟п╨я│п╦п╬п╪п╟ п╫п╟ п╡я▀п╠я─п╟п╫п╫я▀я┘ я─п╟п╥п╪п╣я─п╫п╬я│я┌я▐я┘ п╡я▀п╠я─п╟п╫п╫п╬п╧ я┌я─п╟п╣п╨я┌п╬я─п╦п╦ п╦ я│я┤п╦я┌п╟п╣п╪ я│я┌п╟я┌п╦я│я┌п╦п╨я┐ п╢п╩я▐ п©п╬п╢я│я┤п╣я┌п╟ п╥п╫п╟я┤п╣п╫п╦я▐ я├п╣п╩п╣п╡п╬п╧ я└я┐п╫п╨я├п╦п╦
 		int currNumOfCarriedOutItems = numOfCarriedOutItems (ax, curTS, classLenCur);
 		
 		if(currNumOfCarriedOutItems > 0) {
 			++numOccured;
 		}
 		
-		// Вычисляем частоту срабатывания на текущей траектории
+		// п▓я▀я┤п╦я│п╩я▐п╣п╪ я┤п╟я│я┌п╬я┌я┐ я│я─п╟п╠п╟я┌я▀п╡п╟п╫п╦я▐ п╫п╟ я┌п╣п╨я┐я┴п╣п╧ я┌я─п╟п╣п╨я┌п╬я─п╦п╦
 		double currFreq = (double) currNumOfCarriedOutItems / (double) classLenCur;
 		
-		// Аккумулируем значение частоты для дальнейшего подсчета вариации
+		// п░п╨п╨я┐п╪я┐п╩п╦я─я┐п╣п╪ п╥п╫п╟я┤п╣п╫п╦п╣ я┤п╟я│я┌п╬я┌я▀ п╢п╩я▐ п╢п╟п╩я▄п╫п╣п╧я┬п╣пЁп╬ п©п╬п╢я│я┤п╣я┌п╟ п╡п╟я─п╦п╟я├п╦п╦
 		varianceAccumulator(currFreq);
 		
 		classCount += currNumOfCarriedOutItems;
 		classLen += classLenCur;
 	}
-	// Заполняем статистику по нештатному поведению
+	// п≈п╟п©п╬п╩п╫я▐п╣п╪ я│я┌п╟я┌п╦я│я┌п╦п╨я┐ п©п╬ п╫п╣я┬я┌п╟я┌п╫п╬п╪я┐ п©п╬п╡п╣п╢п╣п╫п╦я▌
 	
 	if (classLen > 0) {
 		ax.statAbnorm = (double) classCount/ (double) classLen;
@@ -602,22 +602,22 @@ double FuzzyMultiDataLearnAlgorithm::matterAxiomFunc (AxiomExprPlus &ax, const i
 				);
 		ax.statOccurence = (double) numOccured / (double) numTraj;
 	} else {
-		ax.statAbnorm = -1.0; // - значит данные не определены
+		ax.statAbnorm = -1.0; // - п╥п╫п╟я┤п╦я┌ п╢п╟п╫п╫я▀п╣ п╫п╣ п╬п©я─п╣п╢п╣п╩п╣п╫я▀
 		ax.statVariation = -1.0;
 		ax.statOccurence = -1.0;
 		std::cout << "\nWarning in  FuzzyMultiDataLearnAlgorithm::matterAxiomFunc : incorrect dstaSet request for abnormal type.\n";
 	}	
 
-	// Цикл по траекториям нормального поведения
+	// п╕п╦п╨п╩ п©п╬ я┌я─п╟п╣п╨я┌п╬я─п╦я▐п╪ п╫п╬я─п╪п╟п╩я▄п╫п╬пЁп╬ п©п╬п╡п╣п╢п╣п╫п╦я▐
 	fuzzyDataSet.getNormalClassSize (numOfNormalMultiTS, numOfNormalTS);
-	/* // Это уже много где проверяется - в целях оптимизации здесь исключаем проверку
+	/* // п╜я┌п╬ я┐п╤п╣ п╪п╫п╬пЁп╬ пЁп╢п╣ п©я─п╬п╡п╣я─я▐п╣я┌я│я▐ - п╡ я├п╣п╩я▐я┘ п╬п©я┌п╦п╪п╦п╥п╟я├п╦п╦ п╥п╢п╣я│я▄ п╦я│п╨п╩я▌я┤п╟п╣п╪ п©я─п╬п╡п╣я─п╨я┐
 	if (numOfNormalMultiTS != numOfNormalTS.size())
 		throw AxiomLibException("FuzzyMultiDataLearnAlgorithm::matterAxiomFunc : incorrect response from internal function getNormalClassSize");
 	*/
 	classCount = 0;
 	classLen = 0;
 	for (int j = 0; j < (int) numOfNormalTS.size(); j++) {
-		// вытаскиваем траекторию из обучающей выборки для данного класса нештатного поведения (вытаскиваем только нужные размерности)
+		// п╡я▀я┌п╟я│п╨п╦п╡п╟п╣п╪ я┌я─п╟п╣п╨я┌п╬я─п╦я▌ п╦п╥ п╬п╠я┐я┤п╟я▌я┴п╣п╧ п╡я▀п╠п╬я─п╨п╦ п╢п╩я▐ п╢п╟п╫п╫п╬пЁп╬ п╨п╩п╟я│я│п╟ п╫п╣я┬я┌п╟я┌п╫п╬пЁп╬ п©п╬п╡п╣п╢п╣п╫п╦я▐ (п╡я▀я┌п╟я│п╨п╦п╡п╟п╣п╪ я┌п╬п╩я▄п╨п╬ п╫я┐п╤п╫я▀п╣ я─п╟п╥п╪п╣я─п╫п╬я│я┌п╦)
 		classLenCur = 0;
 		for (int t = 0; t < numOfNormalTS[j]; t++) {
 			if (dims[t]) {
@@ -628,20 +628,20 @@ double FuzzyMultiDataLearnAlgorithm::matterAxiomFunc (AxiomExprPlus &ax, const i
 				curTS[t].clear();
 			}
 		}
-		// Получаем статистику по разметки выбранной траектории
+		// п÷п╬п╩я┐я┤п╟п╣п╪ я│я┌п╟я┌п╦я│я┌п╦п╨я┐ п©п╬ я─п╟п╥п╪п╣я┌п╨п╦ п╡я▀п╠я─п╟п╫п╫п╬п╧ я┌я─п╟п╣п╨я┌п╬я─п╦п╦
 		classCount += numOfCarriedOutItems (ax, curTS, classLenCur);
 		classLen += classLenCur;
 	}
-	// Заполняем статистику по нештатному поведению
+	// п≈п╟п©п╬п╩п╫я▐п╣п╪ я│я┌п╟я┌п╦я│я┌п╦п╨я┐ п©п╬ п╫п╣я┬я┌п╟я┌п╫п╬п╪я┐ п©п╬п╡п╣п╢п╣п╫п╦я▌
 	if (classLen > 0)
 		ax.statNormal = (double) classCount/ (double) classLen;
 	else {
-		ax.statNormal = -1.0; // - значит данные не определены
+		ax.statNormal = -1.0; // - п╥п╫п╟я┤п╦я┌ п╢п╟п╫п╫я▀п╣ п╫п╣ п╬п©я─п╣п╢п╣п╩п╣п╫я▀
 		std::cout << "\nWarning in FuzzyMultiDataLearnAlgorithm::matterAxiomFunc: incorrect dstaSet request for normal data.\n";
 	}
 
 #ifndef FUZZYMULTIDATA_AXIOMGOAL_EXPERIMENTAL
-	// Определение значения целевой функции
+	// п·п©я─п╣п╢п╣п╩п╣п╫п╦п╣ п╥п╫п╟я┤п╣п╫п╦я▐ я├п╣п╩п╣п╡п╬п╧ я└я┐п╫п╨я├п╦п╦
 	if (ax.statAbnorm < eps)
 		ax.goal = 0.0;
 	else
@@ -663,10 +663,10 @@ double FuzzyMultiDataLearnAlgorithm::matterAxiomFunc (AxiomExprPlus &ax, const i
 /****************************************************************************
 *					FuzzyMultiDataLearnAlgorithm::numOfCarriedOutItems
 *
-*	Description:	Подсчет числа точек в ряду, на которых аксиома выполняется
-*	Parameters:		ax - проверяемоя аксиома
-*					row - ряд для порверки
-*	Returns:		int - число точек, на которых аксиома выполнена
+*	Description:	п÷п╬п╢я│я┤п╣я┌ я┤п╦я│п╩п╟ я┌п╬я┤п╣п╨ п╡ я─я▐п╢я┐, п╫п╟ п╨п╬я┌п╬я─я▀я┘ п╟п╨я│п╦п╬п╪п╟ п╡я▀п©п╬п╩п╫я▐п╣я┌я│я▐
+*	Parameters:		ax - п©я─п╬п╡п╣я─я▐п╣п╪п╬я▐ п╟п╨я│п╦п╬п╪п╟
+*					row - я─я▐п╢ п╢п╩я▐ п©п╬я─п╡п╣я─п╨п╦
+*	Returns:		int - я┤п╦я│п╩п╬ я┌п╬я┤п╣п╨, п╫п╟ п╨п╬я┌п╬я─я▀я┘ п╟п╨я│п╦п╬п╪п╟ п╡я▀п©п╬п╩п╫п╣п╫п╟
 *	Throws:			-
 *	Author:			dk
 *	History:
@@ -685,12 +685,12 @@ inline int FuzzyMultiDataLearnAlgorithm::numOfCarriedOutItems (AxiomExpr &ax, st
 /****************************************************************************
 *					FuzzyMultiDataLearnAlgorithm::getPriority
 *
-*	Description:	Вспомогательная функция сортировки массива по убыванию 
-*					с занесением результатов в отдельный вектор индексов.
-*					Значения исходного сортируемого вектора не изменяются и не 
-*					перемещаются.
-*	Parameters:		vec - сортируемый вектор аксиом по значению целевой функции
-*					pos - вектор индексов для указания результата
+*	Description:	п▓я│п©п╬п╪п╬пЁп╟я┌п╣п╩я▄п╫п╟я▐ я└я┐п╫п╨я├п╦я▐ я│п╬я─я┌п╦я─п╬п╡п╨п╦ п╪п╟я│я│п╦п╡п╟ п©п╬ я┐п╠я▀п╡п╟п╫п╦я▌ 
+*					я│ п╥п╟п╫п╣я│п╣п╫п╦п╣п╪ я─п╣п╥я┐п╩я▄я┌п╟я┌п╬п╡ п╡ п╬я┌п╢п╣п╩я▄п╫я▀п╧ п╡п╣п╨я┌п╬я─ п╦п╫п╢п╣п╨я│п╬п╡.
+*					п≈п╫п╟я┤п╣п╫п╦я▐ п╦я│я┘п╬п╢п╫п╬пЁп╬ я│п╬я─я┌п╦я─я┐п╣п╪п╬пЁп╬ п╡п╣п╨я┌п╬я─п╟ п╫п╣ п╦п╥п╪п╣п╫я▐я▌я┌я│я▐ п╦ п╫п╣ 
+*					п©п╣я─п╣п╪п╣я┴п╟я▌я┌я│я▐.
+*	Parameters:		vec - я│п╬я─я┌п╦я─я┐п╣п╪я▀п╧ п╡п╣п╨я┌п╬я─ п╟п╨я│п╦п╬п╪ п©п╬ п╥п╫п╟я┤п╣п╫п╦я▌ я├п╣п╩п╣п╡п╬п╧ я└я┐п╫п╨я├п╦п╦
+*					pos - п╡п╣п╨я┌п╬я─ п╦п╫п╢п╣п╨я│п╬п╡ п╢п╩я▐ я┐п╨п╟п╥п╟п╫п╦я▐ я─п╣п╥я┐п╩я▄я┌п╟я┌п╟
 *	Returns:		0
 *	Throws:			-
 *	Author:			dk
@@ -718,26 +718,26 @@ inline int FuzzyMultiDataLearnAlgorithm::getPriority (std::vector <AxiomExprPlus
 /****************************************************************************
 *					FuzzyMultiDataLearnAlgorithm::cutDownBestAxioms
 *
-*	Description:	Функция сокращает популяцию существующих аксиом 
-*					до определенного в параметрах (из конфиг-файла) значения
-*	Parameters:		axioms - вектор лучших аксиом
-*	Returns:		0 - если урезания популяции не было
-*					1 - в противном случае
-*	Throws:			AxiomLibException - если внутренние переменные класса не согласованы
+*	Description:	п╓я┐п╫п╨я├п╦я▐ я│п╬п╨я─п╟я┴п╟п╣я┌ п©п╬п©я┐п╩я▐я├п╦я▌ я│я┐я┴п╣я│я┌п╡я┐я▌я┴п╦я┘ п╟п╨я│п╦п╬п╪ 
+*					п╢п╬ п╬п©я─п╣п╢п╣п╩п╣п╫п╫п╬пЁп╬ п╡ п©п╟я─п╟п╪п╣я┌я─п╟я┘ (п╦п╥ п╨п╬п╫я└п╦пЁ-я└п╟п╧п╩п╟) п╥п╫п╟я┤п╣п╫п╦я▐
+*	Parameters:		axioms - п╡п╣п╨я┌п╬я─ п╩я┐я┤я┬п╦я┘ п╟п╨я│п╦п╬п╪
+*	Returns:		0 - п╣я│п╩п╦ я┐я─п╣п╥п╟п╫п╦я▐ п©п╬п©я┐п╩я▐я├п╦п╦ п╫п╣ п╠я▀п╩п╬
+*					1 - п╡ п©я─п╬я┌п╦п╡п╫п╬п╪ я│п╩я┐я┤п╟п╣
+*	Throws:			AxiomLibException - п╣я│п╩п╦ п╡п╫я┐я┌я─п╣п╫п╫п╦п╣ п©п╣я─п╣п╪п╣п╫п╫я▀п╣ п╨п╩п╟я│я│п╟ п╫п╣ я│п╬пЁп╩п╟я│п╬п╡п╟п╫я▀
 *	Author:			dk
 *	History:
 *
 ****************************************************************************/
 int FuzzyMultiDataLearnAlgorithm::cutDownBestAxioms (std::vector <AxiomExprPlus> &axioms) const {
-	// Проверка входных параметров
+	// п÷я─п╬п╡п╣я─п╨п╟ п╡я┘п╬п╢п╫я▀я┘ п©п╟я─п╟п╪п╣я┌я─п╬п╡
 	if ((maxAxiomPopSize < 1) || (axioms.size() <= (unsigned int) maxAxiomPopSize))
 		return 0;
 	
-	// Сортировка аксиом по значению целевой функции
+	// п║п╬я─я┌п╦я─п╬п╡п╨п╟ п╟п╨я│п╦п╬п╪ п©п╬ п╥п╫п╟я┤п╣п╫п╦я▌ я├п╣п╩п╣п╡п╬п╧ я└я┐п╫п╨я├п╦п╦
 	std::vector <unsigned int> pos;
 	getPriority (axioms, pos);
 	
-	// Определение числа лучших аксиом, сохраняемых в популяции
+	// п·п©я─п╣п╢п╣п╩п╣п╫п╦п╣ я┤п╦я│п╩п╟ п╩я┐я┤я┬п╦я┘ п╟п╨я│п╦п╬п╪, я│п╬я┘я─п╟п╫я▐п╣п╪я▀я┘ п╡ п©п╬п©я┐п╩я▐я├п╦п╦
 	unsigned int numBestToSave, numToChoose, numFrom;
 	numBestToSave = (unsigned int) round (percentBestAxioms*maxAxiomPopSize);
 	numToChoose = (unsigned int) maxAxiomPopSize - numBestToSave;
@@ -748,11 +748,11 @@ int FuzzyMultiDataLearnAlgorithm::cutDownBestAxioms (std::vector <AxiomExprPlus>
 	int curChoice;
 	std::vector <unsigned int> toSave;
 	toSave.resize (maxAxiomPopSize);
-	// Заносим в вектор сохраняемых элементов - заданное число лучших
+	// п≈п╟п╫п╬я│п╦п╪ п╡ п╡п╣п╨я┌п╬я─ я│п╬я┘я─п╟п╫я▐п╣п╪я▀я┘ я█п╩п╣п╪п╣п╫я┌п╬п╡ - п╥п╟п╢п╟п╫п╫п╬п╣ я┤п╦я│п╩п╬ п╩я┐я┤я┬п╦я┘
 	for (unsigned int i = 0; i < numBestToSave; i++) {
 		toSave[i] = pos[i];
 	}
-	// Случайный выбор оставшихся
+	// п║п╩я┐я┤п╟п╧п╫я▀п╧ п╡я▀п╠п╬я─ п╬я│я┌п╟п╡я┬п╦я┘я│я▐
 	for (unsigned int i = 0; i < numToChoose; i++) {
 		curChoice = round (((double) rand() / (double) RAND_MAX) * (double) (numFrom - i - 1));
 		for (unsigned int t = (unsigned int) curChoice; t < numFrom; t++)
@@ -763,7 +763,7 @@ int FuzzyMultiDataLearnAlgorithm::cutDownBestAxioms (std::vector <AxiomExprPlus>
 			}
 	}
 
-	// Сортировка массива выбранных для сохранения элементов по убыванию
+	// п║п╬я─я┌п╦я─п╬п╡п╨п╟ п╪п╟я│я│п╦п╡п╟ п╡я▀п╠я─п╟п╫п╫я▀я┘ п╢п╩я▐ я│п╬я┘я─п╟п╫п╣п╫п╦я▐ я█п╩п╣п╪п╣п╫я┌п╬п╡ п©п╬ я┐п╠я▀п╡п╟п╫п╦я▌
 	unsigned int tmpInt;
 	for (unsigned int i = maxAxiomPopSize - 1; i > 0; i--) {
 		for (unsigned int j = 0; j < i; j++) {
@@ -775,8 +775,8 @@ int FuzzyMultiDataLearnAlgorithm::cutDownBestAxioms (std::vector <AxiomExprPlus>
 		}
 	}
 	
-	// Удаление невыбранных аксиом
-	// Удаляем все элементы после последнего по индексу в списке
+	// пёп╢п╟п╩п╣п╫п╦п╣ п╫п╣п╡я▀п╠я─п╟п╫п╫я▀я┘ п╟п╨я│п╦п╬п╪
+	// пёп╢п╟п╩я▐п╣п╪ п╡я│п╣ я█п╩п╣п╪п╣п╫я┌я▀ п©п╬я│п╩п╣ п©п╬я│п╩п╣п╢п╫п╣пЁп╬ п©п╬ п╦п╫п╢п╣п╨я│я┐ п╡ я│п©п╦я│п╨п╣
 	if ((toSave[0] + 1) < axioms.size()) {
 		for (unsigned int j = toSave[0] + 1; j < axioms.size(); j++)
 			axioms[j].clear();
@@ -784,14 +784,14 @@ int FuzzyMultiDataLearnAlgorithm::cutDownBestAxioms (std::vector <AxiomExprPlus>
 	}
 	for (int i = 1; i < maxAxiomPopSize; i++) {
 		if ((toSave[i] + 1) < toSave[i-1]) {
-			// Очищаем содержимое элементов вектора аксиом
+			// п·я┤п╦я┴п╟п╣п╪ я│п╬п╢п╣я─п╤п╦п╪п╬п╣ я█п╩п╣п╪п╣п╫я┌п╬п╡ п╡п╣п╨я┌п╬я─п╟ п╟п╨я│п╦п╬п╪
 			for (unsigned int j = toSave[i] + 1; j < toSave[i-1]; j++)
 				axioms[j].clear();
-			// Удаляем элементы векторов
+			// пёп╢п╟п╩я▐п╣п╪ я█п╩п╣п╪п╣п╫я┌я▀ п╡п╣п╨я┌п╬я─п╬п╡
 			axioms.erase (axioms.begin() + toSave[i] + 1, axioms.begin() + toSave[i-1]);
 		}
 	}
-	// Удаляем все элементы до первого по индексу в составленном списке
+	// пёп╢п╟п╩я▐п╣п╪ п╡я│п╣ я█п╩п╣п╪п╣п╫я┌я▀ п╢п╬ п©п╣я─п╡п╬пЁп╬ п©п╬ п╦п╫п╢п╣п╨я│я┐ п╡ я│п╬я│я┌п╟п╡п╩п╣п╫п╫п╬п╪ я│п©п╦я│п╨п╣
 	if (toSave[maxAxiomPopSize-1] > 0) {
 		for (unsigned int j = 0; j < toSave[maxAxiomPopSize-1]; j++) {
 			axioms[j].clear();
@@ -806,75 +806,75 @@ int FuzzyMultiDataLearnAlgorithm::cutDownBestAxioms (std::vector <AxiomExprPlus>
 /****************************************************************************
 *					FuzzyMultiDataLearnAlgorithm::combineAxioms
 *
-*	Description:	Объединение двух аксиом и вычисление результата для полученных новых аксиом.
-*	Parameters:		axiomFirst - первая из аксиом, на основе которой будут построены новые варианты аксиом
-*					axiomSec - вторая из аксиом, на основе которой будут построены новые варианты аксиом
-*					axiomExpr - заполняемая переменная аксиомы, в случае если удалось построить лучшую аксиому
-*					abType - тип нештатного поведения для которого производится построение аксиомы
-*	Returns:		0 - если новые аксиомы, созданные из двух указанных оказались не лучше
-*					>0 - если созданная аксиома оказалась лучше предшественников
-*					-1 - если не удалось провести комбинирование указанных аксиом
-*	Throws:			AxiomLibException - если указанные входные параметры не согласованы с внутренними пременными класса
+*	Description:	п·п╠я┼п╣п╢п╦п╫п╣п╫п╦п╣ п╢п╡я┐я┘ п╟п╨я│п╦п╬п╪ п╦ п╡я▀я┤п╦я│п╩п╣п╫п╦п╣ я─п╣п╥я┐п╩я▄я┌п╟я┌п╟ п╢п╩я▐ п©п╬п╩я┐я┤п╣п╫п╫я▀я┘ п╫п╬п╡я▀я┘ п╟п╨я│п╦п╬п╪.
+*	Parameters:		axiomFirst - п©п╣я─п╡п╟я▐ п╦п╥ п╟п╨я│п╦п╬п╪, п╫п╟ п╬я│п╫п╬п╡п╣ п╨п╬я┌п╬я─п╬п╧ п╠я┐п╢я┐я┌ п©п╬я│я┌я─п╬п╣п╫я▀ п╫п╬п╡я▀п╣ п╡п╟я─п╦п╟п╫я┌я▀ п╟п╨я│п╦п╬п╪
+*					axiomSec - п╡я┌п╬я─п╟я▐ п╦п╥ п╟п╨я│п╦п╬п╪, п╫п╟ п╬я│п╫п╬п╡п╣ п╨п╬я┌п╬я─п╬п╧ п╠я┐п╢я┐я┌ п©п╬я│я┌я─п╬п╣п╫я▀ п╫п╬п╡я▀п╣ п╡п╟я─п╦п╟п╫я┌я▀ п╟п╨я│п╦п╬п╪
+*					axiomExpr - п╥п╟п©п╬п╩п╫я▐п╣п╪п╟я▐ п©п╣я─п╣п╪п╣п╫п╫п╟я▐ п╟п╨я│п╦п╬п╪я▀, п╡ я│п╩я┐я┤п╟п╣ п╣я│п╩п╦ я┐п╢п╟п╩п╬я│я▄ п©п╬я│я┌я─п╬п╦я┌я▄ п╩я┐я┤я┬я┐я▌ п╟п╨я│п╦п╬п╪я┐
+*					abType - я┌п╦п© п╫п╣я┬я┌п╟я┌п╫п╬пЁп╬ п©п╬п╡п╣п╢п╣п╫п╦я▐ п╢п╩я▐ п╨п╬я┌п╬я─п╬пЁп╬ п©я─п╬п╦п╥п╡п╬п╢п╦я┌я│я▐ п©п╬я│я┌я─п╬п╣п╫п╦п╣ п╟п╨я│п╦п╬п╪я▀
+*	Returns:		0 - п╣я│п╩п╦ п╫п╬п╡я▀п╣ п╟п╨я│п╦п╬п╪я▀, я│п╬п╥п╢п╟п╫п╫я▀п╣ п╦п╥ п╢п╡я┐я┘ я┐п╨п╟п╥п╟п╫п╫я▀я┘ п╬п╨п╟п╥п╟п╩п╦я│я▄ п╫п╣ п╩я┐я┤я┬п╣
+*					>0 - п╣я│п╩п╦ я│п╬п╥п╢п╟п╫п╫п╟я▐ п╟п╨я│п╦п╬п╪п╟ п╬п╨п╟п╥п╟п╩п╟я│я▄ п╩я┐я┤я┬п╣ п©я─п╣п╢я┬п╣я│я┌п╡п╣п╫п╫п╦п╨п╬п╡
+*					-1 - п╣я│п╩п╦ п╫п╣ я┐п╢п╟п╩п╬я│я▄ п©я─п╬п╡п╣я│я┌п╦ п╨п╬п╪п╠п╦п╫п╦я─п╬п╡п╟п╫п╦п╣ я┐п╨п╟п╥п╟п╫п╫я▀я┘ п╟п╨я│п╦п╬п╪
+*	Throws:			AxiomLibException - п╣я│п╩п╦ я┐п╨п╟п╥п╟п╫п╫я▀п╣ п╡я┘п╬п╢п╫я▀п╣ п©п╟я─п╟п╪п╣я┌я─я▀ п╫п╣ я│п╬пЁп╩п╟я│п╬п╡п╟п╫я▀ я│ п╡п╫я┐я┌я─п╣п╫п╫п╦п╪п╦ п©я─п╣п╪п╣п╫п╫я▀п╪п╦ п╨п╩п╟я│я│п╟
 *	Author:			dk
 *	History:
 *
 ****************************************************************************/
 int FuzzyMultiDataLearnAlgorithm::combineAxioms (AxiomExprPlus &axiomFirst, AxiomExprPlus &axiomSec, AxiomExprPlus &axiomExprPlus, const int abType) const {
-	// Создание новых аксиом
+	// п║п╬п╥п╢п╟п╫п╦п╣ п╫п╬п╡я▀я┘ п╟п╨я│п╦п╬п╪
 	AxiomExprPlus axiomExprAnd, axiomExprOr;
 	axiomExprAnd.andExpr(axiomFirst, axiomSec);
 	axiomExprOr.orExpr (axiomFirst, axiomSec);
 	
-	// Вычисление целевых функций
+	// п▓я▀я┤п╦я│п╩п╣п╫п╦п╣ я├п╣п╩п╣п╡я▀я┘ я└я┐п╫п╨я├п╦п╧
 	matterAxiomFunc (axiomExprAnd, abType);
 	matterAxiomFunc (axiomExprOr, abType);
 
-	// Вывод отладочной информации
+	// п▓я▀п╡п╬п╢ п╬я┌п╩п╟п╢п╬я┤п╫п╬п╧ п╦п╫я└п╬я─п╪п╟я├п╦п╦
 	//std::cout << "\n\t andRes = " << axiomExprAnd.goal << "\torRes = " << axiomExprOr.goal << "\taxF = " << fi << "\taxS = " << se << "\tand.size() = " << axiomExprAnd.expression.size() << "\tand[0].size() = " << axiomExprAnd.expression[0].size() << "\tor.size() = " << axiomExprOr.expression.size() << "\tor[0].size() = " << axiomExprOr.expression[0].size();
 	
-	// Определение лучше ли получились значения целевых функций у новых аксиом
+	// п·п©я─п╣п╢п╣п╩п╣п╫п╦п╣ п╩я┐я┤я┬п╣ п╩п╦ п©п╬п╩я┐я┤п╦п╩п╦я│я▄ п╥п╫п╟я┤п╣п╫п╦я▐ я├п╣п╩п╣п╡я▀я┘ я└я┐п╫п╨я├п╦п╧ я┐ п╫п╬п╡я▀я┘ п╟п╨я│п╦п╬п╪
 	if ((axiomExprAnd.goal >= axiomExprOr.goal) || (((axiomExprOr.goal - axiomExprAnd.goal) <= eps) && (axiomExprAnd.statAbnorm >= axiomExprOr.statAbnorm))) {
-		// значит axiomExprAnd - лучше axiomExprOr
+		// п╥п╫п╟я┤п╦я┌ axiomExprAnd - п╩я┐я┤я┬п╣ axiomExprOr
 		if ((axiomFirst.goal >= axiomSec.goal) || (((axiomSec.goal - axiomFirst.goal) <= eps) && (axiomFirst.statAbnorm >= axiomSec.statAbnorm))) {
-			// значит axiomFirst - лучше axiomSec
+			// п╥п╫п╟я┤п╦я┌ axiomFirst - п╩я┐я┤я┬п╣ axiomSec
 			if ((axiomFirst.goal >= axiomExprAnd.goal) || (((axiomExprAnd.goal - axiomFirst.goal) <= eps) && (axiomFirst.statAbnorm >= axiomExprAnd.statAbnorm))) {
-				// значит лучшая из axiomExprAnd, axiomExprOr - хуже, чем одна из axiomFirst, axiomSec
+				// п╥п╫п╟я┤п╦я┌ п╩я┐я┤я┬п╟я▐ п╦п╥ axiomExprAnd, axiomExprOr - я┘я┐п╤п╣, я┤п╣п╪ п╬п╢п╫п╟ п╦п╥ axiomFirst, axiomSec
 				return 0;
 			} else {
-				// значит лучшая из axiomExprAnd, axiomExprOr - лучше, чем каждая из axiomFirst, axiomSec
+				// п╥п╫п╟я┤п╦я┌ п╩я┐я┤я┬п╟я▐ п╦п╥ axiomExprAnd, axiomExprOr - п╩я┐я┤я┬п╣, я┤п╣п╪ п╨п╟п╤п╢п╟я▐ п╦п╥ axiomFirst, axiomSec
 				axiomExprPlus = axiomExprAnd;
 				return 1;
 			}
 		} else {
-			// значит axiomSec - лучше axiomFirst
+			// п╥п╫п╟я┤п╦я┌ axiomSec - п╩я┐я┤я┬п╣ axiomFirst
 			if ((axiomSec.goal >= axiomExprAnd.goal) || (((axiomExprAnd.goal - axiomSec.goal) <= eps) && (axiomSec.statAbnorm >= axiomExprAnd.statAbnorm))) {
-				// значит лучшая из axiomExprAnd, axiomExprOr - хуже, чем одна из axiomFirst, axiomSec
+				// п╥п╫п╟я┤п╦я┌ п╩я┐я┤я┬п╟я▐ п╦п╥ axiomExprAnd, axiomExprOr - я┘я┐п╤п╣, я┤п╣п╪ п╬п╢п╫п╟ п╦п╥ axiomFirst, axiomSec
 				return 0;
 			} else {
-				// значит лучшая из axiomExprAnd, axiomExprOr - лучше, чем каждая из axiomFirst, axiomSec
+				// п╥п╫п╟я┤п╦я┌ п╩я┐я┤я┬п╟я▐ п╦п╥ axiomExprAnd, axiomExprOr - п╩я┐я┤я┬п╣, я┤п╣п╪ п╨п╟п╤п╢п╟я▐ п╦п╥ axiomFirst, axiomSec
 				axiomExprPlus = axiomExprAnd;
 				return 1;
 			}			
 		}
 	} else {
-		// значит axiomExprOr - лучше axiomExprAnd
+		// п╥п╫п╟я┤п╦я┌ axiomExprOr - п╩я┐я┤я┬п╣ axiomExprAnd
 		if ((axiomFirst.goal >= axiomSec.goal) || (((axiomSec.goal - axiomFirst.goal) <= eps) && (axiomFirst.statAbnorm >= axiomSec.statAbnorm))) {
-			// значит axiomFirst - лучше axiomSec
+			// п╥п╫п╟я┤п╦я┌ axiomFirst - п╩я┐я┤я┬п╣ axiomSec
 			if ((axiomFirst.goal >= axiomExprOr.goal) || (((axiomExprOr.goal - axiomFirst.goal) <= eps) && (axiomFirst.statAbnorm >= axiomExprOr.statAbnorm))) {
-				// значит лучшая из axiomExprAnd, axiomExprOr - хуже, чем одна из axiomFirst, axiomSec
+				// п╥п╫п╟я┤п╦я┌ п╩я┐я┤я┬п╟я▐ п╦п╥ axiomExprAnd, axiomExprOr - я┘я┐п╤п╣, я┤п╣п╪ п╬п╢п╫п╟ п╦п╥ axiomFirst, axiomSec
 				return 0;
 			} else {
-				// значит лучшая из axiomExprAnd, axiomExprOr - лучше, чем каждая из axiomFirst, axiomSec
+				// п╥п╫п╟я┤п╦я┌ п╩я┐я┤я┬п╟я▐ п╦п╥ axiomExprAnd, axiomExprOr - п╩я┐я┤я┬п╣, я┤п╣п╪ п╨п╟п╤п╢п╟я▐ п╦п╥ axiomFirst, axiomSec
 				axiomExprPlus = axiomExprOr;
 				return 2;
 			}
 		} else {
-			// значит axiomSec - лучше axiomFirst
+			// п╥п╫п╟я┤п╦я┌ axiomSec - п╩я┐я┤я┬п╣ axiomFirst
 			if ((axiomSec.goal >= axiomExprOr.goal) || (((axiomExprOr.goal - axiomSec.goal) <= eps) && (axiomSec.statAbnorm >= axiomExprOr.statAbnorm))) {
-				// значит лучшая из axiomExprAnd, axiomExprOr - хуже, чем одна из axiomFirst, axiomSec
+				// п╥п╫п╟я┤п╦я┌ п╩я┐я┤я┬п╟я▐ п╦п╥ axiomExprAnd, axiomExprOr - я┘я┐п╤п╣, я┤п╣п╪ п╬п╢п╫п╟ п╦п╥ axiomFirst, axiomSec
 				return 0;
 			} else {
-				// значит лучшая из axiomExprAnd, axiomExprOr - лучше, чем каждая из axiomFirst, axiomSec
+				// п╥п╫п╟я┤п╦я┌ п╩я┐я┤я┬п╟я▐ п╦п╥ axiomExprAnd, axiomExprOr - п╩я┐я┤я┬п╣, я┤п╣п╪ п╨п╟п╤п╢п╟я▐ п╦п╥ axiomFirst, axiomSec
 				axiomExprPlus = axiomExprOr;
 				return 2;
 			}			
@@ -891,6 +891,6 @@ int FuzzyMultiDataLearnAlgorithm::combineAxioms (AxiomExprPlus &axiomFirst, Axio
 		return 2;
 	}*/
 
-	// Сюда прийти уже не должны 
+	// п║я▌п╢п╟ п©я─п╦п╧я┌п╦ я┐п╤п╣ п╫п╣ п╢п╬п╩п╤п╫я▀ 
 	return -1;
 }

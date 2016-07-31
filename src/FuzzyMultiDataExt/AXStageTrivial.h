@@ -15,7 +15,7 @@ public:
 
 	void initFromEnv(const Environment& env) {}
 
-		// Функции доступа к набору аксиом
+		// п╓я┐п╫п╨я├п╦п╦ п╢п╬я│я┌я┐п©п╟ п╨ п╫п╟п╠п╬я─я┐ п╟п╨я│п╦п╬п╪
 	void setAxioms(const std::vector<std::vector<AxiomExprPlus> > &initial);
 
 	const AxiomExprPlus &getAX(int aType, int n) const;

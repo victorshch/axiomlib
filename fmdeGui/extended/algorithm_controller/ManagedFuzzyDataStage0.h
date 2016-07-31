@@ -1,7 +1,7 @@
 /****************************************************************************
 *			ManagedFuzzyDataStage0
 *
-*	Description:	Структура, содержащая параметры первой стадии
+*	Description:	п║я┌я─я┐п╨я┌я┐я─п╟, я│п╬п╢п╣я─п╤п╟я┴п╟я▐ п©п╟я─п╟п╪п╣я┌я─я▀ п©п╣я─п╡п╬п╧ я│я┌п╟п╢п╦п╦
 *	Author:		wictor
 *	History:
 *
@@ -27,7 +27,7 @@ typedef std::pair<std::string, bool> ECTypeSpec;
 
 class ManagedFuzzyDataStage0 : public ManagedFuzzyDataStage {
 
-	//объявления для сериализации
+	//п╬п╠я┼я▐п╡п╩п╣п╫п╦я▐ п╢п╩я▐ я│п╣я─п╦п╟п╩п╦п╥п╟я├п╦п╦
 	friend class boost::serialization::access;
 	template <class Archive>
 	void serialize(Archive &archive, const unsigned int /*version*/) {
@@ -102,12 +102,12 @@ public:
 		}
 	}
 
-	//Параметры данного этапа
+	//п÷п╟я─п╟п╪п╣я┌я─я▀ п╢п╟п╫п╫п╬пЁп╬ я█я┌п╟п©п╟
 
-	//Набор элементарных условий
+	//п²п╟п╠п╬я─ я█п╩п╣п╪п╣п╫я┌п╟я─п╫я▀я┘ я┐я│п╩п╬п╡п╦п╧
 	std::vector<AxiomLib::ElemCondPlus> initialECTypes;
 	
-	//Выбранные ЭУ
+	//п▓я▀п╠я─п╟п╫п╫я▀п╣ п╜пё
 	std::vector<bool> checkedECTypes;
 };
 

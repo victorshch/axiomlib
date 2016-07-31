@@ -1,7 +1,7 @@
 /****************************************************************************
 *				NeuralCommon.h
 *
-*	Description:	Файл, содержащий некоторые общие для нейросетей объявления
+*	Description:	п╓п╟п╧п╩, я│п╬п╢п╣я─п╤п╟я┴п╦п╧ п╫п╣п╨п╬я┌п╬я─я▀п╣ п╬п╠я┴п╦п╣ п╢п╩я▐ п╫п╣п╧я─п╬я│п╣я┌п╣п╧ п╬п╠я┼я▐п╡п╩п╣п╫п╦я▐
 *	Author:		wictor
 *	History:	
 *
@@ -26,17 +26,17 @@
 namespace AxiomLib {
 
 typedef int Symbol;
-// q-нарная строка (q-нарный вектор)
+// q-п╫п╟я─п╫п╟я▐ я│я┌я─п╬п╨п╟ (q-п╫п╟я─п╫я▀п╧ п╡п╣п╨я┌п╬я─)
 typedef boost::numeric::ublas::vector<Symbol> Qstring;
 typedef boost::numeric::ublas::zero_vector<Symbol> ZeroQstring;
 
-// Возвращает расстряние Хемминга между более короткой строкой и префиксом более длинной строки
+// п▓п╬п╥п╡я─п╟я┴п╟п╣я┌ я─п╟я│я│я┌я─я▐п╫п╦п╣ п╔п╣п╪п╪п╦п╫пЁп╟ п╪п╣п╤п╢я┐ п╠п╬п╩п╣п╣ п╨п╬я─п╬я┌п╨п╬п╧ я│я┌я─п╬п╨п╬п╧ п╦ п©я─п╣я└п╦п╨я│п╬п╪ п╠п╬п╩п╣п╣ п╢п╩п╦п╫п╫п╬п╧ я│я┌я─п╬п╨п╦
 int hammingDistance(const Qstring &str1, const Qstring &str2);
 double difference(const Qstring &str1, const Qstring &str2);
 
-// Копирует в V2 windowSize (по умолчанию 0) элементов V1 с позиции startPos (по умолчанию 0)
-// если windowSize = 0, то копируется весь V1.
-// Функция сделана шаблоном, т.к. предполагается работа как с std::vector, так и с Qstring
+// п п╬п©п╦я─я┐п╣я┌ п╡ V2 windowSize (п©п╬ я┐п╪п╬п╩я┤п╟п╫п╦я▌ 0) я█п╩п╣п╪п╣п╫я┌п╬п╡ V1 я│ п©п╬п╥п╦я├п╦п╦ startPos (п©п╬ я┐п╪п╬п╩я┤п╟п╫п╦я▌ 0)
+// п╣я│п╩п╦ windowSize = 0, я┌п╬ п╨п╬п©п╦я─я┐п╣я┌я│я▐ п╡п╣я│я▄ V1.
+// п╓я┐п╫п╨я├п╦я▐ я│п╢п╣п╩п╟п╫п╟ я┬п╟п╠п╩п╬п╫п╬п╪, я┌.п╨. п©я─п╣п╢п©п╬п╩п╟пЁп╟п╣я┌я│я▐ я─п╟п╠п╬я┌п╟ п╨п╟п╨ я│ std::vector, я┌п╟п╨ п╦ я│ Qstring
 template<class Vector1, class Vector2>
 inline void copyVector(const Vector1 &v1, Vector2 &v2, unsigned int startPos = 0, unsigned int windowSize = 0) {
 	int s1;
@@ -51,13 +51,13 @@ inline void copyVector(const Vector1 &v1, Vector2 &v2, unsigned int startPos = 0
 		v2.resize(s1);
 	}
 	
-	// Копируем в v2 часть v1 из окна
+	// п п╬п©п╦я─я┐п╣п╪ п╡ v2 я┤п╟я│я┌я▄ v1 п╦п╥ п╬п╨п╫п╟
 	for (int i = (int) startPos; i < (int) startPos + s1; i++) {
 		v2[i - (int) startPos] = /*(Vector2::value_type)*/ v1[i];
 	}
 }
 
-// отключение макроса min, т.к. далее везде используется функция std::min
+// п╬я┌п╨п╩я▌я┤п╣п╫п╦п╣ п╪п╟п╨я─п╬я│п╟ min, я┌.п╨. п╢п╟п╩п╣п╣ п╡п╣п╥п╢п╣ п╦я│п©п╬п╩я▄п╥я┐п╣я┌я│я▐ я└я┐п╫п╨я├п╦я▐ std::min
 //#undef min
 
 inline void getWindow(const Qstring &v1, Qstring &v2, int pos, int size) {
@@ -71,22 +71,22 @@ inline void getWindow(const Qstring &v1, Qstring &v2, int pos, int size) {
 	}	
 }
 
-// Возвращает число цифр в записи num в q-ичной системе счисления
+// п▓п╬п╥п╡я─п╟я┴п╟п╣я┌ я┤п╦я│п╩п╬ я├п╦я└я─ п╡ п╥п╟п©п╦я│п╦ num п╡ q-п╦я┤п╫п╬п╧ я│п╦я│я┌п╣п╪п╣ я│я┤п╦я│п╩п╣п╫п╦я▐
 int numDigits(int q, int num);
 
-// Записывает в str число num в q-ичной системе счисления как q-нарный вектор
+// п≈п╟п©п╦я│я▀п╡п╟п╣я┌ п╡ str я┤п╦я│п╩п╬ num п╡ q-п╦я┤п╫п╬п╧ я│п╦я│я┌п╣п╪п╣ я│я┤п╦я│п╩п╣п╫п╦я▐ п╨п╟п╨ q-п╫п╟я─п╫я▀п╧ п╡п╣п╨я┌п╬я─
 void numToQnaryVector(int q, int num, Qstring &str);
 
-// Преобразует q-нарный вектор в число, рассматривая его как число в q-ичной СС
+// п÷я─п╣п╬п╠я─п╟п╥я┐п╣я┌ q-п╫п╟я─п╫я▀п╧ п╡п╣п╨я┌п╬я─ п╡ я┤п╦я│п╩п╬, я─п╟я│я│п╪п╟я┌я─п╦п╡п╟я▐ п╣пЁп╬ п╨п╟п╨ я┤п╦я│п╩п╬ п╡ q-п╦я┤п╫п╬п╧ п║п║
 int qnaryVectorToNum(int q, const Qstring &str);
 
-// Забивает q-нарный вектор v нулями
+// п≈п╟п╠п╦п╡п╟п╣я┌ q-п╫п╟я─п╫я▀п╧ п╡п╣п╨я┌п╬я─ v п╫я┐п╩я▐п╪п╦
 void makeZero(Qstring &v);
 
-// Ищет вхождение toFind в векторе v в delta-окрестности pos
+// п≤я┴п╣я┌ п╡я┘п╬п╤п╢п╣п╫п╦п╣ toFind п╡ п╡п╣п╨я┌п╬я─п╣ v п╡ delta-п╬п╨я─п╣я│я┌п╫п╬я│я┌п╦ pos
 bool scanDelta(const std::vector<int> &v, int pos, int delta, int toFind);
 
-// Считывание вектора значений из строки
+// п║я┤п╦я┌я▀п╡п╟п╫п╦п╣ п╡п╣п╨я┌п╬я─п╟ п╥п╫п╟я┤п╣п╫п╦п╧ п╦п╥ я│я┌я─п╬п╨п╦
 template<class T>
 void getVectorFromString(std::vector<T> &v, const std::string &s, const std::string &sep = "|") {
 	std::string s1(s);
@@ -111,7 +111,7 @@ void getVectorFromString(std::vector<T> &v, const std::string &s, const std::str
 	}
 }
 
-// Получение из окружения параметра с именем name как булевского значения
+// п÷п╬п╩я┐я┤п╣п╫п╦п╣ п╦п╥ п╬п╨я─я┐п╤п╣п╫п╦я▐ п©п╟я─п╟п╪п╣я┌я─п╟ я│ п╦п╪п╣п╫п╣п╪ name п╨п╟п╨ п╠я┐п╩п╣п╡я│п╨п╬пЁп╬ п╥п╫п╟я┤п╣п╫п╦я▐
 int getBoolParamValueFromEnv(const Environment &env, bool &value, 
 	const std::string &name);
 

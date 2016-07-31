@@ -72,10 +72,10 @@ int main (int argc, char** argv) {
 		
 		std::string res;
 		
-		// Отдельно - запуск только первого этапа
+		// п·я┌п╢п╣п╩я▄п╫п╬ - п╥п╟п©я┐я│п╨ я┌п╬п╩я▄п╨п╬ п©п╣я─п╡п╬пЁп╬ я█я┌п╟п©п╟
 		//res = fuzzyMultiDataLearnAlgorithm.runFirstLevel();
 
-		// Отдельно - запуск только второго этапа
+		// п·я┌п╢п╣п╩я▄п╫п╬ - п╥п╟п©я┐я│п╨ я┌п╬п╩я▄п╨п╬ п╡я┌п╬я─п╬пЁп╬ я█я┌п╟п©п╟
 		//if (rank == 0)
 		//	res.assign ("./axioms/bestECsList_rank_1");
 		//else 
@@ -83,7 +83,7 @@ int main (int argc, char** argv) {
 		//res.assign ("./axioms/bestECsListPhoneme_rank_1");
 		//res = fuzzyMultiDataLearnAlgorithm.runSecondLevel (res);
 				
-		// Отдельно - запуск только третьего этапа
+		// п·я┌п╢п╣п╩я▄п╫п╬ - п╥п╟п©я┐я│п╨ я┌п╬п╩я▄п╨п╬ я┌я─п╣я┌я▄п╣пЁп╬ я█я┌п╟п©п╟
 		//res.assign ("./axioms/bestAxiomsList_fta_15_03_v2New");
 		//res = fuzzyMultiDataLearnAlgorithm.runThirdLevel (res);
 

@@ -1,8 +1,8 @@
 /****************************************************************************
 *				ECTypeStage
 *
-*	Description: Класс, соответствующий стадии задания типов ЭУ
-*				алгоритма FuzzyMultiDataExt
+*	Description: п п╩п╟я│я│, я│п╬п╬я┌п╡п╣я┌я│я┌п╡я┐я▌я┴п╦п╧ я│я┌п╟п╢п╦п╦ п╥п╟п╢п╟п╫п╦я▐ я┌п╦п©п╬п╡ п╜пё
+*				п╟п╩пЁп╬я─п╦я┌п╪п╟ FuzzyMultiDataExt
 *	Author:		wictor
 *	History:	
 *
@@ -32,7 +32,7 @@ public:
 	void setLogger(Logger *logger);
 	void initFromEnv(const Environment &env);
 	
-	// Функции доступа к набору типов ЭУ
+	// п╓я┐п╫п╨я├п╦п╦ п╢п╬я│я┌я┐п©п╟ п╨ п╫п╟п╠п╬я─я┐ я┌п╦п©п╬п╡ п╜пё
 	const ElemCondPlus &getECType(int n) const;
 	bool isECTypeSelected(int n) const;
 	void setECTypeSelected(int n, bool value);

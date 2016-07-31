@@ -2,13 +2,13 @@
 *			File name: test_elem_conditions.cxx
 *			File type: C++ program file
 *
-*			Тестовая площадка для отработки классоа ElemConditions
+*			п╒п╣я│я┌п╬п╡п╟я▐ п©п╩п╬я┴п╟п╢п╨п╟ п╢п╩я▐ п╬я┌я─п╟п╠п╬я┌п╨п╦ п╨п╩п╟я│я│п╬п╟ ElemConditions
 *
 *	Copyright (C) Eugene A. Vasin, 2000 - 2001. All rights reserved
 *
 *	Version:	0.1
 *
-*	File history:	26 нобяря 2005 (0.1) - болванка, linux/gcc
+*	File history:	26 п╫п╬п╠я▐я─я▐ 2005 (0.1) - п╠п╬п╩п╡п╟п╫п╨п╟, linux/gcc
 *
 ****************************************************************************/
 

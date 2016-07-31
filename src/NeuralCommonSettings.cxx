@@ -1,8 +1,8 @@
 /****************************************************************************
 *				NeuralCommonSettings.cxx
 *
-*	Description:	Файл, содержащий реализацию того, что описано в NeuralCommonSettings.h
-*					(структура NeuralCommonSettings - общие настройки для класса RecognizerNeuralNet)
+*	Description:	п╓п╟п╧п╩, я│п╬п╢п╣я─п╤п╟я┴п╦п╧ я─п╣п╟п╩п╦п╥п╟я├п╦я▌ я┌п╬пЁп╬, я┤я┌п╬ п╬п©п╦я│п╟п╫п╬ п╡ NeuralCommonSettings.h
+*					(я│я┌я─я┐п╨я┌я┐я─п╟ NeuralCommonSettings - п╬п╠я┴п╦п╣ п╫п╟я│я┌я─п╬п╧п╨п╦ п╢п╩я▐ п╨п╩п╟я│я│п╟ RecognizerNeuralNet)
 *	Author:		wictor
 *	History:	
 *
@@ -16,34 +16,34 @@ namespace AxiomLib {
 /****************************************************************************
 *					NeuralCommonSettings::initFromEnv()
 *
-*	Description:	Инициализация из окружения. Имя параметра окружения
-*					для srcQ - "numSymbols", для остальных параметров
-*					имена совпадают с именами полей структуры.
-*					Для comments умолчание - false
-*	Parameters:	Environment& env - окружение
+*	Description:	п≤п╫п╦я├п╦п╟п╩п╦п╥п╟я├п╦я▐ п╦п╥ п╬п╨я─я┐п╤п╣п╫п╦я▐. п≤п╪я▐ п©п╟я─п╟п╪п╣я┌я─п╟ п╬п╨я─я┐п╤п╣п╫п╦я▐
+*					п╢п╩я▐ srcQ - "numSymbols", п╢п╩я▐ п╬я│я┌п╟п╩я▄п╫я▀я┘ п©п╟я─п╟п╪п╣я┌я─п╬п╡
+*					п╦п╪п╣п╫п╟ я│п╬п╡п©п╟п╢п╟я▌я┌ я│ п╦п╪п╣п╫п╟п╪п╦ п©п╬п╩п╣п╧ я│я┌я─я┐п╨я┌я┐я─я▀.
+*					п■п╩я▐ comments я┐п╪п╬п╩я┤п╟п╫п╦п╣ - false
+*	Parameters:	Environment& env - п╬п╨я─я┐п╤п╣п╫п╦п╣
 *	Returns:	-
-*	Throws:		AxiomLibException, если параметр, для которого нет умолчания, не установлен
+*	Throws:		AxiomLibException, п╣я│п╩п╦ п©п╟я─п╟п╪п╣я┌я─, п╢п╩я▐ п╨п╬я┌п╬я─п╬пЁп╬ п╫п╣я┌ я┐п╪п╬п╩я┤п╟п╫п╦я▐, п╫п╣ я┐я│я┌п╟п╫п╬п╡п╩п╣п╫
 *	Author:		wictor
 *	History:
 *
 ****************************************************************************/
 void NeuralCommonSettings::initFromEnv(const Environment &env) {
-	// Считываем число символов
+	// п║я┤п╦я┌я▀п╡п╟п╣п╪ я┤п╦я│п╩п╬ я│п╦п╪п╡п╬п╩п╬п╡
 	if(env.getIntParamValue(srcQ ,"numSymbols") < 0) {
 		throw AxiomLibException("PercSingleSettings::initFromEnv(): numSymbols not set");
 	};
 		
-	// считываем normalDist
+	// я│я┤п╦я┌я▀п╡п╟п╣п╪ normalDist
 	if(env.getDoubleParamValue(minDist ,"normalDist") < 0) {
 		throw AxiomLibException("PercSingleSettings::initFromEnv(): normalDist not set");
 	};
 	
-	// Считываем значение comments, по умолчанию false
+	// п║я┤п╦я┌я▀п╡п╟п╣п╪ п╥п╫п╟я┤п╣п╫п╦п╣ comments, п©п╬ я┐п╪п╬п╩я┤п╟п╫п╦я▌ false
 	if(env.getBoolParamValue(comments, "comments") < 0) {
 		comments = false;
 	}
 
-	// Считываем значение useCentral, по умолчанию false
+	// п║я┤п╦я┌я▀п╡п╟п╣п╪ п╥п╫п╟я┤п╣п╫п╦п╣ useCentral, п©п╬ я┐п╪п╬п╩я┤п╟п╫п╦я▌ false
 	if(getBoolParamValueFromEnv(env, useCentral, "useCentral") < 0) {
 		useCentral = false;
 	}
@@ -52,30 +52,30 @@ void NeuralCommonSettings::initFromEnv(const Environment &env) {
 /****************************************************************************
 *					NeuralCoderSettings::initFromEnv()
 *
-*	Description:	Инициализация из окружения. Имя параметров окружения
-*					 совпадают с именами полей структуры.
-*					Для dstQ умолчание 2,
-*					для numVar 0
-*	Parameters:	Environment& env - окружение
+*	Description:	п≤п╫п╦я├п╦п╟п╩п╦п╥п╟я├п╦я▐ п╦п╥ п╬п╨я─я┐п╤п╣п╫п╦я▐. п≤п╪я▐ п©п╟я─п╟п╪п╣я┌я─п╬п╡ п╬п╨я─я┐п╤п╣п╫п╦я▐
+*					 я│п╬п╡п©п╟п╢п╟я▌я┌ я│ п╦п╪п╣п╫п╟п╪п╦ п©п╬п╩п╣п╧ я│я┌я─я┐п╨я┌я┐я─я▀.
+*					п■п╩я▐ dstQ я┐п╪п╬п╩я┤п╟п╫п╦п╣ 2,
+*					п╢п╩я▐ numVar 0
+*	Parameters:	Environment& env - п╬п╨я─я┐п╤п╣п╫п╦п╣
 *	Returns:	-
-*	Throws:		AxiomLibException, если параметр, для которого нет умолчания, не установлен
+*	Throws:		AxiomLibException, п╣я│п╩п╦ п©п╟я─п╟п╪п╣я┌я─, п╢п╩я▐ п╨п╬я┌п╬я─п╬пЁп╬ п╫п╣я┌ я┐п╪п╬п╩я┤п╟п╫п╦я▐, п╫п╣ я┐я│я┌п╟п╫п╬п╡п╩п╣п╫
 *	Author:		wictor
 *	History:
 *
 ****************************************************************************/
 void NeuralCoderSettings::initFromEnv(const Environment &env) {
-	// Считываем dstQ
+	// п║я┤п╦я┌я▀п╡п╟п╣п╪ dstQ
 	if(env.getIntParamValue(dstQ ,"dstQ") < 0) {
-		// По умолчанию - 2
+		// п÷п╬ я┐п╪п╬п╩я┤п╟п╫п╦я▌ - 2
 		dstQ = 2;
 	}
 	
-	// Считываем numVar, по умолчанию - 0
+	// п║я┤п╦я┌я▀п╡п╟п╣п╪ numVar, п©п╬ я┐п╪п╬п╩я┤п╟п╫п╦я▌ - 0
 	if(env.getIntParamValue(numVar ,"numVar") < 0) {
 		numVar = 0;
 	}
 	
-	// Считываем windowSize, по умолчанию - 0
+	// п║я┤п╦я┌я▀п╡п╟п╣п╪ windowSize, п©п╬ я┐п╪п╬п╩я┤п╟п╫п╦я▌ - 0
 	if(env.getIntParamValue(windowSize ,"windowSize") < 0) {
 		windowSize = 1;
 	}

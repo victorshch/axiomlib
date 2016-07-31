@@ -20,16 +20,16 @@ public:
 					   bool showTime = false);
     ~TrajSelectGroupBox();
 		
-	// не считая нормальное поведение
+	// п╫п╣ я│я┤п╦я┌п╟я▐ п╫п╬я─п╪п╟п╩я▄п╫п╬п╣ п©п╬п╡п╣п╢п╣п╫п╦п╣
 	int numClasses();
 	int numTS(int classNo);
 	int numDimensions(int classNo, int tsNo);
 
-	// нумерация от 0, -1 - нормальное поведение
+	// п╫я┐п╪п╣я─п╟я├п╦я▐ п╬я┌ 0, -1 - п╫п╬я─п╪п╟п╩я▄п╫п╬п╣ п©п╬п╡п╣п╢п╣п╫п╦п╣
 	int currentClass();
-	// нумерация от 0
+	// п╫я┐п╪п╣я─п╟я├п╦я▐ п╬я┌ 0
 	int currentTS();
-	// нумерация от 0
+	// п╫я┐п╪п╣я─п╟я├п╦я▐ п╬я┌ 0
 	int currentDimension();
 public slots:
 	TrajSelectGroupBox *setCurrentTS(int currentClass, int currentTS, int currentDimension);

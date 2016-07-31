@@ -17,8 +17,8 @@
 
 #undef FUZZYMULTIDATA_AXIOMGOAL_EXPERIMENTAL
 
-#define eps						0.0000001 // используется в некоторых формулах, чтобы исплючить ошибку машинного округления
-#define max_goal_val			100000 // максимальное значение целевой функции для аксиомы (просто достаточно большое число)
+#define eps						0.0000001 // п╦я│п©п╬п╩я▄п╥я┐п╣я┌я│я▐ п╡ п╫п╣п╨п╬я┌п╬я─я▀я┘ я└п╬я─п╪я┐п╩п╟я┘, я┤я┌п╬п╠я▀ п╦я│п©п╩я▌я┤п╦я┌я▄ п╬я┬п╦п╠п╨я┐ п╪п╟я┬п╦п╫п╫п╬пЁп╬ п╬п╨я─я┐пЁп╩п╣п╫п╦я▐
+#define max_goal_val			100000 // п╪п╟п╨я│п╦п╪п╟п╩я▄п╫п╬п╣ п╥п╫п╟я┤п╣п╫п╦п╣ я├п╣п╩п╣п╡п╬п╧ я└я┐п╫п╨я├п╦п╦ п╢п╩я▐ п╟п╨я│п╦п╬п╪я▀ (п©я─п╬я│я┌п╬ п╢п╬я│я┌п╟я┌п╬я┤п╫п╬ п╠п╬п╩я▄я┬п╬п╣ я┤п╦я│п╩п╬)
 
 using namespace AxiomLib;
 using namespace AxiomLib::FuzzyMultiDataExt;
@@ -26,7 +26,7 @@ using namespace AxiomLib::FuzzyMultiDataExt;
 AXStageSimple::AXStageSimple(FuzzyDataSet *fuzzyDataSet, ECStage *stage1)
 	:AXStage(fuzzyDataSet, stage1), logger(Logger::getInstance())
 {
-	//TODO: инициализация дефлотными значениями
+	//TODO: п╦п╫п╦я├п╦п╟п╩п╦п╥п╟я├п╦я▐ п╢п╣я└п╩п╬я┌п╫я▀п╪п╦ п╥п╫п╟я┤п╣п╫п╦я▐п╪п╦
 	goalOccurenceWeight = 0.0;
 
 	axiomNameTemplate = "axiom";
@@ -41,7 +41,7 @@ void AXStageSimple::setAxioms(const std::vector<std::vector<AxiomExprPlus> > &in
 }
 
 void AXStageSimple::initFromEnv(const Environment &env) {
-	// Параметры поиска аксиом
+	// п÷п╟я─п╟п╪п╣я┌я─я▀ п©п╬п╦я│п╨п╟ п╟п╨я│п╦п╬п╪
 	if (env.getIntParamValue (maxAxiomPopSize, "maxAxiomPopSize") < 0)
 		throw AxiomLibException("FuzzyMultiDataLearnAlgorithm::setParamsFromEnv : maxAxiomPopSize is undefined.");
 	if (env.getIntParamValue (maxIterNum, "axiomAlgIterNum") < 0)
@@ -163,7 +163,7 @@ void AXStageSimple::formAxioms(int abType) {
 
 	stage1->getECSize(ecSizeVector);
 
-	// Подсчет числа различных элементарных условий
+	// п÷п╬п╢я│я┤п╣я┌ я┤п╦я│п╩п╟ я─п╟п╥п╩п╦я┤п╫я▀я┘ я█п╩п╣п╪п╣п╫я┌п╟я─п╫я▀я┘ я┐я│п╩п╬п╡п╦п╧
 	unsigned int totSize = 0;
 	for (unsigned int i = 0; i < ecSizeVector[abType].size(); i++)
 		for (unsigned int j = 0; j < ecSizeVector[abType][i].size(); j++)
@@ -176,7 +176,7 @@ void AXStageSimple::formAxioms(int abType) {
 	if (totSize < 1)
 		throw AxiomLibException("FuzzyMultiDataLearnAlgorithm::formAxioms : set of prepared elementary conditions is indeed empty.");
 
-	// Создание начальной популяции аксиом, из которых буду строиться аксиомы дальше в итеративном алгоритме
+	// п║п╬п╥п╢п╟п╫п╦п╣ п╫п╟я┤п╟п╩я▄п╫п╬п╧ п©п╬п©я┐п╩я▐я├п╦п╦ п╟п╨я│п╦п╬п╪, п╦п╥ п╨п╬я┌п╬я─я▀я┘ п╠я┐п╢я┐ я│я┌я─п╬п╦я┌я▄я│я▐ п╟п╨я│п╦п╬п╪я▀ п╢п╟п╩я▄я┬п╣ п╡ п╦я┌п╣я─п╟я┌п╦п╡п╫п╬п╪ п╟п╩пЁп╬я─п╦я┌п╪п╣
 	axioms.clear();
 	axioms.reserve(totSize);
 	setSatPointsSize(abType, totSize);
@@ -196,7 +196,7 @@ void AXStageSimple::formAxioms(int abType) {
 //					logger->writeComment("EC retrieved from stage1");
 					addToEcSatPoints(abType, ec);
 //					logger->writeComment("SatPoints created");
-					// Создание аксиомы по ЭУ
+					// п║п╬п╥п╢п╟п╫п╦п╣ п╟п╨я│п╦п╬п╪я▀ п©п╬ п╜пё
 //					if(t >= axioms.size()) {
 //						throw AxiomLibException("t >= axioms.size() : t="+str(t)+", axioms.size()="+str(axioms.size()));
 //					}
@@ -210,7 +210,7 @@ void AXStageSimple::formAxioms(int abType) {
 		logger->writeComment("Warning: totSize != axioms.size(): totSize="+str(totSize)+", axioms.size()="+str(axioms.size()));
 		totSize = axioms.size();
 	}
-	// Заполняем начальную статистику по популяции
+	// п≈п╟п©п╬п╩п╫я▐п╣п╪ п╫п╟я┤п╟п╩я▄п╫я┐я▌ я│я┌п╟я┌п╦я│я┌п╦п╨я┐ п©п╬ п©п╬п©я┐п╩я▐я├п╦п╦
 	logger->writeComment("Counting initial statistics");
 
 	for (int i = 0; i < (int) totSize; i++) {
@@ -222,21 +222,21 @@ void AXStageSimple::formAxioms(int abType) {
 		}
 		matterAxiomFunc (axioms[i].element(), abType);
 	}
-	// Подготовка переменных для поиска аксиом
+	// п÷п╬п╢пЁп╬я┌п╬п╡п╨п╟ п©п╣я─п╣п╪п╣п╫п╫я▀я┘ п╢п╩я▐ п©п╬п╦я│п╨п╟ п╟п╨я│п╦п╬п╪
 	AxiomExprPlus axiomExprPlus;
-	int iterNum = 0; // Счетчик итераций алгоритма построения аксиом
-	bool criteriaToContinue = true; // Флаг продолжения процедуры построения аксиом
+	int iterNum = 0; // п║я┤п╣я┌я┤п╦п╨ п╦я┌п╣я─п╟я├п╦п╧ п╟п╩пЁп╬я─п╦я┌п╪п╟ п©п╬я│я┌я─п╬п╣п╫п╦я▐ п╟п╨я│п╦п╬п╪
+	bool criteriaToContinue = true; // п╓п╩п╟пЁ п©я─п╬п╢п╬п╩п╤п╣п╫п╦я▐ п©я─п╬я├п╣п╢я┐я─я▀ п©п╬я│я┌я─п╬п╣п╫п╦я▐ п╟п╨я│п╦п╬п╪
 	int curSize, curBest;
 	std::vector <AxiomExprPlus> bestAxiomsNew;
-	// Проверка корректности указания максимального размера популяции
+	// п÷я─п╬п╡п╣я─п╨п╟ п╨п╬я─я─п╣п╨я┌п╫п╬я│я┌п╦ я┐п╨п╟п╥п╟п╫п╦я▐ п╪п╟п╨я│п╦п╪п╟п╩я▄п╫п╬пЁп╬ я─п╟п╥п╪п╣я─п╟ п©п╬п©я┐п╩я▐я├п╦п╦
 	if (maxAxiomPopSize < 2)
 		throw AxiomLibException("FuzzyMultiDataLearnAlgorithm::formAxioms : incorrect value of parameter 'maxAxiomPopValue'.");
-	// Задаем размер множества аксиом, которые могут быть получены на каждом шаге алгоритма - размер задаем достаточным для худшего случая
+	// п≈п╟п╢п╟п╣п╪ я─п╟п╥п╪п╣я─ п╪п╫п╬п╤п╣я│я┌п╡п╟ п╟п╨я│п╦п╬п╪, п╨п╬я┌п╬я─я▀п╣ п╪п╬пЁя┐я┌ п╠я▀я┌я▄ п©п╬п╩я┐я┤п╣п╫я▀ п╫п╟ п╨п╟п╤п╢п╬п╪ я┬п╟пЁп╣ п╟п╩пЁп╬я─п╦я┌п╪п╟ - я─п╟п╥п╪п╣я─ п╥п╟п╢п╟п╣п╪ п╢п╬я│я┌п╟я┌п╬я┤п╫я▀п╪ п╢п╩я▐ я┘я┐п╢я┬п╣пЁп╬ я│п╩я┐я┤п╟я▐
 	bestAxiomsNew.resize(maxAxiomPopSize + round ((double)((maxAxiomPopSize - 1) * maxAxiomPopSize) / 2.0));
-	// Итеративное изменение популяции
+	// п≤я┌п╣я─п╟я┌п╦п╡п╫п╬п╣ п╦п╥п╪п╣п╫п╣п╫п╦п╣ п©п╬п©я┐п╩я▐я├п╦п╦
 	while (criteriaToContinue) {
 		iterNum++;
-		// Отображаем на экран стадию процесса
+		// п·я┌п╬п╠я─п╟п╤п╟п╣п╪ п╫п╟ я█п╨я─п╟п╫ я│я┌п╟п╢п╦я▌ п©я─п╬я├п╣я│я│п╟
 
 		//cutDownByOccurrence(axioms, iterNum - 1, maxIterNum);
 
@@ -246,9 +246,9 @@ void AXStageSimple::formAxioms(int abType) {
 			logger->writeComment(buf);
 			//std::cout.flush();
 		}
-		// Урезаем, если необходимо, вектор аксиом до максимально допустимых размеров
+		// пёя─п╣п╥п╟п╣п╪, п╣я│п╩п╦ п╫п╣п╬п╠я┘п╬п╢п╦п╪п╬, п╡п╣п╨я┌п╬я─ п╟п╨я│п╦п╬п╪ п╢п╬ п╪п╟п╨я│п╦п╪п╟п╩я▄п╫п╬ п╢п╬п©я┐я│я┌п╦п╪я▀я┘ я─п╟п╥п╪п╣я─п╬п╡
 		cutDownBestAxioms (axioms);
-		// Проверяем - достаточное ли число элементов вектора
+		// п÷я─п╬п╡п╣я─я▐п╣п╪ - п╢п╬я│я┌п╟я┌п╬я┤п╫п╬п╣ п╩п╦ я┤п╦я│п╩п╬ я█п╩п╣п╪п╣п╫я┌п╬п╡ п╡п╣п╨я┌п╬я─п╟
 		curSize = axioms.size();
 		if (curSize < 2) {
 			criteriaToContinue = false;
@@ -264,13 +264,13 @@ void AXStageSimple::formAxioms(int abType) {
 
 		logger->writeComment("Finished creating sat points for axioms");
 
-		// Переносим существующие аксиомы в результат на данном шаге
+		// п÷п╣я─п╣п╫п╬я│п╦п╪ я│я┐я┴п╣я│я┌п╡я┐я▌я┴п╦п╣ п╟п╨я│п╦п╬п╪я▀ п╡ я─п╣п╥я┐п╩я▄я┌п╟я┌ п╫п╟ п╢п╟п╫п╫п╬п╪ я┬п╟пЁп╣
 		for (int i = 0; i < curSize; i++) {
 			bestAxiomsNew[i] = axioms[i].element();
 		}
 		curBest = curSize;
 		logger->writeComment("Creating axiom combinations");
-		// Создаем новые элементы и вычисляем их значение целевой функции
+		// п║п╬п╥п╢п╟п╣п╪ п╫п╬п╡я▀п╣ я█п╩п╣п╪п╣п╫я┌я▀ п╦ п╡я▀я┤п╦я│п╩я▐п╣п╪ п╦я┘ п╥п╫п╟я┤п╣п╫п╦п╣ я├п╣п╩п╣п╡п╬п╧ я└я┐п╫п╨я├п╦п╦
 		for (unsigned int i = 0; i < (unsigned int) (curSize - 1); i++) {
 			for (unsigned int j = i+1; j < (unsigned int) curSize; j++) {
 				if (combineAxioms (axioms[i].element(), axioms[j].element(), axiomExprPlus, abType) > 0) {
@@ -280,14 +280,14 @@ void AXStageSimple::formAxioms(int abType) {
 			}
 		}
 		axioms.clear();
-		// Записываем полученные значения в вектор для следующей итерации
+		// п≈п╟п©п╦я│я▀п╡п╟п╣п╪ п©п╬п╩я┐я┤п╣п╫п╫я▀п╣ п╥п╫п╟я┤п╣п╫п╦я▐ п╡ п╡п╣п╨я┌п╬я─ п╢п╩я▐ я│п╩п╣п╢я┐я▌я┴п╣п╧ п╦я┌п╣я─п╟я├п╦п╦
 		axioms.resize(curBest);
 		for (int i = 0; i < curBest; i++) {
 			axioms[i] = bestAxiomsNew[i];
 			bestAxiomsNew[i].clear();
 		}
 
-		// Проверяем критерии останова
+		// п÷я─п╬п╡п╣я─я▐п╣п╪ п╨я─п╦я┌п╣я─п╦п╦ п╬я│я┌п╟п╫п╬п╡п╟
 		if (curBest == curSize) {
 			criteriaToContinue = false;
 			{
@@ -314,10 +314,10 @@ void AXStageSimple::formAxioms(int abType) {
 		}
 	}
 
-	// Очищаем использованные промежуточные вектора
+	// п·я┤п╦я┴п╟п╣п╪ п╦я│п©п╬п╩я▄п╥п╬п╡п╟п╫п╫я▀п╣ п©я─п╬п╪п╣п╤я┐я┌п╬я┤п╫я▀п╣ п╡п╣п╨я┌п╬я─п╟
 	bestAxiomsNew.clear();
 
-	// Уменьшаем размер популяции аксиом
+	// пёп╪п╣п╫я▄я┬п╟п╣п╪ я─п╟п╥п╪п╣я─ п©п╬п©я┐п╩я▐я├п╦п╦ п╟п╨я│п╦п╬п╪
 	cutDownBestAxioms (axioms);
 
 	logger->writeComment("Abnormal type " + str(abType) + ", final number of axioms : " + str(axioms.size()));
@@ -337,18 +337,18 @@ public:
 /****************************************************************************
 *					FuzzyMultiDataLearnAlgorithm::cutDownBestAxioms
 *
-*	Description:	Функция сокращает популяцию существующих аксиом
-*					до определенного в параметрах (из конфиг-файла) значения
-*	Parameters:		axioms - вектор лучших аксиом
-*	Returns:		0 - если урезания популяции не было
-*					1 - в противном случае
-*	Throws:			AxiomLibException - если внутренние переменные класса не согласованы
+*	Description:	п╓я┐п╫п╨я├п╦я▐ я│п╬п╨я─п╟я┴п╟п╣я┌ п©п╬п©я┐п╩я▐я├п╦я▌ я│я┐я┴п╣я│я┌п╡я┐я▌я┴п╦я┘ п╟п╨я│п╦п╬п╪
+*					п╢п╬ п╬п©я─п╣п╢п╣п╩п╣п╫п╫п╬пЁп╬ п╡ п©п╟я─п╟п╪п╣я┌я─п╟я┘ (п╦п╥ п╨п╬п╫я└п╦пЁ-я└п╟п╧п╩п╟) п╥п╫п╟я┤п╣п╫п╦я▐
+*	Parameters:		axioms - п╡п╣п╨я┌п╬я─ п╩я┐я┤я┬п╦я┘ п╟п╨я│п╦п╬п╪
+*	Returns:		0 - п╣я│п╩п╦ я┐я─п╣п╥п╟п╫п╦я▐ п©п╬п©я┐п╩я▐я├п╦п╦ п╫п╣ п╠я▀п╩п╬
+*					1 - п╡ п©я─п╬я┌п╦п╡п╫п╬п╪ я│п╩я┐я┤п╟п╣
+*	Throws:			AxiomLibException - п╣я│п╩п╦ п╡п╫я┐я┌я─п╣п╫п╫п╦п╣ п©п╣я─п╣п╪п╣п╫п╫я▀п╣ п╨п╩п╟я│я│п╟ п╫п╣ я│п╬пЁп╩п╟я│п╬п╡п╟п╫я▀
 *	Author:			dk
 *	History:
 *
 ****************************************************************************/
 int AXStageSimple::cutDownBestAxioms (std::vector <AXSelection> &axioms) const {
-	// Проверка входных параметров
+	// п÷я─п╬п╡п╣я─п╨п╟ п╡я┘п╬п╢п╫я▀я┘ п©п╟я─п╟п╪п╣я┌я─п╬п╡
 	if ((maxAxiomPopSize < 1) || (axioms.size() <= (unsigned int) maxAxiomPopSize))
 		return 0;
 
@@ -371,7 +371,7 @@ int AXStageSimple::cutDownBestAxioms (std::vector <AXSelection> &axioms) const {
 	std::sort(sortedPositions.begin(), sortedPositions.end(), AxiomSort(axioms));
 
 
-	// Определение числа лучших аксиом, сохраняемых в популяции
+	// п·п©я─п╣п╢п╣п╩п╣п╫п╦п╣ я┤п╦я│п╩п╟ п╩я┐я┤я┬п╦я┘ п╟п╨я│п╦п╬п╪, я│п╬я┘я─п╟п╫я▐п╣п╪я▀я┘ п╡ п©п╬п©я┐п╩я▐я├п╦п╦
 	unsigned int numBestToSave;//, numToChoose, numFrom;
 	numBestToSave = (unsigned int) round (percentBestAxioms*maxAxiomPopSize);
 	//numToChoose = (unsigned int) maxAxiomPopSize - numBestToSave;
@@ -400,11 +400,11 @@ int AXStageSimple::cutDownBestAxioms (std::vector <AXSelection> &axioms) const {
 	////
 
 /*
-	// Сортировка аксиом по значению целевой функции
+	// п║п╬я─я┌п╦я─п╬п╡п╨п╟ п╟п╨я│п╦п╬п╪ п©п╬ п╥п╫п╟я┤п╣п╫п╦я▌ я├п╣п╩п╣п╡п╬п╧ я└я┐п╫п╨я├п╦п╦
 	std::vector <unsigned int> pos;
 	getPriority (axioms, pos);
 
-	// Определение числа лучших аксиом, сохраняемых в популяции
+	// п·п©я─п╣п╢п╣п╩п╣п╫п╦п╣ я┤п╦я│п╩п╟ п╩я┐я┤я┬п╦я┘ п╟п╨я│п╦п╬п╪, я│п╬я┘я─п╟п╫я▐п╣п╪я▀я┘ п╡ п©п╬п©я┐п╩я▐я├п╦п╦
 	unsigned int numBestToSave, numToChoose, numFrom;
 	numBestToSave = (unsigned int) round (percentBestAxioms*maxAxiomPopSize);
 	numToChoose = (unsigned int) maxAxiomPopSize - numBestToSave;
@@ -415,11 +415,11 @@ int AXStageSimple::cutDownBestAxioms (std::vector <AXSelection> &axioms) const {
 	int curChoice;
 	std::vector <unsigned int> toSave;
 	toSave.resize (maxAxiomPopSize);
-	// Заносим в вектор сохраняемых элементов - заданное число лучших
+	// п≈п╟п╫п╬я│п╦п╪ п╡ п╡п╣п╨я┌п╬я─ я│п╬я┘я─п╟п╫я▐п╣п╪я▀я┘ я█п╩п╣п╪п╣п╫я┌п╬п╡ - п╥п╟п╢п╟п╫п╫п╬п╣ я┤п╦я│п╩п╬ п╩я┐я┤я┬п╦я┘
 	for (unsigned int i = 0; i < numBestToSave; i++) {
 		toSave[i] = pos[i];
 	}
-	// Случайный выбор оставшихся
+	// п║п╩я┐я┤п╟п╧п╫я▀п╧ п╡я▀п╠п╬я─ п╬я│я┌п╟п╡я┬п╦я┘я│я▐
 	for (unsigned int i = 0; i < numToChoose; i++) {
 		curChoice = round (((double) rand() / (double) RAND_MAX) * (double) (numFrom - i - 1));
 		for (unsigned int t = (unsigned int) curChoice; t < numFrom; t++)
@@ -430,7 +430,7 @@ int AXStageSimple::cutDownBestAxioms (std::vector <AXSelection> &axioms) const {
 			}
 	}
 
-	// Сортировка массива выбранных для сохранения элементов по убыванию
+	// п║п╬я─я┌п╦я─п╬п╡п╨п╟ п╪п╟я│я│п╦п╡п╟ п╡я▀п╠я─п╟п╫п╫я▀я┘ п╢п╩я▐ я│п╬я┘я─п╟п╫п╣п╫п╦я▐ я█п╩п╣п╪п╣п╫я┌п╬п╡ п©п╬ я┐п╠я▀п╡п╟п╫п╦я▌
 	unsigned int tmpInt;
 	for (unsigned int i = maxAxiomPopSize - 1; i > 0; i--) {
 		for (unsigned int j = 0; j < i; j++) {
@@ -442,8 +442,8 @@ int AXStageSimple::cutDownBestAxioms (std::vector <AXSelection> &axioms) const {
 		}
 	}
 
-	// Удаление невыбранных аксиом
-	// Удаляем все элементы после последнего по индексу в списке
+	// пёп╢п╟п╩п╣п╫п╦п╣ п╫п╣п╡я▀п╠я─п╟п╫п╫я▀я┘ п╟п╨я│п╦п╬п╪
+	// пёп╢п╟п╩я▐п╣п╪ п╡я│п╣ я█п╩п╣п╪п╣п╫я┌я▀ п©п╬я│п╩п╣ п©п╬я│п╩п╣п╢п╫п╣пЁп╬ п©п╬ п╦п╫п╢п╣п╨я│я┐ п╡ я│п©п╦я│п╨п╣
 	if ((toSave[0] + 1) < axioms.size()) {
 		for (unsigned int j = toSave[0] + 1; j < axioms.size(); j++)
 			axioms[j].element().clear();
@@ -451,14 +451,14 @@ int AXStageSimple::cutDownBestAxioms (std::vector <AXSelection> &axioms) const {
 	}
 	for (int i = 1; i < maxAxiomPopSize; i++) {
 		if ((toSave[i] + 1) < toSave[i-1]) {
-			// Очищаем содержимое элементов вектора аксиом
+			// п·я┤п╦я┴п╟п╣п╪ я│п╬п╢п╣я─п╤п╦п╪п╬п╣ я█п╩п╣п╪п╣п╫я┌п╬п╡ п╡п╣п╨я┌п╬я─п╟ п╟п╨я│п╦п╬п╪
 			for (unsigned int j = toSave[i] + 1; j < toSave[i-1]; j++)
 				axioms[j].element().clear();
-			// Удаляем элементы векторов
+			// пёп╢п╟п╩я▐п╣п╪ я█п╩п╣п╪п╣п╫я┌я▀ п╡п╣п╨я┌п╬я─п╬п╡
 			axioms.erase (axioms.begin() + toSave[i] + 1, axioms.begin() + toSave[i-1]);
 		}
 	}
-	// Удаляем все элементы до первого по индексу в составленном списке
+	// пёп╢п╟п╩я▐п╣п╪ п╡я│п╣ я█п╩п╣п╪п╣п╫я┌я▀ п╢п╬ п©п╣я─п╡п╬пЁп╬ п©п╬ п╦п╫п╢п╣п╨я│я┐ п╡ я│п╬я│я┌п╟п╡п╩п╣п╫п╫п╬п╪ я│п©п╦я│п╨п╣
 	if (toSave[maxAxiomPopSize-1] > 0) {
 		for (unsigned int j = 0; j < toSave[maxAxiomPopSize-1]; j++) {
 			axioms[j].element().clear();
@@ -473,12 +473,12 @@ int AXStageSimple::cutDownBestAxioms (std::vector <AXSelection> &axioms) const {
 /****************************************************************************
 *					FuzzyMultiDataLearnAlgorithm::getPriority
 *
-*	Description:	Вспомогательная функция сортировки массива по убыванию
-*					с занесением результатов в отдельный вектор индексов.
-*					Значения исходного сортируемого вектора не изменяются и не
-*					перемещаются.
-*	Parameters:		vec - сортируемый вектор аксиом по значению целевой функции
-*					pos - вектор индексов для указания результата
+*	Description:	п▓я│п©п╬п╪п╬пЁп╟я┌п╣п╩я▄п╫п╟я▐ я└я┐п╫п╨я├п╦я▐ я│п╬я─я┌п╦я─п╬п╡п╨п╦ п╪п╟я│я│п╦п╡п╟ п©п╬ я┐п╠я▀п╡п╟п╫п╦я▌
+*					я│ п╥п╟п╫п╣я│п╣п╫п╦п╣п╪ я─п╣п╥я┐п╩я▄я┌п╟я┌п╬п╡ п╡ п╬я┌п╢п╣п╩я▄п╫я▀п╧ п╡п╣п╨я┌п╬я─ п╦п╫п╢п╣п╨я│п╬п╡.
+*					п≈п╫п╟я┤п╣п╫п╦я▐ п╦я│я┘п╬п╢п╫п╬пЁп╬ я│п╬я─я┌п╦я─я┐п╣п╪п╬пЁп╬ п╡п╣п╨я┌п╬я─п╟ п╫п╣ п╦п╥п╪п╣п╫я▐я▌я┌я│я▐ п╦ п╫п╣
+*					п©п╣я─п╣п╪п╣я┴п╟я▌я┌я│я▐.
+*	Parameters:		vec - я│п╬я─я┌п╦я─я┐п╣п╪я▀п╧ п╡п╣п╨я┌п╬я─ п╟п╨я│п╦п╬п╪ п©п╬ п╥п╫п╟я┤п╣п╫п╦я▌ я├п╣п╩п╣п╡п╬п╧ я└я┐п╫п╨я├п╦п╦
+*					pos - п╡п╣п╨я┌п╬я─ п╦п╫п╢п╣п╨я│п╬п╡ п╢п╩я▐ я┐п╨п╟п╥п╟п╫п╦я▐ я─п╣п╥я┐п╩я▄я┌п╟я┌п╟
 *	Returns:		0
 *	Throws:			-
 *	Author:			dk
@@ -506,27 +506,27 @@ inline int AXStageSimple::getPriority (std::vector <AXSelection> &vec, std::vect
 /****************************************************************************
 *					FuzzyMultiDataLearnAlgorithm::combineAxioms
 *
-*	Description:	Объединение двух аксиом и вычисление результата для полученных новых аксиом.
-*	Parameters:		axiomFirst - первая из аксиом, на основе которой будут построены новые варианты аксиом
-*					axiomSec - вторая из аксиом, на основе которой будут построены новые варианты аксиом
-*					axiomExpr - заполняемая переменная аксиомы, в случае если удалось построить лучшую аксиому
-*					abType - тип нештатного поведения для которого производится построение аксиомы
-*	Returns:		0 - если новые аксиомы, созданные из двух указанных оказались не лучше
-*					>0 - если созданная аксиома оказалась лучше предшественников
-*					-1 - если не удалось провести комбинирование указанных аксиом
-*	Throws:			AxiomLibException - если указанные входные параметры не согласованы с внутренними пременными класса
+*	Description:	п·п╠я┼п╣п╢п╦п╫п╣п╫п╦п╣ п╢п╡я┐я┘ п╟п╨я│п╦п╬п╪ п╦ п╡я▀я┤п╦я│п╩п╣п╫п╦п╣ я─п╣п╥я┐п╩я▄я┌п╟я┌п╟ п╢п╩я▐ п©п╬п╩я┐я┤п╣п╫п╫я▀я┘ п╫п╬п╡я▀я┘ п╟п╨я│п╦п╬п╪.
+*	Parameters:		axiomFirst - п©п╣я─п╡п╟я▐ п╦п╥ п╟п╨я│п╦п╬п╪, п╫п╟ п╬я│п╫п╬п╡п╣ п╨п╬я┌п╬я─п╬п╧ п╠я┐п╢я┐я┌ п©п╬я│я┌я─п╬п╣п╫я▀ п╫п╬п╡я▀п╣ п╡п╟я─п╦п╟п╫я┌я▀ п╟п╨я│п╦п╬п╪
+*					axiomSec - п╡я┌п╬я─п╟я▐ п╦п╥ п╟п╨я│п╦п╬п╪, п╫п╟ п╬я│п╫п╬п╡п╣ п╨п╬я┌п╬я─п╬п╧ п╠я┐п╢я┐я┌ п©п╬я│я┌я─п╬п╣п╫я▀ п╫п╬п╡я▀п╣ п╡п╟я─п╦п╟п╫я┌я▀ п╟п╨я│п╦п╬п╪
+*					axiomExpr - п╥п╟п©п╬п╩п╫я▐п╣п╪п╟я▐ п©п╣я─п╣п╪п╣п╫п╫п╟я▐ п╟п╨я│п╦п╬п╪я▀, п╡ я│п╩я┐я┤п╟п╣ п╣я│п╩п╦ я┐п╢п╟п╩п╬я│я▄ п©п╬я│я┌я─п╬п╦я┌я▄ п╩я┐я┤я┬я┐я▌ п╟п╨я│п╦п╬п╪я┐
+*					abType - я┌п╦п© п╫п╣я┬я┌п╟я┌п╫п╬пЁп╬ п©п╬п╡п╣п╢п╣п╫п╦я▐ п╢п╩я▐ п╨п╬я┌п╬я─п╬пЁп╬ п©я─п╬п╦п╥п╡п╬п╢п╦я┌я│я▐ п©п╬я│я┌я─п╬п╣п╫п╦п╣ п╟п╨я│п╦п╬п╪я▀
+*	Returns:		0 - п╣я│п╩п╦ п╫п╬п╡я▀п╣ п╟п╨я│п╦п╬п╪я▀, я│п╬п╥п╢п╟п╫п╫я▀п╣ п╦п╥ п╢п╡я┐я┘ я┐п╨п╟п╥п╟п╫п╫я▀я┘ п╬п╨п╟п╥п╟п╩п╦я│я▄ п╫п╣ п╩я┐я┤я┬п╣
+*					>0 - п╣я│п╩п╦ я│п╬п╥п╢п╟п╫п╫п╟я▐ п╟п╨я│п╦п╬п╪п╟ п╬п╨п╟п╥п╟п╩п╟я│я▄ п╩я┐я┤я┬п╣ п©я─п╣п╢я┬п╣я│я┌п╡п╣п╫п╫п╦п╨п╬п╡
+*					-1 - п╣я│п╩п╦ п╫п╣ я┐п╢п╟п╩п╬я│я▄ п©я─п╬п╡п╣я│я┌п╦ п╨п╬п╪п╠п╦п╫п╦я─п╬п╡п╟п╫п╦п╣ я┐п╨п╟п╥п╟п╫п╫я▀я┘ п╟п╨я│п╦п╬п╪
+*	Throws:			AxiomLibException - п╣я│п╩п╦ я┐п╨п╟п╥п╟п╫п╫я▀п╣ п╡я┘п╬п╢п╫я▀п╣ п©п╟я─п╟п╪п╣я┌я─я▀ п╫п╣ я│п╬пЁп╩п╟я│п╬п╡п╟п╫я▀ я│ п╡п╫я┐я┌я─п╣п╫п╫п╦п╪п╦ п©я─п╣п╪п╣п╫п╫я▀п╪п╦ п╨п╩п╟я│я│п╟
 *	Author:			dk
 *	History:
 *
 ****************************************************************************/
 int AXStageSimple::combineAxioms (AxiomExprPlus &axiomFirst, AxiomExprPlus &axiomSecond, AxiomExprPlus &axiomExprPlus, const int abType) const {
-	// Создание новых аксиом
+	// п║п╬п╥п╢п╟п╫п╦п╣ п╫п╬п╡я▀я┘ п╟п╨я│п╦п╬п╪
 //	logger->writeDebug("Creating Or and And axioms");
 	AxiomExprPlus axiomExprAnd, axiomExprOr;
 	axiomExprAnd.andExpr(axiomFirst, axiomSecond);
 	axiomExprOr.orExpr (axiomFirst, axiomSecond);
 
-	// Вычисление наборов точек выполнимости
+	// п▓я▀я┤п╦я│п╩п╣п╫п╦п╣ п╫п╟п╠п╬я─п╬п╡ я┌п╬я┤п╣п╨ п╡я▀п©п╬п╩п╫п╦п╪п╬я│я┌п╦
 //	logger->writeDebug("Calculating SatPointSets");
 	ReducedSatPointSet orSet = getOr(abType, axiomFirst, axiomSecond, m_temporary1[abType]);
 	ReducedSatPointSet andSet = getAnd(abType, axiomFirst, axiomSecond, m_temporary2[abType]);
@@ -548,57 +548,57 @@ int AXStageSimple::combineAxioms (AxiomExprPlus &axiomFirst, AxiomExprPlus &axio
 		logger->writeDebug("And ok");
 	}
 */
-	// Вычисление целевых функций
+	// п▓я▀я┤п╦я│п╩п╣п╫п╦п╣ я├п╣п╩п╣п╡я▀я┘ я└я┐п╫п╨я├п╦п╧
 //	logger->writeDebug("Calculating matterAxiomFuncs");
 	matterAxiomFunc (axiomExprOr, abType, orSet);
 	matterAxiomFunc (axiomExprAnd, abType, andSet);
 
-	// Вывод отладочной информации
+	// п▓я▀п╡п╬п╢ п╬я┌п╩п╟п╢п╬я┤п╫п╬п╧ п╦п╫я└п╬я─п╪п╟я├п╦п╦
 	//std::cout << "\n\t andRes = " << axiomExprAnd.goal << "\torRes = " << axiomExprOr.goal << "\taxF = " << fi << "\taxS = " << se << "\tand.size() = " << axiomExprAnd.expression.size() << "\tand[0].size() = " << axiomExprAnd.expression[0].size() << "\tor.size() = " << axiomExprOr.expression.size() << "\tor[0].size() = " << axiomExprOr.expression[0].size();
 //	logger->writeDebug("Analyzing result");
-	// Определение лучше ли получились значения целевых функций у новых аксиом
+	// п·п©я─п╣п╢п╣п╩п╣п╫п╦п╣ п╩я┐я┤я┬п╣ п╩п╦ п©п╬п╩я┐я┤п╦п╩п╦я│я▄ п╥п╫п╟я┤п╣п╫п╦я▐ я├п╣п╩п╣п╡я▀я┘ я└я┐п╫п╨я├п╦п╧ я┐ п╫п╬п╡я▀я┘ п╟п╨я│п╦п╬п╪
 	if ((axiomExprAnd.goal >= axiomExprOr.goal) || (((axiomExprOr.goal - axiomExprAnd.goal) <= eps) && (axiomExprAnd.statAbnorm >= axiomExprOr.statAbnorm))) {
-		// значит axiomExprAnd - лучше axiomExprOr
+		// п╥п╫п╟я┤п╦я┌ axiomExprAnd - п╩я┐я┤я┬п╣ axiomExprOr
 		if ((axiomFirst.goal >= axiomSecond.goal) || (((axiomSecond.goal - axiomFirst.goal) <= eps) && (axiomFirst.statAbnorm >= axiomSecond.statAbnorm))) {
-			// значит axiomFirst - лучше axiomSec
+			// п╥п╫п╟я┤п╦я┌ axiomFirst - п╩я┐я┤я┬п╣ axiomSec
 			if ((axiomFirst.goal >= axiomExprAnd.goal) || (((axiomExprAnd.goal - axiomFirst.goal) <= eps) && (axiomFirst.statAbnorm >= axiomExprAnd.statAbnorm))) {
-				// значит лучшая из axiomExprAnd, axiomExprOr - хуже, чем одна из axiomFirst, axiomSec
+				// п╥п╫п╟я┤п╦я┌ п╩я┐я┤я┬п╟я▐ п╦п╥ axiomExprAnd, axiomExprOr - я┘я┐п╤п╣, я┤п╣п╪ п╬п╢п╫п╟ п╦п╥ axiomFirst, axiomSec
 				return 0;
 			} else {
-				// значит лучшая из axiomExprAnd, axiomExprOr - лучше, чем каждая из axiomFirst, axiomSec
+				// п╥п╫п╟я┤п╦я┌ п╩я┐я┤я┬п╟я▐ п╦п╥ axiomExprAnd, axiomExprOr - п╩я┐я┤я┬п╣, я┤п╣п╪ п╨п╟п╤п╢п╟я▐ п╦п╥ axiomFirst, axiomSec
 				axiomExprPlus = axiomExprAnd;
 				return 1;
 			}
 		} else {
-			// значит axiomSec - лучше axiomFirst
+			// п╥п╫п╟я┤п╦я┌ axiomSec - п╩я┐я┤я┬п╣ axiomFirst
 			if ((axiomSecond.goal >= axiomExprAnd.goal) || (((axiomExprAnd.goal - axiomSecond.goal) <= eps) && (axiomSecond.statAbnorm >= axiomExprAnd.statAbnorm))) {
-				// значит лучшая из axiomExprAnd, axiomExprOr - хуже, чем одна из axiomFirst, axiomSec
+				// п╥п╫п╟я┤п╦я┌ п╩я┐я┤я┬п╟я▐ п╦п╥ axiomExprAnd, axiomExprOr - я┘я┐п╤п╣, я┤п╣п╪ п╬п╢п╫п╟ п╦п╥ axiomFirst, axiomSec
 				return 0;
 			} else {
-				// значит лучшая из axiomExprAnd, axiomExprOr - лучше, чем каждая из axiomFirst, axiomSec
+				// п╥п╫п╟я┤п╦я┌ п╩я┐я┤я┬п╟я▐ п╦п╥ axiomExprAnd, axiomExprOr - п╩я┐я┤я┬п╣, я┤п╣п╪ п╨п╟п╤п╢п╟я▐ п╦п╥ axiomFirst, axiomSec
 				axiomExprPlus = axiomExprAnd;
 				return 1;
 			}
 		}
 	} else {
-		// значит axiomExprOr - лучше axiomExprAnd
+		// п╥п╫п╟я┤п╦я┌ axiomExprOr - п╩я┐я┤я┬п╣ axiomExprAnd
 		if ((axiomFirst.goal >= axiomSecond.goal) || (((axiomSecond.goal - axiomFirst.goal) <= eps) && (axiomFirst.statAbnorm >= axiomSecond.statAbnorm))) {
-			// значит axiomFirst - лучше axiomSec
+			// п╥п╫п╟я┤п╦я┌ axiomFirst - п╩я┐я┤я┬п╣ axiomSec
 			if ((axiomFirst.goal >= axiomExprOr.goal) || (((axiomExprOr.goal - axiomFirst.goal) <= eps) && (axiomFirst.statAbnorm >= axiomExprOr.statAbnorm))) {
-				// значит лучшая из axiomExprAnd, axiomExprOr - хуже, чем одна из axiomFirst, axiomSec
+				// п╥п╫п╟я┤п╦я┌ п╩я┐я┤я┬п╟я▐ п╦п╥ axiomExprAnd, axiomExprOr - я┘я┐п╤п╣, я┤п╣п╪ п╬п╢п╫п╟ п╦п╥ axiomFirst, axiomSec
 				return 0;
 			} else {
-				// значит лучшая из axiomExprAnd, axiomExprOr - лучше, чем каждая из axiomFirst, axiomSec
+				// п╥п╫п╟я┤п╦я┌ п╩я┐я┤я┬п╟я▐ п╦п╥ axiomExprAnd, axiomExprOr - п╩я┐я┤я┬п╣, я┤п╣п╪ п╨п╟п╤п╢п╟я▐ п╦п╥ axiomFirst, axiomSec
 				axiomExprPlus = axiomExprOr;
 				return 2;
 			}
 		} else {
-			// значит axiomSec - лучше axiomFirst
+			// п╥п╫п╟я┤п╦я┌ axiomSec - п╩я┐я┤я┬п╣ axiomFirst
 			if ((axiomSecond.goal >= axiomExprOr.goal) || (((axiomExprOr.goal - axiomSecond.goal) <= eps) && (axiomSecond.statAbnorm >= axiomExprOr.statAbnorm))) {
-				// значит лучшая из axiomExprAnd, axiomExprOr - хуже, чем одна из axiomFirst, axiomSec
+				// п╥п╫п╟я┤п╦я┌ п╩я┐я┤я┬п╟я▐ п╦п╥ axiomExprAnd, axiomExprOr - я┘я┐п╤п╣, я┤п╣п╪ п╬п╢п╫п╟ п╦п╥ axiomFirst, axiomSec
 				return 0;
 			} else {
-				// значит лучшая из axiomExprAnd, axiomExprOr - лучше, чем каждая из axiomFirst, axiomSec
+				// п╥п╫п╟я┤п╦я┌ п╩я┐я┤я┬п╟я▐ п╦п╥ axiomExprAnd, axiomExprOr - п╩я┐я┤я┬п╣, я┤п╣п╪ п╨п╟п╤п╢п╟я▐ п╦п╥ axiomFirst, axiomSec
 				axiomExprPlus = axiomExprOr;
 				return 2;
 			}
@@ -606,7 +606,7 @@ int AXStageSimple::combineAxioms (AxiomExprPlus &axiomFirst, AxiomExprPlus &axio
 
 	}
 
-	// Сюда прийти уже не должны
+	// п║я▌п╢п╟ п©я─п╦п╧я┌п╦ я┐п╤п╣ п╫п╣ п╢п╬п╩п╤п╫я▀
 	return -1;
 }
 
@@ -619,11 +619,11 @@ double AXStageSimple::matterAxiomFunc(AxiomExprPlus &ax, const int abType) const
 /****************************************************************************
 *					FuzzyMultiDataLearnAlgorithm::matterAxiomFunc
 *
-*	Description:	Подсчет целевой функции для аксиомы
-*	Parameters:		ax - аксиома, для которой вычисляется значение целевой функции
-*					param - параметр набора данных, на котором проверяется аксиома
-*	Returns:		double - значение целевой функции
-*	Throws:			AxiomLibException - если функция получает несогласованные параметры от набора данных
+*	Description:	п÷п╬п╢я│я┤п╣я┌ я├п╣п╩п╣п╡п╬п╧ я└я┐п╫п╨я├п╦п╦ п╢п╩я▐ п╟п╨я│п╦п╬п╪я▀
+*	Parameters:		ax - п╟п╨я│п╦п╬п╪п╟, п╢п╩я▐ п╨п╬я┌п╬я─п╬п╧ п╡я▀я┤п╦я│п╩я▐п╣я┌я│я▐ п╥п╫п╟я┤п╣п╫п╦п╣ я├п╣п╩п╣п╡п╬п╧ я└я┐п╫п╨я├п╦п╦
+*					param - п©п╟я─п╟п╪п╣я┌я─ п╫п╟п╠п╬я─п╟ п╢п╟п╫п╫я▀я┘, п╫п╟ п╨п╬я┌п╬я─п╬п╪ п©я─п╬п╡п╣я─я▐п╣я┌я│я▐ п╟п╨я│п╦п╬п╪п╟
+*	Returns:		double - п╥п╫п╟я┤п╣п╫п╦п╣ я├п╣п╩п╣п╡п╬п╧ я└я┐п╫п╨я├п╦п╦
+*	Throws:			AxiomLibException - п╣я│п╩п╦ я└я┐п╫п╨я├п╦я▐ п©п╬п╩я┐я┤п╟п╣я┌ п╫п╣я│п╬пЁп╩п╟я│п╬п╡п╟п╫п╫я▀п╣ п©п╟я─п╟п╪п╣я┌я─я▀ п╬я┌ п╫п╟п╠п╬я─п╟ п╢п╟п╫п╫я▀я┘
 *	Author:			dk
 *	History:
 *
@@ -633,21 +633,21 @@ double AXStageSimple::matterAxiomFunc (AxiomExprPlus &ax, const int abType, cons
 	const SatPointSet& normalSatPointSet = axSatPointSet.normal();
 	const SatPointSet& abnormalSatPointSet = axSatPointSet.abnormal();
 
-	// цикл по всем траекториям из обучающей выборки для данного класса нештатного поведения
+	// я├п╦п╨п╩ п©п╬ п╡я│п╣п╪ я┌я─п╟п╣п╨я┌п╬я─п╦я▐п╪ п╦п╥ п╬п╠я┐я┤п╟я▌я┴п╣п╧ п╡я▀п╠п╬я─п╨п╦ п╢п╩я▐ п╢п╟п╫п╫п╬пЁп╬ п╨п╩п╟я│я│п╟ п╫п╣я┬я┌п╟я┌п╫п╬пЁп╬ п©п╬п╡п╣п╢п╣п╫п╦я▐
 	int classCount = 0;
 	int classLen = 0;
 
 	boost::accumulators::accumulator_set<double,
 		boost::accumulators::features<boost::accumulators::tag::variance> > varianceAccumulator;
 
-	// Число траекторий, соответствующих нештатному поведению, на которых аксиома сработалаы
+	// п╖п╦я│п╩п╬ я┌я─п╟п╣п╨я┌п╬я─п╦п╧, я│п╬п╬я┌п╡п╣я┌я│я┌п╡я┐я▌я┴п╦я┘ п╫п╣я┬я┌п╟я┌п╫п╬п╪я┐ п©п╬п╡п╣п╢п╣п╫п╦я▌, п╫п╟ п╨п╬я┌п╬я─я▀я┘ п╟п╨я│п╦п╬п╪п╟ я│я─п╟п╠п╬я┌п╟п╩п╟я▀
 	int numOccured = 0;
 
-	// Общее число траекторий, соответствующих нештатному поведению
+	// п·п╠я┴п╣п╣ я┤п╦я│п╩п╬ я┌я─п╟п╣п╨я┌п╬я─п╦п╧, я│п╬п╬я┌п╡п╣я┌я│я┌п╡я┐я▌я┴п╦я┘ п╫п╣я┬я┌п╟я┌п╫п╬п╪я┐ п©п╬п╡п╣п╢п╣п╫п╦я▌
 	int numTraj = abnormalSatPointSet.size();
 	double abnFreq = 0.0;
 	for (int j = 0; j < numTraj; j++) {
-		// проверяем как срабатывает аксиома на выбранных размерностях выбранной траектории и считаем статистику для подсчета значения целевой функции
+		// п©я─п╬п╡п╣я─я▐п╣п╪ п╨п╟п╨ я│я─п╟п╠п╟я┌я▀п╡п╟п╣я┌ п╟п╨я│п╦п╬п╪п╟ п╫п╟ п╡я▀п╠я─п╟п╫п╫я▀я┘ я─п╟п╥п╪п╣я─п╫п╬я│я┌я▐я┘ п╡я▀п╠я─п╟п╫п╫п╬п╧ я┌я─п╟п╣п╨я┌п╬я─п╦п╦ п╦ я│я┤п╦я┌п╟п╣п╪ я│я┌п╟я┌п╦я│я┌п╦п╨я┐ п╢п╩я▐ п©п╬п╢я│я┤п╣я┌п╟ п╥п╫п╟я┤п╣п╫п╦я▐ я├п╣п╩п╣п╡п╬п╧ я└я┐п╫п╨я├п╦п╦
 		int currNumOfCarriedOutItems = abnormalSatPointSet.numSat(j);
 
 		if(currNumOfCarriedOutItems > 0) {
@@ -656,10 +656,10 @@ double AXStageSimple::matterAxiomFunc (AxiomExprPlus &ax, const int abType, cons
 
 		int classLenCur = abnormalSatPointSet.size(j);
 
-		// Вычисляем частоту срабатывания на текущей траектории
+		// п▓я▀я┤п╦я│п╩я▐п╣п╪ я┤п╟я│я┌п╬я┌я┐ я│я─п╟п╠п╟я┌я▀п╡п╟п╫п╦я▐ п╫п╟ я┌п╣п╨я┐я┴п╣п╧ я┌я─п╟п╣п╨я┌п╬я─п╦п╦
 		double currFreq = (double) currNumOfCarriedOutItems / (double) classLenCur;
 
-		// Аккумулируем значение частоты для дальнейшего подсчета вариации
+		// п░п╨п╨я┐п╪я┐п╩п╦я─я┐п╣п╪ п╥п╫п╟я┤п╣п╫п╦п╣ я┤п╟я│я┌п╬я┌я▀ п╢п╩я▐ п╢п╟п╩я▄п╫п╣п╧я┬п╣пЁп╬ п©п╬п╢я│я┤п╣я┌п╟ п╡п╟я─п╦п╟я├п╦п╦
 		varianceAccumulator(currFreq);
 
 		abnFreq += currFreq;
@@ -670,7 +670,7 @@ double AXStageSimple::matterAxiomFunc (AxiomExprPlus &ax, const int abType, cons
 
 	abnFreq /= (double)numTraj;
 
-	// Заполняем статистику по нештатному поведению
+	// п≈п╟п©п╬п╩п╫я▐п╣п╪ я│я┌п╟я┌п╦я│я┌п╦п╨я┐ п©п╬ п╫п╣я┬я┌п╟я┌п╫п╬п╪я┐ п©п╬п╡п╣п╢п╣п╫п╦я▌
 
 	if (classLen > 0) {
 		//ax.statAbnorm = (double) classCount/ (double) classLen;
@@ -680,7 +680,7 @@ double AXStageSimple::matterAxiomFunc (AxiomExprPlus &ax, const int abType, cons
 				);
 		ax.statOccurence = (double) numOccured / (double) numTraj;
 	} else {
-		ax.statAbnorm = -1.0; // - значит данные не определены
+		ax.statAbnorm = -1.0; // - п╥п╫п╟я┤п╦я┌ п╢п╟п╫п╫я▀п╣ п╫п╣ п╬п©я─п╣п╢п╣п╩п╣п╫я▀
 		ax.statVariation = -1.0;
 		ax.statOccurence = -1.0;
 		std::cout << "\nWarning in  FuzzyMultiDataLearnAlgorithm::matterAxiomFunc : incorrect dataSet request for abnormal type.\n";
@@ -701,17 +701,17 @@ double AXStageSimple::matterAxiomFunc (AxiomExprPlus &ax, const int abType, cons
 
 	normFreq /= (double) numTraj;
 
-	// Заполняем статистику по нештатному поведению
+	// п≈п╟п©п╬п╩п╫я▐п╣п╪ я│я┌п╟я┌п╦я│я┌п╦п╨я┐ п©п╬ п╫п╣я┬я┌п╟я┌п╫п╬п╪я┐ п©п╬п╡п╣п╢п╣п╫п╦я▌
 	if (classLen > 0)
 		//ax.statNormal = (double) classCount/ (double) classLen;
 		ax.statNormal = normFreq;
 	else {
-		ax.statNormal = -1.0; // - значит данные не определены
+		ax.statNormal = -1.0; // - п╥п╫п╟я┤п╦я┌ п╢п╟п╫п╫я▀п╣ п╫п╣ п╬п©я─п╣п╢п╣п╩п╣п╫я▀
 		std::cout << "\nWarning in FuzzyMultiDataLearnAlgorithm::matterAxiomFunc: incorrect dstaSet request for normal data.\n";
 	}
 
 #ifndef FUZZYMULTIDATA_AXIOMGOAL_EXPERIMENTAL
-	// Определение значения целевой функции
+	// п·п©я─п╣п╢п╣п╩п╣п╫п╦п╣ п╥п╫п╟я┤п╣п╫п╦я▐ я├п╣п╩п╣п╡п╬п╧ я└я┐п╫п╨я├п╦п╦
 	if (ax.statAbnorm < eps)
 		ax.goal = 0.0;
 	else {
@@ -809,10 +809,10 @@ void AXStageSimple::createAxiomSatPoints(int abType, std::vector<AXSelection> &a
 	}
 }
 
-// Записывает результат в storage
+// п≈п╟п©п╦я│я▀п╡п╟п╣я┌ я─п╣п╥я┐п╩я▄я┌п╟я┌ п╡ storage
 ReducedSatPointSet AXStageSimple::createAxiomSatPoints(int abType, const AxiomExprPlus &ax,
 	ReducedSatPointSet& storage, ReducedSatPointSet& storageAux) const {
-	// Строим набор точек выполнения аксиомы
+	// п║я┌я─п╬п╦п╪ п╫п╟п╠п╬я─ я┌п╬я┤п╣п╨ п╡я▀п©п╬п╩п╫п╣п╫п╦я▐ п╟п╨я│п╦п╬п╪я▀
 	ReducedSatPointSet axSatPointSet = conjunction(abType, ax.expression[0], storage);
 	for(int disjunctIndex = 1; disjunctIndex < ax.expression.size(); ++disjunctIndex) {
 		ReducedSatPointSet current = conjunction(abType, ax.expression[disjunctIndex], storageAux);

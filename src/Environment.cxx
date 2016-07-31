@@ -1,7 +1,7 @@
 /****************************************************************************
 *				Environment.cxx
 *
-*	Description:	Функции класса Environment - Реализация
+*	Description:	п╓я┐п╫п╨я├п╦п╦ п╨п╩п╟я│я│п╟ Environment - п═п╣п╟п╩п╦п╥п╟я├п╦я▐
 *	Author:		gevor,dk
 *	History:		
 *
@@ -33,11 +33,11 @@ using namespace std;
 /****************************************************************************
 *				Environment::getStringParamValue
 *
-*	Description:	Функция возвращает первое значение параметра с именем name в виде строки
-*	Parameters:	string& value - куда писать значение
-*			string name - имя параметра
-*	Returns:	0 - если такой параметр нашелся
-*			-1 - если такого параметра не нашлось
+*	Description:	п╓я┐п╫п╨я├п╦я▐ п╡п╬п╥п╡я─п╟я┴п╟п╣я┌ п©п╣я─п╡п╬п╣ п╥п╫п╟я┤п╣п╫п╦п╣ п©п╟я─п╟п╪п╣я┌я─п╟ я│ п╦п╪п╣п╫п╣п╪ name п╡ п╡п╦п╢п╣ я│я┌я─п╬п╨п╦
+*	Parameters:	string& value - п╨я┐п╢п╟ п©п╦я│п╟я┌я▄ п╥п╫п╟я┤п╣п╫п╦п╣
+*			string name - п╦п╪я▐ п©п╟я─п╟п╪п╣я┌я─п╟
+*	Returns:	0 - п╣я│п╩п╦ я┌п╟п╨п╬п╧ п©п╟я─п╟п╪п╣я┌я─ п╫п╟я┬п╣п╩я│я▐
+*			-1 - п╣я│п╩п╦ я┌п╟п╨п╬пЁп╬ п©п╟я─п╟п╪п╣я┌я─п╟ п╫п╣ п╫п╟я┬п╩п╬я│я▄
 *	Throws:		-
 *	Author:		gevor
 *	History:
@@ -47,11 +47,11 @@ int Environment::getStringParamValue(string& value, const string& name) const
 {
   MapType::const_iterator i = configFileParams.find(name);
   
-  // проверка - есть ли такой элемент
+  // п©я─п╬п╡п╣я─п╨п╟ - п╣я│я┌я▄ п╩п╦ я┌п╟п╨п╬п╧ я█п╩п╣п╪п╣п╫я┌
   if (i == configFileParams.end())
     return -1;
 
-  // если есть - возвращаем первое вхождение
+  // п╣я│п╩п╦ п╣я│я┌я▄ - п╡п╬п╥п╡я─п╟я┴п╟п╣п╪ п©п╣я─п╡п╬п╣ п╡я┘п╬п╤п╢п╣п╫п╦п╣
   value = (*i).second;
   return 0;
 }
@@ -59,11 +59,11 @@ int Environment::getStringParamValue(string& value, const string& name) const
 /****************************************************************************
 *				Environment::getDoubleParamValue
 *
-*	Description:	Функция возвращает первое значение параметра с именем name в виде дроного числа
-*	Parameters:	double& value - куда писать значение
-*				string name - имя параметра
-*	Returns:		0 - если такой параметр нашелся
-*				-1 - если такого параметра не нашлось, или он не привелся к double
+*	Description:	п╓я┐п╫п╨я├п╦я▐ п╡п╬п╥п╡я─п╟я┴п╟п╣я┌ п©п╣я─п╡п╬п╣ п╥п╫п╟я┤п╣п╫п╦п╣ п©п╟я─п╟п╪п╣я┌я─п╟ я│ п╦п╪п╣п╫п╣п╪ name п╡ п╡п╦п╢п╣ п╢я─п╬п╫п╬пЁп╬ я┤п╦я│п╩п╟
+*	Parameters:	double& value - п╨я┐п╢п╟ п©п╦я│п╟я┌я▄ п╥п╫п╟я┤п╣п╫п╦п╣
+*				string name - п╦п╪я▐ п©п╟я─п╟п╪п╣я┌я─п╟
+*	Returns:		0 - п╣я│п╩п╦ я┌п╟п╨п╬п╧ п©п╟я─п╟п╪п╣я┌я─ п╫п╟я┬п╣п╩я│я▐
+*				-1 - п╣я│п╩п╦ я┌п╟п╨п╬пЁп╬ п©п╟я─п╟п╪п╣я┌я─п╟ п╫п╣ п╫п╟я┬п╩п╬я│я▄, п╦п╩п╦ п╬п╫ п╫п╣ п©я─п╦п╡п╣п╩я│я▐ п╨ double
 *	Throws:		-
 *	Author:		gevor
 *	History:
@@ -73,12 +73,12 @@ int Environment::getDoubleParamValue(double& value, const string& name) const
 {
   MapType::const_iterator i = configFileParams.find(name);
   
-  // проверка - есть ли такой элемент
+  // п©я─п╬п╡п╣я─п╨п╟ - п╣я│я┌я▄ п╩п╦ я┌п╟п╨п╬п╧ я█п╩п╣п╪п╣п╫я┌
   if (i == configFileParams.end())
     return -1;
 
   std::string stringValue = i->second;
-  // приводим к double
+  // п©я─п╦п╡п╬п╢п╦п╪ п╨ double
   value = boost::lexical_cast<double>(stringValue);
 //  value = atof(stringValue.c_str());
   return 0;
@@ -87,11 +87,11 @@ int Environment::getDoubleParamValue(double& value, const string& name) const
 /****************************************************************************
 *				Environment::getIntParamValue
 *
-*	Description:	Функция возвращает первое значение параметра с именем name в виде целого
-*	Parameters:	signed int& value - куда писать значение
-*				string name - имя параметра
-*	Returns:		0 - если такой параметр нашелся
-*				-1 - если такого параметра не нашлось, или он не привелся к int
+*	Description:	п╓я┐п╫п╨я├п╦я▐ п╡п╬п╥п╡я─п╟я┴п╟п╣я┌ п©п╣я─п╡п╬п╣ п╥п╫п╟я┤п╣п╫п╦п╣ п©п╟я─п╟п╪п╣я┌я─п╟ я│ п╦п╪п╣п╫п╣п╪ name п╡ п╡п╦п╢п╣ я├п╣п╩п╬пЁп╬
+*	Parameters:	signed int& value - п╨я┐п╢п╟ п©п╦я│п╟я┌я▄ п╥п╫п╟я┤п╣п╫п╦п╣
+*				string name - п╦п╪я▐ п©п╟я─п╟п╪п╣я┌я─п╟
+*	Returns:		0 - п╣я│п╩п╦ я┌п╟п╨п╬п╧ п©п╟я─п╟п╪п╣я┌я─ п╫п╟я┬п╣п╩я│я▐
+*				-1 - п╣я│п╩п╦ я┌п╟п╨п╬пЁп╬ п©п╟я─п╟п╪п╣я┌я─п╟ п╫п╣ п╫п╟я┬п╩п╬я│я▄, п╦п╩п╦ п╬п╫ п╫п╣ п©я─п╦п╡п╣п╩я│я▐ п╨ int
 *	Throws:		-
 *	Author:		gevor
 *	History:
@@ -101,11 +101,11 @@ int Environment::getIntParamValue(signed int& value, const string& name) const
 {
   MapType::const_iterator i = configFileParams.find(name);
   
-  // проверка - есть ли такой элемент
+  // п©я─п╬п╡п╣я─п╨п╟ - п╣я│я┌я▄ п╩п╦ я┌п╟п╨п╬п╧ я█п╩п╣п╪п╣п╫я┌
   if (i == configFileParams.end())
     return -1;
 
-  // приводим к double
+  // п©я─п╦п╡п╬п╢п╦п╪ п╨ double
   value = atoi((*i).second.c_str());
   return 0;
 }
@@ -113,12 +113,12 @@ int Environment::getIntParamValue(signed int& value, const string& name) const
 /****************************************************************************
 *					Environment::getBoolParamValue
 *
-*	Description:	Функция возвращает первое значение параметра с именем name как булевскую переменную
-*					(правило преобразования - case-insensitive, "true" или "false")
-*	Parameters:	bool& value - куда писать значение
-*				string name - имя параметра
-*	Returns:		0 - если такой параметр нашелся
-*				-1 - если такого параметра не нашлось, или он не привелся к bool (по указанному правилу)
+*	Description:	п╓я┐п╫п╨я├п╦я▐ п╡п╬п╥п╡я─п╟я┴п╟п╣я┌ п©п╣я─п╡п╬п╣ п╥п╫п╟я┤п╣п╫п╦п╣ п©п╟я─п╟п╪п╣я┌я─п╟ я│ п╦п╪п╣п╫п╣п╪ name п╨п╟п╨ п╠я┐п╩п╣п╡я│п╨я┐я▌ п©п╣я─п╣п╪п╣п╫п╫я┐я▌
+*					(п©я─п╟п╡п╦п╩п╬ п©я─п╣п╬п╠я─п╟п╥п╬п╡п╟п╫п╦я▐ - case-insensitive, "true" п╦п╩п╦ "false")
+*	Parameters:	bool& value - п╨я┐п╢п╟ п©п╦я│п╟я┌я▄ п╥п╫п╟я┤п╣п╫п╦п╣
+*				string name - п╦п╪я▐ п©п╟я─п╟п╪п╣я┌я─п╟
+*	Returns:		0 - п╣я│п╩п╦ я┌п╟п╨п╬п╧ п©п╟я─п╟п╪п╣я┌я─ п╫п╟я┬п╣п╩я│я▐
+*				-1 - п╣я│п╩п╦ я┌п╟п╨п╬пЁп╬ п©п╟я─п╟п╪п╣я┌я─п╟ п╫п╣ п╫п╟я┬п╩п╬я│я▄, п╦п╩п╦ п╬п╫ п╫п╣ п©я─п╦п╡п╣п╩я│я▐ п╨ bool (п©п╬ я┐п╨п╟п╥п╟п╫п╫п╬п╪я┐ п©я─п╟п╡п╦п╩я┐)
 *	Throws:		-
 *	Author:		wictor
 *	History:
@@ -144,11 +144,11 @@ int Environment::getBoolParamValue(bool &value, const std::string &name) const {
 /****************************************************************************
 *				Environment::getStringSetParamValue
 *
-*	Description:	Функция возвращает все значения параметра с именем name в виде строки
-*	Parameters:	string& value - куда писать значение
-*			string name - имя параметра
-*	Returns:	0 - если такой параметр нашелся
-*			-1 - если такого параметра не нашлось
+*	Description:	п╓я┐п╫п╨я├п╦я▐ п╡п╬п╥п╡я─п╟я┴п╟п╣я┌ п╡я│п╣ п╥п╫п╟я┤п╣п╫п╦я▐ п©п╟я─п╟п╪п╣я┌я─п╟ я│ п╦п╪п╣п╫п╣п╪ name п╡ п╡п╦п╢п╣ я│я┌я─п╬п╨п╦
+*	Parameters:	string& value - п╨я┐п╢п╟ п©п╦я│п╟я┌я▄ п╥п╫п╟я┤п╣п╫п╦п╣
+*			string name - п╦п╪я▐ п©п╟я─п╟п╪п╣я┌я─п╟
+*	Returns:	0 - п╣я│п╩п╦ я┌п╟п╨п╬п╧ п©п╟я─п╟п╪п╣я┌я─ п╫п╟я┬п╣п╩я│я▐
+*			-1 - п╣я│п╩п╦ я┌п╟п╨п╬пЁп╬ п©п╟я─п╟п╪п╣я┌я─п╟ п╫п╣ п╫п╟я┬п╩п╬я│я▄
 *	Throws:		-
 *	Author:		gevor
 *	History:
@@ -158,11 +158,11 @@ int Environment::getStringSetParamValue(set<string>& value, const string& name) 
 {
   MapType::const_iterator i = configFileParams.find(name);
   
-  // проверка - есть ли такой элемент вообще, хоть один
+  // п©я─п╬п╡п╣я─п╨п╟ - п╣я│я┌я▄ п╩п╦ я┌п╟п╨п╬п╧ я█п╩п╣п╪п╣п╫я┌ п╡п╬п╬п╠я┴п╣, я┘п╬я┌я▄ п╬п╢п╦п╫
   if (i == configFileParams.end())
     return -1;
 
-  // если есть - заполняем наше множество
+  // п╣я│п╩п╦ п╣я│я┌я▄ - п╥п╟п©п╬п╩п╫я▐п╣п╪ п╫п╟я┬п╣ п╪п╫п╬п╤п╣я│я┌п╡п╬
   pair<mm_c_iter,mm_c_iter> runner = configFileParams.equal_range(name);
   for (mm_c_iter i = runner.first; i != runner.second; ++i)
     value.insert((*i).second);
@@ -172,11 +172,11 @@ int Environment::getStringSetParamValue(set<string>& value, const string& name) 
 /****************************************************************************
 *				Environment::getDoubleSetParamValue
 *
-*	Description:	Функция возвращает все значения параметра с именем name в виде набора чисел
-*	Parameters:	string& value - куда писать значение
-*				string name - имя параметра
-*	Returns:		0 - если такой параметр нашелся
-*				-1 - если такого параметра не нашлось
+*	Description:	п╓я┐п╫п╨я├п╦я▐ п╡п╬п╥п╡я─п╟я┴п╟п╣я┌ п╡я│п╣ п╥п╫п╟я┤п╣п╫п╦я▐ п©п╟я─п╟п╪п╣я┌я─п╟ я│ п╦п╪п╣п╫п╣п╪ name п╡ п╡п╦п╢п╣ п╫п╟п╠п╬я─п╟ я┤п╦я│п╣п╩
+*	Parameters:	string& value - п╨я┐п╢п╟ п©п╦я│п╟я┌я▄ п╥п╫п╟я┤п╣п╫п╦п╣
+*				string name - п╦п╪я▐ п©п╟я─п╟п╪п╣я┌я─п╟
+*	Returns:		0 - п╣я│п╩п╦ я┌п╟п╨п╬п╧ п©п╟я─п╟п╪п╣я┌я─ п╫п╟я┬п╣п╩я│я▐
+*				-1 - п╣я│п╩п╦ я┌п╟п╨п╬пЁп╬ п©п╟я─п╟п╪п╣я┌я─п╟ п╫п╣ п╫п╟я┬п╩п╬я│я▄
 *	Throws:		-
 *	Author:		dk
 *	History:
@@ -186,11 +186,11 @@ int Environment::getDoubleSetParamValue (std::set<double>& value, const std::str
 {
   MapType::const_iterator i = configFileParams.find(name);
   
-  // проверка - есть ли такой элемент вообще, хоть один
+  // п©я─п╬п╡п╣я─п╨п╟ - п╣я│я┌я▄ п╩п╦ я┌п╟п╨п╬п╧ я█п╩п╣п╪п╣п╫я┌ п╡п╬п╬п╠я┴п╣, я┘п╬я┌я▄ п╬п╢п╦п╫
   if (i == configFileParams.end())
     return -1;
 
-  // если есть - заполняем наше множество
+  // п╣я│п╩п╦ п╣я│я┌я▄ - п╥п╟п©п╬п╩п╫я▐п╣п╪ п╫п╟я┬п╣ п╪п╫п╬п╤п╣я│я┌п╡п╬
   pair<mm_c_iter,mm_c_iter> runner = configFileParams.equal_range(name);
   for (mm_c_iter i = runner.first; i != runner.second; ++i)
     value.insert(atof((*i).second.c_str()));
@@ -200,12 +200,12 @@ int Environment::getDoubleSetParamValue (std::set<double>& value, const std::str
 /****************************************************************************
 *				Environment::getIntSetParamValue
 *
-*	Description:	Функция возвращает все значения параметра с именем name в виде набора чисел
-*	Parameters:	std::set<int>& value - куда писать значения 
-*				(значения добавляются, то, что уже там лежит, не трогается)
-*				string name - имя параметра
-*	Returns:		0 - если такой параметр нашелся
-*				-1 - если такого параметра не нашлось
+*	Description:	п╓я┐п╫п╨я├п╦я▐ п╡п╬п╥п╡я─п╟я┴п╟п╣я┌ п╡я│п╣ п╥п╫п╟я┤п╣п╫п╦я▐ п©п╟я─п╟п╪п╣я┌я─п╟ я│ п╦п╪п╣п╫п╣п╪ name п╡ п╡п╦п╢п╣ п╫п╟п╠п╬я─п╟ я┤п╦я│п╣п╩
+*	Parameters:	std::set<int>& value - п╨я┐п╢п╟ п©п╦я│п╟я┌я▄ п╥п╫п╟я┤п╣п╫п╦я▐ 
+*				(п╥п╫п╟я┤п╣п╫п╦я▐ п╢п╬п╠п╟п╡п╩я▐я▌я┌я│я▐, я┌п╬, я┤я┌п╬ я┐п╤п╣ я┌п╟п╪ п╩п╣п╤п╦я┌, п╫п╣ я┌я─п╬пЁп╟п╣я┌я│я▐)
+*				string name - п╦п╪я▐ п©п╟я─п╟п╪п╣я┌я─п╟
+*	Returns:		0 - п╣я│п╩п╦ я┌п╟п╨п╬п╧ п©п╟я─п╟п╪п╣я┌я─ п╫п╟я┬п╣п╩я│я▐
+*				-1 - п╣я│п╩п╦ я┌п╟п╨п╬пЁп╬ п©п╟я─п╟п╪п╣я┌я─п╟ п╫п╣ п╫п╟я┬п╩п╬я│я▄
 *	Throws:		-
 *	Author:		wictor
 *	History:
@@ -216,9 +216,9 @@ int Environment::getIntSetParamValue(std::set<int>& value, const std::string& na
 	if(getStringSetParamValue(stringSet, name) < 0) {
 		return -1;
 	}
-	// Отдельная переменная - чтобы в случае ошибки ничего в value не писать
+	// п·я┌п╢п╣п╩я▄п╫п╟я▐ п©п╣я─п╣п╪п╣п╫п╫п╟я▐ - я┤я┌п╬п╠я▀ п╡ я│п╩я┐я┤п╟п╣ п╬я┬п╦п╠п╨п╦ п╫п╦я┤п╣пЁп╬ п╡ value п╫п╣ п©п╦я│п╟я┌я▄
 	std::list<int> result;
-	// Переводим строки в числа
+	// п÷п╣я─п╣п╡п╬п╢п╦п╪ я│я┌я─п╬п╨п╦ п╡ я┤п╦я│п╩п╟
 	BOOST_FOREACH(const std::string &str, stringSet) {
 		try {
 			result.push_back(boost::lexical_cast<int>(str));
@@ -226,7 +226,7 @@ int Environment::getIntSetParamValue(std::set<int>& value, const std::string& na
 			return -1;
 		}
 	}
-	// Копируем result в value
+	// п п╬п©п╦я─я┐п╣п╪ result п╡ value
 	value.insert(result.begin(), result.end());
 	return 0;
 }
@@ -241,10 +241,10 @@ void Environment::setParamValues(const std::set<std::string> &value, const std::
 /****************************************************************************
 *				Environment::undefineParam
 *
-*	Description:	Функция удаляет параметр из окружения
-*	Parameters:	string name - имя параметра
-*	Returns:		0 - если такой параметр нашелся
-*				-1 - если такого параметра не нашлось
+*	Description:	п╓я┐п╫п╨я├п╦я▐ я┐п╢п╟п╩я▐п╣я┌ п©п╟я─п╟п╪п╣я┌я─ п╦п╥ п╬п╨я─я┐п╤п╣п╫п╦я▐
+*	Parameters:	string name - п╦п╪я▐ п©п╟я─п╟п╪п╣я┌я─п╟
+*	Returns:		0 - п╣я│п╩п╦ я┌п╟п╨п╬п╧ п©п╟я─п╟п╪п╣я┌я─ п╫п╟я┬п╣п╩я│я▐
+*				-1 - п╣я│п╩п╦ я┌п╟п╨п╬пЁп╬ п©п╟я─п╟п╪п╣я┌я─п╟ п╫п╣ п╫п╟я┬п╩п╬я│я▄
 *	Throws:		-
 *	Author:		wictor
 *	History:
@@ -266,8 +266,8 @@ void Environment::clear() {
 /****************************************************************************
 *					Environment::moveSpaces
 *
-*	Description:	Функция преобразует строку - удаляет все пробелы и табуляции в начале и в конце файла
-*	Parameters:	str - преобразуемая строка
+*	Description:	п╓я┐п╫п╨я├п╦я▐ п©я─п╣п╬п╠я─п╟п╥я┐п╣я┌ я│я┌я─п╬п╨я┐ - я┐п╢п╟п╩я▐п╣я┌ п╡я│п╣ п©я─п╬п╠п╣п╩я▀ п╦ я┌п╟п╠я┐п╩я▐я├п╦п╦ п╡ п╫п╟я┤п╟п╩п╣ п╦ п╡ п╨п╬п╫я├п╣ я└п╟п╧п╩п╟
+*	Parameters:	str - п©я─п╣п╬п╠я─п╟п╥я┐п╣п╪п╟я▐ я│я┌я─п╬п╨п╟
 *	Returns:		0
 *	Throws:		-
 *	Author:		dk
@@ -275,11 +275,11 @@ void Environment::clear() {
 *
 ****************************************************************************/
 int Environment::moveSpaces (std::string &str) {
-	// проверка - путсая ли строка
+	// п©я─п╬п╡п╣я─п╨п╟ - п©я┐я┌я│п╟я▐ п╩п╦ я│я┌я─п╬п╨п╟
 	if (str.size() == 0) {
 		return 0;
 	}
-	// преобраование
+	// п©я─п╣п╬п╠я─п╟п╬п╡п╟п╫п╦п╣
 	if ((str[0] == '\t') || (str[0] == ' ') || (str[str.size() - 1] == '\t') || (str[str.size() - 1] == ' ')) {
 		int j = 0;
 		while (j < (int) str.size()) {
@@ -289,11 +289,11 @@ int Environment::moveSpaces (std::string &str) {
 			j++;
 		}
 		if (j == str.size()) {
-			// строка тока из пробелов и табуляции
+			// я│я┌я─п╬п╨п╟ я┌п╬п╨п╟ п╦п╥ п©я─п╬п╠п╣п╩п╬п╡ п╦ я┌п╟п╠я┐п╩я▐я├п╦п╦
 			str.resize(0);
 			return 0;
 		}
-		// теперь j - индекс первого символа отличного от табуляции и пробела
+		// я┌п╣п©п╣я─я▄ j - п╦п╫п╢п╣п╨я│ п©п╣я─п╡п╬пЁп╬ я│п╦п╪п╡п╬п╩п╟ п╬я┌п╩п╦я┤п╫п╬пЁп╬ п╬я┌ я┌п╟п╠я┐п╩я▐я├п╦п╦ п╦ п©я─п╬п╠п╣п╩п╟
 		int l = (int) str.size() - 1;
 		while (l >= j) {
 			if ((str[l] != '\t') && (str[l] != ' ')) {
@@ -301,7 +301,7 @@ int Environment::moveSpaces (std::string &str) {
 			}
 			l--;
 		}
-		// теперь в l - индекс последнего символа отличного от табуляции и пробела
+		// я┌п╣п©п╣я─я▄ п╡ l - п╦п╫п╢п╣п╨я│ п©п╬я│п╩п╣п╢п╫п╣пЁп╬ я│п╦п╪п╡п╬п╩п╟ п╬я┌п╩п╦я┤п╫п╬пЁп╬ п╬я┌ я┌п╟п╠я┐п╩я▐я├п╦п╦ п╦ п©я─п╬п╠п╣п╩п╟
 		std::string newStr;
 		newStr.resize(l - j + 1);
 		int h = 0;
@@ -318,7 +318,7 @@ int Environment::moveSpaces (std::string &str) {
 /****************************************************************************
 *					Environment::testOut
 *
-*	Description:	Тестовый вывод всех считанных параметров в stdout
+*	Description:	п╒п╣я│я┌п╬п╡я▀п╧ п╡я▀п╡п╬п╢ п╡я│п╣я┘ я│я┤п╦я┌п╟п╫п╫я▀я┘ п©п╟я─п╟п╪п╣я┌я─п╬п╡ п╡ stdout
 *	Parameters:	-
 *	Returns:		0
 *	Throws:		-
@@ -334,22 +334,22 @@ int Environment::testOut (void) {
 /****************************************************************************
 *					Environment::createDir
 *
-*	Description:	Создает директорию по указанному адресу
-*	Parameters:		dir - строка с адресом для создания директории
-*	Returns:		0 - если директория создана или существует
-*					-1 - если директорию создать не удалось
+*	Description:	п║п╬п╥п╢п╟п╣я┌ п╢п╦я─п╣п╨я┌п╬я─п╦я▌ п©п╬ я┐п╨п╟п╥п╟п╫п╫п╬п╪я┐ п╟п╢я─п╣я│я┐
+*	Parameters:		dir - я│я┌я─п╬п╨п╟ я│ п╟п╢я─п╣я│п╬п╪ п╢п╩я▐ я│п╬п╥п╢п╟п╫п╦я▐ п╢п╦я─п╣п╨я┌п╬я─п╦п╦
+*	Returns:		0 - п╣я│п╩п╦ п╢п╦я─п╣п╨я┌п╬я─п╦я▐ я│п╬п╥п╢п╟п╫п╟ п╦п╩п╦ я│я┐я┴п╣я│я┌п╡я┐п╣я┌
+*					-1 - п╣я│п╩п╦ п╢п╦я─п╣п╨я┌п╬я─п╦я▌ я│п╬п╥п╢п╟я┌я▄ п╫п╣ я┐п╢п╟п╩п╬я│я▄
 *	Throws:			-
 *	Author:			dk
 *	History:
 *
 ****************************************************************************/
 int Environment::createDir (std::string dir) {
-	// Проверка входного параметра
+	// п÷я─п╬п╡п╣я─п╨п╟ п╡я┘п╬п╢п╫п╬пЁп╬ п©п╟я─п╟п╪п╣я┌я─п╟
 	if (dir.size() < 1)
 		return -1;
 
 	boost::filesystem::path path (dir);
-	// Проверка - существует ли указанная директория
+	// п÷я─п╬п╡п╣я─п╨п╟ - я│я┐я┴п╣я│я┌п╡я┐п╣я┌ п╩п╦ я┐п╨п╟п╥п╟п╫п╫п╟я▐ п╢п╦я─п╣п╨я┌п╬я─п╦я▐
 	if ( boost::filesystem::exists(path) ) {
 		if ( !boost::filesystem::is_directory(path) ) {
 			boost::filesystem::create_directory(path);
@@ -357,7 +357,7 @@ int Environment::createDir (std::string dir) {
 		return 0;
 	}
 
-	// Если директория с указанным именем не существует
+	// п∙я│п╩п╦ п╢п╦я─п╣п╨я┌п╬я─п╦я▐ я│ я┐п╨п╟п╥п╟п╫п╫я▀п╪ п╦п╪п╣п╫п╣п╪ п╫п╣ я│я┐я┴п╣я│я┌п╡я┐п╣я┌
 	int index;
 	index = (int) dir.find_last_of ("/\\");
 	if (index > 0) {
@@ -370,11 +370,11 @@ int Environment::createDir (std::string dir) {
 		boost::filesystem::create_directory(path);
 		return 0;
 	} else {
-		// значит слешей в пути не осталось - такая директория, считаем, должна всегда существовать
+		// п╥п╫п╟я┤п╦я┌ я│п╩п╣я┬п╣п╧ п╡ п©я┐я┌п╦ п╫п╣ п╬я│я┌п╟п╩п╬я│я▄ - я┌п╟п╨п╟я▐ п╢п╦я─п╣п╨я┌п╬я─п╦я▐, я│я┤п╦я┌п╟п╣п╪, п╢п╬п╩п╤п╫п╟ п╡я│п╣пЁп╢п╟ я│я┐я┴п╣я│я┌п╡п╬п╡п╟я┌я▄
 		return -1;
 	}
 
-	// Сюда дойти не должны - поэтому возвращаем ошибку
+	// п║я▌п╢п╟ п╢п╬п╧я┌п╦ п╫п╣ п╢п╬п╩п╤п╫я▀ - п©п╬я█я┌п╬п╪я┐ п╡п╬п╥п╡я─п╟я┴п╟п╣п╪ п╬я┬п╦п╠п╨я┐
 	return -1;
 }
 
@@ -382,14 +382,14 @@ int Environment::createDir (std::string dir) {
 /****************************************************************************
 *					Environment::saveFile
 *
-*	Description:	Сохранение указанного файла в папку с результатами
-*	Parameters:		fileName - адрес файла, который сохранять в результаты
-*	Returns:		0 - если все нормально
-*					-1 - если в данном классе Environment не задан путь для сохранения резултатов
-*					-2 - если указанный путь для сохранения результатов не является директорией
-*					-3 - если не существует указанный для копирования файл
-*					-4 - если не удается заменить уже существующий файл по указанному пути
-*					-5 - если не удается создать указанный путь, по которому сохранить файл
+*	Description:	п║п╬я┘я─п╟п╫п╣п╫п╦п╣ я┐п╨п╟п╥п╟п╫п╫п╬пЁп╬ я└п╟п╧п╩п╟ п╡ п©п╟п©п╨я┐ я│ я─п╣п╥я┐п╩я▄я┌п╟я┌п╟п╪п╦
+*	Parameters:		fileName - п╟п╢я─п╣я│ я└п╟п╧п╩п╟, п╨п╬я┌п╬я─я▀п╧ я│п╬я┘я─п╟п╫я▐я┌я▄ п╡ я─п╣п╥я┐п╩я▄я┌п╟я┌я▀
+*	Returns:		0 - п╣я│п╩п╦ п╡я│п╣ п╫п╬я─п╪п╟п╩я▄п╫п╬
+*					-1 - п╣я│п╩п╦ п╡ п╢п╟п╫п╫п╬п╪ п╨п╩п╟я│я│п╣ Environment п╫п╣ п╥п╟п╢п╟п╫ п©я┐я┌я▄ п╢п╩я▐ я│п╬я┘я─п╟п╫п╣п╫п╦я▐ я─п╣п╥я┐п╩я┌п╟я┌п╬п╡
+*					-2 - п╣я│п╩п╦ я┐п╨п╟п╥п╟п╫п╫я▀п╧ п©я┐я┌я▄ п╢п╩я▐ я│п╬я┘я─п╟п╫п╣п╫п╦я▐ я─п╣п╥я┐п╩я▄я┌п╟я┌п╬п╡ п╫п╣ я▐п╡п╩я▐п╣я┌я│я▐ п╢п╦я─п╣п╨я┌п╬я─п╦п╣п╧
+*					-3 - п╣я│п╩п╦ п╫п╣ я│я┐я┴п╣я│я┌п╡я┐п╣я┌ я┐п╨п╟п╥п╟п╫п╫я▀п╧ п╢п╩я▐ п╨п╬п©п╦я─п╬п╡п╟п╫п╦я▐ я└п╟п╧п╩
+*					-4 - п╣я│п╩п╦ п╫п╣ я┐п╢п╟п╣я┌я│я▐ п╥п╟п╪п╣п╫п╦я┌я▄ я┐п╤п╣ я│я┐я┴п╣я│я┌п╡я┐я▌я┴п╦п╧ я└п╟п╧п╩ п©п╬ я┐п╨п╟п╥п╟п╫п╫п╬п╪я┐ п©я┐я┌п╦
+*					-5 - п╣я│п╩п╦ п╫п╣ я┐п╢п╟п╣я┌я│я▐ я│п╬п╥п╢п╟я┌я▄ я┐п╨п╟п╥п╟п╫п╫я▀п╧ п©я┐я┌я▄, п©п╬ п╨п╬я┌п╬я─п╬п╪я┐ я│п╬я┘я─п╟п╫п╦я┌я▄ я└п╟п╧п╩
 *	Throws:			-
 *	Author:			dk
 *	History:
@@ -397,7 +397,7 @@ int Environment::createDir (std::string dir) {
 ****************************************************************************/
 signed int Environment::saveFile (const std::string fileName) {
 	std::string whereToSave;
-	// Если нет параметра - куда сохранять файл - то выходим из функции
+	// п∙я│п╩п╦ п╫п╣я┌ п©п╟я─п╟п╪п╣я┌я─п╟ - п╨я┐п╢п╟ я│п╬я┘я─п╟п╫я▐я┌я▄ я└п╟п╧п╩ - я┌п╬ п╡я▀я┘п╬п╢п╦п╪ п╦п╥ я└я┐п╫п╨я├п╦п╦
 	if (getStringParamValue (whereToSave, "PathToSaveResults") < 0)
 		return -1;
 	boost::filesystem::path path (whereToSave);
@@ -428,7 +428,7 @@ signed int Environment::saveFile (const std::string fileName) {
 }
 
 void Environment::writeToStream(std::ostream &ostr) const {
-	// TODO подумать о escape'е спецсимволов
+	// TODO п©п╬п╢я┐п╪п╟я┌я▄ п╬ escape'п╣ я│п©п╣я├я│п╦п╪п╡п╬п╩п╬п╡
 	ostr<<"{ ";
 	auto it = configFileParams.begin();
 	ostr<<"\""<<it->first<<"\""<<":"<<"\""<<it->second<<"\"";
@@ -456,7 +456,7 @@ void Environment::getParamNames(std::vector<std::string> &result) const {
 /****************************************************************************
 *					Environment::readConfigParams
 *
-*	Description:	Читает параметры поданные на вход при запуске программы
+*	Description:	п╖п╦я┌п╟п╣я┌ п©п╟я─п╟п╪п╣я┌я─я▀ п©п╬п╢п╟п╫п╫я▀п╣ п╫п╟ п╡я┘п╬п╢ п©я─п╦ п╥п╟п©я┐я│п╨п╣ п©я─п╬пЁя─п╟п╪п╪я▀
 *	Parameters:	-
 *	Returns:		0
 *	Throws:		-
@@ -481,7 +481,7 @@ signed int Environment::readConfigParams (int argc, char** argv) {
 /****************************************************************************
 *					Environment::readConfigFile
 *
-*	Description:	Функция чтения конфигурационного файла по умолчанию
+*	Description:	п╓я┐п╫п╨я├п╦я▐ я┤я┌п╣п╫п╦я▐ п╨п╬п╫я└п╦пЁя┐я─п╟я├п╦п╬п╫п╫п╬пЁп╬ я└п╟п╧п╩п╟ п©п╬ я┐п╪п╬п╩я┤п╟п╫п╦я▌
 *	Parameters:	-
 *	Returns:	0
 *	Throws:		-
@@ -498,17 +498,17 @@ signed int Environment::readConfigFile(void) {
 /****************************************************************************
 *					Environment::readConfigFile
 *
-*	Description:	Функция чтения данного конфигурационного файла
-*	Parameters:	Параметром является тектовая строка содержащая путь к конфигурационному файлу
+*	Description:	п╓я┐п╫п╨я├п╦я▐ я┤я┌п╣п╫п╦я▐ п╢п╟п╫п╫п╬пЁп╬ п╨п╬п╫я└п╦пЁя┐я─п╟я├п╦п╬п╫п╫п╬пЁп╬ я└п╟п╧п╩п╟
+*	Parameters:	п÷п╟я─п╟п╪п╣я┌я─п╬п╪ я▐п╡п╩я▐п╣я┌я│я▐ я┌п╣п╨я┌п╬п╡п╟я▐ я│я┌я─п╬п╨п╟ я│п╬п╢п╣я─п╤п╟я┴п╟я▐ п©я┐я┌я▄ п╨ п╨п╬п╫я└п╦пЁя┐я─п╟я├п╦п╬п╫п╫п╬п╪я┐ я└п╟п╧п╩я┐
 *	Returns:	0
-*	Throws:		AxiomLibException - если не нашлось конфигурационного файла с заданным путем
+*	Throws:		AxiomLibException - п╣я│п╩п╦ п╫п╣ п╫п╟я┬п╩п╬я│я▄ п╨п╬п╫я└п╦пЁя┐я─п╟я├п╦п╬п╫п╫п╬пЁп╬ я└п╟п╧п╩п╟ я│ п╥п╟п╢п╟п╫п╫я▀п╪ п©я┐я┌п╣п╪
 *	Author:		gevor
 *	History:
 *
 ****************************************************************************/
 signed int Environment::readConfigFile(const char* filename) {
   std::string fileName(filename);
-  // Проверяем - существует ли файл
+  // п÷я─п╬п╡п╣я─я▐п╣п╪ - я│я┐я┴п╣я│я┌п╡я┐п╣я┌ п╩п╦ я└п╟п╧п╩
   boost::filesystem::path fPath (filename);
   bool tempBool = boost::filesystem::exists( fPath );
   if ( !boost::filesystem::exists( fileName ) ) {
@@ -516,13 +516,13 @@ signed int Environment::readConfigFile(const char* filename) {
 							+ std::string(fileName) + "'");
   }
 
-  // Открываем файл
+  // п·я┌п╨я─я▀п╡п╟п╣п╪ я└п╟п╧п╩
   boost::filesystem::ifstream file( fileName );
-  // задаем сепаратор
+  // п╥п╟п╢п╟п╣п╪ я│п╣п©п╟я─п╟я┌п╬я─
   boost::char_separator<char> sep("';:\t \r\n");
 
-  // Цикл - считывается по одной строке файла и они переходит в вид набора токенов, 
-  // которые после чего посылаются на обработку дополнительной функции
+  // п╕п╦п╨п╩ - я│я┤п╦я┌я▀п╡п╟п╣я┌я│я▐ п©п╬ п╬п╢п╫п╬п╧ я│я┌я─п╬п╨п╣ я└п╟п╧п╩п╟ п╦ п╬п╫п╦ п©п╣я─п╣я┘п╬п╢п╦я┌ п╡ п╡п╦п╢ п╫п╟п╠п╬я─п╟ я┌п╬п╨п╣п╫п╬п╡, 
+  // п╨п╬я┌п╬я─я▀п╣ п©п╬я│п╩п╣ я┤п╣пЁп╬ п©п╬я│я▀п╩п╟я▌я┌я│я▐ п╫п╟ п╬п╠я─п╟п╠п╬я┌п╨я┐ п╢п╬п©п╬п╩п╫п╦я┌п╣п╩я▄п╫п╬п╧ я└я┐п╫п╨я├п╦п╦
   std::string str;
   while ( !file.eof() )  {
 	std::getline(file, str);
@@ -533,7 +533,7 @@ signed int Environment::readConfigFile(const char* filename) {
     }
   } 
 
-  // закрываем файл, все ok
+  // п╥п╟п╨я─я▀п╡п╟п╣п╪ я└п╟п╧п╩, п╡я│п╣ ok
   file.close();
   return 0;
 }
@@ -542,10 +542,10 @@ signed int Environment::readConfigFile(const char* filename) {
 /****************************************************************************
 *					Environment::processTokens
 *
-*	Description:	Парсит строчку токенов, заполняет multimap
-*	Parameters:	Набор токенов для разбора
+*	Description:	п÷п╟я─я│п╦я┌ я│я┌я─п╬я┤п╨я┐ я┌п╬п╨п╣п╫п╬п╡, п╥п╟п©п╬п╩п╫я▐п╣я┌ multimap
+*	Parameters:	п²п╟п╠п╬я─ я┌п╬п╨п╣п╫п╬п╡ п╢п╩я▐ я─п╟п╥п╠п╬я─п╟
 *	Returns:	0
-*	Throws:		AxiomLibException - если формат данного конфигурационного не совпадает с форматом описанном в ../format.x
+*	Throws:		AxiomLibException - п╣я│п╩п╦ я└п╬я─п╪п╟я┌ п╢п╟п╫п╫п╬пЁп╬ п╨п╬п╫я└п╦пЁя┐я─п╟я├п╦п╬п╫п╫п╬пЁп╬ п╫п╣ я│п╬п╡п©п╟п╢п╟п╣я┌ я│ я└п╬я─п╪п╟я┌п╬п╪ п╬п©п╦я│п╟п╫п╫п╬п╪ п╡ ../format.x
 *	Author:		dk,gevor
 *	History:
 *
@@ -554,16 +554,16 @@ signed int Environment::processTokens (token_separator tokens) {
   for (token_separator::iterator tok_iter = tokens.begin();  tok_iter != tokens.end();  ++tok_iter) {
     string strTemp = *tok_iter;
     if ( (strTemp.size() < 1) || (strTemp[0] == ' ' ) ) {
-		// либо пустой токен, либо начинается с пробела - а значит это не слово
+		// п╩п╦п╠п╬ п©я┐я│я┌п╬п╧ я┌п╬п╨п╣п╫, п╩п╦п╠п╬ п╫п╟я┤п╦п╫п╟п╣я┌я│я▐ я│ п©я─п╬п╠п╣п╩п╟ - п╟ п╥п╫п╟я┤п╦я┌ я█я┌п╬ п╫п╣ я│п╩п╬п╡п╬
 		continue;
     }
 	if (strTemp.size() >= 2 && strTemp[0] == '/' && strTemp[1] == '/') {
-		// данная строка - это строка с комментами
+		// п╢п╟п╫п╫п╟я▐ я│я┌я─п╬п╨п╟ - я█я┌п╬ я│я┌я─п╬п╨п╟ я│ п╨п╬п╪п╪п╣п╫я┌п╟п╪п╦
 		return 0;
 	}
 
-    // Разбираем на param и value
-    // (!!!) - не работает с пробелами
+    // п═п╟п╥п╠п╦я─п╟п╣п╪ п╫п╟ param п╦ value
+    // (!!!) - п╫п╣ я─п╟п╠п╬я┌п╟п╣я┌ я│ п©я─п╬п╠п╣п╩п╟п╪п╦
     string name = *tok_iter;
     //cerr << "Name token: " << *tok_iter << "\n";
 	
@@ -577,7 +577,7 @@ signed int Environment::processTokens (token_separator tokens) {
 	
     string value = *tok_iter;
 
-    // Заносим в наш multimap
+    // п≈п╟п╫п╬я│п╦п╪ п╡ п╫п╟я┬ multimap
     configFileParams.insert(make_pair(name, value));
   }    
   return 0;
@@ -587,8 +587,8 @@ signed int Environment::processTokens (token_separator tokens) {
 /****************************************************************************
 *				Environment::operator +=
 *
-*	Description:	Оператор объединения содержимого классов окружения
-*	Parameters:		second - добавляемый класс окружения
+*	Description:	п·п©п╣я─п╟я┌п╬я─ п╬п╠я┼п╣п╢п╦п╫п╣п╫п╦я▐ я│п╬п╢п╣я─п╤п╦п╪п╬пЁп╬ п╨п╩п╟я│я│п╬п╡ п╬п╨я─я┐п╤п╣п╫п╦я▐
+*	Parameters:		second - п╢п╬п╠п╟п╡п╩я▐п╣п╪я▀п╧ п╨п╩п╟я│я│ п╬п╨я─я┐п╤п╣п╫п╦я▐
 *	Returns:		*this
 *	Throws:			-
 *	Author:			dk
@@ -601,11 +601,11 @@ Environment& Environment::operator += (const Environment& second) {
 	}
 	
 	MapType::const_iterator iter;
-	// удаляем значения для обновляемых параметрах
+	// я┐п╢п╟п╩я▐п╣п╪ п╥п╫п╟я┤п╣п╫п╦я▐ п╢п╩я▐ п╬п╠п╫п╬п╡п╩я▐п╣п╪я▀я┘ п©п╟я─п╟п╪п╣я┌я─п╟я┘
 	for (iter = second.configFileParams.begin(); iter != second.configFileParams.end(); ++iter ) {
 			this->configFileParams.erase (iter->first);		
 	}
-	// добавляем новые значения для обновляемых параметров
+	// п╢п╬п╠п╟п╡п╩я▐п╣п╪ п╫п╬п╡я▀п╣ п╥п╫п╟я┤п╣п╫п╦я▐ п╢п╩я▐ п╬п╠п╫п╬п╡п╩я▐п╣п╪я▀я┘ п©п╟я─п╟п╪п╣я┌я─п╬п╡
 	for (iter = second.configFileParams.begin(); iter != second.configFileParams.end(); ++iter ) {
 		this->configFileParams.insert(make_pair(iter->first, iter->second));	
 	}

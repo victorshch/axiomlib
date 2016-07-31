@@ -18,7 +18,7 @@ using namespace AxiomLib;
 using namespace AxiomLib::FuzzyMultiDataExt;
 
 HeuristicsFactory::HeuristicsFactory() {
-	//TODO вызовы addPrototype для каждого типа эвристики
+	//TODO п╡я▀п╥п╬п╡я▀ addPrototype п╢п╩я▐ п╨п╟п╤п╢п╬пЁп╬ я┌п╦п©п╟ я█п╡я─п╦я│я┌п╦п╨п╦
 	addPrototype(new ECStatClustering());
 	addPrototype(new AXStatClustering());
 	addPrototype(new ECOccFilter());

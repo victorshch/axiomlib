@@ -1,8 +1,8 @@
 /****************************************************************************
 *						NeuralDataHolder.cxx
 *
-*       Description:	Реализация шаблонов функций-членов шаблона класса NeuralDataHolder
-*						Об ограничениях на Coder см. NeuralDataHolder.h
+*       Description:	п═п╣п╟п╩п╦п╥п╟я├п╦я▐ я┬п╟п╠п╩п╬п╫п╬п╡ я└я┐п╫п╨я├п╦п╧-я┤п╩п╣п╫п╬п╡ я┬п╟п╠п╩п╬п╫п╟ п╨п╩п╟я│я│п╟ NeuralDataHolder
+*						п·п╠ п╬пЁя─п╟п╫п╦я┤п╣п╫п╦я▐я┘ п╫п╟ Coder я│п╪. NeuralDataHolder.h
 *       Author:			wictor
 *       History:
 *
@@ -19,8 +19,8 @@ namespace AxiomLib {
 /****************************************************************************
 *						NeuralDataHolder<Coder>::supplyTrainingData
 *
-*       Description:	Функция добавляет одну строку в вектор строк для обучения
-*       Parameters:		const Qstring &s - добавляемая строка
+*       Description:	п╓я┐п╫п╨я├п╦я▐ п╢п╬п╠п╟п╡п╩я▐п╣я┌ п╬п╢п╫я┐ я│я┌я─п╬п╨я┐ п╡ п╡п╣п╨я┌п╬я─ я│я┌я─п╬п╨ п╢п╩я▐ п╬п╠я┐я┤п╣п╫п╦я▐
+*       Parameters:		const Qstring &s - п╢п╬п╠п╟п╡п╩я▐п╣п╪п╟я▐ я│я┌я─п╬п╨п╟
 *       Returns:		-
 *       Throws:			-
 *       Author:			wictor
@@ -44,15 +44,15 @@ inline void NeuralDataHolder<Coder>::supplyTrainingData(const Qstring &s) {
 /****************************************************************************
 *						NeuralDataHolder<Coder>::supplyAuxTrainingData
 *
-*       Description:	Функция добавляет одну дополнительную строку для обучения,
-*						которая соответствует последней добавленной строке для обучения
-*       Parameters:		const Qstring &s - добавляемая строка
-*						i - индекс основной строки, с которой надо ассоциировать 
-*						добавляемую строку или -1, если надо ассоциировать с последней
-*						добавленной основной строкой
+*       Description:	п╓я┐п╫п╨я├п╦я▐ п╢п╬п╠п╟п╡п╩я▐п╣я┌ п╬п╢п╫я┐ п╢п╬п©п╬п╩п╫п╦я┌п╣п╩я▄п╫я┐я▌ я│я┌я─п╬п╨я┐ п╢п╩я▐ п╬п╠я┐я┤п╣п╫п╦я▐,
+*						п╨п╬я┌п╬я─п╟я▐ я│п╬п╬я┌п╡п╣я┌я│я┌п╡я┐п╣я┌ п©п╬я│п╩п╣п╢п╫п╣п╧ п╢п╬п╠п╟п╡п╩п╣п╫п╫п╬п╧ я│я┌я─п╬п╨п╣ п╢п╩я▐ п╬п╠я┐я┤п╣п╫п╦я▐
+*       Parameters:		const Qstring &s - п╢п╬п╠п╟п╡п╩я▐п╣п╪п╟я▐ я│я┌я─п╬п╨п╟
+*						i - п╦п╫п╢п╣п╨я│ п╬я│п╫п╬п╡п╫п╬п╧ я│я┌я─п╬п╨п╦, я│ п╨п╬я┌п╬я─п╬п╧ п╫п╟п╢п╬ п╟я│я│п╬я├п╦п╦я─п╬п╡п╟я┌я▄ 
+*						п╢п╬п╠п╟п╡п╩я▐п╣п╪я┐я▌ я│я┌я─п╬п╨я┐ п╦п╩п╦ -1, п╣я│п╩п╦ п╫п╟п╢п╬ п╟я│я│п╬я├п╦п╦я─п╬п╡п╟я┌я▄ я│ п©п╬я│п╩п╣п╢п╫п╣п╧
+*						п╢п╬п╠п╟п╡п╩п╣п╫п╫п╬п╧ п╬я│п╫п╬п╡п╫п╬п╧ я│я┌я─п╬п╨п╬п╧
 *       Returns:		-
-*       Throws:			AxiomLibException, если ни разу не было вызвано supplyTrainingData(),
-*						либо размер inp не совпадает с размером последней добавленной строки для обучения
+*       Throws:			AxiomLibException, п╣я│п╩п╦ п╫п╦ я─п╟п╥я┐ п╫п╣ п╠я▀п╩п╬ п╡я▀п╥п╡п╟п╫п╬ supplyTrainingData(),
+*						п╩п╦п╠п╬ я─п╟п╥п╪п╣я─ inp п╫п╣ я│п╬п╡п©п╟п╢п╟п╣я┌ я│ я─п╟п╥п╪п╣я─п╬п╪ п©п╬я│п╩п╣п╢п╫п╣п╧ п╢п╬п╠п╟п╡п╩п╣п╫п╫п╬п╧ я│я┌я─п╬п╨п╦ п╢п╩я▐ п╬п╠я┐я┤п╣п╫п╦я▐
 *       Author:			wictor
 *       History:
 *
@@ -82,18 +82,18 @@ void NeuralDataHolder<Coder>::supplyAuxTrainingData(const Qstring &inp, int i)
 /****************************************************************************
 *						NeuralDataHolder<Coder>::getNumAuxTrain
 *
-*       Description:	Возвращает число дополнительных строк для обучения, соответствующих
-*						строке для обучения с номером i
-*       Parameters:		const Qstring &s - добавляемая строка
+*       Description:	п▓п╬п╥п╡я─п╟я┴п╟п╣я┌ я┤п╦я│п╩п╬ п╢п╬п©п╬п╩п╫п╦я┌п╣п╩я▄п╫я▀я┘ я│я┌я─п╬п╨ п╢п╩я▐ п╬п╠я┐я┤п╣п╫п╦я▐, я│п╬п╬я┌п╡п╣я┌я│я┌п╡я┐я▌я┴п╦я┘
+*						я│я┌я─п╬п╨п╣ п╢п╩я▐ п╬п╠я┐я┤п╣п╫п╦я▐ я│ п╫п╬п╪п╣я─п╬п╪ i
+*       Parameters:		const Qstring &s - п╢п╬п╠п╟п╡п╩я▐п╣п╪п╟я▐ я│я┌я─п╬п╨п╟
 *       Returns:		-
-*       Throws:			AxiomLibException, если номер i некорректен
+*       Throws:			AxiomLibException, п╣я│п╩п╦ п╫п╬п╪п╣я─ i п╫п╣п╨п╬я─я─п╣п╨я┌п╣п╫
 *       Author:			wictor
 *       History:
 *
 ****************************************************************************/
 template<class Coder>
 int NeuralDataHolder<Coder>::getNumAuxTrain(int i) const {
-	// Проверка на выход за границы массива
+	// п÷я─п╬п╡п╣я─п╨п╟ п╫п╟ п╡я▀я┘п╬п╢ п╥п╟ пЁя─п╟п╫п╦я├я▀ п╪п╟я│я│п╦п╡п╟
 	if(i < 0 || i >= (int) trainData.size()) {
 		throw AxiomLibException("NeuralDataHolder<Coder>::getNumAuxTrain() : i out of range");
 	}
@@ -104,9 +104,9 @@ int NeuralDataHolder<Coder>::getNumAuxTrain(int i) const {
 /****************************************************************************
 *						NeuralDataHolder<Coder>::construct
 *
-*       Description:	Функция строит сеть, основываясь на полученных данных.
-*       Parameters:		тип Settings - должен удовлетворять ограничениям Coder::construct()
-*						const Settings &settings - настройки
+*       Description:	п╓я┐п╫п╨я├п╦я▐ я│я┌я─п╬п╦я┌ я│п╣я┌я▄, п╬я│п╫п╬п╡я▀п╡п╟я▐я│я▄ п╫п╟ п©п╬п╩я┐я┤п╣п╫п╫я▀я┘ п╢п╟п╫п╫я▀я┘.
+*       Parameters:		я┌п╦п© Settings - п╢п╬п╩п╤п╣п╫ я┐п╢п╬п╡п╩п╣я┌п╡п╬я─я▐я┌я▄ п╬пЁя─п╟п╫п╦я┤п╣п╫п╦я▐п╪ Coder::construct()
+*						const Settings &settings - п╫п╟я│я┌я─п╬п╧п╨п╦
 *       Returns:		-
 *       Throws:			-
 *       Author:			wictor
@@ -122,7 +122,7 @@ void NeuralDataHolder<Coder>::construct(const Settings &settings) {
 /****************************************************************************
 *						NeuralDataHolder<Coder>::clear
 *
-*       Description:	Функция очищает объект для повторного использования
+*       Description:	п╓я┐п╫п╨я├п╦я▐ п╬я┤п╦я┴п╟п╣я┌ п╬п╠я┼п╣п╨я┌ п╢п╩я▐ п©п╬п╡я┌п╬я─п╫п╬пЁп╬ п╦я│п©п╬п╩я▄п╥п╬п╡п╟п╫п╦я▐
 *       Parameters:		-
 *       Returns:		-
 *       Throws:			-
@@ -142,17 +142,17 @@ inline void NeuralDataHolder<Coder>::clear()
 /****************************************************************************
 *						NeuralDataHolder<Coder>::getTrainString
 *
-*       Description:	Возвращает обучающую строку с номером i
-*       Parameters:		int i - номер строки
-*       Returns:		const Qstring & - строка для обучения
-*       Throws:			AxiomLibException, если номер строки некорректен
+*       Description:	п▓п╬п╥п╡я─п╟я┴п╟п╣я┌ п╬п╠я┐я┤п╟я▌я┴я┐я▌ я│я┌я─п╬п╨я┐ я│ п╫п╬п╪п╣я─п╬п╪ i
+*       Parameters:		int i - п╫п╬п╪п╣я─ я│я┌я─п╬п╨п╦
+*       Returns:		const Qstring & - я│я┌я─п╬п╨п╟ п╢п╩я▐ п╬п╠я┐я┤п╣п╫п╦я▐
+*       Throws:			AxiomLibException, п╣я│п╩п╦ п╫п╬п╪п╣я─ я│я┌я─п╬п╨п╦ п╫п╣п╨п╬я─я─п╣п╨я┌п╣п╫
 *       Author:			wictor
 *       History:
 *
 ****************************************************************************/
 template<class Coder>
 const Qstring & NeuralDataHolder<Coder>::getTrainString(int i) const { 
-	// Проверка на выход за границы массива
+	// п÷я─п╬п╡п╣я─п╨п╟ п╫п╟ п╡я▀я┘п╬п╢ п╥п╟ пЁя─п╟п╫п╦я├я▀ п╪п╟я│я│п╦п╡п╟
 	if(i < 0 || i >= (int) trainData.size()) {
 		throw AxiomLibException("NeuralDataHolder<Coder>::getTrainString() : i out of range");
 	}
@@ -162,19 +162,19 @@ const Qstring & NeuralDataHolder<Coder>::getTrainString(int i) const {
 /****************************************************************************
 *						NeuralDataHolder<Coder>::getAuxTrainString
 *
-*       Description:	Возвращает строку для доп. обучения с номером j,
-*						соответствующую обучающей строке с номером i
-*       Parameters:		int i - номер обучающей строки
-*						int j - номер строки для доп. обучения
-*       Returns:		const Qstring & - строка для доп. обучения
-*       Throws:			AxiomLibException, если номер i или j некорректен
+*       Description:	п▓п╬п╥п╡я─п╟я┴п╟п╣я┌ я│я┌я─п╬п╨я┐ п╢п╩я▐ п╢п╬п©. п╬п╠я┐я┤п╣п╫п╦я▐ я│ п╫п╬п╪п╣я─п╬п╪ j,
+*						я│п╬п╬я┌п╡п╣я┌я│я┌п╡я┐я▌я┴я┐я▌ п╬п╠я┐я┤п╟я▌я┴п╣п╧ я│я┌я─п╬п╨п╣ я│ п╫п╬п╪п╣я─п╬п╪ i
+*       Parameters:		int i - п╫п╬п╪п╣я─ п╬п╠я┐я┤п╟я▌я┴п╣п╧ я│я┌я─п╬п╨п╦
+*						int j - п╫п╬п╪п╣я─ я│я┌я─п╬п╨п╦ п╢п╩я▐ п╢п╬п©. п╬п╠я┐я┤п╣п╫п╦я▐
+*       Returns:		const Qstring & - я│я┌я─п╬п╨п╟ п╢п╩я▐ п╢п╬п©. п╬п╠я┐я┤п╣п╫п╦я▐
+*       Throws:			AxiomLibException, п╣я│п╩п╦ п╫п╬п╪п╣я─ i п╦п╩п╦ j п╫п╣п╨п╬я─я─п╣п╨я┌п╣п╫
 *       Author:			wictor
 *       History:
 *
 ****************************************************************************/
 template<class Coder>
 const Qstring & NeuralDataHolder<Coder>::getAuxTrainString(int i, int j) const { 
-	// Проверки на выход за границы массивов
+	// п÷я─п╬п╡п╣я─п╨п╦ п╫п╟ п╡я▀я┘п╬п╢ п╥п╟ пЁя─п╟п╫п╦я├я▀ п╪п╟я│я│п╦п╡п╬п╡
 	if(i < 0 || i >= (int) auxTrainData.size()) {
 		throw AxiomLibException("NeuralDataHolder<Coder>::getAuxTrainString() : i out of range");
 	}
@@ -188,9 +188,9 @@ const Qstring & NeuralDataHolder<Coder>::getAuxTrainString(int i, int j) const {
 /****************************************************************************
 *						NeuralDataHolder<Coder>::getTranslated
 *
-*       Description:	Возвращает обучающую строку с номером i в закодированном виде
-*       Parameters:		int i - номер строки
-*       Returns:		const Qstring & - закодированная строка для обучения 
+*       Description:	п▓п╬п╥п╡я─п╟я┴п╟п╣я┌ п╬п╠я┐я┤п╟я▌я┴я┐я▌ я│я┌я─п╬п╨я┐ я│ п╫п╬п╪п╣я─п╬п╪ i п╡ п╥п╟п╨п╬п╢п╦я─п╬п╡п╟п╫п╫п╬п╪ п╡п╦п╢п╣
+*       Parameters:		int i - п╫п╬п╪п╣я─ я│я┌я─п╬п╨п╦
+*       Returns:		const Qstring & - п╥п╟п╨п╬п╢п╦я─п╬п╡п╟п╫п╫п╟я▐ я│я┌я─п╬п╨п╟ п╢п╩я▐ п╬п╠я┐я┤п╣п╫п╦я▐ 
 *       Throws:			-
 *       Author:			wictor
 *       History:
@@ -206,12 +206,12 @@ const Qstring NeuralDataHolder<Coder>::getTranslated(int i) const {
 /****************************************************************************
 *						NeuralDataHolder<Coder>::getAuxTranslated
 *
-*       Description:	Возвращает (в закодированном виде) строку для доп. 
-*						обучения с номером j,
-*						соответствующую обучающей строке с номером i
-*       Parameters:		int i - номер обучающей строки
-*						int j - номер строки для доп. обучения
-*       Returns:		const Qstring & - закодированная строка для доп. обучения
+*       Description:	п▓п╬п╥п╡я─п╟я┴п╟п╣я┌ (п╡ п╥п╟п╨п╬п╢п╦я─п╬п╡п╟п╫п╫п╬п╪ п╡п╦п╢п╣) я│я┌я─п╬п╨я┐ п╢п╩я▐ п╢п╬п©. 
+*						п╬п╠я┐я┤п╣п╫п╦я▐ я│ п╫п╬п╪п╣я─п╬п╪ j,
+*						я│п╬п╬я┌п╡п╣я┌я│я┌п╡я┐я▌я┴я┐я▌ п╬п╠я┐я┤п╟я▌я┴п╣п╧ я│я┌я─п╬п╨п╣ я│ п╫п╬п╪п╣я─п╬п╪ i
+*       Parameters:		int i - п╫п╬п╪п╣я─ п╬п╠я┐я┤п╟я▌я┴п╣п╧ я│я┌я─п╬п╨п╦
+*						int j - п╫п╬п╪п╣я─ я│я┌я─п╬п╨п╦ п╢п╩я▐ п╢п╬п©. п╬п╠я┐я┤п╣п╫п╦я▐
+*       Returns:		const Qstring & - п╥п╟п╨п╬п╢п╦я─п╬п╡п╟п╫п╫п╟я▐ я│я┌я─п╬п╨п╟ п╢п╩я▐ п╢п╬п©. п╬п╠я┐я┤п╣п╫п╦я▐
 *       Throws:			-
 *       Author:			wictor
 *       History:
@@ -227,9 +227,9 @@ const Qstring NeuralDataHolder<Coder>::getAuxTranslated(int i, int j) const {
 /****************************************************************************
 *						NeuralDataHolder<Coder>::coderTranslate
 *
-*       Description:	Кодирует строку str, возвращает результат
+*       Description:	п п╬п╢п╦я─я┐п╣я┌ я│я┌я─п╬п╨я┐ str, п╡п╬п╥п╡я─п╟я┴п╟п╣я┌ я─п╣п╥я┐п╩я▄я┌п╟я┌
 *       Parameters:		const Qstring &str
-*       Returns:		const Qstring & - закодированная str
+*       Returns:		const Qstring & - п╥п╟п╨п╬п╢п╦я─п╬п╡п╟п╫п╫п╟я▐ str
 *       Throws:			-
 *       Author:			wictor
 *       History:

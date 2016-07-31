@@ -15,7 +15,7 @@ void setSelected(ECTypeSelection& ecPlus)
 ECTypeStage::ECTypeStage(FuzzyMultiDataExtAlgorithm *parent)
 	: parent(parent)
 {
-	//úÁÐÏÌÎÅÎÉÅ ×ÅËÔÏÒÁ ÔÉÐÏ× üõ - ÐÏ ÕÍÏÌÞÁÎÉÀ ÉÓÐÏÌØÚÕÀÔÓÑ ×ÓÅ ÔÉÐÙ üõ
+	//Ð—Ð°Ð¿Ð¾Ð»Ð½ÐµÐ½Ð¸Ðµ Ð²ÐµÐºÑ‚Ð¾Ñ€Ð° Ñ‚Ð¸Ð¿Ð¾Ð² Ð­Ð£ - Ð¿Ð¾ ÑƒÐ¼Ð¾Ð»Ñ‡Ð°Ð½Ð¸ÑŽ Ð¸ÑÐ¿Ð¾Ð»ÑŒÐ·ÑƒÑŽÑ‚ÑÑ Ð²ÑÐµ Ñ‚Ð¸Ð¿Ñ‹ Ð­Ð£
 	ElemConditionsFactory ecf;
 	this->ecTypes.resize (2*N_EL_AXIOMS);
 	for (unsigned int i = 0; i < N_EL_AXIOMS; i++) {
@@ -43,7 +43,7 @@ void ECTypeStage::setLogger(Logger *logger) {
 }
 
 void ECTypeStage::initFromEnv(const Environment &/*env*/) {
-	// ðÏËÁ Õ ÜÔÏÇÏ ÜÔÁÐÁ ÎÅÔ ÐÁÒÁÍÅÔÒÏ×
+	// ÐŸÐ¾ÐºÐ° Ñƒ ÑÑ‚Ð¾Ð³Ð¾ ÑÑ‚Ð°Ð¿Ð° Ð½ÐµÑ‚ Ð¿Ð°Ñ€Ð°Ð¼ÐµÑ‚Ñ€Ð¾Ð²
 }
 
 const ElemCondPlus &ECTypeStage::getECType(int n) const {

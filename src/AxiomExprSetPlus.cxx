@@ -1,7 +1,7 @@
 /****************************************************************************
-*					Функции класса AxiomExprSetPlus
+*					п╓я┐п╫п╨я├п╦п╦ п╨п╩п╟я│я│п╟ AxiomExprSetPlus
 *
-*	Description:	Система аксиом от аксиом типа AxiomExpr со статистикой - Реализация
+*	Description:	п║п╦я│я┌п╣п╪п╟ п╟п╨я│п╦п╬п╪ п╬я┌ п╟п╨я│п╦п╬п╪ я┌п╦п©п╟ AxiomExpr я│п╬ я│я┌п╟я┌п╦я│я┌п╦п╨п╬п╧ - п═п╣п╟п╩п╦п╥п╟я├п╦я▐
 *	Author:			dk
 *	History:	
 *
@@ -59,7 +59,7 @@ bool AxiomExprSetPlus::operator <(const AxiomExprSetPlus &other) const
 	return this->goal < other.goal;
 }
 
-// Пустой конструктор с заданием имени системы аксиом по default'у
+// п÷я┐я│я┌п╬п╧ п╨п╬п╫я│я┌я─я┐п╨я┌п╬я─ я│ п╥п╟п╢п╟п╫п╦п╣п╪ п╦п╪п╣п╫п╦ я│п╦я│я┌п╣п╪я▀ п╟п╨я│п╦п╬п╪ п©п╬ default'я┐
 AxiomExprSetPlus::AxiomExprSetPlus () {
 	goal = -1.0;
 	errFirst = -1;
@@ -69,7 +69,7 @@ AxiomExprSetPlus::AxiomExprSetPlus () {
 }
 
 
-// Пустой конструктор с заданием имени системы аксиом в параметре
+// п÷я┐я│я┌п╬п╧ п╨п╬п╫я│я┌я─я┐п╨я┌п╬я─ я│ п╥п╟п╢п╟п╫п╦п╣п╪ п╦п╪п╣п╫п╦ я│п╦я│я┌п╣п╪я▀ п╟п╨я│п╦п╬п╪ п╡ п©п╟я─п╟п╪п╣я┌я─п╣
 AxiomExprSetPlus::AxiomExprSetPlus (const std::string sName) {
 	goal = -1.0;
 	errFirst = -1;
@@ -85,7 +85,7 @@ AxiomExprSetPlus::AxiomExprSetPlus(const AxiomExprSet &as) : AxiomExprSet(as) {
 	errSecond = -1;	
 }
 
-// Деструктор - удаляет все созданные динамические объкты в системе аксиом
+// п■п╣я│я┌я─я┐п╨я┌п╬я─ - я┐п╢п╟п╩я▐п╣я┌ п╡я│п╣ я│п╬п╥п╢п╟п╫п╫я▀п╣ п╢п╦п╫п╟п╪п╦я┤п╣я│п╨п╦п╣ п╬п╠я┼п╨я┌я▀ п╡ я│п╦я│я┌п╣п╪п╣ п╟п╨я│п╦п╬п╪
 AxiomExprSetPlus::~AxiomExprSetPlus(void) {
 	axiomsIndex.clear();
 	markUps.clear();
@@ -108,7 +108,7 @@ std::pair<int, int> AxiomExprSetPlus::getErrorsForTraj(int type, int trajNo) con
 	return errorsForClass.at(trajNo);
 }
 
-// Функция удаляет все созданные динамические объкты в системе аксиом
+// п╓я┐п╫п╨я├п╦я▐ я┐п╢п╟п╩я▐п╣я┌ п╡я│п╣ я│п╬п╥п╢п╟п╫п╫я▀п╣ п╢п╦п╫п╟п╪п╦я┤п╣я│п╨п╦п╣ п╬п╠я┼п╨я┌я▀ п╡ я│п╦я│я┌п╣п╪п╣ п╟п╨я│п╦п╬п╪
 void AxiomExprSetPlus::clear(void) {
 	AxiomExprSet::clear();
 	goal = -1.0;
@@ -122,8 +122,8 @@ void AxiomExprSetPlus::clear(void) {
 /****************************************************************************
 *					AxiomExprSetPlus::operator=
 *
-*	Description:	Оператор присваивания системы аксиом со статистикой
-*	Parameters:		second - присваиваемая система аксиом
+*	Description:	п·п©п╣я─п╟я┌п╬я─ п©я─п╦я│п╡п╟п╦п╡п╟п╫п╦я▐ я│п╦я│я┌п╣п╪я▀ п╟п╨я│п╦п╬п╪ я│п╬ я│я┌п╟я┌п╦я│я┌п╦п╨п╬п╧
+*	Parameters:		second - п©я─п╦я│п╡п╟п╦п╡п╟п╣п╪п╟я▐ я│п╦я│я┌п╣п╪п╟ п╟п╨я│п╦п╬п╪
 *	Returns:		*this
 *	Throws:			-
 *	Author:			dk
@@ -132,17 +132,17 @@ void AxiomExprSetPlus::clear(void) {
 ****************************************************************************/
 //AxiomExprSetPlus& AxiomExprSetPlus::operator= (const AxiomExprSetPlus &second) {
 //	AxiomExprSet::operator =(second);
-////	// Копируем имя системы аксиом
+////	// п п╬п©п╦я─я┐п╣п╪ п╦п╪я▐ я│п╦я│я┌п╣п╪я▀ п╟п╨я│п╦п╬п╪
 ////	this->nameOfAxiomSet = second.nameOfAxiomSet;
 ////	this->nameOfAxiomBank = second.nameOfAxiomBank;
-////	// Копируем входящие в систему аксиомы
+////	// п п╬п©п╦я─я┐п╣п╪ п╡я┘п╬п╢я▐я┴п╦п╣ п╡ я│п╦я│я┌п╣п╪я┐ п╟п╨я│п╦п╬п╪я▀
 ////	this->clear();
 ////	axioms.resize(second.axioms.size());
 ////	for (unsigned int i = 0; i < second.axioms.size(); i++) {
 ////		axioms[i] = new AxiomExpr;
 ////		*axioms[i] = *(second.axioms[i]);
 ////	}
-//	// Копируем статистику по системе аксиом
+//	// п п╬п©п╦я─я┐п╣п╪ я│я┌п╟я┌п╦я│я┌п╦п╨я┐ п©п╬ я│п╦я│я┌п╣п╪п╣ п╟п╨я│п╦п╬п╪
 //	this->goal = second.goal;
 //	this->errFirst = second.errFirst;
 //	this->errSecond = second.errSecond;
@@ -154,7 +154,7 @@ void AxiomExprSetPlus::clear(void) {
 int AxiomExprSetPlus::saveAxiomSetToFile(std::string baseDir, std::string axiomSetName, 
 										  const std::vector<std::string> &dataSetParams, 
 										  int first, int second) const {
-	// TODO: сделать везде const std::vector<std::string>& dataSetParams
+	// TODO: я│п╢п╣п╩п╟я┌я▄ п╡п╣п╥п╢п╣ const std::vector<std::string>& dataSetParams
 	std::vector<std::string> temp(dataSetParams);
 	int result = AxiomExprSet::saveAxiomSetToFile(baseDir, axiomSetName, temp, first, second);
 	

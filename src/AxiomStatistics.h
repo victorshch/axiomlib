@@ -1,7 +1,7 @@
 /****************************************************************************
 *					AxiomStatistics
 *
-*	Description:	Класс для загрузки/сохранения статистики по аксиоме
+*	Description:	п п╩п╟я│я│ п╢п╩я▐ п╥п╟пЁя─я┐п╥п╨п╦/я│п╬я┘я─п╟п╫п╣п╫п╦я▐ я│я┌п╟я┌п╦я│я┌п╦п╨п╦ п©п╬ п╟п╨я│п╦п╬п╪п╣
 *	Author:			wictor
 *	History:	
 *
@@ -25,18 +25,18 @@ namespace AxiomLib {
 	class AxiomStatistics {
 	private:
 		
-		// Частота срабатывания на нормальном поведении
+		// п╖п╟я│я┌п╬я┌п╟ я│я─п╟п╠п╟я┌я▀п╡п╟п╫п╦я▐ п╫п╟ п╫п╬я─п╪п╟п╩я▄п╫п╬п╪ п©п╬п╡п╣п╢п╣п╫п╦п╦
 		double m_statNormal;
-		// Частота срабатывания на нештатном поведении
+		// п╖п╟я│я┌п╬я┌п╟ я│я─п╟п╠п╟я┌я▀п╡п╟п╫п╦я▐ п╫п╟ п╫п╣я┬я┌п╟я┌п╫п╬п╪ п©п╬п╡п╣п╢п╣п╫п╦п╦
 		double m_statAbnorm;
-		// Максимальное минус минимальное значение частоты встречаемости
-		// на траекториях нештатного поведения
+		// п°п╟п╨я│п╦п╪п╟п╩я▄п╫п╬п╣ п╪п╦п╫я┐я│ п╪п╦п╫п╦п╪п╟п╩я▄п╫п╬п╣ п╥п╫п╟я┤п╣п╫п╦п╣ я┤п╟я│я┌п╬я┌я▀ п╡я│я┌я─п╣я┤п╟п╣п╪п╬я│я┌п╦
+		// п╫п╟ я┌я─п╟п╣п╨я┌п╬я─п╦я▐я┘ п╫п╣я┬я┌п╟я┌п╫п╬пЁп╬ п©п╬п╡п╣п╢п╣п╫п╦я▐
 		double m_statVariation;
-		// Отношение числа траекторий, соответствующих нештатному поведению, на которых 
-		// аксиома выполняется, к общему числу траекторий, соответствующих нештатному
-		// поведению		
+		// п·я┌п╫п╬я┬п╣п╫п╦п╣ я┤п╦я│п╩п╟ я┌я─п╟п╣п╨я┌п╬я─п╦п╧, я│п╬п╬я┌п╡п╣я┌я│я┌п╡я┐я▌я┴п╦я┘ п╫п╣я┬я┌п╟я┌п╫п╬п╪я┐ п©п╬п╡п╣п╢п╣п╫п╦я▌, п╫п╟ п╨п╬я┌п╬я─я▀я┘ 
+		// п╟п╨я│п╦п╬п╪п╟ п╡я▀п©п╬п╩п╫я▐п╣я┌я│я▐, п╨ п╬п╠я┴п╣п╪я┐ я┤п╦я│п╩я┐ я┌я─п╟п╣п╨я┌п╬я─п╦п╧, я│п╬п╬я┌п╡п╣я┌я│я┌п╡я┐я▌я┴п╦я┘ п╫п╣я┬я┌п╟я┌п╫п╬п╪я┐
+		// п©п╬п╡п╣п╢п╣п╫п╦я▌		
 		double m_statOccurence;
-		// Значение целевой функции
+		// п≈п╫п╟я┤п╣п╫п╦п╣ я├п╣п╩п╣п╡п╬п╧ я└я┐п╫п╨я├п╦п╦
 		double m_goal;
 
 
@@ -45,7 +45,7 @@ namespace AxiomLib {
 		
 #define AXIOMLIB_MEMBER_NVP(mName) boost::serialization::make_nvp(#mName, m_##mName);
 		
-		// Описание сериализуемых членов класса
+		// п·п©п╦я│п╟п╫п╦п╣ я│п╣я─п╦п╟п╩п╦п╥я┐п╣п╪я▀я┘ я┤п╩п╣п╫п╬п╡ п╨п╩п╟я│я│п╟
 		template<class Archive>
 		void serialize(Archive & archive, const unsigned int version)
 		{
@@ -62,7 +62,7 @@ namespace AxiomLib {
 		AxiomStatistics() : m_statNormal(-1), m_statAbnorm(-1), m_statVariation(-1), 
 		m_statOccurence(-1), m_goal(-1) { }
 		
-		// Конструктор - создает объект по AxiomExprPlus
+		// п п╬п╫я│я┌я─я┐п╨я┌п╬я─ - я│п╬п╥п╢п╟п╣я┌ п╬п╠я┼п╣п╨я┌ п©п╬ AxiomExprPlus
 		AxiomStatistics(const AxiomExprPlus &ax) {
 			m_statNormal = ax.statNormal;
 			m_statAbnorm = ax.statAbnorm;
@@ -71,9 +71,9 @@ namespace AxiomLib {
 			m_goal = ax.goal;
 		}
 		
-		// Копирование и присваивание реализовано по умолчанию так, как нужно
+		// п п╬п©п╦я─п╬п╡п╟п╫п╦п╣ п╦ п©я─п╦я│п╡п╟п╦п╡п╟п╫п╦п╣ я─п╣п╟п╩п╦п╥п╬п╡п╟п╫п╬ п©п╬ я┐п╪п╬п╩я┤п╟п╫п╦я▌ я┌п╟п╨, п╨п╟п╨ п╫я┐п╤п╫п╬
 		
-		// Копирует данные в объект AxiomExprPlus
+		// п п╬п©п╦я─я┐п╣я┌ п╢п╟п╫п╫я▀п╣ п╡ п╬п╠я┼п╣п╨я┌ AxiomExprPlus
 		void copyTo(AxiomExprPlus &ax) const {
 			ax.statNormal = m_statNormal;
 			ax.statAbnorm = m_statAbnorm;
@@ -84,7 +84,7 @@ namespace AxiomLib {
 		
 		double goal() const { return m_goal; }
 		
-		// Сохраняет объект в файл
+		// п║п╬я┘я─п╟п╫я▐п╣я┌ п╬п╠я┼п╣п╨я┌ п╡ я└п╟п╧п╩
 		void saveToFile(const std::string &fileName) const {
 			if(!boost::filesystem::exists(fileName.c_str())) {
 				boost::filesystem::path path(fileName.c_str());
@@ -104,7 +104,7 @@ namespace AxiomLib {
 			}
 		}
 		
-		// Загружает объект из файла
+		// п≈п╟пЁя─я┐п╤п╟п╣я┌ п╬п╠я┼п╣п╨я┌ п╦п╥ я└п╟п╧п╩п╟
 		void initFromFile(const std::string &fileName) {
 			std::ifstream ifstr(fileName.c_str());
 			if(ifstr.good())

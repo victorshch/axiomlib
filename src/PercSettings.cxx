@@ -1,7 +1,7 @@
 /****************************************************************************
 *						PercSettings.cxx
 *
-*       Description:	Реализация того, что объявлено в PercSettings.h
+*       Description:	п═п╣п╟п╩п╦п╥п╟я├п╦я▐ я┌п╬пЁп╬, я┤я┌п╬ п╬п╠я┼я▐п╡п╩п╣п╫п╬ п╡ PercSettings.h
 *       Author:			wictor
 *       History:
 *
@@ -15,45 +15,45 @@ namespace AxiomLib {
 /****************************************************************************
 *					PercSettings::initFromEnv()
 *
-*	Description:	Инициализация из окружения.
-*					Имена параметров окружения совпадают с именами полей структуры.
-*	Parameters:	Environment& env - окружение
+*	Description:	п≤п╫п╦я├п╦п╟п╩п╦п╥п╟я├п╦я▐ п╦п╥ п╬п╨я─я┐п╤п╣п╫п╦я▐.
+*					п≤п╪п╣п╫п╟ п©п╟я─п╟п╪п╣я┌я─п╬п╡ п╬п╨я─я┐п╤п╣п╫п╦я▐ я│п╬п╡п©п╟п╢п╟я▌я┌ я│ п╦п╪п╣п╫п╟п╪п╦ п©п╬п╩п╣п╧ я│я┌я─я┐п╨я┌я┐я─я▀.
+*	Parameters:	Environment& env - п╬п╨я─я┐п╤п╣п╫п╦п╣
 *	Returns:	-
-*	Throws:		AxiomLibException, если параметр не установлен
+*	Throws:		AxiomLibException, п╣я│п╩п╦ п©п╟я─п╟п╪п╣я┌я─ п╫п╣ я┐я│я┌п╟п╫п╬п╡п╩п╣п╫
 *	Author:		wictor
 *	History:
 *
 ****************************************************************************/
 void PercSettings::initFromEnv(const Environment &env) {
-	// считываем настройки перцептрона
-	// считываем число слоев
+	// я│я┤п╦я┌я▀п╡п╟п╣п╪ п╫п╟я│я┌я─п╬п╧п╨п╦ п©п╣я─я├п╣п©я┌я─п╬п╫п╟
+	// я│я┤п╦я┌я▀п╡п╟п╣п╪ я┤п╦я│п╩п╬ я│п╩п╬п╣п╡
 	if(env.getIntParamValue(numLay ,"numLay") < 0) {
 		throw AxiomLibException("PercSettings::initFromEnv(): numLay not set");
 	}
 	
-	// считываем строку с алгоритмом
+	// я│я┤п╦я┌я▀п╡п╟п╣п╪ я│я┌я─п╬п╨я┐ я│ п╟п╩пЁп╬я─п╦я┌п╪п╬п╪
 	std::string algorithmStr;
 	if(env.getStringParamValue(algorithmStr ,"trainingAlgorithm") < 0) {
 		throw AxiomLibException("PercSettings::initFromEnv(): trainingAlgorithm not set");
 	}
 	
-	// переводим строку с алгоритмом в FANN::training_algorithm_enum
+	// п©п╣я─п╣п╡п╬п╢п╦п╪ я│я┌я─п╬п╨я┐ я│ п╟п╩пЁп╬я─п╦я┌п╪п╬п╪ п╡ FANN::training_algorithm_enum
 	int algorithmNum = trainFromStr(algorithmStr);
 	if (algorithmNum < 0) {
 		throw AxiomLibException("PercSettings::initFromEnv(): incorrect trainingAlgorithm");
 	}
 	trainingAlgorithm = (FANN::training_algorithm_enum) algorithmNum;
 	
-	// считываем строку со списком активационных функций
+	// я│я┤п╦я┌я▀п╡п╟п╣п╪ я│я┌я─п╬п╨я┐ я│п╬ я│п©п╦я│п╨п╬п╪ п╟п╨я┌п╦п╡п╟я├п╦п╬п╫п╫я▀я┘ я└я┐п╫п╨я├п╦п╧
 	std::string actFuncsStr;
 	if(env.getStringParamValue(actFuncsStr ,"actFuncs") < 0) {
 		throw AxiomLibException("PercSettings::initFromEnv(): actFuncs not set");
 	}
 	
-	// переводим строку со списком активационных в вектор строк активационных функций
+	// п©п╣я─п╣п╡п╬п╢п╦п╪ я│я┌я─п╬п╨я┐ я│п╬ я│п©п╦я│п╨п╬п╪ п╟п╨я┌п╦п╡п╟я├п╦п╬п╫п╫я▀я┘ п╡ п╡п╣п╨я┌п╬я─ я│я┌я─п╬п╨ п╟п╨я┌п╦п╡п╟я├п╦п╬п╫п╫я▀я┘ я└я┐п╫п╨я├п╦п╧
 	std::vector<std::string> actFuncsStrs;
 	getVectorFromString(actFuncsStrs, actFuncsStr);
-	// переводим вектор строк активационных функций в вектор из FANN::activation_function_enum
+	// п©п╣я─п╣п╡п╬п╢п╦п╪ п╡п╣п╨я┌п╬я─ я│я┌я─п╬п╨ п╟п╨я┌п╦п╡п╟я├п╦п╬п╫п╫я▀я┘ я└я┐п╫п╨я├п╦п╧ п╡ п╡п╣п╨я┌п╬я─ п╦п╥ FANN::activation_function_enum
 	actFuncs.clear();
 	actFuncs.reserve(actFuncsStrs.size());
 	for(unsigned int i = 0; i < actFuncsStrs.size(); i++) {
@@ -64,48 +64,48 @@ void PercSettings::initFromEnv(const Environment &env) {
 		actFuncs.push_back((FANN::activation_function_enum) actFuncNum);
 	}
 	
-	// считываем список факторов (множителей) числа нейронов слоев
+	// я│я┤п╦я┌я▀п╡п╟п╣п╪ я│п©п╦я│п╬п╨ я└п╟п╨я┌п╬я─п╬п╡ (п╪п╫п╬п╤п╦я┌п╣п╩п╣п╧) я┤п╦я│п╩п╟ п╫п╣п╧я─п╬п╫п╬п╡ я│п╩п╬п╣п╡
 	std::string numNeuronsFStr;
 	if(env.getStringParamValue(numNeuronsFStr ,"numNeuronsF") < 0) {
 		throw AxiomLibException("PercSettings::initFromEnv(): numNeuronsF not set");
 	}
-	// переводим в вектор из double
+	// п©п╣я─п╣п╡п╬п╢п╦п╪ п╡ п╡п╣п╨я┌п╬я─ п╦п╥ double
 	getVectorFromString(numNeuronsF, numNeuronsFStr);
 	
-	// считываем список параметров активационных функций
+	// я│я┤п╦я┌я▀п╡п╟п╣п╪ я│п©п╦я│п╬п╨ п©п╟я─п╟п╪п╣я┌я─п╬п╡ п╟п╨я┌п╦п╡п╟я├п╦п╬п╫п╫я▀я┘ я└я┐п╫п╨я├п╦п╧
 	std::string actFuncsSStr;
 	if(env.getStringParamValue(actFuncsSStr ,"actFuncsS") < 0) {
 		throw AxiomLibException("PercSettings::initFromEnv(): actFuncsS not set");
 	}
-	// переводим в вектор из double
+	// п©п╣я─п╣п╡п╬п╢п╦п╪ п╡ п╡п╣п╨я┌п╬я─ п╦п╥ double
 	getVectorFromString(actFuncsS, actFuncsSStr);
 	
-	// считываем коэффициент обучения
+	// я│я┤п╦я┌я▀п╡п╟п╣п╪ п╨п╬я█я└я└п╦я├п╦п╣п╫я┌ п╬п╠я┐я┤п╣п╫п╦я▐
 	if(env.getDoubleParamValue(learningRate ,"learningRate") < 0) {
 		throw AxiomLibException("PercSettings::initFromEnv(): learningRate not set");
 	};
 
-	// считываем момент обучения
+	// я│я┤п╦я┌я▀п╡п╟п╣п╪ п╪п╬п╪п╣п╫я┌ п╬п╠я┐я┤п╣п╫п╦я▐
 	if(env.getDoubleParamValue(learningMomentum ,"learningMomentum") < 0) {
 		throw AxiomLibException("PercSettings::initFromEnv(): learningMomentum not set");
 	};
 	
-	// считываем желаемую ошибку
+	// я│я┤п╦я┌я▀п╡п╟п╣п╪ п╤п╣п╩п╟п╣п╪я┐я▌ п╬я┬п╦п╠п╨я┐
 	if(env.getDoubleParamValue(desiredError ,"desiredError") < 0) {
 		throw AxiomLibException("PercSettings::initFromEnv(): desiredError not set");
 	};
 
-	// считываем максимальное число эпох
+	// я│я┤п╦я┌я▀п╡п╟п╣п╪ п╪п╟п╨я│п╦п╪п╟п╩я▄п╫п╬п╣ я┤п╦я│п╩п╬ я█п©п╬я┘
 	if(env.getIntParamValue(maxIters ,"maxIters") < 0) {
 		throw AxiomLibException("PercSettings::initFromEnv(): maxIters not set");
 	}
 
-	// считываем максимальное число эпох
+	// я│я┤п╦я┌я▀п╡п╟п╣п╪ п╪п╟п╨я│п╦п╪п╟п╩я▄п╫п╬п╣ я┤п╦я│п╩п╬ я█п©п╬я┘
 	if(env.getIntParamValue(itersBetweenReports ,"itersBetweenReports") < 0) {
 		throw AxiomLibException("PercSettings::initFromEnv(): itersBetweenReports not set");
 	}
 	
-	// проверяем настройки на консистентность
+	// п©я─п╬п╡п╣я─я▐п╣п╪ п╫п╟я│я┌я─п╬п╧п╨п╦ п╫п╟ п╨п╬п╫я│п╦я│я┌п╣п╫я┌п╫п╬я│я┌я▄
 	if(!valid()) {
 		throw AxiomLibException("PercSettings::initFromEnv(): invalid perceptron settings");
 	}	

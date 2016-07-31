@@ -25,13 +25,13 @@ using namespace AxiomLib;
 
 int loadAxoimExprSet (const std::string baseDir, const std::string fileName,
 					  const std::vector <std::string>& dataSetParams, AxiomExprSetPlus& aesp) {
-	// Инициализация системы аксиом из указанного файла
+	// п≤п╫п╦я├п╦п╟п╩п╦п╥п╟я├п╦я▐ я│п╦я│я┌п╣п╪я▀ п╟п╨я│п╦п╬п╪ п╦п╥ я┐п╨п╟п╥п╟п╫п╫п╬пЁп╬ я└п╟п╧п╩п╟
 	AxiomSetBase axiomSetBase;
 	AxiomExprSetStructure aess;
 	std::string axiomSetPath = baseDir;
 	axiomSetPath.append("/");
 	axiomSetPath.append(fileName);
-	// Считываем информацию о системе аксиом в aess
+	// п║я┤п╦я┌я▀п╡п╟п╣п╪ п╦п╫я└п╬я─п╪п╟я├п╦я▌ п╬ я│п╦я│я┌п╣п╪п╣ п╟п╨я│п╦п╬п╪ п╡ aess
 	axiomSetBase.readFromAS (axiomSetPath, aess, dataSetParams);
 	aesp.initAxiomSetFromStructure (aess);
 
@@ -78,7 +78,7 @@ int main (int argc, char** argv) {
 		env += envStart;
 		env.saveFile (pathToConfigFile);
 
-		// Параметры, по которым сохранять лучщие решения
+		// п÷п╟я─п╟п╪п╣я┌я─я▀, п©п╬ п╨п╬я┌п╬я─я▀п╪ я│п╬я┘я─п╟п╫я▐я┌я▄ п╩я┐я┤я┴п╦п╣ я─п╣я┬п╣п╫п╦я▐
 		std::string axiomSetBaseDir;
 		if (env.getStringParamValue(axiomSetBaseDir, "AxiomSetBaseDir") < 0)
 			throw AxiomLibException("Execute_fuzzy : axiomSetBaseDir directory is undefined in config");

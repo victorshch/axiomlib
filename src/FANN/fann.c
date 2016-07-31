@@ -17,8 +17,8 @@
   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
-// Данный файл должен обрабатываться только 
-// когда включен из другого исходника
+// п■п╟п╫п╫я▀п╧ я└п╟п╧п╩ п╢п╬п╩п╤п╣п╫ п╬п╠я─п╟п╠п╟я┌я▀п╡п╟я┌я▄я│я▐ я┌п╬п╩я▄п╨п╬ 
+// п╨п╬пЁп╢п╟ п╡п╨п╩я▌я┤п╣п╫ п╦п╥ п╢я─я┐пЁп╬пЁп╬ п╦я│я┘п╬п╢п╫п╦п╨п╟
 #ifdef FANN_INCLUDE_SOURCES
 
 #include <stdio.h>
@@ -169,7 +169,7 @@ FANN_EXTERNAL struct fann *FANN_API fann_create_sparse_array(float connection_ra
 	for(layer_it = ann->first_layer + 1; layer_it != ann->last_layer; layer_it++)
 	{
 		num_neurons_out = layer_it->last_neuron - layer_it->first_neuron - 1;
-		/*О©╫if all neurons in each layer should be connected to at least one neuron
+		/*п·б╘Б∙╚if all neurons in each layer should be connected to at least one neuron
 		 * in the previous layer, and one neuron in the next layer.
 		 * and the bias node should be connected to the all neurons in the next layer.
 		 * Then this is the minimum amount of neurons */

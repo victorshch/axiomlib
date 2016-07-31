@@ -1,7 +1,7 @@
 /****************************************************************************
 *					checkName
 *
-*	Description:	Функция сравнения строк
+*	Description:	п╓я┐п╫п╨я├п╦я▐ я│я─п╟п╡п╫п╣п╫п╦я▐ я│я┌я─п╬п╨
 *	Author:			dk
 *	History:	
 *
@@ -15,7 +15,7 @@
 
 namespace AxiomLib {
 
-	// Функция сравнения строк
+	// п╓я┐п╫п╨я├п╦я▐ я│я─п╟п╡п╫п╣п╫п╦я▐ я│я┌я─п╬п╨
 	bool checkName (std::string name1, signed int from, signed int upTo, std::string name2);
 
 }; // end of namespace

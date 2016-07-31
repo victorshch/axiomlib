@@ -15,11 +15,11 @@
 
 #include "ECStageSimple.h"
 
-#define eps						0.0000001 // используется в некоторых формулах, чтобы исплючить ошибку машинного округления
-#define max_goal_val			10000 // максимальное значение целевой функции для элементарного условия (просто достаточно большое число)
+#define eps						0.0000001 // п╦я│п©п╬п╩я▄п╥я┐п╣я┌я│я▐ п╡ п╫п╣п╨п╬я┌п╬я─я▀я┘ я└п╬я─п╪я┐п╩п╟я┘, я┤я┌п╬п╠я▀ п╦я│п©п╩я▌я┤п╦я┌я▄ п╬я┬п╦п╠п╨я┐ п╪п╟я┬п╦п╫п╫п╬пЁп╬ п╬п╨я─я┐пЁп╩п╣п╫п╦я▐
+#define max_goal_val			10000 // п╪п╟п╨я│п╦п╪п╟п╩я▄п╫п╬п╣ п╥п╫п╟я┤п╣п╫п╦п╣ я├п╣п╩п╣п╡п╬п╧ я└я┐п╫п╨я├п╦п╦ п╢п╩я▐ я█п╩п╣п╪п╣п╫я┌п╟я─п╫п╬пЁп╬ я┐я│п╩п╬п╡п╦я▐ (п©я─п╬я│я┌п╬ п╢п╬я│я┌п╟я┌п╬я┤п╫п╬ п╠п╬п╩я▄я┬п╬п╣ я┤п╦я│п╩п╬)
 
-#define replacementProbability	0.5 // Вероятность замещения одного из элементов вектора bestECs новым, если этот вектор уже раздут и заполнен условиями с таким же значением целевой функции
-#define additionalECItems		10	// > 0 !!! Число дополнительных слотов, на которое увеличивать bestECs, если этот вектор заполнен
+#define replacementProbability	0.5 // п▓п╣я─п╬я▐я┌п╫п╬я│я┌я▄ п╥п╟п╪п╣я┴п╣п╫п╦я▐ п╬п╢п╫п╬пЁп╬ п╦п╥ я█п╩п╣п╪п╣п╫я┌п╬п╡ п╡п╣п╨я┌п╬я─п╟ bestECs п╫п╬п╡я▀п╪, п╣я│п╩п╦ я█я┌п╬я┌ п╡п╣п╨я┌п╬я─ я┐п╤п╣ я─п╟п╥п╢я┐я┌ п╦ п╥п╟п©п╬п╩п╫п╣п╫ я┐я│п╩п╬п╡п╦я▐п╪п╦ я│ я┌п╟п╨п╦п╪ п╤п╣ п╥п╫п╟я┤п╣п╫п╦п╣п╪ я├п╣п╩п╣п╡п╬п╧ я└я┐п╫п╨я├п╦п╦
+#define additionalECItems		10	// > 0 !!! п╖п╦я│п╩п╬ п╢п╬п©п╬п╩п╫п╦я┌п╣п╩я▄п╫я▀я┘ я│п╩п╬я┌п╬п╡, п╫п╟ п╨п╬я┌п╬я─п╬п╣ я┐п╡п╣п╩п╦я┤п╦п╡п╟я┌я▄ bestECs, п╣я│п╩п╦ я█я┌п╬я┌ п╡п╣п╨я┌п╬я─ п╥п╟п©п╬п╩п╫п╣п╫
 
 #undef AXIOMLIB_ECSTAGE_EXPERIMENTAL
 
@@ -33,9 +33,9 @@ ECStageSimple::ECStageSimple(FuzzyDataSet* fuzzyDataSet,
 	this->fuzzyDataSet = fuzzyDataSet;
 	this->logger = Logger::getInstance();
 	
-	//TODO: проверка fuzzyDataSet и stage0 на NULL
+	//TODO: п©я─п╬п╡п╣я─п╨п╟ fuzzyDataSet п╦ stage0 п╫п╟ NULL
 	
-	//TODO: значения по умлочанию
+	//TODO: п╥п╫п╟я┤п╣п╫п╦я▐ п©п╬ я┐п╪п╩п╬я┤п╟п╫п╦я▌
 	
 	parent = stage0->getParent();
 
@@ -57,7 +57,7 @@ ECStageSimple::ECStageSimple(FuzzyDataSet* fuzzyDataSet,
 //}
 
 int ECStageSimple::initFromEnv(const Environment &env) {
-	// Параметры алгоритма настройки элементарных условий
+	// п÷п╟я─п╟п╪п╣я┌я─я▀ п╟п╩пЁп╬я─п╦я┌п╪п╟ п╫п╟я│я┌я─п╬п╧п╨п╦ я█п╩п╣п╪п╣п╫я┌п╟я─п╫я▀я┘ я┐я│п╩п╬п╡п╦п╧
 	if (env.getIntParamValue (leftLimit, "leftLimit") < 0)
 		throw AxiomLibException("FuzzyMultiDataLearnAlgorithm::setParamsFromEnv : leftLimit is undefined.");
 	if (env.getIntParamValue (rightLimit, "rightLimit") < 0)
@@ -104,7 +104,7 @@ void ECStageSimple::run() {
 		v.resize(dimensionCount);
 	}
 	
-	// Распараллеливание по классам и размерностям
+	// п═п╟я│п©п╟я─п╟п╩п╩п╣п╩п╦п╡п╟п╫п╦п╣ п©п╬ п╨п╩п╟я│я│п╟п╪ п╦ я─п╟п╥п╪п╣я─п╫п╬я│я┌я▐п╪
 	int taskCount = classCount * dimensionCount;
 	
 	setTaskCount(taskCount);
@@ -150,7 +150,7 @@ void ECStageSimple::setTaskCount(int n) const {
 
 void ECStageSimple::selectElemCond(int abnormalBehaviourType, int dimension, int dimensionIndex, int taskNo) {
 	
-//	// Эта операция не должна занимать много времени, т.к. мы следали до этого reserve()
+//	// п╜я┌п╟ п╬п©п╣я─п╟я├п╦я▐ п╫п╣ п╢п╬п╩п╤п╫п╟ п╥п╟п╫п╦п╪п╟я┌я▄ п╪п╫п╬пЁп╬ п╡я─п╣п╪п╣п╫п╦, я┌.п╨. п╪я▀ я│п╩п╣п╢п╟п╩п╦ п╢п╬ я█я┌п╬пЁп╬ reserve()
 //	this->elemConditions[abnormalBehaviourType].resize(
 //			this->elemConditions[abnormalBehaviourType].size() + 1
 //			);
@@ -163,7 +163,7 @@ void ECStageSimple::selectElemCond(int abnormalBehaviourType, int dimension, int
 	
 	elemConds.reserve(numTypes);
 	
-	// Подготавливаем набор используемых типов ЭУ
+	// п÷п╬п╢пЁп╬я┌п╟п╡п╩п╦п╡п╟п╣п╪ п╫п╟п╠п╬я─ п╦я│п©п╬п╩я▄п╥я┐п╣п╪я▀я┘ я┌п╦п©п╬п╡ п╜пё
 	for(int i = 0; i < numTypes; i++) {
 		if(stage0->isECTypeSelected(i)) {
 			ElemCondPlus ec = stage0->getECType(i);
@@ -180,7 +180,7 @@ void ECStageSimple::selectElemCond(int abnormalBehaviourType, int dimension, int
 		throw AxiomLibException("ECStage::selectElemCond() : no ECs selected for EC stage");
 	}
 	
-	// Достаем необходимый для обучения ряд
+	// п■п╬я│я┌п╟п╣п╪ п╫п╣п╬п╠я┘п╬п╢п╦п╪я▀п╧ п╢п╩я▐ п╬п╠я┐я┤п╣п╫п╦я▐ я─я▐п╢
 	std::vector<double> teachRow;
 	int numOfMultiTS;
 	std::vector <int> numOfTS;
@@ -204,17 +204,17 @@ void ECStageSimple::selectElemCond(int abnormalBehaviourType, int dimension, int
 	}
 	if (teachRow.size() < 1)
 		throw AxiomLibException("FuzzyMultiDataLearnAlgorithm::selectElemCond : incorrect normal data set.");
-	// Данный участок ряда необходим чтобы собрать начальную статистику по максимальным и минимальным значениям для
-	// некоторого набора переменных в элементарных условиях. Поэтому слишком большие объемы не нужны, можно ограничить 1000.
+	// п■п╟п╫п╫я▀п╧ я┐я┤п╟я│я┌п╬п╨ я─я▐п╢п╟ п╫п╣п╬п╠я┘п╬п╢п╦п╪ я┤я┌п╬п╠я▀ я│п╬п╠я─п╟я┌я▄ п╫п╟я┤п╟п╩я▄п╫я┐я▌ я│я┌п╟я┌п╦я│я┌п╦п╨я┐ п©п╬ п╪п╟п╨я│п╦п╪п╟п╩я▄п╫я▀п╪ п╦ п╪п╦п╫п╦п╪п╟п╩я▄п╫я▀п╪ п╥п╫п╟я┤п╣п╫п╦я▐п╪ п╢п╩я▐
+	// п╫п╣п╨п╬я┌п╬я─п╬пЁп╬ п╫п╟п╠п╬я─п╟ п©п╣я─п╣п╪п╣п╫п╫я▀я┘ п╡ я█п╩п╣п╪п╣п╫я┌п╟я─п╫я▀я┘ я┐я│п╩п╬п╡п╦я▐я┘. п÷п╬я█я┌п╬п╪я┐ я│п╩п╦я┬п╨п╬п╪ п╠п╬п╩я▄я┬п╦п╣ п╬п╠я┼п╣п╪я▀ п╫п╣ п╫я┐п╤п╫я▀, п╪п╬п╤п╫п╬ п╬пЁя─п╟п╫п╦я┤п╦я┌я▄ 1000.
 	/*
 	if (teachRow.size() > 1000) {
 		teachRow.resize (1000);
 	}*/
 	
-	// изменяем размер по числу типов элементраных условий - для каждого типа будет сохранет набор лучших вариантов условий
+	// п╦п╥п╪п╣п╫я▐п╣п╪ я─п╟п╥п╪п╣я─ п©п╬ я┤п╦я│п╩я┐ я┌п╦п©п╬п╡ я█п╩п╣п╪п╣п╫я┌я─п╟п╫я▀я┘ я┐я│п╩п╬п╡п╦п╧ - п╢п╩я▐ п╨п╟п╤п╢п╬пЁп╬ я┌п╦п©п╟ п╠я┐п╢п╣я┌ я│п╬я┘я─п╟п╫п╣я┌ п╫п╟п╠п╬я─ п╩я┐я┤я┬п╦я┘ п╡п╟я─п╦п╟п╫я┌п╬п╡ я┐я│п╩п╬п╡п╦п╧
 	bestECs.resize (elemCondsSize);
 
-	// теперь в цикле обучаем каждое элементарное условие
+	// я┌п╣п©п╣я─я▄ п╡ я├п╦п╨п╩п╣ п╬п╠я┐я┤п╟п╣п╪ п╨п╟п╤п╢п╬п╣ я█п╩п╣п╪п╣п╫я┌п╟я─п╫п╬п╣ я┐я│п╩п╬п╡п╦п╣
 	#pragma omp parallel for schedule(dynamic, 1)
 	for (int i = 0; i < elemCondsSize; i++) {
 		{
@@ -225,53 +225,53 @@ void ECStageSimple::selectElemCond(int abnormalBehaviourType, int dimension, int
 					 elemConds[i].ecTypeName().c_str(), (int)elemConds.size(), th_id);
 			logger->writeComment(buf);
 		}
-		// Изменяем размер по числу лучших элементарных условий, которое сохранять для каждого из типов условий
+		// п≤п╥п╪п╣п╫я▐п╣п╪ я─п╟п╥п╪п╣я─ п©п╬ я┤п╦я│п╩я┐ п╩я┐я┤я┬п╦я┘ я█п╩п╣п╪п╣п╫я┌п╟я─п╫я▀я┘ я┐я│п╩п╬п╡п╦п╧, п╨п╬я┌п╬я─п╬п╣ я│п╬я┘я─п╟п╫я▐я┌я▄ п╢п╩я▐ п╨п╟п╤п╢п╬пЁп╬ п╦п╥ я┌п╦п©п╬п╡ я┐я│п╩п╬п╡п╦п╧
 		bestECs[i].reserve(numBestECsMax);
 		bestECs[i].clear();
 		//bestECs[i].resize(numBestECs);
-		// Устанавливаем границы сетки
+		// пёя│я┌п╟п╫п╟п╡п╩п╦п╡п╟п╣п╪ пЁя─п╟п╫п╦я├я▀ я│п╣я┌п╨п╦
 		elemConds[i].elemCondition->setLimits (leftLimit, rightLimit);
 		if(elemConds[i].elemCondition->setLimits (teachRow, reserve, numOfLevels) == -1) {
 			logger->writeComment("Could not select parameter grid for " + elemConds[i].ecTypeName());
 			bestECs[i].resize(0);
 			continue;
 		}
-		// Задаем первое значение в сетке параметров
+		// п≈п╟п╢п╟п╣п╪ п©п╣я─п╡п╬п╣ п╥п╫п╟я┤п╣п╫п╦п╣ п╡ я│п╣я┌п╨п╣ п©п╟я─п╟п╪п╣я┌я─п╬п╡
 		elemConds[i].elemCondition->changeParams (0);
-		// Вычисляем значение целевой функции для условия с заданными параметрами
+		// п▓я▀я┤п╦я│п╩я▐п╣п╪ п╥п╫п╟я┤п╣п╫п╦п╣ я├п╣п╩п╣п╡п╬п╧ я└я┐п╫п╨я├п╦п╦ п╢п╩я▐ я┐я│п╩п╬п╡п╦я▐ я│ п╥п╟п╢п╟п╫п╫я▀п╪п╦ п©п╟я─п╟п╪п╣я┌я─п╟п╪п╦
 		matterECFunc (elemConds[i], dimension, abnormalBehaviourType, taskNo);
 		ElemCondPlusStat currentBestEC(elemConds[i]);
 		
-		// Индикатор, который показывает, что значение целевой функции растет
+		// п≤п╫п╢п╦п╨п╟я┌п╬я─, п╨п╬я┌п╬я─я▀п╧ п©п╬п╨п╟п╥я▀п╡п╟п╣я┌, я┤я┌п╬ п╥п╫п╟я┤п╣п╫п╦п╣ я├п╣п╩п╣п╡п╬п╧ я└я┐п╫п╨я├п╦п╦ я─п╟я│я┌п╣я┌
 		bool goalGrowing = true;
 		
-		// Итеративно повторяем вычисление целевой фунекции и сохранение лучших для всех вариантов параметров условия
+		// п≤я┌п╣я─п╟я┌п╦п╡п╫п╬ п©п╬п╡я┌п╬я─я▐п╣п╪ п╡я▀я┤п╦я│п╩п╣п╫п╦п╣ я├п╣п╩п╣п╡п╬п╧ я└я┐п╫п╣п╨я├п╦п╦ п╦ я│п╬я┘я─п╟п╫п╣п╫п╦п╣ п╩я┐я┤я┬п╦я┘ п╢п╩я▐ п╡я│п╣я┘ п╡п╟я─п╦п╟п╫я┌п╬п╡ п©п╟я─п╟п╪п╣я┌я─п╬п╡ я┐я│п╩п╬п╡п╦я▐
 		while (elemConds[i].elemCondition->changeParams(1) >= 0) {
-			// Считаем значение целевой функции для измененных параметров
+			// п║я┤п╦я┌п╟п╣п╪ п╥п╫п╟я┤п╣п╫п╦п╣ я├п╣п╩п╣п╡п╬п╧ я└я┐п╫п╨я├п╦п╦ п╢п╩я▐ п╦п╥п╪п╣п╫п╣п╫п╫я▀я┘ п©п╟я─п╟п╪п╣я┌я─п╬п╡
 			matterECFunc (elemConds[i], dimension, abnormalBehaviourType, taskNo);
 			//Logger::debug("Current goal: " + boost::lexical_cast<std::string>(elemConds[i].goal));
-			// Определеяем необходимо ли сохранять элементарное условие с данным набором параметров
+			// п·п©я─п╣п╢п╣п╩п╣я▐п╣п╪ п╫п╣п╬п╠я┘п╬п╢п╦п╪п╬ п╩п╦ я│п╬я┘я─п╟п╫я▐я┌я▄ я█п╩п╣п╪п╣п╫я┌п╟я─п╫п╬п╣ я┐я│п╩п╬п╡п╦п╣ я│ п╢п╟п╫п╫я▀п╪ п╫п╟п╠п╬я─п╬п╪ п©п╟я─п╟п╪п╣я┌я─п╬п╡
 			if (abs(elemConds[i].goal - currentBestEC.goal) < eps) {
-				// продолжается область одного значения целевой функции
+				// п©я─п╬п╢п╬п╩п╤п╟п╣я┌я│я▐ п╬п╠п╩п╟я│я┌я▄ п╬п╢п╫п╬пЁп╬ п╥п╫п╟я┤п╣п╫п╦я▐ я├п╣п╩п╣п╡п╬п╧ я└я┐п╫п╨я├п╦п╦
 				if(currentBestEC.goal < elemConds[i].goal) {
 					currentBestEC = elemConds[i];
 				}
 			} else {
-				// значение целевой функции относительно предыдущего значения изменилось
+				// п╥п╫п╟я┤п╣п╫п╦п╣ я├п╣п╩п╣п╡п╬п╧ я└я┐п╫п╨я├п╦п╦ п╬я┌п╫п╬я│п╦я┌п╣п╩я▄п╫п╬ п©я─п╣п╢я▀п╢я┐я┴п╣пЁп╬ п╥п╫п╟я┤п╣п╫п╦я▐ п╦п╥п╪п╣п╫п╦п╩п╬я│я▄
 				if (elemConds[i].goal < currentBestEC.goal) {
-					// Значение целевой функции упало - тогда сохраняем если необходимо элементарное условие из закончившейся области 
+					// п≈п╫п╟я┤п╣п╫п╦п╣ я├п╣п╩п╣п╡п╬п╧ я└я┐п╫п╨я├п╦п╦ я┐п©п╟п╩п╬ - я┌п╬пЁп╢п╟ я│п╬я┘я─п╟п╫я▐п╣п╪ п╣я│п╩п╦ п╫п╣п╬п╠я┘п╬п╢п╦п╪п╬ я█п╩п╣п╪п╣п╫я┌п╟я─п╫п╬п╣ я┐я│п╩п╬п╡п╦п╣ п╦п╥ п╥п╟п╨п╬п╫я┤п╦п╡я┬п╣п╧я│я▐ п╬п╠п╩п╟я│я┌п╦ 
 					if (goalGrowing) {
-						// Значит значение целевой функции на предыдущей области параметров было на максимуме - сохраняем условие с одним их тех параметров
-						// Сохраняем условие, в котором достигается локальный максимум, среди лучших
+						// п≈п╫п╟я┤п╦я┌ п╥п╫п╟я┤п╣п╫п╦п╣ я├п╣п╩п╣п╡п╬п╧ я└я┐п╫п╨я├п╦п╦ п╫п╟ п©я─п╣п╢я▀п╢я┐я┴п╣п╧ п╬п╠п╩п╟я│я┌п╦ п©п╟я─п╟п╪п╣я┌я─п╬п╡ п╠я▀п╩п╬ п╫п╟ п╪п╟п╨я│п╦п╪я┐п╪п╣ - я│п╬я┘я─п╟п╫я▐п╣п╪ я┐я│п╩п╬п╡п╦п╣ я│ п╬п╢п╫п╦п╪ п╦я┘ я┌п╣я┘ п©п╟я─п╟п╪п╣я┌я─п╬п╡
+						// п║п╬я┘я─п╟п╫я▐п╣п╪ я┐я│п╩п╬п╡п╦п╣, п╡ п╨п╬я┌п╬я─п╬п╪ п╢п╬я│я┌п╦пЁп╟п╣я┌я│я▐ п╩п╬п╨п╟п╩я▄п╫я▀п╧ п╪п╟п╨я│п╦п╪я┐п╪, я│я─п╣п╢п╦ п╩я┐я┤я┬п╦я┘
 						storeBestECs (bestECs[i], currentBestEC, currentBestEC.goal, currentBestEC.statNormal, currentBestEC.statAbnorm);
-						// Наконец сохраняем в соответствующей переменной указатель на то, что значение целевой функции начало падать
+						// п²п╟п╨п╬п╫п╣я├ я│п╬я┘я─п╟п╫я▐п╣п╪ п╡ я│п╬п╬я┌п╡п╣я┌я│я┌п╡я┐я▌я┴п╣п╧ п©п╣я─п╣п╪п╣п╫п╫п╬п╧ я┐п╨п╟п╥п╟я┌п╣п╩я▄ п╫п╟ я┌п╬, я┤я┌п╬ п╥п╫п╟я┤п╣п╫п╦п╣ я├п╣п╩п╣п╡п╬п╧ я└я┐п╫п╨я├п╦п╦ п╫п╟я┤п╟п╩п╬ п©п╟п╢п╟я┌я▄
 						goalGrowing = false;
 					}
 				} else {
-					// Значение целевой функции возростает - сохраняем это
+					// п≈п╫п╟я┤п╣п╫п╦п╣ я├п╣п╩п╣п╡п╬п╧ я└я┐п╫п╨я├п╦п╦ п╡п╬п╥я─п╬я│я┌п╟п╣я┌ - я│п╬я┘я─п╟п╫я▐п╣п╪ я█я┌п╬
 					goalGrowing = true;
 									}
-				// Устанавливаем текущее значение целеовой функции и обнуляем счетчик элементов в последней области с одним значением целевой функции
+				// пёя│я┌п╟п╫п╟п╡п╩п╦п╡п╟п╣п╪ я┌п╣п╨я┐я┴п╣п╣ п╥п╫п╟я┤п╣п╫п╦п╣ я├п╣п╩п╣п╬п╡п╬п╧ я└я┐п╫п╨я├п╦п╦ п╦ п╬п╠п╫я┐п╩я▐п╣п╪ я│я┤п╣я┌я┤п╦п╨ я█п╩п╣п╪п╣п╫я┌п╬п╡ п╡ п©п╬я│п╩п╣п╢п╫п╣п╧ п╬п╠п╩п╟я│я┌п╦ я│ п╬п╢п╫п╦п╪ п╥п╫п╟я┤п╣п╫п╦п╣п╪ я├п╣п╩п╣п╡п╬п╧ я└я┐п╫п╨я├п╦п╦
 				currentBestEC = elemConds[i];
 			}
 		}
@@ -295,17 +295,17 @@ inline double informationGainTerm(int normNegCount, int normPosCount, int abnNeg
 }
 
 double ECStageSimple::matterECFunc (ElemCondPlusStat &ec, const int param, const int abnormalBehaviourType, int taskNo) const {
-	// Берем готовый вектор, чтобы не выделять каждый раз память
+	// п▒п╣я─п╣п╪ пЁп╬я┌п╬п╡я▀п╧ п╡п╣п╨я┌п╬я─, я┤я┌п╬п╠я▀ п╫п╣ п╡я▀п╢п╣п╩я▐я┌я▄ п╨п╟п╤п╢я▀п╧ я─п╟п╥ п©п╟п╪я▐я┌я▄
 	std::vector <double>& curTS = m_storage[taskNo];
 	int classCount = 0;
 	int classLen = 0;
 
 	int classMultiTSCount = fuzzyDataSet->getMutiTSCount(FuzzyDataSet::Reference, abnormalBehaviourType);
 	
-	// Этот resize будет взывать выделение памяти только тогда,
-	// когда она еще не выделена.
-	// В большинстве случаев при входе в данную функцию
-	// памать на этот вектор уже выделена
+	// п╜я┌п╬я┌ resize п╠я┐п╢п╣я┌ п╡п╥я▀п╡п╟я┌я▄ п╡я▀п╢п╣п╩п╣п╫п╦п╣ п©п╟п╪я▐я┌п╦ я┌п╬п╩я▄п╨п╬ я┌п╬пЁп╢п╟,
+	// п╨п╬пЁп╢п╟ п╬п╫п╟ п╣я┴п╣ п╫п╣ п╡я▀п╢п╣п╩п╣п╫п╟.
+	// п▓ п╠п╬п╩я▄я┬п╦п╫я│я┌п╡п╣ я│п╩я┐я┤п╟п╣п╡ п©я─п╦ п╡я┘п╬п╢п╣ п╡ п╢п╟п╫п╫я┐я▌ я└я┐п╫п╨я├п╦я▌
+	// п©п╟п╪п╟я┌я▄ п╫п╟ я█я┌п╬я┌ п╡п╣п╨я┌п╬я─ я┐п╤п╣ п╡я▀п╢п╣п╩п╣п╫п╟
 	ec.statOccVector.resize(classMultiTSCount);
 	
 	int abnOccCount = 0;
@@ -324,18 +324,18 @@ double ECStageSimple::matterECFunc (ElemCondPlusStat &ec, const int param, const
 		}
 	}
 	//std::cout<<"numOccurred = "<<numOccurred<<std::endl;
-	// Заполняем статистику по нештатному поведению
+	// п≈п╟п©п╬п╩п╫я▐п╣п╪ я│я┌п╟я┌п╦я│я┌п╦п╨я┐ п©п╬ п╫п╣я┬я┌п╟я┌п╫п╬п╪я┐ п©п╬п╡п╣п╢п╣п╫п╦я▌
 	if (classLen > 0) {
 		ec.statAbnorm = (double) classCount/ (double) classLen;
 		ec.statOccurence = (double) abnOccCount / (double) classMultiTSCount;
 	}
 	else {
-		ec.statAbnorm = -1.0; // - значит данные не определены
+		ec.statAbnorm = -1.0; // - п╥п╫п╟я┤п╦я┌ п╢п╟п╫п╫я▀п╣ п╫п╣ п╬п©я─п╣п╢п╣п╩п╣п╫я▀
 		ec.statOccurence = -1.0;
 		std::cout << "\nWarning in  FuzzyMultiDataLearnAlgorithm::matterECFunc : incorrect dstaSet request for abnormal type.\n";
 	}
 
-	// Цикл по траекториям нормального поведения
+	// п╕п╦п╨п╩ п©п╬ я┌я─п╟п╣п╨я┌п╬я─п╦я▐п╪ п╫п╬я─п╪п╟п╩я▄п╫п╬пЁп╬ п©п╬п╡п╣п╢п╣п╫п╦я▐
 	//fuzzyDataSet->getNormalClassSize (numOfNormalMultiTS, numOfNormalTS);
 	int normalMultiTSCount = fuzzyDataSet->getMutiTSCount(FuzzyDataSet::Reference, -1);
 
@@ -385,11 +385,11 @@ double ECStageSimple::matterECFunc (ElemCondPlusStat &ec, const int param, const
 	int normClassCount = classCount;
 	int normClassLen = classLen;
 
-	// Заполняем статистику по нештатному поведению
+	// п≈п╟п©п╬п╩п╫я▐п╣п╪ я│я┌п╟я┌п╦я│я┌п╦п╨я┐ п©п╬ п╫п╣я┬я┌п╟я┌п╫п╬п╪я┐ п©п╬п╡п╣п╢п╣п╫п╦я▌
 	if (classLen > 0)
 		ec.statNormal = (double) classCount/ (double) classLen;
 	else {
-		ec.statNormal = -1.0; // - значит данные не определены
+		ec.statNormal = -1.0; // - п╥п╫п╟я┤п╦я┌ п╢п╟п╫п╫я▀п╣ п╫п╣ п╬п©я─п╣п╢п╣п╩п╣п╫я▀
 		std::cout << "\nWarning in FuzzyMultiDatadLearnAlgorithm::matterECFunc: incorrect dstaSet request.\n";
 	}
 
@@ -403,7 +403,7 @@ double ECStageSimple::matterECFunc (ElemCondPlusStat &ec, const int param, const
 		}
 	}
 	if(!entropyObjective) {
-		// Определение значения целевой функции
+		// п·п©я─п╣п╢п╣п╩п╣п╫п╦п╣ п╥п╫п╟я┤п╣п╫п╦я▐ я├п╣п╩п╣п╡п╬п╧ я└я┐п╫п╨я├п╦п╦
 		if (ec.statAbnorm < eps) {
 			ec.goal = 0.0;
 		} else {
@@ -427,10 +427,10 @@ double ECStageSimple::matterECFunc (ElemCondPlusStat &ec, const int param, const
 /****************************************************************************
 *					FuzzyMultiDataLearnAlgorithm::numOfCarriedOutItems
 *
-*	Description:	Подсчет числа точек в ряду, на которых элементарное условие выполняется
-*	Parameters:		ec - проверяемое элементарное условие
-*					row - ряд для порверки элементарного условия
-*	Returns:		int - число точек, на которых элементарное условие выполнено
+*	Description:	п÷п╬п╢я│я┤п╣я┌ я┤п╦я│п╩п╟ я┌п╬я┤п╣п╨ п╡ я─я▐п╢я┐, п╫п╟ п╨п╬я┌п╬я─я▀я┘ я█п╩п╣п╪п╣п╫я┌п╟я─п╫п╬п╣ я┐я│п╩п╬п╡п╦п╣ п╡я▀п©п╬п╩п╫я▐п╣я┌я│я▐
+*	Parameters:		ec - п©я─п╬п╡п╣я─я▐п╣п╪п╬п╣ я█п╩п╣п╪п╣п╫я┌п╟я─п╫п╬п╣ я┐я│п╩п╬п╡п╦п╣
+*					row - я─я▐п╢ п╢п╩я▐ п©п╬я─п╡п╣я─п╨п╦ я█п╩п╣п╪п╣п╫я┌п╟я─п╫п╬пЁп╬ я┐я│п╩п╬п╡п╦я▐
+*	Returns:		int - я┤п╦я│п╩п╬ я┌п╬я┤п╣п╨, п╫п╟ п╨п╬я┌п╬я─я▀я┘ я█п╩п╣п╪п╣п╫я┌п╟я─п╫п╬п╣ я┐я│п╩п╬п╡п╦п╣ п╡я▀п©п╬п╩п╫п╣п╫п╬
 *	Throws:			-
 *	Author:			dk
 *	History:
@@ -451,19 +451,19 @@ bool goalCompare(const ECSelection& ecSel1, const ECSelection& ecSel2) { return 
 /****************************************************************************
 *					FuzzyMultiDataLearnAlgorithm::storeBestECs
 *
-*	Description:	Функция сохранения лучших элементарных условий и соответствующих 
-*					значений целевой функции
-*	Parameters:		ec - сохраняемое элементарное условие
-*					bestECs - вектор лучших условий того же типа
-*	Returns:		1 - если условие сохранено
-*					0 - если условие не входит в список лучших 
-*	Throws:			AxiomLibException - если входные вектора не согласованы
+*	Description:	п╓я┐п╫п╨я├п╦я▐ я│п╬я┘я─п╟п╫п╣п╫п╦я▐ п╩я┐я┤я┬п╦я┘ я█п╩п╣п╪п╣п╫я┌п╟я─п╫я▀я┘ я┐я│п╩п╬п╡п╦п╧ п╦ я│п╬п╬я┌п╡п╣я┌я│я┌п╡я┐я▌я┴п╦я┘ 
+*					п╥п╫п╟я┤п╣п╫п╦п╧ я├п╣п╩п╣п╡п╬п╧ я└я┐п╫п╨я├п╦п╦
+*	Parameters:		ec - я│п╬я┘я─п╟п╫я▐п╣п╪п╬п╣ я█п╩п╣п╪п╣п╫я┌п╟я─п╫п╬п╣ я┐я│п╩п╬п╡п╦п╣
+*					bestECs - п╡п╣п╨я┌п╬я─ п╩я┐я┤я┬п╦я┘ я┐я│п╩п╬п╡п╦п╧ я┌п╬пЁп╬ п╤п╣ я┌п╦п©п╟
+*	Returns:		1 - п╣я│п╩п╦ я┐я│п╩п╬п╡п╦п╣ я│п╬я┘я─п╟п╫п╣п╫п╬
+*					0 - п╣я│п╩п╦ я┐я│п╩п╬п╡п╦п╣ п╫п╣ п╡я┘п╬п╢п╦я┌ п╡ я│п©п╦я│п╬п╨ п╩я┐я┤я┬п╦я┘ 
+*	Throws:			AxiomLibException - п╣я│п╩п╦ п╡я┘п╬п╢п╫я▀п╣ п╡п╣п╨я┌п╬я─п╟ п╫п╣ я│п╬пЁп╩п╟я│п╬п╡п╟п╫я▀
 *	Author:			wictor
 *	History:
 *
 ****************************************************************************/
 inline int ECStageSimple::storeBestECs (std::vector <ECSelection> &bestECs, ElemCondPlusStat &ec, double &goal, double &statNorm, double &statAbnorm) const {
-	//todo заглушка; исправить, чтобы таких ситуаций не возникало
+	//todo п╥п╟пЁп╩я┐я┬п╨п╟; п╦я│п©я─п╟п╡п╦я┌я▄, я┤я┌п╬п╠я▀ я┌п╟п╨п╦я┘ я│п╦я┌я┐п╟я├п╦п╧ п╫п╣ п╡п╬п╥п╫п╦п╨п╟п╩п╬
 	if(ec.elemCondition == NULL /*|| ec.goal <= -1*/) {
 		Logger::debug("ec.elemCondition == NULL");
 		return 0;
@@ -476,8 +476,8 @@ inline int ECStageSimple::storeBestECs (std::vector <ECSelection> &bestECs, Elem
 		auto pair = boost::minmax_element(bestECs.begin(), bestECs.end(), 
 										  goalCompare);
 		if(std::abs(goal - pair.second->element().goal) < eps) {
-			// Если значение целевой функции равно максимальному из лучших, то с вероятностью replacementProbability
-			// записываем на место ЭУ с минимальной целевой функцией
+			// п∙я│п╩п╦ п╥п╫п╟я┤п╣п╫п╦п╣ я├п╣п╩п╣п╡п╬п╧ я└я┐п╫п╨я├п╦п╦ я─п╟п╡п╫п╬ п╪п╟п╨я│п╦п╪п╟п╩я▄п╫п╬п╪я┐ п╦п╥ п╩я┐я┤я┬п╦я┘, я┌п╬ я│ п╡п╣я─п╬я▐я┌п╫п╬я│я┌я▄я▌ replacementProbability
+			// п╥п╟п©п╦я│я▀п╡п╟п╣п╪ п╫п╟ п╪п╣я│я┌п╬ п╜пё я│ п╪п╦п╫п╦п╪п╟п╩я▄п╫п╬п╧ я├п╣п╩п╣п╡п╬п╧ я└я┐п╫п╨я├п╦п╣п╧
 			if (((double) rand() / (double) RAND_MAX) < replacementProbability) {
 				pair.first->element() = ec;
 				return 1;
@@ -485,46 +485,46 @@ inline int ECStageSimple::storeBestECs (std::vector <ECSelection> &bestECs, Elem
 				return 0;
 			}			
 		} else if (pair.first->element().goal < goal) {
-			// Если значение целевой функции больше минимального из лучших, 
-			// то добавляем ЭУ, заменяя ЭУ с минимальным значением
+			// п∙я│п╩п╦ п╥п╫п╟я┤п╣п╫п╦п╣ я├п╣п╩п╣п╡п╬п╧ я└я┐п╫п╨я├п╦п╦ п╠п╬п╩я▄я┬п╣ п╪п╦п╫п╦п╪п╟п╩я▄п╫п╬пЁп╬ п╦п╥ п╩я┐я┤я┬п╦я┘, 
+			// я┌п╬ п╢п╬п╠п╟п╡п╩я▐п╣п╪ п╜пё, п╥п╟п╪п╣п╫я▐я▐ п╜пё я│ п╪п╦п╫п╦п╪п╟п╩я▄п╫я▀п╪ п╥п╫п╟я┤п╣п╫п╦п╣п╪
 			pair.first->element() = ec;
 			return 1;
 		} else {
-			// Иначе -- не добавляем ЭУ
+			// п≤п╫п╟я┤п╣ -- п╫п╣ п╢п╬п╠п╟п╡п╩я▐п╣п╪ п╜пё
 			return 0;
 		}
 	}
-//	// Проверка - входит ли данное ЭУ в список лучших за историю
+//	// п÷я─п╬п╡п╣я─п╨п╟ - п╡я┘п╬п╢п╦я┌ п╩п╦ п╢п╟п╫п╫п╬п╣ п╜пё п╡ я│п©п╦я│п╬п╨ п╩я┐я┤я┬п╦я┘ п╥п╟ п╦я│я┌п╬я─п╦я▌
 //	double minVal = goal;
 //	int whereToSave = -1;
 //	double bestGoal = -1;
 //	for (int i = 0; i < (int) bestECs.size(); i++) {
-//		// Если есть свободный слот, то просто записываем в него
+//		// п∙я│п╩п╦ п╣я│я┌я▄ я│п╡п╬п╠п╬п╢п╫я▀п╧ я│п╩п╬я┌, я┌п╬ п©я─п╬я│я┌п╬ п╥п╟п©п╦я│я▀п╡п╟п╣п╪ п╡ п╫п╣пЁп╬
 //		if (bestECs[i].element().elemCondition == NULL) {
 //			bestECs[i] = ec;
 //			return 1;
 //		} else {
-//			// Определяем максимальное значение целевой функции среди bestECs
+//			// п·п©я─п╣п╢п╣п╩я▐п╣п╪ п╪п╟п╨я│п╦п╪п╟п╩я▄п╫п╬п╣ п╥п╫п╟я┤п╣п╫п╦п╣ я├п╣п╩п╣п╡п╬п╧ я└я┐п╫п╨я├п╦п╦ я│я─п╣п╢п╦ bestECs
 //			if (bestGoal < bestECs[i].element().goal) 
 //				bestGoal = bestECs[i].element().goal;
-//			// Определяем - куда разместить данное условие ec
+//			// п·п©я─п╣п╢п╣п╩я▐п╣п╪ - п╨я┐п╢п╟ я─п╟п╥п╪п╣я│я┌п╦я┌я▄ п╢п╟п╫п╫п╬п╣ я┐я│п╩п╬п╡п╦п╣ ec
 //			if (minVal > bestECs[i].element().goal) {
 //				minVal = bestECs[i].element().goal;
 //				whereToSave = i;
 //			}
 //		}
 //	}
-//	// Если условие среди лучших - сохраняем его
+//	// п∙я│п╩п╦ я┐я│п╩п╬п╡п╦п╣ я│я─п╣п╢п╦ п╩я┐я┤я┬п╦я┘ - я│п╬я┘я─п╟п╫я▐п╣п╪ п╣пЁп╬
 //	if (whereToSave >= 0) {
-//		// Сохраняем элементарное условие заменяя самое слабое условие в наборе
+//		// п║п╬я┘я─п╟п╫я▐п╣п╪ я█п╩п╣п╪п╣п╫я┌п╟я─п╫п╬п╣ я┐я│п╩п╬п╡п╦п╣ п╥п╟п╪п╣п╫я▐я▐ я│п╟п╪п╬п╣ я│п╩п╟п╠п╬п╣ я┐я│п╩п╬п╡п╦п╣ п╡ п╫п╟п╠п╬я─п╣
 //		bestECs[whereToSave] = ec;
 //		return 1;
 //	}
-//	// Если условие по факту среди лучших, но места для него нет - то находим это место
+//	// п∙я│п╩п╦ я┐я│п╩п╬п╡п╦п╣ п©п╬ я└п╟п╨я┌я┐ я│я─п╣п╢п╦ п╩я┐я┤я┬п╦я┘, п╫п╬ п╪п╣я│я┌п╟ п╢п╩я▐ п╫п╣пЁп╬ п╫п╣я┌ - я┌п╬ п╫п╟я┘п╬п╢п╦п╪ я█я┌п╬ п╪п╣я│я┌п╬
 //	if (abs(bestGoal - goal) < eps) {
 //		int curSize = (int) bestECs.size();
 //		if (curSize < numBestECsMax) {
-//			// Значит есть еще возможность расширить вектор bestECs
+//			// п≈п╫п╟я┤п╦я┌ п╣я│я┌я▄ п╣я┴п╣ п╡п╬п╥п╪п╬п╤п╫п╬я│я┌я▄ я─п╟я│я┬п╦я─п╦я┌я▄ п╡п╣п╨я┌п╬я─ bestECs
 //			std::vector <ElemCondPlusStat> tmpECs;
 //			tmpECs.resize (curSize);
 //			for (int i = 0; i < curSize; i++) {
@@ -540,11 +540,11 @@ inline int ECStageSimple::storeBestECs (std::vector <ECSelection> &bestECs, Elem
 //			bestECs[curSize] = ec;
 //			return 1;
 //		} else {
-//			// Значит вектор bestECs уже раздут до предела 
+//			// п≈п╫п╟я┤п╦я┌ п╡п╣п╨я┌п╬я─ bestECs я┐п╤п╣ я─п╟п╥п╢я┐я┌ п╢п╬ п©я─п╣п╢п╣п╩п╟ 
 
-//			// Все условия - одинаковые, поэтому случайно выбираем - сохранять ли данное элементарное условие
+//			// п▓я│п╣ я┐я│п╩п╬п╡п╦я▐ - п╬п╢п╦п╫п╟п╨п╬п╡я▀п╣, п©п╬я█я┌п╬п╪я┐ я│п╩я┐я┤п╟п╧п╫п╬ п╡я▀п╠п╦я─п╟п╣п╪ - я│п╬я┘я─п╟п╫я▐я┌я▄ п╩п╦ п╢п╟п╫п╫п╬п╣ я█п╩п╣п╪п╣п╫я┌п╟я─п╫п╬п╣ я┐я│п╩п╬п╡п╦п╣
 //			if (((double) rand() / (double) RAND_MAX) < replacementProbability) {
-//				// Выбираем элемент, который заместить
+//				// п▓я▀п╠п╦я─п╟п╣п╪ я█п╩п╣п╪п╣п╫я┌, п╨п╬я┌п╬я─я▀п╧ п╥п╟п╪п╣я│я┌п╦я┌я▄
 //				whereToSave = round ( (((double) std::rand() + 1.0)/((double) RAND_MAX + 2.0)) * ((double) curSize) - 0.5);
 //				bestECs[whereToSave] = ec;
 //				return 1;

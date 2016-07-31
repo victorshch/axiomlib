@@ -1,7 +1,7 @@
 /****************************************************************************
-*					Функции класса AxiomExprSet
+*					п╓я┐п╫п╨я├п╦п╦ п╨п╩п╟я│я│п╟ AxiomExprSet
 *
-*	Description:	Система аксиом от аксиом типа AxiomExpr - Реализация
+*	Description:	п║п╦я│я┌п╣п╪п╟ п╟п╨я│п╦п╬п╪ п╬я┌ п╟п╨я│п╦п╬п╪ я┌п╦п©п╟ AxiomExpr - п═п╣п╟п╩п╦п╥п╟я├п╦я▐
 *	Author:			dk
 *	History:	
 *
@@ -14,7 +14,7 @@ using namespace AxiomLib;
 #define str_default_axiomBank_name	"no_name_AxiomBank"
 
 
-// Пустой конструктор с заданием имени системы аксиом по default'у
+// п÷я┐я│я┌п╬п╧ п╨п╬п╫я│я┌я─я┐п╨я┌п╬я─ я│ п╥п╟п╢п╟п╫п╦п╣п╪ п╦п╪п╣п╫п╦ я│п╦я│я┌п╣п╪я▀ п╟п╨я│п╦п╬п╪ п©п╬ default'я┐
 AxiomExprSet::AxiomExprSet () {
 	nameOfAxiomSet.assign (str_default_axiomSet_name);
 	nameOfAxiomBank.assign (str_default_axiomBank_name);
@@ -22,14 +22,14 @@ AxiomExprSet::AxiomExprSet () {
 }
 
 
-// Пустой конструктор с заданием имени системы аксиом в параметре
+// п÷я┐я│я┌п╬п╧ п╨п╬п╫я│я┌я─я┐п╨я┌п╬я─ я│ п╥п╟п╢п╟п╫п╦п╣п╪ п╦п╪п╣п╫п╦ я│п╦я│я┌п╣п╪я▀ п╟п╨я│п╦п╬п╪ п╡ п©п╟я─п╟п╪п╣я┌я─п╣
 AxiomExprSet::AxiomExprSet (const std::string sName) {
 	nameOfAxiomSet = sName;
 	nameOfAxiomBank.assign (str_default_axiomBank_name);
 	axioms.clear();
 }
 
-// Конструктор копирования - клонирует аксиомы
+// п п╬п╫я│я┌я─я┐п╨я┌п╬я─ п╨п╬п©п╦я─п╬п╡п╟п╫п╦я▐ - п╨п╩п╬п╫п╦я─я┐п╣я┌ п╟п╨я│п╦п╬п╪я▀
 AxiomExprSet::AxiomExprSet(const AxiomExprSet &other) {
 	this->nameOfAxiomBank = other.nameOfAxiomBank;
 	this->nameOfAxiomSet = other.nameOfAxiomSet;
@@ -41,13 +41,13 @@ AxiomExprSet::AxiomExprSet(const AxiomExprSet &other) {
 	}
 }
 
-// Деструктор - удаляет все созданные динамические объкты в системе аксиом
+// п■п╣я│я┌я─я┐п╨я┌п╬я─ - я┐п╢п╟п╩я▐п╣я┌ п╡я│п╣ я│п╬п╥п╢п╟п╫п╫я▀п╣ п╢п╦п╫п╟п╪п╦я┤п╣я│п╨п╦п╣ п╬п╠я┼п╨я┌я▀ п╡ я│п╦я│я┌п╣п╪п╣ п╟п╨я│п╦п╬п╪
 AxiomExprSet::~AxiomExprSet(void) {
 	this->clear();
 }
 
 
-// Функция удаляет все созданные динамические объкты в системе аксиом
+// п╓я┐п╫п╨я├п╦я▐ я┐п╢п╟п╩я▐п╣я┌ п╡я│п╣ я│п╬п╥п╢п╟п╫п╫я▀п╣ п╢п╦п╫п╟п╪п╦я┤п╣я│п╨п╦п╣ п╬п╠я┼п╨я┌я▀ п╡ я│п╦я│я┌п╣п╪п╣ п╟п╨я│п╦п╬п╪
 void AxiomExprSet::clear(void) {
 	for (unsigned int i = 0; i < this->axioms.size(); i++) {
 		(axioms[i])->clear();
@@ -57,7 +57,7 @@ void AxiomExprSet::clear(void) {
 }
 
 
-// Добавляет аксиому к существующему ветору аксиом в данной системе
+// п■п╬п╠п╟п╡п╩я▐п╣я┌ п╟п╨я│п╦п╬п╪я┐ п╨ я│я┐я┴п╣я│я┌п╡я┐я▌я┴п╣п╪я┐ п╡п╣я┌п╬я─я┐ п╟п╨я│п╦п╬п╪ п╡ п╢п╟п╫п╫п╬п╧ я│п╦я│я┌п╣п╪п╣
 void AxiomExprSet::addAxiom (const AxiomExpr& newAxiom) {
 	unsigned int oldSize = axioms.size();
 	axioms.resize (oldSize + 1);
@@ -66,7 +66,7 @@ void AxiomExprSet::addAxiom (const AxiomExpr& newAxiom) {
 }
 
 
-// Добавляет аксиомы к существующему ветору аксиом в данной системе
+// п■п╬п╠п╟п╡п╩я▐п╣я┌ п╟п╨я│п╦п╬п╪я▀ п╨ я│я┐я┴п╣я│я┌п╡я┐я▌я┴п╣п╪я┐ п╡п╣я┌п╬я─я┐ п╟п╨я│п╦п╬п╪ п╡ п╢п╟п╫п╫п╬п╧ я│п╦я│я┌п╣п╪п╣
 void AxiomExprSet::addAxioms (std::vector <AxiomExpr*> &newAxiomExpr) {
 	unsigned int oldSize = axioms.size();
 	axioms.resize (oldSize + newAxiomExpr.size());
@@ -76,20 +76,20 @@ void AxiomExprSet::addAxioms (std::vector <AxiomExpr*> &newAxiomExpr) {
 	}
 }
 
-// Устанавливает новый вектор аксиом
+// пёя│я┌п╟п╫п╟п╡п╩п╦п╡п╟п╣я┌ п╫п╬п╡я▀п╧ п╡п╣п╨я┌п╬я─ п╟п╨я│п╦п╬п╪
 void AxiomExprSet::setAxioms (std::vector <AxiomExpr*> &newAxiomExpr) {
 	clear();
 	addAxioms (newAxiomExpr);
 }
 
 
-// Возвращает название системы аксиом
+// п▓п╬п╥п╡я─п╟я┴п╟п╣я┌ п╫п╟п╥п╡п╟п╫п╦п╣ я│п╦я│я┌п╣п╪я▀ п╟п╨я│п╦п╬п╪
 std::string AxiomExprSet::name (void) const {
 	return nameOfAxiomSet;
 }
 
 
-// Функция возвращает число аксиом в данной системе
+// п╓я┐п╫п╨я├п╦я▐ п╡п╬п╥п╡я─п╟я┴п╟п╣я┌ я┤п╦я│п╩п╬ п╟п╨я│п╦п╬п╪ п╡ п╢п╟п╫п╫п╬п╧ я│п╦я│я┌п╣п╪п╣
 int AxiomExprSet::size (void) const {
 	return axioms.size();
 }
@@ -98,19 +98,19 @@ int AxiomExprSet::size (void) const {
 /****************************************************************************
 *					AxiomExprSet::enter
 *
-*	Description:	Функция разметки многомерного ряда row начиная с отсчета begin до отсчета end
-*	Parameters:		marked - вектор, куда кладем разметку
-*					row    - многомерный ряд
-*					begin  - отсчет с которого начинать разметку
-*					end    - отсчет до которого вести разметку
+*	Description:	п╓я┐п╫п╨я├п╦я▐ я─п╟п╥п╪п╣я┌п╨п╦ п╪п╫п╬пЁп╬п╪п╣я─п╫п╬пЁп╬ я─я▐п╢п╟ row п╫п╟я┤п╦п╫п╟я▐ я│ п╬я┌я│я┤п╣я┌п╟ begin п╢п╬ п╬я┌я│я┤п╣я┌п╟ end
+*	Parameters:		marked - п╡п╣п╨я┌п╬я─, п╨я┐п╢п╟ п╨п╩п╟п╢п╣п╪ я─п╟п╥п╪п╣я┌п╨я┐
+*					row    - п╪п╫п╬пЁп╬п╪п╣я─п╫я▀п╧ я─я▐п╢
+*					begin  - п╬я┌я│я┤п╣я┌ я│ п╨п╬я┌п╬я─п╬пЁп╬ п╫п╟я┤п╦п╫п╟я┌я▄ я─п╟п╥п╪п╣я┌п╨я┐
+*					end    - п╬я┌я│я┤п╣я┌ п╢п╬ п╨п╬я┌п╬я─п╬пЁп╬ п╡п╣я│я┌п╦ я─п╟п╥п╪п╣я┌п╨я┐
 *	Returns:		0
-*	Throws:			AxiomLibExeption - если begin и end заданы некорректно
+*	Throws:			AxiomLibExeption - п╣я│п╩п╦ begin п╦ end п╥п╟п╢п╟п╫я▀ п╫п╣п╨п╬я─я─п╣п╨я┌п╫п╬
 *	Author:			dk
 *	History:
 *
 ****************************************************************************/
 int AxiomExprSet::enter (std::vector<int>& marked, const std::vector < std::vector<double> > &row, const unsigned long begin, const unsigned long end) const {
-	// Проверка входных параметров
+	// п÷я─п╬п╡п╣я─п╨п╟ п╡я┘п╬п╢п╫я▀я┘ п©п╟я─п╟п╪п╣я┌я─п╬п╡
 	unsigned int len = 0;
 	for (unsigned int i = 0; i < row.size(); i++) {
 		if (row[i].size() > len)
@@ -119,7 +119,7 @@ int AxiomExprSet::enter (std::vector<int>& marked, const std::vector < std::vect
 	if ((end <= begin) || (begin < 0) || (end > len)) {
 		throw AxiomLibException("Error in AxiomExprSet::enter : wrong input parameters.");
 	}	
-	// Разметка ряда аксиомами системы
+	// п═п╟п╥п╪п╣я┌п╨п╟ я─я▐п╢п╟ п╟п╨я│п╦п╬п╪п╟п╪п╦ я│п╦я│я┌п╣п╪я▀
 	int curRes;
 	marked.resize(end - begin);
 	unsigned long k = 0;
@@ -140,25 +140,25 @@ int AxiomExprSet::enter (std::vector<int>& marked, const std::vector < std::vect
 /****************************************************************************
 *				AxiomExprSet::enter
 *
-*	Description:	Функция разметки ряда row начиная с отсчета begin до отсчета end
-*	Parameters:		marked - вектор, куда кладем разметку
-*					row    - ряд для разметки
-*					begin - отсчет с которого начинать разметку
-*					end    - отсчет до которого вести разметку
-*	Returns:		Функция вовзращает размеченный ряд - ряд с номером аксиомы выполненной на каждом из отсчетов исходного ряда
-*					-1 - означает что ни одна аксиома не выполнена - то есть нулевая аксиома записывается под этим значением
-*	Throws:			AxiomLibExeption - если begin и end заданы не корректно
+*	Description:	п╓я┐п╫п╨я├п╦я▐ я─п╟п╥п╪п╣я┌п╨п╦ я─я▐п╢п╟ row п╫п╟я┤п╦п╫п╟я▐ я│ п╬я┌я│я┤п╣я┌п╟ begin п╢п╬ п╬я┌я│я┤п╣я┌п╟ end
+*	Parameters:		marked - п╡п╣п╨я┌п╬я─, п╨я┐п╢п╟ п╨п╩п╟п╢п╣п╪ я─п╟п╥п╪п╣я┌п╨я┐
+*					row    - я─я▐п╢ п╢п╩я▐ я─п╟п╥п╪п╣я┌п╨п╦
+*					begin - п╬я┌я│я┤п╣я┌ я│ п╨п╬я┌п╬я─п╬пЁп╬ п╫п╟я┤п╦п╫п╟я┌я▄ я─п╟п╥п╪п╣я┌п╨я┐
+*					end    - п╬я┌я│я┤п╣я┌ п╢п╬ п╨п╬я┌п╬я─п╬пЁп╬ п╡п╣я│я┌п╦ я─п╟п╥п╪п╣я┌п╨я┐
+*	Returns:		п╓я┐п╫п╨я├п╦я▐ п╡п╬п╡п╥я─п╟я┴п╟п╣я┌ я─п╟п╥п╪п╣я┤п╣п╫п╫я▀п╧ я─я▐п╢ - я─я▐п╢ я│ п╫п╬п╪п╣я─п╬п╪ п╟п╨я│п╦п╬п╪я▀ п╡я▀п©п╬п╩п╫п╣п╫п╫п╬п╧ п╫п╟ п╨п╟п╤п╢п╬п╪ п╦п╥ п╬я┌я│я┤п╣я┌п╬п╡ п╦я│я┘п╬п╢п╫п╬пЁп╬ я─я▐п╢п╟
+*					-1 - п╬п╥п╫п╟я┤п╟п╣я┌ я┤я┌п╬ п╫п╦ п╬п╢п╫п╟ п╟п╨я│п╦п╬п╪п╟ п╫п╣ п╡я▀п©п╬п╩п╫п╣п╫п╟ - я┌п╬ п╣я│я┌я▄ п╫я┐п╩п╣п╡п╟я▐ п╟п╨я│п╦п╬п╪п╟ п╥п╟п©п╦я│я▀п╡п╟п╣я┌я│я▐ п©п╬п╢ я█я┌п╦п╪ п╥п╫п╟я┤п╣п╫п╦п╣п╪
+*	Throws:			AxiomLibExeption - п╣я│п╩п╦ begin п╦ end п╥п╟п╢п╟п╫я▀ п╫п╣ п╨п╬я─я─п╣п╨я┌п╫п╬
 *	Author:			dk
 *	History:
 *
 ****************************************************************************/
 int AxiomExprSet::enter (std::vector<int>& marked, const std::vector<double>& row, const unsigned long begin, const unsigned long end) {
-	// Проверка входных параметров
+	// п÷я─п╬п╡п╣я─п╨п╟ п╡я┘п╬п╢п╫я▀я┘ п©п╟я─п╟п╪п╣я┌я─п╬п╡
 	if ((end <= begin) || (row.size() < end)) {
 		marked.clear();
 		throw AxiomLibException("Error in AxiomExprSet::enter : wrong input parameters.");
 	}
-	// Разметка ряда аксиомами системы
+	// п═п╟п╥п╪п╣я┌п╨п╟ я─я▐п╢п╟ п╟п╨я│п╦п╬п╪п╟п╪п╦ я│п╦я│я┌п╣п╪я▀
 	int curRes;
 	marked.resize(end - begin);
 	unsigned long k = 0;
@@ -180,26 +180,26 @@ int AxiomExprSet::enter (std::vector<int>& marked, const std::vector<double>& ro
 /****************************************************************************
 *				AxiomExprSet::enter
 *
-*	Description:	Функция разметки ряда row начиная с отсчета begin до отсчета end
-*	Parameters:		marked - вектор, куда кладем разметку
-*					row    - ряд для разметки
-*					begin - отсчет с которого начинать разметку
-*					end    - отсчет до которого вести разметку
-*					stat - статистика по аксиомам системы, какие были использованы при разметке
-*	Returns:		Функция вовзращает размеченный ряд - ряд с номером аксиомы выполненной на каждом из отсчетов исходного ряда
-*					-1 - означает что ни одна аксиома не выполнена - то есть нулевая аксиома записывается под этим значением
-*	Throws:			AxiomLibExeption - если begin и end заданы не корректно
+*	Description:	п╓я┐п╫п╨я├п╦я▐ я─п╟п╥п╪п╣я┌п╨п╦ я─я▐п╢п╟ row п╫п╟я┤п╦п╫п╟я▐ я│ п╬я┌я│я┤п╣я┌п╟ begin п╢п╬ п╬я┌я│я┤п╣я┌п╟ end
+*	Parameters:		marked - п╡п╣п╨я┌п╬я─, п╨я┐п╢п╟ п╨п╩п╟п╢п╣п╪ я─п╟п╥п╪п╣я┌п╨я┐
+*					row    - я─я▐п╢ п╢п╩я▐ я─п╟п╥п╪п╣я┌п╨п╦
+*					begin - п╬я┌я│я┤п╣я┌ я│ п╨п╬я┌п╬я─п╬пЁп╬ п╫п╟я┤п╦п╫п╟я┌я▄ я─п╟п╥п╪п╣я┌п╨я┐
+*					end    - п╬я┌я│я┤п╣я┌ п╢п╬ п╨п╬я┌п╬я─п╬пЁп╬ п╡п╣я│я┌п╦ я─п╟п╥п╪п╣я┌п╨я┐
+*					stat - я│я┌п╟я┌п╦я│я┌п╦п╨п╟ п©п╬ п╟п╨я│п╦п╬п╪п╟п╪ я│п╦я│я┌п╣п╪я▀, п╨п╟п╨п╦п╣ п╠я▀п╩п╦ п╦я│п©п╬п╩я▄п╥п╬п╡п╟п╫я▀ п©я─п╦ я─п╟п╥п╪п╣я┌п╨п╣
+*	Returns:		п╓я┐п╫п╨я├п╦я▐ п╡п╬п╡п╥я─п╟я┴п╟п╣я┌ я─п╟п╥п╪п╣я┤п╣п╫п╫я▀п╧ я─я▐п╢ - я─я▐п╢ я│ п╫п╬п╪п╣я─п╬п╪ п╟п╨я│п╦п╬п╪я▀ п╡я▀п©п╬п╩п╫п╣п╫п╫п╬п╧ п╫п╟ п╨п╟п╤п╢п╬п╪ п╦п╥ п╬я┌я│я┤п╣я┌п╬п╡ п╦я│я┘п╬п╢п╫п╬пЁп╬ я─я▐п╢п╟
+*					-1 - п╬п╥п╫п╟я┤п╟п╣я┌ я┤я┌п╬ п╫п╦ п╬п╢п╫п╟ п╟п╨я│п╦п╬п╪п╟ п╫п╣ п╡я▀п©п╬п╩п╫п╣п╫п╟ - я┌п╬ п╣я│я┌я▄ п╫я┐п╩п╣п╡п╟я▐ п╟п╨я│п╦п╬п╪п╟ п╥п╟п©п╦я│я▀п╡п╟п╣я┌я│я▐ п©п╬п╢ я█я┌п╦п╪ п╥п╫п╟я┤п╣п╫п╦п╣п╪
+*	Throws:			AxiomLibExeption - п╣я│п╩п╦ begin п╦ end п╥п╟п╢п╟п╫я▀ п╫п╣ п╨п╬я─я─п╣п╨я┌п╫п╬
 *	Author:			dk
 *	History:
 *
 ****************************************************************************/
 int AxiomExprSet::enter (std::vector<int>& marked, const std::vector<double>& row, const unsigned long begin, const unsigned long end, std::vector<bool> &stat) {
-	// Проверка входных параметров
+	// п÷я─п╬п╡п╣я─п╨п╟ п╡я┘п╬п╢п╫я▀я┘ п©п╟я─п╟п╪п╣я┌я─п╬п╡
 	if ((end <= begin) || (row.size() < end)) {
 		marked.resize(0);
 		throw AxiomLibException("Error in AxiomExprSet::enter : wrong parameters.");
 	}
-	// Разметка ряда аксиомами системы со сбором статистики
+	// п═п╟п╥п╪п╣я┌п╨п╟ я─я▐п╢п╟ п╟п╨я│п╦п╬п╪п╟п╪п╦ я│п╦я│я┌п╣п╪я▀ я│п╬ я│п╠п╬я─п╬п╪ я│я┌п╟я┌п╦я│я┌п╦п╨п╦
 	int curRes;
 	marked.resize(end - begin);
 	stat.resize(axioms.size());
@@ -225,8 +225,8 @@ int AxiomExprSet::enter (std::vector<int>& marked, const std::vector<double>& ro
 /****************************************************************************
 *				AxiomExprSet::operator=
 *
-*	Description:	Оператор присваивания системы аксиом
-*	Parameters:		second - присваиваемая система аксиом
+*	Description:	п·п©п╣я─п╟я┌п╬я─ п©я─п╦я│п╡п╟п╦п╡п╟п╫п╦я▐ я│п╦я│я┌п╣п╪я▀ п╟п╨я│п╦п╬п╪
+*	Parameters:		second - п©я─п╦я│п╡п╟п╦п╡п╟п╣п╪п╟я▐ я│п╦я│я┌п╣п╪п╟ п╟п╨я│п╦п╬п╪
 *	Returns:		*this
 *	Throws:			-
 *	Author:			dk
@@ -238,10 +238,10 @@ AxiomExprSet& AxiomExprSet::operator= (const AxiomExprSet &second) {
 		return *this;
 	}
 
-	// Копируем имя системы аксиом
+	// п п╬п©п╦я─я┐п╣п╪ п╦п╪я▐ я│п╦я│я┌п╣п╪я▀ п╟п╨я│п╦п╬п╪
 	this->nameOfAxiomSet = second.nameOfAxiomSet;
 	this->nameOfAxiomBank = second.nameOfAxiomBank;
-	// Копируем входящие в систему аксиомы
+	// п п╬п©п╦я─я┐п╣п╪ п╡я┘п╬п╢я▐я┴п╦п╣ п╡ я│п╦я│я┌п╣п╪я┐ п╟п╨я│п╦п╬п╪я▀
 	this->clear();
 	axioms.resize(second.axioms.size());
 	for (unsigned int i = 0; i < second.axioms.size(); i++) {
@@ -254,9 +254,9 @@ AxiomExprSet& AxiomExprSet::operator= (const AxiomExprSet &second) {
 /****************************************************************************
 *					AxiomExprSet::createAxiomExprSetStructure
 *
-*	Description:	Функция сохраняет структуру данной системы аксиом в AxiomExprSetStructures
-*	Parameters:		aess - заполняемое поле структуры системы аксиом
-*	Returns:		0 - если все нормально, в противном случае выход по throw
+*	Description:	п╓я┐п╫п╨я├п╦я▐ я│п╬я┘я─п╟п╫я▐п╣я┌ я│я┌я─я┐п╨я┌я┐я─я┐ п╢п╟п╫п╫п╬п╧ я│п╦я│я┌п╣п╪я▀ п╟п╨я│п╦п╬п╪ п╡ AxiomExprSetStructures
+*	Parameters:		aess - п╥п╟п©п╬п╩п╫я▐п╣п╪п╬п╣ п©п╬п╩п╣ я│я┌я─я┐п╨я┌я┐я─я▀ я│п╦я│я┌п╣п╪я▀ п╟п╨я│п╦п╬п╪
+*	Returns:		0 - п╣я│п╩п╦ п╡я│п╣ п╫п╬я─п╪п╟п╩я▄п╫п╬, п╡ п©я─п╬я┌п╦п╡п╫п╬п╪ я│п╩я┐я┤п╟п╣ п╡я▀я┘п╬п╢ п©п╬ throw
 *	Throws:			-
 *	Author:			dk
 *	History:
@@ -276,9 +276,9 @@ int AxiomExprSet::createAxiomExprSetStructure (AxiomExprSetStructure &aess) cons
 /****************************************************************************
 *					AxiomExprSet::initAxiomSetFromFile
 *
-*	Description:	Функция задающая систему аксиом как набор строго определенных аксиом
-*	Parameters:		axiomBaseDir - директория, где находится запрашиваемый файл описания системы аксиом
-*					axiomSetName - имя системы аксиом
+*	Description:	п╓я┐п╫п╨я├п╦я▐ п╥п╟п╢п╟я▌я┴п╟я▐ я│п╦я│я┌п╣п╪я┐ п╟п╨я│п╦п╬п╪ п╨п╟п╨ п╫п╟п╠п╬я─ я│я┌я─п╬пЁп╬ п╬п©я─п╣п╢п╣п╩п╣п╫п╫я▀я┘ п╟п╨я│п╦п╬п╪
+*	Parameters:		axiomBaseDir - п╢п╦я─п╣п╨я┌п╬я─п╦я▐, пЁп╢п╣ п╫п╟я┘п╬п╢п╦я┌я│я▐ п╥п╟п©я─п╟я┬п╦п╡п╟п╣п╪я▀п╧ я└п╟п╧п╩ п╬п©п╦я│п╟п╫п╦я▐ я│п╦я│я┌п╣п╪я▀ п╟п╨я│п╦п╬п╪
+*					axiomSetName - п╦п╪я▐ я│п╦я│я┌п╣п╪я▀ п╟п╨я│п╦п╬п╪
 *	Returns:		0
 *	Throws:			-
 *	Author:			dk
@@ -288,11 +288,11 @@ int AxiomExprSet::createAxiomExprSetStructure (AxiomExprSetStructure &aess) cons
 signed int AxiomExprSet::initAxiomSetFromFile (std::string axiomSetBaseDir, std::string axiomSetName) {
 	AxiomSetBase axiomSetBase;
 	AxiomExprSetStructure aess;
-	// Формируем полный путь к файлу
+	// п╓п╬я─п╪п╦я─я┐п╣п╪ п©п╬п╩п╫я▀п╧ п©я┐я┌я▄ п╨ я└п╟п╧п╩я┐
 	std::string axiomSetPath = axiomSetBaseDir;
 	axiomSetPath.append("/");
 	axiomSetPath.append(axiomSetName);
-	// Считываем информацию о системе аксиом в aess
+	// п║я┤п╦я┌я▀п╡п╟п╣п╪ п╦п╫я└п╬я─п╪п╟я├п╦я▌ п╬ я│п╦я│я┌п╣п╪п╣ п╟п╨я│п╦п╬п╪ п╡ aess
 	axiomSetBase.readFromAS (axiomSetPath, aess);
 	return initAxiomSetFromStructure (aess);
 }
@@ -300,11 +300,11 @@ signed int AxiomExprSet::initAxiomSetFromFile (std::string axiomSetBaseDir, std:
 /****************************************************************************
 *					AxiomExprSet::initAxiomSetFromFile
 *
-*	Description:	Функция задающая систему аксиом как набор строго определенных аксиом.
-*					Сделана по аналогии с предыдущей, только добавлена обработка имен размерностей
-*	Parameters:		axiomBaseDir - директория, где находится запрашиваемый файл описания системы аксиом
-*					axiomSetName - имя системы аксиом
-*					paramNames - имена размерностей
+*	Description:	п╓я┐п╫п╨я├п╦я▐ п╥п╟п╢п╟я▌я┴п╟я▐ я│п╦я│я┌п╣п╪я┐ п╟п╨я│п╦п╬п╪ п╨п╟п╨ п╫п╟п╠п╬я─ я│я┌я─п╬пЁп╬ п╬п©я─п╣п╢п╣п╩п╣п╫п╫я▀я┘ п╟п╨я│п╦п╬п╪.
+*					п║п╢п╣п╩п╟п╫п╟ п©п╬ п╟п╫п╟п╩п╬пЁп╦п╦ я│ п©я─п╣п╢я▀п╢я┐я┴п╣п╧, я┌п╬п╩я▄п╨п╬ п╢п╬п╠п╟п╡п╩п╣п╫п╟ п╬п╠я─п╟п╠п╬я┌п╨п╟ п╦п╪п╣п╫ я─п╟п╥п╪п╣я─п╫п╬я│я┌п╣п╧
+*	Parameters:		axiomBaseDir - п╢п╦я─п╣п╨я┌п╬я─п╦я▐, пЁп╢п╣ п╫п╟я┘п╬п╢п╦я┌я│я▐ п╥п╟п©я─п╟я┬п╦п╡п╟п╣п╪я▀п╧ я└п╟п╧п╩ п╬п©п╦я│п╟п╫п╦я▐ я│п╦я│я┌п╣п╪я▀ п╟п╨я│п╦п╬п╪
+*					axiomSetName - п╦п╪я▐ я│п╦я│я┌п╣п╪я▀ п╟п╨я│п╦п╬п╪
+*					paramNames - п╦п╪п╣п╫п╟ я─п╟п╥п╪п╣я─п╫п╬я│я┌п╣п╧
 *	Returns:		0
 *	Throws:			-
 *	Author:			wictor
@@ -314,15 +314,15 @@ signed int AxiomExprSet::initAxiomSetFromFile (std::string axiomSetBaseDir, std:
 signed int AxiomExprSet::initAxiomSetFromFile (std::string axiomSetBaseDir, std::string axiomSetName, const std::vector<std::string> &paramNames) {
 	AxiomSetBase axiomSetBase;
 	AxiomExprSetStructure aess;
-	// Формируем полный путь к файлу
+	// п╓п╬я─п╪п╦я─я┐п╣п╪ п©п╬п╩п╫я▀п╧ п©я┐я┌я▄ п╨ я└п╟п╧п╩я┐
 	std::string axiomSetPath = axiomSetBaseDir;
 	axiomSetPath.append("/");
 	axiomSetPath.append(axiomSetName);
 	
-	// TODO: убрать это и добавить const в соответствующие места
+	// TODO: я┐п╠я─п╟я┌я▄ я█я┌п╬ п╦ п╢п╬п╠п╟п╡п╦я┌я▄ const п╡ я│п╬п╬я┌п╡п╣я┌я│я┌п╡я┐я▌я┴п╦п╣ п╪п╣я│я┌п╟
 	std::vector<std::string> temp(paramNames);
 	
-	// Считываем информацию о системе аксиом в aess
+	// п║я┤п╦я┌я▀п╡п╟п╣п╪ п╦п╫я└п╬я─п╪п╟я├п╦я▌ п╬ я│п╦я│я┌п╣п╪п╣ п╟п╨я│п╦п╬п╪ п╡ aess
 	axiomSetBase.readFromAS (axiomSetPath, aess, temp);
 	return initAxiomSetFromStructure (aess);
 }
@@ -331,8 +331,8 @@ signed int AxiomExprSet::initAxiomSetFromFile (std::string axiomSetBaseDir, std:
 /****************************************************************************
 *					AxiomExprSet::initAxiomSetFromStructure
 *
-*	Description:	Функция задающая систему аксиом по специализированной структуре с описанием системы акисом
-*	Parameters:		aess - структура с описанием системы аксиом
+*	Description:	п╓я┐п╫п╨я├п╦я▐ п╥п╟п╢п╟я▌я┴п╟я▐ я│п╦я│я┌п╣п╪я┐ п╟п╨я│п╦п╬п╪ п©п╬ я│п©п╣я├п╦п╟п╩п╦п╥п╦я─п╬п╡п╟п╫п╫п╬п╧ я│я┌я─я┐п╨я┌я┐я─п╣ я│ п╬п©п╦я│п╟п╫п╦п╣п╪ я│п╦я│я┌п╣п╪я▀ п╟п╨п╦я│п╬п╪
+*	Parameters:		aess - я│я┌я─я┐п╨я┌я┐я─п╟ я│ п╬п©п╦я│п╟п╫п╦п╣п╪ я│п╦я│я┌п╣п╪я▀ п╟п╨я│п╦п╬п╪
 *	Returns:		0
 *	Throws:			-
 *	Author:			dk
@@ -359,10 +359,10 @@ signed int AxiomExprSet::initAxiomSetFromStructure (AxiomExprSetStructure &aess)
 /****************************************************************************
 *					AxiomExprSet::initAxiomSetByRand
 *
-*	Description:	Функция задания системы аксиом случайным образом
-*	Parameters:		numOfAxioms  - число случано выбириаемых аксиом
-*					maxECinAxiom - максимальное чилсо элементарных условий которые могут составлять одну аксиому
-*	Returns:		0 - если все нормальо, в противном случае выход по throw 
+*	Description:	п╓я┐п╫п╨я├п╦я▐ п╥п╟п╢п╟п╫п╦я▐ я│п╦я│я┌п╣п╪я▀ п╟п╨я│п╦п╬п╪ я│п╩я┐я┤п╟п╧п╫я▀п╪ п╬п╠я─п╟п╥п╬п╪
+*	Parameters:		numOfAxioms  - я┤п╦я│п╩п╬ я│п╩я┐я┤п╟п╫п╬ п╡я▀п╠п╦я─п╦п╟п╣п╪я▀я┘ п╟п╨я│п╦п╬п╪
+*					maxECinAxiom - п╪п╟п╨я│п╦п╪п╟п╩я▄п╫п╬п╣ я┤п╦п╩я│п╬ я█п╩п╣п╪п╣п╫я┌п╟я─п╫я▀я┘ я┐я│п╩п╬п╡п╦п╧ п╨п╬я┌п╬я─я▀п╣ п╪п╬пЁя┐я┌ я│п╬я│я┌п╟п╡п╩я▐я┌я▄ п╬п╢п╫я┐ п╟п╨я│п╦п╬п╪я┐
+*	Returns:		0 - п╣я│п╩п╦ п╡я│п╣ п╫п╬я─п╪п╟п╩я▄п╬, п╡ п©я─п╬я┌п╦п╡п╫п╬п╪ я│п╩я┐я┤п╟п╣ п╡я▀я┘п╬п╢ п©п╬ throw 
 *	Throws:			-
 *	Author:			dk
 *	History:
@@ -376,13 +376,13 @@ int AxiomExprSet::initAxiomSetByRand (const int numOfAxioms, const int maxECinAx
 /****************************************************************************
 *					AxiomExprSet::initAxiomSetByRand
 *
-*	Description:	Функция задания системы аксиом случайным образом с указанием 
-*					размерности набора данных для каждого условия из заданного диапазона
-*	Parameters:		numOfAxioms  - число случано выбириаемых аксиом
-*					maxECinAxiom - максимальное чилсо элементарных условий которые могут составлять одну аксиому
-*					dimensionMin - минимальное значение для размерности исходных данных
-*					dimensionMax - максимальное значение для размерности исходных данных
-*	Returns:		0 - если все нормальо, в противном случае выход по throw 
+*	Description:	п╓я┐п╫п╨я├п╦я▐ п╥п╟п╢п╟п╫п╦я▐ я│п╦я│я┌п╣п╪я▀ п╟п╨я│п╦п╬п╪ я│п╩я┐я┤п╟п╧п╫я▀п╪ п╬п╠я─п╟п╥п╬п╪ я│ я┐п╨п╟п╥п╟п╫п╦п╣п╪ 
+*					я─п╟п╥п╪п╣я─п╫п╬я│я┌п╦ п╫п╟п╠п╬я─п╟ п╢п╟п╫п╫я▀я┘ п╢п╩я▐ п╨п╟п╤п╢п╬пЁп╬ я┐я│п╩п╬п╡п╦я▐ п╦п╥ п╥п╟п╢п╟п╫п╫п╬пЁп╬ п╢п╦п╟п©п╟п╥п╬п╫п╟
+*	Parameters:		numOfAxioms  - я┤п╦я│п╩п╬ я│п╩я┐я┤п╟п╫п╬ п╡я▀п╠п╦я─п╦п╟п╣п╪я▀я┘ п╟п╨я│п╦п╬п╪
+*					maxECinAxiom - п╪п╟п╨я│п╦п╪п╟п╩я▄п╫п╬п╣ я┤п╦п╩я│п╬ я█п╩п╣п╪п╣п╫я┌п╟я─п╫я▀я┘ я┐я│п╩п╬п╡п╦п╧ п╨п╬я┌п╬я─я▀п╣ п╪п╬пЁя┐я┌ я│п╬я│я┌п╟п╡п╩я▐я┌я▄ п╬п╢п╫я┐ п╟п╨я│п╦п╬п╪я┐
+*					dimensionMin - п╪п╦п╫п╦п╪п╟п╩я▄п╫п╬п╣ п╥п╫п╟я┤п╣п╫п╦п╣ п╢п╩я▐ я─п╟п╥п╪п╣я─п╫п╬я│я┌п╦ п╦я│я┘п╬п╢п╫я▀я┘ п╢п╟п╫п╫я▀я┘
+*					dimensionMax - п╪п╟п╨я│п╦п╪п╟п╩я▄п╫п╬п╣ п╥п╫п╟я┤п╣п╫п╦п╣ п╢п╩я▐ я─п╟п╥п╪п╣я─п╫п╬я│я┌п╦ п╦я│я┘п╬п╢п╫я▀я┘ п╢п╟п╫п╫я▀я┘
+*	Returns:		0 - п╣я│п╩п╦ п╡я│п╣ п╫п╬я─п╪п╟п╩я▄п╬, п╡ п©я─п╬я┌п╦п╡п╫п╬п╪ я│п╩я┐я┤п╟п╣ п╡я▀я┘п╬п╢ п©п╬ throw 
 *	Throws:			-
 *	Author:			dk
 *	History:
@@ -391,13 +391,13 @@ int AxiomExprSet::initAxiomSetByRand (const int numOfAxioms, const int maxECinAx
 int AxiomExprSet::initAxiomSetByRand (const int numOfAxioms, const int maxECinAxiom, const int dimensionMin, const int dimensionMax) {
 	this->clear();
 	int numOfEC;
-	// Изменяем число аксиом в данной системе
+	// п≤п╥п╪п╣п╫я▐п╣п╪ я┤п╦я│п╩п╬ п╟п╨я│п╦п╬п╪ п╡ п╢п╟п╫п╫п╬п╧ я│п╦я│я┌п╣п╪п╣
 	this->axioms.resize(numOfAxioms);
 	for (int i = 0; i < numOfAxioms; i++) {
 		this->axioms[i] = new AxiomExpr();
-		// Случайным образом определяем сколько Элементарных Условий будут входить в i-ую аксиому
+		// п║п╩я┐я┤п╟п╧п╫я▀п╪ п╬п╠я─п╟п╥п╬п╪ п╬п©я─п╣п╢п╣п╩я▐п╣п╪ я│п╨п╬п╩я▄п╨п╬ п╜п╩п╣п╪п╣п╫я┌п╟я─п╫я▀я┘ пёя│п╩п╬п╡п╦п╧ п╠я┐п╢я┐я┌ п╡я┘п╬п╢п╦я┌я▄ п╡ i-я┐я▌ п╟п╨я│п╦п╬п╪я┐
 		numOfEC = round(((double) rand() / (double) RAND_MAX) * (maxECinAxiom-1) + 1);
-		// Определяем случайно новую аксиому
+		// п·п©я─п╣п╢п╣п╩я▐п╣п╪ я│п╩я┐я┤п╟п╧п╫п╬ п╫п╬п╡я┐я▌ п╟п╨я│п╦п╬п╪я┐
 		this->axioms[i]->initAxiomByRand(numOfEC, dimensionMin, dimensionMax);
 	}
 	return 0;
@@ -407,11 +407,11 @@ int AxiomExprSet::initAxiomSetByRand (const int numOfAxioms, const int maxECinAx
 /****************************************************************************
 *					AxiomExprSet::saveAxiomSetToFile
 *
-*	Description:	Функция сохранения системы аксиом в файл
-*	Parameters:		baseDir - директория, где находится запрашиваемый файл описания системы аксиом
-*					AxiomSetName - имя, под которым сохрянять данную систему аксиом
-*					first - число ошибок I рода данной системы аксиом на некоторой выборке
-*					second - число ошибок II рода данной системы аксиом на некоторой выборке
+*	Description:	п╓я┐п╫п╨я├п╦я▐ я│п╬я┘я─п╟п╫п╣п╫п╦я▐ я│п╦я│я┌п╣п╪я▀ п╟п╨я│п╦п╬п╪ п╡ я└п╟п╧п╩
+*	Parameters:		baseDir - п╢п╦я─п╣п╨я┌п╬я─п╦я▐, пЁп╢п╣ п╫п╟я┘п╬п╢п╦я┌я│я▐ п╥п╟п©я─п╟я┬п╦п╡п╟п╣п╪я▀п╧ я└п╟п╧п╩ п╬п©п╦я│п╟п╫п╦я▐ я│п╦я│я┌п╣п╪я▀ п╟п╨я│п╦п╬п╪
+*					AxiomSetName - п╦п╪я▐, п©п╬п╢ п╨п╬я┌п╬я─я▀п╪ я│п╬я┘я─я▐п╫я▐я┌я▄ п╢п╟п╫п╫я┐я▌ я│п╦я│я┌п╣п╪я┐ п╟п╨я│п╦п╬п╪
+*					first - я┤п╦я│п╩п╬ п╬я┬п╦п╠п╬п╨ I я─п╬п╢п╟ п╢п╟п╫п╫п╬п╧ я│п╦я│я┌п╣п╪я▀ п╟п╨я│п╦п╬п╪ п╫п╟ п╫п╣п╨п╬я┌п╬я─п╬п╧ п╡я▀п╠п╬я─п╨п╣
+*					second - я┤п╦я│п╩п╬ п╬я┬п╦п╠п╬п╨ II я─п╬п╢п╟ п╢п╟п╫п╫п╬п╧ я│п╦я│я┌п╣п╪я▀ п╟п╨я│п╦п╬п╪ п╫п╟ п╫п╣п╨п╬я┌п╬я─п╬п╧ п╡я▀п╠п╬я─п╨п╣
 *	Returns:		0
 *	Throws:			-
 *	Author:			dk
@@ -429,13 +429,13 @@ signed int AxiomExprSet::saveAxiomSetToFile (std::string baseDir, std::string ax
 /****************************************************************************
 *					AxiomExprSet::saveAxiomSetToFile
 *
-*	Description:	Функция сохранения системы аксиом в файл
-*					(с указанием размерости исходных данных для каждого элементарного условия)
-*	Parameters:		baseDir - директория, где находится запрашиваемый файл описания системы аксиом
-*					AxiomSetName - имя, под которым сохрянять данную систему аксиом
-*					dataSetParams - вектор названий размерностей исходных данных
-*					first - число ошибок I рода данной системы аксиом на некоторой выборке
-*					second - число ошибок II рода данной системы аксиом на некоторой выборке
+*	Description:	п╓я┐п╫п╨я├п╦я▐ я│п╬я┘я─п╟п╫п╣п╫п╦я▐ я│п╦я│я┌п╣п╪я▀ п╟п╨я│п╦п╬п╪ п╡ я└п╟п╧п╩
+*					(я│ я┐п╨п╟п╥п╟п╫п╦п╣п╪ я─п╟п╥п╪п╣я─п╬я│я┌п╦ п╦я│я┘п╬п╢п╫я▀я┘ п╢п╟п╫п╫я▀я┘ п╢п╩я▐ п╨п╟п╤п╢п╬пЁп╬ я█п╩п╣п╪п╣п╫я┌п╟я─п╫п╬пЁп╬ я┐я│п╩п╬п╡п╦я▐)
+*	Parameters:		baseDir - п╢п╦я─п╣п╨я┌п╬я─п╦я▐, пЁп╢п╣ п╫п╟я┘п╬п╢п╦я┌я│я▐ п╥п╟п©я─п╟я┬п╦п╡п╟п╣п╪я▀п╧ я└п╟п╧п╩ п╬п©п╦я│п╟п╫п╦я▐ я│п╦я│я┌п╣п╪я▀ п╟п╨я│п╦п╬п╪
+*					AxiomSetName - п╦п╪я▐, п©п╬п╢ п╨п╬я┌п╬я─я▀п╪ я│п╬я┘я─я▐п╫я▐я┌я▄ п╢п╟п╫п╫я┐я▌ я│п╦я│я┌п╣п╪я┐ п╟п╨я│п╦п╬п╪
+*					dataSetParams - п╡п╣п╨я┌п╬я─ п╫п╟п╥п╡п╟п╫п╦п╧ я─п╟п╥п╪п╣я─п╫п╬я│я┌п╣п╧ п╦я│я┘п╬п╢п╫я▀я┘ п╢п╟п╫п╫я▀я┘
+*					first - я┤п╦я│п╩п╬ п╬я┬п╦п╠п╬п╨ I я─п╬п╢п╟ п╢п╟п╫п╫п╬п╧ я│п╦я│я┌п╣п╪я▀ п╟п╨я│п╦п╬п╪ п╫п╟ п╫п╣п╨п╬я┌п╬я─п╬п╧ п╡я▀п╠п╬я─п╨п╣
+*					second - я┤п╦я│п╩п╬ п╬я┬п╦п╠п╬п╨ II я─п╬п╢п╟ п╢п╟п╫п╫п╬п╧ я│п╦я│я┌п╣п╪я▀ п╟п╨я│п╦п╬п╪ п╫п╟ п╫п╣п╨п╬я┌п╬я─п╬п╧ п╡я▀п╠п╬я─п╨п╣
 *	Returns:		0
 *	Throws:			-
 *	Author:			dk

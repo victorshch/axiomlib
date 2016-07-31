@@ -33,7 +33,7 @@ void orVector(std::vector<bool> &v1, const std::vector<bool> &v2) {
 }
 
 int joinResults (TrajectorySampleDistance &result, std::vector < TrajectorySampleDistance > &prelimResult) {
-	// если объединять то и нечего - то просто копируем результат и выходим
+	// п╣я│п╩п╦ п╬п╠я┼п╣п╢п╦п╫я▐я┌я▄ я┌п╬ п╦ п╫п╣я┤п╣пЁп╬ - я┌п╬ п©я─п╬я│я┌п╬ п╨п╬п©п╦я─я┐п╣п╪ я─п╣п╥я┐п╩я▄я┌п╟я┌ п╦ п╡я▀я┘п╬п╢п╦п╪
 	if (prelimResult.size() == 1) {
 		result = prelimResult[0];
 		return 0;
@@ -63,9 +63,9 @@ int joinResults (TrajectorySampleDistance &result, std::vector < TrajectorySampl
 
 void RecognizerReducedAdapter::computeDistances(AxiomSet& axiomSet, DataSet& dataSet, std::vector<int>& params, 
 											   std::vector<TrajectorySampleDistance >& result, 
-											   // какие аксиомы срабатывали при разметке эталонных траекторий
+											   // п╨п╟п╨п╦п╣ п╟п╨я│п╦п╬п╪я▀ я│я─п╟п╠п╟я┌я▀п╡п╟п╩п╦ п©я─п╦ я─п╟п╥п╪п╣я┌п╨п╣ я█я┌п╟п╩п╬п╫п╫я▀я┘ я┌я─п╟п╣п╨я┌п╬я─п╦п╧
 											   std::vector<bool> &refAxiomUsage, 
-											   // какие аксиомы срабатывали при разметке тестовых траекторий
+											   // п╨п╟п╨п╦п╣ п╟п╨я│п╦п╬п╪я▀ я│я─п╟п╠п╟я┌я▀п╡п╟п╩п╦ п©я─п╦ я─п╟п╥п╪п╣я┌п╨п╣ я┌п╣я│я┌п╬п╡я▀я┘ я┌я─п╟п╣п╨я┌п╬я─п╦п╧
 											   std::vector<bool> &testAxiomUsage) {
 	int nAxioms = axiomSet.size();
 	

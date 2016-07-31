@@ -1,8 +1,8 @@
 /****************************************************************************
 *				AXStage
 *
-*	Description: Класс, соответствующий стадии построения аксиом
-*				алгоритма FuzzyMultiDataExt
+*	Description: п п╩п╟я│я│, я│п╬п╬я┌п╡п╣я┌я│я┌п╡я┐я▌я┴п╦п╧ я│я┌п╟п╢п╦п╦ п©п╬я│я┌я─п╬п╣п╫п╦я▐ п╟п╨я│п╦п╬п╪
+*				п╟п╩пЁп╬я─п╦я┌п╪п╟ FuzzyMultiDataExt
 *	Author:		wictor
 *	History:	
 *
@@ -38,7 +38,7 @@ public:
 	
 	virtual void initFromEnv(const Environment& env) = 0;
 	
-	// Функции доступа к набору аксиом
+	// п╓я┐п╫п╨я├п╦п╦ п╢п╬я│я┌я┐п©п╟ п╨ п╫п╟п╠п╬я─я┐ п╟п╨я│п╦п╬п╪
 	virtual void setAxioms(const std::vector<std::vector<AxiomExprPlus> > &initial) = 0;
 	
 	virtual const AxiomExprPlus &getAX(int aType, int n) const = 0;

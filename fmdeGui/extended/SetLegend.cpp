@@ -15,8 +15,8 @@ SetLegend::SetLegend(QWidget *parent) : QFrame(parent) {
 	signalMapper = new QSignalMapper(this);
 	signalMapperCheck = new QSignalMapper(this);
 
-	QPushButton *selectAllButton = new QPushButton(encode("÷ÙÂÒÁÔØ ×ÓÅ"), 0);
-	QPushButton *deselectAllButton = new QPushButton(encode("ïÔÍÅÎÉÔØ ×ÓÅ"), 0);
+	QPushButton *selectAllButton = new QPushButton(encode("Ð’Ñ‹Ð±Ñ€Ð°Ñ‚ÑŒ Ð²ÑÐµ"), 0);
+	QPushButton *deselectAllButton = new QPushButton(encode("ÐžÑ‚Ð¼ÐµÐ½Ð¸Ñ‚ÑŒ Ð²ÑÐµ"), 0);
 
 	QVBoxLayout *topLevelLayout = new QVBoxLayout();
 
@@ -117,7 +117,7 @@ void SetLegend::insert(QwtLegendItemManager *newItem, QWidget *widget) {
 
 			curvesMap.insert(title);
 
-			//úÁÄÁÅÍ mapping ÄÌÑ ÓÉÇÎÁÌÁ ÎÁÖÁÔÉÑ legend item
+			//Ð—Ð°Ð´Ð°ÐµÐ¼ mapping Ð´Ð»Ñ ÑÐ¸Ð³Ð½Ð°Ð»Ð° Ð½Ð°Ð¶Ð°Ñ‚Ð¸Ñ legend item
 			//signalMapper->setMapping(frame, title);
 			connect(box, SIGNAL(clicked(const QString&)), this, SLOT(highlightItem(const QString&)));
 			connect(box,

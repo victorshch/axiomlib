@@ -1,7 +1,7 @@
 /****************************************************************************
 *					ECStatistics
 *
-*	Description:	Класс для загрузки/сохранения статистики по ЭУ
+*	Description:	п п╩п╟я│я│ п╢п╩я▐ п╥п╟пЁя─я┐п╥п╨п╦/я│п╬я┘я─п╟п╫п╣п╫п╦я▐ я│я┌п╟я┌п╦я│я┌п╦п╨п╦ п©п╬ п╜пё
 *	Author:			wictor
 *	History:	
 *
@@ -26,20 +26,20 @@ namespace AxiomLib {
 		
 	private:
 		
-		// Частота срабатывания на нормальном поведении
+		// п╖п╟я│я┌п╬я┌п╟ я│я─п╟п╠п╟я┌я▀п╡п╟п╫п╦я▐ п╫п╟ п╫п╬я─п╪п╟п╩я▄п╫п╬п╪ п©п╬п╡п╣п╢п╣п╫п╦п╦
 		double m_statNormal;
-		// Частота срабатывания на нештатном поведении
+		// п╖п╟я│я┌п╬я┌п╟ я│я─п╟п╠п╟я┌я▀п╡п╟п╫п╦я▐ п╫п╟ п╫п╣я┬я┌п╟я┌п╫п╬п╪ п©п╬п╡п╣п╢п╣п╫п╦п╦
 		double m_statAbnorm;
-		// Значение целевой функции
+		// п≈п╫п╟я┤п╣п╫п╦п╣ я├п╣п╩п╣п╡п╬п╧ я└я┐п╫п╨я├п╦п╦
 		double m_goal;
-		// Встречаемость
+		// п▓я│я┌я─п╣я┤п╟п╣п╪п╬я│я┌я▄
 		double m_statOccurence;
 		
 		friend class boost::serialization::access;
 		
 #define AXIOMLIB_MEMBER_NVP(mName) boost::serialization::make_nvp(#mName, m_##mName);
 		
-		// Описание сериализуемых членов класса
+		// п·п©п╦я│п╟п╫п╦п╣ я│п╣я─п╦п╟п╩п╦п╥я┐п╣п╪я▀я┘ я┤п╩п╣п╫п╬п╡ п╨п╩п╟я│я│п╟
 		template<class Archive>
 		void serialize(Archive & archive, const unsigned int /*version*/)
 		{
@@ -53,10 +53,10 @@ namespace AxiomLib {
 		
 	public:
 		
-		// Конструктор умолчания
+		// п п╬п╫я│я┌я─я┐п╨я┌п╬я─ я┐п╪п╬п╩я┤п╟п╫п╦я▐
 		ECStatistics() : m_statNormal(-1), m_statAbnorm(-1), m_goal(-1), m_statOccurence(-1) {}
 		
-		// Конструктор - создает объект по ElemCondPlusStat
+		// п п╬п╫я│я┌я─я┐п╨я┌п╬я─ - я│п╬п╥п╢п╟п╣я┌ п╬п╠я┼п╣п╨я┌ п©п╬ ElemCondPlusStat
 		ECStatistics(const ElemCondPlusStat &ec) {
 			m_statNormal = ec.statNormal;
 			m_statAbnorm = ec.statAbnorm;
@@ -68,9 +68,9 @@ namespace AxiomLib {
 		
 		double statOccurrence() const { return m_statOccurence; }
 		
-		// Копирование и присваивание реализовано по умолчанию так, как нужно
+		// п п╬п©п╦я─п╬п╡п╟п╫п╦п╣ п╦ п©я─п╦я│п╡п╟п╦п╡п╟п╫п╦п╣ я─п╣п╟п╩п╦п╥п╬п╡п╟п╫п╬ п©п╬ я┐п╪п╬п╩я┤п╟п╫п╦я▌ я┌п╟п╨, п╨п╟п╨ п╫я┐п╤п╫п╬
 		
-		// Копирует данные в объект ElemCondPlusStat
+		// п п╬п©п╦я─я┐п╣я┌ п╢п╟п╫п╫я▀п╣ п╡ п╬п╠я┼п╣п╨я┌ ElemCondPlusStat
 		void copyTo(ElemCondPlusStat &ec) const {
 			ec.statNormal = m_statNormal;
 			ec.statAbnorm = m_statAbnorm;
@@ -78,7 +78,7 @@ namespace AxiomLib {
 			ec.statOccurence = m_statOccurence;
 		}
 		
-		// Сохраняет объект в файл
+		// п║п╬я┘я─п╟п╫я▐п╣я┌ п╬п╠я┼п╣п╨я┌ п╡ я└п╟п╧п╩
 		void saveToFile(const std::string &fileName) const {
 			if(!boost::filesystem::exists(fileName.c_str())) {
 				boost::filesystem::path path(fileName.c_str());
@@ -98,7 +98,7 @@ namespace AxiomLib {
 			}
 		}
 		
-		// Загружает объект из файла
+		// п≈п╟пЁя─я┐п╤п╟п╣я┌ п╬п╠я┼п╣п╨я┌ п╦п╥ я└п╟п╧п╩п╟
 		void initFromFile(const std::string &fileName) {
 			std::ifstream ifstr(fileName.c_str());
 			if(ifstr.good())

@@ -1,7 +1,7 @@
 /****************************************************************************
 *			NeuralAuxSupplier.cxx
 *
-*	Description: Реализация того, что описано в NeuralAuxSupplier.h
+*	Description: п═п╣п╟п╩п╦п╥п╟я├п╦я▐ я┌п╬пЁп╬, я┤я┌п╬ п╬п©п╦я│п╟п╫п╬ п╡ NeuralAuxSupplier.h
 *	Author:		wictor
 *	History:	
 *
@@ -17,12 +17,12 @@ namespace AxiomLib {
 /****************************************************************************
 *					NeuralAuxSupplier<NetWrapper>::construct
 *
-*	Description:	Инициализация по настройкам
-*					тип Settings должен иметь члены int numAux, double auxDiff
-*					и удовлетворять NetWrapper::construct
-*	Parameters:	const Settings &settings - настройки
+*	Description:	п≤п╫п╦я├п╦п╟п╩п╦п╥п╟я├п╦я▐ п©п╬ п╫п╟я│я┌я─п╬п╧п╨п╟п╪
+*					я┌п╦п© Settings п╢п╬п╩п╤п╣п╫ п╦п╪п╣я┌я▄ я┤п╩п╣п╫я▀ int numAux, double auxDiff
+*					п╦ я┐п╢п╬п╡п╩п╣я┌п╡п╬я─я▐я┌я▄ NetWrapper::construct
+*	Parameters:	const Settings &settings - п╫п╟я│я┌я─п╬п╧п╨п╦
 *	Returns:	-
-*	Throws:		AxiomLibException, если numAux < 0 || auxDiff <= 0
+*	Throws:		AxiomLibException, п╣я│п╩п╦ numAux < 0 || auxDiff <= 0
 *	Author:		wictor
 *	History:
 *

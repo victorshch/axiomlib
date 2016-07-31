@@ -1,7 +1,7 @@
 /****************************************************************************
-*			Функции класса RefMarkupSet.h
+*			п╓я┐п╫п╨я├п╦п╦ п╨п╩п╟я│я│п╟ RefMarkupSet.h
 *
-*	Description:	Эталонная разметка для класса неисправностей - Реализация
+*	Description:	п╜я┌п╟п╩п╬п╫п╫п╟я▐ я─п╟п╥п╪п╣я┌п╨п╟ п╢п╩я▐ п╨п╩п╟я│я│п╟ п╫п╣п╦я│п©я─п╟п╡п╫п╬я│я┌п╣п╧ - п═п╣п╟п╩п╦п╥п╟я├п╦я▐
 *	Author:		dk
 *	History:		
 *
@@ -11,20 +11,20 @@
 
 using namespace AxiomLib;
 
-// Конструктор  - с заданием внутренних переменных по умолчанию
+// п п╬п╫я│я┌я─я┐п╨я┌п╬я─  - я│ п╥п╟п╢п╟п╫п╦п╣п╪ п╡п╫я┐я┌я─п╣п╫п╫п╦я┘ п©п╣я─п╣п╪п╣п╫п╫я▀я┘ п©п╬ я┐п╪п╬п╩я┤п╟п╫п╦я▌
 RefMarkupSet::RefMarkupSet () {
 	precision = 0.0;
 	refMarkups.resize(0);
 }
 
 
-// Пустой (пока) деструктор
+// п÷я┐я│я┌п╬п╧ (п©п╬п╨п╟) п╢п╣я│я┌я─я┐п╨я┌п╬я─
 RefMarkupSet::~RefMarkupSet () {
 
 }
 
 
-// Функция задания новых значений внутренних переменных
+// п╓я┐п╫п╨я├п╦я▐ п╥п╟п╢п╟п╫п╦я▐ п╫п╬п╡я▀я┘ п╥п╫п╟я┤п╣п╫п╦п╧ п╡п╫я┐я┌я─п╣п╫п╫п╦я┘ п©п╣я─п╣п╪п╣п╫п╫я▀я┘
 int RefMarkupSet::setPrecision (const double newPrecision) {
 	if ((newPrecision < 0.0) || (newPrecision > 1.0)) {
 		throw AxiomLibException ("Error in RefMarkupSet::setPrecision: input parameter out of range");
@@ -37,39 +37,39 @@ int RefMarkupSet::setPrecision (const double newPrecision) {
 /****************************************************************************
 *					RefMarkupSet::processRes
 *
-*	Description:	Функция генерации расширенной разметки ряда по 
-*				обычной разметке - когда каждой точке соответсвует 
-*				какая-либо аксиома
-*	Parameters:	resRef - исходная разметка ряда
-*				axiomTypes - заполняемая разметка ряда
-*				axiomMinLen - заполняемые параметры разметки
-*				axiomMaxLen - заполняемые параметры разметки
+*	Description:	п╓я┐п╫п╨я├п╦я▐ пЁп╣п╫п╣я─п╟я├п╦п╦ я─п╟я│я┬п╦я─п╣п╫п╫п╬п╧ я─п╟п╥п╪п╣я┌п╨п╦ я─я▐п╢п╟ п©п╬ 
+*				п╬п╠я▀я┤п╫п╬п╧ я─п╟п╥п╪п╣я┌п╨п╣ - п╨п╬пЁп╢п╟ п╨п╟п╤п╢п╬п╧ я┌п╬я┤п╨п╣ я│п╬п╬я┌п╡п╣я┌я│п╡я┐п╣я┌ 
+*				п╨п╟п╨п╟я▐-п╩п╦п╠п╬ п╟п╨я│п╦п╬п╪п╟
+*	Parameters:	resRef - п╦я│я┘п╬п╢п╫п╟я▐ я─п╟п╥п╪п╣я┌п╨п╟ я─я▐п╢п╟
+*				axiomTypes - п╥п╟п©п╬п╩п╫я▐п╣п╪п╟я▐ я─п╟п╥п╪п╣я┌п╨п╟ я─я▐п╢п╟
+*				axiomMinLen - п╥п╟п©п╬п╩п╫я▐п╣п╪я▀п╣ п©п╟я─п╟п╪п╣я┌я─я▀ я─п╟п╥п╪п╣я┌п╨п╦
+*				axiomMaxLen - п╥п╟п©п╬п╩п╫я▐п╣п╪я▀п╣ п©п╟я─п╟п╪п╣я┌я─я▀ я─п╟п╥п╪п╣я┌п╨п╦
 *	Returns:		0
-*	Throws:		AxiomLibException - если исходная разметка пуста
+*	Throws:		AxiomLibException - п╣я│п╩п╦ п╦я│я┘п╬п╢п╫п╟я▐ я─п╟п╥п╪п╣я┌п╨п╟ п©я┐я│я┌п╟
 *	Author:		dk
 *	History:
 *
 ****************************************************************************/
 signed int RefMarkupSet::processRes (std::vector<int> &resRef, std::vector<int> &axiomTypes, std::vector<int> &axiomMinLen, std::vector<int> &axiomMaxLen) {
-	// Проверка на корректность параметров
+	// п÷я─п╬п╡п╣я─п╨п╟ п╫п╟ п╨п╬я─я─п╣п╨я┌п╫п╬я│я┌я▄ п©п╟я─п╟п╪п╣я┌я─п╬п╡
 	if (resRef.size() <= 0) {
 		throw AxiomLibException ("Error in RefMarkupSet::processRes: empty resRef - nothing to process.");
 	}
-	// Подсчитываем число элементов в заполняемых векторах
+	// п÷п╬п╢я│я┤п╦я┌я▀п╡п╟п╣п╪ я┤п╦я│п╩п╬ я█п╩п╣п╪п╣п╫я┌п╬п╡ п╡ п╥п╟п©п╬п╩п╫я▐п╣п╪я▀я┘ п╡п╣п╨я┌п╬я─п╟я┘
 	int numOfCng = 1;
 	for (unsigned int j = 1; j < resRef.size(); j++) {
 		if (resRef[j] != resRef[j-1]) {
 			numOfCng++;
 		}
 	}
-	// Подготавливаем к заполнению вектора
+	// п÷п╬п╢пЁп╬я┌п╟п╡п╩п╦п╡п╟п╣п╪ п╨ п╥п╟п©п╬п╩п╫п╣п╫п╦я▌ п╡п╣п╨я┌п╬я─п╟
 	int curMin = 1;
 	int curMax = 1;
 	axiomTypes.resize(numOfCng);
 	axiomTypes[0] = resRef[0];
 	axiomMinLen.resize(numOfCng);
 	axiomMaxLen.resize(numOfCng);
-	// Переходим к итеративному заполнению векторов
+	// п÷п╣я─п╣я┘п╬п╢п╦п╪ п╨ п╦я┌п╣я─п╟я┌п╦п╡п╫п╬п╪я┐ п╥п╟п©п╬п╩п╫п╣п╫п╦я▌ п╡п╣п╨я┌п╬я─п╬п╡
 	int h = 1;
 	for (int i = 1; i < (int) resRef.size(); i++) {
 		if (resRef[i] != resRef[i-1]) {
@@ -96,10 +96,10 @@ signed int RefMarkupSet::processRes (std::vector<int> &resRef, std::vector<int> 
 /****************************************************************************
 *					RefMarkupSet::addRefMarkup
 *
-*	Description:	Добавление новой эталонной разметки данной системой аксиом
-*	Parameters:	refPattern - временной ряд для разметки системой аксиом и добавления 
-*				к эталонной разметке
-*				as - система аксиом для разметки
+*	Description:	п■п╬п╠п╟п╡п╩п╣п╫п╦п╣ п╫п╬п╡п╬п╧ я█я┌п╟п╩п╬п╫п╫п╬п╧ я─п╟п╥п╪п╣я┌п╨п╦ п╢п╟п╫п╫п╬п╧ я│п╦я│я┌п╣п╪п╬п╧ п╟п╨я│п╦п╬п╪
+*	Parameters:	refPattern - п╡я─п╣п╪п╣п╫п╫п╬п╧ я─я▐п╢ п╢п╩я▐ я─п╟п╥п╪п╣я┌п╨п╦ я│п╦я│я┌п╣п╪п╬п╧ п╟п╨я│п╦п╬п╪ п╦ п╢п╬п╠п╟п╡п╩п╣п╫п╦я▐ 
+*				п╨ я█я┌п╟п╩п╬п╫п╫п╬п╧ я─п╟п╥п╪п╣я┌п╨п╣
+*				as - я│п╦я│я┌п╣п╪п╟ п╟п╨я│п╦п╬п╪ п╢п╩я▐ я─п╟п╥п╪п╣я┌п╨п╦
 *	Returns:		void
 *	Throws:		-
 *	Author:		dk
@@ -109,15 +109,15 @@ signed int RefMarkupSet::processRes (std::vector<int> &resRef, std::vector<int> 
 void RefMarkupSet::addRefMarkup(std::vector<double>& refPattern, AxiomSet& as, const bool comments) {
 	//std::cout << "Adding reference markup to the set with size " << refMarkups.size() << ": ";
 
-	// Создаем ряд для хранения разметки
+	// п║п╬п╥п╢п╟п╣п╪ я─я▐п╢ п╢п╩я▐ я┘я─п╟п╫п╣п╫п╦я▐ я─п╟п╥п╪п╣я┌п╨п╦
 	std::vector<int> resRef;
-	// Размечаем временной ряд
+	// п═п╟п╥п╪п╣я┤п╟п╣п╪ п╡я─п╣п╪п╣п╫п╫п╬п╧ я─я▐п╢
 	as.enter(resRef, refPattern, 0, (unsigned long) refPattern.size());
-	// Подготавливаем ряды для записи расширенной разметки
+	// п÷п╬п╢пЁп╬я┌п╟п╡п╩п╦п╡п╟п╣п╪ я─я▐п╢я▀ п╢п╩я▐ п╥п╟п©п╦я│п╦ я─п╟я│я┬п╦я─п╣п╫п╫п╬п╧ я─п╟п╥п╪п╣я┌п╨п╦
 	std::vector<int> axiomTypes;
 	std::vector<int> axiomMinLen;
 	std::vector<int> axiomMaxLen;
-	// Производство расширенной разметки
+	// п÷я─п╬п╦п╥п╡п╬п╢я│я┌п╡п╬ я─п╟я│я┬п╦я─п╣п╫п╫п╬п╧ я─п╟п╥п╪п╣я┌п╨п╦
 	processRes (resRef, axiomTypes, axiomMinLen, axiomMaxLen);
 	if (comments) {
 		std::cout << "\n	Axioms";
@@ -134,11 +134,11 @@ void RefMarkupSet::addRefMarkup(std::vector<double>& refPattern, AxiomSet& as, c
 		}
 		std::cout << "\n";
 	}
-	// Запись произведенной разметки
+	// п≈п╟п©п╦я│я▄ п©я─п╬п╦п╥п╡п╣п╢п╣п╫п╫п╬п╧ я─п╟п╥п╪п╣я┌п╨п╦
 	int flag = 0;
 	RefMarkup temp;
 	std::vector<RefMarkup>::iterator setIter;
-	// Пробуем добавить параметры к уже существуеющей такой же разметкой
+	// п÷я─п╬п╠я┐п╣п╪ п╢п╬п╠п╟п╡п╦я┌я▄ п©п╟я─п╟п╪п╣я┌я─я▀ п╨ я┐п╤п╣ я│я┐я┴п╣я│я┌п╡я┐п╣я▌я┴п╣п╧ я┌п╟п╨п╬п╧ п╤п╣ я─п╟п╥п╪п╣я┌п╨п╬п╧
 	for (setIter = refMarkups.begin(); setIter != refMarkups.end(); ++setIter) {
 		temp = *setIter; 
 		flag = temp.addLens (axiomTypes, axiomMinLen, axiomMaxLen);
@@ -146,7 +146,7 @@ void RefMarkupSet::addRefMarkup(std::vector<double>& refPattern, AxiomSet& as, c
 			break;
 		}
 	}
-	// Если такой же разметки не нашлось - то добавляем ее как новую
+	// п∙я│п╩п╦ я┌п╟п╨п╬п╧ п╤п╣ я─п╟п╥п╪п╣я┌п╨п╦ п╫п╣ п╫п╟я┬п╩п╬я│я▄ - я┌п╬ п╢п╬п╠п╟п╡п╩я▐п╣п╪ п╣п╣ п╨п╟п╨ п╫п╬п╡я┐я▌
 	if (flag == 0) {
 		RefMarkup rmu;
 		rmu.create(axiomTypes, axiomMinLen, axiomMaxLen);
@@ -161,8 +161,8 @@ void RefMarkupSet::addRefMarkup(std::vector<double>& refPattern, AxiomSet& as, c
 /****************************************************************************
 *					RefMarkupSet::addRefMarkup
 *
-*	Description:	Добавление новой эталонной разметки к данному классу
-*	Parameters:	refRes - добавляемая разметка в стандартном виде - последовательность аксиом без ограничений
+*	Description:	п■п╬п╠п╟п╡п╩п╣п╫п╦п╣ п╫п╬п╡п╬п╧ я█я┌п╟п╩п╬п╫п╫п╬п╧ я─п╟п╥п╪п╣я┌п╨п╦ п╨ п╢п╟п╫п╫п╬п╪я┐ п╨п╩п╟я│я│я┐
+*	Parameters:	refRes - п╢п╬п╠п╟п╡п╩я▐п╣п╪п╟я▐ я─п╟п╥п╪п╣я┌п╨п╟ п╡ я│я┌п╟п╫п╢п╟я─я┌п╫п╬п╪ п╡п╦п╢п╣ - п©п╬я│п╩п╣п╢п╬п╡п╟я┌п╣п╩я▄п╫п╬я│я┌я▄ п╟п╨я│п╦п╬п╪ п╠п╣п╥ п╬пЁя─п╟п╫п╦я┤п╣п╫п╦п╧
 *	Returns:		void
 *	Throws:		-
 *	Author:		dk
@@ -170,11 +170,11 @@ void RefMarkupSet::addRefMarkup(std::vector<double>& refPattern, AxiomSet& as, c
 *
 ****************************************************************************/
 void RefMarkupSet::addRefMarkup(std::vector<int> &resRef, const bool comments) {
-	// Подготавливаем ряды для записи расширенной разметки
+	// п÷п╬п╢пЁп╬я┌п╟п╡п╩п╦п╡п╟п╣п╪ я─я▐п╢я▀ п╢п╩я▐ п╥п╟п©п╦я│п╦ я─п╟я│я┬п╦я─п╣п╫п╫п╬п╧ я─п╟п╥п╪п╣я┌п╨п╦
 	std::vector<int> axiomTypes;
 	std::vector<int> axiomMinLen;
 	std::vector<int> axiomMaxLen;
-	// Производство расширенной разметки
+	// п÷я─п╬п╦п╥п╡п╬п╢я│я┌п╡п╬ я─п╟я│я┬п╦я─п╣п╫п╫п╬п╧ я─п╟п╥п╪п╣я┌п╨п╦
 	processRes (resRef, axiomTypes, axiomMinLen, axiomMaxLen);
 	if (comments) {
 		std::cout << "\n	Axioms";
@@ -191,11 +191,11 @@ void RefMarkupSet::addRefMarkup(std::vector<int> &resRef, const bool comments) {
 		}
 		std::cout << "\n";
 	}
-	// Запись произведенной разметки
+	// п≈п╟п©п╦я│я▄ п©я─п╬п╦п╥п╡п╣п╢п╣п╫п╫п╬п╧ я─п╟п╥п╪п╣я┌п╨п╦
 	int flag = 0;
 	RefMarkup temp;
 	std::vector<RefMarkup>::iterator setIter;
-	// Пробуем добавить параметры к уже существуеющей такой же разметкой
+	// п÷я─п╬п╠я┐п╣п╪ п╢п╬п╠п╟п╡п╦я┌я▄ п©п╟я─п╟п╪п╣я┌я─я▀ п╨ я┐п╤п╣ я│я┐я┴п╣я│я┌п╡я┐п╣я▌я┴п╣п╧ я┌п╟п╨п╬п╧ п╤п╣ я─п╟п╥п╪п╣я┌п╨п╬п╧
 	for (setIter = refMarkups.begin(); setIter != refMarkups.end(); ++setIter) {
 		temp = *setIter; 
 		flag = temp.addLens (axiomTypes, axiomMinLen, axiomMaxLen);
@@ -203,7 +203,7 @@ void RefMarkupSet::addRefMarkup(std::vector<int> &resRef, const bool comments) {
 			break;
 		}
 	}
-	// Если такой же разметки не нашлось - то добавляем ее как новую
+	// п∙я│п╩п╦ я┌п╟п╨п╬п╧ п╤п╣ я─п╟п╥п╪п╣я┌п╨п╦ п╫п╣ п╫п╟я┬п╩п╬я│я▄ - я┌п╬ п╢п╬п╠п╟п╡п╩я▐п╣п╪ п╣п╣ п╨п╟п╨ п╫п╬п╡я┐я▌
 	if (flag == 0) {
 		RefMarkup rmu;
 		rmu.create(axiomTypes, axiomMinLen, axiomMaxLen);
@@ -218,16 +218,16 @@ void RefMarkupSet::addRefMarkup(std::vector<int> &resRef, const bool comments) {
 /****************************************************************************
 *					RefMarkupSet::check 
 *
-*	Description:	Функция проверки - подходит ли какая либо из разметок
-*				класса к вектору расшиеренной разметки во вхоном параметре.
-*				То есть проверяется - найдется ли в конце входного ряда аксиом 
-*				какая либо из раметок данного класса. (нахождение в конце - 
-*				подразумевает, что последняя аксиома расширенной разметки 
-*				входного ряда должна совпадать с последней аксиомой 
-*				эталонной разметки)
-*	Parameters:	axiomTypes - входной ряд аксиом (разметка ряда)
-*				axiomLen - параметры разметки
-*				upTo - конец ряда (ряд возможно заполнен лишь до этой точки)
+*	Description:	п╓я┐п╫п╨я├п╦я▐ п©я─п╬п╡п╣я─п╨п╦ - п©п╬п╢я┘п╬п╢п╦я┌ п╩п╦ п╨п╟п╨п╟я▐ п╩п╦п╠п╬ п╦п╥ я─п╟п╥п╪п╣я┌п╬п╨
+*				п╨п╩п╟я│я│п╟ п╨ п╡п╣п╨я┌п╬я─я┐ я─п╟я│я┬п╦п╣я─п╣п╫п╫п╬п╧ я─п╟п╥п╪п╣я┌п╨п╦ п╡п╬ п╡я┘п╬п╫п╬п╪ п©п╟я─п╟п╪п╣я┌я─п╣.
+*				п╒п╬ п╣я│я┌я▄ п©я─п╬п╡п╣я─я▐п╣я┌я│я▐ - п╫п╟п╧п╢п╣я┌я│я▐ п╩п╦ п╡ п╨п╬п╫я├п╣ п╡я┘п╬п╢п╫п╬пЁп╬ я─я▐п╢п╟ п╟п╨я│п╦п╬п╪ 
+*				п╨п╟п╨п╟я▐ п╩п╦п╠п╬ п╦п╥ я─п╟п╪п╣я┌п╬п╨ п╢п╟п╫п╫п╬пЁп╬ п╨п╩п╟я│я│п╟. (п╫п╟я┘п╬п╤п╢п╣п╫п╦п╣ п╡ п╨п╬п╫я├п╣ - 
+*				п©п╬п╢я─п╟п╥я┐п╪п╣п╡п╟п╣я┌, я┤я┌п╬ п©п╬я│п╩п╣п╢п╫я▐я▐ п╟п╨я│п╦п╬п╪п╟ я─п╟я│я┬п╦я─п╣п╫п╫п╬п╧ я─п╟п╥п╪п╣я┌п╨п╦ 
+*				п╡я┘п╬п╢п╫п╬пЁп╬ я─я▐п╢п╟ п╢п╬п╩п╤п╫п╟ я│п╬п╡п©п╟п╢п╟я┌я▄ я│ п©п╬я│п╩п╣п╢п╫п╣п╧ п╟п╨я│п╦п╬п╪п╬п╧ 
+*				я█я┌п╟п╩п╬п╫п╫п╬п╧ я─п╟п╥п╪п╣я┌п╨п╦)
+*	Parameters:	axiomTypes - п╡я┘п╬п╢п╫п╬п╧ я─я▐п╢ п╟п╨я│п╦п╬п╪ (я─п╟п╥п╪п╣я┌п╨п╟ я─я▐п╢п╟)
+*				axiomLen - п©п╟я─п╟п╪п╣я┌я─я▀ я─п╟п╥п╪п╣я┌п╨п╦
+*				upTo - п╨п╬п╫п╣я├ я─я▐п╢п╟ (я─я▐п╢ п╡п╬п╥п╪п╬п╤п╫п╬ п╥п╟п©п╬п╩п╫п╣п╫ п╩п╦я┬я▄ п╢п╬ я█я┌п╬п╧ я┌п╬я┤п╨п╦)
 *	Returns:		0
 *	Throws:		-
 *	Author:		dk
@@ -235,12 +235,12 @@ void RefMarkupSet::addRefMarkup(std::vector<int> &resRef, const bool comments) {
 *
 ****************************************************************************/
 signed int RefMarkupSet::check (std::vector<int> &axiomTypes, std::vector<int> &axiomLen, long int upTo) {
-	// Пробегаем по всем разметкам и смотрим - найдется ли подходящая
+	// п÷я─п╬п╠п╣пЁп╟п╣п╪ п©п╬ п╡я│п╣п╪ я─п╟п╥п╪п╣я┌п╨п╟п╪ п╦ я│п╪п╬я┌я─п╦п╪ - п╫п╟п╧п╢п╣я┌я│я▐ п╩п╦ п©п╬п╢я┘п╬п╢я▐я┴п╟я▐
 	RefMarkup temp;
 	std::vector<RefMarkup>::iterator setIter;
 	int flag = 0;
 //	cout << "Checking the set with size" << refMarkups.size() << ": ";
-	// Пробуем добавить параметры к уже существуеющей такой же разметкой
+	// п÷я─п╬п╠я┐п╣п╪ п╢п╬п╠п╟п╡п╦я┌я▄ п©п╟я─п╟п╪п╣я┌я─я▀ п╨ я┐п╤п╣ я│я┐я┴п╣я│я┌п╡я┐п╣я▌я┴п╣п╧ я┌п╟п╨п╬п╧ п╤п╣ я─п╟п╥п╪п╣я┌п╨п╬п╧
 	for (setIter = refMarkups.begin(); setIter != refMarkups.end(); ++setIter) {
 		temp = *setIter; 
 		flag = temp.check(axiomTypes, axiomLen, upTo);

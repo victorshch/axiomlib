@@ -19,7 +19,7 @@ using namespace FuzzyMultiDataExt;
 
 ECOccFilter::ECOccFilter()
 {
-	// Значения по умолчанию
+	// п≈п╫п╟я┤п╣п╫п╦я▐ п©п╬ я┐п╪п╬п╩я┤п╟п╫п╦я▌
 	this->setOrder(2);
 	m_maxECs = 50;
 	m_offset = 0.2;
@@ -94,7 +94,7 @@ private:
 };
 
 void ECOccFilter::run(FuzzyMultiDataExtAlgorithm &algorithm, int abType) const {
-	// TODO сделать нормальный комментарий
+	// TODO я│п╢п╣п╩п╟я┌я▄ п╫п╬я─п╪п╟п╩я▄п╫я▀п╧ п╨п╬п╪п╪п╣п╫я┌п╟я─п╦п╧
 	
 	typedef std::deque<FuzzyMultiDataExtAlgorithm::ECIndex> EcVectorType;
 	
@@ -122,7 +122,7 @@ void ECOccFilter::run(FuzzyMultiDataExtAlgorithm &algorithm, int abType) const {
 		}
 	}
 	
-	// Порог -- макс. встречаемость минус отступ
+	// п÷п╬я─п╬пЁ -- п╪п╟п╨я│. п╡я│я┌я─п╣я┤п╟п╣п╪п╬я│я┌я▄ п╪п╦п╫я┐я│ п╬я┌я│я┌я┐п©
 	double threshold = maxOccurrence - m_offset;
 	
 	ecs.clear();
@@ -137,7 +137,7 @@ void ECOccFilter::run(FuzzyMultiDataExtAlgorithm &algorithm, int abType) const {
 							&& currentEC.statOccVector.size() > 0) {
 						for(int i = 0; i < ecs.size(); i++) {
 							if(currentEC.statOccVector[i]) {
-								// Кладем в ecs[i] индекс ЭУ, встречающегося на i-й траектории
+								// п п╩п╟п╢п╣п╪ п╡ ecs[i] п╦п╫п╢п╣п╨я│ п╜пё, п╡я│я┌я─п╣я┤п╟я▌я┴п╣пЁп╬я│я▐ п╫п╟ i-п╧ я┌я─п╟п╣п╨я┌п╬я─п╦п╦
 								ecs[i].push_back(ecIndex);
 							}
 						}
@@ -150,7 +150,7 @@ void ECOccFilter::run(FuzzyMultiDataExtAlgorithm &algorithm, int abType) const {
 	
 	//logger->writeComment("ECs after threshold: "+boost::lexical_cast<std::string>(std::accumulate()));
 	
-	// Сортируем каждый дек по значению целевой функции и встречаемости
+	// п║п╬я─я┌п╦я─я┐п╣п╪ п╨п╟п╤п╢я▀п╧ п╢п╣п╨ п©п╬ п╥п╫п╟я┤п╣п╫п╦я▌ я├п╣п╩п╣п╡п╬п╧ я└я┐п╫п╨я├п╦п╦ п╦ п╡я│я┌я─п╣я┤п╟п╣п╪п╬я│я┌п╦
 	for(auto it = ecs.begin(); it != ecs.end(); it++) {
 		std::sort(it->begin(), it->end(), 
 				  ecComparer(algorithm));
@@ -160,7 +160,7 @@ void ECOccFilter::run(FuzzyMultiDataExtAlgorithm &algorithm, int abType) const {
 	std::fill(saturation.begin(), saturation.end(), 0);
 
 	{
-		// Формируем в indices индексы непустых векторов из ecs
+		// п╓п╬я─п╪п╦я─я┐п╣п╪ п╡ indices п╦п╫п╢п╣п╨я│я▀ п╫п╣п©я┐я│я┌я▀я┘ п╡п╣п╨я┌п╬я─п╬п╡ п╦п╥ ecs
 		for(int i = 0; i < multiTSCount; ++i)
 		{
 			indices.push_back(i);
@@ -199,7 +199,7 @@ void ECOccFilter::run(FuzzyMultiDataExtAlgorithm &algorithm, int abType) const {
 			break;				
 		}
 					
-		//Находим индекс траектории с минимальным насыщением и индекс еще не выбранного ЭУ
+		//п²п╟я┘п╬п╢п╦п╪ п╦п╫п╢п╣п╨я│ я┌я─п╟п╣п╨я┌п╬я─п╦п╦ я│ п╪п╦п╫п╦п╪п╟п╩я▄п╫я▀п╪ п╫п╟я│я▀я┴п╣п╫п╦п╣п╪ п╦ п╦п╫п╢п╣п╨я│ п╣я┴п╣ п╫п╣ п╡я▀п╠я─п╟п╫п╫п╬пЁп╬ п╜пё
 		while(!indices.empty()) {
 			currentIndexIter = std::min_element(indices.begin(), indices.end(), 
 												indexComparer(saturation));
@@ -230,7 +230,7 @@ void ECOccFilter::run(FuzzyMultiDataExtAlgorithm &algorithm, int abType) const {
 		}					
 	}
 				
-	// TODO функция слишком большая, сделать декомпозицию
+	// TODO я└я┐п╫п╨я├п╦я▐ я│п╩п╦я┬п╨п╬п╪ п╠п╬п╩я▄я┬п╟я▐, я│п╢п╣п╩п╟я┌я▄ п╢п╣п╨п╬п╪п©п╬п╥п╦я├п╦я▌
 }
 
 const double epsilon = 1e-6;

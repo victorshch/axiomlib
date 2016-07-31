@@ -32,7 +32,7 @@ void Heuristics::setOrder(int value) {
 }
 
 void Heuristics::run(FuzzyMultiDataExtAlgorithm &algorithm, int classNo) const {
-	// при наследовании класса Heuristics необходимо переопределить один из методов run
+	// п©я─п╦ п╫п╟я│п╩п╣п╢п╬п╡п╟п╫п╦п╦ п╨п╩п╟я│я│п╟ Heuristics п╫п╣п╬п╠я┘п╬п╢п╦п╪п╬ п©п╣я─п╣п╬п©я─п╣п╢п╣п╩п╦я┌я▄ п╬п╢п╦п╫ п╦п╥ п╪п╣я┌п╬п╢п╬п╡ run
 	throw AxiomLibException("Heuristics::run() : method not implemented");
 }
 
@@ -56,7 +56,7 @@ void Heuristics::initFromEnv(const Environment &env) {
 
 void Heuristics::run(FuzzyMultiDataExtAlgorithm &algorithm) const {
 	
-	// 1. Формируем набор номеров классов, выбранных для применения эвристики
+	// 1. п╓п╬я─п╪п╦я─я┐п╣п╪ п╫п╟п╠п╬я─ п╫п╬п╪п╣я─п╬п╡ п╨п╩п╟я│я│п╬п╡, п╡я▀п╠я─п╟п╫п╫я▀я┘ п╢п╩я▐ п©я─п╦п╪п╣п╫п╣п╫п╦я▐ я█п╡я─п╦я│я┌п╦п╨п╦
 	std::vector<std::string> allClassNames = algorithm.getDataSet().getClassNames();
 	const std::vector<std::string>& classNames = m_classNames.empty() ? allClassNames : m_classNames;
 	
@@ -67,18 +67,18 @@ void Heuristics::run(FuzzyMultiDataExtAlgorithm &algorithm) const {
 		int index = isIn(*it, allClassNames);
 		
 		if(index < 0) {
-			// Плохо, что эта ошибка ловится только здесь, а не в initFromEnv
-			// Но оттуда не виден датасет
+			// п÷п╩п╬я┘п╬, я┤я┌п╬ я█я┌п╟ п╬я┬п╦п╠п╨п╟ п╩п╬п╡п╦я┌я│я▐ я┌п╬п╩я▄п╨п╬ п╥п╢п╣я│я▄, п╟ п╫п╣ п╡ initFromEnv
+			// п²п╬ п╬я┌я┌я┐п╢п╟ п╫п╣ п╡п╦п╢п╣п╫ п╢п╟я┌п╟я│п╣я┌
 			throw AxiomLibException("Heuristics::run(): invalid class name : "+*it);
 		}
 		
 		classNums.push_back(index);
 	}
 	
-	// 2. Сортируем, чтобы был канонический порядок
+	// 2. п║п╬я─я┌п╦я─я┐п╣п╪, я┤я┌п╬п╠я▀ п╠я▀п╩ п╨п╟п╫п╬п╫п╦я┤п╣я│п╨п╦п╧ п©п╬я─я▐п╢п╬п╨
 	std::sort(classNums.begin(), classNums.end());
 	
-	// 3. Применяем эвристики к выбранным классам
+	// 3. п÷я─п╦п╪п╣п╫я▐п╣п╪ я█п╡я─п╦я│я┌п╦п╨п╦ п╨ п╡я▀п╠я─п╟п╫п╫я▀п╪ п╨п╩п╟я│я│п╟п╪
 	for(auto it = classNums.begin(); it != classNums.end(); ++it) {
 		int classNo = *it;
 		

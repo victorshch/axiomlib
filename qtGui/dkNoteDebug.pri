@@ -1,19 +1,19 @@
-### Задание папки, куда будет положен исполняемый файл ###
+### п≈п╟п╢п╟п╫п╦п╣ п©п╟п©п╨п╦, п╨я┐п╢п╟ п╠я┐п╢п╣я┌ п©п╬п╩п╬п╤п╣п╫ п╦я│п©п╬п╩п╫я▐п╣п╪я▀п╧ я└п╟п╧п╩ ###
 DESTDIR = ./
 
-### Конфигурация - release или debug, можно добавить warn_off ###
+### п п╬п╫я└п╦пЁя┐я─п╟я├п╦я▐ - release п╦п╩п╦ debug, п╪п╬п╤п╫п╬ п╢п╬п╠п╟п╡п╦я┌я▄ warn_off ###
 CONFIG += debug
 
 
-### Пути include'ов ###
+### п÷я┐я┌п╦ include'п╬п╡ ###
 win32 {
-# Пути к include'ам
+# п÷я┐я┌п╦ п╨ include'п╟п╪
 	AXIOMLIB_INCLUDE = "C:\Users\dk\Documents\Visual Studio 2008\Projects\AxiomLib\AxiomLib\src"
 	QWT_INCLUDE = "D:\qwt\src"
 	MPICH_INCLUDE = "C:\Program Files\MPICH2\include"
 	BOOST_INCLUDE = "D:\boost_1_42"
 	OTHER_INCLUDE =
-# Подключение библиотек
+# п÷п╬п╢п╨п╩я▌я┤п╣п╫п╦п╣ п╠п╦п╠п╩п╦п╬я┌п╣п╨
 	AXIOMLIB_LIB = "C:\Users\dk\Documents\Visual Studio 2008\Projects\AxiomLib\debug\AxiomLib.lib"
 	MPICH_LIB = "C:\Program Files\MPICH2\lib\mpi.lib"
 	QWT_LIB = D:\qwt\lib\qwtd5.lib
@@ -21,13 +21,13 @@ win32 {
 	OTHER_LIB = Shell32.lib
 }
 unix {
-# Пути к include'ам
+# п÷я┐я┌п╦ п╨ include'п╟п╪
 	AXIOMLIB_INCLUDE = /home/wictor/workspace/AxiomLib/axiomlib/src
 	QWT_INCLUDE = /usr/include/qwt-qt4
 	MPICH_INCLUDE = /home/wictor/mpich2-install/include
 	BOOST_INCLUDE = 
 	OTHER_INCLUDE = 
-# Подключение бибилиотек
+# п÷п╬п╢п╨п╩я▌я┤п╣п╫п╦п╣ п╠п╦п╠п╦п╩п╦п╬я┌п╣п╨
 	AXIOMLIB_LIB = ../libAxiomLib.a
 	MPICH_LIB =	/home/wictor/mpich2-install/lib/libmpich.a \
 		/home/wictor/mpich2-install/lib/libmpichcxx.a
@@ -36,34 +36,34 @@ unix {
 	OTHER_LIB = -lrt -lpthread -lgomp
 }
 
-### Дополнительные флаги компиляции ###
+### п■п╬п©п╬п╩п╫п╦я┌п╣п╩я▄п╫я▀п╣ я└п╩п╟пЁп╦ п╨п╬п╪п©п╦п╩я▐я├п╦п╦ ###
 
-# Для windows
+# п■п╩я▐ windows
 win32 {
 	QMAKE_CXXFLAGS += -openmp
 	QMAKE_CXXFLAGS_RELEASE += /O2
 }
-# Для unix
+# п■п╩я▐ unix
 unix {
 	QMAKE_CXXFLAGS += -fopenmp
 }
 
-### Дополнительные флаги линковки ###
+### п■п╬п©п╬п╩п╫п╦я┌п╣п╩я▄п╫я▀п╣ я└п╩п╟пЁп╦ п╩п╦п╫п╨п╬п╡п╨п╦ ###
 
-# Для windows
+# п■п╩я▐ windows
 win32 {
 	QMAKE_LFLAGS +=
 }
-# Для unix
+# п■п╩я▐ unix
 unix {
 	QMAKE_LFLAGS += -fopenmp
 }
 
-### Задание флагов отключение warning'ов (работает только если warn_off есть в CONFIG)
+### п≈п╟п╢п╟п╫п╦п╣ я└п╩п╟пЁп╬п╡ п╬я┌п╨п╩я▌я┤п╣п╫п╦п╣ warning'п╬п╡ (я─п╟п╠п╬я┌п╟п╣я┌ я┌п╬п╩я▄п╨п╬ п╣я│п╩п╦ warn_off п╣я│я┌я▄ п╡ CONFIG)
 
-# Для windows - надо читать мануал по cl
+# п■п╩я▐ windows - п╫п╟п╢п╬ я┤п╦я┌п╟я┌я▄ п╪п╟п╫я┐п╟п╩ п©п╬ cl
 
-# Для unix
+# п■п╩я▐ unix
 unix {
 	QMAKE_CXXFLAGS_WARN_OFF = -Wno-sign-compare -Wno-sign-conversion -Wno-unused-parameter
 }

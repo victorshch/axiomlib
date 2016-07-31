@@ -1,7 +1,7 @@
 /****************************************************************************
 *				ForwardDeclarations
 *
-*	Description: Forward-объявления
+*	Description: Forward-п╬п╠я┼я▐п╡п╩п╣п╫п╦я▐
 *	Author:		wictor
 *	History:	
 *

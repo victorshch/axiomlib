@@ -1,7 +1,7 @@
 /****************************************************************************
 *						NeuralMultiplexer.cxx
 *
-*       Description:	Реализация членов NeuralMultiplexer
+*       Description:	п═п╣п╟п╩п╦п╥п╟я├п╦я▐ я┤п╩п╣п╫п╬п╡ NeuralMultiplexer
 *       Author:			wictor
 *       History:
 *
@@ -19,8 +19,8 @@ namespace AxiomLib {
 /****************************************************************************
 *						NeuralMultiplexer<NetWrapper>::supplyTrainingData
 *
-*       Description:	Функция добавляет одну строку для обучения
-*       Parameters:		const Qstring &s - добавляемая строка
+*       Description:	п╓я┐п╫п╨я├п╦я▐ п╢п╬п╠п╟п╡п╩я▐п╣я┌ п╬п╢п╫я┐ я│я┌я─п╬п╨я┐ п╢п╩я▐ п╬п╠я┐я┤п╣п╫п╦я▐
+*       Parameters:		const Qstring &s - п╢п╬п╠п╟п╡п╩я▐п╣п╪п╟я▐ я│я┌я─п╬п╨п╟
 *       Returns:		-
 *       Throws:			-
 *       Author:			wictor
@@ -31,45 +31,45 @@ template<class NetWrapper>
 void NeuralMultiplexer<NetWrapper>::supplyTrainingData(const Qstring &s) {
 	int len = s.size();
 	
-	// Получаем указатель на сеть, соответствующую длине len 
-	// (если ее нет, создаем)
-	/*NetWrapper *pNetWrapper; // Было так, НО - ни один компилятор в линуксе не смог создать iterator для определения map в котором используются названия из шаблона.
+	// п÷п╬п╩я┐я┤п╟п╣п╪ я┐п╨п╟п╥п╟я┌п╣п╩я▄ п╫п╟ я│п╣я┌я▄, я│п╬п╬я┌п╡п╣я┌я│я┌п╡я┐я▌я┴я┐я▌ п╢п╩п╦п╫п╣ len 
+	// (п╣я│п╩п╦ п╣п╣ п╫п╣я┌, я│п╬п╥п╢п╟п╣п╪)
+	/*NetWrapper *pNetWrapper; // п▒я▀п╩п╬ я┌п╟п╨, п²п· - п╫п╦ п╬п╢п╦п╫ п╨п╬п╪п©п╦п╩я▐я┌п╬я─ п╡ п╩п╦п╫я┐п╨я│п╣ п╫п╣ я│п╪п╬пЁ я│п╬п╥п╢п╟я┌я▄ iterator п╢п╩я▐ п╬п©я─п╣п╢п╣п╩п╣п╫п╦я▐ map п╡ п╨п╬я┌п╬я─п╬п╪ п╦я│п©п╬п╩я▄п╥я┐я▌я┌я│я▐ п╫п╟п╥п╡п╟п╫п╦я▐ п╦п╥ я┬п╟п╠п╩п╬п╫п╟.
 	MapType::const_iterator it = netArray.find(len);
 	if(it!=netArray.end()) {
-		// Сеть для данной длины уже есть - получаем указатель на нее
+		// п║п╣я┌я▄ п╢п╩я▐ п╢п╟п╫п╫п╬п╧ п╢п╩п╦п╫я▀ я┐п╤п╣ п╣я│я┌я▄ - п©п╬п╩я┐я┤п╟п╣п╪ я┐п╨п╟п╥п╟я┌п╣п╩я▄ п╫п╟ п╫п╣п╣
 		pNetWrapper = it->second;
 	} else {
-		// Сети для данной длины еще нет - создаем ее
+		// п║п╣я┌п╦ п╢п╩я▐ п╢п╟п╫п╫п╬п╧ п╢п╩п╦п╫я▀ п╣я┴п╣ п╫п╣я┌ - я│п╬п╥п╢п╟п╣п╪ п╣п╣
 		pNetWrapper = new NetWrapper();
 		netArray.insert(std::make_pair(len, pNetWrapper));
 	}*/
 	NetWrapper *pNetWrapper;
 	if(netArray.find(len) != netArray.end()) {
-		// Сеть для данной длины уже есть - получаем указатель на нее
+		// п║п╣я┌я▄ п╢п╩я▐ п╢п╟п╫п╫п╬п╧ п╢п╩п╦п╫я▀ я┐п╤п╣ п╣я│я┌я▄ - п©п╬п╩я┐я┤п╟п╣п╪ я┐п╨п╟п╥п╟я┌п╣п╩я▄ п╫п╟ п╫п╣п╣
 		pNetWrapper = (netArray.find(len))->second;
 	} else {
-		// Сети для данной длины еще нет - создаем ее
+		// п║п╣я┌п╦ п╢п╩я▐ п╢п╟п╫п╫п╬п╧ п╢п╩п╦п╫я▀ п╣я┴п╣ п╫п╣я┌ - я│п╬п╥п╢п╟п╣п╪ п╣п╣
 		pNetWrapper = new NetWrapper();
 		netArray.insert(std::make_pair(len, pNetWrapper));
 	}
-	// Получаем число уже добавленных в netWrapper строк
-	// Это будет номером добавляемой строки в этой сети
+	// п÷п╬п╩я┐я┤п╟п╣п╪ я┤п╦я│п╩п╬ я┐п╤п╣ п╢п╬п╠п╟п╡п╩п╣п╫п╫я▀я┘ п╡ netWrapper я│я┌я─п╬п╨
+	// п╜я┌п╬ п╠я┐п╢п╣я┌ п╫п╬п╪п╣я─п╬п╪ п╢п╬п╠п╟п╡п╩я▐п╣п╪п╬п╧ я│я┌я─п╬п╨п╦ п╡ я█я┌п╬п╧ я│п╣я┌п╦
 	int num = pNetWrapper->getNumTrain();
 	
-	// Добавляем строку в сеть
+	// п■п╬п╠п╟п╡п╩я▐п╣п╪ я│я┌я─п╬п╨я┐ п╡ я│п╣я┌я▄
 	pNetWrapper->supplyTrainingData(s);
 	
-	//Локальный индекс данной строки
+	//п⌡п╬п╨п╟п╩я▄п╫я▀п╧ п╦п╫п╢п╣п╨я│ п╢п╟п╫п╫п╬п╧ я│я┌я─п╬п╨п╦
 	IndexPair ip = std::make_pair(len, num);
 	glNumToLocNum.push_back(ip);
 	
-	// Глобальный номер
+	// п⌠п╩п╬п╠п╟п╩я▄п╫я▀п╧ п╫п╬п╪п╣я─
 	locNumToGlNum[ip] = globalTrainSize;
 	
-	// Увеличиваем счетчик строк
+	// пёп╡п╣п╩п╦я┤п╦п╡п╟п╣п╪ я│я┤п╣я┌я┤п╦п╨ я│я┌я─п╬п╨
 	globalTrainSize++;
 	
-	// Заполняем lastIndex
+	// п≈п╟п©п╬п╩п╫я▐п╣п╪ lastIndex
 	lastIndex.len = ip.len;
 	lastIndex.num = ip.num;
 }
@@ -77,8 +77,8 @@ void NeuralMultiplexer<NetWrapper>::supplyTrainingData(const Qstring &s) {
 /****************************************************************************
 *						NeuralMultiplexer<NetWrapper>::supplyCentralString
 *
-*       Description:	Функция добавляет одну primary-строку для обучения
-*       Parameters:		const Qstring &s - добавляемая строка
+*       Description:	п╓я┐п╫п╨я├п╦я▐ п╢п╬п╠п╟п╡п╩я▐п╣я┌ п╬п╢п╫я┐ primary-я│я┌я─п╬п╨я┐ п╢п╩я▐ п╬п╠я┐я┤п╣п╫п╦я▐
+*       Parameters:		const Qstring &s - п╢п╬п╠п╟п╡п╩я▐п╣п╪п╟я▐ я│я┌я─п╬п╨п╟
 *       Returns:		-
 *       Throws:			-
 *       Author:			wictor
@@ -89,45 +89,45 @@ template<class NetWrapper>
 void NeuralMultiplexer<NetWrapper>::supplyCentralString(const Qstring &s) {
 	int len = s.size();
 	
-	// Получаем указатель на сеть, соответствующую длине len 
-	// (если ее нет, создаем)
+	// п÷п╬п╩я┐я┤п╟п╣п╪ я┐п╨п╟п╥п╟я┌п╣п╩я▄ п╫п╟ я│п╣я┌я▄, я│п╬п╬я┌п╡п╣я┌я│я┌п╡я┐я▌я┴я┐я▌ п╢п╩п╦п╫п╣ len 
+	// (п╣я│п╩п╦ п╣п╣ п╫п╣я┌, я│п╬п╥п╢п╟п╣п╪)
 	/*NetWrapper *pNetWrapper;	
 	MapType::const_iterator it = netArray.find(len);
 	if(it!=netArray.end()) {
-		// Сеть для данной длины уже есть - получаем указатель на нее
+		// п║п╣я┌я▄ п╢п╩я▐ п╢п╟п╫п╫п╬п╧ п╢п╩п╦п╫я▀ я┐п╤п╣ п╣я│я┌я▄ - п©п╬п╩я┐я┤п╟п╣п╪ я┐п╨п╟п╥п╟я┌п╣п╩я▄ п╫п╟ п╫п╣п╣
 		pNetWrapper = it->second;
 	} else {
-		// Сети для данной длины еще нет - создаем ее
+		// п║п╣я┌п╦ п╢п╩я▐ п╢п╟п╫п╫п╬п╧ п╢п╩п╦п╫я▀ п╣я┴п╣ п╫п╣я┌ - я│п╬п╥п╢п╟п╣п╪ п╣п╣
 		pNetWrapper = new NetWrapper();
 		netArray.insert(std::make_pair(len, pNetWrapper));
 	}*/
 	NetWrapper *pNetWrapper;
 	if(netArray.find(len) != netArray.end()) {
-		// Сеть для данной длины уже есть - получаем указатель на нее
+		// п║п╣я┌я▄ п╢п╩я▐ п╢п╟п╫п╫п╬п╧ п╢п╩п╦п╫я▀ я┐п╤п╣ п╣я│я┌я▄ - п©п╬п╩я┐я┤п╟п╣п╪ я┐п╨п╟п╥п╟я┌п╣п╩я▄ п╫п╟ п╫п╣п╣
 		pNetWrapper = (netArray.find(len))->second;
 	} else {
-		// Сети для данной длины еще нет - создаем ее
+		// п║п╣я┌п╦ п╢п╩я▐ п╢п╟п╫п╫п╬п╧ п╢п╩п╦п╫я▀ п╣я┴п╣ п╫п╣я┌ - я│п╬п╥п╢п╟п╣п╪ п╣п╣
 		pNetWrapper = new NetWrapper();
 		netArray.insert(std::make_pair(len, pNetWrapper));
 	}
-	// Получаем число уже добавленных в netWrapper строк
-	// Это будет номером добавляемой строки в этой сети
+	// п÷п╬п╩я┐я┤п╟п╣п╪ я┤п╦я│п╩п╬ я┐п╤п╣ п╢п╬п╠п╟п╡п╩п╣п╫п╫я▀я┘ п╡ netWrapper я│я┌я─п╬п╨
+	// п╜я┌п╬ п╠я┐п╢п╣я┌ п╫п╬п╪п╣я─п╬п╪ п╢п╬п╠п╟п╡п╩я▐п╣п╪п╬п╧ я│я┌я─п╬п╨п╦ п╡ я█я┌п╬п╧ я│п╣я┌п╦
 	int num = pNetWrapper->getNumTrain();
 	
-	// Добавляем центральную строку в сеть
+	// п■п╬п╠п╟п╡п╩я▐п╣п╪ я├п╣п╫я┌я─п╟п╩я▄п╫я┐я▌ я│я┌я─п╬п╨я┐ п╡ я│п╣я┌я▄
 	pNetWrapper->supplyCentralString(s);
 	
-	//Локальный индекс данной строки
+	//п⌡п╬п╨п╟п╩я▄п╫я▀п╧ п╦п╫п╢п╣п╨я│ п╢п╟п╫п╫п╬п╧ я│я┌я─п╬п╨п╦
 	IndexPair ip = std::make_pair(len, num);
 	glNumToLocNum.push_back(ip);
 	
-	// Глобальный номер
+	// п⌠п╩п╬п╠п╟п╩я▄п╫я▀п╧ п╫п╬п╪п╣я─
 	locNumToGlNum[ip] = globalTrainSize;
 	
-	// Увеличиваем счетчик строк
+	// пёп╡п╣п╩п╦я┤п╦п╡п╟п╣п╪ я│я┤п╣я┌я┤п╦п╨ я│я┌я─п╬п╨
 	globalTrainSize++;
 	
-	// Заполняем lastIndex
+	// п≈п╟п©п╬п╩п╫я▐п╣п╪ lastIndex
 	lastIndex.len = ip.len;
 	lastIndex.num = ip.num;
 }
@@ -135,10 +135,10 @@ void NeuralMultiplexer<NetWrapper>::supplyCentralString(const Qstring &s) {
 /****************************************************************************
 *						NeuralMultiplexer<NetWrapper>::getTrainString
 *
-*       Description:	Возвращает обучающую строку с (глобальным) номером i
-*       Parameters:		int i - номер строки
-*       Returns:		const Qstring & - строка для обучения
-*       Throws:			AxiomLibException, если номер строки некорректен
+*       Description:	п▓п╬п╥п╡я─п╟я┴п╟п╣я┌ п╬п╠я┐я┤п╟я▌я┴я┐я▌ я│я┌я─п╬п╨я┐ я│ (пЁп╩п╬п╠п╟п╩я▄п╫я▀п╪) п╫п╬п╪п╣я─п╬п╪ i
+*       Parameters:		int i - п╫п╬п╪п╣я─ я│я┌я─п╬п╨п╦
+*       Returns:		const Qstring & - я│я┌я─п╬п╨п╟ п╢п╩я▐ п╬п╠я┐я┤п╣п╫п╦я▐
+*       Throws:			AxiomLibException, п╣я│п╩п╦ п╫п╬п╪п╣я─ я│я┌я─п╬п╨п╦ п╫п╣п╨п╬я─я─п╣п╨я┌п╣п╫
 *       Author:			wictor
 *       History:
 *
@@ -148,37 +148,37 @@ const Qstring &NeuralMultiplexer<NetWrapper>::getTrainString(int i) const {
 	if (i < 0 || i >= globalTrainSize) {
 		throw AxiomLibException("NeuralMultiplexer<NetWrapper>::getTrainString() : i out of bounds");
 	}
-	// Переводим глобальную нумерацию в локальную
+	// п÷п╣я─п╣п╡п╬п╢п╦п╪ пЁп╩п╬п╠п╟п╩я▄п╫я┐я▌ п╫я┐п╪п╣я─п╟я├п╦я▌ п╡ п╩п╬п╨п╟п╩я▄п╫я┐я▌
 	int len = glNumToLocNum[i].len;
 	int num = glNumToLocNum[i].num;
-	// Ищем сеть с нужной длиной с структуре netArray
+	// п≤я┴п╣п╪ я│п╣я┌я▄ я│ п╫я┐п╤п╫п╬п╧ п╢п╩п╦п╫п╬п╧ я│ я│я┌я─я┐п╨я┌я┐я─п╣ netArray
 	/*MapType::const_iterator it = netArray.find(len);
 	
-	// Этого не должно случаться, но проверка оставлена на всякий случай
+	// п╜я┌п╬пЁп╬ п╫п╣ п╢п╬п╩п╤п╫п╬ я│п╩я┐я┤п╟я┌я▄я│я▐, п╫п╬ п©я─п╬п╡п╣я─п╨п╟ п╬я│я┌п╟п╡п╩п╣п╫п╟ п╫п╟ п╡я│я▐п╨п╦п╧ я│п╩я┐я┤п╟п╧
 	if(it == netArray.end()) {
 		throw AxiomLibException("NeuralMultiplexer<NetWrapper>::getTrainString() : len not found (this shouldn't happen)");
 	}
 	
-	// Возвращаем нужную строку
+	// п▓п╬п╥п╡я─п╟я┴п╟п╣п╪ п╫я┐п╤п╫я┐я▌ я│я┌я─п╬п╨я┐
 	return it->second->getTrainString(num);*/	
-	// Этого не должно случаться, но проверка оставлена на всякий случай
+	// п╜я┌п╬пЁп╬ п╫п╣ п╢п╬п╩п╤п╫п╬ я│п╩я┐я┤п╟я┌я▄я│я▐, п╫п╬ п©я─п╬п╡п╣я─п╨п╟ п╬я│я┌п╟п╡п╩п╣п╫п╟ п╫п╟ п╡я│я▐п╨п╦п╧ я│п╩я┐я┤п╟п╧
 	if(netArray.find(len) == netArray.end()) {
 		throw AxiomLibException("NeuralMultiplexer<NetWrapper>::getTrainString() : len not found (this shouldn't happen)");
 	}
 	
-	// Возвращаем нужную строку
+	// п▓п╬п╥п╡я─п╟я┴п╟п╣п╪ п╫я┐п╤п╫я┐я▌ я│я┌я─п╬п╨я┐
 	return (netArray.find(len))->second->getTrainString(num);
 }
 
 /****************************************************************************
 *						NeuralMultiplexer<NetWrapper>::supplyAuxTrainingData
 *
-*       Description:	Функция добавляет одну дополнительную строку для обучения,
-*						которая соответствует последней добавленной строке для обучения
-*       Parameters:		const Qstring &s - добавляемая строка
+*       Description:	п╓я┐п╫п╨я├п╦я▐ п╢п╬п╠п╟п╡п╩я▐п╣я┌ п╬п╢п╫я┐ п╢п╬п©п╬п╩п╫п╦я┌п╣п╩я▄п╫я┐я▌ я│я┌я─п╬п╨я┐ п╢п╩я▐ п╬п╠я┐я┤п╣п╫п╦я▐,
+*						п╨п╬я┌п╬я─п╟я▐ я│п╬п╬я┌п╡п╣я┌я│я┌п╡я┐п╣я┌ п©п╬я│п╩п╣п╢п╫п╣п╧ п╢п╬п╠п╟п╡п╩п╣п╫п╫п╬п╧ я│я┌я─п╬п╨п╣ п╢п╩я▐ п╬п╠я┐я┤п╣п╫п╦я▐
+*       Parameters:		const Qstring &s - п╢п╬п╠п╟п╡п╩я▐п╣п╪п╟я▐ я│я┌я─п╬п╨п╟
 *       Returns:		-
-*       Throws:			AxiomLibException, если ни разу не было вызвано supplyTrainingData(),
-*						либо размер inp не совпадает с размером последней добавленной строки для обучения
+*       Throws:			AxiomLibException, п╣я│п╩п╦ п╫п╦ я─п╟п╥я┐ п╫п╣ п╠я▀п╩п╬ п╡я▀п╥п╡п╟п╫п╬ supplyTrainingData(),
+*						п╩п╦п╠п╬ я─п╟п╥п╪п╣я─ inp п╫п╣ я│п╬п╡п©п╟п╢п╟п╣я┌ я│ я─п╟п╥п╪п╣я─п╬п╪ п©п╬я│п╩п╣п╢п╫п╣п╧ п╢п╬п╠п╟п╡п╩п╣п╫п╫п╬п╧ я│я┌я─п╬п╨п╦ п╢п╩я▐ п╬п╠я┐я┤п╣п╫п╦я▐
 *       Author:			wictor
 *       History:
 *
@@ -194,16 +194,16 @@ void NeuralMultiplexer<NetWrapper>::supplyAuxTrainingData(const Qstring &s) {
 		throw AxiomLibException("NeuralMultiplexer<NetWrapper>::supplyAuxTrainingData : len not found (this shouldn't happen)");
 	}
 	
-	// Добавление доп. строки для обучения в нужную сеть
+	// п■п╬п╠п╟п╡п╩п╣п╫п╦п╣ п╢п╬п©. я│я┌я─п╬п╨п╦ п╢п╩я▐ п╬п╠я┐я┤п╣п╫п╦я▐ п╡ п╫я┐п╤п╫я┐я▌ я│п╣я┌я▄
 	(netArray.find(len))->second->supplyAuxTrainingData(s);
 }
 
 /****************************************************************************
 *						NeuralMultiplexer<NetWrapper>::construct
 *
-*       Description:	Установка параметров и создание сетей
-*       Parameters:		const Settings &settings - параметры
-*						тип Settings должен удовлетворять NetWrapper::construct()
+*       Description:	пёя│я┌п╟п╫п╬п╡п╨п╟ п©п╟я─п╟п╪п╣я┌я─п╬п╡ п╦ я│п╬п╥п╢п╟п╫п╦п╣ я│п╣я┌п╣п╧
+*       Parameters:		const Settings &settings - п©п╟я─п╟п╪п╣я┌я─я▀
+*						я┌п╦п© Settings п╢п╬п╩п╤п╣п╫ я┐п╢п╬п╡п╩п╣я┌п╡п╬я─я▐я┌я▄ NetWrapper::construct()
 *       Returns:		-
 *       Throws:			-
 *       Author:			wictor
@@ -213,7 +213,7 @@ void NeuralMultiplexer<NetWrapper>::supplyAuxTrainingData(const Qstring &s) {
 template<class NetWrapper>
 template<class Settings>
 void NeuralMultiplexer<NetWrapper>::construct(const Settings &settings) {
-	// Задание параметров из настроек - для каждой сети
+	// п≈п╟п╢п╟п╫п╦п╣ п©п╟я─п╟п╪п╣я┌я─п╬п╡ п╦п╥ п╫п╟я│я┌я─п╬п╣п╨ - п╢п╩я▐ п╨п╟п╤п╢п╬п╧ я│п╣я┌п╦
 	MapTypePair val;
 	BOOST_FOREACH(val, netArray) {
 		val.second->construct(settings);
@@ -223,7 +223,7 @@ void NeuralMultiplexer<NetWrapper>::construct(const Settings &settings) {
 /****************************************************************************
 *						NeuralMultiplexer<NetWrapper>::train
 *
-*       Description:	Функция обучает сети на ранее предоставленных ей обучающих строках
+*       Description:	п╓я┐п╫п╨я├п╦я▐ п╬п╠я┐я┤п╟п╣я┌ я│п╣я┌п╦ п╫п╟ я─п╟п╫п╣п╣ п©я─п╣п╢п╬я│я┌п╟п╡п╩п╣п╫п╫я▀я┘ п╣п╧ п╬п╠я┐я┤п╟я▌я┴п╦я┘ я│я┌я─п╬п╨п╟я┘
 *       Parameters:		-
 *       Returns:		-
 *       Throws:			-
@@ -233,7 +233,7 @@ void NeuralMultiplexer<NetWrapper>::construct(const Settings &settings) {
 ****************************************************************************/
 template<class NetWrapper>
 void NeuralMultiplexer<NetWrapper>::train() {
-	// Итерация по массиву сетей и обучение каждой из них
+	// п≤я┌п╣я─п╟я├п╦я▐ п©п╬ п╪п╟я│я│п╦п╡я┐ я│п╣я┌п╣п╧ п╦ п╬п╠я┐я┤п╣п╫п╦п╣ п╨п╟п╤п╢п╬п╧ п╦п╥ п╫п╦я┘
 	MapTypePair val;
 	BOOST_FOREACH(val, netArray) {
 		val.second->train();
@@ -243,12 +243,12 @@ void NeuralMultiplexer<NetWrapper>::train() {
 /****************************************************************************
 *						NeuralMultiplexer<NetWrapper>::run
 *
-*       Description:	Функция запускает нейросетевой алгоритм
+*       Description:	п╓я┐п╫п╨я├п╦я▐ п╥п╟п©я┐я│п╨п╟п╣я┌ п╫п╣п╧я─п╬я│п╣я┌п╣п╡п╬п╧ п╟п╩пЁп╬я─п╦я┌п╪
 *						
-*       Parameters:		const Qstring &inp - вход сети ()
-*						double &p - число, которое может возвращать сеть при работе (пока не используется)
-*       Returns:		Номер эталонной строки (в том порядке, в котором они были заданы функцией supplyTrainingData()), 
-*						либо -1, если все объекты NetWrapper в массиве сетей вернули -1
+*       Parameters:		const Qstring &inp - п╡я┘п╬п╢ я│п╣я┌п╦ ()
+*						double &p - я┤п╦я│п╩п╬, п╨п╬я┌п╬я─п╬п╣ п╪п╬п╤п╣я┌ п╡п╬п╥п╡я─п╟я┴п╟я┌я▄ я│п╣я┌я▄ п©я─п╦ я─п╟п╠п╬я┌п╣ (п©п╬п╨п╟ п╫п╣ п╦я│п©п╬п╩я▄п╥я┐п╣я┌я│я▐)
+*       Returns:		п²п╬п╪п╣я─ я█я┌п╟п╩п╬п╫п╫п╬п╧ я│я┌я─п╬п╨п╦ (п╡ я┌п╬п╪ п©п╬я─я▐п╢п╨п╣, п╡ п╨п╬я┌п╬я─п╬п╪ п╬п╫п╦ п╠я▀п╩п╦ п╥п╟п╢п╟п╫я▀ я└я┐п╫п╨я├п╦п╣п╧ supplyTrainingData()), 
+*						п╩п╦п╠п╬ -1, п╣я│п╩п╦ п╡я│п╣ п╬п╠я┼п╣п╨я┌я▀ NetWrapper п╡ п╪п╟я│я│п╦п╡п╣ я│п╣я┌п╣п╧ п╡п╣я─п╫я┐п╩п╦ -1
 *       Throws:			-
 *       Author:			wictor
 *       History:
@@ -256,34 +256,34 @@ void NeuralMultiplexer<NetWrapper>::train() {
 ****************************************************************************/
 template<class NetWrapper>
 int NeuralMultiplexer<NetWrapper>::run(const Qstring &inp, double &p) const {
-	// Для каждого элемента массива сетей
+	// п■п╩я▐ п╨п╟п╤п╢п╬пЁп╬ я█п╩п╣п╪п╣п╫я┌п╟ п╪п╟я│я│п╦п╡п╟ я│п╣я┌п╣п╧
 	MapTypePair val;
 	BOOST_FOREACH(val, netArray) {
 		
 		Qstring actualInp;
 		
-		// Длина входа
+		// п■п╩п╦п╫п╟ п╡я┘п╬п╢п╟
 		const int &len = val.first;
-		// Указатель на нейросетевой объект
+		// пёп╨п╟п╥п╟я┌п╣п╩я▄ п╫п╟ п╫п╣п╧я─п╬я│п╣я┌п╣п╡п╬п╧ п╬п╠я┼п╣п╨я┌
 		const NetWrapper *pNetWrapper = val.second;
-		// Копируем в actualInp содержимое inp от 0 до len
+		// п п╬п©п╦я─я┐п╣п╪ п╡ actualInp я│п╬п╢п╣я─п╤п╦п╪п╬п╣ inp п╬я┌ 0 п╢п╬ len
 		copyVector(inp, actualInp, 0, len);
 		
-		// Запускаем текущую сеть на actualInp
+		// п≈п╟п©я┐я│п╨п╟п╣п╪ я┌п╣п╨я┐я┴я┐я▌ я│п╣я┌я▄ п╫п╟ actualInp
 		int res = pNetWrapper->run(actualInp, p);
 		
-		// Если она что-то обнаружила - возвращаем полученный результат
+		// п∙я│п╩п╦ п╬п╫п╟ я┤я┌п╬-я┌п╬ п╬п╠п╫п╟я─я┐п╤п╦п╩п╟ - п╡п╬п╥п╡я─п╟я┴п╟п╣п╪ п©п╬п╩я┐я┤п╣п╫п╫я▀п╧ я─п╣п╥я┐п╩я▄я┌п╟я┌
 		if (res >= 0) {
-			// Переводим результат в глобальную нумерацию
+			// п÷п╣я─п╣п╡п╬п╢п╦п╪ я─п╣п╥я┐п╩я▄я┌п╟я┌ п╡ пЁп╩п╬п╠п╟п╩я▄п╫я┐я▌ п╫я┐п╪п╣я─п╟я├п╦я▌
 			std::map<IndexPair, int>::const_iterator it = locNumToGlNum.find(IndexPair(std::make_pair(len, res)));
-			// Этого не должно случаться, но проверка оставлена на всякий случай
+			// п╜я┌п╬пЁп╬ п╫п╣ п╢п╬п╩п╤п╫п╬ я│п╩я┐я┤п╟я┌я▄я│я▐, п╫п╬ п©я─п╬п╡п╣я─п╨п╟ п╬я│я┌п╟п╡п╩п╣п╫п╟ п╫п╟ п╡я│я▐п╨п╦п╧ я│п╩я┐я┤п╟п╧
 			if(it == locNumToGlNum.end()) {
 				throw AxiomLibException("NeuralMultiplexer<NetWrapper>::run(): pair not found (this shouldn't happen)");
 			}
 			return it->second;
 		}
 	}
-	// Если ни одна из сетей ничего не нашла, то возвращаем -1
+	// п∙я│п╩п╦ п╫п╦ п╬п╢п╫п╟ п╦п╥ я│п╣я┌п╣п╧ п╫п╦я┤п╣пЁп╬ п╫п╣ п╫п╟я┬п╩п╟, я┌п╬ п╡п╬п╥п╡я─п╟я┴п╟п╣п╪ -1
 	return -1;
 }
 

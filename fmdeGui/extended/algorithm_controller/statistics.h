@@ -5,7 +5,7 @@
 //#include "ElemCondPlusStat.h"
 #include "FullFuzzyDataSet.h"
 
-//Обновляет статистику и значение целевой функции аксиомы или ЭУ
+//п·п╠п╫п╬п╡п╩я▐п╣я┌ я│я┌п╟я┌п╦я│я┌п╦п╨я┐ п╦ п╥п╫п╟я┤п╣п╫п╦п╣ я├п╣п╩п╣п╡п╬п╧ я└я┐п╫п╨я├п╦п╦ п╟п╨я│п╦п╬п╪я▀ п╦п╩п╦ п╜пё
 template<class Axiom>
 void updateStatistics(Axiom &axiomPlus, 
 					  const AxiomLib::FullFuzzyDataSet &fullFuzzyDataSet);

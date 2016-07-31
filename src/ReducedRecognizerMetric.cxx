@@ -1,7 +1,7 @@
 /****************************************************************************
 *					ReducedRecognizerMetric.cxx
 *
-*	Description:	Функции класса ReducedRecognizerMetric - Реализация
+*	Description:	п╓я┐п╫п╨я├п╦п╦ п╨п╩п╟я│я│п╟ ReducedRecognizerMetric - п═п╣п╟п╩п╦п╥п╟я├п╦я▐
 *	Author:			dk
 *	History:		
 *
@@ -12,13 +12,13 @@
 using namespace AxiomLib;
 
 
-// Стандартный конструктор - задание значений внутренних переменных по умолчанию
+// п║я┌п╟п╫п╢п╟я─я┌п╫я▀п╧ п╨п╬п╫я│я┌я─я┐п╨я┌п╬я─ - п╥п╟п╢п╟п╫п╦п╣ п╥п╫п╟я┤п╣п╫п╦п╧ п╡п╫я┐я┌я─п╣п╫п╫п╦я┘ п©п╣я─п╣п╪п╣п╫п╫я▀я┘ п©п╬ я┐п╪п╬п╩я┤п╟п╫п╦я▌
 ReducedRecognizerMetric::ReducedRecognizerMetric (void) { 
 	
 }
 
 
-// Стандартный деструктор - удаление всех динамических объектов класса
+// п║я┌п╟п╫п╢п╟я─я┌п╫я▀п╧ п╢п╣я│я┌я─я┐п╨я┌п╬я─ - я┐п╢п╟п╩п╣п╫п╦п╣ п╡я│п╣я┘ п╢п╦п╫п╟п╪п╦я┤п╣я│п╨п╦я┘ п╬п╠я┼п╣п╨я┌п╬п╡ п╨п╩п╟я│я│п╟
 ReducedRecognizerMetric::~ReducedRecognizerMetric (void) { 
 	
 }
@@ -27,16 +27,16 @@ ReducedRecognizerMetric::~ReducedRecognizerMetric (void) {
 /****************************************************************************
 *                       ReducedRecognizerMetric::setParamsFromEnv
 *
-*       Description:    Инициализировать параметры данными из env
-*       Parameters:     const Environment& env - окружение
+*       Description:    п≤п╫п╦я├п╦п╟п╩п╦п╥п╦я─п╬п╡п╟я┌я▄ п©п╟я─п╟п╪п╣я┌я─я▀ п╢п╟п╫п╫я▀п╪п╦ п╦п╥ env
+*       Parameters:     const Environment& env - п╬п╨я─я┐п╤п╣п╫п╦п╣
 *       Returns:        0
-*       Throws:         AxiomLibException - если нет какого-топараметра
+*       Throws:         AxiomLibException - п╣я│п╩п╦ п╫п╣я┌ п╨п╟п╨п╬пЁп╬-я┌п╬п©п╟я─п╟п╪п╣я┌я─п╟
 *       Author:         gevor
 *       History:
 *
 ****************************************************************************/
 int ReducedRecognizerMetric::setParamsFromEnv (const Environment& env) {
-	// установка параметра точности распознавателя из конфига
+	// я┐я│я┌п╟п╫п╬п╡п╨п╟ п©п╟я─п╟п╪п╣я┌я─п╟ я┌п╬я┤п╫п╬я│я┌п╦ я─п╟я│п©п╬п╥п╫п╟п╡п╟я┌п╣п╩я▐ п╦п╥ п╨п╬п╫я└п╦пЁп╟
 	ReducedRecognizerDistance::setParamsFromEnv(env);
 	
 	return 0;
@@ -46,10 +46,10 @@ int ReducedRecognizerMetric::setParamsFromEnv (const Environment& env) {
 /****************************************************************************
 *                       ReducedRecognizerMetric::run
 *
-*       Description:    Функция вызывает поиска разметки ethalon в markUp и запись результатов поиска в result
-*       Parameters:     markUp - данный для анализа ряд разметки
-*						etalon - разметка траектории нештатного поведения, т.е. искомый участок ряда
-*						result - вектор с результатами распознавания
+*       Description:    п╓я┐п╫п╨я├п╦я▐ п╡я▀п╥я▀п╡п╟п╣я┌ п©п╬п╦я│п╨п╟ я─п╟п╥п╪п╣я┌п╨п╦ ethalon п╡ markUp п╦ п╥п╟п©п╦я│я▄ я─п╣п╥я┐п╩я▄я┌п╟я┌п╬п╡ п©п╬п╦я│п╨п╟ п╡ result
+*       Parameters:     markUp - п╢п╟п╫п╫я▀п╧ п╢п╩я▐ п╟п╫п╟п╩п╦п╥п╟ я─я▐п╢ я─п╟п╥п╪п╣я┌п╨п╦
+*						etalon - я─п╟п╥п╪п╣я┌п╨п╟ я┌я─п╟п╣п╨я┌п╬я─п╦п╦ п╫п╣я┬я┌п╟я┌п╫п╬пЁп╬ п©п╬п╡п╣п╢п╣п╫п╦я▐, я┌.п╣. п╦я│п╨п╬п╪я▀п╧ я┐я┤п╟я│я┌п╬п╨ я─я▐п╢п╟
+*						result - п╡п╣п╨я┌п╬я─ я│ я─п╣п╥я┐п╩я▄я┌п╟я┌п╟п╪п╦ я─п╟я│п©п╬п╥п╫п╟п╡п╟п╫п╦я▐
 *       Returns:        0
 *       Throws:         -
 *       Author:         dk
@@ -63,10 +63,10 @@ int ReducedRecognizerMetric::run (const std::vector <int> &markUp, const std::ve
 /****************************************************************************
 *                       ReducedRecognizerMetric::countMetricDist
 *
-*       Description:    Функция реализует поиск разметки ethalon в markUp и запись результатов поиска в result
-*       Parameters:     markUp - данный для анализа ряд разметки
-*						etalon - разметка траектории нештатного поведения, т.е. искомый участок ряда
-*						result - вектор с результатами распознавания
+*       Description:    п╓я┐п╫п╨я├п╦я▐ я─п╣п╟п╩п╦п╥я┐п╣я┌ п©п╬п╦я│п╨ я─п╟п╥п╪п╣я┌п╨п╦ ethalon п╡ markUp п╦ п╥п╟п©п╦я│я▄ я─п╣п╥я┐п╩я▄я┌п╟я┌п╬п╡ п©п╬п╦я│п╨п╟ п╡ result
+*       Parameters:     markUp - п╢п╟п╫п╫я▀п╧ п╢п╩я▐ п╟п╫п╟п╩п╦п╥п╟ я─я▐п╢ я─п╟п╥п╪п╣я┌п╨п╦
+*						etalon - я─п╟п╥п╪п╣я┌п╨п╟ я┌я─п╟п╣п╨я┌п╬я─п╦п╦ п╫п╣я┬я┌п╟я┌п╫п╬пЁп╬ п©п╬п╡п╣п╢п╣п╫п╦я▐, я┌.п╣. п╦я│п╨п╬п╪я▀п╧ я┐я┤п╟я│я┌п╬п╨ я─я▐п╢п╟
+*						result - п╡п╣п╨я┌п╬я─ я│ я─п╣п╥я┐п╩я▄я┌п╟я┌п╟п╪п╦ я─п╟я│п©п╬п╥п╫п╟п╡п╟п╫п╦я▐
 *       Returns:        0
 *       Throws:         -
 *       Author:         dk
@@ -74,7 +74,7 @@ int ReducedRecognizerMetric::run (const std::vector <int> &markUp, const std::ve
 *
 ****************************************************************************/
 int ReducedRecognizerMetric::countMetricDist (const std::vector <int> &markUp, const std::vector<int> &etalon, std::vector <double> &result) const {
-	// Сохраняем длину ряда, чтобы каждый раз к функции не обращаться
+	// п║п╬я┘я─п╟п╫я▐п╣п╪ п╢п╩п╦п╫я┐ я─я▐п╢п╟, я┤я┌п╬п╠я▀ п╨п╟п╤п╢я▀п╧ я─п╟п╥ п╨ я└я┐п╫п╨я├п╦п╦ п╫п╣ п╬п╠я─п╟я┴п╟я┌я▄я│я▐
 	int len = (int) markUp.size();
 	result.resize(len, 0);
 	int etLen = etalon.size();
@@ -83,25 +83,25 @@ int ReducedRecognizerMetric::countMetricDist (const std::vector <int> &markUp, c
 	int etLenMinusOne = etLen - 1;
 	double curPrecisionF = precision() * (double) etLen;
 	//int curPrecision = round (curPrecisionF);
-	// Вычисление границ для поиска соответствия для ряда etalon
+	// п▓я▀я┤п╦я│п╩п╣п╫п╦п╣ пЁя─п╟п╫п╦я├ п╢п╩я▐ п©п╬п╦я│п╨п╟ я│п╬п╬я┌п╡п╣я┌я│я┌п╡п╦я▐ п╢п╩я▐ я─я▐п╢п╟ etalon
 	int minLen, maxLen;
 	maxLen = round ((1.0 + precision()) * ((double) etLen));
 	minLen = round ((1.0 - precision()) * ((double) etLen));
 	if (minLen < 1)
 		minLen = 1;
-	// Подготавливаем матрицу для подсчета минимального расстояния
+	// п÷п╬п╢пЁп╬я┌п╟п╡п╩п╦п╡п╟п╣п╪ п╪п╟я┌я─п╦я├я┐ п╢п╩я▐ п©п╬п╢я│я┤п╣я┌п╟ п╪п╦п╫п╦п╪п╟п╩я▄п╫п╬пЁп╬ я─п╟я│я│я┌п╬я▐п╫п╦я▐
 	std::vector <std::vector <int> > matrix;
 	matrix.resize (etLen);
-	// Сначала отдельно обрабатываем область от 0 до maxLen в ряду markUp
+	// п║п╫п╟я┤п╟п╩п╟ п╬я┌п╢п╣п╩я▄п╫п╬ п╬п╠я─п╟п╠п╟я┌я▀п╡п╟п╣п╪ п╬п╠п╩п╟я│я┌я▄ п╬я┌ 0 п╢п╬ maxLen п╡ я─я▐п╢я┐ markUp
 	int upTo, j, l, curVal;
 	int rightDist, diagDist, downDist, minDist;
 	upTo = min (len, maxLen);
 	for (int i = minLen-1; i < upTo; i++) {
-		// изменяем размер матрицы в соответствии с текущим обрабатываемым отсчетом i
+		// п╦п╥п╪п╣п╫я▐п╣п╪ я─п╟п╥п╪п╣я─ п╪п╟я┌я─п╦я├я▀ п╡ я│п╬п╬я┌п╡п╣я┌я│я┌п╡п╦п╦ я│ я┌п╣п╨я┐я┴п╦п╪ п╬п╠я─п╟п╠п╟я┌я▀п╡п╟п╣п╪я▀п╪ п╬я┌я│я┤п╣я┌п╬п╪ i
 		for (j = 0; j < etLen; j++) {
 			matrix[j].resize(i+1);
 		}
-		// Вычисляем значение в крайнем элементе матрицы
+		// п▓я▀я┤п╦я│п╩я▐п╣п╪ п╥п╫п╟я┤п╣п╫п╦п╣ п╡ п╨я─п╟п╧п╫п╣п╪ я█п╩п╣п╪п╣п╫я┌п╣ п╪п╟я┌я─п╦я├я▀
 		if (markUp[i] == etalon[etLenMinusOne]) {
 			matrix[etLenMinusOne][i] = 0;
 			curVal = 0;
@@ -109,7 +109,7 @@ int ReducedRecognizerMetric::countMetricDist (const std::vector <int> &markUp, c
 			matrix[etLenMinusOne][i] = 1;
 			curVal = 1;
 		}
-		// Вычисляем значение в крайних элементах матрицы
+		// п▓я▀я┤п╦я│п╩я▐п╣п╪ п╥п╫п╟я┤п╣п╫п╦п╣ п╡ п╨я─п╟п╧п╫п╦я┘ я█п╩п╣п╪п╣п╫я┌п╟я┘ п╪п╟я┌я─п╦я├я▀
 		for (int k = etLen - 2; k >= 0; k--) {
 			curVal++;
 			matrix[k][i] = curVal;
@@ -119,12 +119,12 @@ int ReducedRecognizerMetric::countMetricDist (const std::vector <int> &markUp, c
 			curVal++;
 			matrix[etLenMinusOne][k] = curVal;
 		}
-		// Вычисляем значение в элементах матрицы
+		// п▓я▀я┤п╦я│п╩я▐п╣п╪ п╥п╫п╟я┤п╣п╫п╦п╣ п╡ я█п╩п╣п╪п╣п╫я┌п╟я┘ п╪п╟я┌я─п╦я├я▀
 		for (int k = 1; k <= min(etLenMinusOne, i); k++) {
-			// идем по горизонтали
+			// п╦п╢п╣п╪ п©п╬ пЁп╬я─п╦п╥п╬п╫я┌п╟п╩п╦
 			j = etLenMinusOne - k;
 			for (l = i - k; l >= 0; l--) {
-				// вычисляем значение для всех возможных путей
+				// п╡я▀я┤п╦я│п╩я▐п╣п╪ п╥п╫п╟я┤п╣п╫п╦п╣ п╢п╩я▐ п╡я│п╣я┘ п╡п╬п╥п╪п╬п╤п╫я▀я┘ п©я┐я┌п╣п╧
 				rightDist = matrix[j][l+1] + 1;
 				diagDist =  matrix[j+1][l+1];
 				if (markUp[l] != etalon[j])
@@ -140,10 +140,10 @@ int ReducedRecognizerMetric::countMetricDist (const std::vector <int> &markUp, c
 					}
 				}
 			}
-			// идем по вертикали
+			// п╦п╢п╣п╪ п©п╬ п╡п╣я─я┌п╦п╨п╟п╩п╦
 			l = i - k;
 			for (j = etLenMinusOne - k - 1; j >= 0; j--) {
-				// вычисляем значение для всех возможных путей
+				// п╡я▀я┤п╦я│п╩я▐п╣п╪ п╥п╫п╟я┤п╣п╫п╦п╣ п╢п╩я▐ п╡я│п╣я┘ п╡п╬п╥п╪п╬п╤п╫я▀я┘ п©я┐я┌п╣п╧
 				rightDist = matrix[j][l+1] + 1;
 				diagDist =  matrix[j+1][l+1];
 				if (markUp[l] != etalon[j])
@@ -160,25 +160,25 @@ int ReducedRecognizerMetric::countMetricDist (const std::vector <int> &markUp, c
 				}
 			}
 		}
-		// Выбираем наименьшее значение среди возможных соответствий
+		// п▓я▀п╠п╦я─п╟п╣п╪ п╫п╟п╦п╪п╣п╫я▄я┬п╣п╣ п╥п╫п╟я┤п╣п╫п╦п╣ я│я─п╣п╢п╦ п╡п╬п╥п╪п╬п╤п╫я▀я┘ я│п╬п╬я┌п╡п╣я┌я│я┌п╡п╦п╧
 		minDist = matrix[0][0];
 		for (int k = 1; k <= (i - minLen + 1); k++) {
 			if (matrix[0][k] < minDist)
 				minDist = matrix[0][k];
 		}
 		result[i] = (double)minDist / (double) etLen;
-//		// Определяем было ли совпадение
+//		// п·п©я─п╣п╢п╣п╩я▐п╣п╪ п╠я▀п╩п╬ п╩п╦ я│п╬п╡п©п╟п╢п╣п╫п╦п╣
 //		if (minDist <= curPrecision) {
 //			result[i] = 1;
 //		} else {
 //			result[i] = 0;
 //		}
 	}
-	// Продолжаем идти по ряду - только теперь его длина заведомо больше maxLen
+	// п÷я─п╬п╢п╬п╩п╤п╟п╣п╪ п╦п╢я┌п╦ п©п╬ я─я▐п╢я┐ - я┌п╬п╩я▄п╨п╬ я┌п╣п©п╣я─я▄ п╣пЁп╬ п╢п╩п╦п╫п╟ п╥п╟п╡п╣п╢п╬п╪п╬ п╠п╬п╩я▄я┬п╣ maxLen
 	int maxLenMinusOne = maxLen - 1;
 	upTo = min(etLenMinusOne, maxLenMinusOne);
 	for (int i = maxLen; i < len; i++) {
-		// Вычисляем значение в крайнем элементе матрицы
+		// п▓я▀я┤п╦я│п╩я▐п╣п╪ п╥п╫п╟я┤п╣п╫п╦п╣ п╡ п╨я─п╟п╧п╫п╣п╪ я█п╩п╣п╪п╣п╫я┌п╣ п╪п╟я┌я─п╦я├я▀
 		if (markUp[i] == etalon[etLenMinusOne]) {
 			matrix[etLenMinusOne][maxLenMinusOne] = 0;
 			curVal = 0;
@@ -186,7 +186,7 @@ int ReducedRecognizerMetric::countMetricDist (const std::vector <int> &markUp, c
 			matrix[etLenMinusOne][maxLenMinusOne] = 1;
 			curVal = 1;
 		}
-		// Вычисляем значение в крайних элементах матрицы
+		// п▓я▀я┤п╦я│п╩я▐п╣п╪ п╥п╫п╟я┤п╣п╫п╦п╣ п╡ п╨я─п╟п╧п╫п╦я┘ я█п╩п╣п╪п╣п╫я┌п╟я┘ п╪п╟я┌я─п╦я├я▀
 		for (int k = etLen - 2; k >= 0; k--) {
 			curVal++;
 			matrix[k][maxLenMinusOne] = curVal;
@@ -196,12 +196,12 @@ int ReducedRecognizerMetric::countMetricDist (const std::vector <int> &markUp, c
 			curVal++;
 			matrix[etLenMinusOne][k] = curVal;
 		}
-		// Вычисляем значение в элементах матрицы
+		// п▓я▀я┤п╦я│п╩я▐п╣п╪ п╥п╫п╟я┤п╣п╫п╦п╣ п╡ я█п╩п╣п╪п╣п╫я┌п╟я┘ п╪п╟я┌я─п╦я├я▀
 		for (int k = 1; k <= upTo; k++) {
-			// идем по горизонтали
+			// п╦п╢п╣п╪ п©п╬ пЁп╬я─п╦п╥п╬п╫я┌п╟п╩п╦
 			j = etLenMinusOne - k;
 			for (l = maxLenMinusOne - k; l >= 0; l--) {
-				// вычисляем значение для всех возможных путей
+				// п╡я▀я┤п╦я│п╩я▐п╣п╪ п╥п╫п╟я┤п╣п╫п╦п╣ п╢п╩я▐ п╡я│п╣я┘ п╡п╬п╥п╪п╬п╤п╫я▀я┘ п©я┐я┌п╣п╧
 				rightDist = matrix[j][l+1] + 1;
 				diagDist =  matrix[j+1][l+1];
 				if (markUp[i - maxLenMinusOne + l] != etalon[j])
@@ -217,10 +217,10 @@ int ReducedRecognizerMetric::countMetricDist (const std::vector <int> &markUp, c
 					}
 				}
 			}
-			// идем по вертикали
+			// п╦п╢п╣п╪ п©п╬ п╡п╣я─я┌п╦п╨п╟п╩п╦
 			l = maxLenMinusOne - k;
 			for (j = etLenMinusOne - k - 1; j >= 0; j--) {
-				// вычисляем значение для всех возможных путей
+				// п╡я▀я┤п╦я│п╩я▐п╣п╪ п╥п╫п╟я┤п╣п╫п╦п╣ п╢п╩я▐ п╡я│п╣я┘ п╡п╬п╥п╪п╬п╤п╫я▀я┘ п©я┐я┌п╣п╧
 				rightDist = matrix[j][l+1] + 1;
 				diagDist =  matrix[j+1][l+1];
 				if (markUp[i - k] != etalon[j])
@@ -237,14 +237,14 @@ int ReducedRecognizerMetric::countMetricDist (const std::vector <int> &markUp, c
 				}
 			}
 		}
-		// Выбираем наименьшее значение среди возможных соответствий
+		// п▓я▀п╠п╦я─п╟п╣п╪ п╫п╟п╦п╪п╣п╫я▄я┬п╣п╣ п╥п╫п╟я┤п╣п╫п╦п╣ я│я─п╣п╢п╦ п╡п╬п╥п╪п╬п╤п╫я▀я┘ я│п╬п╬я┌п╡п╣я┌я│я┌п╡п╦п╧
 		minDist = matrix[0][0];
 		for (int k = 1; k <= (maxLen - minLen); k++) {
 			if (matrix[0][k] < minDist)
 				minDist = matrix[0][k];
 		}
 		result[i] = (double)minDist / (double)etLen;
-		// Определяем было ли совпадение
+		// п·п©я─п╣п╢п╣п╩я▐п╣п╪ п╠я▀п╩п╬ п╩п╦ я│п╬п╡п©п╟п╢п╣п╫п╦п╣
 //		if (minDist <= curPrecision) {
 //			result[i] = 1;
 //		} else {

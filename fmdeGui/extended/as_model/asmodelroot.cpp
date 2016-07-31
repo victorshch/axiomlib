@@ -43,12 +43,12 @@ int ASModelRoot::columnCount() const {
 
 QVariant ASModelRoot::data(int column) const {
 	switch(column) {
-	case 0: return encode("Имя");
-	case 1: return encode("Целев.");
-	case 2: return encode("# ошибок 1-го рода");
-	case 3: return encode("% ошибок 2-го рода");
-	case 4: return encode("Разметка");
-	case 5: return encode("Встречаемость");
+	case 0: return encode("п≤п╪я▐");
+	case 1: return encode("п╕п╣п╩п╣п╡.");
+	case 2: return encode("# п╬я┬п╦п╠п╬п╨ 1-пЁп╬ я─п╬п╢п╟");
+	case 3: return encode("% п╬я┬п╦п╠п╬п╨ 2-пЁп╬ я─п╬п╢п╟");
+	case 4: return encode("п═п╟п╥п╪п╣я┌п╨п╟");
+	case 5: return encode("п▓я│я┌я─п╣я┤п╟п╣п╪п╬я│я┌я▄");
 	default: return QVariant();
 	}	
 }

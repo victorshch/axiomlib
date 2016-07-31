@@ -1,7 +1,7 @@
 /****************************************************************************
 *						NeuralFANNHeader.h
 *
-*       Description:	Файл, который нужно включать для использования FANN
+*       Description:	п╓п╟п╧п╩, п╨п╬я┌п╬я─я▀п╧ п╫я┐п╤п╫п╬ п╡п╨п╩я▌я┤п╟я┌я▄ п╢п╩я▐ п╦я│п©п╬п╩я▄п╥п╬п╡п╟п╫п╦я▐ FANN
 *       Author:			wictor
 *       History:
 *
@@ -11,10 +11,10 @@
 #define NEURALFANNHEADER_H_
 
 extern "C" {
-// Для использования float вместо double здесь нужно 
-// вместо doublefann.h написать floatfann.h,
-// а также выключить из сборки doublefann.c
-// и включить floatfann.c
+// п■п╩я▐ п╦я│п©п╬п╩я▄п╥п╬п╡п╟п╫п╦я▐ float п╡п╪п╣я│я┌п╬ double п╥п╢п╣я│я▄ п╫я┐п╤п╫п╬ 
+// п╡п╪п╣я│я┌п╬ doublefann.h п╫п╟п©п╦я│п╟я┌я▄ floatfann.h,
+// п╟ я┌п╟п╨п╤п╣ п╡я▀п╨п╩я▌я┤п╦я┌я▄ п╦п╥ я│п╠п╬я─п╨п╦ doublefann.c
+// п╦ п╡п╨п╩я▌я┤п╦я┌я▄ floatfann.c
 #include "FANN/doublefann.h"
 }
 

@@ -1,7 +1,7 @@
 /****************************************************************************
 *				DataSetDivision
 *
-*	Description: Класс, соответствующий разделу набора данных
+*	Description: п п╩п╟я│я│, я│п╬п╬я┌п╡п╣я┌я│я┌п╡я┐я▌я┴п╦п╧ я─п╟п╥п╢п╣п╩я┐ п╫п╟п╠п╬я─п╟ п╢п╟п╫п╫я▀я┘
 *	Author:		wictor
 *	History:	
 *
@@ -25,29 +25,29 @@ public:
 	
 	std::string getMultiTSName(int indexClass, int indexMultiTS) const;
 
-	// Возвращает число классов нештатного поведения
+	// п▓п╬п╥п╡я─п╟я┴п╟п╣я┌ я┤п╦я│п╩п╬ п╨п╩п╟я│я│п╬п╡ п╫п╣я┬я┌п╟я┌п╫п╬пЁп╬ п©п╬п╡п╣п╢п╣п╫п╦я▐
 	int getClassCount() const; 
 	
-	// Число мультирядов в классе
+	// п╖п╦я│п╩п╬ п╪я┐п╩я▄я┌п╦я─я▐п╢п╬п╡ п╡ п╨п╩п╟я│я│п╣
 	int getMultiTSCount(int classNo) const;
 	
-	// Возвращает одномерный ряд по индексам
+	// п▓п╬п╥п╡я─п╟я┴п╟п╣я┌ п╬п╢п╫п╬п╪п╣я─п╫я▀п╧ я─я▐п╢ п©п╬ п╦п╫п╢п╣п╨я│п╟п╪
 	bool getTSByIndex(std::vector<double> &v, int behaviourType, int multiTSNo, int tsNo, bool clip = true) const;
 	
-	// Возвращает длину мультиряда
+	// п▓п╬п╥п╡я─п╟я┴п╟п╣я┌ п╢п╩п╦п╫я┐ п╪я┐п╩я▄я┌п╦я─я▐п╢п╟
 	int getMultiTSLength(int behaviourType, int multiTSNo) const;
 	
-	// Работа с интервалом ограничения
+	// п═п╟п╠п╬я┌п╟ я│ п╦п╫я┌п╣я─п╡п╟п╩п╬п╪ п╬пЁя─п╟п╫п╦я┤п╣п╫п╦я▐
 	IntInterval getClippingInterval(int behaviourType, int multiTSNo) const;
 	void setClippingInterval(const IntInterval &interval,int behaviourType, int multiTSNo);
 	
-	// Возвращает размерности траекторий нештатного поведения для каждого класса нештатного поведения
+	// п▓п╬п╥п╡я─п╟я┴п╟п╣я┌ я─п╟п╥п╪п╣я─п╫п╬я│я┌п╦ я┌я─п╟п╣п╨я┌п╬я─п╦п╧ п╫п╣я┬я┌п╟я┌п╫п╬пЁп╬ п©п╬п╡п╣п╢п╣п╫п╦я▐ п╢п╩я▐ п╨п╟п╤п╢п╬пЁп╬ п╨п╩п╟я│я│п╟ п╫п╣я┬я┌п╟я┌п╫п╬пЁп╬ п©п╬п╡п╣п╢п╣п╫п╦я▐
 	bool getAbnormalSize(std::vector<std::vector<int> > &v) const;
 	
-	// Возвращает размерности траекторий заданного класса
+	// п▓п╬п╥п╡я─п╟я┴п╟п╣я┌ я─п╟п╥п╪п╣я─п╫п╬я│я┌п╦ я┌я─п╟п╣п╨я┌п╬я─п╦п╧ п╥п╟п╢п╟п╫п╫п╬пЁп╬ п╨п╩п╟я│я│п╟
 	bool getClassSize(int classNo, std::vector<int> &v) const;
 	
-	// Возвращает размерности траекторий нормального поведения
+	// п▓п╬п╥п╡я─п╟я┴п╟п╣я┌ я─п╟п╥п╪п╣я─п╫п╬я│я┌п╦ я┌я─п╟п╣п╨я┌п╬я─п╦п╧ п╫п╬я─п╪п╟п╩я▄п╫п╬пЁп╬ п©п╬п╡п╣п╢п╣п╫п╦я▐
 	bool getNormalSize(std::vector<int> &v) const;
 private:
 	typedef boost::tuples::tuple<MultiTS, IntInterval> ClippedMultiTS;

@@ -1,6 +1,6 @@
 /****************************************************************************
 *
-*			Функции класса ExtGenetics
+*			п╓я┐п╫п╨я├п╦п╦ п╨п╩п╟я│я│п╟ ExtGenetics
 *
 ****************************************************************************/
 
@@ -10,7 +10,7 @@ using namespace AxiomLib;
 
 #define debug true
 
-// Коструктор класса с заданием начальных параметров по умолчанию
+// п п╬я│я┌я─я┐п╨я┌п╬я─ п╨п╩п╟я│я│п╟ я│ п╥п╟п╢п╟п╫п╦п╣п╪ п╫п╟я┤п╟п╩я▄п╫я▀я┘ п©п╟я─п╟п╪п╣я┌я─п╬п╡ п©п╬ я┐п╪п╬п╩я┤п╟п╫п╦я▌
 ExtGenetics::ExtGenetics (void) {
 	numOfIter = -1; 
 	popSize = -1;
@@ -28,7 +28,7 @@ ExtGenetics::ExtGenetics (void) {
 } 
 
 
-// Деструктор класса - удаляюся все созданные в рамках класса динамические объекты
+// п■п╣я│я┌я─я┐п╨я┌п╬я─ п╨п╩п╟я│я│п╟ - я┐п╢п╟п╩я▐я▌я│я▐ п╡я│п╣ я│п╬п╥п╢п╟п╫п╫я▀п╣ п╡ я─п╟п╪п╨п╟я┘ п╨п╩п╟я│я│п╟ п╢п╦п╫п╟п╪п╦я┤п╣я│п╨п╦п╣ п╬п╠я┼п╣п╨я┌я▀
 ExtGenetics::~ExtGenetics (void) {
 	if (recognizer != NULL) delete recognizer;
 	//if (selectionStrategy != NULL) delete selectionStrategy;
@@ -43,16 +43,16 @@ ExtGenetics::~ExtGenetics (void) {
 /****************************************************************************
 *			ExtGenetics::initFromEnv
 *
-*	Description:	Инициализация параметров с данными из env
-*	Parameters:	const Environment& env - структура с параметрами конфигурации
+*	Description:	п≤п╫п╦я├п╦п╟п╩п╦п╥п╟я├п╦я▐ п©п╟я─п╟п╪п╣я┌я─п╬п╡ я│ п╢п╟п╫п╫я▀п╪п╦ п╦п╥ env
+*	Parameters:	const Environment& env - я│я┌я─я┐п╨я┌я┐я─п╟ я│ п©п╟я─п╟п╪п╣я┌я─п╟п╪п╦ п╨п╬п╫я└п╦пЁя┐я─п╟я├п╦п╦
 *	Returns:	0
-*	Throws:		AxiomLibException - если конфигурация некорректна
+*	Throws:		AxiomLibException - п╣я│п╩п╦ п╨п╬п╫я└п╦пЁя┐я─п╟я├п╦я▐ п╫п╣п╨п╬я─я─п╣п╨я┌п╫п╟
 *	Author:		gevor
 *	History:
 *
 ****************************************************************************/
 int ExtGenetics::initFromEnv(const Environment& env) {
-	// проверяем число операций
+	// п©я─п╬п╡п╣я─я▐п╣п╪ я┤п╦я│п╩п╬ п╬п©п╣я─п╟я├п╦п╧
 	if (env.getIntParamValue(numOfIter, "numOfIter") < 0)
 		throw AxiomLibException("ExtGenetics::initFromEnv : number of iterations has not been set.");
 
@@ -63,7 +63,7 @@ int ExtGenetics::initFromEnv(const Environment& env) {
 		throw AxiomLibException("ExtGenetics::initFromEnv : tempInt has wrong value.");
 	population.resize (tempInt);
 	popSize = tempInt;
-	// инициализируем начальную популяцию
+	// п╦п╫п╦я├п╦п╟п╩п╦п╥п╦я─я┐п╣п╪ п╫п╟я┤п╟п╩я▄п╫я┐я▌ п©п╬п©я┐п╩я▐я├п╦я▌
 	if (debug) std::cout << "\n	Generated elems:\n";
 	for (int i = 0; i < tempInt; i++) {
 		(population[i]).initFromEnv(env);
@@ -78,7 +78,7 @@ int ExtGenetics::initFromEnv(const Environment& env) {
 		std::cout.flush();
 	}
 
-  // инициализируем распознаватель
+  // п╦п╫п╦я├п╦п╟п╩п╦п╥п╦я─я┐п╣п╪ я─п╟я│п©п╬п╥п╫п╟п╡п╟я┌п╣п╩я▄
   string recognizerName;
   RecognizerFactory rf;
   if (env.getStringParamValue(recognizerName, "Recognizer") < 0)
@@ -112,7 +112,7 @@ int ExtGenetics::initFromEnv(const Environment& env) {
 	throw AxiomLibException ("Error in ExtGenetics::initFromEnv: precisionTransLevel is not set.");
   }
 
-  // инициализируем стратегию скрещивания
+  // п╦п╫п╦я├п╦п╟п╩п╦п╥п╦я─я┐п╣п╪ я│я┌я─п╟я┌п╣пЁп╦я▌ я│п╨я─п╣я┴п╦п╡п╟п╫п╦я▐
   string crossoverStrategyName;
   CrossoverStrategyFactory csf;
   if (env.getStringParamValue(crossoverStrategyName, "crossClass") < 0)
@@ -137,13 +137,13 @@ int ExtGenetics::initFromEnv(const Environment& env) {
 	else {
 		if ( (allCrossLevel < 0.0) || (allCrossLevel > 1.0) ) 
 			throw AxiomLibException("ExtGenetics::initFromEnv : crossLevel isn't set in config file or crossLevel is out of range.");
-		// Если не заданы степени мутации по отдельности для каждого уровня мутации, а задан единый уровень - то его и присваиваем каждому из уровней
+		// п∙я│п╩п╦ п╫п╣ п╥п╟п╢п╟п╫я▀ я│я┌п╣п©п╣п╫п╦ п╪я┐я┌п╟я├п╦п╦ п©п╬ п╬я┌п╢п╣п╩я▄п╫п╬я│я┌п╦ п╢п╩я▐ п╨п╟п╤п╢п╬пЁп╬ я┐я─п╬п╡п╫я▐ п╪я┐я┌п╟я├п╦п╦, п╟ п╥п╟п╢п╟п╫ п╣п╢п╦п╫я▀п╧ я┐я─п╬п╡п╣п╫я▄ - я┌п╬ п╣пЁп╬ п╦ п©я─п╦я│п╡п╟п╦п╡п╟п╣п╪ п╨п╟п╤п╢п╬п╪я┐ п╦п╥ я┐я─п╬п╡п╫п╣п╧
 		eccl = allCrossLevel;
 		acl = 0.0;
 		ascl = 0.0;
 	}
 
-  // инициализируем стратегию вычисления целевой функции
+  // п╦п╫п╦я├п╦п╟п╩п╦п╥п╦я─я┐п╣п╪ я│я┌я─п╟я┌п╣пЁп╦я▌ п╡я▀я┤п╦я│п╩п╣п╫п╦я▐ я├п╣п╩п╣п╡п╬п╧ я└я┐п╫п╨я├п╦п╦
   string goalStrategyName;
   GoalStrategyFactory gsf;
   if (env.getStringParamValue(goalStrategyName, "goalClass") < 0)
@@ -151,11 +151,11 @@ int ExtGenetics::initFromEnv(const Environment& env) {
   goalStrategy = gsf.create(goalStrategyName);
   goalStrategy->setParamsFromEnv(env);
   
-  // нинициализация условия досрочного выхожаи из цикла генетического алгоритма
+  // п╫п╦п╫п╦я├п╦п╟п╩п╦п╥п╟я├п╦я▐ я┐я│п╩п╬п╡п╦я▐ п╢п╬я│я─п╬я┤п╫п╬пЁп╬ п╡я▀я┘п╬п╤п╟п╦ п╦п╥ я├п╦п╨п╩п╟ пЁп╣п╫п╣я┌п╦я┤п╣я│п╨п╬пЁп╬ п╟п╩пЁп╬я─п╦я┌п╪п╟
   if (env.getDoubleParamValue (exitCond, "exitCond") < 0)
     throw AxiomLibException("ExtGenetics::initFromEnv : goal strategy is undefined.");
   
-  // сохраняем путь по которому сохранять лучшую систему аксиом по результатам работы цикла
+  // я│п╬я┘я─п╟п╫я▐п╣п╪ п©я┐я┌я▄ п©п╬ п╨п╬я┌п╬я─п╬п╪я┐ я│п╬я┘я─п╟п╫я▐я┌я▄ п╩я┐я┤я┬я┐я▌ я│п╦я│я┌п╣п╪я┐ п╟п╨я│п╦п╬п╪ п©п╬ я─п╣п╥я┐п╩я▄я┌п╟я┌п╟п╪ я─п╟п╠п╬я┌я▀ я├п╦п╨п╩п╟
   std::string temp;
   if (env.getStringParamValue(temp, "AxiomSetBaseDir") >= 0) {
     axiomSetBaseDir = new string;
@@ -172,8 +172,8 @@ int ExtGenetics::initFromEnv(const Environment& env) {
 /****************************************************************************
 *				ExtGenetics::setNumOfIter
 *
-*	Description:	Установка нового значения числа итераций при подборе оптимальной системы аксиом
-*	Parameters:	newNumOfIter - новое значение числа итераций
+*	Description:	пёя│я┌п╟п╫п╬п╡п╨п╟ п╫п╬п╡п╬пЁп╬ п╥п╫п╟я┤п╣п╫п╦я▐ я┤п╦я│п╩п╟ п╦я┌п╣я─п╟я├п╦п╧ п©я─п╦ п©п╬п╢п╠п╬я─п╣ п╬п©я┌п╦п╪п╟п╩я▄п╫п╬п╧ я│п╦я│я┌п╣п╪я▀ п╟п╨я│п╦п╬п╪
+*	Parameters:	newNumOfIter - п╫п╬п╡п╬п╣ п╥п╫п╟я┤п╣п╫п╦п╣ я┤п╦я│п╩п╟ п╦я┌п╣я─п╟я├п╦п╧
 *	Returns:		0
 *	Throws:		-
 *	Author:		dk
@@ -189,53 +189,53 @@ int ExtGenetics::setNumOfIter (const int newNumOfIter) {
 /****************************************************************************
 *			ExtGenetics::run
 *
-*	Description:	Запуск ГА
+*	Description:	п≈п╟п©я┐я│п╨ п⌠п░
 *	Parameters:	-
 *	Returns:		0
-*	Throws:		AxiomLibException - если произошла ошибка или ГА не
-*				был инициализирован
+*	Throws:		AxiomLibException - п╣я│п╩п╦ п©я─п╬п╦п╥п╬я┬п╩п╟ п╬я┬п╦п╠п╨п╟ п╦п╩п╦ п⌠п░ п╫п╣
+*				п╠я▀п╩ п╦п╫п╦я├п╦п╟п╩п╦п╥п╦я─п╬п╡п╟п╫
 *	Author:		gevor, dk
 *	History:
 *
 ****************************************************************************/
 int ExtGenetics::run(void) {
-	// Классический генетический алгоритм:
-	// 0. проверяем, установлены ли параметры
-	// В цикле:
-	// 1. Прогоняем на существующих системах аксиом распознаватель
-	// 2. Вычисляем значение целевой функции по каждой из систем аксиом
-	// 3. Селекционируем, Проверяем критерий останова
-	// 4. Мутируем
-	// 5. Скрещиваем
+	// п п╩п╟я│я│п╦я┤п╣я│п╨п╦п╧ пЁп╣п╫п╣я┌п╦я┤п╣я│п╨п╦п╧ п╟п╩пЁп╬я─п╦я┌п╪:
+	// 0. п©я─п╬п╡п╣я─я▐п╣п╪, я┐я│я┌п╟п╫п╬п╡п╩п╣п╫я▀ п╩п╦ п©п╟я─п╟п╪п╣я┌я─я▀
+	// п▓ я├п╦п╨п╩п╣:
+	// 1. п÷я─п╬пЁп╬п╫я▐п╣п╪ п╫п╟ я│я┐я┴п╣я│я┌п╡я┐я▌я┴п╦я┘ я│п╦я│я┌п╣п╪п╟я┘ п╟п╨я│п╦п╬п╪ я─п╟я│п©п╬п╥п╫п╟п╡п╟я┌п╣п╩я▄
+	// 2. п▓я▀я┤п╦я│п╩я▐п╣п╪ п╥п╫п╟я┤п╣п╫п╦п╣ я├п╣п╩п╣п╡п╬п╧ я└я┐п╫п╨я├п╦п╦ п©п╬ п╨п╟п╤п╢п╬п╧ п╦п╥ я│п╦я│я┌п╣п╪ п╟п╨я│п╦п╬п╪
+	// 3. п║п╣п╩п╣п╨я├п╦п╬п╫п╦я─я┐п╣п╪, п÷я─п╬п╡п╣я─я▐п╣п╪ п╨я─п╦я┌п╣я─п╦п╧ п╬я│я┌п╟п╫п╬п╡п╟
+	// 4. п°я┐я┌п╦я─я┐п╣п╪
+	// 5. п║п╨я─п╣я┴п╦п╡п╟п╣п╪
 
-	// 0. проверка параметров
+	// 0. п©я─п╬п╡п╣я─п╨п╟ п©п╟я─п╟п╪п╣я┌я─п╬п╡
 	if (numOfIter < 0)
 		throw AxiomLibException("ExtGenetics::run : number of iterations < 0; probably GA has not been initialized.");
 		
-	// заводим переменную дял хранения лучшей системы аксиом за историю
+	// п╥п╟п╡п╬п╢п╦п╪ п©п╣я─п╣п╪п╣п╫п╫я┐я▌ п╢я▐п╩ я┘я─п╟п╫п╣п╫п╦я▐ п╩я┐я┤я┬п╣п╧ я│п╦я│я┌п╣п╪я▀ п╟п╨я│п╦п╬п╪ п╥п╟ п╦я│я┌п╬я─п╦я▌
 	PopElemExt elemBest;
 	if (population.size() < 1)
 		throw AxiomLibException("ExtGenetics::run : population have not been initialized.");
 	
 	AxiomSetPop aspTemp;
 	std::vector <double> precVec;
-	// Основной Цикл
+	// п·я│п╫п╬п╡п╫п╬п╧ п╕п╦п╨п╩
 
 	for (int gaIter=0; gaIter < numOfIter; gaIter++) {
 		if (debug) cout << "	ExtGenetics: iteration " << gaIter+1 << " out of " << numOfIter << ", pop size = " << population.size() << "\n";
-		// 1. Прогоняем на существующей популяции алгоритм разметки и распознавания, получаем число ошибок первого и второго рода, заполняем статистику.
+		// 1. п÷я─п╬пЁп╬п╫я▐п╣п╪ п╫п╟ я│я┐я┴п╣я│я┌п╡я┐я▌я┴п╣п╧ п©п╬п©я┐п╩я▐я├п╦п╦ п╟п╩пЁп╬я─п╦я┌п╪ я─п╟п╥п╪п╣я┌п╨п╦ п╦ я─п╟я│п©п╬п╥п╫п╟п╡п╟п╫п╦я▐, п©п╬п╩я┐я┤п╟п╣п╪ я┤п╦я│п╩п╬ п╬я┬п╦п╠п╬п╨ п©п╣я─п╡п╬пЁп╬ п╦ п╡я┌п╬я─п╬пЁп╬ я─п╬п╢п╟, п╥п╟п©п╬п╩п╫я▐п╣п╪ я│я┌п╟я┌п╦я│я┌п╦п╨я┐.
 		aspTemp.clear();
 		precVec.clear();
 		
-		// 2. Проводим Селекцию
+		// 2. п÷я─п╬п╡п╬п╢п╦п╪ п║п╣п╩п╣п╨я├п╦я▌
 		if (gaIter > 0) 
 			select ();
 				
-		// 3. Мутируем
+		// 3. п°я┐я┌п╦я─я┐п╣п╪
 		if (gaIter > 0) 
 			transmute ();
 		
-		// 4. Скрещиваем    
+		// 4. п║п╨я─п╣я┴п╦п╡п╟п╣п╪    
 		if (gaIter > 0) 
 			crossover ();
 
@@ -243,7 +243,7 @@ int ExtGenetics::run(void) {
 		packAxiomSetPop (aspTemp, precVec);
 		recognizer->run(aspTemp, precVec);
 		
-		// 6. Прогоняем вычисление H(first, second)
+		// 6. п÷я─п╬пЁп╬п╫я▐п╣п╪ п╡я▀я┤п╦я│п╩п╣п╫п╦п╣ H(first, second)
 		goalStrategy->compute(aspTemp);
 		unpackAxiomSetPop (aspTemp, precVec);
 		writeResultsToDisplay();
@@ -256,7 +256,7 @@ int ExtGenetics::run(void) {
 		if (comments) { cout << "\n"; std::cout.flush();}
 	}
 
-	// сохраняем лучшую систему аксиом в файл
+	// я│п╬я┘я─п╟п╫я▐п╣п╪ п╩я┐я┤я┬я┐я▌ я│п╦я│я┌п╣п╪я┐ п╟п╨я│п╦п╬п╪ п╡ я└п╟п╧п╩
 	AxiomSetWithStats bestAxiomSet;
 	bestAxiomSet = elemBest.axSet;
 	if (debug) {
@@ -358,25 +358,25 @@ int ExtGenetics::unpackAxiomSetPop (AxiomSetPop &aspTemp, std::vector <double> &
 
 
 inline int ExtGenetics::sort (std::vector<int> &mask, std::vector<double> &goals) const {
-	// проверка входных парметров
+	// п©я─п╬п╡п╣я─п╨п╟ п╡я┘п╬п╢п╫я▀я┘ п©п╟я─п╪п╣я┌я─п╬п╡
 	if ( (mask.size() != goals.size()) || (mask.size() < 1) )
 		throw AxiomLibException ("Error in SimpleSelectionStrategy::sort: input parameters are of wrong length.");
-	// собственно сортировка по принципу - размещения в порядке неубывания по goals индексов в mask
+	// я│п╬п╠я│я┌п╡п╣п╫п╫п╬ я│п╬я─я┌п╦я─п╬п╡п╨п╟ п©п╬ п©я─п╦п╫я├п╦п©я┐ - я─п╟п╥п╪п╣я┴п╣п╫п╦я▐ п╡ п©п╬я─я▐п╢п╨п╣ п╫п╣я┐п╠я▀п╡п╟п╫п╦я▐ п©п╬ goals п╦п╫п╢п╣п╨я│п╬п╡ п╡ mask
 	int j = 0;
 	for (int i = 0; i < (int) goals.size(); i++){
 		j = 0;
-		// поиск размешения
+		// п©п╬п╦я│п╨ я─п╟п╥п╪п╣я┬п╣п╫п╦я▐
 		while ( j < i ) {
 			if (goals[i] < goals[mask[j]]) {
 				break;
 			}
 			j++;
 		}
-		// смещение всех, у кого goal меньше
+		// я│п╪п╣я┴п╣п╫п╦п╣ п╡я│п╣я┘, я┐ п╨п╬пЁп╬ goal п╪п╣п╫я▄я┬п╣
 		for (int k = i; k > j; k--) {
 			mask[k] = mask[k-1];
 		}
-		// собственно размещение индекса
+		// я│п╬п╠я│я┌п╡п╣п╫п╫п╬ я─п╟п╥п╪п╣я┴п╣п╫п╦п╣ п╦п╫п╢п╣п╨я│п╟
 		mask[j] = i;
 	}
 	return 0;

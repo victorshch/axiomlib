@@ -75,7 +75,7 @@ void StageBase::refresh() {
 }
 	
 void StageBase::reloadValuesFromStage() {
-	// ğÏ ÕÍÏÌŞÁÎÉÀ -- ĞÒÏÓÔÏ ĞÅÒÅÚÁÇÒÕÖÁÅÍ ÄÁÎÎÙÅ
+	// ĞŸĞ¾ ÑƒĞ¼Ğ¾Ğ»Ñ‡Ğ°Ğ½Ğ¸Ñ -- Ğ¿Ñ€Ğ¾ÑÑ‚Ğ¾ Ğ¿ĞµÑ€ĞµĞ·Ğ°Ğ³Ñ€ÑƒĞ¶Ğ°ĞµĞ¼ Ğ´Ğ°Ğ½Ğ½Ñ‹Ğµ
 	loadValuesFromStage();
 }
 
@@ -94,7 +94,7 @@ void StageBase::runHeuristics(QWidget *widget) {
 		throw std::logic_error("Invalid widget in runHeuristics");
 	}
 	
-	//TODO ÕÂÒÁÔØ ÌÉÛÎÉÅ ËÏĞÉÒÏ×ÁÎÉÑ
+	//TODO ÑƒĞ±Ñ€Ğ°Ñ‚ÑŒ Ğ»Ğ¸ÑˆĞ½Ğ¸Ğµ ĞºĞ¾Ğ¿Ğ¸Ñ€Ğ¾Ğ²Ğ°Ğ½Ğ¸Ñ
 	saveValuesToStage();
 	copyParamsToStage(heuristicsForm);
 	controller->getStage(stageNumber()).save();

@@ -35,5 +35,5 @@ void LogWindow::closeEvent(QCloseEvent *event) {
 void LogWindow::finish() {
 	running = false;
 	ui->pushButton_cancel->setEnabled(true);
-	this->setWindowTitle(encode("Вычисление завершено"));
+	this->setWindowTitle(encode("п▓я▀я┤п╦я│п╩п╣п╫п╦п╣ п╥п╟п╡п╣я─я┬п╣п╫п╬"));
 }

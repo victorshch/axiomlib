@@ -24,7 +24,7 @@ public:
 	double minValue();
 	double maxValue();
 	
-	// false - меньше (т.е. отсекаем все, что больше), true - больше
+	// false - п╪п╣п╫я▄я┬п╣ (я┌.п╣. п╬я┌я│п╣п╨п╟п╣п╪ п╡я│п╣, я┤я┌п╬ п╠п╬п╩я▄я┬п╣), true - п╠п╬п╩я▄я┬п╣
 	bool direction();
 	
 	bool checked();
@@ -41,7 +41,7 @@ public slots:
 	SliderGroup* setChecked(bool checked);
 	SliderGroup* toDefault();
 signals:
-	// сигналит, когда изменяется значение или направление отсечения
+	// я│п╦пЁп╫п╟п╩п╦я┌, п╨п╬пЁп╢п╟ п╦п╥п╪п╣п╫я▐п╣я┌я│я▐ п╥п╫п╟я┤п╣п╫п╦п╣ п╦п╩п╦ п╫п╟п©я─п╟п╡п╩п╣п╫п╦п╣ п╬я┌я│п╣я┤п╣п╫п╦я▐
 	void valueChanged();
 
 protected:

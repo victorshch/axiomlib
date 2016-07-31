@@ -40,13 +40,13 @@ int main (int argc, char** argv) {
 			std::cout.flush();
 		}
 
-		// Блок используемый исключительно для отладки
+		// п▒п╩п╬п╨ п╦я│п©п╬п╩я▄п╥я┐п╣п╪я▀п╧ п╦я│п╨п╩я▌я┤п╦я┌п╣п╩я▄п╫п╬ п╢п╩я▐ п╬я┌п╩п╟п╢п╨п╦
 //		if (rank == 0) {
 //			std::cout << "\n\tTo start press enter, please.";
 //			std::cin.get();
 //		}
 //		MPI_Barrier (MPI_COMM_WORLD);
-		// Конец блока для отладки
+		// п п╬п╫п╣я├ п╠п╩п╬п╨п╟ п╢п╩я▐ п╬я┌п╩п╟п╢п╨п╦
 
 		if ((specOutputForGui) && (rank == 0)) { std::cout << str_systemMsg_prog << "1\n"; std::cout.flush(); }
 
@@ -75,9 +75,9 @@ int main (int argc, char** argv) {
 
 		if (comments) {	std::cout << "\n	Starting template learning algorithm.\n"; std::cout.flush(); }
 
-		// Запуск обучения
+		// п≈п╟п©я┐я│п╨ п╬п╠я┐я┤п╣п╫п╦я▐
 		templateManager.run();
-		// Запуск только проверки качества работы распознавателей на заданном наборе данных
+		// п≈п╟п©я┐я│п╨ я┌п╬п╩я▄п╨п╬ п©я─п╬п╡п╣я─п╨п╦ п╨п╟я┤п╣я│я┌п╡п╟ я─п╟п╠п╬я┌я▀ я─п╟я│п©п╬п╥п╫п╟п╡п╟я┌п╣п╩п╣п╧ п╫п╟ п╥п╟п╢п╟п╫п╫п╬п╪ п╫п╟п╠п╬я─п╣ п╢п╟п╫п╫я▀я┘
 		//templateManager.runExecuteOnly();
 		
 		if (rank == 0) { 

@@ -20,7 +20,7 @@ int main (int argc, char** argv) {
 	  std::cout.flush();
 	}
 
-    // Считываем файл конфигурации из заданного источника
+    // п║я┤п╦я┌я▀п╡п╟п╣п╪ я└п╟п╧п╩ п╨п╬п╫я└п╦пЁя┐я─п╟я├п╦п╦ п╦п╥ п╥п╟п╢п╟п╫п╫п╬пЁп╬ п╦я│я┌п╬я┤п╫п╦п╨п╟
 	Environment envStart;
 	envStart.readConfigParams (argc, argv);
 
@@ -32,21 +32,21 @@ int main (int argc, char** argv) {
 	env.readConfigFile(pathToConfigFile.c_str());
 	env += envStart;
 		
-    // инициализируем генетический алгоритм
+    // п╦п╫п╦я├п╦п╟п╩п╦п╥п╦я─я┐п╣п╪ пЁп╣п╫п╣я┌п╦я┤п╣я│п╨п╦п╧ п╟п╩пЁп╬я─п╦я┌п╪
     string gaToUse;
 		
-    // Проверяем, задан лт ГА
+    // п÷я─п╬п╡п╣я─я▐п╣п╪, п╥п╟п╢п╟п╫ п╩я┌ п⌠п░
     if (env.getStringParamValue(gaToUse, "GA") < 0) {
       cerr << "No GA set in the environment.\n";
       return -1;
     }
-    // Проверяем, задан ли нужный нам ГА
+    // п÷я─п╬п╡п╣я─я▐п╣п╪, п╥п╟п╢п╟п╫ п╩п╦ п╫я┐п╤п╫я▀п╧ п╫п╟п╪ п⌠п░
     if (gaToUse == "BaseGenetics") {
       BaseGenetics ga;
       ga.initFromEnv(env);
-      // запускаем генетический алгоритм
+      // п╥п╟п©я┐я│п╨п╟п╣п╪ пЁп╣п╫п╣я┌п╦я┤п╣я│п╨п╦п╧ п╟п╩пЁп╬я─п╦я┌п╪
       ga.run();
-      // выводим результаты работы ГА
+      // п╡я▀п╡п╬п╢п╦п╪ я─п╣п╥я┐п╩я▄я┌п╟я┌я▀ я─п╟п╠п╬я┌я▀ п⌠п░
       ga.writeResultsToDisplay();
       if (comments)
         std::cout << "\n";

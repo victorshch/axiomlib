@@ -1,6 +1,6 @@
 /****************************************************************************
 *
-*				Функции класса FuzzyDataLearnAlgorithm
+*				п╓я┐п╫п╨я├п╦п╦ п╨п╩п╟я│я│п╟ FuzzyDataLearnAlgorithm
 *
 ****************************************************************************/
 #include "FuzzyDataLearnAlgorithm.h"
@@ -12,9 +12,9 @@ using namespace AxiomLib;
 
 #define eps 0.001
 
-// Коструктор класса
+// п п╬я│я┌я─я┐п╨я┌п╬я─ п╨п╩п╟я│я│п╟
 FuzzyDataLearnAlgorithm::FuzzyDataLearnAlgorithm (void) {
-	// Определяем по умолчанию не выводить никаких комментариев
+	// п·п©я─п╣п╢п╣п╩я▐п╣п╪ п©п╬ я┐п╪п╬п╩я┤п╟п╫п╦я▌ п╫п╣ п╡я▀п╡п╬п╢п╦я┌я▄ п╫п╦п╨п╟п╨п╦я┘ п╨п╬п╪п╪п╣п╫я┌п╟я─п╦п╣п╡
 	comments = false;
 	compareStatistic = NULL;
 	goalStrategy = NULL;
@@ -43,7 +43,7 @@ FuzzyDataLearnAlgorithm::FuzzyDataLearnAlgorithm (void) {
 } 
 
 
-// Деструктор класса - удаляюся все созданные в рамках класса динамические объекты
+// п■п╣я│я┌я─я┐п╨я┌п╬я─ п╨п╩п╟я│я│п╟ - я┐п╢п╟п╩я▐я▌я│я▐ п╡я│п╣ я│п╬п╥п╢п╟п╫п╫я▀п╣ п╡ я─п╟п╪п╨п╟я┘ п╨п╩п╟я│я│п╟ п╢п╦п╫п╟п╪п╦я┤п╣я│п╨п╦п╣ п╬п╠я┼п╣п╨я┌я▀
 FuzzyDataLearnAlgorithm::~FuzzyDataLearnAlgorithm (void) {
 	if (compareStatistic != NULL) delete compareStatistic;
 	if (goalStrategy != NULL) delete goalStrategy;
@@ -53,40 +53,40 @@ FuzzyDataLearnAlgorithm::~FuzzyDataLearnAlgorithm (void) {
 /****************************************************************************
 *				FuzzyDataLearnAlgorithm::initFromEnv
 *
-*	Description:	Функция устанавливает параметры объекта по данным из 
-*					окружения, которое подается как параметр функции
-*	Parameters:	env - объект класса окружения, откуда берутся параметры данного класса
+*	Description:	п╓я┐п╫п╨я├п╦я▐ я┐я│я┌п╟п╫п╟п╡п╩п╦п╡п╟п╣я┌ п©п╟я─п╟п╪п╣я┌я─я▀ п╬п╠я┼п╣п╨я┌п╟ п©п╬ п╢п╟п╫п╫я▀п╪ п╦п╥ 
+*					п╬п╨я─я┐п╤п╣п╫п╦я▐, п╨п╬я┌п╬я─п╬п╣ п©п╬п╢п╟п╣я┌я│я▐ п╨п╟п╨ п©п╟я─п╟п╪п╣я┌я─ я└я┐п╫п╨я├п╦п╦
+*	Parameters:	env - п╬п╠я┼п╣п╨я┌ п╨п╩п╟я│я│п╟ п╬п╨я─я┐п╤п╣п╫п╦я▐, п╬я┌п╨я┐п╢п╟ п╠п╣я─я┐я┌я│я▐ п©п╟я─п╟п╪п╣я┌я─я▀ п╢п╟п╫п╫п╬пЁп╬ п╨п╩п╟я│я│п╟
 *	Returns:	0
-*	Throws:		AxiomLibException - если в одном из алгоритмов возникла ошибка
+*	Throws:		AxiomLibException - п╣я│п╩п╦ п╡ п╬п╢п╫п╬п╪ п╦п╥ п╟п╩пЁп╬я─п╦я┌п╪п╬п╡ п╡п╬п╥п╫п╦п╨п╩п╟ п╬я┬п╦п╠п╨п╟
 *	Author:		dk
 *	History:
 *
 ****************************************************************************/
 int FuzzyDataLearnAlgorithm::initFromEnv (const Environment& env) {
-	// Инициализируем dataSet
+	// п≤п╫п╦я├п╦п╟п╩п╦п╥п╦я─я┐п╣п╪ dataSet
 	std::string datasetDir, datasetName;
 	if (env.getStringParamValue(datasetDir, "BaseDataSetDir") < 0)
 		throw AxiomLibException("FuzzyDataLearnAlgorithm::setParamsFromEnv : data set directory is undefined.");
 	if (env.getStringParamValue(datasetName, "DataSet") < 0)
 		throw AxiomLibException("FuzzyDataLearnAlgorithm::setParamsFromEnv : data set is undefined.");
-	// считываем необходимые для данного класса параметры о наборе данных
+	// я│я┤п╦я┌я▀п╡п╟п╣п╪ п╫п╣п╬п╠я┘п╬п╢п╦п╪я▀п╣ п╢п╩я▐ п╢п╟п╫п╫п╬пЁп╬ п╨п╩п╟я│я│п╟ п©п╟я─п╟п╪п╣я┌я─я▀ п╬ п╫п╟п╠п╬я─п╣ п╢п╟п╫п╫я▀я┘
 	EnvDataSet envDataSet;
 	envDataSet.readConfigFile (datasetDir, datasetName);
-	// установка корректного обозначения NullStr - обозначение остутсвия в данной точке ряда какого либо нештатного поведения
+	// я┐я│я┌п╟п╫п╬п╡п╨п╟ п╨п╬я─я─п╣п╨я┌п╫п╬пЁп╬ п╬п╠п╬п╥п╫п╟я┤п╣п╫п╦я▐ NullStr - п╬п╠п╬п╥п╫п╟я┤п╣п╫п╦п╣ п╬я│я┌я┐я┌я│п╡п╦я▐ п╡ п╢п╟п╫п╫п╬п╧ я┌п╬я┤п╨п╣ я─я▐п╢п╟ п╨п╟п╨п╬пЁп╬ п╩п╦п╠п╬ п╫п╣я┬я┌п╟я┌п╫п╬пЁп╬ п©п╬п╡п╣п╢п╣п╫п╦я▐
 	fuzzyDataSet.setNullStr (envDataSet);
 	fuzzyDataSet.setNormalStr (envDataSet);
-	// собственно считываем набор данных - заводим его во внутреннее представление
+	// я│п╬п╠я│я┌п╡п╣п╫п╫п╬ я│я┤п╦я┌я▀п╡п╟п╣п╪ п╫п╟п╠п╬я─ п╢п╟п╫п╫я▀я┘ - п╥п╟п╡п╬п╢п╦п╪ п╣пЁп╬ п╡п╬ п╡п╫я┐я┌я─п╣п╫п╫п╣п╣ п©я─п╣п╢я│я┌п╟п╡п╩п╣п╫п╦п╣
 	fuzzyDataSet.readDataSet(datasetDir, datasetName);
-	// восстанавливаем в данном классе вектор индексов параметров в каноническом представленнии по которым вести поиск нештатых ситуаций
+	// п╡п╬я│я│я┌п╟п╫п╟п╡п╩п╦п╡п╟п╣п╪ п╡ п╢п╟п╫п╫п╬п╪ п╨п╩п╟я│я│п╣ п╡п╣п╨я┌п╬я─ п╦п╫п╢п╣п╨я│п╬п╡ п©п╟я─п╟п╪п╣я┌я─п╬п╡ п╡ п╨п╟п╫п╬п╫п╦я┤п╣я│п╨п╬п╪ п©я─п╣п╢я│я┌п╟п╡п╩п╣п╫п╫п╦п╦ п©п╬ п╨п╬я┌п╬я─я▀п╪ п╡п╣я│я┌п╦ п©п╬п╦я│п╨ п╫п╣я┬я┌п╟я┌я▀я┘ я│п╦я┌я┐п╟я├п╦п╧
 	fuzzyDataSet.getParamNums(dataSetParams, env, envDataSet);
 
-	// Параметры, по которым сохранять лучщие решения
+	// п÷п╟я─п╟п╪п╣я┌я─я▀, п©п╬ п╨п╬я┌п╬я─я▀п╪ я│п╬я┘я─п╟п╫я▐я┌я▄ п╩я┐я┤я┴п╦п╣ я─п╣я┬п╣п╫п╦я▐
 	if (env.getStringParamValue(axiomSetBaseDir, "AxiomSetBaseDir") < 0)
 		throw AxiomLibException("FuzzyDataLearnAlgorithm::setParamsFromEnv : axiomSetBaseDir directory is undefined.");
 	if (env.getStringParamValue(axiomName, "saveTo") < 0)
 		throw AxiomLibException("FuzzyDataLearnAlgorithm::setParamsFromEnv : axiomName to save is undefined.");
 
-	// создание класса подсчета статистики
+	// я│п╬п╥п╢п╟п╫п╦п╣ п╨п╩п╟я│я│п╟ п©п╬п╢я│я┤п╣я┌п╟ я│я┌п╟я┌п╦я│я┌п╦п╨п╦
 	std::string compClassName;
 	CompareClassFactory ccf;
 	if (env.getStringParamValue(compClassName, "compareClass") < 0)
@@ -94,7 +94,7 @@ int FuzzyDataLearnAlgorithm::initFromEnv (const Environment& env) {
 	compareStatistic = ccf.create(compClassName);
 	compareStatistic->setParamsFromEnv(env);
 
-	// Инициализируем стратегию вычисления целевой функции
+	// п≤п╫п╦я├п╦п╟п╩п╦п╥п╦я─я┐п╣п╪ я│я┌я─п╟я┌п╣пЁп╦я▌ п╡я▀я┤п╦я│п╩п╣п╫п╦я▐ я├п╣п╩п╣п╡п╬п╧ я└я┐п╫п╨я├п╦п╦
 	std::string goalStrategyName;
 	GoalStrategyFactory gsf;
 	if (env.getStringParamValue(goalStrategyName, "goalClass") < 0) 
@@ -102,7 +102,7 @@ int FuzzyDataLearnAlgorithm::initFromEnv (const Environment& env) {
 	goalStrategy = gsf.create(goalStrategyName);
 	goalStrategy->setParamsFromEnv(env);
 
-	// Параметры алгоритма настройки элементарных условий
+	// п÷п╟я─п╟п╪п╣я┌я─я▀ п╟п╩пЁп╬я─п╦я┌п╪п╟ п╫п╟я│я┌я─п╬п╧п╨п╦ я█п╩п╣п╪п╣п╫я┌п╟я─п╫я▀я┘ я┐я│п╩п╬п╡п╦п╧
 	if (env.getIntParamValue (leftLimit, "leftLimit") < 0)
 		throw AxiomLibException("FuzzyDataLearnAlgorithm::setParamsFromEnv : leftLimit is undefined.");
 	if (env.getIntParamValue (rightLimit, "rightLimit") < 0)
@@ -112,23 +112,23 @@ int FuzzyDataLearnAlgorithm::initFromEnv (const Environment& env) {
 	if (env.getIntParamValue (numOfLevels, "numOfLevels") < 0)
 		throw AxiomLibException("FuzzyDataLearnAlgorithm::setParamsFromEnv : numOfLevels is undefined.");
 
-	// Стадия процесса построения системы аксиом и поиска разметок изначально 0 (поиск не начинался)
+	// п║я┌п╟п╢п╦я▐ п©я─п╬я├п╣я│я│п╟ п©п╬я│я┌я─п╬п╣п╫п╦я▐ я│п╦я│я┌п╣п╪я▀ п╟п╨я│п╦п╬п╪ п╦ п©п╬п╦я│п╨п╟ я─п╟п╥п╪п╣я┌п╬п╨ п╦п╥п╫п╟я┤п╟п╩я▄п╫п╬ 0 (п©п╬п╦я│п╨ п╫п╣ п╫п╟я┤п╦п╫п╟п╩я│я▐)
 	stage = 0;
 
-	// Стоимость выполнения элементарного условия на участке, содержащем нештатное поведение
+	// п║я┌п╬п╦п╪п╬я│я┌я▄ п╡я▀п©п╬п╩п╫п╣п╫п╦я▐ я█п╩п╣п╪п╣п╫я┌п╟я─п╫п╬пЁп╬ я┐я│п╩п╬п╡п╦я▐ п╫п╟ я┐я┤п╟я│я┌п╨п╣, я│п╬п╢п╣я─п╤п╟я┴п╣п╪ п╫п╣я┬я┌п╟я┌п╫п╬п╣ п©п╬п╡п╣п╢п╣п╫п╦п╣
 	if (env.getDoubleParamValue (costEthIn, "costEthIn") < 0)
 		throw AxiomLibException("FuzzyDataLearnAlgorithm::setParamsFromEnv : costEthIn is undefined.");
-	// Стоимость невыполнения элементарного условия на участке, содержащем нештатное поведение
+	// п║я┌п╬п╦п╪п╬я│я┌я▄ п╫п╣п╡я▀п©п╬п╩п╫п╣п╫п╦я▐ я█п╩п╣п╪п╣п╫я┌п╟я─п╫п╬пЁп╬ я┐я│п╩п╬п╡п╦я▐ п╫п╟ я┐я┤п╟я│я┌п╨п╣, я│п╬п╢п╣я─п╤п╟я┴п╣п╪ п╫п╣я┬я┌п╟я┌п╫п╬п╣ п©п╬п╡п╣п╢п╣п╫п╦п╣
 	if (env.getDoubleParamValue (costEthOut, "costEthOut") < 0)
 		throw AxiomLibException("FuzzyDataLearnAlgorithm::setParamsFromEnv : costEthOut is undefined.");
-	// Стоимость выполнения элементарного условия на участке нормального поведения
+	// п║я┌п╬п╦п╪п╬я│я┌я▄ п╡я▀п©п╬п╩п╫п╣п╫п╦я▐ я█п╩п╣п╪п╣п╫я┌п╟я─п╫п╬пЁп╬ я┐я│п╩п╬п╡п╦я▐ п╫п╟ я┐я┤п╟я│я┌п╨п╣ п╫п╬я─п╪п╟п╩я▄п╫п╬пЁп╬ п©п╬п╡п╣п╢п╣п╫п╦я▐
 	if (env.getDoubleParamValue (costNormalIn, "costNormalIn") < 0)
 		throw AxiomLibException("FuzzyDataLearnAlgorithm::setParamsFromEnv : costNormalIn is undefined.");
-	// Стоимость невыполнения элементарного условия на участке нормального поведения
+	// п║я┌п╬п╦п╪п╬я│я┌я▄ п╫п╣п╡я▀п©п╬п╩п╫п╣п╫п╦я▐ я█п╩п╣п╪п╣п╫я┌п╟я─п╫п╬пЁп╬ я┐я│п╩п╬п╡п╦я▐ п╫п╟ я┐я┤п╟я│я┌п╨п╣ п╫п╬я─п╪п╟п╩я▄п╫п╬пЁп╬ п©п╬п╡п╣п╢п╣п╫п╦я▐
 	if (env.getDoubleParamValue (costNormalOut, "costNormalOut") < 0)
 		throw AxiomLibException("FuzzyDataLearnAlgorithm::setParamsFromEnv : costNormalOut is undefined.");
 
-	// Параметры поиска аксиом
+	// п÷п╟я─п╟п╪п╣я┌я─я▀ п©п╬п╦я│п╨п╟ п╟п╨я│п╦п╬п╪
 	if (env.getIntParamValue (maxAxiomPopSize, "maxAxiomPopSize") < 0)
 		throw AxiomLibException("FuzzyDataLearnAlgorithm::setParamsFromEnv : maxAxiomPopSize is undefined.");
 	if (env.getIntParamValue (maxIterNum, "axiomAlgIterNum") < 0)
@@ -138,27 +138,27 @@ int FuzzyDataLearnAlgorithm::initFromEnv (const Environment& env) {
 	if (env.getDoubleParamValue (percentBestAxioms, "percentBestAxioms") < 0)
 		throw AxiomLibException("FuzzyDataLearnAlgorithm::setParamsFromEnv : percentBestAxioms is undefined.");
 
-	// Стоимость для оценивания вероятности существования опорных точек
+	// п║я┌п╬п╦п╪п╬я│я┌я▄ п╢п╩я▐ п╬я├п╣п╫п╦п╡п╟п╫п╦я▐ п╡п╣я─п╬я▐я┌п╫п╬я│я┌п╦ я│я┐я┴п╣я│я┌п╡п╬п╡п╟п╫п╦я▐ п╬п©п╬я─п╫я▀я┘ я┌п╬я┤п╣п╨
 	if (env.getDoubleParamValue (costStrongPoint, "costStrongPoint") < 0)
 		throw AxiomLibException("FuzzyDataLearnAlgorithm::setParamsFromEnv : costStrongPoint is undefined.");
-	// Стоимость близости отношения минимальной длине к максимальной для участков где аксиома выполняется на тестовой выборке
+	// п║я┌п╬п╦п╪п╬я│я┌я▄ п╠п╩п╦п╥п╬я│я┌п╦ п╬я┌п╫п╬я┬п╣п╫п╦я▐ п╪п╦п╫п╦п╪п╟п╩я▄п╫п╬п╧ п╢п╩п╦п╫п╣ п╨ п╪п╟п╨я│п╦п╪п╟п╩я▄п╫п╬п╧ п╢п╩я▐ я┐я┤п╟я│я┌п╨п╬п╡ пЁп╢п╣ п╟п╨я│п╦п╬п╪п╟ п╡я▀п©п╬п╩п╫я▐п╣я┌я│я▐ п╫п╟ я┌п╣я│я┌п╬п╡п╬п╧ п╡я▀п╠п╬я─п╨п╣
 	if (env.getDoubleParamValue (costMaxMinLenRatio, "costMaxMinLenRatio") < 0)
 		throw AxiomLibException("FuzzyDataLearnAlgorithm::setParamsFromEnv : costMaxMinLenRatio is undefined.");
-	// Стоимость близости к 0 отношения числа точек, где аксиома срабатывает к общему число на тестовой выборке.
+	// п║я┌п╬п╦п╪п╬я│я┌я▄ п╠п╩п╦п╥п╬я│я┌п╦ п╨ 0 п╬я┌п╫п╬я┬п╣п╫п╦я▐ я┤п╦я│п╩п╟ я┌п╬я┤п╣п╨, пЁп╢п╣ п╟п╨я│п╦п╬п╪п╟ я│я─п╟п╠п╟я┌я▀п╡п╟п╣я┌ п╨ п╬п╠я┴п╣п╪я┐ я┤п╦я│п╩п╬ п╫п╟ я┌п╣я│я┌п╬п╡п╬п╧ п╡я▀п╠п╬я─п╨п╣.
 	if (env.getDoubleParamValue (costLenRatio, "costLenRatio") < 0)
 		throw AxiomLibException("FuzzyDataLearnAlgorithm::setParamsFromEnv : costLenRatio is undefined.");
-	// Стоимость отсутствия областей срабатывания аксиомы на траекториях нормального поведения
+	// п║я┌п╬п╦п╪п╬я│я┌я▄ п╬я┌я│я┐я┌я│я┌п╡п╦я▐ п╬п╠п╩п╟я│я┌п╣п╧ я│я─п╟п╠п╟я┌я▀п╡п╟п╫п╦я▐ п╟п╨я│п╦п╬п╪я▀ п╫п╟ я┌я─п╟п╣п╨я┌п╬я─п╦я▐я┘ п╫п╬я─п╪п╟п╩я▄п╫п╬пЁп╬ п©п╬п╡п╣п╢п╣п╫п╦я▐
 	if (env.getDoubleParamValue (costHiAreasNum, "costNormalInWhole") < 0)
 		throw AxiomLibException("FuzzyDataLearnAlgorithm::setParamsFromEnv : costNormalInWhole is undefined.");
-	// Гибкость, с которой учитывать costHiAreasNum
+	// п⌠п╦п╠п╨п╬я│я┌я▄, я│ п╨п╬я┌п╬я─п╬п╧ я┐я┤п╦я┌я▀п╡п╟я┌я▄ costHiAreasNum
 	if (env.getDoubleParamValue (hiAreasNumEffect, "normalInWholeEffect") < 0)
 		throw AxiomLibException("FuzzyDataLearnAlgorithm::setParamsFromEnv : normalInWholeEffect is undefined.");
 
-	// Стоимость ошибки, если при сдвиге разметок осталась область разметки без соответствия в другой разметке
+	// п║я┌п╬п╦п╪п╬я│я┌я▄ п╬я┬п╦п╠п╨п╦, п╣я│п╩п╦ п©я─п╦ я│п╢п╡п╦пЁп╣ я─п╟п╥п╪п╣я┌п╬п╨ п╬я│я┌п╟п╩п╟я│я▄ п╬п╠п╩п╟я│я┌я▄ я─п╟п╥п╪п╣я┌п╨п╦ п╠п╣п╥ я│п╬п╬я┌п╡п╣я┌я│я┌п╡п╦я▐ п╡ п╢я─я┐пЁп╬п╧ я─п╟п╥п╪п╣я┌п╨п╣
 	if (env.getDoubleParamValue (shiftErrIn, "shiftErrIn") < 0)
 		throw AxiomLibException("FuzzyDataLearnAlgorithm::setParamsFromEnv : shiftErrIn is undefined.");
 
-	// Степень расширения длины вхождения разметки (при поиске разметок во время их подбора) 
+	// п║я┌п╣п©п╣п╫я▄ я─п╟я│я┬п╦я─п╣п╫п╦я▐ п╢п╩п╦п╫я▀ п╡я┘п╬п╤п╢п╣п╫п╦я▐ я─п╟п╥п╪п╣я┌п╨п╦ (п©я─п╦ п©п╬п╦я│п╨п╣ я─п╟п╥п╪п╣я┌п╬п╨ п╡п╬ п╡я─п╣п╪я▐ п╦я┘ п©п╬п╢п╠п╬я─п╟) 
 	if (env.getDoubleParamValue (extendMarkUpLensLevel, "extendMarkUpLensLevel") < 0)
 		throw AxiomLibException("FuzzyDataLearnAlgorithm::setParamsFromEnv : extendMarkUpLensLevel is undefined.");
 
@@ -169,8 +169,8 @@ int FuzzyDataLearnAlgorithm::initFromEnv (const Environment& env) {
 /****************************************************************************
 *					FuzzyDataLearnAlgorithm::setComments
 *
-*	Description:	Устанавливает новое значение переменной класса comments
-*	Parameters:		newVal - новое значение переменной comments
+*	Description:	пёя│я┌п╟п╫п╟п╡п╩п╦п╡п╟п╣я┌ п╫п╬п╡п╬п╣ п╥п╫п╟я┤п╣п╫п╦п╣ п©п╣я─п╣п╪п╣п╫п╫п╬п╧ п╨п╩п╟я│я│п╟ comments
+*	Parameters:		newVal - п╫п╬п╡п╬п╣ п╥п╫п╟я┤п╣п╫п╦п╣ п©п╣я─п╣п╪п╣п╫п╫п╬п╧ comments
 *	Returns:		0
 *	Throws:			-
 *	Author:			dk
@@ -186,42 +186,42 @@ int FuzzyDataLearnAlgorithm::setComments (const bool newVal) {
 /****************************************************************************
 *					FuzzyDataLearnAlgorithm::run
 *
-*	Description:	Основная функция в классе - реализует алгоритм поиска
-*					системы аксиом и разметки траекторий аномального поведения.
+*	Description:	п·я│п╫п╬п╡п╫п╟я▐ я└я┐п╫п╨я├п╦я▐ п╡ п╨п╩п╟я│я│п╣ - я─п╣п╟п╩п╦п╥я┐п╣я┌ п╟п╩пЁп╬я─п╦я┌п╪ п©п╬п╦я│п╨п╟
+*					я│п╦я│я┌п╣п╪я▀ п╟п╨я│п╦п╬п╪ п╦ я─п╟п╥п╪п╣я┌п╨п╦ я┌я─п╟п╣п╨я┌п╬я─п╦п╧ п╟п╫п╬п╪п╟п╩я▄п╫п╬пЁп╬ п©п╬п╡п╣п╢п╣п╫п╦я▐.
 *	Parameters:		void
 *	Returns:		0
-*	Throws:			AxiomLibException - если в одном из алгоритмов возникла ошибка
+*	Throws:			AxiomLibException - п╣я│п╩п╦ п╡ п╬п╢п╫п╬п╪ п╦п╥ п╟п╩пЁп╬я─п╦я┌п╪п╬п╡ п╡п╬п╥п╫п╦п╨п╩п╟ п╬я┬п╦п╠п╨п╟
 *	Author:			dk
 *	History:
 *
 ****************************************************************************/
 int FuzzyDataLearnAlgorithm::run (void) {
-	// ВАЖНО!!! : проверяем, что в конфиге указан один анализируемый параметр, так как алгоритм построен для одномерных временных рядов
+	// п▓п░п√п²п·!!! : п©я─п╬п╡п╣я─я▐п╣п╪, я┤я┌п╬ п╡ п╨п╬п╫я└п╦пЁп╣ я┐п╨п╟п╥п╟п╫ п╬п╢п╦п╫ п╟п╫п╟п╩п╦п╥п╦я─я┐п╣п╪я▀п╧ п©п╟я─п╟п╪п╣я┌я─, я┌п╟п╨ п╨п╟п╨ п╟п╩пЁп╬я─п╦я┌п╪ п©п╬я│я┌я─п╬п╣п╫ п╢п╩я▐ п╬п╢п╫п╬п╪п╣я─п╫я▀я┘ п╡я─п╣п╪п╣п╫п╫я▀я┘ я─я▐п╢п╬п╡
 	if (dataSetParams.size() != 1)
 		throw AxiomLibException("FuzzyDataLearnAlgorithm::run : algorithm is not designed to work with multiple number of params.");
 	int param = dataSetParams[0];
 
-	// Начальная стадия процесса построения системы аксиом и поиска разметок
+	// п²п╟я┤п╟п╩я▄п╫п╟я▐ я│я┌п╟п╢п╦я▐ п©я─п╬я├п╣я│я│п╟ п©п╬я│я┌я─п╬п╣п╫п╦я▐ я│п╦я│я┌п╣п╪я▀ п╟п╨я│п╦п╬п╪ п╦ п©п╬п╦я│п╨п╟ я─п╟п╥п╪п╣я┌п╬п╨
 	stage = 0;
 
-	// 1. подбор параметров элементарных условий
+	// 1. п©п╬п╢п╠п╬я─ п©п╟я─п╟п╪п╣я┌я─п╬п╡ я█п╩п╣п╪п╣п╫я┌п╟я─п╫я▀я┘ я┐я│п╩п╬п╡п╦п╧
 	selectElemCond (param);
-	// Завершен поиск элементарных условий
+	// п≈п╟п╡п╣я─я┬п╣п╫ п©п╬п╦я│п╨ я█п╩п╣п╪п╣п╫я┌п╟я─п╫я▀я┘ я┐я│п╩п╬п╡п╦п╧
 	stage = 1;
 
-	// 2. создание набора аксиом из элементрных условий
+	// 2. я│п╬п╥п╢п╟п╫п╦п╣ п╫п╟п╠п╬я─п╟ п╟п╨я│п╦п╬п╪ п╦п╥ я█п╩п╣п╪п╣п╫я┌я─п╫я▀я┘ я┐я│п╩п╬п╡п╦п╧
 	formAxioms (param);
-	// Завершен поиск аксиом
+	// п≈п╟п╡п╣я─я┬п╣п╫ п©п╬п╦я│п╨ п╟п╨я│п╦п╬п╪
 	stage = 2;
 
-	// 3. формирование системы аксиом из построенных аксиом
+	// 3. я└п╬я─п╪п╦я─п╬п╡п╟п╫п╦п╣ я│п╦я│я┌п╣п╪я▀ п╟п╨я│п╦п╬п╪ п╦п╥ п©п╬я│я┌я─п╬п╣п╫п╫я▀я┘ п╟п╨я│п╦п╬п╪
 	createAxiomSet (param);
-	// Завершено построение системы аксиом
+	// п≈п╟п╡п╣я─я┬п╣п╫п╬ п©п╬я│я┌я─п╬п╣п╫п╦п╣ я│п╦я│я┌п╣п╪я▀ п╟п╨я│п╦п╬п╪
 	stage = 3;
 
-	// 4. сохранение результатов в файл
+	// 4. я│п╬я┘я─п╟п╫п╣п╫п╦п╣ я─п╣п╥я┐п╩я▄я┌п╟я┌п╬п╡ п╡ я└п╟п╧п╩
 	//axiomSet->saveAxiomSetToFile(axiomSetBaseDir, axiomName);
-	// Найденная система аксиом сохранена в файл
+	// п²п╟п╧п╢п╣п╫п╫п╟я▐ я│п╦я│я┌п╣п╪п╟ п╟п╨я│п╦п╬п╪ я│п╬я┘я─п╟п╫п╣п╫п╟ п╡ я└п╟п╧п╩
 	stage = 4;
 	return 0;
 }
@@ -230,24 +230,24 @@ int FuzzyDataLearnAlgorithm::run (void) {
 /****************************************************************************
 *					FuzzyDataLearnAlgorithm::storeBestECs
 *
-*	Description:	Функция сохранения лучших элементарных условий и соответствующих 
-*					значений целевой функции
-*	Parameters:		ec - сохраняемое элементарное условие
-*					curFun - значение целевой функции
-*					bestECs - вектор лучших условий того же типа
-*					bestECres - вектор лучших значений целевой функции
-*	Returns:		1 - если условие сохранено
-*					0 - если условие не входит в список лучших 
-*	Throws:			AxiomLibException - если входные вектора не согласованы
+*	Description:	п╓я┐п╫п╨я├п╦я▐ я│п╬я┘я─п╟п╫п╣п╫п╦я▐ п╩я┐я┤я┬п╦я┘ я█п╩п╣п╪п╣п╫я┌п╟я─п╫я▀я┘ я┐я│п╩п╬п╡п╦п╧ п╦ я│п╬п╬я┌п╡п╣я┌я│я┌п╡я┐я▌я┴п╦я┘ 
+*					п╥п╫п╟я┤п╣п╫п╦п╧ я├п╣п╩п╣п╡п╬п╧ я└я┐п╫п╨я├п╦п╦
+*	Parameters:		ec - я│п╬я┘я─п╟п╫я▐п╣п╪п╬п╣ я█п╩п╣п╪п╣п╫я┌п╟я─п╫п╬п╣ я┐я│п╩п╬п╡п╦п╣
+*					curFun - п╥п╫п╟я┤п╣п╫п╦п╣ я├п╣п╩п╣п╡п╬п╧ я└я┐п╫п╨я├п╦п╦
+*					bestECs - п╡п╣п╨я┌п╬я─ п╩я┐я┤я┬п╦я┘ я┐я│п╩п╬п╡п╦п╧ я┌п╬пЁп╬ п╤п╣ я┌п╦п©п╟
+*					bestECres - п╡п╣п╨я┌п╬я─ п╩я┐я┤я┬п╦я┘ п╥п╫п╟я┤п╣п╫п╦п╧ я├п╣п╩п╣п╡п╬п╧ я└я┐п╫п╨я├п╦п╦
+*	Returns:		1 - п╣я│п╩п╦ я┐я│п╩п╬п╡п╦п╣ я│п╬я┘я─п╟п╫п╣п╫п╬
+*					0 - п╣я│п╩п╦ я┐я│п╩п╬п╡п╦п╣ п╫п╣ п╡я┘п╬п╢п╦я┌ п╡ я│п©п╦я│п╬п╨ п╩я┐я┤я┬п╦я┘ 
+*	Throws:			AxiomLibException - п╣я│п╩п╦ п╡я┘п╬п╢п╫я▀п╣ п╡п╣п╨я┌п╬я─п╟ п╫п╣ я│п╬пЁп╩п╟я│п╬п╡п╟п╫я▀
 *	Author:			dk
 *	History:
 *
 ****************************************************************************/
 inline int FuzzyDataLearnAlgorithm::storeBestECs (ElemCondPlus &ec, double &curFun, std::vector <ElemCondPlus> &bestECs, std::vector <double> &bestECres) {
-	// Проверка входных параметров
+	// п÷я─п╬п╡п╣я─п╨п╟ п╡я┘п╬п╢п╫я▀я┘ п©п╟я─п╟п╪п╣я┌я─п╬п╡
 	if (bestECs.size() != bestECres.size())
 		throw AxiomLibException("FuzzyDataLearnAlgorithm::storeBestECs : incorrect input parameters.");
-	// Проверка - входит ли данное ЭУ в список лучших за историю
+	// п÷я─п╬п╡п╣я─п╨п╟ - п╡я┘п╬п╢п╦я┌ п╩п╦ п╢п╟п╫п╫п╬п╣ п╜пё п╡ я│п©п╦я│п╬п╨ п╩я┐я┤я┬п╦я┘ п╥п╟ п╦я│я┌п╬я─п╦я▌
 	int whereToSave = -1;
 	for (int i = 0; i < (int) bestECs.size(); i++) {
 		if (bestECs[i].elemCondition == NULL) {
@@ -261,15 +261,15 @@ inline int FuzzyDataLearnAlgorithm::storeBestECs (ElemCondPlus &ec, double &curF
 			}
 		}
 	}
-	// Если условие не среди лучших - выходим с 0
+	// п∙я│п╩п╦ я┐я│п╩п╬п╡п╦п╣ п╫п╣ я│я─п╣п╢п╦ п╩я┐я┤я┬п╦я┘ - п╡я▀я┘п╬п╢п╦п╪ я│ 0
 	if (whereToSave < 0)
 		return 0;
-	// Сдвигаем старые ЭУ, чтобы они были выстроены по порядку значения целевой функции
+	// п║п╢п╡п╦пЁп╟п╣п╪ я│я┌п╟я─я▀п╣ п╜пё, я┤я┌п╬п╠я▀ п╬п╫п╦ п╠я▀п╩п╦ п╡я▀я│я┌я─п╬п╣п╫я▀ п©п╬ п©п╬я─я▐п╢п╨я┐ п╥п╫п╟я┤п╣п╫п╦я▐ я├п╣п╩п╣п╡п╬п╧ я└я┐п╫п╨я├п╦п╦
 	for (unsigned int i = bestECs.size() - 1; i > (unsigned int) whereToSave; i--) {
 		bestECs[i] = bestECs[i-1];
 		bestECres[i] = bestECres[i-1];
 	}
-	// Сохраняем ЭУ
+	// п║п╬я┘я─п╟п╫я▐п╣п╪ п╜пё
 	bestECs[whereToSave] = ec;
 	bestECres[whereToSave] = curFun;
 	return 1;
@@ -279,10 +279,10 @@ inline int FuzzyDataLearnAlgorithm::storeBestECs (ElemCondPlus &ec, double &curF
 /****************************************************************************
 *					FuzzyDataLearnAlgorithm::numOfCarriedOutItems
 *
-*	Description:	Подсчет числа точек в ряду, на которых элементарное условие выполняется
-*	Parameters:		ec - проверяемое элементарное условие
-*					row - ряд для порверки элементарного условия
-*	Returns:		int - число точек, на которых элементарное условие выполнено
+*	Description:	п÷п╬п╢я│я┤п╣я┌ я┤п╦я│п╩п╟ я┌п╬я┤п╣п╨ п╡ я─я▐п╢я┐, п╫п╟ п╨п╬я┌п╬я─я▀я┘ я█п╩п╣п╪п╣п╫я┌п╟я─п╫п╬п╣ я┐я│п╩п╬п╡п╦п╣ п╡я▀п©п╬п╩п╫я▐п╣я┌я│я▐
+*	Parameters:		ec - п©я─п╬п╡п╣я─я▐п╣п╪п╬п╣ я█п╩п╣п╪п╣п╫я┌п╟я─п╫п╬п╣ я┐я│п╩п╬п╡п╦п╣
+*					row - я─я▐п╢ п╢п╩я▐ п©п╬я─п╡п╣я─п╨п╦ я█п╩п╣п╪п╣п╫я┌п╟я─п╫п╬пЁп╬ я┐я│п╩п╬п╡п╦я▐
+*	Returns:		int - я┤п╦я│п╩п╬ я┌п╬я┤п╣п╨, п╫п╟ п╨п╬я┌п╬я─я▀я┘ я█п╩п╣п╪п╣п╫я┌п╟я─п╫п╬п╣ я┐я│п╩п╬п╡п╦п╣ п╡я▀п©п╬п╩п╫п╣п╫п╬
 *	Throws:			-
 *	Author:			dk
 *	History:
@@ -301,17 +301,17 @@ inline int FuzzyDataLearnAlgorithm::numOfCarriedOutItems (ElemCondPlus &ec, std:
 /****************************************************************************
 *					FuzzyDataLearnAlgorithm::matterECFunc
 *
-*	Description:	Подсчет целевой функции для элементарного условия
-*	Parameters:		ec - Элементарное условие
-*					param - параметр набора данных, на котором проверяется элементароное условие
-*	Returns:		double - значение целевой функции
-*	Throws:			AxiomLibException - если функция получает несогласованные параметры от набора данных
+*	Description:	п÷п╬п╢я│я┤п╣я┌ я├п╣п╩п╣п╡п╬п╧ я└я┐п╫п╨я├п╦п╦ п╢п╩я▐ я█п╩п╣п╪п╣п╫я┌п╟я─п╫п╬пЁп╬ я┐я│п╩п╬п╡п╦я▐
+*	Parameters:		ec - п╜п╩п╣п╪п╣п╫я┌п╟я─п╫п╬п╣ я┐я│п╩п╬п╡п╦п╣
+*					param - п©п╟я─п╟п╪п╣я┌я─ п╫п╟п╠п╬я─п╟ п╢п╟п╫п╫я▀я┘, п╫п╟ п╨п╬я┌п╬я─п╬п╪ п©я─п╬п╡п╣я─я▐п╣я┌я│я▐ я█п╩п╣п╪п╣п╫я┌п╟я─п╬п╫п╬п╣ я┐я│п╩п╬п╡п╦п╣
+*	Returns:		double - п╥п╫п╟я┤п╣п╫п╦п╣ я├п╣п╩п╣п╡п╬п╧ я└я┐п╫п╨я├п╦п╦
+*	Throws:			AxiomLibException - п╣я│п╩п╦ я└я┐п╫п╨я├п╦я▐ п©п╬п╩я┐я┤п╟п╣я┌ п╫п╣я│п╬пЁп╩п╟я│п╬п╡п╟п╫п╫я▀п╣ п©п╟я─п╟п╪п╣я┌я─я▀ п╬я┌ п╫п╟п╠п╬я─п╟ п╢п╟п╫п╫я▀я┘
 *	Author:			dk
 *	History:
 *
 ****************************************************************************/
 double FuzzyDataLearnAlgorithm::matterECFunc (ElemCondPlus &ec, const int param) {
-	// Объявленеи необходимых переменных
+	// п·п╠я┼я▐п╡п╩п╣п╫п╣п╦ п╫п╣п╬п╠я┘п╬п╢п╦п╪я▀я┘ п©п╣я─п╣п╪п╣п╫п╫я▀я┘
 	double toReturn = 0.0;
 	int numOfClasses, numOfNormalMultiTS;
 	std::vector <int> numOfMultiTS, numOfNormalTS;
@@ -320,9 +320,9 @@ double FuzzyDataLearnAlgorithm::matterECFunc (ElemCondPlus &ec, const int param)
 	bool bres = false;
 	double curItem, classCount;
 	int curRes, ethNum, ethInc;
-	// Получение информации о наборе данных
+	// п÷п╬п╩я┐я┤п╣п╫п╦п╣ п╦п╫я└п╬я─п╪п╟я├п╦п╦ п╬ п╫п╟п╠п╬я─п╣ п╢п╟п╫п╫я▀я┘
 	fuzzyDataSet.getClassSize (numOfClasses, numOfMultiTS, numOfTS);
-	// Цикл по траекториям из обучающей выборки
+	// п╕п╦п╨п╩ п©п╬ я┌я─п╟п╣п╨я┌п╬я─п╦я▐п╪ п╦п╥ п╬п╠я┐я┤п╟я▌я┴п╣п╧ п╡я▀п╠п╬я─п╨п╦
 	for (int i = 0; i < (int) numOfMultiTS.size(); i++) {
 		if (numOfMultiTS[i] != numOfTS[i].size())
 			throw AxiomLibException("FuzzyDataLearnAlgorithm::matterECFunc : incorrect response from internal function.");
@@ -345,7 +345,7 @@ double FuzzyDataLearnAlgorithm::matterECFunc (ElemCondPlus &ec, const int param)
 		else
 			toReturn -= costEthOut;
 	}
-	// Цикл по траекториям нормального поведения
+	// п╕п╦п╨п╩ п©п╬ я┌я─п╟п╣п╨я┌п╬я─п╦я▐п╪ п╫п╬я─п╪п╟п╩я▄п╫п╬пЁп╬ п©п╬п╡п╣п╢п╣п╫п╦я▐
 	fuzzyDataSet.getNormalClassSize (numOfNormalMultiTS, numOfNormalTS);
 	if (numOfNormalMultiTS != numOfNormalTS.size())
 		throw AxiomLibException("FuzzyDataLearnAlgorithm::matterECFunc : incorrect response from internal function getNormalClassSize");
@@ -372,17 +372,17 @@ double FuzzyDataLearnAlgorithm::matterECFunc (ElemCondPlus &ec, const int param)
 /****************************************************************************
 *					FuzzyDataLearnAlgorithm::selectElemCond
 *
-*	Description:	Функция подбора и настройки элементарных условий.
+*	Description:	п╓я┐п╫п╨я├п╦я▐ п©п╬п╢п╠п╬я─п╟ п╦ п╫п╟я│я┌я─п╬п╧п╨п╦ я█п╩п╣п╪п╣п╫я┌п╟я─п╫я▀я┘ я┐я│п╩п╬п╡п╦п╧.
 *	Parameters:		void
 *	Returns:		0
-*	Throws:			AxiomLibException - если в одном из алгоритмов возникла ошибка
+*	Throws:			AxiomLibException - п╣я│п╩п╦ п╡ п╬п╢п╫п╬п╪ п╦п╥ п╟п╩пЁп╬я─п╦я┌п╪п╬п╡ п╡п╬п╥п╫п╦п╨п╩п╟ п╬я┬п╦п╠п╨п╟
 *	Author:			dk
 *	History:
 *
 ****************************************************************************/
 int FuzzyDataLearnAlgorithm::selectElemCond (const int param) {
 	ElemConditionsFactory ecf;
-	// сначала забиваем вектор elemConds различными по типу элементарными условиями
+	// я│п╫п╟я┤п╟п╩п╟ п╥п╟п╠п╦п╡п╟п╣п╪ п╡п╣п╨я┌п╬я─ elemConds я─п╟п╥п╩п╦я┤п╫я▀п╪п╦ п©п╬ я┌п╦п©я┐ я█п╩п╣п╪п╣п╫я┌п╟я─п╫я▀п╪п╦ я┐я│п╩п╬п╡п╦я▐п╪п╦
 	std::vector <ElemCondPlus> elemConds;
 	elemConds.resize (2*N_EL_AXIOMS);
 	for (unsigned int i = 0; i < N_EL_AXIOMS; i++) {
@@ -391,7 +391,7 @@ int FuzzyDataLearnAlgorithm::selectElemCond (const int param) {
 		elemConds[2*i+1].elemCondition = ecf.createAxiomByNum(i+1);
 		elemConds[2*i+1].sign = false;
 	}
-	// Достаем необходимый для обучения ряд
+	// п■п╬я│я┌п╟п╣п╪ п╫п╣п╬п╠я┘п╬п╢п╦п╪я▀п╧ п╢п╩я▐ п╬п╠я┐я┤п╣п╫п╦я▐ я─я▐п╢
 	std::vector<double> teachRow;
 	int numOfMultiTS;
 	std::vector <int> numOfTS;
@@ -407,8 +407,8 @@ int FuzzyDataLearnAlgorithm::selectElemCond (const int param) {
 	}
 	if (teachRow.size() < 1)
 		throw AxiomLibException("FuzzyDataLearnAlgorithm::selectElemCond : incorrect normal data set.");
-	// Данный участок ряда необходим чтобы собрать начальную статистику по максимальным и минимальным значениям для
-	// некоторого набора переменных в элементарных условиях. Поэтому слишком большие объемы не нужны, можно ограничить 1000.
+	// п■п╟п╫п╫я▀п╧ я┐я┤п╟я│я┌п╬п╨ я─я▐п╢п╟ п╫п╣п╬п╠я┘п╬п╢п╦п╪ я┤я┌п╬п╠я▀ я│п╬п╠я─п╟я┌я▄ п╫п╟я┤п╟п╩я▄п╫я┐я▌ я│я┌п╟я┌п╦я│я┌п╦п╨я┐ п©п╬ п╪п╟п╨я│п╦п╪п╟п╩я▄п╫я▀п╪ п╦ п╪п╦п╫п╦п╪п╟п╩я▄п╫я▀п╪ п╥п╫п╟я┤п╣п╫п╦я▐п╪ п╢п╩я▐
+	// п╫п╣п╨п╬я┌п╬я─п╬пЁп╬ п╫п╟п╠п╬я─п╟ п©п╣я─п╣п╪п╣п╫п╫я▀я┘ п╡ я█п╩п╣п╪п╣п╫я┌п╟я─п╫я▀я┘ я┐я│п╩п╬п╡п╦я▐я┘. п÷п╬я█я┌п╬п╪я┐ я│п╩п╦я┬п╨п╬п╪ п╠п╬п╩я▄я┬п╦п╣ п╬п╠я┼п╣п╪я▀ п╫п╣ п╫я┐п╤п╫я▀, п╪п╬п╤п╫п╬ п╬пЁя─п╟п╫п╦я┤п╦я┌я▄ 1000.
 	if (teachRow.size() > 1000) {
 		teachRow.resize (1000);
 	}
@@ -418,7 +418,7 @@ int FuzzyDataLearnAlgorithm::selectElemCond (const int param) {
 	curFun.resize (elemConds.size());
 	bestECs.resize (elemConds.size());
 	bestECres.resize (elemConds.size());
-	// теперь в цикле обучаем каждое элементарное условие
+	// я┌п╣п©п╣я─я▄ п╡ я├п╦п╨п╩п╣ п╬п╠я┐я┤п╟п╣п╪ п╨п╟п╤п╢п╬п╣ я█п╩п╣п╪п╣п╫я┌п╟я─п╫п╬п╣ я┐я│п╩п╬п╡п╦п╣
 	if (this->comments)
 		std::cout << "\n\tTeaching elementary conditions: \n\n";
 	#pragma omp parallel for schedule(dynamic, 1)
@@ -451,17 +451,17 @@ int FuzzyDataLearnAlgorithm::selectElemCond (const int param) {
 /****************************************************************************
 *					FuzzyDataLearnAlgorithm::matterAxiomFunc
 *
-*	Description:	Подсчет целевой функции для аксиомы
-*	Parameters:		ax - аксиома, для которой вычисляется значение целевой функции
-*					param - параметр набора данных, на котором проверяется аксиома
-*	Returns:		double - значение целевой функции
-*	Throws:			AxiomLibException - если функция получает несогласованные параметры от набора данных
+*	Description:	п÷п╬п╢я│я┤п╣я┌ я├п╣п╩п╣п╡п╬п╧ я└я┐п╫п╨я├п╦п╦ п╢п╩я▐ п╟п╨я│п╦п╬п╪я▀
+*	Parameters:		ax - п╟п╨я│п╦п╬п╪п╟, п╢п╩я▐ п╨п╬я┌п╬я─п╬п╧ п╡я▀я┤п╦я│п╩я▐п╣я┌я│я▐ п╥п╫п╟я┤п╣п╫п╦п╣ я├п╣п╩п╣п╡п╬п╧ я└я┐п╫п╨я├п╦п╦
+*					param - п©п╟я─п╟п╪п╣я┌я─ п╫п╟п╠п╬я─п╟ п╢п╟п╫п╫я▀я┘, п╫п╟ п╨п╬я┌п╬я─п╬п╪ п©я─п╬п╡п╣я─я▐п╣я┌я│я▐ п╟п╨я│п╦п╬п╪п╟
+*	Returns:		double - п╥п╫п╟я┤п╣п╫п╦п╣ я├п╣п╩п╣п╡п╬п╧ я└я┐п╫п╨я├п╦п╦
+*	Throws:			AxiomLibException - п╣я│п╩п╦ я└я┐п╫п╨я├п╦я▐ п©п╬п╩я┐я┤п╟п╣я┌ п╫п╣я│п╬пЁп╩п╟я│п╬п╡п╟п╫п╫я▀п╣ п©п╟я─п╟п╪п╣я┌я─я▀ п╬я┌ п╫п╟п╠п╬я─п╟ п╢п╟п╫п╫я▀я┘
 *	Author:			dk
 *	History:
 *
 ****************************************************************************/
 double FuzzyDataLearnAlgorithm::matterAxiomFunc (AxiomExpr &ax, const int param) {
-	// Объявленеи необходимых переменных
+	// п·п╠я┼я▐п╡п╩п╣п╫п╣п╦ п╫п╣п╬п╠я┘п╬п╢п╦п╪я▀я┘ п©п╣я─п╣п╪п╣п╫п╫я▀я┘
 	double toReturn = 0.0;
 	int numOfClasses, numOfNormalMultiTS;
 	std::vector <int> numOfMultiTS, numOfNormalTS;
@@ -470,11 +470,11 @@ double FuzzyDataLearnAlgorithm::matterAxiomFunc (AxiomExpr &ax, const int param)
 	bool bres = false;
 	double maxMinRelation, lenRelation;
 	int ethNum, ethInc, len, num, minLen, maxLen, wholeNum, hiLen, sumLen;
-	// Получение информации о наборе данных
+	// п÷п╬п╩я┐я┤п╣п╫п╦п╣ п╦п╫я└п╬я─п╪п╟я├п╦п╦ п╬ п╫п╟п╠п╬я─п╣ п╢п╟п╫п╫я▀я┘
 	fuzzyDataSet.getClassSize (numOfClasses, numOfMultiTS, numOfTS);
 	if ((numOfClasses != numOfMultiTS.size()) || (numOfClasses != numOfTS.size()))
 		throw AxiomLibException("FuzzyDataLearnAlgorithm::matterAxiomFunc : incorrect response from internal function.");
-	// Цикл по классам траекторий нештатного поведения обучающей выборки
+	// п╕п╦п╨п╩ п©п╬ п╨п╩п╟я│я│п╟п╪ я┌я─п╟п╣п╨я┌п╬я─п╦п╧ п╫п╣я┬я┌п╟я┌п╫п╬пЁп╬ п©п╬п╡п╣п╢п╣п╫п╦я▐ п╬п╠я┐я┤п╟я▌я┴п╣п╧ п╡я▀п╠п╬я─п╨п╦
 	for (int i = 0; i < numOfClasses; i++) {
 		if (numOfMultiTS[i] != numOfTS[i].size())
 			throw AxiomLibException("FuzzyDataLearnAlgorithm::matterAxiomFunc : incorrect response from internal function*.");
@@ -500,22 +500,22 @@ double FuzzyDataLearnAlgorithm::matterAxiomFunc (AxiomExpr &ax, const int param)
 					ethInc++;
 			}
 		}
-		// Вклад от ethInc
+		// п▓п╨п╩п╟п╢ п╬я┌ ethInc
 		if (ethInc > 0)
 			toReturn += costEthIn * (double) ethInc / (double) ethNum;
 		else
 			toReturn -= costEthOut;
-		// Вклад от wholeNum
+		// п▓п╨п╩п╟п╢ п╬я┌ wholeNum
 		toReturn += costStrongPoint * ((double) (wholeNum + ethNum - abs(wholeNum - ethNum)) / (double) (wholeNum + ethNum));
-		// Вклад от maxMinRelation и lenRelation
+		// п▓п╨п╩п╟п╢ п╬я┌ maxMinRelation п╦ lenRelation
 		if (wholeNum > 0) {
-			// Вклад от maxMinRelation
+			// п▓п╨п╩п╟п╢ п╬я┌ maxMinRelation
 			toReturn += costMaxMinLenRatio * maxMinRelation;
-			// Вклад от lenRelation
+			// п▓п╨п╩п╟п╢ п╬я┌ lenRelation
 			toReturn += costLenRatio * pow4(1.0 - lenRelation);
 		}
 	}
-	// Цикл по траекториям нормального поведения
+	// п╕п╦п╨п╩ п©п╬ я┌я─п╟п╣п╨я┌п╬я─п╦я▐п╪ п╫п╬я─п╪п╟п╩я▄п╫п╬пЁп╬ п©п╬п╡п╣п╢п╣п╫п╦я▐
 	fuzzyDataSet.getNormalClassSize (numOfNormalMultiTS, numOfNormalTS);
 	if (numOfNormalMultiTS != numOfNormalTS.size())
 		throw AxiomLibException("FuzzyDataLearnAlgorithm::matterAxiomFunc : incorrect response from internal function getNormalClassSize");
@@ -534,12 +534,12 @@ double FuzzyDataLearnAlgorithm::matterAxiomFunc (AxiomExpr &ax, const int param)
 			sumLen += curTS.size();
 		}
 	}
-	// Сравнение числа вхождений с 0 - учет hiLen
+	// п║я─п╟п╡п╫п╣п╫п╦п╣ я┤п╦я│п╩п╟ п╡я┘п╬п╤п╢п╣п╫п╦п╧ я│ 0 - я┐я┤п╣я┌ hiLen
 	if (hiLen < 1)
 		toReturn += costNormalOut;
 	else
 		toReturn -= costNormalIn * (double) hiLen / (double) sumLen;
-	// Вклад wholeNum
+	// п▓п╨п╩п╟п╢ wholeNum
 	toReturn += costHiAreasNum * hiAreasNumEffect / (hiAreasNumEffect + (double) wholeNum);
 
 	return toReturn;
@@ -549,13 +549,13 @@ double FuzzyDataLearnAlgorithm::matterAxiomFunc (AxiomExpr &ax, const int param)
 /****************************************************************************
 *					FuzzyDataLearnAlgorithm::axiomMarkUpStat
 *
-*	Description:	Анализа разметки аксиомой axiomExpr ряда curTS и сбор статистики
-*	Parameters:		axiomExpr - аксиома, для которой производится сбор статистики
-*					row - временной ряд, на котором проверяется аксиома axiomExpr
-*					hiAreasNum - число областей связности (таких где подряд выполняется аксиома axiomExpr) 
-*					hiAreasMinLen - минимальная длина таких областей
-*					hiAreasMaxLen - максимальная длина таких областей
-*	Returns:		int - число точек ряда row, в которых аксиома axiomExpr выполняется
+*	Description:	п░п╫п╟п╩п╦п╥п╟ я─п╟п╥п╪п╣я┌п╨п╦ п╟п╨я│п╦п╬п╪п╬п╧ axiomExpr я─я▐п╢п╟ curTS п╦ я│п╠п╬я─ я│я┌п╟я┌п╦я│я┌п╦п╨п╦
+*	Parameters:		axiomExpr - п╟п╨я│п╦п╬п╪п╟, п╢п╩я▐ п╨п╬я┌п╬я─п╬п╧ п©я─п╬п╦п╥п╡п╬п╢п╦я┌я│я▐ я│п╠п╬я─ я│я┌п╟я┌п╦я│я┌п╦п╨п╦
+*					row - п╡я─п╣п╪п╣п╫п╫п╬п╧ я─я▐п╢, п╫п╟ п╨п╬я┌п╬я─п╬п╪ п©я─п╬п╡п╣я─я▐п╣я┌я│я▐ п╟п╨я│п╦п╬п╪п╟ axiomExpr
+*					hiAreasNum - я┤п╦я│п╩п╬ п╬п╠п╩п╟я│я┌п╣п╧ я│п╡я▐п╥п╫п╬я│я┌п╦ (я┌п╟п╨п╦я┘ пЁп╢п╣ п©п╬п╢я─я▐п╢ п╡я▀п©п╬п╩п╫я▐п╣я┌я│я▐ п╟п╨я│п╦п╬п╪п╟ axiomExpr) 
+*					hiAreasMinLen - п╪п╦п╫п╦п╪п╟п╩я▄п╫п╟я▐ п╢п╩п╦п╫п╟ я┌п╟п╨п╦я┘ п╬п╠п╩п╟я│я┌п╣п╧
+*					hiAreasMaxLen - п╪п╟п╨я│п╦п╪п╟п╩я▄п╫п╟я▐ п╢п╩п╦п╫п╟ я┌п╟п╨п╦я┘ п╬п╠п╩п╟я│я┌п╣п╧
+*	Returns:		int - я┤п╦я│п╩п╬ я┌п╬я┤п╣п╨ я─я▐п╢п╟ row, п╡ п╨п╬я┌п╬я─я▀я┘ п╟п╨я│п╦п╬п╪п╟ axiomExpr п╡я▀п©п╬п╩п╫я▐п╣я┌я│я▐
 *	Throws:			-
 *	Author:			dk
 *	History:
@@ -610,12 +610,12 @@ inline int FuzzyDataLearnAlgorithm::axiomMarkUpStat (AxiomExpr &axiomExpr, std::
 /****************************************************************************
 *					FuzzyDataLearnAlgorithm::getPriority
 *
-*	Description:	Вспомогательная функция сортировки массива по убыванию 
-*					с занесением результатов в отдельный вектор индексов.
-*					Значения исходного сортируемого вектора не изменяются и не 
-*					перемещаются.
-*	Parameters:		vec - сортируемый вектор
-*					pos - вектор индексов для указания результата
+*	Description:	п▓я│п©п╬п╪п╬пЁп╟я┌п╣п╩я▄п╫п╟я▐ я└я┐п╫п╨я├п╦я▐ я│п╬я─я┌п╦я─п╬п╡п╨п╦ п╪п╟я│я│п╦п╡п╟ п©п╬ я┐п╠я▀п╡п╟п╫п╦я▌ 
+*					я│ п╥п╟п╫п╣я│п╣п╫п╦п╣п╪ я─п╣п╥я┐п╩я▄я┌п╟я┌п╬п╡ п╡ п╬я┌п╢п╣п╩я▄п╫я▀п╧ п╡п╣п╨я┌п╬я─ п╦п╫п╢п╣п╨я│п╬п╡.
+*					п≈п╫п╟я┤п╣п╫п╦я▐ п╦я│я┘п╬п╢п╫п╬пЁп╬ я│п╬я─я┌п╦я─я┐п╣п╪п╬пЁп╬ п╡п╣п╨я┌п╬я─п╟ п╫п╣ п╦п╥п╪п╣п╫я▐я▌я┌я│я▐ п╦ п╫п╣ 
+*					п©п╣я─п╣п╪п╣я┴п╟я▌я┌я│я▐.
+*	Parameters:		vec - я│п╬я─я┌п╦я─я┐п╣п╪я▀п╧ п╡п╣п╨я┌п╬я─
+*					pos - п╡п╣п╨я┌п╬я─ п╦п╫п╢п╣п╨я│п╬п╡ п╢п╩я▐ я┐п╨п╟п╥п╟п╫п╦я▐ я─п╣п╥я┐п╩я▄я┌п╟я┌п╟
 *	Returns:		0
 *	Throws:			-
 *	Author:			dk
@@ -643,28 +643,28 @@ inline int FuzzyDataLearnAlgorithm::getPriority (std::vector <double> &vec, std:
 /****************************************************************************
 *					FuzzyDataLearnAlgorithm::cutDownBestAxioms
 *
-*	Description:	Функция сокращает популяцию существующих аксиом до определенного в параметрах значения
+*	Description:	п╓я┐п╫п╨я├п╦я▐ я│п╬п╨я─п╟я┴п╟п╣я┌ п©п╬п©я┐п╩я▐я├п╦я▌ я│я┐я┴п╣я│я┌п╡я┐я▌я┴п╦я┘ п╟п╨я│п╦п╬п╪ п╢п╬ п╬п©я─п╣п╢п╣п╩п╣п╫п╫п╬пЁп╬ п╡ п©п╟я─п╟п╪п╣я┌я─п╟я┘ п╥п╫п╟я┤п╣п╫п╦я▐
 *	Parameters:		void
-*	Returns:		0 - если урезания популяции не было
-*					1 - в противном случае
-*	Throws:			AxiomLibException - если внутренние переменные класса не согласованы
+*	Returns:		0 - п╣я│п╩п╦ я┐я─п╣п╥п╟п╫п╦я▐ п©п╬п©я┐п╩я▐я├п╦п╦ п╫п╣ п╠я▀п╩п╬
+*					1 - п╡ п©я─п╬я┌п╦п╡п╫п╬п╪ я│п╩я┐я┤п╟п╣
+*	Throws:			AxiomLibException - п╣я│п╩п╦ п╡п╫я┐я┌я─п╣п╫п╫п╦п╣ п©п╣я─п╣п╪п╣п╫п╫я▀п╣ п╨п╩п╟я│я│п╟ п╫п╣ я│п╬пЁп╩п╟я│п╬п╡п╟п╫я▀
 *	Author:			dk
 *	History:
 *
 ****************************************************************************/
 int FuzzyDataLearnAlgorithm::cutDownBestAxioms (void) {
-	// Проверка входных параметров
+	// п÷я─п╬п╡п╣я─п╨п╟ п╡я┘п╬п╢п╫я▀я┘ п©п╟я─п╟п╪п╣я┌я─п╬п╡
 	if ((maxAxiomPopSize < 1) || (bestAxioms.size() <= (unsigned int) maxAxiomPopSize))
 		return 0;
-	// Проверка согласованности внутренних переменных
+	// п÷я─п╬п╡п╣я─п╨п╟ я│п╬пЁп╩п╟я│п╬п╡п╟п╫п╫п╬я│я┌п╦ п╡п╫я┐я┌я─п╣п╫п╫п╦я┘ п©п╣я─п╣п╪п╣п╫п╫я▀я┘
 	if (bestAxioms.size() != bestAxiomsRes.size())
 		throw AxiomLibException("FuzzyDataLearnAlgorithm::cutDownBestAxioms : incorrect internal variables.");
 	
-	// Сортировка аксиом по значению целевой функции
+	// п║п╬я─я┌п╦я─п╬п╡п╨п╟ п╟п╨я│п╦п╬п╪ п©п╬ п╥п╫п╟я┤п╣п╫п╦я▌ я├п╣п╩п╣п╡п╬п╧ я└я┐п╫п╨я├п╦п╦
 	std::vector <unsigned int> pos;
 	getPriority (bestAxiomsRes, pos);
 	
-	// Определение числа лучших аксиом, сохраняемых в популяции
+	// п·п©я─п╣п╢п╣п╩п╣п╫п╦п╣ я┤п╦я│п╩п╟ п╩я┐я┤я┬п╦я┘ п╟п╨я│п╦п╬п╪, я│п╬я┘я─п╟п╫я▐п╣п╪я▀я┘ п╡ п©п╬п©я┐п╩я▐я├п╦п╦
 	unsigned int numBestToSave, numToChoose, numFrom;
 	numBestToSave = (unsigned int) round (percentBestAxioms*maxAxiomPopSize);
 	numToChoose = (unsigned int) maxAxiomPopSize - numBestToSave;
@@ -675,11 +675,11 @@ int FuzzyDataLearnAlgorithm::cutDownBestAxioms (void) {
 	int curChoice;
 	std::vector <unsigned int> toSave;
 	toSave.resize (maxAxiomPopSize);
-	// Заносим в вектор сохраняемых элементов - заданное число лучших
+	// п≈п╟п╫п╬я│п╦п╪ п╡ п╡п╣п╨я┌п╬я─ я│п╬я┘я─п╟п╫я▐п╣п╪я▀я┘ я█п╩п╣п╪п╣п╫я┌п╬п╡ - п╥п╟п╢п╟п╫п╫п╬п╣ я┤п╦я│п╩п╬ п╩я┐я┤я┬п╦я┘
 	for (unsigned int i = 0; i < numBestToSave; i++) {
 		toSave[i] = pos[i];
 	}
-	// Случайный выбор оставшихся
+	// п║п╩я┐я┤п╟п╧п╫я▀п╧ п╡я▀п╠п╬я─ п╬я│я┌п╟п╡я┬п╦я┘я│я▐
 	for (unsigned int i = 0; i < numToChoose; i++) {
 		curChoice = round (((double) rand() / (double) RAND_MAX) * (double) (numFrom - i - 1));
 		for (unsigned int t = (unsigned int) curChoice; t < numFrom; t++)
@@ -690,7 +690,7 @@ int FuzzyDataLearnAlgorithm::cutDownBestAxioms (void) {
 			}
 	}
 
-	// Сортировка массива выбранных для сохранения элементов по убыванию
+	// п║п╬я─я┌п╦я─п╬п╡п╨п╟ п╪п╟я│я│п╦п╡п╟ п╡я▀п╠я─п╟п╫п╫я▀я┘ п╢п╩я▐ я│п╬я┘я─п╟п╫п╣п╫п╦я▐ я█п╩п╣п╪п╣п╫я┌п╬п╡ п©п╬ я┐п╠я▀п╡п╟п╫п╦я▌
 	unsigned int tmpInt;
 	for (unsigned int i = maxAxiomPopSize - 1; i > 0; i--) {
 		for (unsigned int j = 0; j < i; j++) {
@@ -703,8 +703,8 @@ int FuzzyDataLearnAlgorithm::cutDownBestAxioms (void) {
 		}
 	}
 
-	// Удаление невыбранных аксиом
-	// Очищаем содержимое элементов вектора аксиом
+	// пёп╢п╟п╩п╣п╫п╦п╣ п╫п╣п╡я▀п╠я─п╟п╫п╫я▀я┘ п╟п╨я│п╦п╬п╪
+	// п·я┤п╦я┴п╟п╣п╪ я│п╬п╢п╣я─п╤п╦п╪п╬п╣ я█п╩п╣п╪п╣п╫я┌п╬п╡ п╡п╣п╨я┌п╬я─п╟ п╟п╨я│п╦п╬п╪
 	if ((toSave[0] + 1) < bestAxioms.size()) {
 		for (unsigned int j = toSave[0] + 1; j < bestAxioms.size(); j++)
 			bestAxioms[j].clear();
@@ -713,14 +713,14 @@ int FuzzyDataLearnAlgorithm::cutDownBestAxioms (void) {
 	}
 	for (int i = 1; i < maxAxiomPopSize; i++) {
 		if ((toSave[i] + 1) < toSave[i-1]) {
-			// Очищаем содержимое элементов вектора аксиом
+			// п·я┤п╦я┴п╟п╣п╪ я│п╬п╢п╣я─п╤п╦п╪п╬п╣ я█п╩п╣п╪п╣п╫я┌п╬п╡ п╡п╣п╨я┌п╬я─п╟ п╟п╨я│п╦п╬п╪
 			for (unsigned int j = toSave[i] + 1; j < toSave[i-1]; j++)
 				bestAxioms[j].clear();
 			bestAxioms.erase (bestAxioms.begin() + toSave[i] + 1, bestAxioms.begin() + toSave[i-1]);
 			bestAxiomsRes.erase (bestAxiomsRes.begin() + toSave[i] + 1, bestAxiomsRes.begin() + toSave[i-1]);
 		}
 	}
-	// Очищаем содержимое элементов вектора аксиом
+	// п·я┤п╦я┴п╟п╣п╪ я│п╬п╢п╣я─п╤п╦п╪п╬п╣ я█п╩п╣п╪п╣п╫я┌п╬п╡ п╡п╣п╨я┌п╬я─п╟ п╟п╨я│п╦п╬п╪
 	if (toSave[maxAxiomPopSize-1] > 0) {
 		for (unsigned int j = 0; j < toSave[maxAxiomPopSize-1]; j++)
 			bestAxioms[j].clear();
@@ -735,35 +735,35 @@ int FuzzyDataLearnAlgorithm::cutDownBestAxioms (void) {
 /****************************************************************************
 *					FuzzyDataLearnAlgorithm::combineAxioms
 *
-*	Description:	Объединение двух аксиом и вычисление результата для полученных новых аксиом.
-*	Parameters:		i - номер одной из аксиом, на основе которой будут построены новые варианты аксиом
-*					j - номер одной из аксиом, на основе которой будут построены новые варианты аксиом
-*					axiomExpr - заполняемая переменная аксиомы, в случае если удалось построить лучшую аксиому
-*					axiomExprRes - результат функции значимости для лучшей созданной аксиомы
-*	Returns:		0 - если новые аксиомы, созданные из двух указанных оказались не лучше
-*					>0 - если созданная аксиома оказалась лучше предшественников
-*					-1 - если не удалось провести комбинирование указанных аксиом
-*	Throws:			AxiomLibException - если указанные входные параметры не согласованы с внутренними пременными класса
+*	Description:	п·п╠я┼п╣п╢п╦п╫п╣п╫п╦п╣ п╢п╡я┐я┘ п╟п╨я│п╦п╬п╪ п╦ п╡я▀я┤п╦я│п╩п╣п╫п╦п╣ я─п╣п╥я┐п╩я▄я┌п╟я┌п╟ п╢п╩я▐ п©п╬п╩я┐я┤п╣п╫п╫я▀я┘ п╫п╬п╡я▀я┘ п╟п╨я│п╦п╬п╪.
+*	Parameters:		i - п╫п╬п╪п╣я─ п╬п╢п╫п╬п╧ п╦п╥ п╟п╨я│п╦п╬п╪, п╫п╟ п╬я│п╫п╬п╡п╣ п╨п╬я┌п╬я─п╬п╧ п╠я┐п╢я┐я┌ п©п╬я│я┌я─п╬п╣п╫я▀ п╫п╬п╡я▀п╣ п╡п╟я─п╦п╟п╫я┌я▀ п╟п╨я│п╦п╬п╪
+*					j - п╫п╬п╪п╣я─ п╬п╢п╫п╬п╧ п╦п╥ п╟п╨я│п╦п╬п╪, п╫п╟ п╬я│п╫п╬п╡п╣ п╨п╬я┌п╬я─п╬п╧ п╠я┐п╢я┐я┌ п©п╬я│я┌я─п╬п╣п╫я▀ п╫п╬п╡я▀п╣ п╡п╟я─п╦п╟п╫я┌я▀ п╟п╨я│п╦п╬п╪
+*					axiomExpr - п╥п╟п©п╬п╩п╫я▐п╣п╪п╟я▐ п©п╣я─п╣п╪п╣п╫п╫п╟я▐ п╟п╨я│п╦п╬п╪я▀, п╡ я│п╩я┐я┤п╟п╣ п╣я│п╩п╦ я┐п╢п╟п╩п╬я│я▄ п©п╬я│я┌я─п╬п╦я┌я▄ п╩я┐я┤я┬я┐я▌ п╟п╨я│п╦п╬п╪я┐
+*					axiomExprRes - я─п╣п╥я┐п╩я▄я┌п╟я┌ я└я┐п╫п╨я├п╦п╦ п╥п╫п╟я┤п╦п╪п╬я│я┌п╦ п╢п╩я▐ п╩я┐я┤я┬п╣п╧ я│п╬п╥п╢п╟п╫п╫п╬п╧ п╟п╨я│п╦п╬п╪я▀
+*	Returns:		0 - п╣я│п╩п╦ п╫п╬п╡я▀п╣ п╟п╨я│п╦п╬п╪я▀, я│п╬п╥п╢п╟п╫п╫я▀п╣ п╦п╥ п╢п╡я┐я┘ я┐п╨п╟п╥п╟п╫п╫я▀я┘ п╬п╨п╟п╥п╟п╩п╦я│я▄ п╫п╣ п╩я┐я┤я┬п╣
+*					>0 - п╣я│п╩п╦ я│п╬п╥п╢п╟п╫п╫п╟я▐ п╟п╨я│п╦п╬п╪п╟ п╬п╨п╟п╥п╟п╩п╟я│я▄ п╩я┐я┤я┬п╣ п©я─п╣п╢я┬п╣я│я┌п╡п╣п╫п╫п╦п╨п╬п╡
+*					-1 - п╣я│п╩п╦ п╫п╣ я┐п╢п╟п╩п╬я│я▄ п©я─п╬п╡п╣я│я┌п╦ п╨п╬п╪п╠п╦п╫п╦я─п╬п╡п╟п╫п╦п╣ я┐п╨п╟п╥п╟п╫п╫я▀я┘ п╟п╨я│п╦п╬п╪
+*	Throws:			AxiomLibException - п╣я│п╩п╦ я┐п╨п╟п╥п╟п╫п╫я▀п╣ п╡я┘п╬п╢п╫я▀п╣ п©п╟я─п╟п╪п╣я┌я─я▀ п╫п╣ я│п╬пЁп╩п╟я│п╬п╡п╟п╫я▀ я│ п╡п╫я┐я┌я─п╣п╫п╫п╦п╪п╦ п©я─п╣п╪п╣п╫п╫я▀п╪п╦ п╨п╩п╟я│я│п╟
 *	Author:			dk
 *	History:
 *
 ****************************************************************************/
 int FuzzyDataLearnAlgorithm::combineAxioms (const unsigned int i, const unsigned int j, AxiomExpr &axiomExpr, double &axiomExprRes, const int param) {
-	// Проверка входных параметров
+	// п÷я─п╬п╡п╣я─п╨п╟ п╡я┘п╬п╢п╫я▀я┘ п©п╟я─п╟п╪п╣я┌я─п╬п╡
 	if ((i >= bestAxioms.size()) || (j >= bestAxioms.size()) || (bestAxioms.size() != bestAxiomsRes.size()))
 		throw AxiomLibException("FuzzyDataLearnAlgorithm::combineAxioms : input parameters out of range.");
 	
-	// Создание новых аксиом
+	// п║п╬п╥п╢п╟п╫п╦п╣ п╫п╬п╡я▀я┘ п╟п╨я│п╦п╬п╪
 	AxiomExpr axiomExprAnd, axiomExprOr;
 	double axiomExprAndRes, axiomExprOrRes;
 	axiomExprAnd.andExpr(bestAxioms[i], bestAxioms[j]);
 	axiomExprOr.orExpr(bestAxioms[i], bestAxioms[j]);
 	
-	// Вычисление целевых функций
+	// п▓я▀я┤п╦я│п╩п╣п╫п╦п╣ я├п╣п╩п╣п╡я▀я┘ я└я┐п╫п╨я├п╦п╧
 	axiomExprAndRes = matterAxiomFunc (axiomExprAnd, param);
 	axiomExprOrRes = matterAxiomFunc (axiomExprOr, param);
 
-	// Определение лучше ли получились значения целевых функций у новых аксиом
+	// п·п©я─п╣п╢п╣п╩п╣п╫п╦п╣ п╩я┐я┤я┬п╣ п╩п╦ п©п╬п╩я┐я┤п╦п╩п╦я│я▄ п╥п╫п╟я┤п╣п╫п╦я▐ я├п╣п╩п╣п╡я▀я┘ я└я┐п╫п╨я├п╦п╧ я┐ п╫п╬п╡я▀я┘ п╟п╨я│п╦п╬п╪
 	if ((axiomExprAndRes > max (bestAxiomsRes[i], bestAxiomsRes[j])) && (axiomExprAndRes > axiomExprOrRes)) {
 		axiomExpr = axiomExprAnd;
 		axiomExprRes = axiomExprAndRes;
@@ -782,16 +782,16 @@ int FuzzyDataLearnAlgorithm::combineAxioms (const unsigned int i, const unsigned
 /****************************************************************************
 *					FuzzyDataLearnAlgorithm::formAxioms
 *
-*	Description:	Функция формирования аксиом из элементарных условий
+*	Description:	п╓я┐п╫п╨я├п╦я▐ я└п╬я─п╪п╦я─п╬п╡п╟п╫п╦я▐ п╟п╨я│п╦п╬п╪ п╦п╥ я█п╩п╣п╪п╣п╫я┌п╟я─п╫я▀я┘ я┐я│п╩п╬п╡п╦п╧
 *	Parameters:		void
 *	Returns:		0
-*	Throws:			AxiomLibException - если в одном из алгоритмов возникла ошибка
+*	Throws:			AxiomLibException - п╣я│п╩п╦ п╡ п╬п╢п╫п╬п╪ п╦п╥ п╟п╩пЁп╬я─п╦я┌п╪п╬п╡ п╡п╬п╥п╫п╦п╨п╩п╟ п╬я┬п╦п╠п╨п╟
 *	Author:			dk
 *	History:
 *
 ****************************************************************************/
 int FuzzyDataLearnAlgorithm::formAxioms (const int param) {
-	// Проверка того, что на входе в функцию все необходимые данные согласованы
+	// п÷я─п╬п╡п╣я─п╨п╟ я┌п╬пЁп╬, я┤я┌п╬ п╫п╟ п╡я┘п╬п╢п╣ п╡ я└я┐п╫п╨я├п╦я▌ п╡я│п╣ п╫п╣п╬п╠я┘п╬п╢п╦п╪я▀п╣ п╢п╟п╫п╫я▀п╣ я│п╬пЁп╩п╟я│п╬п╡п╟п╫я▀
 	if ((bestAxioms.size () != 0) || (bestAxiomsRes.size() != 0))
 		throw AxiomLibException("FuzzyDataLearnAlgorithm::formAxioms : set of axioms is not empty.");
 	if (bestECs.size() < 1)
@@ -802,7 +802,7 @@ int FuzzyDataLearnAlgorithm::formAxioms (const int param) {
 	if (totSize < 1)
 		throw AxiomLibException("FuzzyDataLearnAlgorithm::formAxioms : set of prepared elementary conditions is indeed empty.");
 
-	// Создание начальной популяции аксиом, из которых буду строиться аксиомы дальше в итеративном алгоритме
+	// п║п╬п╥п╢п╟п╫п╦п╣ п╫п╟я┤п╟п╩я▄п╫п╬п╧ п©п╬п©я┐п╩я▐я├п╦п╦ п╟п╨я│п╦п╬п╪, п╦п╥ п╨п╬я┌п╬я─я▀я┘ п╠я┐п╢я┐ я│я┌я─п╬п╦я┌я▄я│я▐ п╟п╨я│п╦п╬п╪я▀ п╢п╟п╩я▄я┬п╣ п╡ п╦я┌п╣я─п╟я┌п╦п╡п╫п╬п╪ п╟п╩пЁп╬я─п╦я┌п╪п╣
 	bestAxioms.resize(totSize);
 	unsigned int k = 0;
 	for (unsigned int i = 0; i < bestECs.size(); i++) {
@@ -812,23 +812,23 @@ int FuzzyDataLearnAlgorithm::formAxioms (const int param) {
 			bestAxioms[k].expression[0][0] = bestECs[i][j];
 		}
 	}
-	// Заполняем начальную статистику по популяции
+	// п≈п╟п©п╬п╩п╫я▐п╣п╪ п╫п╟я┤п╟п╩я▄п╫я┐я▌ я│я┌п╟я┌п╦я│я┌п╦п╨я┐ п©п╬ п©п╬п©я┐п╩я▐я├п╦п╦
 	bestAxiomsRes.resize(totSize);
 	for (unsigned int i = 0; i < totSize; i++)
 		bestAxiomsRes[i] = matterAxiomFunc (bestAxioms[i], param);
 
-	// Подготовка переменных для поиска аксиом
+	// п÷п╬п╢пЁп╬я┌п╬п╡п╨п╟ п©п╣я─п╣п╪п╣п╫п╫я▀я┘ п╢п╩я▐ п©п╬п╦я│п╨п╟ п╟п╨я│п╦п╬п╪
 	AxiomExpr axiomExpr;
 	double axiomExprRes;
 	int iterNum = 0;
 	bool criteriaToContinue = true;
 	int curSize;
-	// Итеративное изменение популяции 
+	// п≤я┌п╣я─п╟я┌п╦п╡п╫п╬п╣ п╦п╥п╪п╣п╫п╣п╫п╦п╣ п©п╬п©я┐п╩я▐я├п╦п╦ 
 	while (criteriaToContinue) {
 		iterNum++;
-		// Урезаем, если необходимо, вектор аксиом до максимально допустимых размеров
+		// пёя─п╣п╥п╟п╣п╪, п╣я│п╩п╦ п╫п╣п╬п╠я┘п╬п╢п╦п╪п╬, п╡п╣п╨я┌п╬я─ п╟п╨я│п╦п╬п╪ п╢п╬ п╪п╟п╨я│п╦п╪п╟п╩я▄п╫п╬ п╢п╬п©я┐я│я┌п╦п╪я▀я┘ я─п╟п╥п╪п╣я─п╬п╡
 		cutDownBestAxioms ();
-		// Создаем новые элементы и вычисляем их значение целевой функции
+		// п║п╬п╥п╢п╟п╣п╪ п╫п╬п╡я▀п╣ я█п╩п╣п╪п╣п╫я┌я▀ п╦ п╡я▀я┤п╦я│п╩я▐п╣п╪ п╦я┘ п╥п╫п╟я┤п╣п╫п╦п╣ я├п╣п╩п╣п╡п╬п╧ я└я┐п╫п╨я├п╦п╦
 		curSize = bestAxioms.size();
 		std::vector <AxiomExpr> bestAxiomsNew;
 		std::vector <double> bestAxiomsResNew;
@@ -849,7 +849,7 @@ int FuzzyDataLearnAlgorithm::formAxioms (const int param) {
 				}
 			}
 		}
-		// Заносим новые элементы в конец bestAxioms
+		// п≈п╟п╫п╬я│п╦п╪ п╫п╬п╡я▀п╣ я█п╩п╣п╪п╣п╫я┌я▀ п╡ п╨п╬п╫п╣я├ bestAxioms
 		if (curBest > 0) {
 			bestAxioms.resize(bestAxioms.size() + curBest); 
 			bestAxiomsRes.resize(bestAxiomsRes.size() + curBest); 
@@ -859,7 +859,7 @@ int FuzzyDataLearnAlgorithm::formAxioms (const int param) {
 			}
 		}
 
-		// Проверяем критерии останова
+		// п÷я─п╬п╡п╣я─я▐п╣п╪ п╨я─п╦я┌п╣я─п╦п╦ п╬я│я┌п╟п╫п╬п╡п╟
 		if (curSize == bestAxioms.size())
 			criteriaToContinue = false;
 		if (iterNum > maxIterNum)
@@ -883,12 +883,12 @@ int FuzzyDataLearnAlgorithm::formAxioms (const int param) {
 /****************************************************************************
 *					FuzzyDataLearnAlgorithm::createMarkUp
 *
-*	Description:	Разметка ряда curTS аксиомой axiom с записью результата в resMarkUp.
-*	Parameters:		resMarkUp - разметка траектории curTS аксиомой axiom
-*					curTS - размечаемая траектория
-*					axiom - аксиома, которой происходит разметка
-*					axNum - номер аксиомы в векторе bestAxioms данного класса
-*	Returns:		int - размер траектории
+*	Description:	п═п╟п╥п╪п╣я┌п╨п╟ я─я▐п╢п╟ curTS п╟п╨я│п╦п╬п╪п╬п╧ axiom я│ п╥п╟п©п╦я│я▄я▌ я─п╣п╥я┐п╩я▄я┌п╟я┌п╟ п╡ resMarkUp.
+*	Parameters:		resMarkUp - я─п╟п╥п╪п╣я┌п╨п╟ я┌я─п╟п╣п╨я┌п╬я─п╦п╦ curTS п╟п╨я│п╦п╬п╪п╬п╧ axiom
+*					curTS - я─п╟п╥п╪п╣я┤п╟п╣п╪п╟я▐ я┌я─п╟п╣п╨я┌п╬я─п╦я▐
+*					axiom - п╟п╨я│п╦п╬п╪п╟, п╨п╬я┌п╬я─п╬п╧ п©я─п╬п╦я│я┘п╬п╢п╦я┌ я─п╟п╥п╪п╣я┌п╨п╟
+*					axNum - п╫п╬п╪п╣я─ п╟п╨я│п╦п╬п╪я▀ п╡ п╡п╣п╨я┌п╬я─п╣ bestAxioms п╢п╟п╫п╫п╬пЁп╬ п╨п╩п╟я│я│п╟
+*	Returns:		int - я─п╟п╥п╪п╣я─ я┌я─п╟п╣п╨я┌п╬я─п╦п╦
 *	Throws:			-
 *	Author:			dk
 *	History:
@@ -908,14 +908,14 @@ inline int FuzzyDataLearnAlgorithm::createMarkUp (std::vector <int> &resMarkUp, 
 /****************************************************************************
 *					FuzzyDataLearnAlgorithm::shiftErrors
 *
-*	Description:	Вспомогательная функция подсчета статистики - число
-*					областей с разметкой. 
-*	Parameters:		markUp - разметка траектории аномального поведения
-*					from - номер отсчета, с которого начинать 
-*					upTo - номер отсчета, до которого считать
-*	Returns:		double - число областей с разметкой, умноженное на 
-*							 соответствующий вес
-*	Throws:			AxiomLibException - если входные данные заданы неверно
+*	Description:	п▓я│п©п╬п╪п╬пЁп╟я┌п╣п╩я▄п╫п╟я▐ я└я┐п╫п╨я├п╦я▐ п©п╬п╢я│я┤п╣я┌п╟ я│я┌п╟я┌п╦я│я┌п╦п╨п╦ - я┤п╦я│п╩п╬
+*					п╬п╠п╩п╟я│я┌п╣п╧ я│ я─п╟п╥п╪п╣я┌п╨п╬п╧. 
+*	Parameters:		markUp - я─п╟п╥п╪п╣я┌п╨п╟ я┌я─п╟п╣п╨я┌п╬я─п╦п╦ п╟п╫п╬п╪п╟п╩я▄п╫п╬пЁп╬ п©п╬п╡п╣п╢п╣п╫п╦я▐
+*					from - п╫п╬п╪п╣я─ п╬я┌я│я┤п╣я┌п╟, я│ п╨п╬я┌п╬я─п╬пЁп╬ п╫п╟я┤п╦п╫п╟я┌я▄ 
+*					upTo - п╫п╬п╪п╣я─ п╬я┌я│я┤п╣я┌п╟, п╢п╬ п╨п╬я┌п╬я─п╬пЁп╬ я│я┤п╦я┌п╟я┌я▄
+*	Returns:		double - я┤п╦я│п╩п╬ п╬п╠п╩п╟я│я┌п╣п╧ я│ я─п╟п╥п╪п╣я┌п╨п╬п╧, я┐п╪п╫п╬п╤п╣п╫п╫п╬п╣ п╫п╟ 
+*							 я│п╬п╬я┌п╡п╣я┌я│я┌п╡я┐я▌я┴п╦п╧ п╡п╣я│
+*	Throws:			AxiomLibException - п╣я│п╩п╦ п╡я┘п╬п╢п╫я▀п╣ п╢п╟п╫п╫я▀п╣ п╥п╟п╢п╟п╫я▀ п╫п╣п╡п╣я─п╫п╬
 *	Author:			dk
 *	History:
 *
@@ -943,16 +943,16 @@ inline double FuzzyDataLearnAlgorithm::shiftErrors (std::vector <int> &markUp, c
 /****************************************************************************
 *					FuzzyDataLearnAlgorithm::shiftErrors
 *
-*	Description:	Вспомогательная функция подсчета статистики - число
-*					несовпадений областей разметки на двух траекторях. 
-*	Parameters:		row1 - разметка одной траектории аномального поведения
-*					from1 - номер отсчета, с которого начинать на row1
-*					row2 - разметка другой траектории аномального поведения
-*					from2 - номер отсчета, с которого начинать на row2
-*					len - сколько отсчетов траектории сравнивать
-*	Returns:		double - число несовпадений областей с разметкой, 
-*							 умноженное на соответствующий вес
-*	Throws:			AxiomLibException - если входные данные заданы неверно
+*	Description:	п▓я│п©п╬п╪п╬пЁп╟я┌п╣п╩я▄п╫п╟я▐ я└я┐п╫п╨я├п╦я▐ п©п╬п╢я│я┤п╣я┌п╟ я│я┌п╟я┌п╦я│я┌п╦п╨п╦ - я┤п╦я│п╩п╬
+*					п╫п╣я│п╬п╡п©п╟п╢п╣п╫п╦п╧ п╬п╠п╩п╟я│я┌п╣п╧ я─п╟п╥п╪п╣я┌п╨п╦ п╫п╟ п╢п╡я┐я┘ я┌я─п╟п╣п╨я┌п╬я─я▐я┘. 
+*	Parameters:		row1 - я─п╟п╥п╪п╣я┌п╨п╟ п╬п╢п╫п╬п╧ я┌я─п╟п╣п╨я┌п╬я─п╦п╦ п╟п╫п╬п╪п╟п╩я▄п╫п╬пЁп╬ п©п╬п╡п╣п╢п╣п╫п╦я▐
+*					from1 - п╫п╬п╪п╣я─ п╬я┌я│я┤п╣я┌п╟, я│ п╨п╬я┌п╬я─п╬пЁп╬ п╫п╟я┤п╦п╫п╟я┌я▄ п╫п╟ row1
+*					row2 - я─п╟п╥п╪п╣я┌п╨п╟ п╢я─я┐пЁп╬п╧ я┌я─п╟п╣п╨я┌п╬я─п╦п╦ п╟п╫п╬п╪п╟п╩я▄п╫п╬пЁп╬ п©п╬п╡п╣п╢п╣п╫п╦я▐
+*					from2 - п╫п╬п╪п╣я─ п╬я┌я│я┤п╣я┌п╟, я│ п╨п╬я┌п╬я─п╬пЁп╬ п╫п╟я┤п╦п╫п╟я┌я▄ п╫п╟ row2
+*					len - я│п╨п╬п╩я▄п╨п╬ п╬я┌я│я┤п╣я┌п╬п╡ я┌я─п╟п╣п╨я┌п╬я─п╦п╦ я│я─п╟п╡п╫п╦п╡п╟я┌я▄
+*	Returns:		double - я┤п╦я│п╩п╬ п╫п╣я│п╬п╡п©п╟п╢п╣п╫п╦п╧ п╬п╠п╩п╟я│я┌п╣п╧ я│ я─п╟п╥п╪п╣я┌п╨п╬п╧, 
+*							 я┐п╪п╫п╬п╤п╣п╫п╫п╬п╣ п╫п╟ я│п╬п╬я┌п╡п╣я┌я│я┌п╡я┐я▌я┴п╦п╧ п╡п╣я│
+*	Throws:			AxiomLibException - п╣я│п╩п╦ п╡я┘п╬п╢п╫я▀п╣ п╢п╟п╫п╫я▀п╣ п╥п╟п╢п╟п╫я▀ п╫п╣п╡п╣я─п╫п╬
 *	Author:			dk
 *	History:
 *
@@ -965,7 +965,7 @@ inline double FuzzyDataLearnAlgorithm::shiftErrors (std::vector <int> &row1, con
 	double toRet = 0;
 	int t = 0;
 	
-	// Бежим по первому ряду и считаем те области, которые не нашли отражение во втором ряду
+	// п▒п╣п╤п╦п╪ п©п╬ п©п╣я─п╡п╬п╪я┐ я─я▐п╢я┐ п╦ я│я┤п╦я┌п╟п╣п╪ я┌п╣ п╬п╠п╩п╟я│я┌п╦, п╨п╬я┌п╬я─я▀п╣ п╫п╣ п╫п╟я┬п╩п╦ п╬я┌я─п╟п╤п╣п╫п╦п╣ п╡п╬ п╡я┌п╬я─п╬п╪ я─я▐п╢я┐
 	while (t < len) {
 		if (row1[from1 + t] > 0) {
 			flag = false;
@@ -990,7 +990,7 @@ inline double FuzzyDataLearnAlgorithm::shiftErrors (std::vector <int> &row1, con
 		t++;
 	}
 
-	// Бежим по второму ряду и считаем те области, которые не нашли отражение в первом ряду
+	// п▒п╣п╤п╦п╪ п©п╬ п╡я┌п╬я─п╬п╪я┐ я─я▐п╢я┐ п╦ я│я┤п╦я┌п╟п╣п╪ я┌п╣ п╬п╠п╩п╟я│я┌п╦, п╨п╬я┌п╬я─я▀п╣ п╫п╣ п╫п╟я┬п╩п╦ п╬я┌я─п╟п╤п╣п╫п╦п╣ п╡ п©п╣я─п╡п╬п╪ я─я▐п╢я┐
 	t = 0;
 	while (t < len) {
 		if (row2[from2 + t] > 0) {
@@ -1023,16 +1023,16 @@ inline double FuzzyDataLearnAlgorithm::shiftErrors (std::vector <int> &row1, con
 /****************************************************************************
 *					FuzzyDataLearnAlgorithm::moveVal
 *
-*	Description:	Вспомогательная функция обновдения векторов newMarkUp и newMarkUpSens 
-*					из вектора markUp с указанием границ областей обновления.
-*	Parameters:		newMarkUp - новая траектория обобщенной разметки
-*					newMarkUpSens - вектор частот встречаемости разметок в newMarkUpSens
-*					newFrom - номер осчета, с которго начинать на newMarkUp
-*					markUp - разметка траектории аномального поведения
-*					from - номер отсчета, с которого начинать 
-*					upTo - номер отсчета, до которого считать
+*	Description:	п▓я│п©п╬п╪п╬пЁп╟я┌п╣п╩я▄п╫п╟я▐ я└я┐п╫п╨я├п╦я▐ п╬п╠п╫п╬п╡п╢п╣п╫п╦я▐ п╡п╣п╨я┌п╬я─п╬п╡ newMarkUp п╦ newMarkUpSens 
+*					п╦п╥ п╡п╣п╨я┌п╬я─п╟ markUp я│ я┐п╨п╟п╥п╟п╫п╦п╣п╪ пЁя─п╟п╫п╦я├ п╬п╠п╩п╟я│я┌п╣п╧ п╬п╠п╫п╬п╡п╩п╣п╫п╦я▐.
+*	Parameters:		newMarkUp - п╫п╬п╡п╟я▐ я┌я─п╟п╣п╨я┌п╬я─п╦я▐ п╬п╠п╬п╠я┴п╣п╫п╫п╬п╧ я─п╟п╥п╪п╣я┌п╨п╦
+*					newMarkUpSens - п╡п╣п╨я┌п╬я─ я┤п╟я│я┌п╬я┌ п╡я│я┌я─п╣я┤п╟п╣п╪п╬я│я┌п╦ я─п╟п╥п╪п╣я┌п╬п╨ п╡ newMarkUpSens
+*					newFrom - п╫п╬п╪п╣я─ п╬я│я┤п╣я┌п╟, я│ п╨п╬я┌п╬я─пЁп╬ п╫п╟я┤п╦п╫п╟я┌я▄ п╫п╟ newMarkUp
+*					markUp - я─п╟п╥п╪п╣я┌п╨п╟ я┌я─п╟п╣п╨я┌п╬я─п╦п╦ п╟п╫п╬п╪п╟п╩я▄п╫п╬пЁп╬ п©п╬п╡п╣п╢п╣п╫п╦я▐
+*					from - п╫п╬п╪п╣я─ п╬я┌я│я┤п╣я┌п╟, я│ п╨п╬я┌п╬я─п╬пЁп╬ п╫п╟я┤п╦п╫п╟я┌я▄ 
+*					upTo - п╫п╬п╪п╣я─ п╬я┌я│я┤п╣я┌п╟, п╢п╬ п╨п╬я┌п╬я─п╬пЁп╬ я│я┤п╦я┌п╟я┌я▄
 *	Returns:		0
-*	Throws:			AxiomLibException - если входные данные заданы неверно
+*	Throws:			AxiomLibException - п╣я│п╩п╦ п╡я┘п╬п╢п╫я▀п╣ п╢п╟п╫п╫я▀п╣ п╥п╟п╢п╟п╫я▀ п╫п╣п╡п╣я─п╫п╬
 *	Author:			dk
 *	History:
 *
@@ -1055,17 +1055,17 @@ inline int FuzzyDataLearnAlgorithm::moveVal (std::vector <int> &newMarkUp, std::
 /****************************************************************************
 *					FuzzyDataLearnAlgorithm::moveVal
 *
-*	Description:	Вспомогательная функция обновдения векторов newMarkUp и newMarkUpSens 
-*					из вектов base, sens с указанием границ областей обновления.
-*	Parameters:		newMarkUp - новая траектория обобщенной разметки
-*					newMarkUpSens - вектор частот встречаемости разметок в newMarkUpSens
-*					newFrom - номер осчета, с которго начинать на newMarkUp
-*					base - старая траектория обобщенной разметки
-*					sens - старый вектор частот
-*					from - номер отсчета, с которого начинать 
-*					upTo - номер отсчета, до которого считать
+*	Description:	п▓я│п©п╬п╪п╬пЁп╟я┌п╣п╩я▄п╫п╟я▐ я└я┐п╫п╨я├п╦я▐ п╬п╠п╫п╬п╡п╢п╣п╫п╦я▐ п╡п╣п╨я┌п╬я─п╬п╡ newMarkUp п╦ newMarkUpSens 
+*					п╦п╥ п╡п╣п╨я┌п╬п╡ base, sens я│ я┐п╨п╟п╥п╟п╫п╦п╣п╪ пЁя─п╟п╫п╦я├ п╬п╠п╩п╟я│я┌п╣п╧ п╬п╠п╫п╬п╡п╩п╣п╫п╦я▐.
+*	Parameters:		newMarkUp - п╫п╬п╡п╟я▐ я┌я─п╟п╣п╨я┌п╬я─п╦я▐ п╬п╠п╬п╠я┴п╣п╫п╫п╬п╧ я─п╟п╥п╪п╣я┌п╨п╦
+*					newMarkUpSens - п╡п╣п╨я┌п╬я─ я┤п╟я│я┌п╬я┌ п╡я│я┌я─п╣я┤п╟п╣п╪п╬я│я┌п╦ я─п╟п╥п╪п╣я┌п╬п╨ п╡ newMarkUpSens
+*					newFrom - п╫п╬п╪п╣я─ п╬я│я┤п╣я┌п╟, я│ п╨п╬я┌п╬я─пЁп╬ п╫п╟я┤п╦п╫п╟я┌я▄ п╫п╟ newMarkUp
+*					base - я│я┌п╟я─п╟я▐ я┌я─п╟п╣п╨я┌п╬я─п╦я▐ п╬п╠п╬п╠я┴п╣п╫п╫п╬п╧ я─п╟п╥п╪п╣я┌п╨п╦
+*					sens - я│я┌п╟я─я▀п╧ п╡п╣п╨я┌п╬я─ я┤п╟я│я┌п╬я┌
+*					from - п╫п╬п╪п╣я─ п╬я┌я│я┤п╣я┌п╟, я│ п╨п╬я┌п╬я─п╬пЁп╬ п╫п╟я┤п╦п╫п╟я┌я▄ 
+*					upTo - п╫п╬п╪п╣я─ п╬я┌я│я┤п╣я┌п╟, п╢п╬ п╨п╬я┌п╬я─п╬пЁп╬ я│я┤п╦я┌п╟я┌я▄
 *	Returns:		0
-*	Throws:			AxiomLibException - если входные данные заданы неверно
+*	Throws:			AxiomLibException - п╣я│п╩п╦ п╡я┘п╬п╢п╫я▀п╣ п╢п╟п╫п╫я▀п╣ п╥п╟п╢п╟п╫я▀ п╫п╣п╡п╣я─п╫п╬
 *	Author:			dk
 *	History:
 *
@@ -1085,19 +1085,19 @@ inline int FuzzyDataLearnAlgorithm::moveVal (std::vector <int> &newMarkUp, std::
 /****************************************************************************
 *					FuzzyDataLearnAlgorithm::moveVal
 *
-*	Description:	Вспомогательная функция обновдения векторов newMarkUp и newMarkUpSens 
-*					из вектора markUp и векторов base, sens с указанием границ областей обновления.
-*	Parameters:		newMarkUp - новая траектория обобщенной разметки
-*					newMarkUpSens - вектор частот встречаемости разметок в newMarkUpSens
-*					newFrom - номер осчета, с которго начинать на newMarkUp
-*					base - старая траектория обобщенной разметки
-*					sens - старый вектор частот
-*					fromBase - номер отсчета, с которого начинать на base
-*					markUp - разметка траектории аномального поведения
-*					fromMarkUp - номер отсчета, с которого начинать 
-*					len - длина обрабатываемого участка
+*	Description:	п▓я│п©п╬п╪п╬пЁп╟я┌п╣п╩я▄п╫п╟я▐ я└я┐п╫п╨я├п╦я▐ п╬п╠п╫п╬п╡п╢п╣п╫п╦я▐ п╡п╣п╨я┌п╬я─п╬п╡ newMarkUp п╦ newMarkUpSens 
+*					п╦п╥ п╡п╣п╨я┌п╬я─п╟ markUp п╦ п╡п╣п╨я┌п╬я─п╬п╡ base, sens я│ я┐п╨п╟п╥п╟п╫п╦п╣п╪ пЁя─п╟п╫п╦я├ п╬п╠п╩п╟я│я┌п╣п╧ п╬п╠п╫п╬п╡п╩п╣п╫п╦я▐.
+*	Parameters:		newMarkUp - п╫п╬п╡п╟я▐ я┌я─п╟п╣п╨я┌п╬я─п╦я▐ п╬п╠п╬п╠я┴п╣п╫п╫п╬п╧ я─п╟п╥п╪п╣я┌п╨п╦
+*					newMarkUpSens - п╡п╣п╨я┌п╬я─ я┤п╟я│я┌п╬я┌ п╡я│я┌я─п╣я┤п╟п╣п╪п╬я│я┌п╦ я─п╟п╥п╪п╣я┌п╬п╨ п╡ newMarkUpSens
+*					newFrom - п╫п╬п╪п╣я─ п╬я│я┤п╣я┌п╟, я│ п╨п╬я┌п╬я─пЁп╬ п╫п╟я┤п╦п╫п╟я┌я▄ п╫п╟ newMarkUp
+*					base - я│я┌п╟я─п╟я▐ я┌я─п╟п╣п╨я┌п╬я─п╦я▐ п╬п╠п╬п╠я┴п╣п╫п╫п╬п╧ я─п╟п╥п╪п╣я┌п╨п╦
+*					sens - я│я┌п╟я─я▀п╧ п╡п╣п╨я┌п╬я─ я┤п╟я│я┌п╬я┌
+*					fromBase - п╫п╬п╪п╣я─ п╬я┌я│я┤п╣я┌п╟, я│ п╨п╬я┌п╬я─п╬пЁп╬ п╫п╟я┤п╦п╫п╟я┌я▄ п╫п╟ base
+*					markUp - я─п╟п╥п╪п╣я┌п╨п╟ я┌я─п╟п╣п╨я┌п╬я─п╦п╦ п╟п╫п╬п╪п╟п╩я▄п╫п╬пЁп╬ п©п╬п╡п╣п╢п╣п╫п╦я▐
+*					fromMarkUp - п╫п╬п╪п╣я─ п╬я┌я│я┤п╣я┌п╟, я│ п╨п╬я┌п╬я─п╬пЁп╬ п╫п╟я┤п╦п╫п╟я┌я▄ 
+*					len - п╢п╩п╦п╫п╟ п╬п╠я─п╟п╠п╟я┌я▀п╡п╟п╣п╪п╬пЁп╬ я┐я┤п╟я│я┌п╨п╟
 *	Returns:		0
-*	Throws:			AxiomLibException - если входные данные заданы неверно
+*	Throws:			AxiomLibException - п╣я│п╩п╦ п╡я┘п╬п╢п╫я▀п╣ п╢п╟п╫п╫я▀п╣ п╥п╟п╢п╟п╫я▀ п╫п╣п╡п╣я─п╫п╬
 *	Author:			dk
 *	History:
 *
@@ -1127,10 +1127,10 @@ inline int FuzzyDataLearnAlgorithm::moveVal (std::vector <int> &newMarkUp, std::
 /****************************************************************************
 *					FuzzyDataLearnAlgorithm::createBaseMarkUp
 *
-*	Description:	Cдвиг основных разметок и формирование обобщенной разметки
-*	Parameters:		sens - формируемая обобщенная разметка (число повторений разметки в данной позиции)
-*					markUps - разметки траекторий аномального поведения одного 
-*								типа и созданные одной аксиомой
+*	Description:	Cп╢п╡п╦пЁ п╬я│п╫п╬п╡п╫я▀я┘ я─п╟п╥п╪п╣я┌п╬п╨ п╦ я└п╬я─п╪п╦я─п╬п╡п╟п╫п╦п╣ п╬п╠п╬п╠я┴п╣п╫п╫п╬п╧ я─п╟п╥п╪п╣я┌п╨п╦
+*	Parameters:		sens - я└п╬я─п╪п╦я─я┐п╣п╪п╟я▐ п╬п╠п╬п╠я┴п╣п╫п╫п╟я▐ я─п╟п╥п╪п╣я┌п╨п╟ (я┤п╦я│п╩п╬ п©п╬п╡я┌п╬я─п╣п╫п╦п╧ я─п╟п╥п╪п╣я┌п╨п╦ п╡ п╢п╟п╫п╫п╬п╧ п©п╬п╥п╦я├п╦п╦)
+*					markUps - я─п╟п╥п╪п╣я┌п╨п╦ я┌я─п╟п╣п╨я┌п╬я─п╦п╧ п╟п╫п╬п╪п╟п╩я▄п╫п╬пЁп╬ п©п╬п╡п╣п╢п╣п╫п╦я▐ п╬п╢п╫п╬пЁп╬ 
+*								я┌п╦п©п╟ п╦ я│п╬п╥п╢п╟п╫п╫я▀п╣ п╬п╢п╫п╬п╧ п╟п╨я│п╦п╬п╪п╬п╧
 *	Returns:		0
 *	Throws:			-
 *	Author:			dk
@@ -1159,45 +1159,45 @@ inline int FuzzyDataLearnAlgorithm::createBaseMarkUp (std::vector <int> &sens, s
 			} else {
 				lastStart = 0;
 				lastScore = -1.0;
-				// бежим по пикам в base
+				// п╠п╣п╤п╦п╪ п©п╬ п©п╦п╨п╟п╪ п╡ base
 				for (int y = 0; y < (int) base.size(); y++) {
 					if (base[y] > 0) {
-						// для каждого пика в base бежим по всем пикам markUps[i]
+						// п╢п╩я▐ п╨п╟п╤п╢п╬пЁп╬ п©п╦п╨п╟ п╡ base п╠п╣п╤п╦п╪ п©п╬ п╡я│п╣п╪ п©п╦п╨п╟п╪ markUps[i]
 						for (int z = 0; z < (int) markUps[i].size(); z++) {
-							// для каждого пика в base и в markUps[i] - считаем число совпадений
+							// п╢п╩я▐ п╨п╟п╤п╢п╬пЁп╬ п©п╦п╨п╟ п╡ base п╦ п╡ markUps[i] - я│я┤п╦я┌п╟п╣п╪ я┤п╦я│п╩п╬ я│п╬п╡п©п╟п╢п╣п╫п╦п╧
 							if (markUps[i][z] > 0) {
 								newStart = y - z;
 								if (newStart < 0) {
-									// от 0 до z - y бежим по markUps[i]
+									// п╬я┌ 0 п╢п╬ z - y п╠п╣п╤п╦п╪ п©п╬ markUps[i]
 									newScore = shiftErrors (markUps[i], 0, z-y);
 									if ((markUps[i].size() + newStart) > base.size()) {
-										// от 0 до base.size() бежим по base и по markUps[i]
+										// п╬я┌ 0 п╢п╬ base.size() п╠п╣п╤п╦п╪ п©п╬ base п╦ п©п╬ markUps[i]
 										newScore += shiftErrors (base, 0, markUps[i], z-y, base.size());
-										// от base.size() - newStart до markUps[i].size() по markUps[i]
+										// п╬я┌ base.size() - newStart п╢п╬ markUps[i].size() п©п╬ markUps[i]
 										newScore += shiftErrors (markUps[i], base.size() - newStart, markUps[i].size());
 									} else {
-										// от 0 до markUps[i].size() + newStart по base и по markUps[i]
+										// п╬я┌ 0 п╢п╬ markUps[i].size() + newStart п©п╬ base п╦ п©п╬ markUps[i]
 										newScore += shiftErrors (base, 0, markUps[i], z-y, markUps[i].size() + newStart);
-										// от markUps[i].size() + newStart до base.size() по base
+										// п╬я┌ markUps[i].size() + newStart п╢п╬ base.size() п©п╬ base
 										newScore += shiftErrors (base, markUps[i].size() + newStart, base.size());
 									}
 								} else {
-									// от 0 до y - z бежим по base
+									// п╬я┌ 0 п╢п╬ y - z п╠п╣п╤п╦п╪ п©п╬ base
 									newScore = shiftErrors (base, 0, newStart);
 									if ((markUps[i].size() + newStart) > base.size()) {
-										// от y - z до base.size() бежим по base и по markUps[i] от 0 до base.size() - y + z
+										// п╬я┌ y - z п╢п╬ base.size() п╠п╣п╤п╦п╪ п©п╬ base п╦ п©п╬ markUps[i] п╬я┌ 0 п╢п╬ base.size() - y + z
 										newScore += shiftErrors (base, newStart, markUps[i], 0, base.size() - newStart);
-										// от base.size() - newStart до markUps[i].size() по markUps[i]
+										// п╬я┌ base.size() - newStart п╢п╬ markUps[i].size() п©п╬ markUps[i]
 										newScore += shiftErrors (markUps[i], base.size() - newStart, markUps[i].size());
 									} else {
-										// от y-z до markUps[i].size() + newStart по base и по markUps[i]
+										// п╬я┌ y-z п╢п╬ markUps[i].size() + newStart п©п╬ base п╦ п©п╬ markUps[i]
 										newScore += shiftErrors (base, newStart, markUps[i], 0, markUps[i].size());
-										// от markUps[i].size() + newStart до base.size() по base
+										// п╬я┌ markUps[i].size() + newStart п╢п╬ base.size() п©п╬ base
 										newScore += shiftErrors (base, markUps[i].size() + newStart, base.size());
 									}
 								}
-								// подсчитали число совпадений для данного сдвига (для данных двух пиков)
-								// Тогда сохрянаем лучшее значение относительного сдвига
+								// п©п╬п╢я│я┤п╦я┌п╟п╩п╦ я┤п╦я│п╩п╬ я│п╬п╡п©п╟п╢п╣п╫п╦п╧ п╢п╩я▐ п╢п╟п╫п╫п╬пЁп╬ я│п╢п╡п╦пЁп╟ (п╢п╩я▐ п╢п╟п╫п╫я▀я┘ п╢п╡я┐я┘ п©п╦п╨п╬п╡)
+								// п╒п╬пЁп╢п╟ я│п╬я┘я─я▐п╫п╟п╣п╪ п╩я┐я┤я┬п╣п╣ п╥п╫п╟я┤п╣п╫п╦п╣ п╬я┌п╫п╬я│п╦я┌п╣п╩я▄п╫п╬пЁп╬ я│п╢п╡п╦пЁп╟
 								if ((lastScore < 0) || (newScore < lastScore)) {
 									lastScore = newScore;
 									lastStart = newStart;
@@ -1206,45 +1206,45 @@ inline int FuzzyDataLearnAlgorithm::createBaseMarkUp (std::vector <int> &sens, s
 						}
 					}
 				}
-				// Пробежали по всем пикам и возможным вариантам сдвига - теперь производим дополнение base в соответствии с лучшим значением сдвига
+				// п÷я─п╬п╠п╣п╤п╟п╩п╦ п©п╬ п╡я│п╣п╪ п©п╦п╨п╟п╪ п╦ п╡п╬п╥п╪п╬п╤п╫я▀п╪ п╡п╟я─п╦п╟п╫я┌п╟п╪ я│п╢п╡п╦пЁп╟ - я┌п╣п©п╣я─я▄ п©я─п╬п╦п╥п╡п╬п╢п╦п╪ п╢п╬п©п╬п╩п╫п╣п╫п╦п╣ base п╡ я│п╬п╬я┌п╡п╣я┌я│я┌п╡п╦п╦ я│ п╩я┐я┤я┬п╦п╪ п╥п╫п╟я┤п╣п╫п╦п╣п╪ я│п╢п╡п╦пЁп╟
 				if (lastStart < 0) {
 					if ((markUps[i].size() + lastStart) > base.size()) {
 						newBase.resize(markUps[i].size());
 						newSens.resize(markUps[i].size());
-						// от 0 до -lastStart бежим по markUps[i]
+						// п╬я┌ 0 п╢п╬ -lastStart п╠п╣п╤п╦п╪ п©п╬ markUps[i]
 						moveVal (newBase, newSens, 0, markUps[i], 0, -lastStart);
-						// от 0 до base.size() бежим по base и по markUps[i]
+						// п╬я┌ 0 п╢п╬ base.size() п╠п╣п╤п╦п╪ п©п╬ base п╦ п©п╬ markUps[i]
 						moveVal (newBase, newSens, -lastStart, base, sens, 0, markUps[i], -lastStart, base.size());
-						// от base.size() - lastStart до markUps[i].size() по markUps[i]
+						// п╬я┌ base.size() - lastStart п╢п╬ markUps[i].size() п©п╬ markUps[i]
 						moveVal (newBase, newSens, base.size() - lastStart, markUps[i], base.size() - lastStart, markUps[i].size());
 					} else {
 						newBase.resize(base.size() - lastStart);
 						newSens.resize(base.size() - lastStart);
-						// от 0 до -lastStart бежим по markUps[i]
+						// п╬я┌ 0 п╢п╬ -lastStart п╠п╣п╤п╦п╪ п©п╬ markUps[i]
 						moveVal (newBase, newSens, 0, markUps[i], 0, -lastStart);
-						// от 0 до markUps[i].size() + lastStart по base и по markUps[i]
+						// п╬я┌ 0 п╢п╬ markUps[i].size() + lastStart п©п╬ base п╦ п©п╬ markUps[i]
 						moveVal (newBase, newSens, -lastStart, base, sens, 0, markUps[i], -lastStart, markUps[i].size() + lastStart);
-						// от markUps[i].size() + lastStart до base.size() по base
+						// п╬я┌ markUps[i].size() + lastStart п╢п╬ base.size() п©п╬ base
 						moveVal (newBase, newSens, markUps[i].size(), base, sens, markUps[i].size() + lastStart, base.size());
 					}
 				} else {
 					if ((markUps[i].size() + lastStart) > base.size()) {
 						newBase.resize(markUps[i].size() + lastStart);
 						newSens.resize(markUps[i].size() + lastStart);
-						// от 0 до lastStart бежим по base
+						// п╬я┌ 0 п╢п╬ lastStart п╠п╣п╤п╦п╪ п©п╬ base
 						moveVal (newBase, newSens, 0, base, sens, 0, lastStart);
-						// от y - z до base.size() бежим по base и по markUps[i] от 0 до base.size() - y + z
+						// п╬я┌ y - z п╢п╬ base.size() п╠п╣п╤п╦п╪ п©п╬ base п╦ п©п╬ markUps[i] п╬я┌ 0 п╢п╬ base.size() - y + z
 						moveVal (newBase, newSens, lastStart, base, sens, lastStart, markUps[i], 0, base.size() - lastStart);
-						// от base.size() - lastStart до markUps[i].size() по markUps[i]
+						// п╬я┌ base.size() - lastStart п╢п╬ markUps[i].size() п©п╬ markUps[i]
 						moveVal (newBase, newSens, base.size(), markUps[i], base.size() - lastStart, markUps[i].size());
 					} else {
 						newBase.resize(base.size());
 						newSens.resize(base.size());
-						// от 0 до lastStart бежим по base
+						// п╬я┌ 0 п╢п╬ lastStart п╠п╣п╤п╦п╪ п©п╬ base
 						moveVal (newBase, newSens, 0, base, sens, 0, lastStart);
-						// от y-z до markUps[i].size() + lastStart по base и по markUps[i]
+						// п╬я┌ y-z п╢п╬ markUps[i].size() + lastStart п©п╬ base п╦ п©п╬ markUps[i]
 						moveVal (newBase, newSens, lastStart, base, sens, lastStart, markUps[i], 0, markUps[i].size());
-						// от markUps[i].size() + lastStart до base.size() по base
+						// п╬я┌ markUps[i].size() + lastStart п╢п╬ base.size() п©п╬ base
 						moveVal (newBase, newSens, markUps[i].size() + lastStart, base, sens, markUps[i].size() + lastStart, base.size());
 					}
 				}
@@ -1261,30 +1261,30 @@ inline int FuzzyDataLearnAlgorithm::createBaseMarkUp (std::vector <int> &sens, s
 /****************************************************************************
 *					FuzzyDataLearnAlgorithm::formGeneralizedMarkUps
 *
-*	Description:	Формирование обобщенных разметок для заданного типа 
-*					аномального поведения и заданной аксиомы:
-*					Получаем разметки всех обучающих траекторий для заданного 
-*					типа аномального поведения и для всех аксиом. Сдвигаем эти 
-*					разметки до наилучшего соответствия и формируем обобщенные 
-*					разметки.
-*	Parameters:		baseMarkUps - обобщенные разметки по различным аксиомам
-*					resMarkUps - массив всех разметок для данной аксиомы
-*					i - номер класса аномального поведения в наборе данных, 
-*						который использовать для анализа
-*					axNum - номер аксиомы в векторе bestAxioms, которую использовать
-*							в данном алгоритме
-*					param - размерность набора данных по которой вести анализ
+*	Description:	п╓п╬я─п╪п╦я─п╬п╡п╟п╫п╦п╣ п╬п╠п╬п╠я┴п╣п╫п╫я▀я┘ я─п╟п╥п╪п╣я┌п╬п╨ п╢п╩я▐ п╥п╟п╢п╟п╫п╫п╬пЁп╬ я┌п╦п©п╟ 
+*					п╟п╫п╬п╪п╟п╩я▄п╫п╬пЁп╬ п©п╬п╡п╣п╢п╣п╫п╦я▐ п╦ п╥п╟п╢п╟п╫п╫п╬п╧ п╟п╨я│п╦п╬п╪я▀:
+*					п÷п╬п╩я┐я┤п╟п╣п╪ я─п╟п╥п╪п╣я┌п╨п╦ п╡я│п╣я┘ п╬п╠я┐я┤п╟я▌я┴п╦я┘ я┌я─п╟п╣п╨я┌п╬я─п╦п╧ п╢п╩я▐ п╥п╟п╢п╟п╫п╫п╬пЁп╬ 
+*					я┌п╦п©п╟ п╟п╫п╬п╪п╟п╩я▄п╫п╬пЁп╬ п©п╬п╡п╣п╢п╣п╫п╦я▐ п╦ п╢п╩я▐ п╡я│п╣я┘ п╟п╨я│п╦п╬п╪. п║п╢п╡п╦пЁп╟п╣п╪ я█я┌п╦ 
+*					я─п╟п╥п╪п╣я┌п╨п╦ п╢п╬ п╫п╟п╦п╩я┐я┤я┬п╣пЁп╬ я│п╬п╬я┌п╡п╣я┌я│я┌п╡п╦я▐ п╦ я└п╬я─п╪п╦я─я┐п╣п╪ п╬п╠п╬п╠я┴п╣п╫п╫я▀п╣ 
+*					я─п╟п╥п╪п╣я┌п╨п╦.
+*	Parameters:		baseMarkUps - п╬п╠п╬п╠я┴п╣п╫п╫я▀п╣ я─п╟п╥п╪п╣я┌п╨п╦ п©п╬ я─п╟п╥п╩п╦я┤п╫я▀п╪ п╟п╨я│п╦п╬п╪п╟п╪
+*					resMarkUps - п╪п╟я│я│п╦п╡ п╡я│п╣я┘ я─п╟п╥п╪п╣я┌п╬п╨ п╢п╩я▐ п╢п╟п╫п╫п╬п╧ п╟п╨я│п╦п╬п╪я▀
+*					i - п╫п╬п╪п╣я─ п╨п╩п╟я│я│п╟ п╟п╫п╬п╪п╟п╩я▄п╫п╬пЁп╬ п©п╬п╡п╣п╢п╣п╫п╦я▐ п╡ п╫п╟п╠п╬я─п╣ п╢п╟п╫п╫я▀я┘, 
+*						п╨п╬я┌п╬я─я▀п╧ п╦я│п©п╬п╩я▄п╥п╬п╡п╟я┌я▄ п╢п╩я▐ п╟п╫п╟п╩п╦п╥п╟
+*					axNum - п╫п╬п╪п╣я─ п╟п╨я│п╦п╬п╪я▀ п╡ п╡п╣п╨я┌п╬я─п╣ bestAxioms, п╨п╬я┌п╬я─я┐я▌ п╦я│п©п╬п╩я▄п╥п╬п╡п╟я┌я▄
+*							п╡ п╢п╟п╫п╫п╬п╪ п╟п╩пЁп╬я─п╦я┌п╪п╣
+*					param - я─п╟п╥п╪п╣я─п╫п╬я│я┌я▄ п╫п╟п╠п╬я─п╟ п╢п╟п╫п╫я▀я┘ п©п╬ п╨п╬я┌п╬я─п╬п╧ п╡п╣я│я┌п╦ п╟п╫п╟п╩п╦п╥
 *	Returns:		0
-*	Throws:			AxiomLibException - при некорректном ответе от набора данных или некорректных входных параметрах
+*	Throws:			AxiomLibException - п©я─п╦ п╫п╣п╨п╬я─я─п╣п╨я┌п╫п╬п╪ п╬я┌п╡п╣я┌п╣ п╬я┌ п╫п╟п╠п╬я─п╟ п╢п╟п╫п╫я▀я┘ п╦п╩п╦ п╫п╣п╨п╬я─я─п╣п╨я┌п╫я▀я┘ п╡я┘п╬п╢п╫я▀я┘ п©п╟я─п╟п╪п╣я┌я─п╟я┘
 *	Author:			dk
 *	History:
 *
 ****************************************************************************/
 inline int FuzzyDataLearnAlgorithm::formGeneralizedMarkUps (std::vector <int> &baseMarkUp, std::vector < std::vector <int> > &resMarkUps, int axNum, int i, int numOfMultiTS, const int param) {
-	// Проверка входных параметров
+	// п÷я─п╬п╡п╣я─п╨п╟ п╡я┘п╬п╢п╫я▀я┘ п©п╟я─п╟п╪п╣я┌я─п╬п╡
 	if (axNum >= (int) bestAxioms.size())
 		throw AxiomLibException("FuzzyDataLearnAlgorithm::formGeneralizedMarkUps : incorrect input parameters.");
-	// Получаем разметки всех траекторий аномального поведения типа i для аксиомы axNum
+	// п÷п╬п╩я┐я┤п╟п╣п╪ я─п╟п╥п╪п╣я┌п╨п╦ п╡я│п╣я┘ я┌я─п╟п╣п╨я┌п╬я─п╦п╧ п╟п╫п╬п╪п╟п╩я▄п╫п╬пЁп╬ п©п╬п╡п╣п╢п╣п╫п╦я▐ я┌п╦п©п╟ i п╢п╩я▐ п╟п╨я│п╦п╬п╪я▀ axNum
 	bool bres;
 	std::vector <double> curTS;
 	resMarkUps.resize (numOfMultiTS);
@@ -1293,11 +1293,11 @@ inline int FuzzyDataLearnAlgorithm::formGeneralizedMarkUps (std::vector <int> &b
 		if (bres) {
 			if (curTS.size() < 1)
 				throw AxiomLibException("FuzzyDataLearnAlgorithm::formGeneralizedMarkUps : incorrect response from internal request to dataSet.");
-			// Разметка траектории curTS
+			// п═п╟п╥п╪п╣я┌п╨п╟ я┌я─п╟п╣п╨я┌п╬я─п╦п╦ curTS
 			createMarkUp (resMarkUps[j], curTS, bestAxioms[axNum], axNum+1);
 		}
 	}
-	// На основании полученных разметок траекторий аномального поведения - производим их сдвиг и формируем обобщенную разметку
+	// п²п╟ п╬я│п╫п╬п╡п╟п╫п╦п╦ п©п╬п╩я┐я┤п╣п╫п╫я▀я┘ я─п╟п╥п╪п╣я┌п╬п╨ я┌я─п╟п╣п╨я┌п╬я─п╦п╧ п╟п╫п╬п╪п╟п╩я▄п╫п╬пЁп╬ п©п╬п╡п╣п╢п╣п╫п╦я▐ - п©я─п╬п╦п╥п╡п╬п╢п╦п╪ п╦я┘ я│п╢п╡п╦пЁ п╦ я└п╬я─п╪п╦я─я┐п╣п╪ п╬п╠п╬п╠я┴п╣п╫п╫я┐я▌ я─п╟п╥п╪п╣я┌п╨я┐
 	createBaseMarkUp (baseMarkUp, resMarkUps);
 	return 0;
 }
@@ -1306,11 +1306,11 @@ inline int FuzzyDataLearnAlgorithm::formGeneralizedMarkUps (std::vector <int> &b
 /****************************************************************************
 *					FuzzyDataLearnAlgorithm::simplifyMarkUp
 *
-*	Description:	Упрощение разметки и приведение ее в сокращенное описание
-*	Parameters:		simp - сокращенный и упрощенный вариант разметки
-*					len - вектор длин вхождений элементов разметки из simp в 
-*						  исходную разметку row
-*					row - преобразуемая разметка
+*	Description:	пёп©я─п╬я┴п╣п╫п╦п╣ я─п╟п╥п╪п╣я┌п╨п╦ п╦ п©я─п╦п╡п╣п╢п╣п╫п╦п╣ п╣п╣ п╡ я│п╬п╨я─п╟я┴п╣п╫п╫п╬п╣ п╬п©п╦я│п╟п╫п╦п╣
+*	Parameters:		simp - я│п╬п╨я─п╟я┴п╣п╫п╫я▀п╧ п╦ я┐п©я─п╬я┴п╣п╫п╫я▀п╧ п╡п╟я─п╦п╟п╫я┌ я─п╟п╥п╪п╣я┌п╨п╦
+*					len - п╡п╣п╨я┌п╬я─ п╢п╩п╦п╫ п╡я┘п╬п╤п╢п╣п╫п╦п╧ я█п╩п╣п╪п╣п╫я┌п╬п╡ я─п╟п╥п╪п╣я┌п╨п╦ п╦п╥ simp п╡ 
+*						  п╦я│я┘п╬п╢п╫я┐я▌ я─п╟п╥п╪п╣я┌п╨я┐ row
+*					row - п©я─п╣п╬п╠я─п╟п╥я┐п╣п╪п╟я▐ я─п╟п╥п╪п╣я┌п╨п╟
 *	Returns:		0
 *	Throws:			-
 *	Author:			dk
@@ -1320,14 +1320,14 @@ inline int FuzzyDataLearnAlgorithm::formGeneralizedMarkUps (std::vector <int> &b
 int FuzzyDataLearnAlgorithm::simplifyMarkUp (std::vector <int> &simp, std::vector <int> &len, std::vector <int> &row, const int axNum) const {
 	simp.clear();
 	len.clear();
-	// Убираем все 0 в начале вектора - их не учитываем
+	// пёп╠п╦я─п╟п╣п╪ п╡я│п╣ 0 п╡ п╫п╟я┤п╟п╩п╣ п╡п╣п╨я┌п╬я─п╟ - п╦я┘ п╫п╣ я┐я┤п╦я┌я▀п╡п╟п╣п╪
 	unsigned int i = 0;
 	while (i < row.size()) {
 		if (row[i] > 0)
 			break;
 		i++;
 	}
-	// не учитываем все 0 в конеце вектора
+	// п╫п╣ я┐я┤п╦я┌я▀п╡п╟п╣п╪ п╡я│п╣ 0 п╡ п╨п╬п╫п╣я├п╣ п╡п╣п╨я┌п╬я─п╟
 	unsigned int upTo = row.size() - 1;
 	while (upTo > i) {
 		if (row[upTo] > 0)
@@ -1335,16 +1335,16 @@ int FuzzyDataLearnAlgorithm::simplifyMarkUp (std::vector <int> &simp, std::vecto
 		upTo--;
 	}
 	upTo++;
-	// Если были только 0 - то выходим из функции
+	// п∙я│п╩п╦ п╠я▀п╩п╦ я┌п╬п╩я▄п╨п╬ 0 - я┌п╬ п╡я▀я┘п╬п╢п╦п╪ п╦п╥ я└я┐п╫п╨я├п╦п╦
 	if (((i+1) == upTo) && (row[i] == 0))
 		return -1;
-	// Пробегаем по всем содержательным элементам и запоминаем максимальное значение вектора
+	// п÷я─п╬п╠п╣пЁп╟п╣п╪ п©п╬ п╡я│п╣п╪ я│п╬п╢п╣я─п╤п╟я┌п╣п╩я▄п╫я▀п╪ я█п╩п╣п╪п╣п╫я┌п╟п╪ п╦ п╥п╟п©п╬п╪п╦п╫п╟п╣п╪ п╪п╟п╨я│п╦п╪п╟п╩я▄п╫п╬п╣ п╥п╫п╟я┤п╣п╫п╦п╣ п╡п╣п╨я┌п╬я─п╟
 	int maxVal = 0;
 	for (unsigned int k = i; k < upTo; k++) {
 		if (row[k] > maxVal)
 			maxVal = row[k];
 	}
-	// Цикл по всем содержательным элементам ветора row
+	// п╕п╦п╨п╩ п©п╬ п╡я│п╣п╪ я│п╬п╢п╣я─п╤п╟я┌п╣п╩я▄п╫я▀п╪ я█п╩п╣п╪п╣п╫я┌п╟п╪ п╡п╣я┌п╬я─п╟ row
 	unsigned int count = i;
 	unsigned int j = 0;
 	while ( i < upTo ) {
@@ -1372,11 +1372,11 @@ int FuzzyDataLearnAlgorithm::simplifyMarkUp (std::vector <int> &simp, std::vecto
 /****************************************************************************
 *					FuzzyDataLearnAlgorithm::subcheck 
 *
-*	Description:	Функция проверки содержания одной из разметок в другой.
-*	Parameters:		rowAxiomTypes - входной ряд аксиом (разметка ряда)
-*					rowAxiomLen - параметры разметки
-*					upTo - конец ряда откуда в сторону начала искать разметку
-*					curEnd - текущее положение в эталонной разметке для сравнения
+*	Description:	п╓я┐п╫п╨я├п╦я▐ п©я─п╬п╡п╣я─п╨п╦ я│п╬п╢п╣я─п╤п╟п╫п╦я▐ п╬п╢п╫п╬п╧ п╦п╥ я─п╟п╥п╪п╣я┌п╬п╨ п╡ п╢я─я┐пЁп╬п╧.
+*	Parameters:		rowAxiomTypes - п╡я┘п╬п╢п╫п╬п╧ я─я▐п╢ п╟п╨я│п╦п╬п╪ (я─п╟п╥п╪п╣я┌п╨п╟ я─я▐п╢п╟)
+*					rowAxiomLen - п©п╟я─п╟п╪п╣я┌я─я▀ я─п╟п╥п╪п╣я┌п╨п╦
+*					upTo - п╨п╬п╫п╣я├ я─я▐п╢п╟ п╬я┌п╨я┐п╢п╟ п╡ я│я┌п╬я─п╬п╫я┐ п╫п╟я┤п╟п╩п╟ п╦я│п╨п╟я┌я▄ я─п╟п╥п╪п╣я┌п╨я┐
+*					curEnd - я┌п╣п╨я┐я┴п╣п╣ п©п╬п╩п╬п╤п╣п╫п╦п╣ п╡ я█я┌п╟п╩п╬п╫п╫п╬п╧ я─п╟п╥п╪п╣я┌п╨п╣ п╢п╩я▐ я│я─п╟п╡п╫п╣п╫п╦я▐
 *	Returns:		0 - false
 *					1 - true
 *	Throws:			-
@@ -1391,43 +1391,43 @@ int FuzzyDataLearnAlgorithm::subcheck (std::vector<int> &rowAxiomTypes, std::vec
 	long int j = upTo;
 	int flag = 0;
 	for (int i = curEnd; i >= 0; i--) {
-		// Не учитываем разметку эталонного ряда - если там -1
+		// п²п╣ я┐я┤п╦я┌я▀п╡п╟п╣п╪ я─п╟п╥п╪п╣я┌п╨я┐ я█я┌п╟п╩п╬п╫п╫п╬пЁп╬ я─я▐п╢п╟ - п╣я│п╩п╦ я┌п╟п╪ -1
 		if (axiomTypes[i] == -1) {
 			continue;
 		}
-		// Не учитываем разметку ряда - если там -1 - что означает пустую аксиому
+		// п²п╣ я┐я┤п╦я┌я▀п╡п╟п╣п╪ я─п╟п╥п╪п╣я┌п╨я┐ я─я▐п╢п╟ - п╣я│п╩п╦ я┌п╟п╪ -1 - я┤я┌п╬ п╬п╥п╫п╟я┤п╟п╣я┌ п©я┐я│я┌я┐я▌ п╟п╨я│п╦п╬п╪я┐
 		if ((rowAxiomTypes[j] == -1) && (j != upTo))  {
 			j--;
 			if (j < 0) {
-				// Ряд слишком короткий чтобы что-то определить
+				// п═я▐п╢ я│п╩п╦я┬п╨п╬п╪ п╨п╬я─п╬я┌п╨п╦п╧ я┤я┌п╬п╠я▀ я┤я┌п╬-я┌п╬ п╬п©я─п╣п╢п╣п╩п╦я┌я▄
 				return 0;
 			}
 		}
-		// Если аксиома может и не входить в размету - то проверяем - совпадают ли ряды ее при отсутствии 
+		// п∙я│п╩п╦ п╟п╨я│п╦п╬п╪п╟ п╪п╬п╤п╣я┌ п╦ п╫п╣ п╡я┘п╬п╢п╦я┌я▄ п╡ я─п╟п╥п╪п╣я┌я┐ - я┌п╬ п©я─п╬п╡п╣я─я▐п╣п╪ - я│п╬п╡п©п╟п╢п╟я▌я┌ п╩п╦ я─я▐п╢я▀ п╣п╣ п©я─п╦ п╬я┌я│я┐я┌я│я┌п╡п╦п╦ 
 		if (axiomMinLen[i] == 0) {
 			flag = this->subcheck (rowAxiomTypes, rowAxiomLen, j, axiomTypes, axiomMinLen, axiomMaxLen, curEnd - 1);
 			if (flag != 0) {
 				return flag;
 			}
 		}
-		// Просто проверка вхождения эталонной последовательности в разметку
+		// п÷я─п╬я│я┌п╬ п©я─п╬п╡п╣я─п╨п╟ п╡я┘п╬п╤п╢п╣п╫п╦я▐ я█я┌п╟п╩п╬п╫п╫п╬п╧ п©п╬я│п╩п╣п╢п╬п╡п╟я┌п╣п╩я▄п╫п╬я│я┌п╦ п╡ я─п╟п╥п╪п╣я┌п╨я┐
 		if (axiomTypes[i] != rowAxiomTypes[j]) {
-			// Несовпадают типы аксиом
+			// п²п╣я│п╬п╡п©п╟п╢п╟я▌я┌ я┌п╦п©я▀ п╟п╨я│п╦п╬п╪
 			return 0;
 		}
-		// Проверка - совпадают ли при этом длины - то есть ссответствие расширенной разметки
+		// п÷я─п╬п╡п╣я─п╨п╟ - я│п╬п╡п©п╟п╢п╟я▌я┌ п╩п╦ п©я─п╦ я█я┌п╬п╪ п╢п╩п╦п╫я▀ - я┌п╬ п╣я│я┌я▄ я│я│п╬я┌п╡п╣я┌я│я┌п╡п╦п╣ я─п╟я│я┬п╦я─п╣п╫п╫п╬п╧ я─п╟п╥п╪п╣я┌п╨п╦
 		if ((axiomMinLen[i] > rowAxiomLen[j]) || ((axiomMaxLen[i] < rowAxiomLen[j]) && (i != 0) ) ) {
-			// Неподходят длины аксиомы
+			// п²п╣п©п╬п╢я┘п╬п╢я▐я┌ п╢п╩п╦п╫я▀ п╟п╨я│п╦п╬п╪я▀
 			return 0;
 		}
-		// Сдвигаемся по ряду - для сравнения следующей аксиомы
+		// п║п╢п╡п╦пЁп╟п╣п╪я│я▐ п©п╬ я─я▐п╢я┐ - п╢п╩я▐ я│я─п╟п╡п╫п╣п╫п╦я▐ я│п╩п╣п╢я┐я▌я┴п╣п╧ п╟п╨я│п╦п╬п╪я▀
 		j--;
 		if ((j < 0) && (i != 0)) {
-			// Ряд слишком короткий чтобы что-то определить
+			// п═я▐п╢ я│п╩п╦я┬п╨п╬п╪ п╨п╬я─п╬я┌п╨п╦п╧ я┤я┌п╬п╠я▀ я┤я┌п╬-я┌п╬ п╬п©я─п╣п╢п╣п╩п╦я┌я▄
 			return 0;
 		}
 	}
-	// раз не выпрыгнули из функции раньше - значит разметка подходит - выходим с true	
+	// я─п╟п╥ п╫п╣ п╡я▀п©я─я▀пЁп╫я┐п╩п╦ п╦п╥ я└я┐п╫п╨я├п╦п╦ я─п╟п╫я▄я┬п╣ - п╥п╫п╟я┤п╦я┌ я─п╟п╥п╪п╣я┌п╨п╟ п©п╬п╢я┘п╬п╢п╦я┌ - п╡я▀я┘п╬п╢п╦п╪ я│ true	
 	return 1;
 }
 
@@ -1435,14 +1435,14 @@ int FuzzyDataLearnAlgorithm::subcheck (std::vector<int> &rowAxiomTypes, std::vec
 /****************************************************************************
 *					FuzzyDataLearnAlgorithm::splitMarkUps
 *
-*	Description:	Объединение расширенных разметок
-*	Parameters:		markUp - новая образованная разметка
-*					markUpMinLen - минимальное число вхождений аксиом в новую разметку
-*					markUpMaxLen - максимальное число вхождений аксиом в новую разметку
-*					set - индексы разметок, которые объединять
-*					markUps - вектор разметок, из которых выбирать разметки для объединения
-*					markUpsMinLen - вектор минимальных вхождений аксиом разметки
-*					markUpsMaxLen - вектор максимальных вхождений аксиом разметки
+*	Description:	п·п╠я┼п╣п╢п╦п╫п╣п╫п╦п╣ я─п╟я│я┬п╦я─п╣п╫п╫я▀я┘ я─п╟п╥п╪п╣я┌п╬п╨
+*	Parameters:		markUp - п╫п╬п╡п╟я▐ п╬п╠я─п╟п╥п╬п╡п╟п╫п╫п╟я▐ я─п╟п╥п╪п╣я┌п╨п╟
+*					markUpMinLen - п╪п╦п╫п╦п╪п╟п╩я▄п╫п╬п╣ я┤п╦я│п╩п╬ п╡я┘п╬п╤п╢п╣п╫п╦п╧ п╟п╨я│п╦п╬п╪ п╡ п╫п╬п╡я┐я▌ я─п╟п╥п╪п╣я┌п╨я┐
+*					markUpMaxLen - п╪п╟п╨я│п╦п╪п╟п╩я▄п╫п╬п╣ я┤п╦я│п╩п╬ п╡я┘п╬п╤п╢п╣п╫п╦п╧ п╟п╨я│п╦п╬п╪ п╡ п╫п╬п╡я┐я▌ я─п╟п╥п╪п╣я┌п╨я┐
+*					set - п╦п╫п╢п╣п╨я│я▀ я─п╟п╥п╪п╣я┌п╬п╨, п╨п╬я┌п╬я─я▀п╣ п╬п╠я┼п╣п╢п╦п╫я▐я┌я▄
+*					markUps - п╡п╣п╨я┌п╬я─ я─п╟п╥п╪п╣я┌п╬п╨, п╦п╥ п╨п╬я┌п╬я─я▀я┘ п╡я▀п╠п╦я─п╟я┌я▄ я─п╟п╥п╪п╣я┌п╨п╦ п╢п╩я▐ п╬п╠я┼п╣п╢п╦п╫п╣п╫п╦я▐
+*					markUpsMinLen - п╡п╣п╨я┌п╬я─ п╪п╦п╫п╦п╪п╟п╩я▄п╫я▀я┘ п╡я┘п╬п╤п╢п╣п╫п╦п╧ п╟п╨я│п╦п╬п╪ я─п╟п╥п╪п╣я┌п╨п╦
+*					markUpsMaxLen - п╡п╣п╨я┌п╬я─ п╪п╟п╨я│п╦п╪п╟п╩я▄п╫я▀я┘ п╡я┘п╬п╤п╢п╣п╫п╦п╧ п╟п╨я│п╦п╬п╪ я─п╟п╥п╪п╣я┌п╨п╦
 *	Returns:		0
 *	Throws:			AxiomLibException - 
 *	Author:			dk
@@ -1450,7 +1450,7 @@ int FuzzyDataLearnAlgorithm::subcheck (std::vector<int> &rowAxiomTypes, std::vec
 *
 ****************************************************************************/
 int FuzzyDataLearnAlgorithm::splitMarkUps (std::vector <int> &markUp, std::vector <int> &markUpMinLen, std::vector <int> &markUpMaxLen, std::vector <int> &set, std::vector < std::vector <int> > &markUps, std::vector < std::vector <int> > &markUpsMinLen, std::vector < std::vector <int> > &markUpsMaxLen) const {
-	// ПОКА ТОЛЬКО ЗАГЛУШКА
+	// п÷п·п п░ п╒п·п⌡п╛п п· п≈п░п⌠п⌡пёп╗п п░
 	return 0;
 }
 
@@ -1458,25 +1458,25 @@ int FuzzyDataLearnAlgorithm::splitMarkUps (std::vector <int> &markUp, std::vecto
 /****************************************************************************
 *					FuzzyDataLearnAlgorithm::countMarkUpEfficiency
 *
-*	Description:	Подсчет эффективности разметки на траекториях обучающей выборки
-*	Parameters:		markUp - тестируемая разметка
-*					markUpMinLen - минимальное число вхождений аксиом в разметку
-*					markUpMaxLen - максимальное число вхождений аксиом в разметку
-*					localMarkUps - разметки траекторий обучающей выборки
-*					localMarkUpsEngaged - принимаемые во внимание разметки 
-*								          траекторий обучающей выборки
-*	Returns:		int - число вхождений разметки в разметку обучающей выборки
-*	Throws:			AxiomLibException - если входные параметры localMarkUpsEngaged и 
-*					localMarkUps разной длины
+*	Description:	п÷п╬п╢я│я┤п╣я┌ я█я└я└п╣п╨я┌п╦п╡п╫п╬я│я┌п╦ я─п╟п╥п╪п╣я┌п╨п╦ п╫п╟ я┌я─п╟п╣п╨я┌п╬я─п╦я▐я┘ п╬п╠я┐я┤п╟я▌я┴п╣п╧ п╡я▀п╠п╬я─п╨п╦
+*	Parameters:		markUp - я┌п╣я│я┌п╦я─я┐п╣п╪п╟я▐ я─п╟п╥п╪п╣я┌п╨п╟
+*					markUpMinLen - п╪п╦п╫п╦п╪п╟п╩я▄п╫п╬п╣ я┤п╦я│п╩п╬ п╡я┘п╬п╤п╢п╣п╫п╦п╧ п╟п╨я│п╦п╬п╪ п╡ я─п╟п╥п╪п╣я┌п╨я┐
+*					markUpMaxLen - п╪п╟п╨я│п╦п╪п╟п╩я▄п╫п╬п╣ я┤п╦я│п╩п╬ п╡я┘п╬п╤п╢п╣п╫п╦п╧ п╟п╨я│п╦п╬п╪ п╡ я─п╟п╥п╪п╣я┌п╨я┐
+*					localMarkUps - я─п╟п╥п╪п╣я┌п╨п╦ я┌я─п╟п╣п╨я┌п╬я─п╦п╧ п╬п╠я┐я┤п╟я▌я┴п╣п╧ п╡я▀п╠п╬я─п╨п╦
+*					localMarkUpsEngaged - п©я─п╦п╫п╦п╪п╟п╣п╪я▀п╣ п╡п╬ п╡п╫п╦п╪п╟п╫п╦п╣ я─п╟п╥п╪п╣я┌п╨п╦ 
+*								          я┌я─п╟п╣п╨я┌п╬я─п╦п╧ п╬п╠я┐я┤п╟я▌я┴п╣п╧ п╡я▀п╠п╬я─п╨п╦
+*	Returns:		int - я┤п╦я│п╩п╬ п╡я┘п╬п╤п╢п╣п╫п╦п╧ я─п╟п╥п╪п╣я┌п╨п╦ п╡ я─п╟п╥п╪п╣я┌п╨я┐ п╬п╠я┐я┤п╟я▌я┴п╣п╧ п╡я▀п╠п╬я─п╨п╦
+*	Throws:			AxiomLibException - п╣я│п╩п╦ п╡я┘п╬п╢п╫я▀п╣ п©п╟я─п╟п╪п╣я┌я─я▀ localMarkUpsEngaged п╦ 
+*					localMarkUps я─п╟п╥п╫п╬п╧ п╢п╩п╦п╫я▀
 *	Author:			dk
 *	History:
 *
 ****************************************************************************/
 int FuzzyDataLearnAlgorithm::countMarkUpEfficiency (std::vector <int> &markUp, std::vector <int> &markUpMinLen, std::vector <int> &markUpMaxLen, std::vector <std::vector <int> > &localMarkUps, std::vector <bool> &localMarkUpsEngaged) const {
-	// Проверка входных данных
+	// п÷я─п╬п╡п╣я─п╨п╟ п╡я┘п╬п╢п╫я▀я┘ п╢п╟п╫п╫я▀я┘
 	if (localMarkUpsEngaged.size() != localMarkUps.size())
 		throw AxiomLibException("FuzzyDataLearnAlgorithm::countMarkUpEfficiency : incorrect input parameters.");
-	// Бежим по разметкам траектрий обучающей выборки и отмечаем те, где нашли требуемую разметку
+	// п▒п╣п╤п╦п╪ п©п╬ я─п╟п╥п╪п╣я┌п╨п╟п╪ я┌я─п╟п╣п╨я┌я─п╦п╧ п╬п╠я┐я┤п╟я▌я┴п╣п╧ п╡я▀п╠п╬я─п╨п╦ п╦ п╬я┌п╪п╣я┤п╟п╣п╪ я┌п╣, пЁп╢п╣ п╫п╟я┬п╩п╦ я┌я─п╣п╠я┐п╣п╪я┐я▌ я─п╟п╥п╪п╣я┌п╨я┐
 	std::vector <int> row, rowLen;
 	int rowSize;
 	int toRet = 0;
@@ -1491,9 +1491,9 @@ int FuzzyDataLearnAlgorithm::countMarkUpEfficiency (std::vector <int> &markUp, s
 		rowLen.resize(localMarkUps[tsNum].size());
 		row[0] = localMarkUps[tsNum][0];
 		rowLen[0] = 1;
-		rowSize = 0; // указывает индекс последней позиции в векторах row и rowLen
+		rowSize = 0; // я┐п╨п╟п╥я▀п╡п╟п╣я┌ п╦п╫п╢п╣п╨я│ п©п╬я│п╩п╣п╢п╫п╣п╧ п©п╬п╥п╦я├п╦п╦ п╡ п╡п╣п╨я┌п╬я─п╟я┘ row п╦ rowLen
 		for (unsigned int i = 1; i < localMarkUps[tsNum].size(); i++) {
-			// собираем ряд расширенной разметки
+			// я│п╬п╠п╦я─п╟п╣п╪ я─я▐п╢ я─п╟я│я┬п╦я─п╣п╫п╫п╬п╧ я─п╟п╥п╪п╣я┌п╨п╦
 			if (localMarkUps[tsNum][i] != localMarkUps[tsNum][i-1]) {
 				rowSize++;
 				row[rowSize] = localMarkUps[tsNum][i];
@@ -1502,7 +1502,7 @@ int FuzzyDataLearnAlgorithm::countMarkUpEfficiency (std::vector <int> &markUp, s
 			else {
 				rowLen[rowSize]++;
 			}
-			// Определяем есть ли совпадение с заданной разметкой
+			// п·п©я─п╣п╢п╣п╩я▐п╣п╪ п╣я│я┌я▄ п╩п╦ я│п╬п╡п©п╟п╢п╣п╫п╦п╣ я│ п╥п╟п╢п╟п╫п╫п╬п╧ я─п╟п╥п╪п╣я┌п╨п╬п╧
 			if (subcheck (row, rowLen, rowSize, markUp, markUpMinLen, markUpMaxLen, (int) markUp.size() - 1) > 0) {
 				toRet++;
 				break;
@@ -1516,28 +1516,28 @@ int FuzzyDataLearnAlgorithm::countMarkUpEfficiency (std::vector <int> &markUp, s
 /****************************************************************************
 *					FuzzyDataLearnAlgorithm::setEngagedMarkUps
 *
-*	Description:	Обновление принимаемых во внимание разметок траекторий 
-*					обучающей выборки в соответствии с разметками, содержащими 
-*					разметку markUp.
-*	Parameters:		markUp - тестируемая разметка
-*					markUpMinLen - минимальное число вхождений аксиом в разметку
-*					markUpMaxLen - максимальное число вхождений аксиом в разметку
-*					localMarkUps - разметки траекторий обучающей выборки
-*					localMarkUpsEngaged - принимаемые во внимание разметки 
-*								          траекторий обучающей выборки
-*	Returns:		bool - остались ли еще разметки траекторий обучающей выборки 
-*						не покрытые текущей разметкой траектории нештатного поведения
-*	Throws:			AxiomLibException - если входные параметры localMarkUpsEngaged и 
-*					localMarkUps разной длины
+*	Description:	п·п╠п╫п╬п╡п╩п╣п╫п╦п╣ п©я─п╦п╫п╦п╪п╟п╣п╪я▀я┘ п╡п╬ п╡п╫п╦п╪п╟п╫п╦п╣ я─п╟п╥п╪п╣я┌п╬п╨ я┌я─п╟п╣п╨я┌п╬я─п╦п╧ 
+*					п╬п╠я┐я┤п╟я▌я┴п╣п╧ п╡я▀п╠п╬я─п╨п╦ п╡ я│п╬п╬я┌п╡п╣я┌я│я┌п╡п╦п╦ я│ я─п╟п╥п╪п╣я┌п╨п╟п╪п╦, я│п╬п╢п╣я─п╤п╟я┴п╦п╪п╦ 
+*					я─п╟п╥п╪п╣я┌п╨я┐ markUp.
+*	Parameters:		markUp - я┌п╣я│я┌п╦я─я┐п╣п╪п╟я▐ я─п╟п╥п╪п╣я┌п╨п╟
+*					markUpMinLen - п╪п╦п╫п╦п╪п╟п╩я▄п╫п╬п╣ я┤п╦я│п╩п╬ п╡я┘п╬п╤п╢п╣п╫п╦п╧ п╟п╨я│п╦п╬п╪ п╡ я─п╟п╥п╪п╣я┌п╨я┐
+*					markUpMaxLen - п╪п╟п╨я│п╦п╪п╟п╩я▄п╫п╬п╣ я┤п╦я│п╩п╬ п╡я┘п╬п╤п╢п╣п╫п╦п╧ п╟п╨я│п╦п╬п╪ п╡ я─п╟п╥п╪п╣я┌п╨я┐
+*					localMarkUps - я─п╟п╥п╪п╣я┌п╨п╦ я┌я─п╟п╣п╨я┌п╬я─п╦п╧ п╬п╠я┐я┤п╟я▌я┴п╣п╧ п╡я▀п╠п╬я─п╨п╦
+*					localMarkUpsEngaged - п©я─п╦п╫п╦п╪п╟п╣п╪я▀п╣ п╡п╬ п╡п╫п╦п╪п╟п╫п╦п╣ я─п╟п╥п╪п╣я┌п╨п╦ 
+*								          я┌я─п╟п╣п╨я┌п╬я─п╦п╧ п╬п╠я┐я┤п╟я▌я┴п╣п╧ п╡я▀п╠п╬я─п╨п╦
+*	Returns:		bool - п╬я│я┌п╟п╩п╦я│я▄ п╩п╦ п╣я┴п╣ я─п╟п╥п╪п╣я┌п╨п╦ я┌я─п╟п╣п╨я┌п╬я─п╦п╧ п╬п╠я┐я┤п╟я▌я┴п╣п╧ п╡я▀п╠п╬я─п╨п╦ 
+*						п╫п╣ п©п╬п╨я─я▀я┌я▀п╣ я┌п╣п╨я┐я┴п╣п╧ я─п╟п╥п╪п╣я┌п╨п╬п╧ я┌я─п╟п╣п╨я┌п╬я─п╦п╦ п╫п╣я┬я┌п╟я┌п╫п╬пЁп╬ п©п╬п╡п╣п╢п╣п╫п╦я▐
+*	Throws:			AxiomLibException - п╣я│п╩п╦ п╡я┘п╬п╢п╫я▀п╣ п©п╟я─п╟п╪п╣я┌я─я▀ localMarkUpsEngaged п╦ 
+*					localMarkUps я─п╟п╥п╫п╬п╧ п╢п╩п╦п╫я▀
 *	Author:			dk
 *	History:
 *
 ****************************************************************************/
 bool FuzzyDataLearnAlgorithm::setEngagedMarkUps (std::vector <int> &markUp, std::vector <int> &markUpMinLen, std::vector <int> &markUpMaxLen, std::vector <std::vector <int> > &localMarkUps, std::vector <bool> &localMarkUpsEngaged) const {
-	// Проверка входных данных
+	// п÷я─п╬п╡п╣я─п╨п╟ п╡я┘п╬п╢п╫я▀я┘ п╢п╟п╫п╫я▀я┘
 	if (localMarkUpsEngaged.size() != localMarkUps.size())
 		throw AxiomLibException("FuzzyDataLearnAlgorithm::setEngagedMarkUps : incorrect input parameters.");
-	// Бежим по разметкам траектрий обучающей выборки и отмечаем те, где нашли требуемую разметку
+	// п▒п╣п╤п╦п╪ п©п╬ я─п╟п╥п╪п╣я┌п╨п╟п╪ я┌я─п╟п╣п╨я┌я─п╦п╧ п╬п╠я┐я┤п╟я▌я┴п╣п╧ п╡я▀п╠п╬я─п╨п╦ п╦ п╬я┌п╪п╣я┤п╟п╣п╪ я┌п╣, пЁп╢п╣ п╫п╟я┬п╩п╦ я┌я─п╣п╠я┐п╣п╪я┐я▌ я─п╟п╥п╪п╣я┌п╨я┐
 	std::vector <int> row, rowLen;
 	int rowSize;
 	bool toRet = false;
@@ -1552,9 +1552,9 @@ bool FuzzyDataLearnAlgorithm::setEngagedMarkUps (std::vector <int> &markUp, std:
 		rowLen.resize(localMarkUps[tsNum].size());
 		row[0] = localMarkUps[tsNum][0];
 		rowLen[0] = 1;
-		rowSize = 0; // указывает индекс последней позиции в векторах row и rowLen
+		rowSize = 0; // я┐п╨п╟п╥я▀п╡п╟п╣я┌ п╦п╫п╢п╣п╨я│ п©п╬я│п╩п╣п╢п╫п╣п╧ п©п╬п╥п╦я├п╦п╦ п╡ п╡п╣п╨я┌п╬я─п╟я┘ row п╦ rowLen
 		for (unsigned int i = 1; i < localMarkUps[tsNum].size(); i++) {
-			// собираем ряд расширенной разметки
+			// я│п╬п╠п╦я─п╟п╣п╪ я─я▐п╢ я─п╟я│я┬п╦я─п╣п╫п╫п╬п╧ я─п╟п╥п╪п╣я┌п╨п╦
 			if (localMarkUps[tsNum][i] != localMarkUps[tsNum][i-1]) {
 				rowSize++;
 				row[rowSize] = localMarkUps[tsNum][i];
@@ -1563,7 +1563,7 @@ bool FuzzyDataLearnAlgorithm::setEngagedMarkUps (std::vector <int> &markUp, std:
 			else {
 				rowLen[rowSize]++;
 			}
-			// Определяем есть ли совпадение с заданной разметкой
+			// п·п©я─п╣п╢п╣п╩я▐п╣п╪ п╣я│я┌я▄ п╩п╦ я│п╬п╡п©п╟п╢п╣п╫п╦п╣ я│ п╥п╟п╢п╟п╫п╫п╬п╧ я─п╟п╥п╪п╣я┌п╨п╬п╧
 			if (subcheck (row, rowLen, rowSize, markUp, markUpMinLen, markUpMaxLen, (int) markUp.size() - 1) > 0) {
 				localMarkUpsEngaged[tsNum] = false;
 				break;
@@ -1580,11 +1580,11 @@ bool FuzzyDataLearnAlgorithm::setEngagedMarkUps (std::vector <int> &markUp, std:
 /****************************************************************************
 *					FuzzyDataLearnAlgorithm::expandMarkUp
 *
-*	Description:	Преобразование расширенной разметки к простой разметке
-*	Parameters:		simpleMarkUp - результат преобразования, простая разметка
-*					markUp - расширенная разметка
-*					markUpMinLen - минимальное число вхождений аксиом в расширенную разметку
-*					markUpMaxLen - максимальное число вхождений аксиом в расширенную разметку
+*	Description:	п÷я─п╣п╬п╠я─п╟п╥п╬п╡п╟п╫п╦п╣ я─п╟я│я┬п╦я─п╣п╫п╫п╬п╧ я─п╟п╥п╪п╣я┌п╨п╦ п╨ п©я─п╬я│я┌п╬п╧ я─п╟п╥п╪п╣я┌п╨п╣
+*	Parameters:		simpleMarkUp - я─п╣п╥я┐п╩я▄я┌п╟я┌ п©я─п╣п╬п╠я─п╟п╥п╬п╡п╟п╫п╦я▐, п©я─п╬я│я┌п╟я▐ я─п╟п╥п╪п╣я┌п╨п╟
+*					markUp - я─п╟я│я┬п╦я─п╣п╫п╫п╟я▐ я─п╟п╥п╪п╣я┌п╨п╟
+*					markUpMinLen - п╪п╦п╫п╦п╪п╟п╩я▄п╫п╬п╣ я┤п╦я│п╩п╬ п╡я┘п╬п╤п╢п╣п╫п╦п╧ п╟п╨я│п╦п╬п╪ п╡ я─п╟я│я┬п╦я─п╣п╫п╫я┐я▌ я─п╟п╥п╪п╣я┌п╨я┐
+*					markUpMaxLen - п╪п╟п╨я│п╦п╪п╟п╩я▄п╫п╬п╣ я┤п╦я│п╩п╬ п╡я┘п╬п╤п╢п╣п╫п╦п╧ п╟п╨я│п╦п╬п╪ п╡ я─п╟я│я┬п╦я─п╣п╫п╫я┐я▌ я─п╟п╥п╪п╣я┌п╨я┐
 *	Returns:		0
 *	Throws:			AxiomLibException - 
 *	Author:			dk
@@ -1592,7 +1592,7 @@ bool FuzzyDataLearnAlgorithm::setEngagedMarkUps (std::vector <int> &markUp, std:
 *
 ****************************************************************************/
 int FuzzyDataLearnAlgorithm::expandMarkUp (std::vector <int> &simpleMarkUp, std::vector <int> &markUp, std::vector <int> &markUpMinLen, std::vector <int> &markUpMaxLen) const {
-	// ТОЛЬКО ЗАГЛУШКА НА ВРЕМЯ ТЕСТИРОВАНИЯ
+	// п╒п·п⌡п╛п п· п≈п░п⌠п⌡пёп╗п п░ п²п░ п▓п═п∙п°п╞ п╒п∙п║п╒п≤п═п·п▓п░п²п≤п╞
 	return 0;
 }
 
@@ -1600,11 +1600,11 @@ int FuzzyDataLearnAlgorithm::expandMarkUp (std::vector <int> &simpleMarkUp, std:
 /****************************************************************************
 *					FuzzyDataLearnAlgorithm::extendMarkUpLen
 *
-*	Description:	Преобразует элементы вектора в интервал из минимального и 
-*					максимального значения с заданным коэффиентом
-*	Parameters:		stdLen - преобразуемые элементы
-*					minLen - заполняемый вектор минимальных значений
-*					maxLen - заполняемый вектор максимальных значений
+*	Description:	п÷я─п╣п╬п╠я─п╟п╥я┐п╣я┌ я█п╩п╣п╪п╣п╫я┌я▀ п╡п╣п╨я┌п╬я─п╟ п╡ п╦п╫я┌п╣я─п╡п╟п╩ п╦п╥ п╪п╦п╫п╦п╪п╟п╩я▄п╫п╬пЁп╬ п╦ 
+*					п╪п╟п╨я│п╦п╪п╟п╩я▄п╫п╬пЁп╬ п╥п╫п╟я┤п╣п╫п╦я▐ я│ п╥п╟п╢п╟п╫п╫я▀п╪ п╨п╬я█я└я└п╦п╣п╫я┌п╬п╪
+*	Parameters:		stdLen - п©я─п╣п╬п╠я─п╟п╥я┐п╣п╪я▀п╣ я█п╩п╣п╪п╣п╫я┌я▀
+*					minLen - п╥п╟п©п╬п╩п╫я▐п╣п╪я▀п╧ п╡п╣п╨я┌п╬я─ п╪п╦п╫п╦п╪п╟п╩я▄п╫я▀я┘ п╥п╫п╟я┤п╣п╫п╦п╧
+*					maxLen - п╥п╟п©п╬п╩п╫я▐п╣п╪я▀п╧ п╡п╣п╨я┌п╬я─ п╪п╟п╨я│п╦п╪п╟п╩я▄п╫я▀я┘ п╥п╫п╟я┤п╣п╫п╦п╧
 *	Returns:		0
 *	Throws:			-
 *	Author:			dk
@@ -1625,23 +1625,23 @@ inline int FuzzyDataLearnAlgorithm::extendMarkUpLen (std::vector <int> &stdLen, 
 /****************************************************************************
 *					FuzzyDataLearnAlgorithm::addResults
 *
-*	Description:	Функция формирует ряд результатов сопоставления эталонной 
-*					разметки и разметки анализируемого ряда
-*	Parameters:		result - обновляемый ряд результатов распознавания
-*					markUp - тестируемая разметка
-*					markUpMinLen - минимальное число вхождений аксиом в разметку
-*					markUpMaxLen - максимальное число вхождений аксиом в разметку
-*					wholeRow - разметка анализируемого ряда 
-*					indicator - индекс класса неисправности, по которому ведется анализ
+*	Description:	п╓я┐п╫п╨я├п╦я▐ я└п╬я─п╪п╦я─я┐п╣я┌ я─я▐п╢ я─п╣п╥я┐п╩я▄я┌п╟я┌п╬п╡ я│п╬п©п╬я│я┌п╟п╡п╩п╣п╫п╦я▐ я█я┌п╟п╩п╬п╫п╫п╬п╧ 
+*					я─п╟п╥п╪п╣я┌п╨п╦ п╦ я─п╟п╥п╪п╣я┌п╨п╦ п╟п╫п╟п╩п╦п╥п╦я─я┐п╣п╪п╬пЁп╬ я─я▐п╢п╟
+*	Parameters:		result - п╬п╠п╫п╬п╡п╩я▐п╣п╪я▀п╧ я─я▐п╢ я─п╣п╥я┐п╩я▄я┌п╟я┌п╬п╡ я─п╟я│п©п╬п╥п╫п╟п╡п╟п╫п╦я▐
+*					markUp - я┌п╣я│я┌п╦я─я┐п╣п╪п╟я▐ я─п╟п╥п╪п╣я┌п╨п╟
+*					markUpMinLen - п╪п╦п╫п╦п╪п╟п╩я▄п╫п╬п╣ я┤п╦я│п╩п╬ п╡я┘п╬п╤п╢п╣п╫п╦п╧ п╟п╨я│п╦п╬п╪ п╡ я─п╟п╥п╪п╣я┌п╨я┐
+*					markUpMaxLen - п╪п╟п╨я│п╦п╪п╟п╩я▄п╫п╬п╣ я┤п╦я│п╩п╬ п╡я┘п╬п╤п╢п╣п╫п╦п╧ п╟п╨я│п╦п╬п╪ п╡ я─п╟п╥п╪п╣я┌п╨я┐
+*					wholeRow - я─п╟п╥п╪п╣я┌п╨п╟ п╟п╫п╟п╩п╦п╥п╦я─я┐п╣п╪п╬пЁп╬ я─я▐п╢п╟ 
+*					indicator - п╦п╫п╢п╣п╨я│ п╨п╩п╟я│я│п╟ п╫п╣п╦я│п©я─п╟п╡п╫п╬я│я┌п╦, п©п╬ п╨п╬я┌п╬я─п╬п╪я┐ п╡п╣п╢п╣я┌я│я▐ п╟п╫п╟п╩п╦п╥
 *	Returns:		0
-*	Throws:			AxiomLibException - если входные параметры localMarkUpsEngaged и 
-*					localMarkUps разной длины
+*	Throws:			AxiomLibException - п╣я│п╩п╦ п╡я┘п╬п╢п╫я▀п╣ п©п╟я─п╟п╪п╣я┌я─я▀ localMarkUpsEngaged п╦ 
+*					localMarkUps я─п╟п╥п╫п╬п╧ п╢п╩п╦п╫я▀
 *	Author:			dk
 *	History:
 *
 ****************************************************************************/
 int FuzzyDataLearnAlgorithm::addResults (std::vector <int> &result, std::vector <int> &markUp, std::vector <int> &markUpMinLen, std::vector <int> &markUpMaxLen, std::vector <int> &wholeRow, int indicator) const {
-	// Проверка входных данных
+	// п÷я─п╬п╡п╣я─п╨п╟ п╡я┘п╬п╢п╫я▀я┘ п╢п╟п╫п╫я▀я┘
 	if (result.size() != wholeRow.size())
 		throw AxiomLibException("FuzzyDataLearnAlgorithm::addResults : incorrect input parameters.");
 	if (wholeRow.size() < 1)
@@ -1653,9 +1653,9 @@ int FuzzyDataLearnAlgorithm::addResults (std::vector <int> &result, std::vector 
 	rowLen.resize(wholeRow.size());
 	row[0] = wholeRow[0];
 	rowLen[0] = 1;
-	rowPos = 0; // указывает индекс последней позиции в векторах row и rowLen
+	rowPos = 0; // я┐п╨п╟п╥я▀п╡п╟п╣я┌ п╦п╫п╢п╣п╨я│ п©п╬я│п╩п╣п╢п╫п╣п╧ п©п╬п╥п╦я├п╦п╦ п╡ п╡п╣п╨я┌п╬я─п╟я┘ row п╦ rowLen
 	for (unsigned int i = 1; i < wholeRow.size(); i++) {
-		// собираем ряд расширенной разметки
+		// я│п╬п╠п╦я─п╟п╣п╪ я─я▐п╢ я─п╟я│я┬п╦я─п╣п╫п╫п╬п╧ я─п╟п╥п╪п╣я┌п╨п╦
 		if (wholeRow[i] != wholeRow[i-1]) {
 			rowPos++;
 			row[rowPos] = wholeRow[i];
@@ -1663,7 +1663,7 @@ int FuzzyDataLearnAlgorithm::addResults (std::vector <int> &result, std::vector 
 		} else {
 			rowLen[rowPos]++;
 		}
-		// Определяем есть ли совпадение с заданной разметкой
+		// п·п©я─п╣п╢п╣п╩я▐п╣п╪ п╣я│я┌я▄ п╩п╦ я│п╬п╡п©п╟п╢п╣п╫п╦п╣ я│ п╥п╟п╢п╟п╫п╫п╬п╧ я─п╟п╥п╪п╣я┌п╨п╬п╧
 		if (subcheck (row, rowLen, rowPos, markUp, markUpMinLen, markUpMaxLen, markUpPos) > 0) {
 			result[i] = indicator;
 		}
@@ -1675,18 +1675,18 @@ int FuzzyDataLearnAlgorithm::addResults (std::vector <int> &result, std::vector 
 /****************************************************************************
 *					FuzzyDataLearnAlgorithm::countExtraStat
 *
-*	Description:	Функция подсчета статистики для вектора разметок на контрольной 
-*					выборке и на разметках траекторий аномального поведения.
-*	Parameters:		curSet - индексы разметок, которые учавствуют в распознавании
-*					simpMarkUps - вектор всех разметок для траекторий аномального поведения
-*					simpMarkUpsMinLens - вектор минимально-необходимого числа вхождений элемента эталонной разметки в исходную
-*					simpMarkUpsMinLens - вектор максимального числа вхождений элемента эталонной разметки в исходную
-*					extraMarkUps - разметки всех траекторий контрольной выборки и 
-*								   траекторий нормального поведения всеми аксиомами.
-*					correctExtraMarkUps - вхождение траекторий аномального поведения 
-*								   для extraMarkUps.
-*					indicator - индекс класса неисправности, по которому ведется анализ
-*	Returns:		int - линейная клмбинация от числа ошибок первого и второго рода, полученных при распознавании
+*	Description:	п╓я┐п╫п╨я├п╦я▐ п©п╬п╢я│я┤п╣я┌п╟ я│я┌п╟я┌п╦я│я┌п╦п╨п╦ п╢п╩я▐ п╡п╣п╨я┌п╬я─п╟ я─п╟п╥п╪п╣я┌п╬п╨ п╫п╟ п╨п╬п╫я┌я─п╬п╩я▄п╫п╬п╧ 
+*					п╡я▀п╠п╬я─п╨п╣ п╦ п╫п╟ я─п╟п╥п╪п╣я┌п╨п╟я┘ я┌я─п╟п╣п╨я┌п╬я─п╦п╧ п╟п╫п╬п╪п╟п╩я▄п╫п╬пЁп╬ п©п╬п╡п╣п╢п╣п╫п╦я▐.
+*	Parameters:		curSet - п╦п╫п╢п╣п╨я│я▀ я─п╟п╥п╪п╣я┌п╬п╨, п╨п╬я┌п╬я─я▀п╣ я┐я┤п╟п╡я│я┌п╡я┐я▌я┌ п╡ я─п╟я│п©п╬п╥п╫п╟п╡п╟п╫п╦п╦
+*					simpMarkUps - п╡п╣п╨я┌п╬я─ п╡я│п╣я┘ я─п╟п╥п╪п╣я┌п╬п╨ п╢п╩я▐ я┌я─п╟п╣п╨я┌п╬я─п╦п╧ п╟п╫п╬п╪п╟п╩я▄п╫п╬пЁп╬ п©п╬п╡п╣п╢п╣п╫п╦я▐
+*					simpMarkUpsMinLens - п╡п╣п╨я┌п╬я─ п╪п╦п╫п╦п╪п╟п╩я▄п╫п╬-п╫п╣п╬п╠я┘п╬п╢п╦п╪п╬пЁп╬ я┤п╦я│п╩п╟ п╡я┘п╬п╤п╢п╣п╫п╦п╧ я█п╩п╣п╪п╣п╫я┌п╟ я█я┌п╟п╩п╬п╫п╫п╬п╧ я─п╟п╥п╪п╣я┌п╨п╦ п╡ п╦я│я┘п╬п╢п╫я┐я▌
+*					simpMarkUpsMinLens - п╡п╣п╨я┌п╬я─ п╪п╟п╨я│п╦п╪п╟п╩я▄п╫п╬пЁп╬ я┤п╦я│п╩п╟ п╡я┘п╬п╤п╢п╣п╫п╦п╧ я█п╩п╣п╪п╣п╫я┌п╟ я█я┌п╟п╩п╬п╫п╫п╬п╧ я─п╟п╥п╪п╣я┌п╨п╦ п╡ п╦я│я┘п╬п╢п╫я┐я▌
+*					extraMarkUps - я─п╟п╥п╪п╣я┌п╨п╦ п╡я│п╣я┘ я┌я─п╟п╣п╨я┌п╬я─п╦п╧ п╨п╬п╫я┌я─п╬п╩я▄п╫п╬п╧ п╡я▀п╠п╬я─п╨п╦ п╦ 
+*								   я┌я─п╟п╣п╨я┌п╬я─п╦п╧ п╫п╬я─п╪п╟п╩я▄п╫п╬пЁп╬ п©п╬п╡п╣п╢п╣п╫п╦я▐ п╡я│п╣п╪п╦ п╟п╨я│п╦п╬п╪п╟п╪п╦.
+*					correctExtraMarkUps - п╡я┘п╬п╤п╢п╣п╫п╦п╣ я┌я─п╟п╣п╨я┌п╬я─п╦п╧ п╟п╫п╬п╪п╟п╩я▄п╫п╬пЁп╬ п©п╬п╡п╣п╢п╣п╫п╦я▐ 
+*								   п╢п╩я▐ extraMarkUps.
+*					indicator - п╦п╫п╢п╣п╨я│ п╨п╩п╟я│я│п╟ п╫п╣п╦я│п©я─п╟п╡п╫п╬я│я┌п╦, п©п╬ п╨п╬я┌п╬я─п╬п╪я┐ п╡п╣п╢п╣я┌я│я▐ п╟п╫п╟п╩п╦п╥
+*	Returns:		int - п╩п╦п╫п╣п╧п╫п╟я▐ п╨п╩п╪п╠п╦п╫п╟я├п╦я▐ п╬я┌ я┤п╦я│п╩п╟ п╬я┬п╦п╠п╬п╨ п©п╣я─п╡п╬пЁп╬ п╦ п╡я┌п╬я─п╬пЁп╬ я─п╬п╢п╟, п©п╬п╩я┐я┤п╣п╫п╫я▀я┘ п©я─п╦ я─п╟я│п©п╬п╥п╫п╟п╡п╟п╫п╦п╦
 *	Throws:			-
 *	Author:			dk
 *	History:
@@ -1698,7 +1698,7 @@ inline int FuzzyDataLearnAlgorithm::countExtraStat (std::vector <int> &curSet, s
 	double tmpFirst, tmpSecond;
 	std::vector <int> result;
 
-	// Проверка входных параметров
+	// п÷я─п╬п╡п╣я─п╨п╟ п╡я┘п╬п╢п╫я▀я┘ п©п╟я─п╟п╪п╣я┌я─п╬п╡
 	if (extraMarkUps.size() < 1)
 		throw AxiomLibException("FuzzyDataLearnAlgorithm::countExtraStat : input params are clear");
 	
@@ -1710,7 +1710,7 @@ inline int FuzzyDataLearnAlgorithm::countExtraStat (std::vector <int> &curSet, s
 
 	first = 0;
 	second = 0;
-	// Цикл по всем рядам контрольный выборки
+	// п╕п╦п╨п╩ п©п╬ п╡я│п╣п╪ я─я▐п╢п╟п╪ п╨п╬п╫я┌я─п╬п╩я▄п╫я▀п╧ п╡я▀п╠п╬я─п╨п╦
 	for (int rowItr = 0; rowItr < inpSize; rowItr++) {
 		result.resize (extraMarkUps[0][rowItr].size(), 0);
 		for (unsigned int setItr = 0; setItr < curSet.size(); setItr++) {
@@ -1721,7 +1721,7 @@ inline int FuzzyDataLearnAlgorithm::countExtraStat (std::vector <int> &curSet, s
 		second += (int) tmpSecond;
 	}
 
-	// Вычисление значения целевой функции
+	// п▓я▀я┤п╦я│п╩п╣п╫п╦п╣ п╥п╫п╟я┤п╣п╫п╦я▐ я├п╣п╩п╣п╡п╬п╧ я└я┐п╫п╨я├п╦п╦
 	toRet = round (goalStrategy->compute (first, second));
 
 	return toRet;
@@ -1730,21 +1730,21 @@ inline int FuzzyDataLearnAlgorithm::countExtraStat (std::vector <int> &curSet, s
 /****************************************************************************
 *					FuzzyDataLearnAlgorithm::createCandidates
 *
-*	Description:	Формирование кандидатов в разметки для заданного типа 
-*					аномального поведения  
-*	Parameters:		candMarkUps - формируемые кандидаты в разметки
-*					candMarkUpsMinLen - минимальное число вхождений аксиом в разметки
-*					candMarkUpsMaxLen - максимальное число вхождений аксиом в разметки
-*					baseMarkUps - обобщенные разметки по различным аксиомам
-*					localMarkUps - разметки всех траекторий обучающей выборки
-*								   всеми аксиомами.
-*					extraMarkUps - разметки всех траекторий контрольной выборки и 
-*								   траекторий нормального поведения всеми аксиомами.
-*					correctExtraMarkUps - вхождение траекторий аномального поведения 
-*								   для extraMarkUps.
-*					indicator - индекс класса неисправности, по которому ведется анализ
+*	Description:	п╓п╬я─п╪п╦я─п╬п╡п╟п╫п╦п╣ п╨п╟п╫п╢п╦п╢п╟я┌п╬п╡ п╡ я─п╟п╥п╪п╣я┌п╨п╦ п╢п╩я▐ п╥п╟п╢п╟п╫п╫п╬пЁп╬ я┌п╦п©п╟ 
+*					п╟п╫п╬п╪п╟п╩я▄п╫п╬пЁп╬ п©п╬п╡п╣п╢п╣п╫п╦я▐  
+*	Parameters:		candMarkUps - я└п╬я─п╪п╦я─я┐п╣п╪я▀п╣ п╨п╟п╫п╢п╦п╢п╟я┌я▀ п╡ я─п╟п╥п╪п╣я┌п╨п╦
+*					candMarkUpsMinLen - п╪п╦п╫п╦п╪п╟п╩я▄п╫п╬п╣ я┤п╦я│п╩п╬ п╡я┘п╬п╤п╢п╣п╫п╦п╧ п╟п╨я│п╦п╬п╪ п╡ я─п╟п╥п╪п╣я┌п╨п╦
+*					candMarkUpsMaxLen - п╪п╟п╨я│п╦п╪п╟п╩я▄п╫п╬п╣ я┤п╦я│п╩п╬ п╡я┘п╬п╤п╢п╣п╫п╦п╧ п╟п╨я│п╦п╬п╪ п╡ я─п╟п╥п╪п╣я┌п╨п╦
+*					baseMarkUps - п╬п╠п╬п╠я┴п╣п╫п╫я▀п╣ я─п╟п╥п╪п╣я┌п╨п╦ п©п╬ я─п╟п╥п╩п╦я┤п╫я▀п╪ п╟п╨я│п╦п╬п╪п╟п╪
+*					localMarkUps - я─п╟п╥п╪п╣я┌п╨п╦ п╡я│п╣я┘ я┌я─п╟п╣п╨я┌п╬я─п╦п╧ п╬п╠я┐я┤п╟я▌я┴п╣п╧ п╡я▀п╠п╬я─п╨п╦
+*								   п╡я│п╣п╪п╦ п╟п╨я│п╦п╬п╪п╟п╪п╦.
+*					extraMarkUps - я─п╟п╥п╪п╣я┌п╨п╦ п╡я│п╣я┘ я┌я─п╟п╣п╨я┌п╬я─п╦п╧ п╨п╬п╫я┌я─п╬п╩я▄п╫п╬п╧ п╡я▀п╠п╬я─п╨п╦ п╦ 
+*								   я┌я─п╟п╣п╨я┌п╬я─п╦п╧ п╫п╬я─п╪п╟п╩я▄п╫п╬пЁп╬ п©п╬п╡п╣п╢п╣п╫п╦я▐ п╡я│п╣п╪п╦ п╟п╨я│п╦п╬п╪п╟п╪п╦.
+*					correctExtraMarkUps - п╡я┘п╬п╤п╢п╣п╫п╦п╣ я┌я─п╟п╣п╨я┌п╬я─п╦п╧ п╟п╫п╬п╪п╟п╩я▄п╫п╬пЁп╬ п©п╬п╡п╣п╢п╣п╫п╦я▐ 
+*								   п╢п╩я▐ extraMarkUps.
+*					indicator - п╦п╫п╢п╣п╨я│ п╨п╩п╟я│я│п╟ п╫п╣п╦я│п©я─п╟п╡п╫п╬я│я┌п╦, п©п╬ п╨п╬я┌п╬я─п╬п╪я┐ п╡п╣п╢п╣я┌я│я▐ п╟п╫п╟п╩п╦п╥
 *	Returns:		0
-*	Throws:			AxiomLibException - если во входных параметрах пустые переменные
+*	Throws:			AxiomLibException - п╣я│п╩п╦ п╡п╬ п╡я┘п╬п╢п╫я▀я┘ п©п╟я─п╟п╪п╣я┌я─п╟я┘ п©я┐я│я┌я▀п╣ п©п╣я─п╣п╪п╣п╫п╫я▀п╣
 *	Author:			dk
 *	History:
 *
@@ -1752,27 +1752,27 @@ inline int FuzzyDataLearnAlgorithm::countExtraStat (std::vector <int> &curSet, s
 inline int FuzzyDataLearnAlgorithm::createCandidates (std::vector < std::vector <int> > &candMarkUps, std::vector < std::vector <int> > &candMarkUpsMinLens, std::vector < std::vector <int> > &candMarkUpsMaxLens, std::vector < std::vector <int> > &baseMarkUps, std::vector < std::vector <std::vector <int> > > &localMarkUps, std::vector < std::vector <std::vector <int> > > &extraMarkUps, std::vector <std::vector <int> > &correctExtraMarkUps, const int indicator) const {
 	std::vector < std::vector <int> > simpMarkUps;
 	std::vector < std::vector <int> > simpMarkUpsLens, simpMarkUpsMinLens, simpMarkUpsMaxLens;
-	// Проверка длины массивва
+	// п÷я─п╬п╡п╣я─п╨п╟ п╢п╩п╦п╫я▀ п╪п╟я│я│п╦п╡п╡п╟
 	if (baseMarkUps.size() < 1)
 		return 0;		
 	simpMarkUps.resize (baseMarkUps.size());
 	simpMarkUpsLens.resize(baseMarkUps.size());
 	simpMarkUpsMinLens.resize(baseMarkUps.size());
 	simpMarkUpsMaxLens.resize(baseMarkUps.size());
-	// Упрощение всех обобщенных разметок и приведение их к расширенной форме
+	// пёп©я─п╬я┴п╣п╫п╦п╣ п╡я│п╣я┘ п╬п╠п╬п╠я┴п╣п╫п╫я▀я┘ я─п╟п╥п╪п╣я┌п╬п╨ п╦ п©я─п╦п╡п╣п╢п╣п╫п╦п╣ п╦я┘ п╨ я─п╟я│я┬п╦я─п╣п╫п╫п╬п╧ я└п╬я─п╪п╣
 	for (int i = 0; i < (int) baseMarkUps.size(); i++) {
 		simplifyMarkUp (simpMarkUps[i], simpMarkUpsLens[i], baseMarkUps[i], i+1);
 		extendMarkUpLen (simpMarkUpsLens[i], simpMarkUpsMinLens[i], simpMarkUpsMaxLens[i]);
 	}
-	// На основе расширенных упрощенных обобщенных разметок - формируем кандидаты в разметки для данного типа аномального поведения
-	// Проверяем входные переменны
+	// п²п╟ п╬я│п╫п╬п╡п╣ я─п╟я│я┬п╦я─п╣п╫п╫я▀я┘ я┐п©я─п╬я┴п╣п╫п╫я▀я┘ п╬п╠п╬п╠я┴п╣п╫п╫я▀я┘ я─п╟п╥п╪п╣я┌п╬п╨ - я└п╬я─п╪п╦я─я┐п╣п╪ п╨п╟п╫п╢п╦п╢п╟я┌я▀ п╡ я─п╟п╥п╪п╣я┌п╨п╦ п╢п╩я▐ п╢п╟п╫п╫п╬пЁп╬ я┌п╦п©п╟ п╟п╫п╬п╪п╟п╩я▄п╫п╬пЁп╬ п©п╬п╡п╣п╢п╣п╫п╦я▐
+	// п÷я─п╬п╡п╣я─я▐п╣п╪ п╡я┘п╬п╢п╫я▀п╣ п©п╣я─п╣п╪п╣п╫п╫я▀
 	for (unsigned int axNum = 1; axNum < localMarkUps.size(); axNum++) {
 		if (localMarkUps[axNum].size() != localMarkUps[axNum-1].size()) 
 			throw AxiomLibException("FuzzyDataLearnAlgorithm::createCandidates : different number of TimeSeries per different axioms - incompatible condition");
 	}
 	if (localMarkUps.size() < 1) 
 		throw AxiomLibException("FuzzyDataLearnAlgorithm::createCandidates : localMarkUps variable is undefined");
-	// Создаем необходимые переменные
+	// п║п╬п╥п╢п╟п╣п╪ п╫п╣п╬п╠я┘п╬п╢п╦п╪я▀п╣ п©п╣я─п╣п╪п╣п╫п╫я▀п╣
 	std::vector < bool > localMarkUpsEngaged;
 	localMarkUpsEngaged.resize (localMarkUps[0].size(), true);
 	std::vector <int> curMarkUp, newMarkUp, toSave; 
@@ -1789,13 +1789,13 @@ inline int FuzzyDataLearnAlgorithm::createCandidates (std::vector < std::vector 
 	std::vector <int> curSet, lastSet;
 	lastRes = -1;
 	lastSet.clear();
-	// Цикл по всем разметкам - с какой начинать чтобы собирать достаточное покрытие возможных разметок
+	// п╕п╦п╨п╩ п©п╬ п╡я│п╣п╪ я─п╟п╥п╪п╣я┌п╨п╟п╪ - я│ п╨п╟п╨п╬п╧ п╫п╟я┤п╦п╫п╟я┌я▄ я┤я┌п╬п╠я▀ я│п╬п╠п╦я─п╟я┌я▄ п╢п╬я│я┌п╟я┌п╬я┤п╫п╬п╣ п©п╬п╨я─я▀я┌п╦п╣ п╡п╬п╥п╪п╬п╤п╫я▀я┘ я─п╟п╥п╪п╣я┌п╬п╨
 	for (int base = 0; base < (int) simpMarkUps.size(); base++) {
-		// Включаем в состав покрытия разметку с индексом base
+		// п▓п╨п╩я▌я┤п╟п╣п╪ п╡ я│п╬я│я┌п╟п╡ п©п╬п╨я─я▀я┌п╦я▐ я─п╟п╥п╪п╣я┌п╨я┐ я│ п╦п╫п╢п╣п╨я│п╬п╪ base
 		localMarkUpsEngaged.resize (localMarkUps[0].size(), true);
 		curSet.resize (1, base);
 		flag = setEngagedMarkUps (simpMarkUps[base], simpMarkUpsMinLens[base], simpMarkUpsMaxLens[base], localMarkUps[base], localMarkUpsEngaged);
-		// Итеративно наращиваем покрытие до максимального
+		// п≤я┌п╣я─п╟я┌п╦п╡п╫п╬ п╫п╟я─п╟я┴п╦п╡п╟п╣п╪ п©п╬п╨я─я▀я┌п╦п╣ п╢п╬ п╪п╟п╨я│п╦п╪п╟п╩я▄п╫п╬пЁп╬
 		curStart = base;
 		while (flag) {
 			bestNum = -1;
@@ -1807,18 +1807,18 @@ inline int FuzzyDataLearnAlgorithm::createCandidates (std::vector < std::vector 
 					bestNum = i;
 				}
 			}
-			// Проверка - была ли найдена разметка лучше текущей
+			// п÷я─п╬п╡п╣я─п╨п╟ - п╠я▀п╩п╟ п╩п╦ п╫п╟п╧п╢п╣п╫п╟ я─п╟п╥п╪п╣я┌п╨п╟ п╩я┐я┤я┬п╣ я┌п╣п╨я┐я┴п╣п╧
 			if (bestNum < 0) {
-				// Если разметки лучше не было найдено - то выходим из цикла
+				// п∙я│п╩п╦ я─п╟п╥п╪п╣я┌п╨п╦ п╩я┐я┤я┬п╣ п╫п╣ п╠я▀п╩п╬ п╫п╟п╧п╢п╣п╫п╬ - я┌п╬ п╡я▀я┘п╬п╢п╦п╪ п╦п╥ я├п╦п╨п╩п╟
 				flag = false;
 				break;
 			}
-			// Если нашли разметку лучше - то сохраняем ее
+			// п∙я│п╩п╦ п╫п╟я┬п╩п╦ я─п╟п╥п╪п╣я┌п╨я┐ п╩я┐я┤я┬п╣ - я┌п╬ я│п╬я┘я─п╟п╫я▐п╣п╪ п╣п╣
 			curSet.push_back (bestNum);
-			// ставим false на тех исходных разметках - где текущий вариант работает
+			// я│я┌п╟п╡п╦п╪ false п╫п╟ я┌п╣я┘ п╦я│я┘п╬п╢п╫я▀я┘ я─п╟п╥п╪п╣я┌п╨п╟я┘ - пЁп╢п╣ я┌п╣п╨я┐я┴п╦п╧ п╡п╟я─п╦п╟п╫я┌ я─п╟п╠п╬я┌п╟п╣я┌
 			flag = setEngagedMarkUps (simpMarkUps[bestNum], simpMarkUpsMinLens[bestNum], simpMarkUpsMaxLens[bestNum], localMarkUps[bestNum], localMarkUpsEngaged);
 		}
-		// Вычисляем значение целевой функции для полученного набора разметок на контрольной выборке
+		// п▓я▀я┤п╦я│п╩я▐п╣п╪ п╥п╫п╟я┤п╣п╫п╦п╣ я├п╣п╩п╣п╡п╬п╧ я└я┐п╫п╨я├п╦п╦ п╢п╩я▐ п©п╬п╩я┐я┤п╣п╫п╫п╬пЁп╬ п╫п╟п╠п╬я─п╟ я─п╟п╥п╪п╣я┌п╬п╨ п╫п╟ п╨п╬п╫я┌я─п╬п╩я▄п╫п╬п╧ п╡я▀п╠п╬я─п╨п╣
 		curRes = countExtraStat (curSet, simpMarkUps, simpMarkUpsMinLens, simpMarkUpsMaxLens, extraMarkUps, correctExtraMarkUps, indicator);
 		if ((lastRes < 0) || (curRes < lastRes)) {
 			lastRes = curRes;
@@ -1827,9 +1827,9 @@ inline int FuzzyDataLearnAlgorithm::createCandidates (std::vector < std::vector 
 				break;
 		}
 	}
-	// Полученный набор разметок сливаем в одну
+	// п÷п╬п╩я┐я┤п╣п╫п╫я▀п╧ п╫п╟п╠п╬я─ я─п╟п╥п╪п╣я┌п╬п╨ я│п╩п╦п╡п╟п╣п╪ п╡ п╬п╢п╫я┐
 	//splitMarkUps (curMarkUp, curMarkUpMinLen, curMarkUpMaxLen, lastSet, simpMarkUps, simpMarkUpsMinLens, simpMarkUpsMaxLens);
-	// Слитую разметку переводим в обычный вид
+	// п║п╩п╦я┌я┐я▌ я─п╟п╥п╪п╣я┌п╨я┐ п©п╣я─п╣п╡п╬п╢п╦п╪ п╡ п╬п╠я▀я┤п╫я▀п╧ п╡п╦п╢
 	candMarkUps.resize (lastSet.size());
 	candMarkUpsMinLens.resize (lastSet.size());
 	candMarkUpsMaxLens.resize (lastSet.size());
@@ -1856,12 +1856,12 @@ inline int FuzzyDataLearnAlgorithm::createCandidates (std::vector < std::vector 
 /****************************************************************************
 *					FuzzyDataLearnAlgorithm::sortCandidateMarkUps
 *
-*	Description:	Отбор разметок для заданного типа аномального поведения из 
-*					сформированных кандидатов
-*	Parameters:		markUps - отобранные разметки траекторий аномального поведения
-*					candMarkUps - кандидаты в разметки
-*					param - размерной траекторий набора данных с которой работаем 
-*					в данном алгоритме
+*	Description:	п·я┌п╠п╬я─ я─п╟п╥п╪п╣я┌п╬п╨ п╢п╩я▐ п╥п╟п╢п╟п╫п╫п╬пЁп╬ я┌п╦п©п╟ п╟п╫п╬п╪п╟п╩я▄п╫п╬пЁп╬ п©п╬п╡п╣п╢п╣п╫п╦я▐ п╦п╥ 
+*					я│я└п╬я─п╪п╦я─п╬п╡п╟п╫п╫я▀я┘ п╨п╟п╫п╢п╦п╢п╟я┌п╬п╡
+*	Parameters:		markUps - п╬я┌п╬п╠я─п╟п╫п╫я▀п╣ я─п╟п╥п╪п╣я┌п╨п╦ я┌я─п╟п╣п╨я┌п╬я─п╦п╧ п╟п╫п╬п╪п╟п╩я▄п╫п╬пЁп╬ п©п╬п╡п╣п╢п╣п╫п╦я▐
+*					candMarkUps - п╨п╟п╫п╢п╦п╢п╟я┌я▀ п╡ я─п╟п╥п╪п╣я┌п╨п╦
+*					param - я─п╟п╥п╪п╣я─п╫п╬п╧ я┌я─п╟п╣п╨я┌п╬я─п╦п╧ п╫п╟п╠п╬я─п╟ п╢п╟п╫п╫я▀я┘ я│ п╨п╬я┌п╬я─п╬п╧ я─п╟п╠п╬я┌п╟п╣п╪ 
+*					п╡ п╢п╟п╫п╫п╬п╪ п╟п╩пЁп╬я─п╦я┌п╪п╣
 *	Returns:		0
 *	Throws:			AxiomLibException - 
 *	Author:			dk
@@ -1869,7 +1869,7 @@ inline int FuzzyDataLearnAlgorithm::createCandidates (std::vector < std::vector 
 *
 ****************************************************************************/
 int FuzzyDataLearnAlgorithm::sortCandidateMarkUps (std::vector < std::vector <int> > &markUps, std::vector < std::vector <int> > &candMarkUps, const int  param) const {
-	// Пока только заглушка
+	// п÷п╬п╨п╟ я┌п╬п╩я▄п╨п╬ п╥п╟пЁп╩я┐я┬п╨п╟
 
 	return 0;
 }
@@ -1878,8 +1878,8 @@ int FuzzyDataLearnAlgorithm::sortCandidateMarkUps (std::vector < std::vector <in
 /****************************************************************************
 *					FuzzyDataLearnAlgorithm::formAxiomSets
 *
-*	Description:	Создание систем аксиом на основе разметок и всего набора аксиом
-*	Parameters:		markUps - наборы разметок траекторий аномального поведения
+*	Description:	п║п╬п╥п╢п╟п╫п╦п╣ я│п╦я│я┌п╣п╪ п╟п╨я│п╦п╬п╪ п╫п╟ п╬я│п╫п╬п╡п╣ я─п╟п╥п╪п╣я┌п╬п╨ п╦ п╡я│п╣пЁп╬ п╫п╟п╠п╬я─п╟ п╟п╨я│п╦п╬п╪
+*	Parameters:		markUps - п╫п╟п╠п╬я─я▀ я─п╟п╥п╪п╣я┌п╬п╨ я┌я─п╟п╣п╨я┌п╬я─п╦п╧ п╟п╫п╬п╪п╟п╩я▄п╫п╬пЁп╬ п©п╬п╡п╣п╢п╣п╫п╦я▐
 *	Returns:		0
 *	Throws:			AxiomLibException - 
 *	Author:			dk
@@ -1887,7 +1887,7 @@ int FuzzyDataLearnAlgorithm::sortCandidateMarkUps (std::vector < std::vector <in
 *
 ****************************************************************************/
 int FuzzyDataLearnAlgorithm::formAxiomSets (std::vector < std::vector <std::vector <int> > > &markUps, std::vector < std::vector <std::vector <int> > > &markUpsMinLens, std::vector < std::vector <std::vector <int> > > &markUpsMaxLens) {
-	// Пока только заглушка
+	// п÷п╬п╨п╟ я┌п╬п╩я▄п╨п╬ п╥п╟пЁп╩я┐я┬п╨п╟
 
 	return 0;
 }
@@ -1896,8 +1896,8 @@ int FuzzyDataLearnAlgorithm::formAxiomSets (std::vector < std::vector <std::vect
 /****************************************************************************
 *					FuzzyDataLearnAlgorithm::saveResults
 *
-*	Description:	Сохранение сформированных систем аксиом и разметок траекторий 
-*					аномального поведения
+*	Description:	п║п╬я┘я─п╟п╫п╣п╫п╦п╣ я│я└п╬я─п╪п╦я─п╬п╡п╟п╫п╫я▀я┘ я│п╦я│я┌п╣п╪ п╟п╨я│п╦п╬п╪ п╦ я─п╟п╥п╪п╣я┌п╬п╨ я┌я─п╟п╣п╨я┌п╬я─п╦п╧ 
+*					п╟п╫п╬п╪п╟п╩я▄п╫п╬пЁп╬ п©п╬п╡п╣п╢п╣п╫п╦я▐
 *	Parameters:		void
 *	Returns:		int
 *	Throws:			AxiomLibException - 
@@ -1906,7 +1906,7 @@ int FuzzyDataLearnAlgorithm::formAxiomSets (std::vector < std::vector <std::vect
 *
 ****************************************************************************/
 int FuzzyDataLearnAlgorithm::saveResults (void) {
-	// Пока только заглушка
+	// п÷п╬п╨п╟ я┌п╬п╩я▄п╨п╬ п╥п╟пЁп╩я┐я┬п╨п╟
 
 	return -1;
 }
@@ -1915,26 +1915,26 @@ int FuzzyDataLearnAlgorithm::saveResults (void) {
 /****************************************************************************
 *					FuzzyDataLearnAlgorithm::getExtraMarkUps
 *
-*	Description:	Функция создает разметки всех траекторий контрольной выборки и траекторий норомального
-*					поведения заданной аксиомой.
-*	Parameters:		markUps - разметки траекторий контрольной выборки и траекторий нормального поведения
-*					correctMarkUps - корректные вхождения траекторий обучающей выборки в markUps
-*					i - номер класса аномального поведения в наборе данных, 
-*						который использовать для анализа
-*					axNum - номер аксиомы в векторе bestAxioms, которую использовать
-*							в данном алгоритме
-*					param - размерность набора данных по которой вести анализ
+*	Description:	п╓я┐п╫п╨я├п╦я▐ я│п╬п╥п╢п╟п╣я┌ я─п╟п╥п╪п╣я┌п╨п╦ п╡я│п╣я┘ я┌я─п╟п╣п╨я┌п╬я─п╦п╧ п╨п╬п╫я┌я─п╬п╩я▄п╫п╬п╧ п╡я▀п╠п╬я─п╨п╦ п╦ я┌я─п╟п╣п╨я┌п╬я─п╦п╧ п╫п╬я─п╬п╪п╟п╩я▄п╫п╬пЁп╬
+*					п©п╬п╡п╣п╢п╣п╫п╦я▐ п╥п╟п╢п╟п╫п╫п╬п╧ п╟п╨я│п╦п╬п╪п╬п╧.
+*	Parameters:		markUps - я─п╟п╥п╪п╣я┌п╨п╦ я┌я─п╟п╣п╨я┌п╬я─п╦п╧ п╨п╬п╫я┌я─п╬п╩я▄п╫п╬п╧ п╡я▀п╠п╬я─п╨п╦ п╦ я┌я─п╟п╣п╨я┌п╬я─п╦п╧ п╫п╬я─п╪п╟п╩я▄п╫п╬пЁп╬ п©п╬п╡п╣п╢п╣п╫п╦я▐
+*					correctMarkUps - п╨п╬я─я─п╣п╨я┌п╫я▀п╣ п╡я┘п╬п╤п╢п╣п╫п╦я▐ я┌я─п╟п╣п╨я┌п╬я─п╦п╧ п╬п╠я┐я┤п╟я▌я┴п╣п╧ п╡я▀п╠п╬я─п╨п╦ п╡ markUps
+*					i - п╫п╬п╪п╣я─ п╨п╩п╟я│я│п╟ п╟п╫п╬п╪п╟п╩я▄п╫п╬пЁп╬ п©п╬п╡п╣п╢п╣п╫п╦я▐ п╡ п╫п╟п╠п╬я─п╣ п╢п╟п╫п╫я▀я┘, 
+*						п╨п╬я┌п╬я─я▀п╧ п╦я│п©п╬п╩я▄п╥п╬п╡п╟я┌я▄ п╢п╩я▐ п╟п╫п╟п╩п╦п╥п╟
+*					axNum - п╫п╬п╪п╣я─ п╟п╨я│п╦п╬п╪я▀ п╡ п╡п╣п╨я┌п╬я─п╣ bestAxioms, п╨п╬я┌п╬я─я┐я▌ п╦я│п©п╬п╩я▄п╥п╬п╡п╟я┌я▄
+*							п╡ п╢п╟п╫п╫п╬п╪ п╟п╩пЁп╬я─п╦я┌п╪п╣
+*					param - я─п╟п╥п╪п╣я─п╫п╬я│я┌я▄ п╫п╟п╠п╬я─п╟ п╢п╟п╫п╫я▀я┘ п©п╬ п╨п╬я┌п╬я─п╬п╧ п╡п╣я│я┌п╦ п╟п╫п╟п╩п╦п╥
 *	Returns:		0
-*	Throws:			AxiomLibException - при некорректном ответе от набора данных или некорректных входных параметрах
+*	Throws:			AxiomLibException - п©я─п╦ п╫п╣п╨п╬я─я─п╣п╨я┌п╫п╬п╪ п╬я┌п╡п╣я┌п╣ п╬я┌ п╫п╟п╠п╬я─п╟ п╢п╟п╫п╫я▀я┘ п╦п╩п╦ п╫п╣п╨п╬я─я─п╣п╨я┌п╫я▀я┘ п╡я┘п╬п╢п╫я▀я┘ п©п╟я─п╟п╪п╣я┌я─п╟я┘
 *	Author:			dk
 *	History:
 *
 ****************************************************************************/
 int FuzzyDataLearnAlgorithm::getExtraMarkUps (std::vector < std::vector <int> > &markUps, std::vector < std::vector <int> > &correctMarkUps, int axNum, int i, const int param) const {
-	// Проверка входных параметров
+	// п÷я─п╬п╡п╣я─п╨п╟ п╡я┘п╬п╢п╫я▀я┘ п©п╟я─п╟п╪п╣я┌я─п╬п╡
 	if (axNum >= (int) bestAxioms.size())
 		throw AxiomLibException("FuzzyDataLearnAlgorithm::getExtraMarkUps : incorrect input parameters.");
-	// Получаем разметки всех траекторий контрольноый выборки для аксиомы axNum
+	// п÷п╬п╩я┐я┤п╟п╣п╪ я─п╟п╥п╪п╣я┌п╨п╦ п╡я│п╣я┘ я┌я─п╟п╣п╨я┌п╬я─п╦п╧ п╨п╬п╫я┌я─п╬п╩я▄п╫п╬я▀п╧ п╡я▀п╠п╬я─п╨п╦ п╢п╩я▐ п╟п╨я│п╦п╬п╪я▀ axNum
 	std::vector <double> row;
 	bool bres;
 	int curRes;
@@ -1942,34 +1942,34 @@ int FuzzyDataLearnAlgorithm::getExtraMarkUps (std::vector < std::vector <int> > 
 	int numOfNormalMultiTS;
 	std::vector <int> numOfTS, numOfNormalTS;
 
-	// запрос числа рядов
+	// п╥п╟п©я─п╬я│ я┤п╦я│п╩п╟ я─я▐п╢п╬п╡
 	fuzzyDataSet.getTestSize (numOfTests, numOfTS);
-	// запрос числа рядов нормального поведения
+	// п╥п╟п©я─п╬я│ я┤п╦я│п╩п╟ я─я▐п╢п╬п╡ п╫п╬я─п╪п╟п╩я▄п╫п╬пЁп╬ п©п╬п╡п╣п╢п╣п╫п╦я▐
 	fuzzyDataSet.getNormalClassSize (numOfNormalMultiTS, numOfNormalTS);
 	if (numOfNormalMultiTS != numOfNormalTS.size())
 		throw AxiomLibException("FuzzyDataLearnAlgorithm::getExtraMarkUps : incorrect response from internal function getNormalClassSize");
 
-	// Проверка того - собрана ли уже корректная разметка
+	// п÷я─п╬п╡п╣я─п╨п╟ я┌п╬пЁп╬ - я│п╬п╠я─п╟п╫п╟ п╩п╦ я┐п╤п╣ п╨п╬я─я─п╣п╨я┌п╫п╟я▐ я─п╟п╥п╪п╣я┌п╨п╟
 	bool correctEmpty = true;
 	if (correctMarkUps.size () > 0)
 		correctEmpty = false;
 	else {
 		correctMarkUps.resize (numOfTests + numOfNormalMultiTS);
 	}
-	// Изменение числа разметок траекторий
+	// п≤п╥п╪п╣п╫п╣п╫п╦п╣ я┤п╦я│п╩п╟ я─п╟п╥п╪п╣я┌п╬п╨ я┌я─п╟п╣п╨я┌п╬я─п╦п╧
 	markUps.resize(numOfTests + numOfNormalMultiTS);
 	
-	// Цикл по всем тестам - получение разметок их траекторий
+	// п╕п╦п╨п╩ п©п╬ п╡я│п╣п╪ я┌п╣я│я┌п╟п╪ - п©п╬п╩я┐я┤п╣п╫п╦п╣ я─п╟п╥п╪п╣я┌п╬п╨ п╦я┘ я┌я─п╟п╣п╨я┌п╬я─п╦п╧
 	for (int testNum = 0; testNum < numOfTests; testNum++) {
-		// Обработка корректной разметки
+		// п·п╠я─п╟п╠п╬я┌п╨п╟ п╨п╬я─я─п╣п╨я┌п╫п╬п╧ я─п╟п╥п╪п╣я┌п╨п╦
 		if (correctEmpty) {
 			fuzzyDataSet.getTSByIndexFromTests (correctMarkUps[testNum], testNum, -1);
-			// Удаляем из разметки траекторий контрольной выборки всю информацию о вхождении эталонных траекторий отличных от i-го класса аномального поведения.
+			// пёп╢п╟п╩я▐п╣п╪ п╦п╥ я─п╟п╥п╪п╣я┌п╨п╦ я┌я─п╟п╣п╨я┌п╬я─п╦п╧ п╨п╬п╫я┌я─п╬п╩я▄п╫п╬п╧ п╡я▀п╠п╬я─п╨п╦ п╡я│я▌ п╦п╫я└п╬я─п╪п╟я├п╦я▌ п╬ п╡я┘п╬п╤п╢п╣п╫п╦п╦ я█я┌п╟п╩п╬п╫п╫я▀я┘ я┌я─п╟п╣п╨я┌п╬я─п╦п╧ п╬я┌п╩п╦я┤п╫я▀я┘ п╬я┌ i-пЁп╬ п╨п╩п╟я│я│п╟ п╟п╫п╬п╪п╟п╩я▄п╫п╬пЁп╬ п©п╬п╡п╣п╢п╣п╫п╦я▐.
 			for (unsigned int j = 0; j < correctMarkUps[testNum].size(); j++)
 				if ((correctMarkUps[testNum][j] > 0) && (correctMarkUps[testNum][j] != i))
 					correctMarkUps[testNum][j] = 0;
 		}
-		// Получение собственно разметки 
+		// п÷п╬п╩я┐я┤п╣п╫п╦п╣ я│п╬п╠я│я┌п╡п╣п╫п╫п╬ я─п╟п╥п╪п╣я┌п╨п╦ 
 		bres = fuzzyDataSet.getTSByIndexFromTests (row, testNum, param);
 		if (bres) {
 			markUps[testNum].resize(row.size(), 0);
@@ -1984,7 +1984,7 @@ int FuzzyDataLearnAlgorithm::getExtraMarkUps (std::vector < std::vector <int> > 
 		}
 	}
 
-	// Разметка траекторий нормального поведения
+	// п═п╟п╥п╪п╣я┌п╨п╟ я┌я─п╟п╣п╨я┌п╬я─п╦п╧ п╫п╬я─п╪п╟п╩я▄п╫п╬пЁп╬ п©п╬п╡п╣п╢п╣п╫п╦я▐
 	for (int j = 0; j < numOfNormalMultiTS; j++) {
 		bres = fuzzyDataSet.getNormalTS (row, j, param);
 		if (bres) {
@@ -2010,46 +2010,46 @@ int FuzzyDataLearnAlgorithm::getExtraMarkUps (std::vector < std::vector <int> > 
 /****************************************************************************
 *					FuzzyDataLearnAlgorithm::createAxiomSet
 *
-*	Description:	функция формирования системы аксиом из аксиом
-*	Parameters:		param - размерность траекторий набора данных с которой работаем 
-*					в данном алгоритме
+*	Description:	я└я┐п╫п╨я├п╦я▐ я└п╬я─п╪п╦я─п╬п╡п╟п╫п╦я▐ я│п╦я│я┌п╣п╪я▀ п╟п╨я│п╦п╬п╪ п╦п╥ п╟п╨я│п╦п╬п╪
+*	Parameters:		param - я─п╟п╥п╪п╣я─п╫п╬я│я┌я▄ я┌я─п╟п╣п╨я┌п╬я─п╦п╧ п╫п╟п╠п╬я─п╟ п╢п╟п╫п╫я▀я┘ я│ п╨п╬я┌п╬я─п╬п╧ я─п╟п╠п╬я┌п╟п╣п╪ 
+*					п╡ п╢п╟п╫п╫п╬п╪ п╟п╩пЁп╬я─п╦я┌п╪п╣
 *	Returns:		0
-*	Throws:			AxiomLibException - если в одном из алгоритмов возникла ошибка
+*	Throws:			AxiomLibException - п╣я│п╩п╦ п╡ п╬п╢п╫п╬п╪ п╦п╥ п╟п╩пЁп╬я─п╦я┌п╪п╬п╡ п╡п╬п╥п╫п╦п╨п╩п╟ п╬я┬п╦п╠п╨п╟
 *	Author:			dk
 *	History:
 *
 ****************************************************************************/
 int FuzzyDataLearnAlgorithm::createAxiomSet (const int param) {
-	// Объявление необходимых переменных
+	// п·п╠я┼я▐п╡п╩п╣п╫п╦п╣ п╫п╣п╬п╠я┘п╬п╢п╦п╪я▀я┘ п©п╣я─п╣п╪п╣п╫п╫я▀я┘
 	int numOfClasses;
 	std::vector <int> numOfMultiTS;
 	std::vector < std::vector <int> > numOfTS;
 	std::vector < std::vector <int> > baseMarkUps;
 	std::vector < std::vector <int> > candMarkUps;
-	std::vector < std::vector <std::vector <int> > > markUps, markUpsMinLen, markUpsMaxLen; // Первая размерость - по типам аномального поведения, остальные - набор разметок
-	std::vector < std::vector <std::vector <int> > > localMarkUps; // Для каждого типа аномального поведения, для каждой аксиомы - разметки всех траекторий обучающей выборки, содержащих траектории аномального поведения
-	std::vector < std::vector <std::vector <int> > > extraMarkUps; // Для каждого типа аномального поведения, для каждой аксиомы - разметки всех траекторий контрольной выборки, содержащих траектории аномального поведения
-	std::vector < std::vector <int> > correctExtraMarkUps; // Правильные ответы для траекторий контрольноый выборки
+	std::vector < std::vector <std::vector <int> > > markUps, markUpsMinLen, markUpsMaxLen; // п÷п╣я─п╡п╟я▐ я─п╟п╥п╪п╣я─п╬я│я┌я▄ - п©п╬ я┌п╦п©п╟п╪ п╟п╫п╬п╪п╟п╩я▄п╫п╬пЁп╬ п©п╬п╡п╣п╢п╣п╫п╦я▐, п╬я│я┌п╟п╩я▄п╫я▀п╣ - п╫п╟п╠п╬я─ я─п╟п╥п╪п╣я┌п╬п╨
+	std::vector < std::vector <std::vector <int> > > localMarkUps; // п■п╩я▐ п╨п╟п╤п╢п╬пЁп╬ я┌п╦п©п╟ п╟п╫п╬п╪п╟п╩я▄п╫п╬пЁп╬ п©п╬п╡п╣п╢п╣п╫п╦я▐, п╢п╩я▐ п╨п╟п╤п╢п╬п╧ п╟п╨я│п╦п╬п╪я▀ - я─п╟п╥п╪п╣я┌п╨п╦ п╡я│п╣я┘ я┌я─п╟п╣п╨я┌п╬я─п╦п╧ п╬п╠я┐я┤п╟я▌я┴п╣п╧ п╡я▀п╠п╬я─п╨п╦, я│п╬п╢п╣я─п╤п╟я┴п╦я┘ я┌я─п╟п╣п╨я┌п╬я─п╦п╦ п╟п╫п╬п╪п╟п╩я▄п╫п╬пЁп╬ п©п╬п╡п╣п╢п╣п╫п╦я▐
+	std::vector < std::vector <std::vector <int> > > extraMarkUps; // п■п╩я▐ п╨п╟п╤п╢п╬пЁп╬ я┌п╦п©п╟ п╟п╫п╬п╪п╟п╩я▄п╫п╬пЁп╬ п©п╬п╡п╣п╢п╣п╫п╦я▐, п╢п╩я▐ п╨п╟п╤п╢п╬п╧ п╟п╨я│п╦п╬п╪я▀ - я─п╟п╥п╪п╣я┌п╨п╦ п╡я│п╣я┘ я┌я─п╟п╣п╨я┌п╬я─п╦п╧ п╨п╬п╫я┌я─п╬п╩я▄п╫п╬п╧ п╡я▀п╠п╬я─п╨п╦, я│п╬п╢п╣я─п╤п╟я┴п╦я┘ я┌я─п╟п╣п╨я┌п╬я─п╦п╦ п╟п╫п╬п╪п╟п╩я▄п╫п╬пЁп╬ п©п╬п╡п╣п╢п╣п╫п╦я▐
+	std::vector < std::vector <int> > correctExtraMarkUps; // п÷я─п╟п╡п╦п╩я▄п╫я▀п╣ п╬я┌п╡п╣я┌я▀ п╢п╩я▐ я┌я─п╟п╣п╨я┌п╬я─п╦п╧ п╨п╬п╫я┌я─п╬п╩я▄п╫п╬я▀п╧ п╡я▀п╠п╬я─п╨п╦
 
-	// Получение инфомарции об обучающей выборке	
+	// п÷п╬п╩я┐я┤п╣п╫п╦п╣ п╦п╫я└п╬п╪п╟я─я├п╦п╦ п╬п╠ п╬п╠я┐я┤п╟я▌я┴п╣п╧ п╡я▀п╠п╬я─п╨п╣	
 	fuzzyDataSet.getClassSize (numOfClasses, numOfMultiTS, numOfTS);
 	if ((numOfClasses != numOfMultiTS.size()) || (numOfClasses != numOfTS.size()))
 		throw AxiomLibException("FuzzyDataLearnAlgorithm::createAxiomSet : incorrect response from internal function.");
 
-	// Цикл по всем типам аномального поведения
+	// п╕п╦п╨п╩ п©п╬ п╡я│п╣п╪ я┌п╦п©п╟п╪ п╟п╫п╬п╪п╟п╩я▄п╫п╬пЁп╬ п©п╬п╡п╣п╢п╣п╫п╦я▐
 	markUps.resize (numOfClasses);
 	markUpsMinLen.resize (numOfClasses);
 	markUpsMaxLen.resize (numOfClasses);
 	for (int i = 0; i < numOfClasses; i++) {
-		// 0. Проверка набора данных
+		// 0. п÷я─п╬п╡п╣я─п╨п╟ п╫п╟п╠п╬я─п╟ п╢п╟п╫п╫я▀я┘
 		if (numOfMultiTS[i] != numOfTS[i].size())
 			throw AxiomLibException("FuzzyDataLearnAlgorithm::createAxiomSet : incorrect response from internal function*.");
 		
-		// 1. Получаем разметки всех обучающих траекторий для данного типа аномального поведения и для всех аксиом
-		//    Сдвигаем эти разметки до наилучшего соответствия и формируем обобщенные разметки
+		// 1. п÷п╬п╩я┐я┤п╟п╣п╪ я─п╟п╥п╪п╣я┌п╨п╦ п╡я│п╣я┘ п╬п╠я┐я┤п╟я▌я┴п╦я┘ я┌я─п╟п╣п╨я┌п╬я─п╦п╧ п╢п╩я▐ п╢п╟п╫п╫п╬пЁп╬ я┌п╦п©п╟ п╟п╫п╬п╪п╟п╩я▄п╫п╬пЁп╬ п©п╬п╡п╣п╢п╣п╫п╦я▐ п╦ п╢п╩я▐ п╡я│п╣я┘ п╟п╨я│п╦п╬п╪
+		//    п║п╢п╡п╦пЁп╟п╣п╪ я█я┌п╦ я─п╟п╥п╪п╣я┌п╨п╦ п╢п╬ п╫п╟п╦п╩я┐я┤я┬п╣пЁп╬ я│п╬п╬я┌п╡п╣я┌я│я┌п╡п╦я▐ п╦ я└п╬я─п╪п╦я─я┐п╣п╪ п╬п╠п╬п╠я┴п╣п╫п╫я▀п╣ я─п╟п╥п╪п╣я┌п╨п╦
 		baseMarkUps.clear();
 		baseMarkUps.resize (bestAxioms.size());
-		//    Цикл по всем сформироанным ранее аксиомам
+		//    п╕п╦п╨п╩ п©п╬ п╡я│п╣п╪ я│я└п╬я─п╪п╦я─п╬п╟п╫п╫я▀п╪ я─п╟п╫п╣п╣ п╟п╨я│п╦п╬п╪п╟п╪
 		localMarkUps.resize(bestAxioms.size());
 		extraMarkUps.resize(bestAxioms.size());
 		correctExtraMarkUps.clear();
@@ -2058,17 +2058,17 @@ int FuzzyDataLearnAlgorithm::createAxiomSet (const int param) {
 			getExtraMarkUps (extraMarkUps[axNum], correctExtraMarkUps, axNum, i+1, param);
 		}
 
-		// 2. По обобщенным разметкам для разных аксиом формируем кандидаты на разметки для данного типа аномального поведения
+		// 2. п÷п╬ п╬п╠п╬п╠я┴п╣п╫п╫я▀п╪ я─п╟п╥п╪п╣я┌п╨п╟п╪ п╢п╩я▐ я─п╟п╥п╫я▀я┘ п╟п╨я│п╦п╬п╪ я└п╬я─п╪п╦я─я┐п╣п╪ п╨п╟п╫п╢п╦п╢п╟я┌я▀ п╫п╟ я─п╟п╥п╪п╣я┌п╨п╦ п╢п╩я▐ п╢п╟п╫п╫п╬пЁп╬ я┌п╦п©п╟ п╟п╫п╬п╪п╟п╩я▄п╫п╬пЁп╬ п©п╬п╡п╣п╢п╣п╫п╦я▐
 		createCandidates (markUps[i], markUpsMinLen[i], markUpsMaxLen[i], baseMarkUps, localMarkUps, extraMarkUps, correctExtraMarkUps, i+1);
 		
-		// 3. Отбор разметок для данного типа аномального поведения среди сформированных кандидатов
+		// 3. п·я┌п╠п╬я─ я─п╟п╥п╪п╣я┌п╬п╨ п╢п╩я▐ п╢п╟п╫п╫п╬пЁп╬ я┌п╦п©п╟ п╟п╫п╬п╪п╟п╩я▄п╫п╬пЁп╬ п©п╬п╡п╣п╢п╣п╫п╦я▐ я│я─п╣п╢п╦ я│я└п╬я─п╪п╦я─п╬п╡п╟п╫п╫я▀я┘ п╨п╟п╫п╢п╦п╢п╟я┌п╬п╡
 		//sortCandidateMarkUps (markUps[i], candMarkUps, param);
 	}
 
-	// Создание систем аксиом на основе анализа сформированных разметок
+	// п║п╬п╥п╢п╟п╫п╦п╣ я│п╦я│я┌п╣п╪ п╟п╨я│п╦п╬п╪ п╫п╟ п╬я│п╫п╬п╡п╣ п╟п╫п╟п╩п╦п╥п╟ я│я└п╬я─п╪п╦я─п╬п╡п╟п╫п╫я▀я┘ я─п╟п╥п╪п╣я┌п╬п╨
 	formAxiomSets (markUps, markUpsMinLen, markUpsMaxLen);
 
-	// Сохранение сформированных систем аксиом и разметок траекторий аномального поведения
+	// п║п╬я┘я─п╟п╫п╣п╫п╦п╣ я│я└п╬я─п╪п╦я─п╬п╡п╟п╫п╫я▀я┘ я│п╦я│я┌п╣п╪ п╟п╨я│п╦п╬п╪ п╦ я─п╟п╥п╪п╣я┌п╬п╨ я┌я─п╟п╣п╨я┌п╬я─п╦п╧ п╟п╫п╬п╪п╟п╩я▄п╫п╬пЁп╬ п©п╬п╡п╣п╢п╣п╫п╦я▐
 	saveResults ();
 
 	if (this->comments) {

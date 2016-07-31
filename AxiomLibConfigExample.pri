@@ -1,8 +1,8 @@
-# Файл, в котором задаются пути к либам и некоторые общие параметры сборки проектов из AxiomLib
+# п╓п╟п╧п╩, п╡ п╨п╬я┌п╬я─п╬п╪ п╥п╟п╢п╟я▌я┌я│я▐ п©я┐я┌п╦ п╨ п╩п╦п╠п╟п╪ п╦ п╫п╣п╨п╬я┌п╬я─я▀п╣ п╬п╠я┴п╦п╣ п©п╟я─п╟п╪п╣я┌я─я▀ я│п╠п╬я─п╨п╦ п©я─п╬п╣п╨я┌п╬п╡ п╦п╥ AxiomLib
 
-### Пути include'ов ###
+### п÷я┐я┌п╦ include'п╬п╡ ###
 
-# Для windows
+# п■п╩я▐ windows
 win32 {
 	AXIOMLIB_INCLUDE = D:\My_documents\Workspace\Axiomlib_working_copy\AxiomLib\src
         QWT_INCLUDE = D:\lib\qwt-5.2.1\src
@@ -10,7 +10,7 @@ win32 {
         BOOST_INCLUDE = D:\lib\boost_1_44_0
 	OTHER_INCLUDE += "c:/libs/shark/include"
 }
-# Для unix
+# п■п╩я▐ unix
 unix {
 	AXIOMLIB_INCLUDE = /home/wictor/Projects/axiomlib/src
         QWT_INCLUDE = "/usr/include/qwt-qt4"
@@ -19,9 +19,9 @@ unix {
 	OTHER_INCLUDE += "/home/wictor/shark/include"
 }
 
-### Спецификация библиотек ###
+### п║п©п╣я├п╦я└п╦п╨п╟я├п╦я▐ п╠п╦п╠п╩п╦п╬я┌п╣п╨ ###
 
-# Для windows
+# п■п╩я▐ windows
 win32 {
 
 debug {
@@ -42,7 +42,7 @@ debug {
 	OTHER_LIB = Shell32.lib
 }
 
-# Для unix
+# п■п╩я▐ unix
 unix {
 linux-icc-64|linux-icc {
         AXIOMLIB_LIB = /home/wictor/Projects/axiomlib/release/libAxiomLib.a
@@ -61,15 +61,15 @@ linux-icc-64|linux-icc {
 }
 
 
-### Дополнительные флаги компиляции ###
+### п■п╬п©п╬п╩п╫п╦я┌п╣п╩я▄п╫я▀п╣ я└п╩п╟пЁп╦ п╨п╬п╪п©п╦п╩я▐я├п╦п╦ ###
 
-# Для windows
+# п■п╩я▐ windows
 win32 {
 	QMAKE_CXXFLAGS_RELEASE += -openmp
 	QMAKE_CXXFLAGS_RELEASE += -o2 -DRELEASE
 	QMAKE_CXXFLAGS_DEBUG += /ZI /Od
 }
-# Для unix
+# п■п╩я▐ unix
 linux-g++|linux-g++-64 {
         QMAKE_CXXFLAGS_RELEASE += -fopenmp -o2 -std=c++0x
 }
@@ -79,24 +79,24 @@ linux-icc|linux-icc-64 {
         QMAKE_LFLAGS_RELEASE += -openmp
 }
 
-### Дополнительные флаги линковки ###
+### п■п╬п©п╬п╩п╫п╦я┌п╣п╩я▄п╫я▀п╣ я└п╩п╟пЁп╦ п╩п╦п╫п╨п╬п╡п╨п╦ ###
 
-# Для windows
+# п■п╩я▐ windows
 win32 {
 	QMAKE_LFLAGS +=
 	QMAKE_LFLAGS_DEBUG += /debug /incremental:yes
 }
 
-### Задание флагов отключение warning'ов (работает только если warn_off есть в CONFIG)
+### п≈п╟п╢п╟п╫п╦п╣ я└п╩п╟пЁп╬п╡ п╬я┌п╨п╩я▌я┤п╣п╫п╦п╣ warning'п╬п╡ (я─п╟п╠п╬я┌п╟п╣я┌ я┌п╬п╩я▄п╨п╬ п╣я│п╩п╦ warn_off п╣я│я┌я▄ п╡ CONFIG)
 
-# Для unix
+# п■п╩я▐ unix
 unix {
 	#QMAKE_CXXFLAGS_WARN_OFF = -Wno-sign-compare -Wno-sign-conversion -Wno-unused-parameter
 	QMAKE_CXXFLAGS_WARN_OFF = -Wno-unused-parameter
 }
 
 win32 {
-        #Отключение ворнингов, связанных со стандартными функциями,
-        #которые cl считает небезопасными
+        #п·я┌п╨п╩я▌я┤п╣п╫п╦п╣ п╡п╬я─п╫п╦п╫пЁп╬п╡, я│п╡я▐п╥п╟п╫п╫я▀я┘ я│п╬ я│я┌п╟п╫п╢п╟я─я┌п╫я▀п╪п╦ я└я┐п╫п╨я├п╦я▐п╪п╦,
+        #п╨п╬я┌п╬я─я▀п╣ cl я│я┤п╦я┌п╟п╣я┌ п╫п╣п╠п╣п╥п╬п©п╟я│п╫я▀п╪п╦
         QMAKE_CXXFLAGS_WARN_OFF += -D_SCL_SECURE_NO_WARNINGS -D_CRT_SECURE_NO_WARNINGS
 }
