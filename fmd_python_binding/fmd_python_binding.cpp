@@ -120,6 +120,44 @@ AxiomLib::RecognizerExt* train_FMD(py::dict env_dict, py::list dataSet_list)
     }
 }
 
+const char* train_FMD_docstring = "env_dict: dict containing environment parameters\n"
+        "dataset: Iterable of iterable of iterable of numpy.ndarray:\n"
+        "for each dataset division (train, test, validation), for each class \n"
+        "an iterable of class miltidimensional time series.\n"
+        "each multidimensional time series is a C_CONTIGUOUS ndarray, where rows correspond to time series dimensions \n"
+        "and columns correspond to time series values at a fixed point of time";
+
+np::ndarray nullArray() {
+    np::ndarray result = np::from_object(py::list());
+    return result;
+}
+
+template<class T>
+np::ndarray toNDArray(const std::vector<std::vector<T> >& src) {
+    if (src.empty()) {
+        return nullArray();
+    }
+
+    size_t rowCount = src.size();
+    size_t colCount = src.front().size();
+    py::tuple shape = py::make_tuple((int)rowCount, (int)colCount);
+    py::object array = np::empty(shape, np::dtype::get_builtin<T>());
+    np::ndarray result = np::from_object(
+            array,
+            np::ndarray::C_CONTIGUOUS | np::ndarray::WRITEABLE
+            );
+    T* dstRowData = reinterpret_cast<T*>(result.get_data());
+    for (size_t row = 0; row < rowCount; ++row, dstRowData += colCount) {
+        const std::vector<T> &srcRow = src[row];
+        if (srcRow.size() != colCount) {
+            throw std::runtime_error("toNDArray(): inconsistent vector<vector<T>> row sizes");
+        }
+        ::memcpy(dstRowData, &srcRow[0], colCount * sizeof(T));
+    }
+
+    return result;
+}
+
 np::ndarray recognizer_get_distances(AxiomLib::RecognizerExt& self, np::ndarray& trajectory) {
     try {
         AxiomLib::MultiTS multiTS = fill_ts(trajectory);
@@ -133,27 +171,52 @@ np::ndarray recognizer_get_distances(AxiomLib::RecognizerExt& self, np::ndarray&
 
         double* row_data = reinterpret_cast<double*>(distances.get_data());
         int noCols = sampleDistances.length();
+        std::vector<std::vector<double> > distMatrix;
+        distMatrix.resize((size_t)sampleDistances.numClasses());
         for (int row = 0; row < sampleDistances.numClasses(); ++row, row_data += noCols) {
-            std::vector<double> dist_for_class;
-            sampleDistances.getDistances(row, dist_for_class);
-            ::memcpy(row_data, &dist_for_class[0], noCols * sizeof(double));
+            sampleDistances.getDistances(row, distMatrix[row]);
         }
 
-        return distances;
+        return toNDArray(distMatrix);
     } catch (AxiomLib::AxiomLibException e) {
         throw std::runtime_error("AxiomLibException: " + e.error());
     }
 }
 
-const char* train_FMD_docstring = "env_dict: dict containing environment parameters\n"
-        "dataset: Iterable of iterable of iterable of numpy.ndarray:\n"
-        "for each dataset division (train, test, validation), for each class \n"
-        "an iterable of class miltidimensional time series.\n"
-        "each multidimensional time series is a C_CONTIGUOUS ndarray, where rows correspond to time series dimensions \n"
-        "and columns correspond to time series values at a fixed point of time";
+py::list load_axiomlib_dataset(std::string dataset_path, bool omitFirstDimension = true) {
+    try {
+        AxiomLib::FuzzyDataSet dataSet;
+        dataSet.readDataSet(dataset_path);
+
+        py::list result;
+        for(int division = AxiomLib::FuzzyDataSet::First;
+            division < AxiomLib::FuzzyDataSet::Last; ++division) {
+            py::list klass_list;
+            // -1 is "normal behavior"
+            for(int klass = -1; klass < dataSet.getClassCount(); ++klass) {
+                py::list ts_list;
+
+                for (int tsNo = 0; tsNo < dataSet.getMutiTSCount((AxiomLib::FuzzyDataSet::DataSetDivisionType)division, klass); ++tsNo) {
+                    std::vector<std::vector<double> > ts;
+                    dataSet.getMultiTSByIndex((AxiomLib::FuzzyDataSet::DataSetDivisionType)division, ts, klass, tsNo, omitFirstDimension);
+                    ts_list.append(toNDArray(ts));
+                }
+
+                klass_list.append(ts_list);
+            }
+            result.append(klass_list);
+        }
+
+        return result;
+    } catch (AxiomLib::AxiomLibException e) {
+        throw std::runtime_error("AxiomLibException: " + e.error());
+    }
+}
 
 BOOST_PYTHON_MODULE(libaxiomlib_fmd)
 {
+    np::initialize();
+
     py::class_<AxiomLib::RecognizerExt>("recognizer")
             .def("get_distances", &recognizer_get_distances);
 
@@ -162,4 +225,8 @@ BOOST_PYTHON_MODULE(libaxiomlib_fmd)
             py::return_value_policy<py::manage_new_object>(),
             train_FMD_docstring,
             (py::arg("env_dict"), py::arg("dataset")));
+
+    py::def("load_axiomlib_dataset", &load_axiomlib_dataset,
+            "load dataset from axiomlib format into list of list of list of ndarrays",
+            (py::arg("dataset_path"), py::arg("omit_first_dim")=true));
 }

@@ -105,13 +105,17 @@ bool FuzzyDataSet::getTSByIndex(DataSetDivisionType division, std::vector<double
 }
 
 bool FuzzyDataSet::getMultiTSByIndex(FuzzyDataSet::DataSetDivisionType division,
-									 std::vector<std::vector<double> > &v,
-									 int indexClass,
-									 int indexMultiTS) const
+                                     std::vector<std::vector<double> > &v,
+                                     int indexClass,
+                                     int indexMultiTS, bool omitFirstDimension) const
 {
-	v.resize((unsigned)getDimensionCount());
-	for(unsigned i = 0; i < v.size(); ++i) {
-		bool ok =  divisions[division].getTSByIndex(v[i], indexClass, indexMultiTS, i);
+    unsigned dimCount = (unsigned)getDimensionCount();
+    if (omitFirstDimension) --dimCount;
+    v.resize(dimCount);
+    for(unsigned i = (omitFirstDimension ? 1 : 0); i < (unsigned)getDimensionCount(); ++i) {
+        int dstIndex = i;
+        if (omitFirstDimension) dstIndex = i - 1;
+        bool ok =  divisions[division].getTSByIndex(v[dstIndex], indexClass, indexMultiTS, i);
 		if(!ok) {
 			return false;
 		}
