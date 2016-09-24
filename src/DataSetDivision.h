@@ -21,6 +21,7 @@ namespace AxiomLib {
 class DataSetDivision
 {
 public:
+    DataSetDivision() {}
     DataSetDivision(const ReferenceClassesTS &abnormalTS, const ClassTS &normalTS);
 	
 	std::string getMultiTSName(int indexClass, int indexMultiTS) const;

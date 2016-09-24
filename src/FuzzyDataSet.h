@@ -33,7 +33,12 @@ public:
 	
 	// Конструктор умолчания
     FuzzyDataSet();
+
+    bool isEmpty();
 	
+    // Non-const reference is here because this function uses swap()
+    void setDivisions(std::vector<DataSetDivision>& divisions);
+
 	// Чтение датасета
 	signed int readDataSet(std::string dataSetDir, std::string dataSetName);
 	

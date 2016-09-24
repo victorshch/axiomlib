@@ -9,6 +9,9 @@ include(AxiomLibConfig.pri)
 QT -= core gui
 CONFIG -= qt
 
+CONFIG -= release
+CONFIG += debug
+
 INCLUDEPATH += $$MPICH_INCLUDE \
     $$BOOST_INCLUDE \
     $$OTHER_INCLUDE
@@ -241,7 +244,8 @@ SOURCES += src/TreatmentSample.cxx \
     src/FuzzyMultiDataExt/AXStageTrivial.cpp \
     src/FuzzyMultiDataExt/ClusteringFeatures/ClusteringFeature.cxx \
 	src/elem_conditions/Export.cxx \
-	src/FuzzyMultiDataExt/ASStageGenetic.cpp
+	src/FuzzyMultiDataExt/ASStageGenetic.cpp \
+    src/FuzzyMultiDataExt/recognizerext.cpp
 HEADERS += src/undefs.h \
     src/TreatmentSample.h \
     src/TreatmentFactory.h \
@@ -474,4 +478,5 @@ HEADERS += src/undefs.h \
     src/FuzzyMultiDataExt/ASStageGenetic.h \
     src/FuzzyMultiDataExt/GeneticUtils/RouletteWheelSelection.h \
     src/FuzzyMultiDataExt/GeneticUtils/ProbabilityMapping.h \
-    src/prettyprint.hpp
+    src/prettyprint.hpp \
+    src/FuzzyMultiDataExt/recognizerext.h

@@ -21,7 +21,18 @@ const char *FuzzyDataSet::divisionNames[] = { "reference", "testing", "validatio
 ****************************************************************************/
 FuzzyDataSet::FuzzyDataSet() : DataSetBase()
 {
-	setNormalStr("normal");
+    setNormalStr("normal");
+}
+
+bool FuzzyDataSet::isEmpty()
+{
+    return divisions.empty();
+}
+
+void FuzzyDataSet::setDivisions(std::vector<DataSetDivision> &divisions)
+{
+    this->divisions.swap(divisions);
+    this->divisions.resize(Last - First);
 }
 
 /****************************************************************************
