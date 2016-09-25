@@ -23,8 +23,8 @@ AxiomLib::MultiTS fill_ts(const np::ndarray& array)
         double* data = reinterpret_cast<double*>(array.get_data());
         result.validParams.assign(rows, true);
         result.data.resize(rows);
-        for(size_t col = 0; col < cols; ++col) {
-            result.data[col].assign(data, data + cols);
+        for(size_t row = 0; row < (size_t)rows; ++row) {
+            result.data[row].assign(data, data + cols);
             data += cols;
         }
     } else if (!(array.get_flags() & np::ndarray::C_CONTIGUOUS)){
@@ -63,9 +63,13 @@ AxiomLib::DataSetDivision fill_division(const py::object& class_list) {
     return AxiomLib::DataSetDivision(abnormal, normal);
 }
 
-AxiomLib::RecognizerExt* train_FMD(py::dict env_dict, py::list dataSet_list)
+AxiomLib::RecognizerExt* train_FMD(py::dict env_dict, py::list dataSet_list, bool debug = true)
 {
     try {
+
+        AxiomLib::Logger::getInstance()->setDebug(debug);
+        AxiomLib::Logger::getInstance()->setComments(debug);
+
         // Construct Environment
         AxiomLib::Environment env;
         {
@@ -85,10 +89,10 @@ AxiomLib::RecognizerExt* train_FMD(py::dict env_dict, py::list dataSet_list)
                 if (value_list.check()) {
                     py::stl_input_iterator<std::string> list_iter(value_list()), end;
                     for(; list_iter != end; ++list_iter) {
-                        env.setParamValue(key(), *list_iter);
+                        env.setParamValue(*list_iter, key());
                     }
                 } else if (value.check()) {
-                    env.setParamValue(key(), value());
+                    env.setParamValue(value(), key());
                 } else {
                     throw std::runtime_error("train_FMD(): could not convert env_dict value to string or list");
                 }
@@ -213,6 +217,36 @@ py::list load_axiomlib_dataset(std::string dataset_path, bool omitFirstDimension
     }
 }
 
+py::dict load_axiomlib_env(const std::string& env_path) {
+    try {
+        AxiomLib::Environment env;
+        env.readConfigFile(env_path.c_str());
+
+        py::dict result;
+
+        std::vector<std::string> paramNames;
+        env.getParamNames(paramNames);
+
+        for(std::vector<std::string>::iterator it = paramNames.begin();
+            it != paramNames.end(); ++it) {
+            std::set<std::string> values;
+            env.getStringSetParamValue(values, *it);
+            if (values.size() > 1) {
+                py::list valuesList(values);
+                result[*it] = valuesList;
+            } else if (!values.empty()) {
+                result[*it] = *values.begin();
+            } else {
+                throw std::runtime_error("Could not retrieve param values values for param " + *it);
+            }
+        }
+
+        return result;
+    } catch (AxiomLib::AxiomLibException e) {
+        throw std::runtime_error("AxiomLibException: " + e.error());
+    }
+}
+
 BOOST_PYTHON_MODULE(libaxiomlib_fmd)
 {
     np::initialize();
@@ -224,9 +258,13 @@ BOOST_PYTHON_MODULE(libaxiomlib_fmd)
             &train_FMD,
             py::return_value_policy<py::manage_new_object>(),
             train_FMD_docstring,
-            (py::arg("env_dict"), py::arg("dataset")));
+            (py::arg("env_dict"), py::arg("dataset"), py::arg("debug") = true));
 
     py::def("load_axiomlib_dataset", &load_axiomlib_dataset,
             "load dataset from axiomlib format into list of list of list of ndarrays",
             (py::arg("dataset_path"), py::arg("omit_first_dim")=true));
+
+    py::def("load_axiomlib_env", &load_axiomlib_env,
+            "load config parameters from axiomlib config file",
+            (py::arg("config_path")));
 }

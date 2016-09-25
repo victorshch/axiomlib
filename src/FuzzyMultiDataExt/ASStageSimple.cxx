@@ -76,7 +76,9 @@ void ASStageSimple::initFromEnv(const Environment &env) {
 	if (env.getDoubleParamValue (percentBestAxiomSets, "percentBestAxiomSets") < 0)
 		throw AxiomLibException("FuzzyMultiDataExt_AS::setParamsFromEnv : percentBestAxiomSets is undefined.");
 	if ((percentBestAxiomSets <= 0.0) || (percentBestAxiomSets > 1.0))
-		throw AxiomLibException("FuzzyMultiDataExt_AS::setParamsFromEnv : percentBestAxiomSets is out of range.");	
+        throw AxiomLibException("FuzzyMultiDataExt_AS::setParamsFromEnv : percentBestAxiomSets is out of range.");
+
+    env.getParamValue(countRepeatErrors, "countRepeatErrors", true);
 }
 
 int ASStageSimple::getASSize() const {
@@ -955,7 +957,7 @@ double ASStageSimple::matterAxiomSetFunc (AxiomExprSetPlus &as, int abType, cons
 			currentSecondKindErrors = 1;
 		}
 		else {
-			currentFirstKindErrors = num - 1;
+            if (countRepeatErrors) currentFirstKindErrors = num - 1;
 		}
 
 		as.setErrorsForTraj(abType, t, currentFirstKindErrors, currentSecondKindErrors);
@@ -978,7 +980,10 @@ double ASStageSimple::matterAxiomSetFunc (AxiomExprSetPlus &as, int abType, cons
 		num = getStatistic (curLabeling);
 		
 		// Суммирование числа ошибок
-		errFirstVal += num;
+        if (countRepeatErrors)
+            errFirstVal += num;
+        else
+            errFirstVal += std::min(1, num);
 
 		int oldTypeIErrors = as.getErrorsForTraj(-1, t).first;
 		if(oldTypeIErrors < 0) oldTypeIErrors = 0;

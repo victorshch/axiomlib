@@ -78,6 +78,9 @@ int FuzzyMultiDataExtAlgorithm::initFromEnv(const Environment &env) {
         fuzzyDataSet->readDataSet(datasetDir, datasetName);
         // восстанавливаем в данном классе вектор индексов параметров в каноническом представленнии по которым вести поиск нештатых ситуаций
         fuzzyDataSet->getParamNums(dataSetParams, env, envDataSet);
+    } else {
+        EnvDataSet envDataSet;
+        fuzzyDataSet->getParamNums(dataSetParams, env, envDataSet);
     }
 
 	std::string curAxiomName;
@@ -134,8 +137,8 @@ int FuzzyMultiDataExtAlgorithm::initFromEnv(const Environment &env) {
 	stage0->initFromEnv(env);
 	stage1->initFromEnv(env);
 	stage2->initFromEnv(env);
-	stage3->initFromEnv(env);
-	
+    stage3->initFromEnv(env);
+
 	return 0;	
 }
 

@@ -33,6 +33,20 @@ void FuzzyDataSet::setDivisions(std::vector<DataSetDivision> &divisions)
 {
     this->divisions.swap(divisions);
     this->divisions.resize(Last - First);
+
+    paramNames.clear();
+    paramNums.clear();
+
+    int dimensionCount = this->divisions.front().getDimensionCount();
+
+    if (dimensionCount == 0) {
+        throw AxiomLibException("FuzzyDataSet::setDivisions(): ill-formed division vector: dimension count is 0");
+    }
+
+    for (int i  = 0; i < dimensionCount; ++i) {
+        paramNames.push_back(boost::lexical_cast<std::string>(i));
+        paramNums.push_back(i);
+    }
 }
 
 /****************************************************************************

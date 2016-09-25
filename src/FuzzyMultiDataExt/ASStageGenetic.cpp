@@ -186,6 +186,8 @@ void ASObjectiveFunction::initFromEnv(const Environment &env)
 	env.getParamValue(penaltyObjective, "ASStageGenetic_penaltyObjective", 10000.0);
 
 	env.getParamValue(numAxiomsWeight, "ASStageGenetic_numAxiomsWeight", 0.0);
+
+    env.getParamValue(countRepeatErrors, "countRepeatErrors", true);
 }
 
 ASObjectiveValue ASObjectiveFunction::eval(const AxiomExprSetPlus &input) const
@@ -268,7 +270,8 @@ double ASObjectiveFunction::matterAxiomSetFunc (AxiomExprSetPlus &as, int abType
 			currentSecondKindErrors = 1;
 		}
 		else {
-			currentFirstKindErrors = num - 1;
+            if (countRepeatErrors)
+                currentFirstKindErrors = num - 1;
 		}
 
 		as.setErrorsForTraj(abType, t, currentFirstKindErrors, currentSecondKindErrors);
@@ -297,7 +300,10 @@ double ASObjectiveFunction::matterAxiomSetFunc (AxiomExprSetPlus &as, int abType
 		num = getStatistic (curLabeling);
 
 		// Суммирование числа ошибок
-		errFirstVal += num;
+        if (countRepeatErrors)
+            errFirstVal += num;
+        else
+            errFirstVal += std::min(1, num);
 
 		int oldTypeIErrors = as.getErrorsForTraj(-1, t).first;
 		if(oldTypeIErrors < 0) oldTypeIErrors = 0;
