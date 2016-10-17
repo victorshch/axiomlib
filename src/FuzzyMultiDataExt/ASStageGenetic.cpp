@@ -125,10 +125,12 @@ int AxiomContainer::classIndex(int classNo)
 AxiomContainer::ExtendedSatPointSet::ExtendedSatPointSet(const AxiomExpr &axiom, FuzzyDataSet *fuzzyDataSet)
 {
 	mSatPoints.resize(FuzzyDataSet::Testing - FuzzyDataSet::Reference + 1);
+    #pragma omp parallel for schedule(dynamic, 1)
 	for(int division = FuzzyDataSet::Reference; division <= FuzzyDataSet::Testing; ++division) {
-		mSatPoints[division].reserve(fuzzyDataSet->getClassCount() + 1);
+        mSatPoints[division].resize(fuzzyDataSet->getClassCount() + 1);
+        #pragma omp parallel for schedule(dynamic, 1)
 		for(int classNo = -1; classNo < fuzzyDataSet->getClassCount(); ++classNo) {
-			mSatPoints[division].push_back(SatPointSet(axiom, *fuzzyDataSet, (FuzzyDataSet::DataSetDivisionType)division, classNo));
+            mSatPoints[division][classNo + 1] = SatPointSet(axiom, *fuzzyDataSet, (FuzzyDataSet::DataSetDivisionType)division, classNo);
 		}
 	}
 }
@@ -626,6 +628,8 @@ void printNormalTrajectoryMarking(FuzzyDataSet* fuzzyDataSet, const AxiomExprSet
 
 void ASStageGenetic::run()
 {
+    comment() << "Initializing axiom container...";
+
 	AxiomContainer* axiomContainer = new AxiomContainer(stage2, fuzzyDataSet);
 
 	mObjective.setAxiomContainer(axiomContainer);

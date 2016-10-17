@@ -30,6 +30,8 @@ public:
 		ComplementarySatPoints
 	};
 
+    SatPointSet() {}
+
 	template<class Axiom>
 	SatPointSet(const Axiom &axiom, const FuzzyDataSet &dataSet, FuzzyDataSet::DataSetDivisionType division,
 				int classNo, SatPointSetType satPointSetType = ClassSatPoints);
@@ -58,8 +60,6 @@ private:
 	typedef char SatValue;
 	typedef std::vector<SatValue> SatVector;
 	typedef std::vector<SatVector> ClassSatVector;
-
-	SatPointSet();
 	
 	ClassSatVector m_satPoints;
 };
