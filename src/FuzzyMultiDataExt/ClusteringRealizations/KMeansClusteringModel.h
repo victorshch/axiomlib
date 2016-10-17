@@ -19,6 +19,7 @@ public:
 	virtual ClusteringModel* clone(){
         KMeansClusteringModel* model = new KMeansClusteringModel();
 		model->setClustersCount(this->k);
+        model->setItersCount(this->iters);
 		return model;
 	}
 
