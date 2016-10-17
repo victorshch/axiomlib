@@ -17,6 +17,9 @@
 
 #include <string>
 #include <iterator>
+#include <algorithm>
+
+#include "omp.h"
 
 using namespace AxiomLib;
 using namespace AxiomLib::FuzzyMultiDataExt;
@@ -158,7 +161,7 @@ shark::RealVector ASObjectiveValue::toRealVector() const
 }
 
 ASObjectiveFunction::ASObjectiveFunction(const FuzzyDataSet *fuzzyDataSet)
-	:mFuzzyDataSet(fuzzyDataSet), mAxiomContainer(0)
+    :mFuzzyDataSet(fuzzyDataSet), mAxiomContainer(0), mStochasticBatchSize(0)
 {
 }
 
@@ -188,6 +191,8 @@ void ASObjectiveFunction::initFromEnv(const Environment &env)
 	env.getParamValue(numAxiomsWeight, "ASStageGenetic_numAxiomsWeight", 0.0);
 
     env.getParamValue(countRepeatErrors, "countRepeatErrors", true);
+
+    env.getParamValue(mStochasticBatchSize, "ASStageGenetic_stochasticBatchSize", 0);
 }
 
 ASObjectiveValue ASObjectiveFunction::eval(const AxiomExprSetPlus &input) const
@@ -249,14 +254,17 @@ double ASObjectiveFunction::matterAxiomSetFunc (AxiomExprSetPlus &as, int abType
 
 //	debug() << "Reference trajectory marking: " << genMarkUp;
 //	debug() << "Searching for markings in abnormal trajectories";
-	for (int t = 0; t < (int) numOfTS[abType].size(); t++) {
+    int trajectoryCount = (int) numOfTS[abType].size();
+    std::vector<int> indices = makeStochasticBatchIndices(mStochasticBatchSize, trajectoryCount);
+    for (size_t i = 0; i < indices.size(); ++i) {
+        int trajectory = indices[i];
 		int currentFirstKindErrors = 0;
 		int currentSecondKindErrors = 0;
 
 //		debug() << "Abnormal trajectory marking: " << curMarkUp;
 
 		// разметка траектории контрольной выборки системой аксиом as
-		performMarkUp(as, FuzzyDataSet::Testing, abType, t, curMarkUp);
+        performMarkUp(as, FuzzyDataSet::Testing, abType, trajectory, curMarkUp);
 		// Распознавание нештатного поведения в разметке ряда
 		mReducedRecognizer->run (curMarkUp, genMarkUp, curLabeling);
 
@@ -274,7 +282,7 @@ double ASObjectiveFunction::matterAxiomSetFunc (AxiomExprSetPlus &as, int abType
                 currentFirstKindErrors = num - 1;
 		}
 
-		as.setErrorsForTraj(abType, t, currentFirstKindErrors, currentSecondKindErrors);
+        as.setErrorsForTraj(abType, trajectory, currentFirstKindErrors, currentSecondKindErrors);
 
 		errSecondVal+= currentSecondKindErrors;
 		errFirstVal += currentFirstKindErrors;
@@ -286,9 +294,12 @@ double ASObjectiveFunction::matterAxiomSetFunc (AxiomExprSetPlus &as, int abType
 
 //	debug() << "Searching for markings in normal trajectory";
 
-	for (int t = 0; t < (int) numNormalTS.size(); t++) {
+    trajectoryCount = (int) numNormalTS.size();
+    indices = makeStochasticBatchIndices(mStochasticBatchSize, trajectoryCount);
+    for (size_t i = 0; i < indices.size(); ++i) {
+        int trajectory = indices[i];
 		// размечаем траекторию нормального поведения
-		performMarkUp(as, FuzzyDataSet::Testing, -1, t, curMarkUp);
+        performMarkUp(as, FuzzyDataSet::Testing, -1, trajectory, curMarkUp);
 
 //		debug() << "Normal trajectory marking: " << curMarkUp;
 		// Распознавание нештатного поведения в разметке ряда
@@ -305,10 +316,10 @@ double ASObjectiveFunction::matterAxiomSetFunc (AxiomExprSetPlus &as, int abType
         else
             errFirstVal += std::min(1, num);
 
-		int oldTypeIErrors = as.getErrorsForTraj(-1, t).first;
+        int oldTypeIErrors = as.getErrorsForTraj(-1, trajectory).first;
 		if(oldTypeIErrors < 0) oldTypeIErrors = 0;
 
-		as.setErrorsForTraj(-1, t, num + oldTypeIErrors, 0);
+        as.setErrorsForTraj(-1, trajectory, num + oldTypeIErrors, 0);
 	}
 
 	// Вычисление значения целевой функции для полученного числа ошибок I и II рода
@@ -347,6 +358,21 @@ int ASObjectiveFunction::getStatistic(std::vector<int> &row) const
 	return num;
 }
 
+std::vector<int> ASObjectiveFunction::makeStochasticBatchIndices(int batchSize, int dataSetSize)
+{
+    std::vector<int> result((size_t)dataSetSize);
+
+    for(size_t i = 0; i < (size_t) dataSetSize; ++i) {
+        result[i] = (int) i;
+    }
+
+    if (batchSize < dataSetSize && batchSize > 0) {
+        std::random_shuffle(result.begin(), result.end());
+        result.resize((size_t) batchSize);
+    }
+
+    return result;
+}
 
 void ASMutation::operator ()(ASIndividual &i) const
 {
@@ -545,8 +571,7 @@ void ASOnePointCrossover::onePointCrossover(const std::vector<int> &dad, const s
 
 ASStageGenetic::ASStageGenetic(FuzzyDataSet* fuzzyDataSet,
 							   AXStage* stage2)
-	: stage2(stage2), fuzzyDataSet(fuzzyDataSet), mObjective(fuzzyDataSet)
-
+    : stage2(stage2), fuzzyDataSet(fuzzyDataSet), mObjective(fuzzyDataSet)
 {
 }
 
@@ -618,11 +643,20 @@ void ASStageGenetic::run()
 	comment() << "Starting ASStageGenetic algorithm";
 
 	population.resize(mPopulationSize);
+
+    #pragma omp parallel for schedule(dynamic, 1)
 	for(unsigned i = 0; i < population.size(); ++i) {
 		*population[i] = generateInitialAS(axiomContainer);
+        if (omp_get_thread_num() == 0) {
+            if (Logger::getInstance()->isWritingComments()) {
+                std::cout << "Computing objective for individual " << i+1 << " of " << population.size() << '\r';
+                std::cout.flush();
+            }
+        }
 		ASObjectiveValue objectiveValue = mObjective.eval(*(population[i]));
 		population[i].penalizedFitness() = shark::RealVector(1, objectiveValue.goalValue);
 	}
+    std::cout << std::endl;
 
 	std::sort(population.begin(), population.end(), FitnessComparator<FitnessExtractor>());
 
@@ -664,10 +698,18 @@ void ASStageGenetic::run()
 
 		debug() << "Re-evaluating objective function for extended population...";
 		// Evaluate objective function
+        #pragma omp parallel for schedule(dynamic, 1)
 		for(unsigned i = mPopulationSize; i < population.size(); ++i) {
+            if (omp_get_thread_num() == 0) {
+                if (Logger::getInstance()->isWritingComments()) {
+                    std::cout << "Computing objective for individual " << i+1 << " of " << population.size() << '\r';
+                    std::cout.flush();
+                }
+            }
 			population[i].penalizedFitness() =
 					shark::RealVector(1, mObjective.eval(*(population[i])).goalValue);
 		}
+        std::cout << std::endl;
 
 		// Selection
 		std::sort(population.begin(), population.end(), FitnessComparator<FitnessExtractor>());
@@ -783,5 +825,6 @@ AxiomExprSetPlus ASStageGenetic::generateInitialAS(const AxiomContainer *axiomCo
 		}
 	}
 
-	return result;
+    return result;
 }
+

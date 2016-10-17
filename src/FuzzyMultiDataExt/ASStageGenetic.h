@@ -113,11 +113,15 @@ private:
 	double penaltyObjective;
 	double numAxiomsWeight;
 
+    int mStochasticBatchSize;
+
     // Если true, несколько вхождений эталона в номальное поведение и повторные вхождения этална в нештатное поведения
     // считаются как несколько ошибок первого рода.
     // Если false, несколько вхождений эталона в номальное поведение считаются одной ошибкой первого рода,
     // и повторные вхождения этална в нештатное поведения не считаются как ошибки первого рода
     bool countRepeatErrors;
+
+    static std::vector<int> makeStochasticBatchIndices(int batchSize, int dataSetSize);
 };
 
 /// Returns indexCount random numbers from 0 to size-1 without repetitions
