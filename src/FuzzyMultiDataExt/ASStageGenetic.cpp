@@ -163,8 +163,9 @@ shark::RealVector ASObjectiveValue::toRealVector() const
 }
 
 ASObjectiveFunction::ASObjectiveFunction(const FuzzyDataSet *fuzzyDataSet)
-    :mFuzzyDataSet(fuzzyDataSet), mAxiomContainer(0), mStochasticBatchSize(0)
+    :mFuzzyDataSet(fuzzyDataSet), mAxiomContainer(0), mStochasticBatchSize(0), completelyRandomBatches(false)
 {
+    initBatchIndices();
 }
 
 void ASObjectiveFunction::initFromEnv(const Environment &env)
@@ -195,6 +196,13 @@ void ASObjectiveFunction::initFromEnv(const Environment &env)
     env.getParamValue(countRepeatErrors, "countRepeatErrors", true);
 
     env.getParamValue(mStochasticBatchSize, "ASStageGenetic_stochasticBatchSize", 0);
+
+    env.getParamValue(completelyRandomBatches, "ASStageGenetic_completelyRandomBatches", false);
+}
+
+void ASObjectiveFunction::nextIteration()
+{
+    initBatchIndices();
 }
 
 ASObjectiveValue ASObjectiveFunction::eval(const AxiomExprSetPlus &input) const
@@ -211,6 +219,7 @@ ASObjectiveValue ASObjectiveFunction::eval(const AxiomExprSetPlus &input) const
 
 	AxiomExprSetPlus copy(input);
 	matterAxiomSetFunc(copy);
+
 	return ASObjectiveValue(copy.goal + numAxiomsWeight * copy.axioms.size(), copy.errFirst, copy.errSecond);
 }
 
@@ -257,7 +266,11 @@ double ASObjectiveFunction::matterAxiomSetFunc (AxiomExprSetPlus &as, int abType
 //	debug() << "Reference trajectory marking: " << genMarkUp;
 //	debug() << "Searching for markings in abnormal trajectories";
     int trajectoryCount = (int) numOfTS[abType].size();
-    std::vector<int> indices = makeStochasticBatchIndices(mStochasticBatchSize, trajectoryCount);
+    std::vector<int> indices;
+    if (completelyRandomBatches)
+        indices = makeStochasticBatchIndices(mStochasticBatchSize, trajectoryCount);
+    else
+        indices = getBatchIndices(abType);
     for (size_t i = 0; i < indices.size(); ++i) {
         int trajectory = indices[i];
 		int currentFirstKindErrors = 0;
@@ -297,7 +310,10 @@ double ASObjectiveFunction::matterAxiomSetFunc (AxiomExprSetPlus &as, int abType
 //	debug() << "Searching for markings in normal trajectory";
 
     trajectoryCount = (int) numNormalTS.size();
-    indices = makeStochasticBatchIndices(mStochasticBatchSize, trajectoryCount);
+    if (completelyRandomBatches)
+        indices = makeStochasticBatchIndices(mStochasticBatchSize, trajectoryCount);
+    else
+        indices = getBatchIndices(-1);
     for (size_t i = 0; i < indices.size(); ++i) {
         int trajectory = indices[i];
 		// размечаем траекторию нормального поведения
@@ -357,7 +373,25 @@ int ASObjectiveFunction::getStatistic(std::vector<int> &row) const
 			i++;
 		}
 	}
-	return num;
+    return num;
+}
+
+std::vector<int> ASObjectiveFunction::getBatchIndices(int classNo) const
+{
+    if (classNo < 0) classNo = -1;
+    if (classNo >= (int) mBatchIndices.size())
+        throw AxiomLibException("ASObjectiveFunction::getBatchIndices(): invalid classNo: " + boost::lexical_cast<std::string>(classNo));
+    return mBatchIndices[classNo + 1];
+}
+
+void ASObjectiveFunction::initBatchIndices()
+{
+    mBatchIndices.resize(mFuzzyDataSet->getClassCount() + 1);
+
+    for(int i = 0; i < (int) mBatchIndices.size(); ++i) {
+        int classSize = mFuzzyDataSet->getMutiTSCount(FuzzyDataSet::Testing, i - 1);
+        mBatchIndices[i] = makeStochasticBatchIndices(mStochasticBatchSize, classSize);
+    }
 }
 
 std::vector<int> ASObjectiveFunction::makeStochasticBatchIndices(int batchSize, int dataSetSize)
@@ -633,6 +667,7 @@ void ASStageGenetic::run()
 	AxiomContainer* axiomContainer = new AxiomContainer(stage2, fuzzyDataSet);
 
 	mObjective.setAxiomContainer(axiomContainer);
+    mObjective.nextIteration();
 
 	std::vector<ASIndividual> population;
 
@@ -664,7 +699,12 @@ void ASStageGenetic::run()
 
 	std::sort(population.begin(), population.end(), FitnessComparator<FitnessExtractor>());
 
-	comment() << "Initial population best goal value: " << mObjective.eval(*population.front()).toString();
+    int oldBatchSize = mObjective.batchSize();
+    mObjective.setBatchSize(0);
+    mObjective.nextIteration();
+    comment() << "Initial population best goal value (whole dataset): " << mObjective.eval(*population.front()).toString();
+    mObjective.setBatchSize(oldBatchSize);
+    mObjective.nextIteration();
 
 	population.reserve(4*mPopulationSize);
 
@@ -701,6 +741,7 @@ void ASStageGenetic::run()
 		}
 
 		debug() << "Re-evaluating objective function for extended population...";
+        mObjective.nextIteration();
 		// Evaluate objective function
         #pragma omp parallel for schedule(dynamic, 1)
 		for(unsigned i = mPopulationSize; i < population.size(); ++i) {
@@ -729,7 +770,12 @@ void ASStageGenetic::run()
 
 	std::sort(population.begin(), population.end(), FitnessComparator<FitnessExtractor>());
 
-	comment() << "Final best goal value: " << mObjective.eval(*population.front()).toString();
+    comment() << "Final goal value (current batch): " << mObjective.eval(*population.front()).toString();
+
+    mObjective.setBatchSize(0);
+    mObjective.nextIteration();
+    comment() << "Final goal value (whole dataset): " << mObjective.eval(*population.front()).toString();
+    mObjective.setBatchSize(oldBatchSize);
 
 	printNormalTrajectoryMarking(fuzzyDataSet, *population.front());
 

@@ -88,7 +88,11 @@ public:
 
 	void setAxiomContainer(const AxiomContainer* newAxiomContainer) { mAxiomContainer = newAxiomContainer; }
 
-	ASObjectiveValue eval(const AxiomExprSetPlus &input) const;
+    int batchSize() const { return mStochasticBatchSize; }
+    void setBatchSize(int value) { mStochasticBatchSize = value; }
+
+    void nextIteration();
+    ASObjectiveValue eval(const AxiomExprSetPlus &input) const;
 
 	double matterAxiomSetFunc(AxiomExprSetPlus& as) const;
 
@@ -115,11 +119,19 @@ private:
 
     int mStochasticBatchSize;
 
+    bool completelyRandomBatches;
+
     // Если true, несколько вхождений эталона в номальное поведение и повторные вхождения этална в нештатное поведения
     // считаются как несколько ошибок первого рода.
     // Если false, несколько вхождений эталона в номальное поведение считаются одной ошибкой первого рода,
     // и повторные вхождения этална в нештатное поведения не считаются как ошибки первого рода
     bool countRepeatErrors;
+
+    std::vector<std::vector<int> > mBatchIndices;
+
+    std::vector<int> getBatchIndices(int classNo) const;
+
+    void initBatchIndices();
 
     static std::vector<int> makeStochasticBatchIndices(int batchSize, int dataSetSize);
 };
