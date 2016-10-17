@@ -50,5 +50,10 @@ void TrajectorySampleDistance::setDistancesForClass(int classNo, const std::vect
 double AxiomLib::TrajectorySampleDistance::distance(int classNo, int point) const
 {
 	//todo checks in debug mode
-	return m_dist[classNo][point];
+    return m_dist[classNo][point];
+}
+
+void TrajectorySampleDistance::getDistances(int classNo, std::vector<double> &result)
+{
+    result = m_dist[classNo];
 }

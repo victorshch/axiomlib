@@ -21,12 +21,16 @@ namespace AxiomLib {
 class DataSetDivision
 {
 public:
+    DataSetDivision() {}
     DataSetDivision(const ReferenceClassesTS &abnormalTS, const ClassTS &normalTS);
 	
 	std::string getMultiTSName(int indexClass, int indexMultiTS) const;
 
 	// Возвращает число классов нештатного поведения
 	int getClassCount() const; 
+
+    // Возвращает число размерностей временных рядов
+    int getDimensionCount() const;
 	
 	// Число мультирядов в классе
 	int getMultiTSCount(int classNo) const;

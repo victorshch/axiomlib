@@ -46,6 +46,8 @@ FuzzyMultiDataExtAlgorithm::~FuzzyMultiDataExtAlgorithm() {
 	delete stage1;
 	delete stage0;
 	delete heuristicsSet;
+
+    delete fuzzyDataSet;
 }
 
 int FuzzyMultiDataExtAlgorithm::setComments(const bool newVal) {
@@ -55,27 +57,33 @@ int FuzzyMultiDataExtAlgorithm::setComments(const bool newVal) {
 }
 
 int FuzzyMultiDataExtAlgorithm::initFromEnv(const Environment &env) {
-	// Инициализируем dataSet
-	std::string datasetDir, datasetName;
-	if (env.getStringParamValue(datasetDir, "BaseDataSetDir") < 0)
-		throw AxiomLibException("FuzzyMultiDataExtAlgorithm::setParamsFromEnv : data set directory is undefined.");
-	if (env.getStringParamValue(datasetName, "DataSet") < 0)
-		throw AxiomLibException("FuzzyMultiDataExtAlgorithm::setParamsFromEnv : data set is undefined.");
-	// считываем необходимые для данного класса параметры о наборе данных
-	EnvDataSet envDataSet;
-	envDataSet.readConfigFile (datasetDir, datasetName);
-	// установка корректного обозначения NullStr - обозначение остутсвия в данной точке ряда какого либо нештатного поведения
-	fuzzyDataSet.setNullStr (envDataSet);
-	fuzzyDataSet.setNormalStr (envDataSet);
-	// собственно считываем набор данных - заводим его во внутреннее представление
-	fuzzyDataSet.readDataSet(datasetDir, datasetName);
-	// восстанавливаем в данном классе вектор индексов параметров в каноническом представленнии по которым вести поиск нештатых ситуаций
-	fuzzyDataSet.getParamNums(dataSetParams, env, envDataSet);
 
-	// Определяем базовую директорию с наборами аксиом
+    if (!fuzzyDataSet) {
+
+        fuzzyDataSet = new FuzzyDataSet();
+
+        // Инициализируем dataSet
+        std::string datasetDir, datasetName;
+        if (env.getStringParamValue(datasetDir, "BaseDataSetDir") < 0)
+            throw AxiomLibException("FuzzyMultiDataExtAlgorithm::setParamsFromEnv : data set directory is undefined.");
+        if (env.getStringParamValue(datasetName, "DataSet") < 0)
+            throw AxiomLibException("FuzzyMultiDataExtAlgorithm::setParamsFromEnv : data set is undefined.");
+        // считываем необходимые для данного класса параметры о наборе данных
+        EnvDataSet envDataSet;
+        envDataSet.readConfigFile (datasetDir, datasetName);
+        // установка корректного обозначения NullStr - обозначение остутсвия в данной точке ряда какого либо нештатного поведения
+        fuzzyDataSet->setNullStr (envDataSet);
+        fuzzyDataSet->setNormalStr (envDataSet);
+        // собственно считываем набор данных - заводим его во внутреннее представление
+        fuzzyDataSet->readDataSet(datasetDir, datasetName);
+        // восстанавливаем в данном классе вектор индексов параметров в каноническом представленнии по которым вести поиск нештатых ситуаций
+        fuzzyDataSet->getParamNums(dataSetParams, env, envDataSet);
+    } else {
+        EnvDataSet envDataSet;
+        fuzzyDataSet->getParamNums(dataSetParams, env, envDataSet);
+    }
+
 	std::string curAxiomName;
-	if (env.getStringParamValue(axiomBaseDir, "AxiomBaseDir") < 0)
-		throw AxiomLibException("FuzzyMultiDataExtAlgorithm::setParamsFromEnv : popPreset > 0 but axiom base dir is not set.");
 	if (env.getStringParamValue(curAxiomName, "ECListFileName") >= 0) 
 		fileNameECList.assign (curAxiomName);
 	if (env.getStringParamValue(curAxiomName, "AxiomListFileName") >= 0) 
@@ -104,7 +112,7 @@ int FuzzyMultiDataExtAlgorithm::initFromEnv(const Environment &env) {
 	std::string ecStageName;
 	env.getParamValue(ecStageName, "ecStage", DEFAULT_EC_STAGE);
 
-	stage1 = ECStage::create(ecStageName, &fuzzyDataSet, stage0);
+    stage1 = ECStage::create(ecStageName, fuzzyDataSet, stage0);
 
 	if(stage1 == 0) {
 		throw AxiomLibException("FuzzyMultiDataExtAlgorithm::setParamsFromEnv : invalid name of ec stage : '" + ecStageName + "'");
@@ -113,7 +121,7 @@ int FuzzyMultiDataExtAlgorithm::initFromEnv(const Environment &env) {
 	std::string axStageName;
 	env.getParamValue(axStageName, "axiomStage", DEFAULT_AX_STAGE);
 
-	stage2 = AXStage::create(axStageName, &fuzzyDataSet, stage1);
+    stage2 = AXStage::create(axStageName, fuzzyDataSet, stage1);
 	if(stage2 == 0) {
 		throw AxiomLibException("FuzzyMultiDataExtAlgorithm::setParamsFromEnv : invalid name of axiom stage : '" + axStageName + "'");
 	}
@@ -121,7 +129,7 @@ int FuzzyMultiDataExtAlgorithm::initFromEnv(const Environment &env) {
 	std::string asStageName;
 	env.getParamValue(asStageName, "axiomSetStage", DEFAULT_AS_STAGE);
 	
-	stage3 = ASStage::create(asStageName, &fuzzyDataSet, stage2);
+    stage3 = ASStage::create(asStageName, fuzzyDataSet, stage2);
 	if(stage3 == 0) {
 		throw AxiomLibException("FuzzyMultiDataExtAlgorithm::setParamsFromEnv : invalid name of axiom set stage : '" + asStageName + "'");
 	}
@@ -129,8 +137,8 @@ int FuzzyMultiDataExtAlgorithm::initFromEnv(const Environment &env) {
 	stage0->initFromEnv(env);
 	stage1->initFromEnv(env);
 	stage2->initFromEnv(env);
-	stage3->initFromEnv(env);
-	
+    stage3->initFromEnv(env);
+
 	return 0;	
 }
 
@@ -145,17 +153,17 @@ int FuzzyMultiDataExtAlgorithm::initFromEnvRecognitionOnly(const Environment &en
 	EnvDataSet envDataSet;
 	envDataSet.readConfigFile (datasetDir, datasetName);
 	// установка корректного обозначения NullStr - обозначение остутсвия в данной точке ряда какого либо нештатного поведения
-	fuzzyDataSet.setNullStr (envDataSet);
-	fuzzyDataSet.setNormalStr (envDataSet);
+    fuzzyDataSet->setNullStr (envDataSet);
+    fuzzyDataSet->setNormalStr (envDataSet);
 	// собственно считываем набор данных - заводим его во внутреннее представление
-	fuzzyDataSet.readDataSet(datasetDir, datasetName);
+    fuzzyDataSet->readDataSet(datasetDir, datasetName);
 	// восстанавливаем в данном классе вектор индексов параметров в каноническом представленнии по которым вести поиск нештатых ситуаций
-	fuzzyDataSet.getParamNums(dataSetParams, env, envDataSet);
+    fuzzyDataSet->getParamNums(dataSetParams, env, envDataSet);
 
 	std::string asStageName;
 	env.getMandatoryParamValue(asStageName, "axiomSetStage");
 
-	stage3 = ASStage::create(asStageName, &fuzzyDataSet, stage2);
+    stage3 = ASStage::create(asStageName, fuzzyDataSet, stage2);
 	if(stage3 == 0) {
 		throw AxiomLibException("FuzzyMultiDataExtAlgorithm::setParamsFromEnv : invalid name of axiom set stage : '" + asStageName + "'");
 	}
@@ -174,11 +182,16 @@ int FuzzyMultiDataExtAlgorithm::initFromEnvRecognitionOnly(const Environment &en
 }
 
 FuzzyDataSet &FuzzyMultiDataExtAlgorithm::getDataSet() {
-	return this->fuzzyDataSet;
+    return *this->fuzzyDataSet;
 }
 
 const FuzzyDataSet &FuzzyMultiDataExtAlgorithm::getDataSet() const {
-	return this->fuzzyDataSet;
+    return *this->fuzzyDataSet;
+}
+
+void FuzzyMultiDataExtAlgorithm::setDataSet(FuzzyDataSet *dataSet)
+{
+    this->fuzzyDataSet = dataSet;
 }
 
 void FuzzyMultiDataExtAlgorithm::setECTypes(const std::vector<ElemCondPlus> &ecTypes) {
@@ -572,4 +585,21 @@ void FuzzyMultiDataExtAlgorithm::runThirdLevel() {
 
 void FuzzyMultiDataExtAlgorithm::setAxiomSets(const std::vector<AxiomExprSetPlus> &axiomSets) {
 	stage3->setAxiomSets(axiomSets);
+}
+
+RecognizerExt* AxiomLib::trainFMDE(FuzzyDataSet *dataSet, const Environment &env)
+{
+    double stretch;
+    env.getMandatoryParamValue<double>(stretch, "stretch");
+    std::string reduced_recognizer;
+    env.getMandatoryParamValue<std::string>(reduced_recognizer, "ReducedRecognizer");
+
+    FuzzyMultiDataExtAlgorithm al;
+    al.setDataSet(dataSet);
+    al.initFromEnv(env);
+    al.run();
+    if (al.getASSize())
+        return new RecognizerExt(al.getAS(0), stretch, reduced_recognizer);
+    else
+        return NULL;
 }

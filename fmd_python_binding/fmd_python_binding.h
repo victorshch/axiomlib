@@ -1,0 +1,4 @@
+#ifndef FMD_PYTHON_BINDING_H
+#define FMD_PYTHON_BINDING_H
+
+#endif // FMD_PYTHON_BINDING_H

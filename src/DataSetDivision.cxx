@@ -41,7 +41,20 @@ std::string DataSetDivision::getMultiTSName(int classNo, int indexMultiTS) const
 }
 
 int DataSetDivision::getClassCount() const {
-	return m_tsSet.size() - 1;
+    return m_tsSet.size() - 1;
+}
+
+int DataSetDivision::getDimensionCount() const
+{
+    ClippedClassTSSet::const_iterator it = m_tsSet.begin();
+    while (it != m_tsSet.end() && it->empty()) ++it;
+    if (it == m_tsSet.end()) throw AxiomLibException("DataSetDivision::getDimensionCount(): ill-formed dataset: all divisions are empty");
+
+    ClippedClassTS::const_iterator it2 = it->begin();
+    while (it2 != it->end() && it2->get<0>().empty()) ++it2;
+    if (it2 == it->end()) throw AxiomLibException("DataSetDivision::getDimensionCount(): ill-formed dataset: all classes in a division are empty");
+
+    return (int) it2->get<0>().size();
 }
 
 int DataSetDivision::getMultiTSCount(int classNo) const {

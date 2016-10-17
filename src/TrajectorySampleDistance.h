@@ -32,12 +32,15 @@ public:
 	// Запись расстояния от участка траектории с концом в endPoint до эталонной траектории класса classNo
 	void setDistance(int classNo, int endPoint, double distance);
 	
-	void setDistancesForClass(int classNo, const std::vector<double>& distances);
+    void setDistancesForClass(int classNo, const std::vector<double>& getDistances);
 	
 	//void setDistancesForClass(int classNo, const std::vector<double>& distances);
 	
 	// Расстояние от участка траектории с концом в endPoint до эталонной траектории класса classNo
 	double distance(int classNo, int endPoint) const;
+
+    // Записывает в result расстояния от участков траекторий до эталонной траектории класса classNo, хранимые в данном объекте
+    void getDistances(int classNo, std::vector<double>& result);
 	
 private:
 	std::vector<std::vector<double> > m_dist;

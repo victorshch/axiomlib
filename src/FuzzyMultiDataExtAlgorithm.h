@@ -25,12 +25,17 @@
 
 #include "FuzzyMultiDataExt/ForwardDeclarations.h"
 
+#include "FuzzyMultiDataExt/recognizerext.h"
+
 #include "Logger.h"
 
 #include "StringPlus.h"
 
 namespace AxiomLib {
-	
+
+// takes ownership of dataSet
+RecognizerExt* trainFMDE(FuzzyDataSet* dataSet, const Environment& env);
+
 class FuzzyMultiDataExtAlgorithm
 {
 public:	
@@ -48,6 +53,9 @@ public:
 	// Доступ к датасету
 	FuzzyDataSet &getDataSet();
 	const FuzzyDataSet& getDataSet() const;
+
+    // takes ownership of dataSet
+    void setDataSet(FuzzyDataSet* dataSet);
 	
 	// Основная функция класса - запуск подбора системы аксиом
 	void run (void);
@@ -143,7 +151,7 @@ public:
 private:
 	
 	// Исходный набор данных, на котором производится обучение
-	FuzzyDataSet fuzzyDataSet;
+    FuzzyDataSet* fuzzyDataSet;
 
 	// Режим "один против всех". Если true, то
 	// при подборе ЭУ и аксиом для некоторого класса нештатного поведения
