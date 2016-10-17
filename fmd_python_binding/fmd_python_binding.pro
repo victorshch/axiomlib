@@ -6,8 +6,8 @@
 
 QT       -= core gui
 
-CONFIG += debug
-CONFIG -= release
+CONFIG -= debug
+CONFIG += release
 
 TARGET = axiomlib_fmd
 TEMPLATE = lib
