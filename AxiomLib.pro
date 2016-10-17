@@ -9,8 +9,8 @@ include(AxiomLibConfig.pri)
 QT -= core gui
 CONFIG -= qt
 
-CONFIG -= release
-CONFIG += debug
+CONFIG += release
+CONFIG -= debug
 
 INCLUDEPATH += $$MPICH_INCLUDE \
     $$BOOST_INCLUDE \
